@@ -13,4 +13,5 @@ package Alerta;
 class Confirmacion {
     public static final int SI=1;
     public static final int NO=2;
+    public static final int TALVEZ=3;
 }
