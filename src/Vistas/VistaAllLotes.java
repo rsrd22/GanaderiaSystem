@@ -10,8 +10,10 @@ import Control.ControLotes;
 import Control.ControlBloques;
 import Control.ControlFincas;
 import Control.ControlGeneral;
+import Control.ControlMultiComboBox;
 import Modelo.ModeloBloques;
 import Modelo.ModeloLotes;
+import Modelo.ModeloOpcionesMultiples;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -47,9 +50,16 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public List<Map<String, String>> listaFincas;
     public List<Map<String, String>> listaBloques;
     public List<Map<String, String>> listaFuentesHidricas;
+    
+    public ArrayList<ModeloOpcionesMultiples> ListaDatosMultiple = new ArrayList<>();
+    public ArrayList<ModeloOpcionesMultiples> ListaSeleccionados = new ArrayList<>();
+    public ArrayList<JPanel> ListaPnlOpciones= new ArrayList<>();
+    public boolean ban = false;
+    public ControlMultiComboBox obj;
     /**
      * Creates new form VistaAllLotes
      */
+    
     public VistaAllLotes() {
         initComponents();
         controlFinca = new ControlFincas();
@@ -63,9 +73,15 @@ public class VistaAllLotes extends javax.swing.JPanel {
         idFinca = "";
         AreaBloque = "";
         fila = -1;
-        CargarListaFincas();
+        txtOpcion.setEnabled(false);
         CargarListaFuentesHidricas();
+        CargarListaFincas();
+        
+        System.out.println("ListaDatosMultiple---_>"+ListaDatosMultiple.size());
+        obj = new ControlMultiComboBox(pnlOpciones, txtOpcion, ListaDatosMultiple);
+        obj.LlenarPnlOpciones(); 
         LimpiarFomulario();
+        EstadoOpciones();
         InicializarTblLotes();
     }
     
@@ -134,6 +150,8 @@ public class VistaAllLotes extends javax.swing.JPanel {
         cbFinca = new javax.swing.JComboBox();
         lblTid = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        scrlPnlOpciones = new javax.swing.JScrollPane();
+        pnlOpciones = new javax.swing.JPanel();
         txtNumero = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         lbltitle1 = new javax.swing.JLabel();
@@ -148,6 +166,8 @@ public class VistaAllLotes extends javax.swing.JPanel {
         lblTid1 = new javax.swing.JLabel();
         lblTid2 = new javax.swing.JLabel();
         cbFuenteHidrica = new javax.swing.JComboBox();
+        txtOpcion = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Lotes = new javax.swing.JTable();
 
@@ -173,6 +193,15 @@ public class VistaAllLotes extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Agregar Lote", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(59, 123, 50));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        scrlPnlOpciones.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        pnlOpciones.setBackground(new java.awt.Color(255, 255, 255));
+        pnlOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnlOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        scrlPnlOpciones.setViewportView(pnlOpciones);
+
+        jPanel1.add(scrlPnlOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 220, 80));
 
         txtNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero.setForeground(new java.awt.Color(59, 123, 50));
@@ -298,7 +327,27 @@ public class VistaAllLotes extends javax.swing.JPanel {
                 cbFuenteHidricaActionPerformed(evt);
             }
         });
-        jPanel1.add(cbFuenteHidrica, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 220, 30));
+        jPanel1.add(cbFuenteHidrica, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 220, 30));
+
+        txtOpcion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtOpcion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtOpcionMousePressed(evt);
+            }
+        });
+        jPanel1.add(txtOpcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 190, 30));
+
+        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel2.setForeground(new java.awt.Color(102, 102, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("A");
+        jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
+            }
+        });
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 30, 30));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 640, 150));
 
@@ -425,6 +474,16 @@ public class VistaAllLotes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbl_LotesMouseReleased
 
+    private void txtOpcionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtOpcionMousePressed
+        ban = !ban;
+        EstadoOpciones();
+    }//GEN-LAST:event_txtOpcionMousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        ban = !ban;
+        EstadoOpciones();
+    }//GEN-LAST:event_jLabel2MousePressed
+
     public int getIndexLista(String id, List<Map<String, String>> lista){
         int ind = -1;
         for(int i = 0; i < lista.size(); i++){
@@ -443,6 +502,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbFuenteHidrica;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator6;
@@ -453,9 +513,12 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid2;
     public javax.swing.JLabel lbltitle1;
     public javax.swing.JLabel lbltitle3;
+    private javax.swing.JPanel pnlOpciones;
+    private javax.swing.JScrollPane scrlPnlOpciones;
     private javax.swing.JTable tbl_Lotes;
     public javax.swing.JTextField txtAreaT;
     public javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtOpcion;
     // End of variables declaration//GEN-END:variables
 
     private void CargarListaFincas() {
@@ -482,11 +545,15 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }
     
     private void CargarListaFuentesHidricas() {
-        listaFuentesHidricas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                "UNION\n" +
-                                                "SELECT id AS ID, descripcion AS DESCRIPCION FROM fuentes_hidricas WHERE estado = 'Activo'");
-         
-        Utilidades.LlenarComboBox(cbFuenteHidrica, listaFuentesHidricas, "DESCRIPCION");
+        listaFuentesHidricas = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION FROM fuentes_hidricas WHERE estado = 'Activo'");
+        System.out.println("listaFuentesHidricas--->"+listaFuentesHidricas.size());
+        for(Map<String, String> dato: listaFuentesHidricas){
+            ListaDatosMultiple.add(new ModeloOpcionesMultiples(Integer.parseInt(dato.get("ID")), 
+                                                                dato.get("DESCRIPCION"), 
+                                                                false));
+        }
+        System.out.println("ListaDatosMultiple--->"+ListaDatosMultiple.size());
+        //Utilidades.LlenarComboBox(cbFuenteHidrica, listaFuentesHidricas, "DESCRIPCION");
        
     }
     
@@ -559,13 +626,20 @@ public class VistaAllLotes extends javax.swing.JPanel {
         if(cbBloque.getItemCount()>0)
             cbBloque.setSelectedIndex(0);
         
-        cbFuenteHidrica.setSelectedIndex(0);
+        //cbFuenteHidrica.setSelectedIndex(0);
+        InicializarMultiComboBox();
         txtNumero.setText("");
         txtAreaT.setText("");
         modeloLotes = new ModeloLotes();
         modeloLotes.setId_finca(""+idFinca);
         modeloLotes.setId("0");
         fila = -1;
+    }
+    
+    public void InicializarMultiComboBox(){
+        for(ModeloOpcionesMultiples dato: ListaDatosMultiple){
+            dato.setEstado(false);
+        }
     }
 
     private double getAcumuladoArea(String id_Bloque) {
@@ -580,5 +654,9 @@ public class VistaAllLotes extends javax.swing.JPanel {
         
         return ret;
     }
-    
+ 
+    public void EstadoOpciones(){
+        pnlOpciones.setVisible(ban);
+        scrlPnlOpciones.setVisible(ban);
+    }
 }
