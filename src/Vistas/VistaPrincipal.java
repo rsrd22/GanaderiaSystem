@@ -14,6 +14,7 @@ import ImportExport.EstadoIE;
 import ImportExport.ImportExport;
 import Utilidades.Consultas;
 import java.awt.Dimension;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -27,6 +28,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private AjustarControles controles;
     private JScrollPane scroll;
     private JPanel panel;
+    public int max = 0;
     /**
      * Creates new form VistaPrincipal
      */
@@ -50,15 +52,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         pnlTitulo = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnMinimizar = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         importarExportar = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        btnInicio = new javax.swing.JLabel();
+        btnMenuVertical = new javax.swing.JLabel();
+        btnMaximizar = new javax.swing.JLabel();
         pnlContenedor = new javax.swing.JPanel();
         progreso = new javax.swing.JProgressBar();
         mensaje = new javax.swing.JLabel();
@@ -97,65 +101,52 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnEstadoActividades = new javax.swing.JLabel();
         btnCronograma = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("eg");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jPanel2.setBackground(new java.awt.Color(153, 0, 102));
+        jPanel2.setMinimumSize(new java.awt.Dimension(750, 570));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        pnlTitulo.setBackground(new java.awt.Color(59, 123, 50));
+
+        btnMinimizar.setBackground(new java.awt.Color(255, 255, 255));
+        btnMinimizar.setForeground(java.awt.Color.gray);
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        btnMinimizar.setToolTipText("Minimizar");
+        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseClicked(evt);
             }
         });
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setForeground(java.awt.Color.gray);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
-        jLabel6.setToolTipText("Minimizar");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnCerrar.setBackground(new java.awt.Color(153, 255, 0));
+        btnCerrar.setForeground(java.awt.Color.gray);
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
+        btnCerrar.setToolTipText("Cerrar");
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-
-        jLabel5.setBackground(new java.awt.Color(153, 255, 0));
-        jLabel5.setForeground(java.awt.Color.gray);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
-        jLabel5.setToolTipText("Cerrar");
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                btnCerrarMouseClicked(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(36, 151, 20));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Ventana Principal");
 
         importarExportar.setBackground(new java.awt.Color(255, 255, 255));
         importarExportar.setForeground(java.awt.Color.gray);
         importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
         importarExportar.setToolTipText("Exportar");
-        importarExportar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         importarExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         importarExportar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -163,12 +154,35 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(36, 151, 20));
-        jLabel8.setText("INICIO");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setText("INICIO");
+        btnInicio.setToolTipText("INICIO");
+        btnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                btnInicioMouseClicked(evt);
+            }
+        });
+
+        btnMenuVertical.setBackground(new java.awt.Color(255, 255, 255));
+        btnMenuVertical.setForeground(java.awt.Color.gray);
+        btnMenuVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        btnMenuVertical.setToolTipText("Menu Vertical");
+        btnMenuVertical.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMenuVertical.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMenuVerticalMouseClicked(evt);
+            }
+        });
+
+        btnMaximizar.setBackground(new java.awt.Color(255, 255, 255));
+        btnMaximizar.setForeground(java.awt.Color.gray);
+        btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
+        btnMaximizar.setToolTipText("Maximizar");
+        btnMaximizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMaximizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMaximizarMouseClicked(evt);
             }
         });
 
@@ -178,17 +192,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
             pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTituloLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnMenuVertical)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(importarExportar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnInicio)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(importarExportar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMinimizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel5)
+                .addComponent(btnMaximizar)
+                .addGap(4, 4, 4)
+                .addComponent(btnCerrar)
                 .addContainerGap())
         );
         pnlTituloLayout.setVerticalGroup(
@@ -196,18 +212,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(pnlTituloLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(importarExportar)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel8)))
+                    .addComponent(btnMaximizar)
+                    .addComponent(btnMenuVertical)
+                    .addGroup(pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(importarExportar)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMinimizar)
+                            .addComponent(btnCerrar))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(btnInicio))))
                 .addContainerGap())
         );
 
-        getContentPane().add(pnlTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 750, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPanel2.add(pnlTitulo, gridBagConstraints);
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 151, 20)));
@@ -226,24 +250,43 @@ public class VistaPrincipal extends javax.swing.JFrame {
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContenedorLayout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 750, 550));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(pnlContenedor, gridBagConstraints);
 
         pnlMenuVertical.setBackground(new java.awt.Color(59, 123, 50));
+        pnlMenuVertical.setPreferredSize(new java.awt.Dimension(220, 612));
+        pnlMenuVertical.setRequestFocusEnabled(false);
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(212, 782));
 
         pnlMenu.setBackground(new java.awt.Color(59, 123, 50));
+        pnlMenu.setName(""); // NOI18N
+        pnlMenu.setPreferredSize(new java.awt.Dimension(220, 780));
+        pnlMenu.setRequestFocusEnabled(false);
 
         btnMostrarPropietarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarPropietarios.setForeground(new java.awt.Color(255, 255, 255));
@@ -697,25 +740,44 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlMenuVertical.setLayout(pnlMenuVerticalLayout);
         pnlMenuVerticalLayout.setHorizontalGroup(
             pnlMenuVerticalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pnlMenuVerticalLayout.setVerticalGroup(
             pnlMenuVerticalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlMenuVertical, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
+        jScrollPane1.getAccessibleContext().setAccessibleDescription("");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(pnlMenuVertical, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(jPanel2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
         this.setState(VistaInicioSesion.ICONIFIED);
-    }//GEN-LAST:event_jLabel6MouseClicked
+    }//GEN-LAST:event_btnMinimizarMouseClicked
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jLabel5MouseClicked
+    }//GEN-LAST:event_btnCerrarMouseClicked
 
     public void MostrarPanel(JPanel panel) {
         this.panel=panel;
@@ -959,10 +1021,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
 //        repaint();
     }//GEN-LAST:event_formComponentResized
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnAnimalxHierro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalxHierro1MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnimalxHierro1MousePressed
@@ -981,12 +1039,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnVerAnimalesRealMousePressed
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void btnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInicioMouseClicked
         if (evt.getClickCount() == 1) {
             VistaInicio vista = new VistaInicio(this);
             MostrarPanel(vista);
         }
-    }//GEN-LAST:event_jLabel8MouseClicked
+    }//GEN-LAST:event_btnInicioMouseClicked
 
     private void btnMostrarAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarAnimalesMouseClicked
         btnAnimales.setVisible(!pnlContenedorAnimales.isVisible());
@@ -1022,6 +1080,24 @@ public class VistaPrincipal extends javax.swing.JFrame {
             MostrarPanel(scroll);
         }
     }//GEN-LAST:event_btnCronogramaMousePressed
+
+    private void btnMenuVerticalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuVerticalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMenuVerticalMouseClicked
+
+    private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
+        if(max == 0){//MAXIMIZAR
+            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
+            btnMaximizar.setToolTipText("Restaurar");
+            max = 1;
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }else{//RESTAURAR
+            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png")));
+            btnMaximizar.setToolTipText("Maximizar");
+            max = 0;
+            this.setExtendedState(JFrame.NORMAL);
+        }
+    }//GEN-LAST:event_btnMaximizarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1062,14 +1138,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnAnimales;
     private javax.swing.JLabel btnAnimalxHierro1;
     private javax.swing.JLabel btnBloques;
+    private javax.swing.JLabel btnCerrar;
     private javax.swing.JLabel btnCronograma;
     private javax.swing.JLabel btnEstadoActividades;
     private javax.swing.JLabel btnFincas;
     private javax.swing.JLabel btnFuenteHidrica;
     private javax.swing.JLabel btnGrupos;
     private javax.swing.JLabel btnHierros;
+    private javax.swing.JLabel btnInicio;
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
+    private javax.swing.JLabel btnMaximizar;
+    private javax.swing.JLabel btnMenuVertical;
+    private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel btnMostrarActividades;
     private javax.swing.JLabel btnMostrarAnimales;
     private javax.swing.JLabel btnMostrarFincas;
@@ -1086,12 +1167,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnVentasAnimal;
     private javax.swing.JLabel btnVerAnimales;
     private javax.swing.JLabel importarExportar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel mensaje;
     public javax.swing.JPanel pnlContenedor;

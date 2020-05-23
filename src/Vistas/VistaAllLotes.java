@@ -548,10 +548,12 @@ public class VistaAllLotes extends javax.swing.JPanel {
         listaFuentesHidricas = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION FROM fuentes_hidricas WHERE estado = 'Activo'");
         System.out.println("listaFuentesHidricas--->"+listaFuentesHidricas.size());
         for(Map<String, String> dato: listaFuentesHidricas){
+            System.out.println("dato.descr...."+dato.get("DESCRIPCION"));
             ListaDatosMultiple.add(new ModeloOpcionesMultiples(Integer.parseInt(dato.get("ID")), 
                                                                 dato.get("DESCRIPCION"), 
                                                                 false));
         }
+        
         System.out.println("ListaDatosMultiple--->"+ListaDatosMultiple.size());
         //Utilidades.LlenarComboBox(cbFuenteHidrica, listaFuentesHidricas, "DESCRIPCION");
        

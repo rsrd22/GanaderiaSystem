@@ -62,7 +62,7 @@ public class ControlMultiComboBox {
                     CambiarEstadoOpcion(indr);
                 }
             });
-
+            System.out.println("dato.getDescripcion()-->"+dato.getDescripcion());
             lblDescripcion.setText(dato.getDescripcion());
             lblDescripcion.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -80,7 +80,8 @@ public class ControlMultiComboBox {
             ListaPnlOpciones.add(pnlOpcion);
             pnlOpciones.add(pnlOpcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3+(tam*ind), pnlOpciones.getWidth(), tam));
         }
-        
+        pnlOpciones.revalidate();
+        pnlOpciones.repaint();
         
         
         
