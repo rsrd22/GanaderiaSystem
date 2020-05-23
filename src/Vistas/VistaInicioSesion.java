@@ -79,6 +79,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnVerContrasenia = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iniciar Sesión");
@@ -105,16 +106,16 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 jLabel3MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 190, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 430, 190, -1));
 
         lblmensaje.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         lblmensaje.setForeground(new java.awt.Color(21, 67, 96));
         lblmensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(lblmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 360, 50));
+        jPanel1.add(lblmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 320, 60));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel1.setText("Nombre de usuario BIEN");
+        jLabel1.setText("Nombre de usuario");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
 
         txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -131,12 +132,12 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 txtusuarioFocusLost(evt);
             }
         });
-        jPanel1.add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 170, 20));
+        jPanel1.add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 140, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(59, 123, 50));
         jLabel2.setText("Contraseña");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
 
         txtcontrasena.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtcontrasena.setForeground(new java.awt.Color(59, 123, 50));
@@ -156,16 +157,16 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 txtcontrasenaKeyReleased(evt);
             }
         });
-        jPanel1.add(txtcontrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 170, 20));
+        jPanel1.add(txtcontrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 140, 30));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ganaderia32.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(59, 123, 50));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 170, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 170, 10));
 
         jSeparator2.setForeground(new java.awt.Color(59, 123, 50));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 170, 10));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 170, 10));
 
         jPanel2.setBackground(new java.awt.Color(59, 123, 50));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -201,7 +202,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
             .addComponent(btniniciarsesion, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 150, 40));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 150, 40));
 
         jPanel3.setBackground(new java.awt.Color(59, 123, 50));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -217,6 +218,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
+        jLabel5.setToolTipText("Cerrar");
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -226,6 +228,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 5, 30, 30));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        jLabel6.setToolTipText("Minimizar");
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -252,9 +255,12 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 btnVerContraseniaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnVerContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 30, 30));
+        jPanel1.add(btnVerContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 30, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 510));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/usuario.png"))); // NOI18N
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 30, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -337,7 +343,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        this.setState(VistaInicioSesion.ICONIFIED);
+        this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
@@ -402,6 +408,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

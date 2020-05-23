@@ -10,7 +10,9 @@ import AjustarControles.AjustarControles;
 import AjustarControles.ControlDeUsuario;
 import AjustarControles.tiposDeAjuste;
 import Modelo.ModeloVentanaGeneral;
+import Utilidades.Utilidades;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +25,7 @@ public class VistaGeneral extends javax.swing.JFrame {
     public ModeloVentanaGeneral modeloVista;
     private AjustarControles controles;
     private JPanel panel;
+    private int band;
 
     /**
      * Creates new form VistaGeneral
@@ -34,7 +37,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         this.modeloVista = modeloVista;
         controles = null;
         CargarVista();
-        iniciarComponentes();
+        band = 1;
     }
 
     public void MostrarPanel(JPanel panel) {
@@ -100,11 +103,13 @@ public class VistaGeneral extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel6 = new javax.swing.JPanel();
         lblCerrar = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblMinimizar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pnlContenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,7 +119,7 @@ public class VistaGeneral extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel6.setBackground(new java.awt.Color(59, 123, 50));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,32 +132,70 @@ public class VistaGeneral extends javax.swing.JFrame {
                 jPanel6MouseDragged(evt);
             }
         });
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel6.setLayout(new java.awt.GridBagLayout());
 
         lblCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
+        lblCerrar.setToolTipText("Cerrar");
         lblCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCerrarMouseClicked(evt);
             }
         });
-        jPanel6.add(lblCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 5, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel6.add(lblCerrar, gridBagConstraints);
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setText("Ventana General");
-        jPanel6.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 12, 220, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPanel6.add(lblTitulo, gridBagConstraints);
 
         lblMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        lblMinimizar.setToolTipText("Minimizar");
         lblMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimizarMouseClicked(evt);
             }
         });
-        jPanel6.add(lblMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 5, -1, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel6.add(lblMinimizar, gridBagConstraints);
 
-        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 40));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
+        jLabel1.setToolTipText("Maximizar");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+        jPanel6.add(jLabel1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        getContentPane().add(jPanel6, gridBagConstraints);
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -166,14 +209,20 @@ public class VistaGeneral extends javax.swing.JFrame {
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 328, Short.MAX_VALUE)
+            .addGap(0, 385, Short.MAX_VALUE)
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
+            .addGap(0, 343, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 330, 340));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(pnlContenedor, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,7 +232,7 @@ public class VistaGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCerrarMouseClicked
 
     private void lblMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizarMouseClicked
-        // TODO add your handling code here:
+        this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_lblMinimizarMouseClicked
 
     private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
@@ -210,6 +259,24 @@ public class VistaGeneral extends javax.swing.JFrame {
             pnlContenedor.repaint();
         }
     }//GEN-LAST:event_pnlContenedorComponentResized
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        if (evt.getClickCount() == 1) {
+            JLabel lblIcono = (JLabel) (evt.getComponent());
+            String icono = "";
+            if (band == 0) {
+                band = 1;
+                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                icono = "restaurar";
+            } else {
+                band = 0;
+                this.setExtendedState(JFrame.NORMAL);
+                icono = "maximizar";
+            }
+            lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+            lblIcono.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,6 +314,7 @@ public class VistaGeneral extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblCerrar;
     private javax.swing.JLabel lblMinimizar;
@@ -323,11 +391,11 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarVenta) {
 
             VistaModificarVenta vista = new VistaModificarVenta(modeloVista);
-            MostrarPanel(vista);  
+            MostrarPanel(vista);
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarMuerte) {
 
             VistaModificarMuerte vista = new VistaModificarMuerte(modeloVista);
-            MostrarPanel(vista);  
+            MostrarPanel(vista);
 
         }
 
@@ -335,51 +403,6 @@ public class VistaGeneral extends javax.swing.JFrame {
 
     public void Packer() {
         pack();
-    }
-
-    private void iniciarComponentes() {
-        controles = new AjustarControles();
-
-        ControlDeUsuario controlUsuario = new ControlDeUsuario(jPanel6);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
-
-        controlUsuario = new ControlDeUsuario(lblTitulo);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.IZQUIERDA);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_POSICION;
-        controles.agregarControl(controlUsuario);
-
-        controlUsuario = new ControlDeUsuario(lblCerrar);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_POSICION;
-        controles.agregarControl(controlUsuario);
-
-        controlUsuario = new ControlDeUsuario(lblMinimizar);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_POSICION;
-        controles.agregarControl(controlUsuario);
-
-        controlUsuario = new ControlDeUsuario(pnlContenedor);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.addAjuste(Ajustar.ABAJO);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
-
-        controlUsuario = new ControlDeUsuario(panel);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.addAjuste(Ajustar.ABAJO);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
-
-        controles.ajustarControlesPorDimension();
-        controles.ajustarControlesPorPosicion();
     }
 
 }
