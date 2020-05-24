@@ -14,6 +14,7 @@ import ImportExport.EstadoIE;
 import ImportExport.ImportExport;
 import Utilidades.Consultas;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,22 +26,24 @@ import javax.swing.JScrollPane;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     private ImportExport ie;
-    private AjustarControles controles;
     private JScrollPane scroll;
     private JPanel panel;
     public int max = 0;
+    private Dimension dpanel = new Dimension();
+    
+    
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
         scroll = new JScrollPane();
-        controles = new AjustarControles();
         this.setLocationRelativeTo(null);
         Consultas.Agregar();
         ie = new ImportExport(this);
+        max = 0;
         OcultarContenidoMenu();
-        iniciarComponentes();
+        dpanel = new Dimension(pnlContenedor.getSize());
         //OcultarMenu();
     }
 
@@ -54,6 +57,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jPanel1 = new javax.swing.JPanel();
+        progreso = new javax.swing.JProgressBar();
+        mensaje = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         pnlTitulo = new javax.swing.JPanel();
         btnMinimizar = new javax.swing.JLabel();
@@ -64,8 +70,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMenuVertical = new javax.swing.JLabel();
         btnMaximizar = new javax.swing.JLabel();
         pnlContenedor = new javax.swing.JPanel();
-        progreso = new javax.swing.JProgressBar();
-        mensaje = new javax.swing.JLabel();
         pnlMenuVertical = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlMenu = new javax.swing.JPanel();
@@ -101,14 +105,39 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnEstadoActividades = new javax.swing.JLabel();
         btnCronograma = new javax.swing.JLabel();
 
+        progreso.setBackground(new java.awt.Color(255, 255, 255));
+        progreso.setForeground(new java.awt.Color(36, 151, 20));
+
+        mensaje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mensaje.setForeground(new java.awt.Color(36, 151, 20));
+        mensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                formComponentResized(evt);
-            }
-        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 0, 102));
@@ -233,37 +262,23 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel2.add(pnlTitulo, gridBagConstraints);
 
-        pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContenedor.setBackground(new java.awt.Color(255, 102, 51));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 151, 20)));
-
-        progreso.setBackground(new java.awt.Color(255, 255, 255));
-        progreso.setForeground(new java.awt.Color(36, 151, 20));
-
-        mensaje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        mensaje.setForeground(new java.awt.Color(36, 151, 20));
-        mensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        mensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        pnlContenedor.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlContenedorComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlContenedorLayout = new javax.swing.GroupLayout(pnlContenedor);
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlContenedorLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContenedorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 755, Short.MAX_VALUE)
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlContenedorLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 559, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -781,22 +796,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     public void MostrarPanel(JPanel panel) {
         this.panel=panel;
-        panel.setBounds(0, 0, pnlContenedor.getWidth(), pnlContenedor.getHeight());
+        this.panel.setBounds(0, 0, pnlContenedor.getWidth(), pnlContenedor.getHeight());
         pnlContenedor.removeAll();
-        pnlContenedor.add(panel);
+        
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlContenedor.add(this.panel, gridBagConstraints);
+        
+//        pnlContenedor.add(panel);
+        
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-        iniciarComponentes();
         
-        ControlDeUsuario controlUsuario = new ControlDeUsuario(panel);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.addAjuste(Ajustar.ABAJO);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
         
-        controles.ajustarControlesPorDimension();
-        controles.ajustarControlesPorPosicion();
+        
+        
     }
     
     
@@ -806,18 +825,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedor.add(scroll);
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-        
-        iniciarComponentes();
-        
-        ControlDeUsuario controlUsuario = new ControlDeUsuario(scroll);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.addAjuste(Ajustar.ABAJO);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
-        
-        controles.ajustarControlesPorDimension();
-        controles.ajustarControlesPorPosicion();
         
     }
 
@@ -1013,14 +1020,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_importarExportarMouseClicked
 
-    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        controles.ajustarControlesPorDimension();
-        controles.ajustarControlesPorPosicion();
-        
-//        scroll.setPreferredSize(new Dimension(this.getSize()));
-//        repaint();
-    }//GEN-LAST:event_formComponentResized
-
     private void btnAnimalxHierro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalxHierro1MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnimalxHierro1MousePressed
@@ -1086,19 +1085,57 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuVerticalMouseClicked
 
     private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
-        if(max == 0){//MAXIMIZAR
-            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
-            btnMaximizar.setToolTipText("Restaurar");
-            max = 1;
-            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        }else{//RESTAURAR
-            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png")));
-            btnMaximizar.setToolTipText("Maximizar");
-            max = 0;
-            this.setExtendedState(JFrame.NORMAL);
+        if(evt.getClickCount()==1){
+            System.out.println("max--->"+max);
+            System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
+            System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
+            if(max == 0){//MAXIMIZAR
+                btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
+                btnMaximizar.setToolTipText("Restaurar");
+                max = 1;
+                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            }else{//RESTAURAR
+                btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png")));
+                btnMaximizar.setToolTipText("Maximizar");
+                max = 0;
+                this.setExtendedState(JFrame.NORMAL);
+            }
+            System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
+            System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
+            
         }
     }//GEN-LAST:event_btnMaximizarMouseClicked
 
+    private void pnlContenedorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorComponentResized
+        System.out.println("ENTRE POR ACA");
+        System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
+        System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
+        EstablecerPnlContenedor();
+    }//GEN-LAST:event_pnlContenedorComponentResized
+
+    public void EstablecerPnlContenedor(){
+        if(pnlContenedor.getComponents().length>0){
+            if(max == 0){
+                pnlContenedor.getComponent(0).setSize(dpanel);
+            }else{
+                pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
+            }
+            java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 1.0;
+            pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
+
+    //        pnlContenedor.add(panel);
+
+            pnlContenedor.revalidate();
+            pnlContenedor.repaint();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1168,6 +1205,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnVerAnimales;
     private javax.swing.JLabel importarExportar;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel mensaje;
@@ -1193,13 +1231,4 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorActividades.setVisible(false);
     }
 
-    private void iniciarComponentes() {
-        controles = new AjustarControles();
-        ControlDeUsuario controlUsuario = new ControlDeUsuario(pnlContenedor);
-        controlUsuario.ajustable = true;
-        controlUsuario.addAjuste(Ajustar.DERECHA);
-        controlUsuario.addAjuste(Ajustar.ABAJO);
-        controlUsuario.tipoAjuste = tiposDeAjuste.POR_DIMENSION;
-        controles.agregarControl(controlUsuario);
-    }
 }
