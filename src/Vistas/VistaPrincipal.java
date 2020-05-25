@@ -69,6 +69,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInicio = new javax.swing.JLabel();
         btnMenuVertical = new javax.swing.JLabel();
         btnMaximizar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pnlContenedor = new javax.swing.JPanel();
         pnlMenuVertical = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -158,7 +159,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.003;
@@ -176,7 +177,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.003;
@@ -188,7 +189,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Ventana Principal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.9;
@@ -197,7 +198,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         importarExportar.setBackground(new java.awt.Color(255, 255, 255));
         importarExportar.setForeground(java.awt.Color.gray);
-        importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/abajo_1.png"))); // NOI18N
+        importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/exportar.png"))); // NOI18N
         importarExportar.setToolTipText("Exportar");
         importarExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         importarExportar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,7 +224,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.007;
@@ -259,12 +260,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.003;
         gridBagConstraints.insets = new java.awt.Insets(11, 6, 11, 0);
         pnlTitulo.add(btnMaximizar, gridBagConstraints);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/importar.png"))); // NOI18N
+        jLabel1.setToolTipText("Importar");
+        jLabel1.setMaximumSize(new java.awt.Dimension(30, 30));
+        jLabel1.setMinimumSize(new java.awt.Dimension(30, 30));
+        jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 6, 11, 0);
+        pnlTitulo.add(jLabel1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1235,6 +1249,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnVentasAnimal;
     private javax.swing.JLabel btnVerAnimales;
     private javax.swing.JLabel importarExportar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
