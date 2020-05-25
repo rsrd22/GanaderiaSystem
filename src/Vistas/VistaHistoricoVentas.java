@@ -215,6 +215,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         txtCodigoTipoAnimal = new javax.swing.JLabel();
         txtCodigoFinca = new javax.swing.JLabel();
@@ -226,13 +227,19 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         tabla = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle8.setText("Fincas");
-        add(lbltitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 74;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(lbltitle8, gridBagConstraints);
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFinca.setForeground(new java.awt.Color(59, 123, 50));
@@ -242,13 +249,29 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
                 cbFincaActionPerformed(evt);
             }
         });
-        add(cbFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 183;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(cbFinca, gridBagConstraints);
 
         lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle4.setText("Tipo de animales");
-        add(lbltitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(lbltitle4, gridBagConstraints);
 
         cbTipoAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
@@ -258,7 +281,17 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
                 cbTipoAnimalActionPerformed(evt);
             }
         });
-        add(cbTipoAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 220, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 133;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        add(cbTipoAnimal, gridBagConstraints);
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -283,7 +316,18 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tabla);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 890, 350));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 867;
+        gridBagConstraints.ipady = 323;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 22, 20);
+        add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed

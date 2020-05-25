@@ -92,6 +92,7 @@ public class VistaRotar extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         cbFinca = new javax.swing.JComboBox();
         lblTid = new javax.swing.JLabel();
@@ -108,7 +109,7 @@ public class VistaRotar extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFinca.setForeground(new java.awt.Color(59, 123, 50));
@@ -117,13 +118,29 @@ public class VistaRotar extends javax.swing.JPanel {
                 cbFincaActionPerformed(evt);
             }
         });
-        add(cbFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 310, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 280;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.insets = new java.awt.Insets(5, 40, 0, 0);
+        add(cbFinca, gridBagConstraints);
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid.setForeground(new java.awt.Color(59, 123, 50));
         lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid.setText("Finca");
-        add(lblTid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 150, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 120;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 40, 0, 0);
+        add(lblTid, gridBagConstraints);
 
         cbLote.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbLote.setForeground(new java.awt.Color(59, 123, 50));
@@ -132,13 +149,28 @@ public class VistaRotar extends javax.swing.JPanel {
                 cbLoteActionPerformed(evt);
             }
         });
-        add(cbLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 310, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 280;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 40, 0, 0);
+        add(cbLote, gridBagConstraints);
 
         lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid2.setForeground(new java.awt.Color(59, 123, 50));
         lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid2.setText("Fecha Entrada");
-        add(lblTid2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 150, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 64;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 0);
+        add(lblTid2, gridBagConstraints);
 
         scrpnlsGrupos.setBackground(new java.awt.Color(255, 255, 255));
         scrpnlsGrupos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Grupos a Rotar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -156,7 +188,18 @@ public class VistaRotar extends javax.swing.JPanel {
         pnlGrupos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         scrpnlsGrupos.setViewportView(pnlGrupos);
 
-        add(scrpnlsGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 550, 110));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 519;
+        gridBagConstraints.ipady = 67;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 18);
+        add(scrpnlsGrupos, gridBagConstraints);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -171,7 +214,16 @@ public class VistaRotar extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 64, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = -23;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 16, 0);
+        add(btnGuardar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -185,14 +237,38 @@ public class VistaRotar extends javax.swing.JPanel {
                 btnDescartarActionPerformed(evt);
             }
         });
-        add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 64, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = -23;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 16, 0);
+        add(btnDescartar, gridBagConstraints);
 
         lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid3.setForeground(new java.awt.Color(59, 123, 50));
         lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid3.setText("Lote");
-        add(lblTid3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 150, -1));
-        add(jdFechaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 122;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 40, 0, 0);
+        add(lblTid3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 173;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 40, 0, 0);
+        add(jdFechaEntrada, gridBagConstraints);
 
         scrpnlsGrupos1.setBackground(new java.awt.Color(255, 255, 255));
         scrpnlsGrupos1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Agregar Grupos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -210,7 +286,18 @@ public class VistaRotar extends javax.swing.JPanel {
         pnlGruposMostrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         scrpnlsGrupos1.setViewportView(pnlGruposMostrar);
 
-        add(scrpnlsGrupos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 200, 190));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 169;
+        gridBagConstraints.ipady = 147;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.3;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 26, 0, 18);
+        add(scrpnlsGrupos1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed

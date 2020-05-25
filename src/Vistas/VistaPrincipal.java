@@ -64,7 +64,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlTitulo = new javax.swing.JPanel();
         btnMinimizar = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         importarExportar = new javax.swing.JLabel();
         btnInicio = new javax.swing.JLabel();
         btnMenuVertical = new javax.swing.JLabel();
@@ -145,6 +145,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         pnlTitulo.setBackground(new java.awt.Color(59, 123, 50));
+        pnlTitulo.setLayout(new java.awt.GridBagLayout());
 
         btnMinimizar.setBackground(new java.awt.Color(255, 255, 255));
         btnMinimizar.setForeground(java.awt.Color.gray);
@@ -156,6 +157,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMinimizarMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 0);
+        pnlTitulo.add(btnMinimizar, gridBagConstraints);
 
         btnCerrar.setBackground(new java.awt.Color(153, 255, 0));
         btnCerrar.setForeground(java.awt.Color.gray);
@@ -167,14 +175,29 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnCerrarMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 4, 11, 10);
+        pnlTitulo.add(btnCerrar, gridBagConstraints);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Ventana Principal");
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Ventana Principal");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(24, 18, 11, 10);
+        pnlTitulo.add(lblTitulo, gridBagConstraints);
 
         importarExportar.setBackground(new java.awt.Color(255, 255, 255));
         importarExportar.setForeground(java.awt.Color.gray);
-        importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/abajo_1.png"))); // NOI18N
         importarExportar.setToolTipText("Exportar");
         importarExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         importarExportar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,6 +205,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 importarExportarMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 6, 11, 0);
+        pnlTitulo.add(importarExportar, gridBagConstraints);
 
         btnInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,10 +222,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnInicioMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.007;
+        gridBagConstraints.insets = new java.awt.Insets(24, 10, 11, 0);
+        pnlTitulo.add(btnInicio, gridBagConstraints);
 
         btnMenuVertical.setBackground(new java.awt.Color(255, 255, 255));
         btnMenuVertical.setForeground(java.awt.Color.gray);
-        btnMenuVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
+        btnMenuVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/menu_1.png"))); // NOI18N
         btnMenuVertical.setToolTipText("Menu Vertical");
         btnMenuVertical.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMenuVertical.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,6 +240,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMenuVerticalMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 0);
+        pnlTitulo.add(btnMenuVertical, gridBagConstraints);
 
         btnMaximizar.setBackground(new java.awt.Color(255, 255, 255));
         btnMaximizar.setForeground(java.awt.Color.gray);
@@ -214,45 +258,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMaximizarMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout pnlTituloLayout = new javax.swing.GroupLayout(pnlTitulo);
-        pnlTitulo.setLayout(pnlTituloLayout);
-        pnlTituloLayout.setHorizontalGroup(
-            pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTituloLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnMenuVertical)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(importarExportar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnInicio)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMinimizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMaximizar)
-                .addGap(4, 4, 4)
-                .addComponent(btnCerrar)
-                .addContainerGap())
-        );
-        pnlTituloLayout.setVerticalGroup(
-            pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTituloLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMaximizar)
-                    .addComponent(btnMenuVertical)
-                    .addGroup(pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(importarExportar)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMinimizar)
-                            .addComponent(btnCerrar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(btnInicio))))
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 6, 11, 0);
+        pnlTitulo.add(btnMaximizar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -262,7 +274,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel2.add(pnlTitulo, gridBagConstraints);
 
-        pnlContenedor.setBackground(new java.awt.Color(255, 102, 51));
+        pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 151, 20)));
         pnlContenedor.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -808,14 +820,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         pnlContenedor.add(this.panel, gridBagConstraints);
         
-//        pnlContenedor.add(panel);
-        
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-        
-        
-        
-        
+           
     }
     
     
@@ -910,6 +917,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnPropietariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPropietariosMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Propietarios");
             VistaPropietarios vista = new VistaPropietarios();
             MostrarPanel(vista);
         }
@@ -917,6 +925,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnHierrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHierrosMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Hierros por Propietarios");
             VistaAllHierros vista = new VistaAllHierros();
             MostrarPanel(vista);
         }
@@ -924,6 +933,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnGruposMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGruposMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Grupos");
             VistaGrupos vista = new VistaGrupos();
             MostrarPanel(vista);
         }
@@ -931,6 +941,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnTipoAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTipoAnimalMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Tipo Animal");
             VistaTipoAnimales vista = new VistaTipoAnimales();
             MostrarPanel(vista);
         }
@@ -938,6 +949,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnMacrogruposRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMacrogruposRealMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Macrogrupos");
             VistaMacroGrupo vista = new VistaMacroGrupo();
             MostrarPanel(vista);
         }
@@ -945,6 +957,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFincasMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Fincas");
             VistaFincas vista = new VistaFincas();
             MostrarPanel(vista);
         }
@@ -952,6 +965,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnBloquesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBloquesMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Bloques");
             VistaAllBloques vista = new VistaAllBloques();
             MostrarPanel(vista);
         }
@@ -959,6 +973,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnFuenteHidricaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFuenteHidricaMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Fuentes Hidricas");
             VistaFuentesHidricas vista = new VistaFuentesHidricas();
             MostrarPanel(vista);
         }
@@ -966,6 +981,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnLotesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLotesMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Lotes");
             VistaAllLotes vista = new VistaAllLotes();
             MostrarPanel(vista);
         }
@@ -973,6 +989,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnTrasladoAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrasladoAnimalMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Traslado Animales");
             VistaTraslado vista = new VistaTraslado();
             MostrarPanel(vista);
         }
@@ -980,6 +997,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnRotacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRotacionMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Rotación Animales");
             VistaRotacion vista = new VistaRotacion();
             MostrarPanel(vista);
         }
@@ -987,6 +1005,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnAnimalesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalesRealMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Animales");
             VistaAnimales vista = new VistaAnimales();
             MostrarPanel(vista);
         }
@@ -994,6 +1013,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnMuerteAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMuerteAnimalMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Historico Muertes");
             VistaHistoricoMuertes vista = new VistaHistoricoMuertes();
             MostrarPanel(vista); 
         }
@@ -1008,6 +1028,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnPluviometroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPluviometroMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Pluviometro");
             VistaPluviometro vista = new VistaPluviometro();
             MostrarPanel(vista);
         }
@@ -1026,6 +1047,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnVentasAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasAnimalMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Historico Ventas");
             VistaHistoricoVentas vista = new VistaHistoricoVentas();
             MostrarPanel(vista);
         }
@@ -1033,6 +1055,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnVerAnimalesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerAnimalesRealMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Ver Animales");
             VistaVerAnimales vista = new VistaVerAnimales();
             MostrarPanel(vista);
         }
@@ -1040,6 +1063,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInicioMouseClicked
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Estadisticas");
             VistaInicio vista = new VistaInicio(this);
             MostrarPanel(vista);
         }
@@ -1057,6 +1081,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnRegistroActividadesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistroActividadesRealMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Actividades");
             VistaActividades vista = new VistaActividades();
             MostrarPanel(vista);
         }
@@ -1064,6 +1089,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnEstadoActividadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEstadoActividadesMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Estados Actividad");
             VistaEstadoActividad vista = new VistaEstadoActividad();
             MostrarPanel(vista);
         }
@@ -1071,6 +1097,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnCronogramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCronogramaMousePressed
         if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Cronograma");
             PanelActividades vista = new PanelActividades(this);
             scroll = new JScrollPane();
             scroll.setViewportView(vista);
@@ -1081,7 +1108,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCronogramaMousePressed
 
     private void btnMenuVerticalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuVerticalMouseClicked
-        // TODO add your handling code here:
+//        if(pnlMenuVertical.getWidth() == 220){
+//            pnlMenuVertical.setSize(50, pnlMenuVertical.getHeight());
+//            jScrollPane1.setSize(50, jScrollPane1.getHeight());
+//        }else{
+//            jScrollPane1.setSize(220, jScrollPane1.getHeight());
+//            pnlMenuVertical.setSize(220, pnlMenuVertical.getHeight());
+//            
+//        }
     }//GEN-LAST:event_btnMenuVerticalMouseClicked
 
     private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
@@ -1107,9 +1141,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMaximizarMouseClicked
 
     private void pnlContenedorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorComponentResized
-        System.out.println("ENTRE POR ACA");
-        System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
-        System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
         EstablecerPnlContenedor();
     }//GEN-LAST:event_pnlContenedorComponentResized
 
@@ -1204,10 +1235,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnVentasAnimal;
     private javax.swing.JLabel btnVerAnimales;
     private javax.swing.JLabel importarExportar;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitulo;
     public javax.swing.JLabel mensaje;
     public javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlContenedorActividades;
@@ -1229,6 +1260,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorGruposAnimales.setVisible(false);
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
+    }
+
+    private void EstablecerTituloVentana(String titulo) {
+        lblTitulo.setText(""+titulo);
     }
 
 }

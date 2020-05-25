@@ -242,7 +242,7 @@ public class VistaFincas extends javax.swing.JPanel {
         tbl_Lotes = new javax.swing.JTable();
         btnAgregarLote = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 102, 102));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jTabbedPane1.setForeground(new java.awt.Color(59, 123, 50));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

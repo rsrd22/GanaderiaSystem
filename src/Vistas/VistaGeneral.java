@@ -11,6 +11,7 @@ import AjustarControles.ControlDeUsuario;
 import AjustarControles.tiposDeAjuste;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class VistaGeneral extends javax.swing.JFrame {
     private AjustarControles controles;
     private JPanel panel;
     private int band;
+    private Dimension dpanel = new Dimension();
 
     /**
      * Creates new form VistaGeneral
@@ -44,15 +46,17 @@ public class VistaGeneral extends javax.swing.JFrame {
         this.panel = panel;
         pnlContenedor.removeAll();
         pnlContenedor.add(panel);
-
+        
+        
         if (panel instanceof VistaTrasladar) {
             VistaTrasladar vista = (VistaTrasladar) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            dpanel = new Dimension(pnlContenedor.getSize());
         } else if (panel instanceof VistaRotar) {
             VistaRotar vista = (VistaRotar) panel;
-            this.setSize(vista.getWidth(), vista.getHeight());
-            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.setSize(vista.getWidth(), vista.getHeight()+36);
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight()+36);
         } else if (panel instanceof VistaDetalleVenta) {
             VistaDetalleVenta vista = (VistaDetalleVenta) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
@@ -87,12 +91,9 @@ public class VistaGeneral extends javax.swing.JFrame {
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+
 //        pnlContenedor.revalidate();
 //        pnlContenedor.repaint();
-
-//        controles.ajustarControlesPorDimension();
-//        controles.ajustarControlesPorPosicion();
-//        repaint();
     }
 
     /**
@@ -193,11 +194,12 @@ public class VistaGeneral extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 155;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         getContentPane().add(jPanel6, gridBagConstraints);
 
-        pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContenedor.setBackground(new java.awt.Color(255, 51, 51));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         pnlContenedor.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -209,7 +211,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +222,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.ipadx = 385;
+        gridBagConstraints.ipady = 343;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(pnlContenedor, gridBagConstraints);
 
@@ -253,11 +258,12 @@ public class VistaGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void pnlContenedorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorComponentResized
-        if (controles != null) {
-            controles.ajustarControlesPorDimension();
-            controles.ajustarControlesPorPosicion();
-            pnlContenedor.repaint();
-        }
+//        if (controles != null) {
+//            controles.ajustarControlesPorDimension();
+//            controles.ajustarControlesPorPosicion();
+//            pnlContenedor.repaint();
+//        }
+        EstablecerPnlContenedor();
     }//GEN-LAST:event_pnlContenedorComponentResized
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -405,4 +411,27 @@ public class VistaGeneral extends javax.swing.JFrame {
         pack();
     }
 
+    public void EstablecerPnlContenedor(){
+        if(pnlContenedor.getComponents().length>0){
+            if(band == 0){
+                pnlContenedor.getComponent(0).setSize(dpanel);
+            }else{
+                pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
+            }
+            java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 1.0;
+            pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
+
+    //        pnlContenedor.add(panel);
+
+            pnlContenedor.revalidate();
+            pnlContenedor.repaint();
+        }
+    }
+    
 }
