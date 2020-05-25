@@ -120,6 +120,7 @@ public class VistaDetalleTraslado extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Traslados = new javax.swing.JTable();
@@ -133,7 +134,7 @@ public class VistaDetalleTraslado extends javax.swing.JPanel {
                 formComponentResized(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         tbl_Traslados.setForeground(new java.awt.Color(59, 123, 50));
         tbl_Traslados.setModel(new javax.swing.table.DefaultTableModel(
@@ -150,19 +151,46 @@ public class VistaDetalleTraslado extends javax.swing.JPanel {
         tbl_Traslados.setSelectionBackground(new java.awt.Color(59, 123, 50));
         jScrollPane1.setViewportView(tbl_Traslados);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 740, 430));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 717;
+        gridBagConstraints.ipady = 403;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 22, 21);
+        add(jScrollPane1, gridBagConstraints);
 
         lblNumeroAnimal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblNumeroAnimal.setForeground(new java.awt.Color(59, 123, 50));
-        lblNumeroAnimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumeroAnimal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNumeroAnimal.setText("Animal Número: ");
-        add(lblNumeroAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 150, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
+        add(lblNumeroAnimal, gridBagConstraints);
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTid1.setText("Historico Traslado");
-        add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 150, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 41;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        add(lblTid1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
