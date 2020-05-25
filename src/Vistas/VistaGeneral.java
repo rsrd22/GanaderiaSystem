@@ -46,13 +46,13 @@ public class VistaGeneral extends javax.swing.JFrame {
         this.panel = panel;
         pnlContenedor.removeAll();
         pnlContenedor.add(panel);
-        
+        dpanel = new Dimension(panel.getSize());
         
         if (panel instanceof VistaTrasladar) {
             VistaTrasladar vista = (VistaTrasladar) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
-            dpanel = new Dimension(pnlContenedor.getSize());
+            
         } else if (panel instanceof VistaRotar) {
             VistaRotar vista = (VistaRotar) panel;
             this.setSize(vista.getWidth(), vista.getHeight()+36);
@@ -199,7 +199,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         getContentPane().add(jPanel6, gridBagConstraints);
 
-        pnlContenedor.setBackground(new java.awt.Color(255, 51, 51));
+        pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         pnlContenedor.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -413,6 +413,7 @@ public class VistaGeneral extends javax.swing.JFrame {
 
     public void EstablecerPnlContenedor(){
         if(pnlContenedor.getComponents().length>0){
+            System.out.println("band--->"+band);
             if(band == 0){
                 pnlContenedor.getComponent(0).setSize(dpanel);
             }else{
@@ -428,7 +429,6 @@ public class VistaGeneral extends javax.swing.JFrame {
             pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
 
     //        pnlContenedor.add(panel);
-
             pnlContenedor.revalidate();
             pnlContenedor.repaint();
         }
