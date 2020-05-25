@@ -126,16 +126,12 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         txtCodigoMacroGrupo = new javax.swing.JLabel();
         txtCodigoTipoAnimal = new javax.swing.JLabel();
         txtCodigoGrupo = new javax.swing.JLabel();
         txtCodigoFinca = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnDescartar = new javax.swing.JButton();
-        btnConsultar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         lbltitle4 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         jSeparator10 = new javax.swing.JSeparator();
@@ -147,11 +143,169 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         cbFinca = new javax.swing.JComboBox();
         cbTipoAnimal = new javax.swing.JComboBox();
         cbMacroGrupo = new javax.swing.JComboBox();
+        jPanel1 = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnDescartar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnDuplicar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
+
+        lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle4.setText("Tipo de animales");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(lbltitle4, gridBagConstraints);
+
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDescripcion.setForeground(new java.awt.Color(59, 123, 50));
+        txtDescripcion.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtDescripcion.setBorder(null);
+        txtDescripcion.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtDescripcion.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 210;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(txtDescripcion, gridBagConstraints);
+
+        jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 210;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(jSeparator10, gridBagConstraints);
+
+        lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle5.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle5.setText("Descripción");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(lbltitle5, gridBagConstraints);
+
+        lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle6.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle6.setText("Estado");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(lbltitle6, gridBagConstraints);
+
+        cbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbEstado.setForeground(new java.awt.Color(59, 123, 50));
+        cbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Activo", "Inactivo" }));
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(cbEstado, gridBagConstraints);
+
+        lbltitle7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle7.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle7.setText("Macro grupo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(lbltitle7, gridBagConstraints);
+
+        lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle8.setText("Fincas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(lbltitle8, gridBagConstraints);
+
+        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
+        cbFinca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        cbFinca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFincaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(cbFinca, gridBagConstraints);
+
+        cbTipoAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
+        cbTipoAnimal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        cbTipoAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoAnimalActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(cbTipoAnimal, gridBagConstraints);
+
+        cbMacroGrupo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbMacroGrupo.setForeground(new java.awt.Color(59, 123, 50));
+        cbMacroGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        cbMacroGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMacroGrupoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        add(cbMacroGrupo, gridBagConstraints);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -166,7 +320,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnGuardar, gridBagConstraints);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
         btnModificar.setToolTipText("Modificar");
@@ -181,7 +341,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnModificarActionPerformed(evt);
             }
         });
-        add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnModificar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -195,7 +361,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnDescartarActionPerformed(evt);
             }
         });
-        add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnDescartar, gridBagConstraints);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
         btnConsultar.setToolTipText("Consutar");
@@ -210,7 +382,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnConsultarActionPerformed(evt);
             }
         });
-        add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnConsultar, gridBagConstraints);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
         btnEliminar.setToolTipText("Eliminar");
@@ -225,88 +403,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnEliminarActionPerformed(evt);
             }
         });
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 60, 64));
-
-        lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle4.setText("Tipo de animales");
-        add(lbltitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 110, -1));
-
-        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtDescripcion.setForeground(new java.awt.Color(59, 123, 50));
-        txtDescripcion.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtDescripcion.setBorder(null);
-        txtDescripcion.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtDescripcion.setSelectionColor(new java.awt.Color(59, 123, 50));
-        add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 260, 30));
-
-        jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 260, 10));
-
-        lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle5.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle5.setText("Descripción");
-        add(lbltitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 180, -1));
-
-        lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle6.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle6.setText("Estado");
-        add(lbltitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 350, 180, -1));
-
-        cbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbEstado.setForeground(new java.awt.Color(59, 123, 50));
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Activo", "Inactivo" }));
-        cbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbEstadoActionPerformed(evt);
-            }
-        });
-        add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, 260, 30));
-
-        lbltitle7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle7.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle7.setText("Macro grupo");
-        add(lbltitle7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 110, -1));
-
-        lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle8.setText("Fincas");
-        add(lbltitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 110, -1));
-
-        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
-        cbFinca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
-        cbFinca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFincaActionPerformed(evt);
-            }
-        });
-        add(cbFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 270, 30));
-
-        cbTipoAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipoAnimal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
-        cbTipoAnimal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTipoAnimalActionPerformed(evt);
-            }
-        });
-        add(cbTipoAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 270, 30));
-
-        cbMacroGrupo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbMacroGrupo.setForeground(new java.awt.Color(59, 123, 50));
-        cbMacroGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
-        cbMacroGrupo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMacroGrupoActionPerformed(evt);
-            }
-        });
-        add(cbMacroGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnEliminar, gridBagConstraints);
 
         btnDuplicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/duplicar.png"))); // NOI18N
         btnDuplicar.setToolTipText("Duplicar registro");
@@ -321,7 +424,20 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 btnDuplicarActionPerformed(evt);
             }
         });
-        add(btnDuplicar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 420, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(btnDuplicar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -390,6 +506,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbMacroGrupo;
     public javax.swing.JComboBox cbTipoAnimal;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JLabel lbltitle4;
     private javax.swing.JLabel lbltitle5;

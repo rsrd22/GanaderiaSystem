@@ -115,6 +115,7 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         txtCodigoMacroGrupo = new javax.swing.JLabel();
         txtCodigoFinca = new javax.swing.JLabel();
@@ -132,16 +133,21 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
         cbFinca = new javax.swing.JComboBox();
         lbltitle7 = new javax.swing.JLabel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle5.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle5.setText("Fincas");
-        jPanel1.add(lbltitle5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(lbltitle5, gridBagConstraints);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
         btnConsultar.setToolTipText("Consutar");
@@ -156,7 +162,14 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 btnConsultarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 15, 0);
+        jPanel1.add(btnConsultar, gridBagConstraints);
 
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtDescripcion.setForeground(new java.awt.Color(59, 123, 50));
@@ -164,13 +177,27 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
         txtDescripcion.setBorder(null);
         txtDescripcion.setCaretColor(new java.awt.Color(59, 123, 50));
         txtDescripcion.setSelectionColor(new java.awt.Color(59, 123, 50));
-        jPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        jPanel1.add(txtDescripcion, gridBagConstraints);
 
         lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle6.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle6.setText("Estado");
-        jPanel1.add(lbltitle6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 180, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        jPanel1.add(lbltitle6, gridBagConstraints);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
         btnModificar.setToolTipText("Modificar");
@@ -185,7 +212,14 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 15, 0);
+        jPanel1.add(btnModificar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -199,7 +233,14 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 btnDescartarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 270, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 15, 0);
+        jPanel1.add(btnDescartar, gridBagConstraints);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -214,10 +255,25 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 0);
+        jPanel1.add(btnGuardar, gridBagConstraints);
 
         jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
-        jPanel1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 270, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        jPanel1.add(jSeparator10, gridBagConstraints);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
         btnEliminar.setToolTipText("Eliminar");
@@ -232,7 +288,14 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -20;
+        gridBagConstraints.ipady = -20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 15, 15);
+        jPanel1.add(btnEliminar, gridBagConstraints);
 
         cbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbEstado.setForeground(new java.awt.Color(59, 123, 50));
@@ -242,7 +305,15 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 cbEstadoActionPerformed(evt);
             }
         });
-        jPanel1.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        jPanel1.add(cbEstado, gridBagConstraints);
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFinca.setForeground(new java.awt.Color(59, 123, 50));
@@ -252,15 +323,36 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
                 cbFincaActionPerformed(evt);
             }
         });
-        jPanel1.add(cbFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        jPanel1.add(cbFinca, gridBagConstraints);
 
         lbltitle7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle7.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle7.setText("Descripción");
-        jPanel1.add(lbltitle7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        jPanel1.add(lbltitle7, gridBagConstraints);
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 550));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
