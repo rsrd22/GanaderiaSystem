@@ -90,6 +90,7 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         txtCodigoFincaOrigen = new javax.swing.JLabel();
         txtCodigoFincaDestino = new javax.swing.JLabel();
@@ -107,17 +108,24 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         panelOrigen.setBackground(new java.awt.Color(255, 255, 255));
         panelOrigen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Datos de origen ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 0))); // NOI18N
-        panelOrigen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelOrigen.setLayout(new java.awt.GridBagLayout());
 
         lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle8.setText("Fincas");
-        panelOrigen.add(lbltitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 124;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        panelOrigen.add(lbltitle8, gridBagConstraints);
 
         cbFincaOrigen.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFincaOrigen.setForeground(new java.awt.Color(59, 123, 50));
@@ -127,13 +135,29 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
                 cbFincaOrigenActionPerformed(evt);
             }
         });
-        panelOrigen.add(cbFincaOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 183;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 4);
+        panelOrigen.add(cbFincaOrigen, gridBagConstraints);
 
         lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle4.setText("Tipo de animales");
-        panelOrigen.add(lbltitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        panelOrigen.add(lbltitle4, gridBagConstraints);
 
         cbTipoAnimalOrigen.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoAnimalOrigen.setForeground(new java.awt.Color(59, 123, 50));
@@ -143,19 +167,44 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
                 cbTipoAnimalOrigenActionPerformed(evt);
             }
         });
-        panelOrigen.add(cbTipoAnimalOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 183;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 4);
+        panelOrigen.add(cbTipoAnimalOrigen, gridBagConstraints);
 
-        add(panelOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 310, 160));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.45;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 24, 0);
+        add(panelOrigen, gridBagConstraints);
 
         panelOrigen1.setBackground(new java.awt.Color(255, 255, 255));
         panelOrigen1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Datos de destino ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 0))); // NOI18N
-        panelOrigen1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelOrigen1.setLayout(new java.awt.GridBagLayout());
 
         lbltitle9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle9.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle9.setText("Fincas");
-        panelOrigen1.add(lbltitle9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 124;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        panelOrigen1.add(lbltitle9, gridBagConstraints);
 
         cbFincaDestino.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFincaDestino.setForeground(new java.awt.Color(59, 123, 50));
@@ -165,9 +214,29 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
                 cbFincaDestinoActionPerformed(evt);
             }
         });
-        panelOrigen1.add(cbFincaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 270, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 183;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        panelOrigen1.add(cbFincaDestino, gridBagConstraints);
 
-        add(panelOrigen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 310, 160));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 80;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.45;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 24, 19);
+        add(panelOrigen1, gridBagConstraints);
 
         btnRegistroSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/copiar.png"))); // NOI18N
         btnRegistroSiguiente.setToolTipText("Copiar grupos de animales");
@@ -181,13 +250,28 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
                 btnRegistroSiguienteActionPerformed(evt);
             }
         });
-        add(btnRegistroSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 30, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = -33;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.weightx = 0.01;
+        add(btnRegistroSiguiente, gridBagConstraints);
 
         lbltitle10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle10.setText("<html>\n<p align='justify'>\nLos <b>grupos de animales</b> de la finca y el tipo de animal especificados en los datos de origen,\n<br> \nserán copiados a la finca especificada en los Datos de destino una vez haga clic en el botón copiar\n</p>\n</html>");
-        add(lbltitle10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 640, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.insets = new java.awt.Insets(20, 30, 0, 19);
+        add(lbltitle10, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaOrigenActionPerformed

@@ -55,6 +55,7 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lblTid1 = new javax.swing.JLabel();
         txtNumeroAnimal = new javax.swing.JTextField();
@@ -68,13 +69,19 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Numero Animal");
-        add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(lblTid1, gridBagConstraints);
 
         txtNumeroAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumeroAnimal.setForeground(new java.awt.Color(59, 123, 50));
@@ -95,17 +102,50 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
                 txtNumeroAnimalKeyReleased(evt);
             }
         });
-        add(txtNumeroAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 120;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        add(txtNumeroAnimal, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 120, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 119;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
+        add(jSeparator6, gridBagConstraints);
 
         lblFechaVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblFechaVenta.setForeground(new java.awt.Color(59, 123, 50));
         lblFechaVenta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblFechaVenta.setText("Fecha de muerte");
-        add(lblFechaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 130, -1));
-        add(jdFechaMuerte, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 190, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        add(lblFechaVenta, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 163;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 24);
+        add(jdFechaMuerte, gridBagConstraints);
 
         txtObservacionMuerte.setColumns(20);
         txtObservacionMuerte.setForeground(new java.awt.Color(59, 123, 50));
@@ -114,13 +154,30 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
         txtObservacionMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
         ScrollCausaMuerte.setViewportView(txtObservacionMuerte);
 
-        add(ScrollCausaMuerte, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 360, 90));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 337;
+        gridBagConstraints.ipady = 67;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 24);
+        add(ScrollCausaMuerte, gridBagConstraints);
 
         lblCausaMuerte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCausaMuerte.setForeground(new java.awt.Color(59, 123, 50));
         lblCausaMuerte.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCausaMuerte.setText("Causa de muerte");
-        add(lblCausaMuerte, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        add(lblCausaMuerte, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -134,7 +191,15 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
                 btnDescartarActionPerformed(evt);
             }
         });
-        add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = -27;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(30, 10, 22, 0);
+        add(btnDescartar, gridBagConstraints);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -149,7 +214,16 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = -27;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(30, 0, 22, 0);
+        add(btnGuardar, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNumeroAnimalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroAnimalFocusLost

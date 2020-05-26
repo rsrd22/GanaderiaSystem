@@ -62,6 +62,7 @@ public class VistaModificarVenta extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lblTid1 = new javax.swing.JLabel();
         txtNumeroAnimal = new javax.swing.JTextField();
@@ -90,13 +91,19 @@ public class VistaModificarVenta extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Numero Animal");
-        add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(lblTid1, gridBagConstraints);
 
         txtNumeroAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumeroAnimal.setForeground(new java.awt.Color(59, 123, 50));
@@ -117,23 +124,61 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtNumeroAnimalKeyReleased(evt);
             }
         });
-        add(txtNumeroAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 120;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(txtNumeroAnimal, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 120, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 119;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(jSeparator6, gridBagConstraints);
 
         lblFechaVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblFechaVenta.setForeground(new java.awt.Color(59, 123, 50));
         lblFechaVenta.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblFechaVenta.setText("Fecha de venta");
-        add(lblFechaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, -1));
-        add(jdFechaVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 190, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 38;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        add(lblFechaVenta, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 163;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(jdFechaVenta, gridBagConstraints);
 
         lbltitle21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle21.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle21.setText("Tipo de venta");
-        add(lbltitle21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 102, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 0);
+        add(lbltitle21, gridBagConstraints);
 
         cbTipoVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoVenta.setForeground(new java.awt.Color(59, 123, 50));
@@ -143,13 +188,28 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 cbTipoVentaActionPerformed(evt);
             }
         });
-        add(cbTipoVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 113;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 40, 0, 21);
+        add(cbTipoVenta, gridBagConstraints);
 
         lbltitle20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle20.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle20.setText("Precio de venta");
-        add(lbltitle20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 110, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(lbltitle20, gridBagConstraints);
 
         txtPrecioVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPrecioVenta.setForeground(new java.awt.Color(59, 123, 50));
@@ -162,16 +222,40 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtPrecioVentaKeyReleased(evt);
             }
         });
-        add(txtPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 190, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 190;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        add(txtPrecioVenta, gridBagConstraints);
 
         jSeparator14.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 190, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 189;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(jSeparator14, gridBagConstraints);
 
         lblPesoCanal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblPesoCanal.setForeground(new java.awt.Color(59, 123, 50));
         lblPesoCanal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPesoCanal.setText("Peso del canal (Kg)");
-        add(lblPesoCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 200, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.ipadx = 84;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(lblPesoCanal, gridBagConstraints);
 
         txtPesoCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPesoCanal.setForeground(new java.awt.Color(59, 123, 50));
@@ -184,16 +268,40 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtPesoCanalKeyReleased(evt);
             }
         });
-        add(txtPesoCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        add(txtPesoCanal, gridBagConstraints);
 
         sepPesoCanal.setBackground(new java.awt.Color(59, 123, 50));
-        add(sepPesoCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 200, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.ipadx = 199;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(sepPesoCanal, gridBagConstraints);
 
         lblPesoCanal1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblPesoCanal1.setForeground(new java.awt.Color(59, 123, 50));
         lblPesoCanal1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPesoCanal1.setText("Porcentaje de Canal (%)");
-        add(lblPesoCanal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 200, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 40, 0, 21);
+        add(lblPesoCanal1, gridBagConstraints);
 
         txtPorcentajeCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPorcentajeCanal.setForeground(new java.awt.Color(59, 123, 50));
@@ -206,10 +314,26 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtPorcentajeCanalKeyReleased(evt);
             }
         });
-        add(txtPorcentajeCanal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 21);
+        add(txtPorcentajeCanal, gridBagConstraints);
 
         sepPesoCanal1.setBackground(new java.awt.Color(59, 123, 50));
-        add(sepPesoCanal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 200, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 199;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 21);
+        add(sepPesoCanal1, gridBagConstraints);
 
         txtPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPeso.setForeground(new java.awt.Color(59, 123, 50));
@@ -222,16 +346,39 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtPesoKeyReleased(evt);
             }
         });
-        add(txtPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 40, 0, 21);
+        add(txtPeso, gridBagConstraints);
 
         sepPesoCanal2.setBackground(new java.awt.Color(59, 123, 50));
-        add(sepPesoCanal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 200, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 199;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 21);
+        add(sepPesoCanal2, gridBagConstraints);
 
         lblPesoCanal2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblPesoCanal2.setForeground(new java.awt.Color(59, 123, 50));
         lblPesoCanal2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPesoCanal2.setText("Peso (Kg)");
-        add(lblPesoCanal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 200, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 141;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 40, 0, 21);
+        add(lblPesoCanal2, gridBagConstraints);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -246,7 +393,15 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = -27;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(30, 10, 15, 10);
+        add(btnGuardar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -260,13 +415,29 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 btnDescartarActionPerformed(evt);
             }
         });
-        add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 330, 60, 64));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = -27;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(30, 10, 15, 0);
+        add(btnDescartar, gridBagConstraints);
 
         lbltitle22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle22.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle22.setText("Valor de venta");
-        add(lbltitle22, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 110, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 21;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 0);
+        add(lbltitle22, gridBagConstraints);
 
         txtValorVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtValorVenta.setForeground(new java.awt.Color(59, 123, 50));
@@ -279,10 +450,26 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 txtValorVentaKeyReleased(evt);
             }
         });
-        add(txtValorVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 190, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 190;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 40, 0, 0);
+        add(txtValorVenta, gridBagConstraints);
 
         jSeparator15.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 190, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 189;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 0);
+        add(jSeparator15, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNumeroAnimalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroAnimalFocusLost
