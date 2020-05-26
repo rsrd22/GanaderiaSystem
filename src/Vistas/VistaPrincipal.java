@@ -30,8 +30,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private JPanel panel;
     public int max = 0;
     private Dimension dpanel = new Dimension();
-    
-    
+    private int x, y;
+
     /**
      * Creates new form VistaPrincipal
      */
@@ -146,6 +146,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         pnlTitulo.setBackground(new java.awt.Color(59, 123, 50));
+        pnlTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlTituloMousePressed(evt);
+            }
+        });
+        pnlTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlTituloMouseDragged(evt);
+            }
+        });
         pnlTitulo.setLayout(new java.awt.GridBagLayout());
 
         btnMinimizar.setBackground(new java.awt.Color(255, 255, 255));
@@ -269,9 +279,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/importar.png"))); // NOI18N
         jLabel1.setToolTipText("Importar");
-        jLabel1.setMaximumSize(new java.awt.Dimension(30, 30));
-        jLabel1.setMinimumSize(new java.awt.Dimension(30, 30));
-        jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -821,10 +828,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     public void MostrarPanel(JPanel panel) {
-        this.panel=panel;
+        this.panel = panel;
         this.panel.setBounds(0, 0, pnlContenedor.getWidth(), pnlContenedor.getHeight());
         pnlContenedor.removeAll();
-        
+
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -833,20 +840,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         pnlContenedor.add(this.panel, gridBagConstraints);
-        
+
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-           
+
     }
-    
-    
+
     public void MostrarPanel(JScrollPane scroll) {
         scroll.setBounds(0, 0, pnlContenedor.getWidth(), pnlContenedor.getHeight());
         pnlContenedor.removeAll();
         pnlContenedor.add(scroll);
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-        
+
     }
 
     private void btnTrasladoAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrasladoAnimalMousePressed
@@ -1029,7 +1035,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Historico Muertes");
             VistaHistoricoMuertes vista = new VistaHistoricoMuertes();
-            MostrarPanel(vista); 
+            MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnMuerteAnimalMousePressed
 
@@ -1133,24 +1139,24 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuVerticalMouseClicked
 
     private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
-        if(evt.getClickCount()==1){
-            System.out.println("max--->"+max);
-            System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
-            System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
-            if(max == 0){//MAXIMIZAR
+        if (evt.getClickCount() == 1) {
+            System.out.println("max--->" + max);
+            System.out.println("w pnlcontenedor--->" + pnlContenedor.getWidth());
+            System.out.println("h pnlcontenedor--->" + pnlContenedor.getHeight());
+            if (max == 0) {//MAXIMIZAR
                 btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
                 btnMaximizar.setToolTipText("Restaurar");
                 max = 1;
                 this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            }else{//RESTAURAR
+            } else {//RESTAURAR
                 btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png")));
                 btnMaximizar.setToolTipText("Maximizar");
                 max = 0;
                 this.setExtendedState(JFrame.NORMAL);
             }
-            System.out.println("w pnlcontenedor--->"+pnlContenedor.getWidth());
-            System.out.println("h pnlcontenedor--->"+pnlContenedor.getHeight());
-            
+            System.out.println("w pnlcontenedor--->" + pnlContenedor.getWidth());
+            System.out.println("h pnlcontenedor--->" + pnlContenedor.getHeight());
+
         }
     }//GEN-LAST:event_btnMaximizarMouseClicked
 
@@ -1158,11 +1164,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
         EstablecerPnlContenedor();
     }//GEN-LAST:event_pnlContenedorComponentResized
 
-    public void EstablecerPnlContenedor(){
-        if(pnlContenedor.getComponents().length>0){
-            if(max == 0){
+    private void pnlTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTituloMousePressed
+        x = evt.getX();
+        y = evt.getY();
+    }//GEN-LAST:event_pnlTituloMousePressed
+
+    private void pnlTituloMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTituloMouseDragged
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
+    }//GEN-LAST:event_pnlTituloMouseDragged
+
+    public void EstablecerPnlContenedor() {
+        if (pnlContenedor.getComponents().length > 0) {
+            if (max == 0) {
                 pnlContenedor.getComponent(0).setSize(dpanel);
-            }else{
+            } else {
                 pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
             }
             java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1175,12 +1190,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
             pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
 
     //        pnlContenedor.add(panel);
-
             pnlContenedor.revalidate();
             pnlContenedor.repaint();
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1278,7 +1292,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     private void EstablecerTituloVentana(String titulo) {
-        lblTitulo.setText(""+titulo);
+        lblTitulo.setText("" + titulo);
     }
 
 }

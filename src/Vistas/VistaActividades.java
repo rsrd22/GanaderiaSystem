@@ -86,6 +86,7 @@ public class VistaActividades extends javax.swing.JPanel implements IControlesUs
         cbEstado = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N

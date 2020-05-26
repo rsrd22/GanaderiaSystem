@@ -12,6 +12,7 @@ import Actividades.Colores;
 import Actividades.Opciones;
 import Actividades.PanelActividades;
 import Actividades.Periodo;
+import Utilidades.DireccionPintado;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -58,14 +59,14 @@ public class EventoMouseClick implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         panRef.arrastreDelMouse = true;
-        panRef.cursor=Cursor.MOVE_CURSOR;
+        panRef.cursor = Cursor.MOVE_CURSOR;
         iniciarArrastreDelMouse(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         finalizarArrastreDelMouse(e);
-        panRef.cursor=Cursor.DEFAULT_CURSOR;
+        panRef.cursor = Cursor.DEFAULT_CURSOR;
         panRef.arrastreDelMouse = false;
         panRef.Actualizar();
     }
@@ -123,25 +124,16 @@ public class EventoMouseClick implements MouseListener {
         }
         for (Opciones opcion : panRef.menu.getOpciones()) {
             if (opcion.estaSobreElemento(e.getPoint())) {
-                switch (opcion.getId()) {
-                    case "1":
-                        establecerPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
-                        seRealizoAccion = true;
-                        break;
-                    case "2":
-                        establecerPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
-                        seRealizoAccion = true;
-                        break;
-                    case "3":
-                        establecerPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
-                        seRealizoAccion = true;
-                        break;
-                    case "99":
-                        quitarPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
-                        seRealizoAccion = true;
-                        break;
+
+                if (!opcion.getId().equals("99")) {
+                    establecerPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
+                    seRealizoAccion = true;
+                    break;
+                } else {
+                    quitarPeriodoSeleccionado(panRef.menu.getPunto(), opcion);
+                    seRealizoAccion = true;
+                    break;
                 }
-                return;
             }
         }
     }
@@ -189,7 +181,13 @@ public class EventoMouseClick implements MouseListener {
     private void clickDerecho(MouseEvent e) {
         for (ActividadesPorPeriodo actividadesPorPeriodo : panRef.actividadesPeriodos) {
             if (actividadesPorPeriodo.estaSobreElemento(e.getPoint())) {
-                panRef.menu.setPunto(e.getPoint());
+                int altoContenedor = panRef.getSize().height;
+                int cantidadOpciones = panRef.menu.getOpciones().size();
+                int altoOpcion = panRef.menu.getOpciones().get(0).getAlto();
+                double altoMenuMasPuntoDePartida = e.getPoint().getY() + cantidadOpciones * altoOpcion;
+                int direccion = altoMenuMasPuntoDePartida > altoContenedor ? DireccionPintado.ARRIBA : DireccionPintado.ABAJO;
+                panRef.menu.setPunto(e.getPoint(), direccion);
+
                 break;
             }
         }

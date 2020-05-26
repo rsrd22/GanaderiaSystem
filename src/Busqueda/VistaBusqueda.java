@@ -34,7 +34,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private gestorMySQL gsql;
     public DefaultTableModel modelo;
     public int opc;
-    
+
     public String SQL = "";
     public ResultSet rs = null;
     public int ini = 0;
@@ -61,7 +61,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         Utilidades.EstablecerIcono(this);
         gsql = new gestorMySQL();
         this.objeto = objeto;
-        
+
         modelo = new DefaultTableModel();
         this.setLocationRelativeTo(null);
         LlenarListaDatos();
@@ -397,12 +397,10 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaGrupos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaTipoAnimales) {
                     ((VistaTipoAnimales) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
-                    ((VistaTipoAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
                 } else if (objeto.getPanelsolicitante() instanceof VistaMacroGrupo) {
                     ((VistaMacroGrupo) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
                     ((VistaAnimales) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
-                    ((VistaAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
                 } else if (objeto.getPanelsolicitante() instanceof VistaFuentesHidricas) {
                     ((VistaFuentesHidricas) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
@@ -495,17 +493,19 @@ public class VistaBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-//        if (objeto.getPanelsolicitante() instanceof VistaGrupos) {
-//            if (objeto.getOpcion() == 1) {
-//                ((VistaGrupos) objeto.getPanelsolicitante()).btnBusquedaTipoAnimales.setEnabled(true);
-//            } else if (objeto.getOpcion() == 2) {
-//                ((VistaGrupos) objeto.getPanelsolicitante()).btnBusquedaMacroGrupo.setEnabled(true);
-//            } 
-//        }else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
-//            if (objeto.getOpcion() == 2) {
-//                ((VistaAnimales) objeto.getPanelsolicitante()).btnBusquedaTipoAnimales.setEnabled(true);
-//            } 
-//        }
+        if (objeto.getPanelsolicitante() instanceof VistaGrupos) {
+            ((VistaGrupos) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
+            ((VistaAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaTipoAnimales) {
+            ((VistaTipoAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaActividades) {
+            ((VistaActividades) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaEstadoActividad) {
+            ((VistaEstadoActividad) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaMacroGrupo) {
+            ((VistaMacroGrupo) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void btnSeleccionarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSeleccionarMouseEntered
@@ -517,7 +517,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarMouseExited
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
+        
     }//GEN-LAST:event_formWindowClosing
 
     /**

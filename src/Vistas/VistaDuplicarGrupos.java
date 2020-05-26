@@ -263,7 +263,10 @@ public class VistaDuplicarGrupos extends javax.swing.JPanel {
                 ((VistaGeneral) modeloVentanaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:
-                mensaje = "Ocurrio un error tratando de copiar los grupos a otra finca.";
+                mensaje = "Ocurrio un error tratando de copiar los grupos a otra finca."
+                        + "\nAl parecer la finca de origen no tiene grupos creados para el tipo de animal "
+                        + cbTipoAnimalOrigen.getSelectedItem().toString()
+                        + ".";
                 break;
             case Retorno.EXCEPCION_SQL:
                 mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";

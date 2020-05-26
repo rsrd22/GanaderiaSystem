@@ -5,6 +5,7 @@
  */
 package Actividades;
 
+import Utilidades.DireccionPintado;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class MenuContextual {
 
     protected ArrayList<Opciones> opciones;
     protected Point punto;
+    protected int direccionPintado = DireccionPintado.DEFAULT;
 
     public MenuContextual(ArrayList<Opciones> opc, Point punto) {
         this.opciones = opc;
@@ -25,14 +27,31 @@ public class MenuContextual {
     }
 
     private void cargarOpciones() {
-        for (int i = 0; i < opciones.size(); i++) {
-            opciones.get(i).setX(punto.x);
-            opciones.get(i).setY(punto.y + opciones.get(i).getAlto() * i);
+        switch (direccionPintado) {
+            case DireccionPintado.ABAJO:
+                for (int i = 0; i < opciones.size(); i++) {
+                    opciones.get(i).setX(punto.x);
+                    opciones.get(i).setY(punto.y + opciones.get(i).getAlto() * i);
+                }
+                break;
+            case DireccionPintado.ARRIBA:
+                for (int i = opciones.size()-1; i >= 0; i--) {
+                    opciones.get(i).setX(punto.x);
+                    opciones.get(i).setY(punto.y -30- opciones.get(i).getAlto() * i);
+                }
+                break;
+            default:
+                for (int i = 0; i < opciones.size(); i++) {
+                    opciones.get(i).setX(punto.x);
+                    opciones.get(i).setY(punto.y + opciones.get(i).getAlto() * i);
+                }
+                break;
         }
     }
 
-    public void setPunto(Point punto) {
+    public void setPunto(Point punto, int direccionDePintado) {
         this.punto = punto;
+        this.direccionPintado = direccionDePintado;
     }
 
     public Point getPunto() {

@@ -100,6 +100,7 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         panelColor = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N

@@ -163,7 +163,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
         add(lbltitle4, gridBagConstraints);
 
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -201,7 +201,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
         add(lbltitle5, gridBagConstraints);
 
         lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -212,7 +212,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        gridBagConstraints.insets = new java.awt.Insets(1, 109, 0, 109);
         add(lbltitle6, gridBagConstraints);
 
         cbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -240,7 +240,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
         add(lbltitle7, gridBagConstraints);
 
         lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -305,6 +305,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
         add(cbMacroGrupo, gridBagConstraints);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
@@ -496,7 +497,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConsultar;
+    public javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnDuplicar;
     private javax.swing.JButton btnEliminar;

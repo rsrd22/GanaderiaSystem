@@ -31,17 +31,8 @@ public class EventoMouseMotion implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-//        if (panRef.arrastreDelMouse) {
-//            for (ActividadesPorPeriodo actividadPorPeriodo : panRef.actividadesPeriodos) {
-//                if (actividadPorPeriodo.estaSobreElemento(e.getPoint())) {
-//                    if (actividadPorPeriodo.isSeleccionado()) {
-//                        continue;
-//                    }
-//                    actividadPorPeriodo.setColorTexto(Color.RED);
-//                    break;
-//                }
-//            }
-//        }
+        seRealizoAccion = false;
+        movimientoSobreActividadesPorPeriodo(e);
         panRef.Actualizar();
     }
 
@@ -74,11 +65,6 @@ public class EventoMouseMotion implements MouseMotionListener {
         }
         for (ActividadesPorPeriodo actividadPorPeriodo : panRef.actividadesPeriodos) {
             if (actividadPorPeriodo.estaSobreElemento(e.getPoint())) {
-                if (actividadPorPeriodo.isSeleccionado()) {
-                    continue;
-                }
-                actividadPorPeriodo.setColorFondo(Colores.DARK_FADED);
-                reinicarActividadesPorPeriodoMenos(actividadPorPeriodo);
                 String nombreActividad = actividadPorPeriodo.getActividad().getDescripcion();
                 String mes = actividadPorPeriodo.getPeriodo().getDescripcionMes();
                 String anio = "" + actividadPorPeriodo.getPeriodo().getAnio();
@@ -89,6 +75,14 @@ public class EventoMouseMotion implements MouseMotionListener {
                         + "en la <b>" + semana + " semana</b> del mes de <b>" + mes.toLowerCase() + "</b>"
                         + " del <b>" + anio + "</b></p></html>"
                 );
+
+                if (actividadPorPeriodo.isSeleccionado()) {
+                    reinicarActividadesPorPeriodoMenos(actividadPorPeriodo);
+                    continue;
+                }
+                actividadPorPeriodo.setColorFondo(Colores.DARK_FADED);
+                reinicarActividadesPorPeriodoMenos(actividadPorPeriodo);
+
                 seRealizoAccion = true;
                 break;
             }

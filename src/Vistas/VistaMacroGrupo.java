@@ -136,6 +136,7 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
         setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -388,7 +389,7 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConsultar;
+    public javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;

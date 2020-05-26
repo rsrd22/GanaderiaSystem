@@ -759,51 +759,45 @@ public class Utilidades {
         switch (opcion) {
             case EstadoControles.POR_DEFECTO:
                 botones[0].setEnabled(habilitar);
-                botones[1].setEnabled(habilitar);
+                botones[1].setEnabled(!habilitar);
+                botones[2].setEnabled(!habilitar);
                 botones[3].setEnabled(habilitar);
-                habilitar = !habilitar;
-                botones[2].setEnabled(habilitar);
-                botones[4].setEnabled(habilitar);
+                botones[4].setEnabled(!habilitar);
                 break;
             case EstadoControles.DESPUES_DE_GUARDAR:
                 botones[0].setEnabled(habilitar);
-                botones[1].setEnabled(habilitar);
-                habilitar = !habilitar;
-                botones[2].setEnabled(habilitar);
+                botones[1].setEnabled(!habilitar);
+                botones[2].setEnabled(!habilitar);
                 botones[3].setEnabled(habilitar);
-                botones[4].setEnabled(habilitar);
+                botones[4].setEnabled(!habilitar);
                 break;
             case EstadoControles.DESPUES_DE_MODIFICAR:
+                botones[0].setEnabled(!habilitar);
                 botones[1].setEnabled(habilitar);
-                botones[3].setEnabled(habilitar);
-                habilitar = !habilitar;
-                botones[0].setEnabled(habilitar);
                 botones[2].setEnabled(habilitar);
-                botones[4].setEnabled(habilitar);
+                botones[3].setEnabled(habilitar);
+                botones[4].setEnabled(!habilitar);
                 break;
             case EstadoControles.DESPUES_DE_DESCARTAR:
                 botones[0].setEnabled(habilitar);
+                botones[1].setEnabled(!habilitar);
+                botones[2].setEnabled(!habilitar);
+                botones[3].setEnabled(habilitar);
+                botones[4].setEnabled(!habilitar);
+                break;
+            case EstadoControles.DESPUES_DE_BUSCAR:
+                botones[0].setEnabled(!habilitar);
                 botones[1].setEnabled(habilitar);
-                habilitar = !habilitar;
                 botones[2].setEnabled(habilitar);
                 botones[3].setEnabled(!habilitar);
                 botones[4].setEnabled(habilitar);
                 break;
-            case EstadoControles.DESPUES_DE_BUSCAR:
-                botones[4].setEnabled(habilitar);
-                botones[2].setEnabled(habilitar);
-                botones[1].setEnabled(habilitar);
-                habilitar = !habilitar;
-                botones[3].setEnabled(habilitar);
-                botones[0].setEnabled(habilitar);
-                break;
             case EstadoControles.DESPUES_DE_ELIMINAR:
                 botones[0].setEnabled(habilitar);
-                botones[1].setEnabled(habilitar);
-                habilitar = !habilitar;
-                botones[2].setEnabled(habilitar);
+                botones[1].setEnabled(!habilitar);
+                botones[2].setEnabled(!habilitar);
                 botones[3].setEnabled(habilitar);
-                botones[4].setEnabled(habilitar);
+                botones[4].setEnabled(!habilitar);
                 break;
             default:
                 break;

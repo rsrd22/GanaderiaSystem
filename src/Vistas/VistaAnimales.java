@@ -362,6 +362,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         btnEliminar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 formPropertyChange(evt);

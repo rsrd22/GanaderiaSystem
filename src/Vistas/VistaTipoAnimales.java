@@ -140,6 +140,7 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
         setLayout(new java.awt.GridBagLayout());
 
         panelcontenedor.setBackground(new java.awt.Color(255, 255, 255));
+        panelcontenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         panelcontenedor.setLayout(new java.awt.GridBagLayout());
 
         jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
@@ -244,6 +245,7 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
         gridBagConstraints.insets = new java.awt.Insets(0, 56, 0, 54);
         panelcontenedor.add(cbFinca, gridBagConstraints);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N

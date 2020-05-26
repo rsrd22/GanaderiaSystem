@@ -113,6 +113,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Hierro = new javax.swing.JTable();
@@ -124,7 +125,8 @@ public class VistaAllHierros extends javax.swing.JPanel {
         lblIdPropietario = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setLayout(new java.awt.GridBagLayout());
 
         tbl_Hierro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,7 +146,16 @@ public class VistaAllHierros extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_Hierro);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 360));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 20, 20);
+        add(jScrollPane1, gridBagConstraints);
 
         btnAgregarHierro.setBackground(new java.awt.Color(0, 0, 204));
         btnAgregarHierro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
@@ -158,13 +169,25 @@ public class VistaAllHierros extends javax.swing.JPanel {
                 btnAgregarHierroActionPerformed(evt);
             }
         });
-        add(btnAgregarHierro, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, 30, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = -1;
+        gridBagConstraints.ipady = -1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 21);
+        add(btnAgregarHierro, gridBagConstraints);
 
         lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle4.setText("Propietario");
-        add(lbltitle4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 20);
+        add(lbltitle4, gridBagConstraints);
 
         txtPropietarios.setEditable(false);
         txtPropietarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -173,10 +196,26 @@ public class VistaAllHierros extends javax.swing.JPanel {
         txtPropietarios.setBorder(null);
         txtPropietarios.setCaretColor(new java.awt.Color(59, 123, 50));
         txtPropietarios.setSelectionColor(new java.awt.Color(59, 123, 50));
-        add(txtPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 480, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 480;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(txtPropietarios, gridBagConstraints);
 
         jSeparator9.setBackground(new java.awt.Color(59, 123, 50));
-        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 480, 10));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 479;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(jSeparator9, gridBagConstraints);
 
         lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/lupa_1.png"))); // NOI18N
         lblBsqPropietarios.setToolTipText("Consultar Arrendatario");
@@ -186,8 +225,17 @@ public class VistaAllHierros extends javax.swing.JPanel {
                 lblBsqPropietariosMouseClicked(evt);
             }
         });
-        add(lblBsqPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 30, 30));
-        add(lblIdPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(lblBsqPropietarios, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(lblIdPropietario, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbl_HierroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_HierroMouseReleased

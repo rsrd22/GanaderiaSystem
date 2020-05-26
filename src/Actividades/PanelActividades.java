@@ -46,6 +46,7 @@ public class PanelActividades extends JPanel {
     public MenuContextual menu;
     public static boolean clickDerechoPresionado;
     public static boolean arrastreDelMouse;
+    public Calendar cal = Calendar.getInstance();
 
     public PanelActividades(VistaPrincipal vp) {
         this.vp = vp;
@@ -56,13 +57,19 @@ public class PanelActividades extends JPanel {
         font = new Font("Tahoma", Font.BOLD, 12);
         controlGral = new ControlGeneral();
         this.cursor = Cursor.DEFAULT_CURSOR;
-        menu=null;
+        menu = null;
         opciones = new ArrayList<>();
         periodos = new ArrayList<>();
         actividades = new ArrayList<>();
         actividadesPeriodos = new ArrayList<>();
         botones = new BotonesDeProgreso[2];
-        cargarPeriodos(xinicial, yinicial, 2019, 11, mesesamostrar);
+
+        SimpleDateFormat sdfa = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+        cal.add(Calendar.MONTH, -1);
+        int anio = Integer.parseInt(sdfa.format(cal.getTime()));
+        int mes = Integer.parseInt(sdfm.format(cal.getTime()));
+        cargarPeriodos(xinicial, yinicial, anio, mes, mesesamostrar);
         cargarBotones();
         cargarActividades();
         cargarEstados();
@@ -102,7 +109,7 @@ public class PanelActividades extends JPanel {
         } else {
             menu = new MenuContextual(opciones, new Point(-500, -500));
         }
-        
+
         g2d.dispose();
     }
 
@@ -237,15 +244,15 @@ public class PanelActividades extends JPanel {
                 int ncolor = Integer.parseInt(estados.get("color"));
                 Color color = new Color(ncolor);
                 opciones.add(new Opciones(
-                    estados.get("descripcion"),
-                    estados.get("id"),
-                    0, 0, 150, alto, Colores.FADED, Colores.DARK_SUCCESS, color)
+                        estados.get("descripcion"),
+                        estados.get("id"),
+                        0, 0, 150, alto, Colores.FADED, Colores.DARK_SUCCESS, color)
                 );
             }
             opciones.add(new Opciones(
-                "DESMARCAR",
-                "99",
-                0, 0, 150, alto, Colores.FADED, Colores.DARK_SUCCESS, Colores.FADED)
+                    "DESMARCAR",
+                    "99",
+                    0, 0, 150, alto, Colores.FADED, Colores.DARK_SUCCESS, Colores.FADED)
             );
             menu = new MenuContextual(opciones, new Point(-500, -500));
         }
