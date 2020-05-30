@@ -158,6 +158,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         tbl_Animales = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -308,7 +309,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 47, 10);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 

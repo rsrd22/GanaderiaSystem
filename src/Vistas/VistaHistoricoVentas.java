@@ -227,6 +227,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         tabla = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -293,6 +294,8 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
         add(cbTipoAnimal, gridBagConstraints);
 
+        tabla.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tabla.setForeground(new java.awt.Color(59, 123, 50));
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -304,6 +307,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
 
             }
         ));
+        tabla.setSelectionBackground(new java.awt.Color(59, 123, 50));
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tablaMouseReleased(evt);
