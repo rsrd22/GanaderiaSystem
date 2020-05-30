@@ -1,5 +1,5 @@
-/build/**
-/nbproject/**
+/build/
+/nbproject/
 /build/built-jar.properties
 /build/classes/Actividades/Actividad.class
 /build/classes/Actividades/ActividadesPorPeriodo.class
