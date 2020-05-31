@@ -40,6 +40,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         controles = null;
         CargarVista();
         band = 1;
+        this.setLocationRelativeTo(null);
     }
 
     public void MostrarPanel(JPanel panel) {
@@ -89,6 +90,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             VistaAnimales vista = (VistaAnimales) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+        } else if (panel instanceof VistaSeleccionarFinca) {
+            VistaSeleccionarFinca vista = (VistaSeleccionarFinca) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Seleccionar Finca");
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
@@ -355,10 +361,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             VistaLotes vista = new VistaLotes(modeloVista);
             MostrarPanel(vista);
 
-//        } else if (modeloVista.getPanelHijo() instanceof VistaFuentesHidricas) {
-//
-//            VistaFuentesHidricas vista = new VistaFuentesHidricas(modeloVista);
-//            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaSeleccionarFinca) {
+
+            VistaSeleccionarFinca vista = new VistaSeleccionarFinca(modeloVista);
+            MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaHierros) {
 
             VistaHierros vista = new VistaHierros(modeloVista);
@@ -378,26 +385,32 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaTrasladar vista = new VistaTrasladar(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleVenta) {
 
             VistaDetalleVenta vista = new VistaDetalleVenta(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleMuerte) {
 
             VistaDetalleMuerte vista = new VistaDetalleMuerte(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleTraslado) {
 
             VistaDetalleTraslado vista = new VistaDetalleTraslado(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaDuplicarGrupos) {
 
             VistaDuplicarGrupos vista = new VistaDuplicarGrupos(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarVenta) {
 
             VistaModificarVenta vista = new VistaModificarVenta(modeloVista);
             MostrarPanel(vista);
+            
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarMuerte) {
 
             VistaModificarMuerte vista = new VistaModificarMuerte(modeloVista);
