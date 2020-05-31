@@ -97,14 +97,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnAnimalxHierro1 = new javax.swing.JLabel();
         btnVentasAnimal = new javax.swing.JLabel();
         btnVerAnimales = new javax.swing.JLabel();
-        btnTrasladoAnimal = new javax.swing.JLabel();
+        btnMostrarTraslados = new javax.swing.JLabel();
         btnRotacion = new javax.swing.JLabel();
         btnUsuarios = new javax.swing.JLabel();
-        btnMostrarAnimales = new javax.swing.JLabel();
         pnlContenedorActividades = new javax.swing.JPanel();
         btnRegistroActividades = new javax.swing.JLabel();
         btnEstadoActividades = new javax.swing.JLabel();
         btnCronograma = new javax.swing.JLabel();
+        btnMostrarAnimales = new javax.swing.JLabel();
+        pnlContenedorTraslados = new javax.swing.JPanel();
+        btnTrasladoAnimal = new javax.swing.JLabel();
+        btnTrasladoGrupo = new javax.swing.JLabel();
 
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
@@ -638,14 +641,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnMuerteAnimal))
         );
 
-        btnTrasladoAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnTrasladoAnimal.setForeground(new java.awt.Color(255, 255, 255));
-        btnTrasladoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnTrasladoAnimal.setText("Traslado Animal");
-        btnTrasladoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTrasladoAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnMostrarTraslados.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarTraslados.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarTraslados.setText("Traslados");
+        btnMostrarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarTraslados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnTrasladoAnimalMouseClicked(evt);
+                btnMostrarTrasladosMouseClicked(evt);
             }
         });
 
@@ -665,20 +668,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMostrarAnimales.setText("Animales");
-        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMostrarAnimalesMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMostrarAnimalesMousePressed(evt);
-            }
-        });
 
         pnlContenedorActividades.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -734,6 +723,60 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
+        btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarAnimales.setText("Animales");
+        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMostrarAnimalesMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMostrarAnimalesMousePressed(evt);
+            }
+        });
+
+        pnlContenedorTraslados.setBackground(new java.awt.Color(59, 145, 70));
+
+        btnTrasladoAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnTrasladoAnimal.setForeground(new java.awt.Color(255, 255, 255));
+        btnTrasladoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnTrasladoAnimal.setText("Traslado Animal");
+        btnTrasladoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrasladoAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTrasladoAnimalRealMousePressed(evt);
+            }
+        });
+
+        btnTrasladoGrupo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnTrasladoGrupo.setForeground(new java.awt.Color(255, 255, 255));
+        btnTrasladoGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnTrasladoGrupo.setText("Traslado Grupo");
+        btnTrasladoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrasladoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTrasladoGrupoMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContenedorTrasladosLayout = new javax.swing.GroupLayout(pnlContenedorTraslados);
+        pnlContenedorTraslados.setLayout(pnlContenedorTrasladosLayout);
+        pnlContenedorTrasladosLayout.setHorizontalGroup(
+            pnlContenedorTrasladosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTrasladoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnTrasladoGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        pnlContenedorTrasladosLayout.setVerticalGroup(
+            pnlContenedorTrasladosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorTrasladosLayout.createSequentialGroup()
+                .addComponent(btnTrasladoAnimal)
+                .addGap(0, 0, 0)
+                .addComponent(btnTrasladoGrupo)
+                .addGap(60, 60, 60))
+        );
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -748,7 +791,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnMostrarActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnTrasladoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
@@ -775,7 +819,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(btnTrasladoAnimal)
+                .addComponent(btnMostrarTraslados)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnRotacion)
                 .addGap(0, 0, 0)
@@ -1007,13 +1053,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLotesMouseClicked
 
-    private void btnTrasladoAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrasladoAnimalMouseClicked
-        if (evt.getClickCount() == 1) {
-            EstablecerTituloVentana("Traslado Animales");
-            VistaTraslado vista = new VistaTraslado();
-            MostrarPanel(vista);
-        }
-    }//GEN-LAST:event_btnTrasladoAnimalMouseClicked
+    private void btnMostrarTrasladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarTrasladosMouseClicked
+        btnTrasladoGrupo.setVisible(!pnlContenedorTraslados.isVisible());
+        btnTrasladoAnimal.setVisible(!pnlContenedorTraslados.isVisible());
+        pnlContenedorTraslados.setVisible(!pnlContenedorTraslados.isVisible());
+    }//GEN-LAST:event_btnMostrarTrasladosMouseClicked
 
     private void btnRotacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRotacionMouseClicked
         if (evt.getClickCount() == 1) {
@@ -1217,6 +1261,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
         this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_pnlTituloMouseDragged
 
+    private void btnTrasladoAnimalRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrasladoAnimalRealMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Traslado Animales");
+            VistaTraslado vista = new VistaTraslado();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnTrasladoAnimalRealMousePressed
+
+    private void btnTrasladoGrupoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrasladoGrupoMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Traslado Grupos");
+            VistaTrasladoGrupos vista = new VistaTrasladoGrupos();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnTrasladoGrupoMousePressed
+
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
             if (max == 0) {
@@ -1296,6 +1356,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnMostrarFincas;
     private javax.swing.JLabel btnMostrarGruposAnimales;
     private javax.swing.JLabel btnMostrarPropietarios;
+    private javax.swing.JLabel btnMostrarTraslados;
     private javax.swing.JLabel btnMuerteAnimal;
     private javax.swing.JLabel btnPluviometro;
     private javax.swing.JLabel btnPropietarios;
@@ -1303,6 +1364,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnRotacion;
     private javax.swing.JLabel btnTipoAnimal;
     private javax.swing.JLabel btnTrasladoAnimal;
+    private javax.swing.JLabel btnTrasladoGrupo;
     private javax.swing.JLabel btnUsuarios;
     private javax.swing.JLabel btnVentasAnimal;
     private javax.swing.JLabel btnVerAnimales;
@@ -1319,6 +1381,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlContenedorFincas;
     private javax.swing.JPanel pnlContenedorGruposAnimales;
     private javax.swing.JPanel pnlContenedorPropietarios;
+    private javax.swing.JPanel pnlContenedorTraslados;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlMenuVertical;
     private javax.swing.JPanel pnlTitulo;
@@ -1333,6 +1396,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorGruposAnimales.setVisible(false);
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
+        pnlContenedorTraslados.setVisible(false);
     }
 
     private void EstablecerTituloVentana(String titulo) {

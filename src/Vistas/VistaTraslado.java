@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -33,6 +34,7 @@ public class VistaTraslado extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String idTipoAnimal;
+    
     
     private List<Map<String, String>>  ListaTraslado;
     private List<Map<String, String>>  ListaAnimaleSeleccionados;
@@ -56,6 +58,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         listaFincas = new ArrayList<>();
         listaTipoAnimales = new ArrayList<>();
         ListaAnimaleSeleccionados = new ArrayList<>();
+        
         InicializarTblBloques();
         CargarListaFincas();
     }
@@ -227,7 +230,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 240;
         gridBagConstraints.ipady = 9;

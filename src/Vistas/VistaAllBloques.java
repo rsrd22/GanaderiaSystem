@@ -515,8 +515,10 @@ public class VistaAllBloques extends javax.swing.JPanel {
 
     private void Guardar() {
         String AreaT = txtAreaT.getText().trim().replace(".", "").replace(",", ".");
-        double AcuAreaBloques = getAcumuladoArea();
+        double AcuAreaBloques = getAcumuladoArea(modeloBloques.getId());
         double AreaTo = Double.parseDouble(AreaT);
+        
+        
         if(modeloBloques.getId().equals("0")){
             boolean Valnumero = controlBloque.VerificarNumeroBloque(idFinca, txtNumero.getText().trim());
             if(Valnumero){
@@ -572,14 +574,16 @@ public class VistaAllBloques extends javax.swing.JPanel {
         modelotbl.addRow(fila);
     }
 
-    private double getAcumuladoArea() {
+    private double getAcumuladoArea(String id_Bloque) {
         double ret = 0;
         String valor = "";
-        for(int i = 0; i < tbl_Bloques.getRowCount(); i++){
-            valor = ((String)tbl_Bloques.getValueAt(i, 2)).trim().replace(".", "").replace(",", ".");
-            ret += Double.parseDouble(valor);
-        }
         
+        for(int i = 0; i < ListamodeloBloques.size(); i++){
+            if(ListamodeloBloques.get(i).getId().equals(id_Bloque)){
+                valor = ListamodeloBloques.get(i).getArea().trim();
+                ret += Double.parseDouble(valor);
+            }
+        }
         return ret;
     }
 }
