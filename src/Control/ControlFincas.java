@@ -219,6 +219,18 @@ public class ControlFincas implements IControl{
                     "WHERE blqs.id_finca = '"+idFinca+"'\n" +
                     "GROUP BY lts.`id`\n" +
                     "ORDER BY blqs.`numero`, lts.numero ASC";
+        consulta = "SELECT lts.id AS ID, lts.`numero` AS NUMERO, lts.`id_bloque` AS ID_BLOQUE,  blqs.numero AS NUMERO_BLOQUE,\n" +
+                        "lts.`area` AS AREAT,  REPLACE(GROUP_CONCAT(ltxhc.`id`), ',', '<:-:>') AS IDLOTESXFUENTE,\n" +
+                        "REPLACE(GROUP_CONCAT(ltxhc.`id_fuente_hidrica`), ',', '<:-:>') AS ID_FUENTE_HIDRICA, \n" +
+                        "REPLACE(GROUP_CONCAT(fh.`descripcion`), ',', '<:-:>') AS FUENTE_HIDRICA,\n" +
+                        "lts.`fecha` AS FECHA, lts.`id_usuario` AS ID_USUARIO\n" +
+                        "FROM lotes lts\n" +
+                        "INNER JOIN `lotexfuente_hidrica` ltxhc ON `ltxhc`.`id_lote` = lts.`id`\n" +
+                        "INNER JOIN `bloques` blqs ON blqs.`id` = lts.`id_bloque`\n" +
+                        "INNER JOIN `fuentes_hidricas` fh ON fh.`id` = ltxhc.`id_fuente_hidrica`\n" +
+                        "WHERE blqs.id_finca = '"+idFinca+"'\n" +
+                        "GROUP BY lts.`id`\n" +
+                        "ORDER BY blqs.`numero`, lts.numero ASC";
         
         List<Map<String, String>> lotes = new ArrayList<Map<String, String>>();
         lotes = mySQL.ListSQL(consulta);
@@ -231,8 +243,9 @@ public class ControlFincas implements IControl{
                     lote.get("NUMERO"),
                     lote.get("ID_BLOQUE"),
                     lote.get("NUMERO_BLOQUE"),
-                    lote.get("ID_FUENTE_HIDRICA"),
-                    lote.get("FUENTE_HIDRICA"),
+                    lote.get("IDLOTESXFUENTE").split("<:-:>"),
+                    lote.get("ID_FUENTE_HIDRICA").split("<:-:>"),
+                    lote.get("FUENTE_HIDRICA").split("<:-:>"),
                     lote.get("AREAT"),
                     lote.get("FECHA"),
                     lote.get("ID_USUARIO")

@@ -16,8 +16,9 @@ public class ModeloLotes {
     private String id_bloque;
     private String numero_bloque;
     private String id_finca;
-    private String id_fuente_hidrica;
-    private String Fuente_Hidrica;
+    private String[] idxfuentehidrica;
+    private String[] id_fuente_hidrica;
+    private String[] Fuente_Hidrica;
     private String area;
     private String fecha;
     private String id_usuario;
@@ -28,6 +29,7 @@ public class ModeloLotes {
         this.id_bloque = null;
         this.numero_bloque = null;
         this.id_finca = null;
+        this.idxfuentehidrica = null;
         this.id_fuente_hidrica = null;
         this.Fuente_Hidrica = null;
         this.area = null;
@@ -35,12 +37,13 @@ public class ModeloLotes {
         this.id_usuario = null;
     }
 
-    public ModeloLotes(String id, String numero, String id_bloque, String numero_bloque, String id_fuente_hidrica, String Fuente_Hidrica, String area, String fecha, String id_usuario) {
+    public ModeloLotes(String id, String numero, String id_bloque, String numero_bloque, String[] idxfuentehidrica, String[] id_fuente_hidrica, String[] Fuente_Hidrica, String area, String fecha, String id_usuario) {
         this.id = id;
         this.numero = numero;
         this.id_bloque = id_bloque;
         this.numero_bloque = numero_bloque;
         this.id_finca = null;
+        this.idxfuentehidrica = idxfuentehidrica;
         this.id_fuente_hidrica = id_fuente_hidrica;
         this.Fuente_Hidrica = Fuente_Hidrica;
         this.area = area;
@@ -48,11 +51,11 @@ public class ModeloLotes {
         this.id_usuario = id_usuario;
     }
 
-    public String getFuente_Hidrica() {
+    public String[] getFuente_Hidrica() {
         return Fuente_Hidrica;
     }
 
-    public void setFuente_Hidrica(String Fuente_Hidrica) {
+    public void setFuente_Hidrica(String[] Fuente_Hidrica) {
         this.Fuente_Hidrica = Fuente_Hidrica;
     }
 
@@ -80,11 +83,11 @@ public class ModeloLotes {
         this.id_bloque = id_bloque;
     }
 
-    public String getId_fuente_hidrica() {
+    public String[] getId_fuente_hidrica() {
         return id_fuente_hidrica;
     }
 
-    public void setId_fuente_hidrica(String id_fuente_hidrica) {
+    public void setId_fuente_hidrica(String[] id_fuente_hidrica) {
         this.id_fuente_hidrica = id_fuente_hidrica;
     }
 
@@ -126,6 +129,14 @@ public class ModeloLotes {
 
     public void setNumero_bloque(String numero_bloque) {
         this.numero_bloque = numero_bloque;
+    }
+
+    public String[] getIdxfuentehidrica() {
+        return idxfuentehidrica;
+    }
+
+    public void setIdxfuentehidrica(String[] idxfuentehidrica) {
+        this.idxfuentehidrica = idxfuentehidrica;
     }
     
     

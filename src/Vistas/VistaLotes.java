@@ -382,7 +382,7 @@ public class VistaLotes extends javax.swing.JPanel {
         modelo.setId_bloque(""+listaBloques.get(cbBloque.getSelectedIndex()).get("ID"));
         modelo.setNumero(txtNumero.getText().trim());
         modelo.setArea(txtAreaT.getText().trim().replace(".", "").replace(",", "."));
-        modelo.setId_fuente_hidrica(""+lblIdFuente.getText());
+        //modelo.setId_fuente_hidrica(""+lblIdFuente.getText());
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         

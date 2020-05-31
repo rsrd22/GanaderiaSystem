@@ -10,6 +10,7 @@ import BaseDeDatos.gestorMySQL;
 import Modelo.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -55,10 +56,16 @@ public class ControLotes implements IControl{
 //        //</editor-fold>
         );
         
-        consultas.add("INSERT INTO `lotexfuente_hidrica`\n" +
-                        "(`id`,`id_lote`, `id_fuente_hidrica`, `id_usuario`, `fecha`)\n" +
-                        "VALUES \n" +
-                        "('0', (SELECT id FROM lotes WHERE id_bloque = '"+lote.getId_bloque()+"' and numero = '"+lote.getNumero()+"'), "+lote.getId_fuente_hidrica()+", "+lote.getId_usuario()+", NOW());");
+        if(lote.getId_fuente_hidrica().length>0){
+            for(String id:lote.getId_fuente_hidrica()){
+                consultas.add("INSERT INTO `lotexfuente_hidrica`\n" +
+                            "(`id`,`id_lote`, "+
+                            "`id_fuente_hidrica`, `id_usuario`, `fecha`)\n" +
+                            "VALUES \n" +
+                            "('0', (SELECT id FROM lotes WHERE id_bloque = '"+lote.getId_bloque()+"' and numero = '"+lote.getNumero()+"'), "+
+                            ""+id+", "+lote.getId_usuario()+", NOW());");
+            }
+        }
 
         try {
             if(mySQL.EnviarConsultas(consultas)){
@@ -85,15 +92,12 @@ public class ControLotes implements IControl{
                 "UPDATE `lotes`\n" +
                     "SET `numero` = "+lote.getNumero()+",\n" +
                     "  `id_bloque` = "+lote.getId_bloque()+",\n" +
-//                    "  `id_fuente_hidrica` = "+lote.getId_fuente_hidrica()+",\n" +
                     "  `area` = "+lote.getArea()+",\n" +
                     "  `fecha` = "+lote.getFecha()+",\n" +
                     "  `id_usuario` = "+lote.getId_usuario()+"\n" +
                     "WHERE `id` = "+lote.getId()+";"
 //        //</editor-fold>
         );
-        
-
         try {
             if(mySQL.EnviarConsultas(consultas)){
                 return Retorno.EXITO;
@@ -146,5 +150,37 @@ public class ControLotes implements IControl{
         
         boolean ret  = mySQL.ExistenDatos(consulta);
         return ret;
+    }
+    
+    public int ActualizarFuentexLotes(ArrayList<Map<String, String>> idsFuentes) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        for(Map<String, String> lista: idsFuentes){
+            if(lista.get("INSERT").equals("0")){
+                consultas.add("INSERT INTO `lotexfuente_hidrica`\n" +
+                                "(`id`,`id_lote`, "+
+                                "`id_fuente_hidrica`, `id_usuario`, `fecha`)\n" +
+                                "VALUES \n" +
+                                "('0', "+lista.get("IDLOTE")+", "+
+                                ""+lista.get("IDFUENTE")+", "+lista.get("IDUSUARIO")+", NOW());");
+            }else{
+                consultas.add("DELETE FROM lotexfuente_hidrica WHERE id = "+lista.get("ID"));
+            }
+            
+        }
+        
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 }

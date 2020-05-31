@@ -8,6 +8,7 @@ package Control;
 
 import Modelo.ModeloOpcionesMultiples;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -77,15 +78,86 @@ public class ControlMultiComboBox {
             pnlOpcion.setToolTipText("Agregar Grupo " + dato.getDescripcion());
             pnlOpcion.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, pnlOpciones.getWidth()-tam, tam));
             pnlOpcion.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(3 + pnlOpciones.getWidth()-tam, 3, tam, tam));
+            System.out.println("panel.getWidth--"+pnlOpcion.getWidth());
+            System.out.println("panel.getHeight--"+pnlOpcion.getHeight());
+            pnlOpcion.setSize(new Dimension(100, 30));
+            System.out.println("panel.getWidth--"+pnlOpcion.getWidth());
+            System.out.println("panel.getHeight--"+pnlOpcion.getHeight());
+            
             ListaPnlOpciones.add(pnlOpcion);
             pnlOpciones.add(pnlOpcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3+(tam*ind), pnlOpciones.getWidth(), tam));
         }
-        pnlOpciones.revalidate();
-        pnlOpciones.repaint();
-        
+//        pnlOpciones.revalidate();
+//        pnlOpciones.repaint();
+        System.out.println("***************END ******************");
         
         
     }
+    
+    public JPanel LlenarPnlOpcionesRet() {    
+        JPanel panel = new JPanel();
+        panel.removeAll();
+        int ind = -1;
+        System.out.println("ListaDatosMultiple--Control---->"+ListaDatosMultiple.size());
+        System.out.println("pnlOpciones--_>"+pnlOpciones);
+        for (ModeloOpcionesMultiples dato : ListaDatosMultiple) {
+            ind++;
+            javax.swing.JPanel pnlOpcion = new javax.swing.JPanel();
+            javax.swing.JLabel lblDescripcion = new javax.swing.JLabel();
+            javax.swing.JLabel lblEstado = new javax.swing.JLabel();
+
+            if(dato.isEstado())
+                pnlOpcion.setBackground(new java.awt.Color(59, 123, 50));
+            else
+                pnlOpcion.setBackground(new java.awt.Color(255, 123, 50));
+            pnlOpcion.setForeground(new java.awt.Color(255, 255, 255));
+            
+            pnlOpcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+            pnlOpcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(59, 123, 50), 1, true));
+            pnlOpcion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+            pnlOpcion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            pnlOpcion.setName("" + ind);
+            pnlOpcion.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                    int indr = Integer.parseInt(evt.getComponent().getName());
+                    CambiarEstadoOpcion(indr);
+                }
+            });
+            System.out.println("dato.getDescripcion()-->"+dato.getDescripcion());
+            lblDescripcion.setText(dato.getDescripcion());
+            lblDescripcion.setName(dato.getDescripcion());
+            lblDescripcion.setForeground(new java.awt.Color(255, 255, 255));
+
+            lblEstado.setFont(new java.awt.Font("Tahoma", 1, 12));
+            //lblEstado.setOpaque(true);
+            //lblEstado.setBackground(new java.awt.Color(59, 123, 50));
+            lblEstado.setText("+");//MousePressed
+            lblEstado.setName("Estado" + ind);
+            lblEstado.setForeground(new java.awt.Color(255, 255, 255));
+            
+
+            pnlOpcion.setToolTipText("Agregar Grupo " + dato.getDescripcion());
+            System.out.println("pnlOpciones.getWidth()--"+pnlOpciones.getWidth());
+            System.out.println("pnlOpciones.getHeight()--"+pnlOpciones.getHeight());
+            //pnlOpcion.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3, pnlOpciones.getWidth()-tam, tam));
+            pnlOpcion.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3,100, tam));
+            //pnlOpcion.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(3 + pnlOpciones.getWidth()-tam, 3, tam, tam));
+            pnlOpcion.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(3 + 100-tam, 3, tam, tam));
+            System.out.println("panel.getWidth--"+pnlOpcion.getWidth());
+            System.out.println("panel.getHeight--"+pnlOpcion.getHeight());
+            //pnlOpcion.setSize(new Dimension(100, 30));
+            System.out.println("panel.getWidth--"+pnlOpcion.getWidth());
+            System.out.println("panel.getHeight--"+pnlOpcion.getHeight());
+            ListaPnlOpciones.add(pnlOpcion);
+            panel.add(pnlOpcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 3+(tam*ind), pnlOpciones.getWidth(), tam));
+        }
+        return panel;
+    }
+    
+    public ArrayList<JPanel> getListaPnlOpciones(){
+        return ListaPnlOpciones;
+    }
+    
     public void LlenarPnlOpcionesFiltro() {
         pnlOpciones.removeAll();
         int ind = -1;

@@ -22,8 +22,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,6 +46,8 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private ArrayList<ModeloLotes>  ListamodeloLotes;
     public DefaultTableModel modeloTblLotes;
     public String[] EncabezadoTblLotes; 
+    public String[] idsFuentesAux; 
+    public ArrayList<Map<String, String>> listaActualizarFuentes; 
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String AreaBloque;
@@ -54,35 +59,62 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public ArrayList<ModeloOpcionesMultiples> ListaDatosMultiple = new ArrayList<>();
     public ArrayList<ModeloOpcionesMultiples> ListaSeleccionados = new ArrayList<>();
     public ArrayList<JPanel> ListaPnlOpciones= new ArrayList<>();
+    public JPanel pnlOpcionesAux = new JPanel();
     public boolean ban = false;
     public ControlMultiComboBox obj;
+    public DefaultListModel modlistFuentes;
+        
     /**
      * Creates new form VistaAllLotes
      */
     
     public VistaAllLotes() {
         initComponents();
+        lstFuentesHidricas.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
+
+            public void setSelectionInterval(int index0, int index1) {
+                if(i0 == index0 && i1 == index1){
+                    if(getValueIsAdjusting()){
+                         setValueIsAdjusting(false);
+                         setSelection(index0, index1);
+                    }
+                }else{
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+            private void setSelection(int index0, int index1){
+                if(super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                }else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
         controlFinca = new ControlFincas();
         controlLote = new ControLotes();
         ListamodeloLotes = new ArrayList<>();
+        listaActualizarFuentes = new ArrayList<>();
         EncabezadoTblLotes = new String[]{
             "No","Bloque", "Número", "Área Total", "Fuente Hidrica", "Modificar", "Eliminar"
         };
         lblId_Bloque.setVisible(false);
         modeloLotes = new ModeloLotes();
+        modlistFuentes = new DefaultListModel();
         idFinca = "";
         AreaBloque = "";
         fila = -1;
-        txtOpcion.setEnabled(false);
+        LimpiarFomulario();
         CargarListaFuentesHidricas();
         CargarListaFincas();
         
-        System.out.println("ListaDatosMultiple---_>"+ListaDatosMultiple.size());
-        obj = new ControlMultiComboBox(pnlOpciones, txtOpcion, ListaDatosMultiple);
-        obj.LlenarPnlOpciones(); 
-        LimpiarFomulario();
-        EstadoOpciones();
+        
         InicializarTblLotes();
+        
     }
     
     public void InicializarTblLotes() {
@@ -148,17 +180,14 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         cbFinca = new javax.swing.JComboBox();
         lblTid = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        scrlPnlOpciones = new javax.swing.JScrollPane();
-        pnlOpciones = new javax.swing.JPanel();
+        pnlAgregarLote = new javax.swing.JPanel();
         txtNumero = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         lbltitle1 = new javax.swing.JLabel();
-        lbltitle3 = new javax.swing.JLabel();
-        txtAreaT = new javax.swing.JTextField();
-        jSeparator8 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
@@ -166,10 +195,20 @@ public class VistaAllLotes extends javax.swing.JPanel {
         cbBloque = new javax.swing.JComboBox();
         lblTid1 = new javax.swing.JLabel();
         lblTid2 = new javax.swing.JLabel();
-        txtOpcion = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lbltitle3 = new javax.swing.JLabel();
+        txtAreaT = new javax.swing.JTextField();
+        jSeparator8 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstFuentesHidricas = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Lotes = new javax.swing.JTable();
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
@@ -204,31 +243,10 @@ public class VistaAllLotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
         add(lblTid, gridBagConstraints);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Agregar Lote", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        jPanel1.setForeground(new java.awt.Color(59, 123, 50));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-
-        scrlPnlOpciones.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        pnlOpciones.setBackground(new java.awt.Color(255, 255, 255));
-        pnlOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        pnlOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        scrlPnlOpciones.setViewportView(pnlOpciones);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 150;
-        gridBagConstraints.ipady = 74;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.35;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanel1.add(scrlPnlOpciones, gridBagConstraints);
+        pnlAgregarLote.setBackground(new java.awt.Color(255, 255, 255));
+        pnlAgregarLote.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Agregar Lote", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        pnlAgregarLote.setForeground(new java.awt.Color(59, 123, 50));
+        pnlAgregarLote.setLayout(new java.awt.GridBagLayout());
 
         txtNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero.setForeground(new java.awt.Color(59, 123, 50));
@@ -250,54 +268,157 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 230;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        jPanel1.add(txtNumero, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        pnlAgregarLote.add(txtNumero, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 229;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 179;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        jPanel1.add(jSeparator6, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        pnlAgregarLote.add(jSeparator6, gridBagConstraints);
 
         lbltitle1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle1.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle1.setText("Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.ipadx = 53;
         gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        jPanel1.add(lbltitle1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(7, 35, 0, 0);
+        pnlAgregarLote.add(lbltitle1, gridBagConstraints);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(59, 123, 50));
+        jLabel13.setText("HA");
+        jLabel13.setToolTipText("Hectárea");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlAgregarLote.add(jLabel13, gridBagConstraints);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_2.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnGuardar.setName("btnGuardar"); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -25;
+        gridBagConstraints.ipady = -9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlAgregarLote.add(btnGuardar, gridBagConstraints);
+
+        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
+        btnDescartar.setToolTipText("Descartar");
+        btnDescartar.setBorderPainted(false);
+        btnDescartar.setContentAreaFilled(false);
+        btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescartarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = -59;
+        gridBagConstraints.ipady = -43;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 12, 0, 0);
+        pnlAgregarLote.add(btnDescartar, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        pnlAgregarLote.add(lblId_Bloque, gridBagConstraints);
+
+        cbBloque.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbBloque.setForeground(new java.awt.Color(59, 123, 50));
+        cbBloque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbBloqueActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 175;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 25, 0, 0);
+        pnlAgregarLote.add(cbBloque, gridBagConstraints);
+
+        lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid1.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid1.setText("Bloque");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 108;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(7, 25, 0, 0);
+        pnlAgregarLote.add(lblTid1, gridBagConstraints);
+
+        lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid2.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid2.setText("Fuente Hidrica");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 43;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(7, 30, 0, 20);
+        pnlAgregarLote.add(lblTid2, gridBagConstraints);
 
         lbltitle3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle3.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle3.setText("Area Total");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.ipadx = 37;
         gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        jPanel1.add(lbltitle3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
+        pnlAgregarLote.add(lbltitle3, gridBagConstraints);
 
         txtAreaT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtAreaT.setForeground(new java.awt.Color(59, 123, 50));
@@ -319,173 +440,52 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 220;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 215;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanel1.add(txtAreaT, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        pnlAgregarLote.add(txtAreaT, gridBagConstraints);
 
         jSeparator8.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 219;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 214;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanel1.add(jSeparator8, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        pnlAgregarLote.add(jSeparator8, gridBagConstraints);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel13.setText("HA");
-        jLabel13.setToolTipText("Hectárea");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.02;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanel1.add(jLabel13, gridBagConstraints);
-
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_2.png"))); // NOI18N
-        btnGuardar.setToolTipText("Guardar");
-        btnGuardar.setBorderPainted(false);
-        btnGuardar.setContentAreaFilled(false);
-        btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
-        btnGuardar.setName("btnGuardar"); // NOI18N
-        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
-        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
+        lstFuentesHidricas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lstFuentesHidricas.setForeground(new java.awt.Color(59, 123, 50));
+        lstFuentesHidricas.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
+        lstFuentesHidricas.setMaximumSize(new java.awt.Dimension(39, 65));
+        lstFuentesHidricas.setMinimumSize(new java.awt.Dimension(39, 65));
+        lstFuentesHidricas.setName(""); // NOI18N
+        lstFuentesHidricas.setPreferredSize(new java.awt.Dimension(39, 65));
+        lstFuentesHidricas.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        jScrollPane3.setViewportView(lstFuentesHidricas);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = -23;
-        gridBagConstraints.ipady = -9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.04;
-        gridBagConstraints.insets = new java.awt.Insets(0, 14, 0, 0);
-        jPanel1.add(btnGuardar, gridBagConstraints);
-
-        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
-        btnDescartar.setToolTipText("Descartar");
-        btnDescartar.setBorderPainted(false);
-        btnDescartar.setContentAreaFilled(false);
-        btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
-        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
-        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
-        btnDescartar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescartarActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 11;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = -57;
-        gridBagConstraints.ipady = -43;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.04;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 20);
-        jPanel1.add(btnDescartar, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel1.add(lblId_Bloque, gridBagConstraints);
-
-        cbBloque.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbBloque.setForeground(new java.awt.Color(59, 123, 50));
-        cbBloque.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbBloqueActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 200;
-        gridBagConstraints.ipady = 9;
+        gridBagConstraints.ipadx = 107;
+        gridBagConstraints.ipady = 70;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        jPanel1.add(cbBloque, gridBagConstraints);
-
-        lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid1.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid1.setText("Bloque");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 108;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        jPanel1.add(lblTid1, gridBagConstraints);
-
-        lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid2.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid2.setText("Fuente Hidrica");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 63;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        jPanel1.add(lblTid2, gridBagConstraints);
-
-        txtOpcion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtOpcion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtOpcionMousePressed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 250;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.499;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        jPanel1.add(txtOpcion, gridBagConstraints);
-
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("A");
-        jLabel2.setOpaque(true);
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel2MousePressed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 23;
-        gridBagConstraints.ipady = 16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 0.001;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        jPanel1.add(jLabel2, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 10);
+        pnlAgregarLote.add(jScrollPane3, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -497,7 +497,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
         gridBagConstraints.ipady = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 20);
-        add(jPanel1, gridBagConstraints);
+        add(pnlAgregarLote, gridBagConstraints);
 
         tbl_Lotes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -546,13 +546,18 @@ public class VistaAllLotes extends javax.swing.JPanel {
             CargarListaBloques();
             System.out.println("");
             for(int i =0; i < ListamodeloLotes.size(); i++){
+                String f = "";
+                for(String d:ListamodeloLotes.get(i).getFuente_Hidrica()){
+                    f += (f.equals("")?"":", ")+d;
+                }
+                
                 agregarFilaTabla(modeloTblLotes, 
                         new Object[]{
                             tbl_Lotes.getRowCount()+1,
                             "Bloque "+ListamodeloLotes.get(i).getNumero_bloque(),
                             ListamodeloLotes.get(i).getNumero(),
                             Utilidades.MascaraMonedaConDecimales(ListamodeloLotes.get(i).getArea().replace(".", ",")),
-                            ListamodeloLotes.get(i).getFuente_Hidrica(),
+                            f,
                             "Modificar",
                             "Eliminar"
                         });
@@ -599,7 +604,9 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDescartarActionPerformed
 
     private void cbBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBloqueActionPerformed
-        AreaBloque = listaBloques.get(cbBloque.getSelectedIndex()).get("AREA");
+        if(listaBloques.size()>0 && cbBloque.getItemCount()>0){
+            AreaBloque = listaBloques.get(cbBloque.getSelectedIndex()).get("AREA");
+        }
     }//GEN-LAST:event_cbBloqueActionPerformed
 
     private void tbl_LotesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LotesMouseReleased
@@ -610,8 +617,13 @@ public class VistaAllLotes extends javax.swing.JPanel {
             modeloLotes = ListamodeloLotes.get(fila);
             modeloLotes.setId_finca(""+idFinca);
             
+            int[] indices = getIndicesLista(); 
+            //System.arraycopy(modeloLotes.getId_fuente_hidrica(), 0, idsFuentesAux, 0, modeloLotes.getId_fuente_hidrica().length);
+            //idsFuentesAux = modeloLotes.getId_fuente_hidrica();
+            
             cbBloque.setSelectedIndex(getIndexLista(modeloLotes.getId_bloque(), listaBloques));
             //cbFuenteHidrica.setSelectedIndex(getIndexLista(modeloLotes.getId_fuente_hidrica(), listaFuentesHidricas));
+            lstFuentesHidricas.setSelectedIndices(indices);
             txtNumero.setText(""+modeloLotes.getNumero());
             txtAreaT.setText(""+Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea().replace(".", ",")));
             txtNumero.requestFocusInWindow();
@@ -628,16 +640,6 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_tbl_LotesMouseReleased
-
-    private void txtOpcionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtOpcionMousePressed
-        ban = !ban;
-        EstadoOpciones();
-    }//GEN-LAST:event_txtOpcionMousePressed
-
-    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-        ban = !ban;
-        EstadoOpciones();
-    }//GEN-LAST:event_jLabel2MousePressed
 
     public int getIndexLista(String id, List<Map<String, String>> lista){
         int ind = -1;
@@ -656,9 +658,10 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public javax.swing.JComboBox cbBloque;
     public javax.swing.JComboBox cbFinca;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JList jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JLabel lblId_Bloque;
@@ -667,12 +670,11 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid2;
     public javax.swing.JLabel lbltitle1;
     public javax.swing.JLabel lbltitle3;
-    private javax.swing.JPanel pnlOpciones;
-    private javax.swing.JScrollPane scrlPnlOpciones;
+    private javax.swing.JList lstFuentesHidricas;
+    private javax.swing.JPanel pnlAgregarLote;
     private javax.swing.JTable tbl_Lotes;
     public javax.swing.JTextField txtAreaT;
     public javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtOpcion;
     // End of variables declaration//GEN-END:variables
 
     private void CargarListaFincas() {
@@ -700,17 +702,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     
     private void CargarListaFuentesHidricas() {
         listaFuentesHidricas = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION FROM fuentes_hidricas WHERE estado = 'Activo'");
-        System.out.println("listaFuentesHidricas--->"+listaFuentesHidricas.size());
-        for(Map<String, String> dato: listaFuentesHidricas){
-            System.out.println("dato.descr...."+dato.get("DESCRIPCION"));
-            ListaDatosMultiple.add(new ModeloOpcionesMultiples(Integer.parseInt(dato.get("ID")), 
-                                                                dato.get("DESCRIPCION"), 
-                                                                false));
-        }
-        
-        System.out.println("ListaDatosMultiple--->"+ListaDatosMultiple.size());
-        //Utilidades.LlenarComboBox(cbFuenteHidrica, listaFuentesHidricas, "DESCRIPCION");
-       
+        LlenarListaFuentes();
     }
     
     private void agregarFilaTabla(DefaultTableModel modelotbl, Object[] fila) {
@@ -721,8 +713,15 @@ public class VistaAllLotes extends javax.swing.JPanel {
         String id_Bloque = ""+listaBloques.get(cbBloque.getSelectedIndex()).get("ID");
         
         String AreaT = txtAreaT.getText().trim().replace(".", "").replace(",", ".");
-        double AcuAreaLotesxBloques = getAcumuladoArea(id_Bloque);
+        double AcuAreaLotesxBloques = getAcumuladoArea(id_Bloque, modeloLotes.getId());
         double AreaTo = Double.parseDouble(AreaT);
+        
+        System.out.println("AcuAreaLotesxBloques--->"+AcuAreaLotesxBloques);
+        System.out.println("AreaTo--->"+AreaTo);
+        System.out.println("AreaBloque--->"+AreaBloque);
+        
+        String[] idsFuentes = getIDs();
+        String[] Fuentes = getValues();
         if(modeloLotes.getId().equals("0")){
             boolean Valnumero = controlLote.VerificarNumeroLotexBloque(id_Bloque, txtNumero.getText().trim());
             if(Valnumero){
@@ -734,11 +733,21 @@ public class VistaAllLotes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "El area debe ser menor al area total de la finca");
             return;
         }
+        if(idsFuentes.length<=0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar al menos una fuente hidrica");
+            return;
+        }
+        
+        if(!modeloLotes.getId().equals("0")){
+            LlenarListaFuentesActualizar(idsFuentes);
+            RecorrerLista();
+        }
         
         modeloLotes.setId_bloque(id_Bloque);
         modeloLotes.setNumero(txtNumero.getText().trim());
         modeloLotes.setArea(txtAreaT.getText().trim().replace(".", "").replace(",", "."));
-        //modeloLotes.setId_fuente_hidrica(""+listaFuentesHidricas.get(cbFuenteHidrica.getSelectedIndex()).get("ID"));
+        modeloLotes.setId_fuente_hidrica(idsFuentes);
+        modeloLotes.setFuente_Hidrica(Fuentes);
         modeloLotes.setFecha("NOW()");
         modeloLotes.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         if(modeloLotes.getId_finca().equals("-1")){ 
@@ -747,18 +756,33 @@ public class VistaAllLotes extends javax.swing.JPanel {
         }
         
         int ret = -1;
+        System.out.println("modeloLotes.getId()-->"+modeloLotes.getId());
         if(modeloLotes.getId().equals("0")){//INSERT
+            System.out.println("HOLA");
             ret = controlLote.Guardar(modeloLotes);
         }else{
+            System.out.println("ENTRE PRO ACA");
+            
             ret = controlLote.Actualizar(modeloLotes);
+            
+            int rret = controlLote.ActualizarFuentexLotes(listaActualizarFuentes);
+            
         }
         
         if(ret == 0){
+            System.out.println("fila-->"+fila);
             if(fila > -1){//ESTA EN TABLA ACTUALIZAR
+                String f = "";
+                for(String d:modeloLotes.getFuente_Hidrica()){
+                    f += (f.equals("")?"":", ")+d;
+                }
+                System.out.println("f--->"+f);
                 ListamodeloLotes.set(fila, modeloLotes);
                 tbl_Lotes.setValueAt("Bloque "+modeloLotes.getNumero_bloque(), fila, 1);
                 tbl_Lotes.setValueAt(modeloLotes.getNumero(), fila, 2);
+                tbl_Lotes.setValueAt(modeloLotes.getNumero(), fila, 2);
                 tbl_Lotes.setValueAt(Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea().replace(".", ",")), fila, 3);
+                tbl_Lotes.setValueAt(f, fila, 4);
                 
                 
             }else{  
@@ -790,6 +814,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
         modeloLotes.setId_finca(""+idFinca);
         modeloLotes.setId("0");
         fila = -1;
+        LimpiarLstFuentes();
     }
     
     public void InicializarMultiComboBox(){
@@ -798,21 +823,118 @@ public class VistaAllLotes extends javax.swing.JPanel {
         }
     }
 
-    private double getAcumuladoArea(String id_Bloque) {
+    private double getAcumuladoArea(String id_Bloque, String id_Lote) {
         double ret = 0;
         String valor = "";
         for(int i = 0; i < ListamodeloLotes.size(); i++){
-            if(ListamodeloLotes.get(i).getId_bloque().equals(id_Bloque)){
-                valor = ListamodeloLotes.get(i).getArea().trim().replace(".", "").replace(",", ".");
+            if(ListamodeloLotes.get(i).getId_bloque().equals(id_Bloque) && !ListamodeloLotes.get(i).getId().equals(id_Lote)){
+                valor = ListamodeloLotes.get(i).getArea().trim();
                 ret += Double.parseDouble(valor);
             }
         }
-        
         return ret;
     }
+    
+
+    private void LlenarListaFuentes() {
+        
+        for (Map<String, String> lista: listaFuentesHidricas) {
+            modlistFuentes.addElement(lista.get("DESCRIPCION"));
+        }
+        lstFuentesHidricas.setModel(modlistFuentes);
+    }
  
-    public void EstadoOpciones(){
-        pnlOpciones.setVisible(ban);
-        scrlPnlOpciones.setVisible(ban);
+    private void LimpiarLstFuentes() {
+        lstFuentesHidricas.setModel(modlistFuentes);
+    }
+
+    private int[] getIndicesLista() {
+        int[] ret = new int[modeloLotes.getFuente_Hidrica().length];
+        int ind = 0;
+        for(String fuente: modeloLotes.getFuente_Hidrica()){
+            for(int i = 0; i < modlistFuentes.size(); i++){
+                if(modlistFuentes.getElementAt(i).equals(fuente)){
+                    ret[ind] = i;
+                    ind++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    private String[] getIDs() {
+        String[] ids = new String[lstFuentesHidricas.getSelectedIndices().length];
+        int x =0;
+        for(int ind :lstFuentesHidricas.getSelectedIndices()){
+            ids[x] = listaFuentesHidricas.get(ind).get("ID");
+            x++;
+        }
+        return ids;
+    }
+
+    private void LlenarListaFuentesActualizar(String[] idsFuentes) {
+        int ban = 0;
+        System.out.println("****************LlenarListaFuentesActualizar*****************"+idsFuentes.length);
+            
+            for(int i= 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++){
+                ban=0;
+                for(String ids: idsFuentes){
+                    if(ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])){
+                        ban = 1;
+                        break;
+                    }
+                }
+                if(ban == 0){
+                    Map<String, String> map =  new HashMap<>();
+                    map.put("INSERT", "1");
+                    map.put("IDLOTE", ""+ListamodeloLotes.get(fila).getId());
+                    map.put("IDFUENTE", ""+ListamodeloLotes.get(fila).getId_fuente_hidrica()[i]);
+                    map.put("IDUSUARIO", ""+ListamodeloLotes.get(fila).getId_usuario());
+                    map.put("ID", ""+ListamodeloLotes.get(fila).getIdxfuentehidrica()[i]);
+                    listaActualizarFuentes.add(map);
+                }
+            }
+            for(String ids: idsFuentes){
+                ban=0;
+                for(int i= 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++){
+                    if(ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])){
+                        ban = 1;
+                        break;
+                    }
+                }
+                if(ban == 0){
+                    Map<String, String> map =  new HashMap<>();
+                    map.put("INSERT", "0");
+                    map.put("IDLOTE", ""+ListamodeloLotes.get(fila).getId());
+                    map.put("IDFUENTE", ""+ids);
+                    map.put("IDUSUARIO", ""+ListamodeloLotes.get(fila).getId_usuario());
+                    map.put("ID", "0");
+                    listaActualizarFuentes.add(map);
+                }
+            }
+            System.out.println("*****************LlenarListaFuentesActualizar*******************"+listaActualizarFuentes.size());
+    }
+
+    private void RecorrerLista() {
+        System.out.println("*********RecorrerLista**********");
+        for(Map<String, String> map : listaActualizarFuentes){
+            System.out.println("*********************************************");
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                System.out.println("key-->"+key+"___________value-->"+value);
+            }
+        }
+        System.out.println("*****************RecorrerLista******************");
+    }
+
+    private String[] getValues() {
+        String[] ids = new String[lstFuentesHidricas.getSelectedIndices().length];
+        int x =0;
+        for(int ind :lstFuentesHidricas.getSelectedIndices()){
+            ids[x] = listaFuentesHidricas.get(ind).get("DESCRIPCION");
+            x++;
+        }
+        return ids;
     }
 }
