@@ -26,6 +26,21 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
     private boolean seleccionado;
     private String descripcion;
 
+    /**
+     * constructor
+     *
+     * @param actividad
+     * @param periodo
+     * @param semana
+     * @param estado
+     * @param seleccionado
+     * @param x
+     * @param y
+     * @param ancho
+     * @param alto
+     * @param colorFondo
+     * @param colorTexto
+     */
     public ActividadesPorPeriodo(Actividad actividad, Periodo periodo, Semana semana, String estado, boolean seleccionado, int x, int y, int ancho, int alto, Color colorFondo, Color colorTexto) {
         super(x, y, ancho, alto, colorFondo, colorTexto);
         this.fm = fm;
@@ -35,6 +50,10 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
         this.estado = estado;
         this.seleccionado = seleccionado;
         descripcion = "x";
+    }
+
+    public ActividadesPorPeriodo() {
+        super(0, 0, 0, 0);
     }
 
     @Override
@@ -116,7 +135,10 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
     }
 
     public boolean Igual(ActividadesPorPeriodo app) {
-        return this == app;
+        return (this.periodo.getAnio() == app.getPeriodo().getAnio()
+                && this.periodo.getMes() == app.getPeriodo().getMes()
+                && this.semana.getId() == app.getSemana().getId()
+                && this.actividad.getId().equals(app.getActividad().getId()));
     }
 
 }

@@ -12,7 +12,9 @@ import Actividades.Colores;
 import Actividades.Opciones;
 import Actividades.PanelActividades;
 import Actividades.Periodo;
+import Modelo.ModeloCronograma;
 import Utilidades.DireccionPintado;
+import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -96,6 +98,7 @@ public class EventoMouseClick implements MouseListener {
     private void click(MouseEvent e) {
         panRef.clickDerechoPresionado = false;
         seRealizoAccion = false;
+        clickBotonMasOpciones(e);
         clickBotonesDesplazamiento(e);
         clickOpcionDelMenu(e);
         clickActividadesPorPeriodo(e);
@@ -144,6 +147,8 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setSeleccionado(true);
                 actividadPorPeriodo.setEstado(opcion.getId());
                 actividadPorPeriodo.setColorFondo(opcion.getColorEstado());
+
+                panRef.agregarActividadesSeleccionadas(actividadPorPeriodo);
                 return;
             }
         }
@@ -155,6 +160,8 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setSeleccionado(false);
                 actividadPorPeriodo.setEstado("-1");
                 actividadPorPeriodo.setColorFondo(opcion.getColorEstado());
+
+                panRef.removerActividadesSeleccionadas(actividadPorPeriodo);
                 return;
             }
         }
@@ -205,6 +212,8 @@ public class EventoMouseClick implements MouseListener {
 
         panRef.limpiarPeriodos();
         panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, 4);
+        panRef.cargarActividadesPorPeriodo();
+        panRef.establecerActividadesSeleccionadas();
     }
 
     private void periodoSiguiente() {
@@ -218,6 +227,8 @@ public class EventoMouseClick implements MouseListener {
 
         panRef.limpiarPeriodos();
         panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, 4);
+        panRef.cargarActividadesPorPeriodo();
+        panRef.establecerActividadesSeleccionadas();
     }
 
     private void iniciarArrastreDelMouse(MouseEvent e) {
@@ -249,6 +260,7 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setEstado("-1");
                 color = actividadPorPeriodo.getColorFondo();
                 actividadPorPeriodo.setColorFondo(Colores.FADED);
+                panRef.agregarActividadesSeleccionadas(actividadPorPeriodo);
                 break;
             }
         }
@@ -258,6 +270,7 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setSeleccionado(true);
                 actividadPorPeriodo.setEstado(estado);
                 actividadPorPeriodo.setColorFondo(color);
+                panRef.removerActividadesSeleccionadas(actividadPorPeriodo);
                 break;
             }
         }
@@ -268,4 +281,9 @@ public class EventoMouseClick implements MouseListener {
         ny = 0;
     }
 
+    private void clickBotonMasOpciones(MouseEvent e) {
+        if (panRef.btnMasOpciones.estaSobreElemento(e.getPoint())) {
+            panRef.guardarCronograma();
+        }
+    }
 }

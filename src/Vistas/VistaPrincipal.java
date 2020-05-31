@@ -12,9 +12,12 @@ import AjustarControles.ControlDeUsuario;
 import AjustarControles.tiposDeAjuste;
 import ImportExport.EstadoIE;
 import ImportExport.ImportExport;
+import Modelo.ModeloVentanaGeneral;
 import Utilidades.Consultas;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,11 +29,13 @@ import javax.swing.JScrollPane;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     private ImportExport ie;
-    private JScrollPane scroll;
+    public JScrollPane scroll;
     private JPanel panel;
     public int max = 0;
     private Dimension dpanel = new Dimension();
     private int x, y, band = 0;
+    public int desplazamiento = 200;
+    public String idFinca="";
 
     /**
      * Creates new form VistaPrincipal
@@ -1161,17 +1166,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnCronogramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCronogramaMousePressed
         if (evt.getClickCount() == 1) {
-            EstablecerTituloVentana("Cronograma");
-            PanelActividades vista = new PanelActividades(this);
-            scroll = new JScrollPane();
-            scroll.setViewportView(vista);
-            scroll.setPreferredSize(new Dimension(this.getSize()));
-            MostrarPanel(scroll);
+            SeleccionarFinca();
+//            EstablecerTituloVentana("Cronograma");
+//            PanelActividades vista = new PanelActividades(this);
+//            scroll = new JScrollPane();
+//            scroll.setViewportView(vista);
+//            scroll.setPreferredSize(new Dimension(this.getSize()));
+//            MostrarPanel(scroll);
         }
     }//GEN-LAST:event_btnCronogramaMousePressed
 
     private void btnMenuVerticalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuVerticalMouseClicked
-        int desplazamiento = 200;
+
         int tamanio = 30;
         int x = 0;
         int ancho = 0;
@@ -1200,13 +1206,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
             pnlMenuVertical.setBounds(
                     pnlMenuVertical.getX(),
                     pnlMenuVertical.getY(),
-                    desplazamiento+tamanio,
+                    desplazamiento + tamanio,
                     pnlMenuVertical.getHeight()
             );
             jScrollPane1.setBounds(
                     jScrollPane1.getX(),
                     jScrollPane1.getY(),
-                    desplazamiento+tamanio,
+                    desplazamiento + tamanio,
                     jScrollPane1.getHeight()
             );
             band = 0;
@@ -1373,7 +1379,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblTitulo;
+    public javax.swing.JLabel lblTitulo;
     public javax.swing.JLabel mensaje;
     public javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlContenedorActividades;
@@ -1402,5 +1408,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void EstablecerTituloVentana(String titulo) {
         lblTitulo.setText("" + titulo);
     }
+
+    private void SeleccionarFinca() {
+        VistaSeleccionarFinca vsf = new VistaSeleccionarFinca();
+        ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(this, vsf, 1);
+        new VistaGeneral(objetoVentana).setVisible(true);
+    }
+
 
 }
