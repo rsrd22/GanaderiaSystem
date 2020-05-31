@@ -25,6 +25,10 @@ public class Semana extends Rectangulo implements IGraficos {
         this.descripcion = descripcion;
     }
 
+    public Semana() {
+        super(0, 0, 0, 0);
+    }
+    
     public int getId() {
         return id;
     }
