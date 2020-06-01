@@ -38,7 +38,7 @@ public class BotonMasOpciones extends Rectangulo implements IGraficos {
         int ny = alto / 2 - altoTexto / 2;
 
         g.setColor(colorFondo);
-        g.fillOval(x, y, ancho, alto);
+        g.fillRect(x, y, ancho, alto);
         g.setColor(colorTexto);
         g.drawString(texto, x + nx, y - ny + alto);
     }
