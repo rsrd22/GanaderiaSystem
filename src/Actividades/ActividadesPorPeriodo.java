@@ -5,7 +5,6 @@
  */
 package Actividades;
 
-import Utilidades.Estado;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -24,7 +23,9 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
     private Semana semana;
     private String estado;
     private boolean seleccionado;
+    private boolean remover;
     private String descripcion;
+    private String id;
 
     /**
      * constructor
@@ -49,11 +50,15 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
         this.semana = semana;
         this.estado = estado;
         this.seleccionado = seleccionado;
+        this.remover = false;
         descripcion = "x";
+        this.id="0";
     }
 
     public ActividadesPorPeriodo() {
         super(0, 0, 0, 0);
+        this.id="0";
+        this.remover = false;
     }
 
     @Override
@@ -94,6 +99,14 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
         }
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setSemana(Semana semana) {
         this.semana = semana;
     }
@@ -132,6 +145,14 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
 
     public void setSeleccionado(boolean seleccionado) {
         this.seleccionado = seleccionado;
+    }
+
+    public boolean isRemovida() {
+        return remover;
+    }
+
+    public void setRemovida(boolean remover) {
+        this.remover = remover;
     }
 
     public boolean Igual(ActividadesPorPeriodo app) {

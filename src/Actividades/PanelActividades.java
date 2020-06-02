@@ -24,6 +24,7 @@ import java.awt.RenderingHints;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -42,6 +43,7 @@ public class PanelActividades extends JPanel {
     public ArrayList<Actividad> actividades;
     public ArrayList<ActividadesPorPeriodo> actividadesPeriodos;
     private ArrayList<ActividadesPorPeriodo> actividadesSeleccionadas;
+    private ArrayList<ActividadesPorPeriodo> actividadesParaGuardar;
     private ArrayList<ModeloCronograma> listaDatos;
     private ControlCronograma controlCronograma;
     public BotonesDeProgreso[] botones;
@@ -74,6 +76,7 @@ public class PanelActividades extends JPanel {
         actividades = new ArrayList<>();
         actividadesPeriodos = new ArrayList<>();
         actividadesSeleccionadas = new ArrayList<>();
+        actividadesParaGuardar = new ArrayList<>();
         botones = new BotonesDeProgreso[2];
         int an = 50, margen = 50;
         btnMasOpciones = new BotonMasOpciones(
@@ -103,6 +106,10 @@ public class PanelActividades extends JPanel {
         vp.addComponentListener(new EventoVentana(this));
     }
 
+    public void establecerActividadesSeleccionadas() {
+        establecerListaDeActividadesSeleccionadas(controlCronograma.ObtenerDatosKey(vp.idFinca));
+    }
+
     private void establecerListaDeActividadesSeleccionadas(Object listado) {
         ArrayList<ModeloCronograma> modeloActividades = (ArrayList<ModeloCronograma>) listado;
 
@@ -120,9 +127,11 @@ public class PanelActividades extends JPanel {
                 appdb.setActividad(act);
                 for (ActividadesPorPeriodo app : actividadesPeriodos) {
                     if (app.Igual(appdb)) {
+                        app.setId(modelo.getId());
                         app.setEstado(modelo.getIdEstado());
-                        app.setColorFondo(new Color(Integer.parseInt(modelo.getColor())));
-                        agregarActividadesSeleccionadas(app);
+                        int color = Integer.parseInt(modelo.getColor().isEmpty() ? "0" : modelo.getColor());
+                        app.setColorFondo(new Color(color));
+                        agregarActividadesSeleccionadasDB(app);
                         break;
                     }
                 }
@@ -131,10 +140,6 @@ public class PanelActividades extends JPanel {
         }
     }
 
-    public void establecerActividadesSeleccionadas() {
-        establecerListaDeActividadesSeleccionadas(controlCronograma.ObtenerDatosKey(vp.idFinca));
-    }
-    
     public void limpiarPeriodos() {
         periodos = new ArrayList<>();
     }
@@ -341,16 +346,42 @@ public class PanelActividades extends JPanel {
         btnMasOpciones.pintar(g2d);
     }
 
+    public void agregarActividadesSeleccionadasDB(ActividadesPorPeriodo actividadPorPeriodo) {
+        for (int i = 0; i < actividadesSeleccionadas.size(); i++) {
+            if (actividadesSeleccionadas.get(i).Igual(actividadPorPeriodo)) {
+                actividadesSeleccionadas.get(i).setActividad(actividadPorPeriodo.getActividad());
+                actividadesSeleccionadas.get(i).setPeriodo(actividadPorPeriodo.getPeriodo());
+                actividadesSeleccionadas.get(i).setEstado(actividadPorPeriodo.getEstado());
+                return;
+            }
+        }
+
+        actividadesSeleccionadas.add(actividadPorPeriodo);
+    }
+    
     public void agregarActividadesSeleccionadas(ActividadesPorPeriodo actividadPorPeriodo) {
+        for (int i = 0; i < actividadesSeleccionadas.size(); i++) {
+            if (actividadesSeleccionadas.get(i).Igual(actividadPorPeriodo)) {
+                actividadesSeleccionadas.get(i).setActividad(actividadPorPeriodo.getActividad());
+                actividadesSeleccionadas.get(i).setPeriodo(actividadPorPeriodo.getPeriodo());
+                actividadesSeleccionadas.get(i).setEstado(actividadPorPeriodo.getEstado());
+
+                actividadesParaGuardar.add(actividadesSeleccionadas.get(i));
+                return;
+            }
+        }
+
         actividadesSeleccionadas.add(actividadPorPeriodo);
     }
 
     public void removerActividadesSeleccionadas(ActividadesPorPeriodo actividadPorPeriodo) {
         for (int i = 0; i < actividadesSeleccionadas.size(); i++) {
             if (actividadesSeleccionadas.get(i).Igual(actividadPorPeriodo)) {
-                System.out.println("********* igual " + actividadesSeleccionadas.size());
+                actividadesSeleccionadas.get(i).setRemovida(true);
+                
+                actividadesParaGuardar.add(actividadesSeleccionadas.get(i));
+                
                 actividadesSeleccionadas.remove(i);
-                System.out.println("********* igual " + actividadesSeleccionadas.size());
                 break;
             }
         }
@@ -364,22 +395,47 @@ public class PanelActividades extends JPanel {
     private void cargarDatosAlModelo() {
         listaDatos = new ArrayList<>();
         ModeloCronograma modelo;
-        if (actividadesSeleccionadas.size() > 0) {
-            for (ActividadesPorPeriodo app : actividadesSeleccionadas) {
+        HashSet hs = new HashSet();
+        
+        hs.addAll(actividadesParaGuardar);
+        actividadesParaGuardar.clear();
+        actividadesParaGuardar.addAll(hs);
+        
+        if (actividadesParaGuardar.size() > 0) {
+            for (ActividadesPorPeriodo app : actividadesParaGuardar) {
                 modelo = new ModeloCronograma();
                 modelo.setAnio("" + app.getPeriodo().getAnio());
                 modelo.setFecha("NOW()");
-                modelo.setId("0");
+                modelo.setId(app.getId());
                 modelo.setIdActividad(app.getActividad().getId());
                 modelo.setIdEstado(app.getEstado());
                 modelo.setIdFinca(vp.idFinca);
                 modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
                 modelo.setMes("" + app.getPeriodo().getMes());
                 modelo.setSemana("" + app.getSemana().getId());
+                modelo.setRemovida(app.isRemovida());
 
                 listaDatos.add(modelo);
             }
         }
+//        listaDatos = new ArrayList<>();
+//        ModeloCronograma modelo;
+//        if (actividadesSeleccionadas.size() > 0) {
+//            for (ActividadesPorPeriodo app : actividadesSeleccionadas) {
+//                modelo = new ModeloCronograma();
+//                modelo.setAnio("" + app.getPeriodo().getAnio());
+//                modelo.setFecha("NOW()");
+//                modelo.setId(app.getId());
+//                modelo.setIdActividad(app.getActividad().getId());
+//                modelo.setIdEstado(app.getEstado());
+//                modelo.setIdFinca(vp.idFinca);
+//                modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+//                modelo.setMes("" + app.getPeriodo().getMes());
+//                modelo.setSemana("" + app.getSemana().getId());
+//
+//                listaDatos.add(modelo);
+//            }
+//        }
     }
 
     private void Guardar() {
@@ -405,6 +461,5 @@ public class PanelActividades extends JPanel {
 
         JOptionPane.showMessageDialog(this, mensaje);
     }
-
 
 }

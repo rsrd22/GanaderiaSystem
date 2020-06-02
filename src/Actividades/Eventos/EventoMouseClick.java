@@ -12,9 +12,7 @@ import Actividades.Colores;
 import Actividades.Opciones;
 import Actividades.PanelActividades;
 import Actividades.Periodo;
-import Modelo.ModeloCronograma;
 import Utilidades.DireccionPintado;
-import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -105,6 +103,9 @@ public class EventoMouseClick implements MouseListener {
     }
 
     private void clickBotonesDesplazamiento(MouseEvent e) {
+        if (seRealizoAccion) {
+            return;
+        }
         for (BotonesDeProgreso boton : panRef.botones) {
             if (boton.estaSobreElemento(e.getPoint())) {
                 switch (boton.getId()) {
@@ -243,11 +244,42 @@ public class EventoMouseClick implements MouseListener {
             nx = e.getX();
             ny = e.getY();
             if (ny - y >= -18 && ny - y <= 18) {
-                establecerSeleccionado();
+                establecerSeleccionadoParaGuardar();
             } else {
                 JOptionPane.showMessageDialog(panRef, "la operacion a realizar debe ser sobre la misma actividad");
             }
         }
+    }
+
+    private void establecerSeleccionadoParaGuardar() {
+        Color color = null;
+        String estado = "-1";
+        for (ActividadesPorPeriodo actividadPorPeriodo : panRef.actividadesPeriodos) {
+            if (actividadPorPeriodo.estaSobreElemento(new Point(x, y))) {
+                actividadPorPeriodo.setSeleccionado(false);
+                estado = actividadPorPeriodo.getEstado();
+                actividadPorPeriodo.setEstado("-1");
+                color = actividadPorPeriodo.getColorFondo();
+                actividadPorPeriodo.setColorFondo(Colores.FADED);
+                panRef.removerActividadesSeleccionadas(actividadPorPeriodo);
+                break;
+            }
+        }
+
+        for (ActividadesPorPeriodo actividadPorPeriodo : panRef.actividadesPeriodos) {
+            if (actividadPorPeriodo.estaSobreElemento(new Point(nx, ny))) {
+                actividadPorPeriodo.setSeleccionado(true);
+                actividadPorPeriodo.setEstado(estado);
+                actividadPorPeriodo.setColorFondo(color);
+                panRef.agregarActividadesSeleccionadas(actividadPorPeriodo);
+                break;
+            }
+        }
+
+        x = 0;
+        y = 0;
+        nx = 0;
+        ny = 0;
     }
 
     private void establecerSeleccionado() {
@@ -260,7 +292,6 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setEstado("-1");
                 color = actividadPorPeriodo.getColorFondo();
                 actividadPorPeriodo.setColorFondo(Colores.FADED);
-                panRef.agregarActividadesSeleccionadas(actividadPorPeriodo);
                 break;
             }
         }
@@ -270,7 +301,6 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setSeleccionado(true);
                 actividadPorPeriodo.setEstado(estado);
                 actividadPorPeriodo.setColorFondo(color);
-                panRef.removerActividadesSeleccionadas(actividadPorPeriodo);
                 break;
             }
         }
@@ -284,6 +314,7 @@ public class EventoMouseClick implements MouseListener {
     private void clickBotonMasOpciones(MouseEvent e) {
         if (panRef.btnMasOpciones.estaSobreElemento(e.getPoint())) {
             panRef.guardarCronograma();
+            seRealizoAccion=true;
         }
     }
 }
