@@ -62,7 +62,6 @@ public class ControlCronograma implements IControl {
         cronograma = mySQL.ListSQL(consulta);
 
         if (cronograma.size() > 0) {
-
             for (Map<String, String> actividad : cronograma) {
                 lista.add(new ModeloCronograma(
                         actividad.get("anio"),
@@ -90,32 +89,35 @@ public class ControlCronograma implements IControl {
         listModelo = (ArrayList<ModeloCronograma>) o;
 
         if (listModelo.size() > 0) {
-            //consultas.add("DELETE FROM cronograma WHERE id_finca=" + listModelo.get(0).getIdFinca());
             for (ModeloCronograma modelo : listModelo) {
-                consultas.add(
-                        //<editor-fold defaultstate="collapsed" desc="INSERT">
-                        "insert into cronograma(id,id_finca,id_actividad,anio,mes,semana,id_estado,id_usuario,fecha)\n"
-                        + "values (\n"
-                        + "" + modelo.getId() + ",\n"
-                        + "" + modelo.getIdFinca() + ",\n"
-                        + "" + modelo.getIdActividad() + ",\n"
-                        + "" + modelo.getAnio() + ",\n"
-                        + "" + modelo.getMes() + ",\n"
-                        + "" + modelo.getSemana() + ",\n"
-                        + "" + modelo.getIdEstado() + ",\n"
-                        + "" + modelo.getIdUsuario() + ",\n"
-                        + "" + modelo.getFecha() + "\n"
-                        + ")\n"
-                        + "ON DUPLICATE KEY UPDATE\n"
-                        + "id_actividad=" + modelo.getIdFinca() + ",\n"
-                        + "anio=" + modelo.getAnio() + ",\n"
-                        + "mes=" + modelo.getMes() + ",\n"
-                        + "semana=" + modelo.getSemana() + ",\n"
-                        + "id_estado=" + modelo.getIdEstado() + ",\n"
-                        + "id_usuario=" + modelo.getIdUsuario() + ",\n"
-                        + "fecha=" + modelo.getFecha() + ""
-                //</editor-fold>
-                );
+                if (modelo.isRemovida()) {
+                    consultas.add("DELETE FROM cronograma WHERE id=" + modelo.getId());
+                } else {
+                    consultas.add(
+                            //<editor-fold defaultstate="collapsed" desc="INSERT">
+                            "insert into cronograma(id,id_finca,id_actividad,anio,mes,semana,id_estado,id_usuario,fecha)\n"
+                            + "values (\n"
+                            + "" + modelo.getId() + ",\n"
+                            + "" + modelo.getIdFinca() + ",\n"
+                            + "" + modelo.getIdActividad() + ",\n"
+                            + "" + modelo.getAnio() + ",\n"
+                            + "" + modelo.getMes() + ",\n"
+                            + "" + modelo.getSemana() + ",\n"
+                            + "" + modelo.getIdEstado() + ",\n"
+                            + "" + modelo.getIdUsuario() + ",\n"
+                            + "" + modelo.getFecha() + "\n"
+                            + ")\n"
+                            + "ON DUPLICATE KEY UPDATE\n"
+                            + "id_actividad=" + modelo.getIdActividad() + ",\n"
+                            + "anio=" + modelo.getAnio() + ",\n"
+                            + "mes=" + modelo.getMes() + ",\n"
+                            + "semana=" + modelo.getSemana() + ",\n"
+                            + "id_estado=" + modelo.getIdEstado() + ",\n"
+                            + "id_usuario=" + modelo.getIdUsuario() + ",\n"
+                            + "fecha=" + modelo.getFecha() + ""
+                    //</editor-fold>
+                    );
+                }
             }
 
             try {

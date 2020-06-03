@@ -21,6 +21,7 @@ public class ModeloCronograma {
     private String Mes;
     private String Semana;
     private String color;
+    private boolean remover;
 
     /**
      *Constructor del modelo.
@@ -46,6 +47,15 @@ public class ModeloCronograma {
         this.Mes = Mes;
         this.Semana = Semana;
         this.color = color;
+        this.remover = false;
+    }
+    
+    public boolean isRemovida() {
+        return remover;
+    }
+
+    public void setRemovida(boolean remover) {
+        this.remover = remover;
     }
 
     public String getColor() {
