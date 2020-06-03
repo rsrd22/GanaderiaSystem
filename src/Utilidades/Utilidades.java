@@ -39,7 +39,7 @@ public class Utilidades {
     public static Double FACTOR_CONVERSION = 2.20462;
 
     public static void EstablecerIcono(JFrame vent) {
-        vent.setIconImage(Toolkit.getDefaultToolkit().getImage(vent.getClass().getResource("/img/Logo.png")));
+        vent.setIconImage(Toolkit.getDefaultToolkit().getImage(vent.getClass().getResource("/img/ganaderia32.png")));
     }
 
     public static void EstablecerPermisosVista(JFrame vista, int idVista) {
@@ -747,7 +747,7 @@ public class Utilidades {
                 break;
             case EstadoControles.DESPUES_DE_ELIMINAR:
                 gestionEstadoControles.limpiarControles();
-                gestionEstadoControles.deshabilitarControles();
+                gestionEstadoControles.habilitarControles();
                 break;
             default:
                 break;

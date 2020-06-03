@@ -103,15 +103,10 @@ public class VistaPluviometro extends javax.swing.JPanel {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
             
-            if(i == 2 ){
-                tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-               
-            }else{
                 tcr.setHorizontalAlignment(SwingConstants.CENTER);
                 
-            }
             tcr.setForeground(new Color(26, 82, 118));
-            tbl_Pluviometro.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            tbl_Pluviometro.getColumnModel().getColumn(i).setCellRenderer(tcr); 
             
         }
         JTableHeader header = tbl_Pluviometro.getTableHeader();
@@ -256,7 +251,7 @@ public class VistaPluviometro extends javax.swing.JPanel {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel13.setText("ml");
+        jLabel13.setText("mm");
         jLabel13.setToolTipText("Hectárea");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;

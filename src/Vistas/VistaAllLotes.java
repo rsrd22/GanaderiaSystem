@@ -730,7 +730,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         }
         if(Double.parseDouble(AreaBloque) < AcuAreaLotesxBloques+AreaTo){
-            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total de la finca");
+            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total del bloque. \n el area del bloque es "+AreaBloque);
             return;
         }
         if(idsFuentes.length<=0){

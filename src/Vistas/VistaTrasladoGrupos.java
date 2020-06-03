@@ -8,15 +8,23 @@ package Vistas;
 
 import Control.ControlGeneral;
 import Control.ControlTraslado;
+import Modelo.ModeloTraslado;
+import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,6 +40,8 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     public String idFincaDestino;
     public String idTipoAnimal;
     public String idTipoAnimalDestino;
+    public String motivo;
+    private ArrayList<ModeloTraslado> ListamodeloTraslado;
     public List<Map<String, String>> listaGrupos;
     public List<Map<String, String>> listaGruposDestino;
     public DefaultListModel modlistGrupos;
@@ -67,16 +77,50 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
                 }
             }
         });
+        cbFinca.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    eventocbFinca();
+                }
+            }
+        });
+        cbFincaDestino.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    eventocbFincaDestino();
+                }
+            }
+        });
+        cbTipoAnimales.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    eventocbTipoAnimales();
+                }
+            }
+        });
+        cbTipoAnimalesDestino.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    eventocbTipoAnimalesDestino();
+                }
+            }
+        });
         listaFincas = new ArrayList<>();
         listaTipoAnimales = new ArrayList<>();
         listaFincasDestino = new ArrayList<>();
         listaTipoAnimalesDestino = new ArrayList<>();
+        ListamodeloTraslado = new ArrayList<>();
         listaGrupos = new ArrayList<>();
         listaGruposDestino = new ArrayList<>();
         idFinca = "";
         idTipoAnimal = "";
         idFincaDestino = "";
         idTipoAnimalDestino = "";
+        motivo = "";
         modlistGrupos = new DefaultListModel();
         modlistGruposDestino = new DefaultListModel();
         IniciarFecha();
@@ -131,20 +175,10 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFinca.setForeground(new java.awt.Color(59, 123, 50));
-        cbFinca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFincaActionPerformed(evt);
-            }
-        });
         jPanel3.add(cbFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 48, 232, 30));
 
         cbTipoAnimales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoAnimales.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipoAnimales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTipoAnimalesActionPerformed(evt);
-            }
-        });
         jPanel3.add(cbTipoAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 108, 232, 30));
 
         lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -237,20 +271,10 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
 
         cbFincaDestino.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFincaDestino.setForeground(new java.awt.Color(59, 123, 50));
-        cbFincaDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFincaDestinoActionPerformed(evt);
-            }
-        });
         jPanel4.add(cbFincaDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 48, 230, 30));
 
         cbTipoAnimalesDestino.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoAnimalesDestino.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipoAnimalesDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTipoAnimalesDestinoActionPerformed(evt);
-            }
-        });
         jPanel4.add(cbTipoAnimalesDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 109, 230, 30));
 
         lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -291,40 +315,72 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+    public void eventocbFinca(){
         if(cbFinca.getItemCount() > 0){
             idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
             FuncionLlenarTipoAnimales(0);
         }
-    }//GEN-LAST:event_cbFincaActionPerformed
-
-    private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
+    }
+    
+    public void eventocbTipoAnimales(){
         if(cbTipoAnimales.getItemCount() > 0){
             idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
-            //FuncionLlenarGrupos(0);
+            String consulta = "SELECT * FROM ( SELECT gr.`id`, gr.`descripcion` AS DESCGRUPO, \n" +
+                                "COUNT(ani.`id`) AS NUMANIMALES, CONCAT(gr.`descripcion`, ' (', COUNT(ani.`id`), tpo.`descripcion`, ')') AS DESCRIPCION\n" +
+                                "FROM grupos gr \n" +
+                                "INNER JOIN `tipo_animales` tpo ON tpo.`id` = gr.`id_tipo_animal`\n" +
+                                "LEFT JOIN `traslado_animalxgrupo` traslado ON  traslado.`id_grupo` = gr.`id`  \n" +
+                                "AND traslado.`id_finca` = tpo.`id_finca` AND traslado.`estado` = 'Activo'\n" +
+                                "LEFT JOIN `animales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
+                                "AND ani.muerte = '0' AND ani.`venta` = '0' \n" +
+                                "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"'  \n" +
+                                "GROUP BY gr.`id` ) AS tbl\n" +
+                                "WHERE tbl.NUMANIMALES > 0";
+            
+            LimpiarLstGrupos();
+            if(cbTipoAnimales.getSelectedIndex()>0){
+                listaGrupos = controlgen.GetComboBox(consulta);
+                LlenarJList(listaGrupos, modlistGrupos, lstGruposOrigen);
+            }
         }
-    }//GEN-LAST:event_cbTipoAnimalesActionPerformed
-
-    private void cbFincaDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaDestinoActionPerformed
+    }
+    
+    public void eventocbFincaDestino(){
         if(cbFincaDestino.getItemCount() > 0){
             idFincaDestino = listaFincas.get(cbFincaDestino.getSelectedIndex()).get("ID");
             FuncionLlenarTipoAnimales(1);
         }
-    }//GEN-LAST:event_cbFincaDestinoActionPerformed
-
-    private void cbTipoAnimalesDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesDestinoActionPerformed
+    }
+    
+    private void eventocbTipoAnimalesDestino(){
         if(cbTipoAnimalesDestino.getItemCount() > 0){
             idTipoAnimalDestino = listaTipoAnimalesDestino.get(cbTipoAnimalesDestino.getSelectedIndex()).get("ID");
-            //FuncionLlenarGrupos(1);
+            String consulta = "SELECT gr.`id`, gr.`descripcion` AS DESCGRUPO, \n" +
+                                "COUNT(ani.`id`) AS NUMANIMALES, CONCAT(gr.`descripcion`, ' (', COUNT(ani.`id`), tpo.`descripcion`, ')') AS DESCRIPCION\n" +
+                                "FROM grupos gr \n" +
+                                "INNER JOIN `tipo_animales` tpo ON tpo.`id` = gr.`id_tipo_animal`\n" +
+                                "LEFT JOIN `traslado_animalxgrupo` traslado ON  traslado.`id_grupo` = gr.`id`  \n" +
+                                "AND traslado.`id_finca` = tpo.`id_finca` AND traslado.`estado` = 'Activo'\n" +
+                                "LEFT JOIN `animales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
+                                "AND ani.muerte = '0' AND ani.`venta` = '0' \n" +
+                                "WHERE tpo.`id_finca` = '"+idFincaDestino+"' AND tpo.`id` = '"+idTipoAnimalDestino+"'  \n" +
+                                "GROUP BY gr.`id` ";
+            LimpiarLstGruposDestino();
+            if(cbTipoAnimalesDestino.getSelectedIndex()>0){
+                listaGruposDestino = controlgen.GetComboBox(consulta);
+                LlenarJList(listaGruposDestino, modlistGruposDestino, lstGrupoDestino);
+            }
         }
-    }//GEN-LAST:event_cbTipoAnimalesDestinoActionPerformed
-
+    }
+    
     private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
         LimpiarFomulario();
     }//GEN-LAST:event_btnDescartarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
+        VistaIngresarMotivo vsf = new VistaIngresarMotivo();
+        ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(this, vsf, 1);
+        new VistaGeneral(objetoVentana).setVisible(true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
@@ -403,13 +459,119 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         lstGrupoDestino.setModel(modlistGruposDestino);
     }
     
-    private void LimpiarFomulario() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void Guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void LlenarJList(List<Map<String, String>> datos, DefaultListModel modelo, JList jlist) {
+        for (Map<String, String> lista: datos) {
+            modelo.addElement(lista.get("DESCRIPCION"));
+        }
+        jlist.setModel(modelo);
     }
     
+    
+    private void LimpiarFomulario() {
+        cbTipoAnimales.setSelectedIndex(0);
+        cbTipoAnimalesDestino.setSelectedIndex(0);
+        
+        LimpiarLstGrupos();
+        LimpiarLstGruposDestino();
+    }
+    
+    
+
+    private void Guardar() {
+        //String motivo = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFechaTraslado.getCalendar();
+        String fechaT = sdf.format(fecha.getTime());
+        
+        String[] idsGrupoOrigen = getIDsGrupoOrigen();
+        System.out.println("lstGrupoDestino.getSelectedIndex()--->"+lstGrupoDestino.getSelectedIndex());
+        
+        
+        String ids = "";
+        for(int i = 0; i < idsGrupoOrigen.length; i++){
+            ids += (ids.equals("")?"":", ")+"'"+idsGrupoOrigen[i]+"'";
+        }
+        
+        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
+        if (ids.equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor seleccione al menos un grupo a trasladar, e intentelo nuevamente.");
+            return;
+        }
+        if (lstGrupoDestino.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(this, "Por favor seleccione el grupo destino a trasladar, e intentelo nuevamente.");
+            return;
+        }
+        
+        
+        //</editor-fold>
+        String idGrupoDestino = listaGruposDestino.get(lstGrupoDestino.getSelectedIndex()).get("id");
+        
+//        //<editor-fold defaultstate="collapsed" desc="Lista ID Animales">
+//        List<Map<String, String>> ListaidsAnimales = controlTraslado.getIdsAnimalesxGrupos(idTipoAnimal, ids);
+//        for (int i = 0; i < ListaidsAnimales.size(); i++) {
+//            ListamodeloTraslado.add(
+//                    new ModeloTraslado(
+//                            "Activo",
+//                            "NOW()",
+//                            fechaT,
+//                            "0",
+//                            "" + ListaidsAnimales.get(i).get("ID"),
+//                            idFincaDestino,
+//                            idGrupoDestino,
+//                            datosUsuario.datos.get(0).get("ID_USUARIO"),
+//                            motivo,
+//                            "",
+//                            "",
+//                            "",
+//                            "",
+//                            ""+idTipoAnimalDestino)//IDTIPOANIMAL
+//            );
+//        }
+//        //</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc="Actualizar Animales">
+//        int ret = 0, ret1 = 0, ret2 = 0;
+//        for(int i = 0; i < idsGrupoOrigen.length; i++){
+//            Map<String, String> datos = new HashMap<String, String>();
+//            datos.put("IDTPO_DESTINO", idTipoAnimalDestino);
+//            datos.put("IDGPO_DESTINO", idGrupoDestino);
+//            datos.put("IDTPO_ORIGEN", idTipoAnimal);
+//            datos.put("IDGPO_ORIGEN", idsGrupoOrigen[i]);
+//            
+//            ret = controlTraslado.ActulizarAnimales(datos);
+//        }
+//        //</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc="Inactivar Traslado">
+//        for(int i = 0; i < idsGrupoOrigen.length; i++){
+//            ret1 = controlTraslado.InactivarTraslados(idsGrupoOrigen[i]);
+//        }
+//        //</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc="GUARDAR TRASLADOS X ANIMALES">
+//        for (int i = 0; i < ListamodeloTraslado.size(); i++) {
+//            ret2 = controlTraslado.Guardar(ListamodeloTraslado.get(i));
+//        }
+//        //</editor-fold>
+        
+//        if(ret == 0 && ret1 == 0 && ret2 == 0){
+//            JOptionPane.showMessageDialog(null, "La operacion se realizo satisfactoriamente");
+//            LimpiarFomulario();
+//        }
+        
+        
+    }
+    
+    private String[] getIDsGrupoOrigen() {
+        String[] ids = new String[lstGruposOrigen.getSelectedIndices().length];
+        int x =0;
+        for(int ind :lstGruposOrigen.getSelectedIndices()){
+            ids[x] = listaGrupos.get(ind).get("id");
+            x++;
+        }
+        return ids;
+    }
+
+    public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral, String motivo) {
+        this.motivo = motivo;
+        Guardar();
+    }
     
 }

@@ -966,12 +966,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFincas1MousePressed
 
     private void btnMostrarPropietariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseClicked
+        if(!pnlContenedorPropietarios.isVisible())
+            OcultarContenidoMenu();
+        
         btnPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
         btnHierros.setVisible(!pnlContenedorPropietarios.isVisible());
         pnlContenedorPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
     }//GEN-LAST:event_btnMostrarPropietariosMouseClicked
 
     private void btnMostrarFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarFincasMouseClicked
+        if(!pnlContenedorFincas.isVisible())
+            OcultarContenidoMenu();
         btnFincas.setVisible(!pnlContenedorFincas.isVisible());
         btnBloques.setVisible(!pnlContenedorFincas.isVisible());
         btnFuenteHidrica.setVisible(!pnlContenedorFincas.isVisible());
@@ -980,6 +985,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarFincasMouseClicked
 
     private void btnMostrarGruposAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarGruposAnimalesMouseClicked
+        if(!pnlContenedorGruposAnimales.isVisible())
+            OcultarContenidoMenu();
+        
         btnMacrogrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
         btnGrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
         btnTipoAnimal.setVisible(!pnlContenedorGruposAnimales.isVisible());
@@ -1059,6 +1067,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLotesMouseClicked
 
     private void btnMostrarTrasladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarTrasladosMouseClicked
+        if(!pnlContenedorTraslados.isVisible())
+            OcultarContenidoMenu();
+        
         btnTrasladoGrupo.setVisible(!pnlContenedorTraslados.isVisible());
         btnTrasladoAnimal.setVisible(!pnlContenedorTraslados.isVisible());
         pnlContenedorTraslados.setVisible(!pnlContenedorTraslados.isVisible());
@@ -1089,6 +1100,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMuerteAnimalMousePressed
 
     private void btnMostrarActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarActividadesMouseClicked
+        if(!pnlContenedorActividades.isVisible())
+            OcultarContenidoMenu();
         btnRegistroActividades.setVisible(!pnlContenedorActividades.isVisible());
         btnEstadoActividades.setVisible(!pnlContenedorActividades.isVisible());
         btnCronograma.setVisible(!pnlContenedorActividades.isVisible());
@@ -1139,6 +1152,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioMouseClicked
 
     private void btnMostrarAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarAnimalesMouseClicked
+        if(!pnlContenedorAnimales.isVisible())
+            OcultarContenidoMenu();
         btnAnimales.setVisible(!pnlContenedorAnimales.isVisible());
         btnMuerteAnimal.setVisible(!pnlContenedorAnimales.isVisible());
         pnlContenedorAnimales.setVisible(!pnlContenedorAnimales.isVisible());
@@ -1234,9 +1249,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
         if (evt.getClickCount() == 1) {
-            System.out.println("max--->" + max);
-            System.out.println("w pnlcontenedor--->" + pnlContenedor.getWidth());
-            System.out.println("h pnlcontenedor--->" + pnlContenedor.getHeight());
+            
             if (max == 0) {//MAXIMIZAR
                 btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
                 btnMaximizar.setToolTipText("Restaurar");
@@ -1248,8 +1261,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 max = 0;
                 this.setExtendedState(JFrame.NORMAL);
             }
-            System.out.println("w pnlcontenedor--->" + pnlContenedor.getWidth());
-            System.out.println("h pnlcontenedor--->" + pnlContenedor.getHeight());
 
         }
     }//GEN-LAST:event_btnMaximizarMouseClicked

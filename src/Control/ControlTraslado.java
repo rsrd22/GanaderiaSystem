@@ -198,7 +198,8 @@ public class ControlTraslado implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         
         consultas.add("UPDATE `animales`\n" +
-                        "SET `id_tipo_animal` = '"+datos.getLote()+"'\n" +
+                        "SET `id_tipo_animal` = '"+datos.getLote()+"', \n" +
+                        "grupo = '"+datos.getIdGrupo()+"'\n"+    
                         "WHERE `id` = '"+datos.getIdAnimal()+"';");
         
         try {
@@ -216,4 +217,60 @@ public class ControlTraslado implements IControl {
         }
     }
 
+    public List<Map<String, String>> getIdsAnimalesxGrupos(String id_tipo_animal, String ids_grupos) {
+        String consulta = "SELECT id as ID FROM `animales` ani \n" +
+                            "WHERE ani.`id_tipo_animal` = '"+id_tipo_animal+"' AND grupo in ("+ids_grupos+")\n" +
+                            "AND venta = '0' AND muerte = '0'";
+        
+        List<Map<String, String>> listaModelo = new ArrayList<Map<String, String>>();
+        listaModelo = mySQL.ListSQL(consulta);
+        
+        return listaModelo;
+    }
+    
+    public int ActulizarAnimales(Map<String, String> datos) {
+        ArrayList<String> consultas = new ArrayList<>();
+                
+        consultas.add("UPDATE `animales`\n" +
+                            "SET `id_tipo_animal` = '"+datos.get("IDTPO_DESTINO")+"',  \n" +
+                            "grupo = '"+datos.get("IDGPO_DESTINO")+"'   \n" +
+                            "WHERE id_tipo_animal = '"+datos.get("IDTPO_ORIGEN")+"' AND grupo = '"+datos.get("IDGPO_ORIGEN")+"';");
+        
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
+    public int InactivarTraslados(String id_grupo) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        consultas.add("UPDATE `traslado_animalxgrupo`\n" +
+                        "SET `estado` = 'Inactivo' \n" +
+                        "WHERE `id_grupo` = '"+id_grupo+"' AND `estado` = 'Activo'");
+        
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
 }

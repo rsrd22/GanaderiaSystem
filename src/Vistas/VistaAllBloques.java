@@ -527,8 +527,13 @@ public class VistaAllBloques extends javax.swing.JPanel {
             }
         }
         
+        if(AreaTo == 0){
+            JOptionPane.showMessageDialog(this, "El area ingresada debe ser mayor que cero.");
+            return;
+        }
+        
         if(Double.parseDouble(AreaFinca) < AcuAreaBloques+AreaTo){
-            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total de la finca");
+            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total de la finca. El area total es "+AreaFinca);
             return;
         }
         
@@ -579,7 +584,7 @@ public class VistaAllBloques extends javax.swing.JPanel {
         String valor = "";
         
         for(int i = 0; i < ListamodeloBloques.size(); i++){
-            if(ListamodeloBloques.get(i).getId().equals(id_Bloque)){
+            if(!ListamodeloBloques.get(i).getId().equals(id_Bloque)){
                 valor = ListamodeloBloques.get(i).getArea().trim();
                 ret += Double.parseDouble(valor);
             }
