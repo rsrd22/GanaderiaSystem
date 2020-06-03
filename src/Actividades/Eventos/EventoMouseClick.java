@@ -251,6 +251,7 @@ public class EventoMouseClick implements MouseListener {
     }
 
     private void establecerSeleccionado() {
+        System.out.println("*establecerSeleccionado*");
         Color color = null;
         String estado = "-1";
         for (ActividadesPorPeriodo actividadPorPeriodo : panRef.actividadesPeriodos) {

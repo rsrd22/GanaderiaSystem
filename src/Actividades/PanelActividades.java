@@ -289,6 +289,8 @@ public class PanelActividades extends JPanel {
         for (ActividadesPorPeriodo actividad : actividadesPeriodos) {
             actividad.pintar(g);
         }
+//        System.out.println("pintarActividadesPorPeriodo--->"+actividadesPeriodos.size());
+//        System.out.println("pintarActividadesPorPeriodo--->"+actividadesSeleccionadas.size());
         for (ActividadesPorPeriodo actividad : actividadesPeriodos) {
             for (ActividadesPorPeriodo app : actividadesSeleccionadas) {
                 if (actividad.Igual(app)) {
@@ -342,6 +344,7 @@ public class PanelActividades extends JPanel {
     }
 
     public void agregarActividadesSeleccionadas(ActividadesPorPeriodo actividadPorPeriodo) {
+        System.out.println("**********agregarActividadesSeleccionadas*********");
         actividadesSeleccionadas.add(actividadPorPeriodo);
     }
 
@@ -357,6 +360,7 @@ public class PanelActividades extends JPanel {
     }
 
     public void guardarCronograma() {
+        System.out.println("**************guardarCronograma***************");
         cargarDatosAlModelo();
         Guardar();
     }

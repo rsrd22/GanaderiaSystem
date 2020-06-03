@@ -90,7 +90,7 @@ public class ControlCronograma implements IControl {
         listModelo = (ArrayList<ModeloCronograma>) o;
 
         if (listModelo.size() > 0) {
-            consultas.add("DELETE FROM cronograma WHERE id_finca=" + listModelo.get(0).getIdFinca());
+            //consultas.add("DELETE FROM cronograma WHERE id_finca=" + listModelo.get(0).getIdFinca());
             for (ModeloCronograma modelo : listModelo) {
                 consultas.add(
                         //<editor-fold defaultstate="collapsed" desc="INSERT">
