@@ -148,6 +148,7 @@ public class EventoMouseClick implements MouseListener {
                 actividadPorPeriodo.setSeleccionado(true);
                 actividadPorPeriodo.setEstado(opcion.getId());
                 actividadPorPeriodo.setColorFondo(opcion.getColorEstado());
+                actividadPorPeriodo.setDescripcionEstado(opcion.getDescripcion());
 
                 panRef.agregarActividadesSeleccionadas(actividadPorPeriodo);
                 return;

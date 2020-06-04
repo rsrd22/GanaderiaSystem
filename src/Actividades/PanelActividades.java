@@ -125,12 +125,14 @@ public class PanelActividades extends JPanel {
                 appdb.setPeriodo(per);
                 appdb.setSemana(sem);
                 appdb.setActividad(act);
+                appdb.setDescripcionEstado(modelo.getDescripcionEstado());
                 for (ActividadesPorPeriodo app : actividadesPeriodos) {
                     if (app.Igual(appdb)) {
                         app.setId(modelo.getId());
                         app.setEstado(modelo.getIdEstado());
                         int color = Integer.parseInt(modelo.getColor().isEmpty() ? "0" : modelo.getColor());
                         app.setColorFondo(new Color(color));
+                        app.setDescripcionEstado(appdb.getDescripcionEstado());
                         agregarActividadesSeleccionadasDB(app);
                         break;
                     }

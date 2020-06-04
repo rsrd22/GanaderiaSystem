@@ -27,7 +27,7 @@ public class ControlCronograma implements IControl {
 
     @Override
     public Object ObtenerDatos() {
-        String consulta = "SELECT a.*, '' color FROM cronograma a";
+        String consulta = "SELECT a.*, '' color,'' descEstado FROM cronograma a";
         List<Map<String, String>> cronograma = new ArrayList<Map<String, String>>();
         ArrayList<ModeloCronograma> lista = new ArrayList<>();
         cronograma = mySQL.ListSQL(consulta);
@@ -45,7 +45,8 @@ public class ControlCronograma implements IControl {
                         actividad.get("id_usuario"),
                         actividad.get("mes"),
                         actividad.get("semana"),
-                        actividad.get("color")
+                        actividad.get("color"),
+                        actividad.get("descEstado")
                 ));
             }
             return lista;
@@ -56,7 +57,7 @@ public class ControlCronograma implements IControl {
 
     @Override
     public Object ObtenerDatosKey(String ID) {
-        String consulta = "SELECT a.*,b.color color FROM cronograma a LEFT JOIN estado_actividad b ON a.id_estado=b.id WHERE a.id_finca=" + ID;
+        String consulta = "SELECT a.*,b.color color,b.descripcion descEstado FROM cronograma a LEFT JOIN estado_actividad b ON a.id_estado=b.id WHERE a.id_finca=" + ID;
         List<Map<String, String>> cronograma = new ArrayList<Map<String, String>>();
         ArrayList<ModeloCronograma> lista = new ArrayList<>();
         cronograma = mySQL.ListSQL(consulta);
@@ -73,7 +74,8 @@ public class ControlCronograma implements IControl {
                         actividad.get("id_usuario"),
                         actividad.get("mes"),
                         actividad.get("semana"),
-                        actividad.get("color")
+                        actividad.get("color"),
+                        actividad.get("descEstado")
                 ));
             }
             return lista;

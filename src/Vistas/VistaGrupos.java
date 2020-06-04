@@ -103,15 +103,18 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         controles.addControl(control);
 
         control = new Control(true, cbMacroGrupo);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtCodigoTipoAnimal);
         controles.addControl(control);
 
         control = new Control(true, txtCodigoMacroGrupo);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtDescripcion);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbEstado);
@@ -472,6 +475,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             txtCodigoFinca.setText(idFinca);
             cargarComboTipoAnimales();
             cargarComboMacroGrupos();
+        }else{
+            txtCodigoFinca.setText("");
         }
     }//GEN-LAST:event_cbFincaActionPerformed
 
@@ -480,6 +485,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
             txtCodigoTipoAnimal.setText(idTipoAnimal);
+        }else{
+            txtCodigoTipoAnimal.setText("");
         }
     }//GEN-LAST:event_cbTipoAnimalActionPerformed
 
@@ -488,6 +495,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         if (indice > 0) {
             String idMacroGrupo = macroGrupos.get(indice).get("id");
             txtCodigoMacroGrupo.setText(idMacroGrupo);
+        }else{
+            txtCodigoMacroGrupo.setText("");
         }
     }//GEN-LAST:event_cbMacroGrupoActionPerformed
 
@@ -576,6 +585,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
                 Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
+                editar = Estado.GUARDAR;
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";

@@ -22,6 +22,7 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
     private Periodo periodo;
     private Semana semana;
     private String estado;
+    private String descripcionEstado;
     private boolean seleccionado;
     private boolean remover;
     private String descripcion;
@@ -99,6 +100,14 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
         }
     }
 
+    public String getDescripcionEstado() {
+        return descripcionEstado;
+    }
+
+    public void setDescripcionEstado(String descripcionEstado) {
+        this.descripcionEstado = descripcionEstado;
+    }
+
     public String getId() {
         return id;
     }
@@ -161,5 +170,4 @@ public class ActividadesPorPeriodo extends Rectangulo implements IGraficos {
                 && this.semana.getId() == app.getSemana().getId()
                 && this.actividad.getId().equals(app.getActividad().getId()));
     }
-
 }

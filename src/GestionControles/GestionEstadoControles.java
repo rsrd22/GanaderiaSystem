@@ -43,7 +43,9 @@ public class GestionEstadoControles {
 
     public void limpiarControles() {
         for (Control control : controles) {
-            limpiarComponente(control);
+            if (control.isLimpiarDespuesDeGuardar()) {
+                limpiarComponente(control);
+            }
         }
     }
 
