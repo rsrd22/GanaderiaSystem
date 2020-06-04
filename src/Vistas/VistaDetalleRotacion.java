@@ -6,19 +6,112 @@
 
 package Vistas;
 
+import Control.ControlAnimales;
+import Modelo.ModeloVentanaGeneral;
+import Tablas.TablaRender;
+import Utilidades.Utilidades;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author MERRY
  */
 public class VistaDetalleRotacion extends javax.swing.JPanel {
-
+    String id_Animal = "";
+    String numero_Animal = "";
+    private ControlAnimales controlAnimales = new ControlAnimales();
+    private List<Map<String, String>> ListaDatos;
+    public DefaultTableModel modeloTblRotacion;
+    public String[] EncabezadoTblTraslado;
+    private int ancho;
+    private int alto;
     /**
      * Creates new form VistaDetalleRotacion
      */
     public VistaDetalleRotacion() {
         initComponents();
+        setSize(781 ,522);
+    }
+    
+    public VistaDetalleRotacion(ModeloVentanaGeneral modeloVentanaGeneral) {
+        initComponents();
+        setSize(781 ,522);
+        id_Animal = ""+modeloVentanaGeneral.getModeloDatos();
+        ListaDatos = new ArrayList<>();
+        EncabezadoTblTraslado = new String[]{
+            "No",
+             "Grupo", 
+             "Bloque / Lote",
+             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Entrada</p></html>", 
+             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>", 
+             "Estado"
+        };
+        InicializarTblAnimales();
+        GetDatosTrasladoAnimal();   
     }
 
+    public void InicializarTblAnimales() {
+        tbl_Rotaciones.setDefaultRenderer(Object.class, new TablaRender());
+        
+        modeloTblRotacion = new DefaultTableModel(EncabezadoTblTraslado, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+
+        tbl_Rotaciones.setModel(modeloTblRotacion);
+
+        tbl_Rotaciones.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tbl_Rotaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tbl_Rotaciones.getColumnModel().getColumn(2).setPreferredWidth(120);
+        tbl_Rotaciones.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tbl_Rotaciones.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tbl_Rotaciones.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tbl_Rotaciones.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloTblRotacion.getColumnCount(); i++) {
+            tbl_Rotaciones.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 0, 12));
+            if(i > 0){
+//                if(i == 2 ){
+//                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
+//
+//                }else{
+                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+//                }
+                tcr.setForeground(new Color(26, 82, 118));
+                tbl_Rotaciones.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            }
+            
+        }
+        JTableHeader header = tbl_Rotaciones.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,21 +121,84 @@ public class VistaDetalleRotacion extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        lblTid1 = new javax.swing.JLabel();
+        lblNumeroAnimal = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_Rotaciones = new javax.swing.JTable();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid1.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTid1.setText("Historico Rotación");
+        add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 759, -1));
+
+        lblNumeroAnimal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNumeroAnimal.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumeroAnimal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNumeroAnimal.setText("Animal Número: ");
+        add(lblNumeroAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 759, -1));
+
+        tbl_Rotaciones.setForeground(new java.awt.Color(59, 123, 50));
+        tbl_Rotaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_Rotaciones.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        jScrollPane1.setViewportView(tbl_Rotaciones);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 738, 420));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNumeroAnimal;
+    private javax.swing.JLabel lblTid1;
+    private javax.swing.JTable tbl_Rotaciones;
     // End of variables declaration//GEN-END:variables
+    
+    private void GetDatosTrasladoAnimal() {
+        ListaDatos = controlAnimales.GetDatosrotaciones(id_Animal); 
+        
+        numero_Animal = ListaDatos.get(0).get("NUMERO_ANIMAL");
+        LlenarTabla();
+    }
+
+    private void LlenarTabla() {
+        Utilidades.LimpiarTabla(tbl_Rotaciones);
+//        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
+//DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,
+//traslado.motivo AS MOTIVO, traslado.estado AS ESTADO
+//        "No",
+//             "Grupo", 
+//             "Bloque / Lote",
+//             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Entrada</p></html>", 
+//             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>", 
+//             "Estado"
+        
+        for(int i =0; i < ListaDatos.size(); i++){ 
+            Utilidades.agregarFilaTabla( 
+                    modeloTblRotacion,  
+                    new Object[]{
+                        (i+1),//tbl_Grupos.getRowCount()+1,
+                        ListaDatos.get(i).get("GRUPO"),
+                        ListaDatos.get(i).get("LOTE"),
+                        ListaDatos.get(i).get("FECHA_ENTRADA"),
+                        ListaDatos.get(i).get("FECHA_SALIDA"), 
+                        ListaDatos.get(i).get("ESTADO")
+                    } 
+                );
+        }
+    }
+
 }

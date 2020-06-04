@@ -532,5 +532,45 @@ public class ControlAnimales implements IControl {
             return new ArrayList<>();
         }
     }
+    public List<Map<String, String>> GetDatosrotaciones(String id_Animal) {
+        try{
+            String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n" +
+                                "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
+                                "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n" +
+                                "traslado.`id`, anim.`numero` AS NUMERO_ANIMAL,\n" +
+                                "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO,\n" +
+                                "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n" +
+                                "DATE_FORMAT(tbl.FECHA_ENTRADA, '%d/%m/%Y') AS FECHA_ENTRADA,\n" +
+                                "IFNULL(DATE_FORMAT(tbl.FECHA_SALIDA, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n" +
+                                "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n" +
+                                "FROM `traslado_animalxgrupo` traslado\n" +
+                                "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n" +
+                                "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n" +
+                                "LEFT JOIN (\n" +
+                                "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n" +
+                                "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n" +
+                                "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n" +
+                                "FROM `rotacion_lotesxestado` rot\n" +
+                                "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n" +
+                                "INNER JOIN traslado_animalxgrupo tras ON tras.`id_grupo` = rotgrup.id_grupo\n" +
+                                "\n" +
+                                "WHERE tras.`id_animal` = '"+id_Animal+"'\n" +
+                                ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n" +
+                                "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n" +
+                                "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n" +
+                                "WHERE traslado.`id_animal` = '"+id_Animal+"'\n" +
+                                "ORDER BY traslado.`id` DESC;";
+            
+            List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();
+
+            rotaciones = mySQL.ListSQL(consulta);
+
+        
+            return rotaciones;
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
     
 }

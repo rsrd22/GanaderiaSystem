@@ -64,10 +64,11 @@ public class VistaVerAnimales extends javax.swing.JPanel {
              "Peso", 
              "Hierro", 
              "Capado", 
-             "Muerte", 
-             "Venta",
+             //"Muerte", 
+             //"Venta",
              "Grupo", 
-             "Lote"
+             "Lote", 
+             "Ver Más"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
@@ -83,7 +84,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,  java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,  java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class //, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -105,10 +106,11 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(5).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(6).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(7).setPreferredWidth(50);
-        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(60);
-        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(70);
-        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(90);
-        tbl_Animales.getColumnModel().getColumn(11).setPreferredWidth(130);
+//        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(60);
+//        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(70);
+        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
+        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
+        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
         
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
@@ -355,33 +357,41 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = ""+tbl_Animales.getValueAt(fila, cola);
-        if(cola == 8 && dato.toUpperCase().equals("SI")){//Muerte
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            
-                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleMuerte(), 1, idAnimal);
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-//            }
-        } else if(cola == 9 && dato.toUpperCase().equals("SI")){//VENTA
-            
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            
-                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleVenta(), 1, idAnimal);
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-            
-        
-        } else if(cola == 10 ){//GRUPO
+//        if(cola == 8 && dato.toUpperCase().equals("SI")){//Muerte
+//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+//            
+//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleMuerte(), 1, idAnimal);
+//                objetoVentana.setFila(fila);
+//                new VistaGeneral(objetoVentana).setVisible(true);
+////            }
+//        }
+//        else if(cola == 9 && dato.toUpperCase().equals("SI")){//VENTA
+//            
+//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+//            
+//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleVenta(), 1, idAnimal);
+//                objetoVentana.setFila(fila);
+//                new VistaGeneral(objetoVentana).setVisible(true);
+//            
+//        
+//        } 
+        if(cola == 8 ){//GRUPO
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleTraslado(), 1, idAnimal);
                 objetoVentana.setFila(fila);
                 new VistaGeneral(objetoVentana).setVisible(true);
                 
-        } else if(cola == 11){//LOTE
+        }  else if(cola == 9){//LOTE
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             
             objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleRotacion(), 1, idAnimal);
+                objetoVentana.setFila(fila);
+                new VistaGeneral(objetoVentana).setVisible(true);
+        }  else if(cola == 10){//VER MAS
+            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+            
+               objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal); 
                 objetoVentana.setFila(fila);
                 new VistaGeneral(objetoVentana).setVisible(true);
         
@@ -488,11 +498,12 @@ public class VistaVerAnimales extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("PESO"), 
                         ListaAnimalesMostrar.get(i).get("DESC_HIERRO"), 
                         ListaAnimalesMostrar.get(i).get("CAPADO"), 
-                        ListaAnimalesMostrar.get(i).get("MUERTE"), 
-                        ListaAnimalesMostrar.get(i).get("VENTA"), 
+//                        ListaAnimalesMostrar.get(i).get("MUERTE"), 
+//                        ListaAnimalesMostrar.get(i).get("VENTA"), 
                         ListaAnimalesMostrar.get(i).get("GRUPO"),
                         (allFincas == 1?ListaAnimalesMostrar.get(i).get("FINCA")+" / ":"") + 
-                        ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE")
+                        ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE"),
+                        "Ver Más"
                     } 
                 );
         }

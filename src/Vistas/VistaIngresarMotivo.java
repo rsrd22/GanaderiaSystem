@@ -125,11 +125,9 @@ public class VistaIngresarMotivo extends javax.swing.JPanel {
 
     private void Aceptar() {
         String motivo = txtMotivo.getText().trim();
-        
         if (modeloVentanaGeneral.getPanelPadre() instanceof VistaTrasladoGrupos) {
             ((VistaTrasladoGrupos) modeloVentanaGeneral.getPanelPadre()).RetornoVistaGeneral(modeloVentanaGeneral, motivo);
         }
-        
         ((VistaGeneral)modeloVentanaGeneral.getFrameVentana()).dispose();  
     }
 

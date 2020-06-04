@@ -234,7 +234,7 @@ public class ControlTraslado implements IControl {
         consultas.add("UPDATE `animales`\n" +
                             "SET `id_tipo_animal` = '"+datos.get("IDTPO_DESTINO")+"',  \n" +
                             "grupo = '"+datos.get("IDGPO_DESTINO")+"'   \n" +
-                            "WHERE id_tipo_animal = '"+datos.get("IDTPO_ORIGEN")+"' AND grupo = '"+datos.get("IDGPO_ORIGEN")+"';");
+                            "WHERE id_tipo_animal = '"+datos.get("IDTPO_ORIGEN")+"' AND grupo = '"+datos.get("IDGPO_ORIGEN")+"' AND venta = '0' AND muerte ='0';");
         
         try {
             if(mySQL.EnviarConsultas(consultas)){
@@ -273,4 +273,42 @@ public class ControlTraslado implements IControl {
         }
     }
     
+    public int GuardarTrasladoGrupo(Object _traslado) {
+        ArrayList<String> consultas = new ArrayList<>();
+        ArrayList<ModeloTraslado> ListamodeloTraslado = (ArrayList<ModeloTraslado>) _traslado;
+        for (ModeloTraslado traslado: ListamodeloTraslado) {
+            consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                    "INSERT INTO ganadero.traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                    + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
+                    + ")\n"
+                    + "VALUES (\n"
+                    + "0,\n"
+                    + ""+traslado.getIdAnimal()+",\n"
+                    + ""+traslado.getIdFinca()+",\n"
+                    + ""+traslado.getIdGrupo()+",\n"
+                    + ""+Utilidades.ValorNULL(traslado.getFechaTraslado())+",\n"
+                    + "'"+traslado.getMotivo()+"',\n"
+                    + "'"+traslado.getEstado()+"',\n"
+                    + ""+traslado.getFecha()+",\n"
+                    + ""+traslado.getIdUsuario()+")"
+            //</editor-fold>
+            );
+        }
+        
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
 }

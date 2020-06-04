@@ -319,6 +319,7 @@ public class VistaRotacion extends javax.swing.JPanel {
         if(cola == 0){
             boolean sel = (boolean) tbl_Grupos.getValueAt(fila, cola);
             tbl_Grupos.getModel().setValueAt(!sel, fila, cola);
+            System.out.println("ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
             if(!sel){//SELECCIONADO
                 ListaGruposSeleccionados.add(ListaRotaciones.get(fila));
             }else{// NO SELECCIONADO
@@ -343,7 +344,9 @@ public class VistaRotacion extends javax.swing.JPanel {
         } else if(cola == 5){ // ROTAR
             boolean sel = (boolean) tbl_Grupos.getValueAt(fila, 0);
             if(sel){
-                getGruposAsociados();
+                System.out.println("**********ANTES*********"+ListaGruposSeleccionados.size());
+                getGruposAsociadosxLote();
+                System.out.println("**********DESPUES*********"+ListaGruposSeleccionados.size());
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaRotar(), 1, ListaGruposSeleccionados);
                 System.out.println("EVENTO TABLA ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
                 objetoVentana.setFila(fila);
@@ -371,7 +374,7 @@ public class VistaRotacion extends javax.swing.JPanel {
     public void RetornoVistaGeneral(ModeloVentanaGeneral objeto, Object retorno) {
         
         if(objeto.getOpcion() == 1){// VISTA ROTAR
-            
+            ListaGruposSeleccionados.clear();
             EventoComboFincas();
         }
     }
@@ -444,19 +447,72 @@ public class VistaRotacion extends javax.swing.JPanel {
             System.out.println("*****************END i*********************");
         }
     }
+    
+    private void getGruposAsociadosxLote(){
+        ArrayList<Integer> indices = new ArrayList<Integer>();
+        ArrayList<String> idsLote = new ArrayList<>();
+        boolean encontro = false;
+        for(int i = 0; i < ListaGruposSeleccionados.size(); i++){
+            encontro = false;
+            for(String idlote : idsLote){
+                System.out.println("ListaGruposSeleccionados.get(i).get(\"IDLOTE\")-->"+ListaGruposSeleccionados.get(i).get("IDLOTE"));
+                if(ListaGruposSeleccionados.get(i).get("IDLOTE").equals(""+idlote)){
+                    encontro = true;
+                    break;
+                }
+            }
+            if(!encontro){
+                idsLote.add(ListaGruposSeleccionados.get(i).get("IDLOTE"));
+            }
+        }
+        
+        for(String idlote : idsLote){
+            encontro = false;
+            if(!idlote.equals("")){
+                for(int j = 0; j < ListaRotaciones.size(); j++){
+                    if(idlote.equals(ListaRotaciones.get(j).get("IDLOTE")) && !ListaSeleccionado(ListaRotaciones.get(j).get("IDGRUPO"))){
+                        ListaGruposSeleccionados.add(ListaRotaciones.get(j));
+                    }
+                }
+            }
+        }  
+        
+        
+    }
+    
+    private boolean ListaSeleccionado(String idGrupo) {
+        for(int i = 0; i < ListaGruposSeleccionados.size(); i++){
+            if(ListaGruposSeleccionados.get(i).get("IDGRUPO").equals(idGrupo)){
+                return true;
+            }
+        }
+        return false;
+    }
 
-    private void getGruposAsociados() {
+    private void getGruposAsociadoas() {
         ArrayList<Integer> indices = new ArrayList<Integer>();
         System.out.println("******************getGruposAsociados*****************"+ListaGruposSeleccionados.size());
+        System.out.println("******************ListaRotaciones*****************"+ListaRotaciones.size());
         boolean encontro = false;
         for(int j = 0; j < ListaRotaciones.size(); j++){
+            System.out.println("*****ListaRotaciones***--"+j);
+            encontro = false;
             for(int i = 0; i < ListaGruposSeleccionados.size(); i++){
+                System.out.println("*****ListaGruposSeleccionados***--"+i);
+                System.out.println("ListaGruposSeleccionados.get(i).get(\"IDGRUPO\")--"+ListaGruposSeleccionados.get(i).get("IDGRUPO"));
+                System.out.println("ListaRotaciones.get(i).get(\"IDGRUPO\")--"+ListaRotaciones.get(j).get("IDGRUPO"));
+                System.out.println("ListaRotaciones.get(i).get(\"GRUPO\")--"+ListaRotaciones.get(i).get("GRUPO"));
+                System.out.println("ListaGruposSeleccionados.get(i).get(\"IDLOTE\")--"+ListaGruposSeleccionados.get(i).get("IDLOTE"));
+                System.out.println("ListaRotaciones.get(i).get(\"IDLOTE\")--"+ListaRotaciones.get(j).get("IDLOTE"));
+                
                 if(ListaGruposSeleccionados.get(i).get("IDGRUPO").equals(ListaRotaciones.get(j).get("IDGRUPO")) && 
                    ListaGruposSeleccionados.get(i).get("IDLOTE").equals(ListaRotaciones.get(j).get("IDLOTE"))){
                    encontro = true;
                    break;
                 }
             }
+            System.out.println("****************************************************************"+encontro);
+            System.out.println("**********************************"+j+"******************************"+indices.size());
             if(!encontro){
                 indices.add(j);
             }
@@ -468,6 +524,8 @@ public class VistaRotacion extends javax.swing.JPanel {
         System.out.println("ListaGruposSeleccionados.size()--->"+ListaGruposSeleccionados.size());
         System.out.println("****************END getGruposAsociados****************");
     }
+
+    
     
     
 }

@@ -69,7 +69,7 @@ public class VistaRotar extends javax.swing.JPanel {
         ListaGruposMostrar = new ArrayList<>();
         Lista_Grupos_Seleccionados = new ArrayList<>();
         ListaGruposSeleccionados = (List<Map<String, String>>) modeloVentanaGeneral.getModeloDatos();
-        System.out.println("ListaGruposSeleccionados-->"+ListaGruposSeleccionados);
+        System.out.println("ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
         if(ListaGruposSeleccionados.size()> 0){
             LlenarPnlGrupos();
         }
@@ -592,7 +592,7 @@ public class VistaRotar extends javax.swing.JPanel {
         ////GRUPOS A MOSTRAR
         private void LlenarPnlGruposMostrar() {
             ind = -1; 
-            System.out.println("Lista_Grupos_Seleccionados-->"+ListaGruposMostrar.size());
+            System.out.println("ListaGruposMostrar-->"+ListaGruposMostrar.size());
             pnlGruposMostrar.removeAll();
             repaint();
             javax.swing.JPanel pnlDato = new javax.swing.JPanel();

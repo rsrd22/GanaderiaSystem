@@ -70,6 +70,14 @@ public class VistaGeneral extends javax.swing.JFrame {
             VistaDetalleTraslado vista = (VistaDetalleTraslado) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+        } else if (panel instanceof VistaDetalleRotacion) {
+            VistaDetalleRotacion vista = (VistaDetalleRotacion) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+        } else if (panel instanceof VistaHistoriaAnimal) {
+            VistaHistoriaAnimal vista = (VistaHistoriaAnimal) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
         } else if (panel instanceof VistaDuplicarGrupos) {
             VistaDuplicarGrupos vista = (VistaDuplicarGrupos) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
@@ -405,6 +413,16 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaDetalleTraslado vista = new VistaDetalleTraslado(modeloVista);
             MostrarPanel(vista);
+            
+        } else if (modeloVista.getPanelHijo() instanceof VistaDetalleRotacion) {
+
+            VistaDetalleRotacion vista = new VistaDetalleRotacion(modeloVista);
+            MostrarPanel(vista);
+            
+        } else if (modeloVista.getPanelHijo() instanceof VistaHistoriaAnimal) {
+
+//            VistaHistoriaAnimal vista = new VistaHistoriaAnimal(modeloVista);
+//            MostrarPanel(vista);
             
         } else if (modeloVista.getPanelHijo() instanceof VistaDuplicarGrupos) {
 

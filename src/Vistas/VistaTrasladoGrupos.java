@@ -138,6 +138,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel3 = new javax.swing.JPanel();
         lblTid = new javax.swing.JLabel();
@@ -161,7 +162,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Traslado Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -218,7 +219,15 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
 
         jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 144, -1, 300));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 260, 460));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
+        add(jPanel3, gridBagConstraints);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Traslado Destino", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -283,7 +292,16 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         lblTid5.setText("Tipo Animales");
         jPanel4.add(lblTid5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 89, -1, -1));
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 260, 460));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(20, 13, 0, 24);
+        add(jPanel4, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -297,7 +315,13 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
                 btnDescartarActionPerformed(evt);
             }
         });
-        add(btnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 3, 13, 0);
+        add(btnDescartar, gridBagConstraints);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -312,7 +336,14 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 210, 13, 0);
+        add(btnGuardar, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     public void eventocbFinca(){
@@ -504,57 +535,63 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         
         
         //</editor-fold>
+        
         String idGrupoDestino = listaGruposDestino.get(lstGrupoDestino.getSelectedIndex()).get("id");
         
-//        //<editor-fold defaultstate="collapsed" desc="Lista ID Animales">
-//        List<Map<String, String>> ListaidsAnimales = controlTraslado.getIdsAnimalesxGrupos(idTipoAnimal, ids);
-//        for (int i = 0; i < ListaidsAnimales.size(); i++) {
-//            ListamodeloTraslado.add(
-//                    new ModeloTraslado(
-//                            "Activo",
-//                            "NOW()",
-//                            fechaT,
-//                            "0",
-//                            "" + ListaidsAnimales.get(i).get("ID"),
-//                            idFincaDestino,
-//                            idGrupoDestino,
-//                            datosUsuario.datos.get(0).get("ID_USUARIO"),
-//                            motivo,
-//                            "",
-//                            "",
-//                            "",
-//                            "",
-//                            ""+idTipoAnimalDestino)//IDTIPOANIMAL
-//            );
-//        }
-//        //</editor-fold>
-//        //<editor-fold defaultstate="collapsed" desc="Actualizar Animales">
-//        int ret = 0, ret1 = 0, ret2 = 0;
-//        for(int i = 0; i < idsGrupoOrigen.length; i++){
-//            Map<String, String> datos = new HashMap<String, String>();
-//            datos.put("IDTPO_DESTINO", idTipoAnimalDestino);
-//            datos.put("IDGPO_DESTINO", idGrupoDestino);
-//            datos.put("IDTPO_ORIGEN", idTipoAnimal);
-//            datos.put("IDGPO_ORIGEN", idsGrupoOrigen[i]);
-//            
-//            ret = controlTraslado.ActulizarAnimales(datos);
-//        }
-//        //</editor-fold>
-//        //<editor-fold defaultstate="collapsed" desc="Inactivar Traslado">
-//        for(int i = 0; i < idsGrupoOrigen.length; i++){
-//            ret1 = controlTraslado.InactivarTraslados(idsGrupoOrigen[i]);
-//        }
-//        //</editor-fold>
-//        //<editor-fold defaultstate="collapsed" desc="GUARDAR TRASLADOS X ANIMALES">
-//        for (int i = 0; i < ListamodeloTraslado.size(); i++) {
-//            ret2 = controlTraslado.Guardar(ListamodeloTraslado.get(i));
-//        }
-//        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Lista ID Animales">
+        List<Map<String, String>> ListaidsAnimales = controlTraslado.getIdsAnimalesxGrupos(idTipoAnimal, ids);
+        if (ListaidsAnimales.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error Al momento de realizar la operación. \nPor favor comuniquese con el administrador del sistema.");
+            return;
+        }
+        for (int i = 0; i < ListaidsAnimales.size(); i++) {
+            ListamodeloTraslado.add(
+                    new ModeloTraslado(
+                            "Activo",
+                            "NOW()",
+                            fechaT,
+                            "0",
+                            "" + ListaidsAnimales.get(i).get("ID"),
+                            idFincaDestino,
+                            idGrupoDestino,
+                            datosUsuario.datos.get(0).get("ID_USUARIO"),
+                            motivo,
+                            "",
+                            "",
+                            "",
+                            "",
+                            ""+idTipoAnimalDestino)//IDTIPOANIMAL
+            );
+        }
+        //</editor-fold>
         
-//        if(ret == 0 && ret1 == 0 && ret2 == 0){
-//            JOptionPane.showMessageDialog(null, "La operacion se realizo satisfactoriamente");
-//            LimpiarFomulario();
-//        }
+        //<editor-fold defaultstate="collapsed" desc="Actualizar Animales">
+        int ret = 0, ret1 = 0, ret2 = 0;
+        for(int i = 0; i < idsGrupoOrigen.length; i++){
+            Map<String, String> datos = new HashMap<String, String>();
+            datos.put("IDTPO_DESTINO", idTipoAnimalDestino);
+            datos.put("IDGPO_DESTINO", idGrupoDestino);
+            datos.put("IDTPO_ORIGEN", idTipoAnimal);
+            datos.put("IDGPO_ORIGEN", idsGrupoOrigen[i]);
+            
+            ret = controlTraslado.ActulizarAnimales(datos);
+        }
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="Inactivar Traslado">
+        for(int i = 0; i < idsGrupoOrigen.length; i++){
+            ret1 = controlTraslado.InactivarTraslados(idsGrupoOrigen[i]);
+        }
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR TRASLADOS X ANIMALES">
+        
+        ret2 = controlTraslado.GuardarTrasladoGrupo(ListamodeloTraslado);
+        
+        //</editor-fold>
+        
+        if(ret == 0 && ret1 == 0 && ret2 == 0){
+            JOptionPane.showMessageDialog(null, "La operacion se realizo satisfactoriamente");
+            LimpiarFomulario();
+        }
         
         
     }

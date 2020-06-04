@@ -77,7 +77,11 @@ public class VistaTrasladar extends javax.swing.JPanel {
         ListamodeloTraslado = new ArrayList<>();
         Lista_Animales_Seleccionados = new ArrayList<>();
         ListaAnimalesSeleccionados = (List<Map<String, String>>) modeloVentanaGeneral.getModeloDatos();
-        LimpiarFomulario();
+        
+        txtMotivo.setText("");
+        
+        
+        
         if (ListaAnimalesSeleccionados.size() > 0) {
             LlenarPnlAnimales();
         }
