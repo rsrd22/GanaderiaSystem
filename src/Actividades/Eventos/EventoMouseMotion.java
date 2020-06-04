@@ -69,9 +69,14 @@ public class EventoMouseMotion implements MouseMotionListener {
                 String mes = actividadPorPeriodo.getPeriodo().getDescripcionMes();
                 String anio = "" + actividadPorPeriodo.getPeriodo().getAnio();
                 String semana = actividadPorPeriodo.getNombreSemana();
+                String estado = actividadPorPeriodo.getEstado().equals("-1") ? "" : ": " + actividadPorPeriodo.getDescripcionEstado();
+                Color color = !actividadPorPeriodo.getEstado().equals("-1") ? actividadPorPeriodo.getColorFondo() : Color.BLACK;
                 panRef.setToolTipText(
                         "<html><p><b>"
-                        + nombreActividad + "</b><br>"
+                        + nombreActividad
+                        + "<span style='color: rgb(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")'>"
+                        + estado
+                        + "</span></b><br>"
                         + "en la <b>" + semana + " semana</b> del mes de <b>" + mes.toLowerCase() + "</b>"
                         + " del <b>" + anio + "</b></p></html>"
                 );

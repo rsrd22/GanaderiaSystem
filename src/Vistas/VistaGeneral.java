@@ -34,6 +34,7 @@ public class VistaGeneral extends javax.swing.JFrame {
      */
     public VistaGeneral(ModeloVentanaGeneral modeloVista) {
         initComponents();
+        Utilidades.EstablecerIcono(this);
         pnlContenedor.setSize(330, 340);
         this.setLocationRelativeTo(null);
         this.modeloVista = modeloVista;
@@ -135,6 +136,9 @@ public class VistaGeneral extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(59, 123, 50));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel6MousePressed(evt);
             }
@@ -294,6 +298,23 @@ public class VistaGeneral extends javax.swing.JFrame {
             lblIcono.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
         }
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        if (evt.getClickCount() == 2) {
+            String icono = "";
+            if (band == 0) {
+                band = 1;
+                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                icono = "restaurar";
+            } else {
+                band = 0;
+                this.setExtendedState(JFrame.NORMAL);
+                icono = "maximizar";
+            }
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+            jLabel1.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+        }
+    }//GEN-LAST:event_jPanel6MouseClicked
 
     /**
      * @param args the command line arguments

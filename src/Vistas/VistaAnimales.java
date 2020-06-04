@@ -101,7 +101,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             btnModificar
         };
         cargarComboFincas();
-        cargarComboPropietarios();
         controles.habilitarControles();
         txtObservacionMuerte.setVisible(false);
         ScrollCausaMuerte.setVisible(false);
@@ -146,7 +145,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             btnModificar
         };
         cargarComboFincas();
-        cargarComboPropietarios();
         controles.habilitarControles();
         txtObservacionMuerte.setVisible(false);
         ScrollCausaMuerte.setVisible(false);
@@ -161,7 +159,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void cargarComboPropietarios() {
-        String consulta = consultas.get("CARGAR_COMBO_PROPIETARIOS");
+        String consulta = consultas.get("CARGAR_COMBO_PROPIETARIOS").replace("PARAMETRO1",
+                txtCodigoFinca.getText());
         propietarios = controlGral.GetComboBox(consulta);
 
         Utilidades.LlenarComboBox(cbPropietario, propietarios, "descripcion");
@@ -202,18 +201,23 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, txtPesoKg);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtObservacionMuerte);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbTipoVenta);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtPrecioVenta);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtPesoCanal);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbPropietario);
@@ -223,54 +227,70 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, txtNumero);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtNumeroMama);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtNumeroMamaAdoptiva);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkAdoptivo);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbGenero);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbGrupos);
         controles.addControl(control);
 
         control = new Control(true, txtPeso);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, slCalificacion);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtNotas);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkMuerte);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, jdFechaMuerte);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, jdFechaNacimiento);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkDestete);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, jdFechaDestete);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkVenta);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, jdFechaVenta);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkCapado);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
     }
 
@@ -1367,11 +1387,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }//GEN-LAST:event_txtNumeroMamaAdoptivaKeyReleased
 
     private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
-        boolean mostrar = txtNumeroMama.getText().trim().equals(txtNumero.getText().trim());
-        lblNumeroDescendiente.setVisible(mostrar);
-        sepNumeroDescendiente.setVisible(mostrar);
-        txtNumeroDescendiente.setVisible(mostrar);
+        if (!txtNumero.getText().isEmpty()) {
+            boolean mostrar = txtNumeroMama.getText().trim().equals(txtNumero.getText().trim());
+            lblNumeroDescendiente.setVisible(mostrar);
+            sepNumeroDescendiente.setVisible(mostrar);
+            txtNumeroDescendiente.setVisible(mostrar);
+            if (!mostrar) {
+                if (verificarNroAnimal()) {
+                    JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+                }
+            }
+        }
     }//GEN-LAST:event_txtNumeroFocusLost
+
+    private boolean verificarNroAnimal() {
+        ArrayList<ModeloAnimales> lista = new ArrayList<>();
+        lista = (ArrayList<ModeloAnimales>) control.ObtenerDatosFiltro(txtNumero.getText().trim());
+        return lista.size() > 0;
+    }
 
     private void cbTiposDeAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTiposDeAnimalesActionPerformed
         int indice = cbTiposDeAnimales.getSelectedIndex();
@@ -1409,6 +1442,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             String idFinca = fincas.get(indice).get("id");
             txtCodigoFinca.setText(idFinca);
 
+            cargarComboPropietarios();
             cargarComboTipoAnimales();
         }
     }//GEN-LAST:event_cbFincaActionPerformed
@@ -1807,6 +1841,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 return;
             }
         }
+
+        if (verificarNroAnimal()) {
+            JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+            return;
+        }
 //</editor-fold>
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -1902,6 +1941,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
                 Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
+                editar = Estado.GUARDAR;
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
@@ -1938,7 +1978,30 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void Eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
+        if (respuesta == JOptionPane.YES_OPTION) {
+            int retorno = control.Eliminar(modelo);
+
+            String mensaje = "";
+            switch (retorno) {
+                case Retorno.EXITO:
+                    mensaje = "Registro eliminado satisfactoriamente.";
+                    Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_ELIMINAR, controles);
+                    Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_ELIMINAR, botones);
+                    break;
+                case Retorno.ERROR:
+                    mensaje = "El registro no pudo ser eliminado.";
+                    break;
+                case Retorno.EXCEPCION_SQL:
+                    mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                    break;
+                case Retorno.CLASE_NO_ENCONTRADA:
+                    mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                    break;
+            }
+
+            JOptionPane.showMessageDialog(this, mensaje);
+        }
     }
 
     public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral, ModeloTipoAnimales modelo) {
@@ -2011,4 +2074,5 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 + "</html>"
         );
     }
+
 }

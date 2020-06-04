@@ -93,7 +93,7 @@ public class ControlTraslado implements IControl {
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO ganadero.traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
                 + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
                 + ")\n"
                 + "VALUES (\n"

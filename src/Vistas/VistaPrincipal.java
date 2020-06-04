@@ -14,6 +14,7 @@ import ImportExport.EstadoIE;
 import ImportExport.ImportExport;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Consultas;
+import Utilidades.Utilidades;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
@@ -42,6 +43,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     public VistaPrincipal() {
         initComponents();
+        Utilidades.EstablecerIcono(this);
         scroll = new JScrollPane();
         this.setLocationRelativeTo(null);
         Consultas.Agregar();
@@ -155,6 +157,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         pnlTitulo.setBackground(new java.awt.Color(59, 123, 50));
         pnlTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlTituloMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 pnlTituloMousePressed(evt);
             }
@@ -1293,6 +1298,23 @@ public class VistaPrincipal extends javax.swing.JFrame {
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnTrasladoGrupoMousePressed
+
+    private void pnlTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTituloMouseClicked
+        if (evt.getClickCount() == 2) {
+            String icono = "";
+            if (band == 0) {
+                band = 1;
+                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                icono = "restaurar";
+            } else {
+                band = 0;
+                this.setExtendedState(JFrame.NORMAL);
+                icono = "maximizar";
+            }
+            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+            btnMaximizar.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+        }
+    }//GEN-LAST:event_pnlTituloMouseClicked
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {

@@ -16,6 +16,7 @@ public class ModeloCronograma {
     private String Id;
     private String IdActividad;
     private String IdEstado;
+    private String DescripcionEstado;
     private String IdFinca;
     private String IdUsuario;
     private String Mes;
@@ -36,7 +37,7 @@ public class ModeloCronograma {
      * @param Mes
      * @param Semana
      */
-    public ModeloCronograma(String Anio, String Fecha, String Id, String IdActividad, String IdEstado, String IdFinca, String IdUsuario, String Mes, String Semana, String color) {
+    public ModeloCronograma(String Anio, String Fecha, String Id, String IdActividad, String IdEstado, String IdFinca, String IdUsuario, String Mes, String Semana, String color,String DescripcionEstado) {
         this.Anio = Anio;
         this.Fecha = Fecha;
         this.Id = Id;
@@ -48,6 +49,15 @@ public class ModeloCronograma {
         this.Semana = Semana;
         this.color = color;
         this.remover = false;
+        this.DescripcionEstado=DescripcionEstado;
+    }
+
+    public String getDescripcionEstado() {
+        return DescripcionEstado;
+    }
+
+    public void setDescripcionEstado(String DescripcionEstado) {
+        this.DescripcionEstado = DescripcionEstado;
     }
     
     public boolean isRemovida() {
