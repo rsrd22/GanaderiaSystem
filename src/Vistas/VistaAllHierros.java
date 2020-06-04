@@ -6,11 +6,12 @@
 package Vistas;
 
 import Busqueda.VistaBusqueda;
-import Control.ControlPropietarios;
+import Control.*;
 import Imagenes.TipoCodificacion;
 import Modelo.*;
 import Tablas.TablaRender;
 import Utilidades.OpcionesHierro;
+import Utilidades.Utilidades;
 import Utilidades.UtilidadesImagenes;
 import java.awt.*;
 import java.awt.Font;
@@ -34,6 +35,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
     public String[] EncabezadoTblHierro;
     private ModeloHierros modeloHierro;
     private ControlPropietarios controlPropietario;
+    private ControlHierros controlHierro;
     private ArrayList<ModeloHierros> ListamodeloHierros;
     ModeloVentanaGeneral objetoVentana;
     ModeloGestorBusqueda objetoBusqueda;
@@ -48,6 +50,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
             "No", "Descripción", "Imagen", "Estado", "Ver", "Modificar", "Eliminar"
         };
         controlPropietario = new ControlPropietarios();
+        controlHierro = new ControlHierros();
         InicializarTblHierros();
     }
 
@@ -253,7 +256,13 @@ public class VistaAllHierros extends javax.swing.JPanel {
         } else if (cola == OpcionesHierro.ELIMINAR) { //ELIMINAR
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
             if (resp == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
+                modeloHierro = new ModeloHierros();
+                modeloHierro = ListamodeloHierros.get(fila);
+                int ret = controlHierro.Eliminar(modeloHierro);
+                if(ret == 0){
+                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                    LlenarDatosTabla();
+                }
             }
         } else if (cola == OpcionesHierro.VER_IMAGEN) { //VER IMAGEN
             modeloHierro = new ModeloHierros();
@@ -312,25 +321,30 @@ public class VistaAllHierros extends javax.swing.JPanel {
             banBQDPropietarios = 0;
             lblIdPropietario.setText("" + retorno.get("ID"));
             txtPropietarios.setText("" + retorno.get("PROPIETARIO"));
-            ListamodeloHierros = (ArrayList<ModeloHierros>) controlPropietario.ObtenerHierrosxPropietario("" + lblIdPropietario.getText());
-
-            if(ListamodeloHierros.size()>0){
-                for (int i = 0; i < ListamodeloHierros.size(); i++) {
-                    agregarFilaTabla(modeloTblHierro,
-                            new Object[]{
-                                tbl_Hierro.getRowCount() + 1,
-                                ListamodeloHierros.get(i).getDescripcion(),
-                                ListamodeloHierros.get(i).getNombre_imagen(),
-                                ListamodeloHierros.get(i).getEstado(),
-                                "Ver",
-                                "Modificar",
-                                "Eliminar"
-                    });
-                }
-            }
+            LlenarDatosTabla();
         }
     }
     //</editor-fold>
+    
+    private void LlenarDatosTabla(){
+        Utilidades.LimpiarTabla(tbl_Hierro);
+        ListamodeloHierros = (ArrayList<ModeloHierros>) controlPropietario.ObtenerHierrosxPropietario("" + lblIdPropietario.getText());
+
+        if(ListamodeloHierros.size()>0){
+            for (int i = 0; i < ListamodeloHierros.size(); i++) {
+                agregarFilaTabla(modeloTblHierro,
+                        new Object[]{
+                            tbl_Hierro.getRowCount() + 1,
+                            ListamodeloHierros.get(i).getDescripcion(),
+                            ListamodeloHierros.get(i).getNombre_imagen(),
+                            ListamodeloHierros.get(i).getEstado(),
+                            "Ver",
+                            "Modificar",
+                            "Eliminar"
+                });
+            }
+        }
+    }
 
     public void RetornoVistaGeneral(ModeloVentanaGeneral objeto, Object retorno) {
 

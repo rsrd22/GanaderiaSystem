@@ -634,9 +634,14 @@ public class VistaAllLotes extends javax.swing.JPanel {
 //            new VistaGeneral(objetoVentana).setVisible(true);
 
         }else if(cola == 6){ //ELIMINAR
+            modeloLotes = ListamodeloLotes.get(fila);
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
             if(resp == JOptionPane.YES_OPTION){
-                JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
+                int ret = controlLote.Eliminar(modeloLotes);
+                if(ret == 0){
+                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                    AccionCombo();
+                }
             }
         }
     }//GEN-LAST:event_tbl_LotesMouseReleased
