@@ -98,7 +98,8 @@ public class ControlAnimales implements IControl {
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
-                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
+                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,\n"
+                + "IFNULL(a.`peso_canal`,0) pesocanal\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN grupos c ON a.grupo=c.id\n"
@@ -146,7 +147,7 @@ public class ControlAnimales implements IControl {
                         grupo.get("venta"),
                         grupo.get("precio_venta"),
                         grupo.get("tipo_venta"),
-                        grupo.get("peso_canal"),
+                        grupo.get("pesocanal"),
                         grupo.get("descripcion_muerte")
                 ));
             }
@@ -193,7 +194,7 @@ public class ControlAnimales implements IControl {
                 + "" + animal.getPrecioVenta() + ",\n"
                 + "" + animal.getTipoVenta() + ",\n"
                 + "" + animal.getPesoCanal() + ",\n"
-                + "'" + animal.getDescripcionMuerte()+ "'\n"
+                + "'" + animal.getDescripcionMuerte() + "'\n"
                 + ")"
         //</editor-fold>
         );
@@ -233,8 +234,8 @@ public class ControlAnimales implements IControl {
                 + "peso = " + animal.getPeso() + ",\n"
                 + "numero_descendiente = " + animal.getNumeroDescendiente() + ",\n"
                 + "estado_descendiente = " + animal.getEstadoDescendiente() + ",\n"
-                + "precio_venta = " + animal.getPrecioVenta()+ ",\n"
-                + "peso_canal = " + animal.getPesoCanal()+ ",\n"
+                + "precio_venta = " + animal.getPrecioVenta() + ",\n"
+                + "peso_canal = " + animal.getPesoCanal() + ",\n"
                 + "grupo = " + animal.getGrupo() + ",\n"
                 + "hierro = " + animal.getHierro() + ",\n"
                 + "genero = '" + animal.getGenero() + "',\n"
@@ -248,7 +249,7 @@ public class ControlAnimales implements IControl {
                 + "fecha_nacimiento = '" + animal.getFechaNacimiento() + "',\n"
                 + "fecha_muerte = '" + animal.getFechaMuerte() + "',\n"
                 + "tipo_venta = " + animal.getTipoVenta() + ",\n"
-                + "descripcion_muerte = '" + animal.getDescripcionMuerte()+ "',\n"
+                + "descripcion_muerte = '" + animal.getDescripcionMuerte() + "',\n"
                 + "fecha = " + animal.getFecha() + "\n"
                 + "WHERE id = " + animal.getId()
         //</editor-fold>
@@ -368,65 +369,63 @@ public class ControlAnimales implements IControl {
     }
 
     public Object ObtenerDatosAnimales(String IDFINCA, String IDTIPOFINCA) {
-        try{
-            String consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n" +
-                                "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n" +
-                                "traslado.`id_usuario` AS ID_USUARIO, traslado.`motivo` AS MOTIVO, IF(animal.`numero_mama_adoptiva` IS NULL, animal.`numero_mama`, animal.`numero_mama_adoptiva`) AS NUMERO_MAMA,\n" +
-                                "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n" +
-                                "grup.`descripcion` AS GRUPO, \n" +
-                                "IFNULL(finc.`id`, '') AS IDFINCA, IFNULL(finc.`descripcion`, '') AS FINCA, \n" +
-                                "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
-                                "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n" +
-                                ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL, \n"+
-                                "IFNULL(animal.`capado`, 'No') AS CAPADO,  IF(animal.`muerte` = '0', 'No', 'Si') AS MUERTE,\n" +
-                                "IF(animal.`venta` = '0', 'No', 'Si') AS VENTA,  animal.`hierro` AS IDHIERRO, hierro.`descripcion` AS DESC_HIERRO \n"+
-                                "FROM `animales` animal\n" +
-                                "INNER JOIN `propietarioxhierro` hierro ON hierro.`id` = animal.`hierro` \n"+
-                                "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"+
-                                "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n" +
-                                "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n" +
-                                "LEFT JOIN (\n" +
-                                "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n" +
-                                "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n" +
-                                "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n" +
-                                "FROM `rotacion_lotesxestado` rot\n" +
-                                "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n" +
-                                "WHERE rot.estado = 'Activo' AND rotgrup.`estado` = 'Activo'\n" +
-                                ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n" +
-                                "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n" +
-                                "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n" +
-                                "LEFT JOIN fincas finc ON finc.`id` = `traslado`.`id_finca`\n" +
-                                "WHERE traslado.`id_finca` = '"+IDFINCA+"' AND tpoani.`id` = '"+IDTIPOFINCA+"' AND traslado.`estado` = 'Activo'\n" +
-                                "ORDER BY animal.`id` ASC";
+        try {
+            String consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
+                    + "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n"
+                    + "traslado.`id_usuario` AS ID_USUARIO, traslado.`motivo` AS MOTIVO, IF(animal.`numero_mama_adoptiva` IS NULL, animal.`numero_mama`, animal.`numero_mama_adoptiva`) AS NUMERO_MAMA,\n"
+                    + "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n"
+                    + "grup.`descripcion` AS GRUPO, \n"
+                    + "IFNULL(finc.`id`, '') AS IDFINCA, IFNULL(finc.`descripcion`, '') AS FINCA, \n"
+                    + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
+                    + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n"
+                    + ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL, \n"
+                    + "IFNULL(animal.`capado`, 'No') AS CAPADO,  IF(animal.`muerte` = '0', 'No', 'Si') AS MUERTE,\n"
+                    + "IF(animal.`venta` = '0', 'No', 'Si') AS VENTA,  animal.`hierro` AS IDHIERRO, hierro.`descripcion` AS DESC_HIERRO \n"
+                    + "FROM `animales` animal\n"
+                    + "INNER JOIN `propietarioxhierro` hierro ON hierro.`id` = animal.`hierro` \n"
+                    + "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"
+                    + "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n"
+                    + "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n"
+                    + "LEFT JOIN (\n"
+                    + "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n"
+                    + "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n"
+                    + "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n"
+                    + "FROM `rotacion_lotesxestado` rot\n"
+                    + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n"
+                    + "WHERE rot.estado = 'Activo' AND rotgrup.`estado` = 'Activo'\n"
+                    + ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n"
+                    + "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n"
+                    + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
+                    + "LEFT JOIN fincas finc ON finc.`id` = `traslado`.`id_finca`\n"
+                    + "WHERE traslado.`id_finca` = '" + IDFINCA + "' AND tpoani.`id` = '" + IDTIPOFINCA + "' AND traslado.`estado` = 'Activo'\n"
+                    + "ORDER BY animal.`id` ASC";
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
 
-        
             return traslados;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
 
     public Map<String, String> GetDatosVenta(String id_Animal) {
-        try{
-            String consulta = "SELECT `numero` AS NUMERO_ANIMAL, IF(`numero_mama_adoptiva` IS NULL,`numero_mama`, `numero_mama_adoptiva`) AS NUMERO_MAMA, \n" +
-                                "DATE_FORMAT(`fecha_venta`, '%d/%m/%Y') AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n" +
-                                "MascaraMonedaDecimal(REPLACE(`precio_venta`, '.', ',')) AS PRECIO_VENTA, peso AS PESO, peso_canal AS PESO_CANAL, \n" +
-                                "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(`peso_canal` IS NULL, peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n" +
-                                "ROUND((peso_canal/peso * 100), 0) PORCENTAJE_CANAL \n" +
-                                "FROM animales \n" +
-                                "WHERE `id` = '"+id_Animal+"'";
-            
+        try {
+            String consulta = "SELECT `numero` AS NUMERO_ANIMAL, IF(`numero_mama_adoptiva` IS NULL,`numero_mama`, `numero_mama_adoptiva`) AS NUMERO_MAMA, \n"
+                    + "DATE_FORMAT(`fecha_venta`, '%d/%m/%Y') AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n"
+                    + "MascaraMonedaDecimal(REPLACE(`precio_venta`, '.', ',')) AS PRECIO_VENTA, peso AS PESO, peso_canal AS PESO_CANAL, \n"
+                    + "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(`peso_canal` IS NULL, peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n"
+                    + "ROUND((peso_canal/peso * 100), 0) PORCENTAJE_CANAL \n"
+                    + "FROM animales \n"
+                    + "WHERE `id` = '" + id_Animal + "'";
+
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
 
-        
             return traslados.get(0);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new HashMap<String, String>();
         }
@@ -440,8 +439,8 @@ public class ControlAnimales implements IControl {
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE animales SET\n"
                 + "peso = " + animal.getPeso() + ",\n"
-                + "precio_venta = " + animal.getPrecioVenta()+ ",\n"
-                + "peso_canal = " + animal.getPesoCanal()+ ",\n"
+                + "precio_venta = " + animal.getPrecioVenta() + ",\n"
+                + "peso_canal = " + animal.getPesoCanal() + ",\n"
                 + "fecha_venta = '" + animal.getFechaVenta() + "',\n"
                 + "tipo_venta = " + animal.getTipoVenta() + "\n"
                 + "WHERE id = " + animal.getId()
@@ -462,7 +461,7 @@ public class ControlAnimales implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
-    
+
     public int ActualizarMuerte(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
@@ -471,7 +470,7 @@ public class ControlAnimales implements IControl {
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE animales SET\n"
                 + "fecha_muerte = '" + animal.getFechaMuerte() + "',\n"
-                + "descripcion_muerte = '" + animal.getDescripcionMuerte()+ "'\n"
+                + "descripcion_muerte = '" + animal.getDescripcionMuerte() + "'\n"
                 + "WHERE id = " + animal.getId()
         //</editor-fold>
         );
@@ -490,87 +489,85 @@ public class ControlAnimales implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
-    
+
     public Map<String, String> GetDatosMuerte(String id_Animal) {
-        try{
-            String consulta = "SELECT `numero` AS NUMERO_ANIMAL, IF(`numero_mama_adoptiva` IS NULL,`numero_mama`, `numero_mama_adoptiva`) AS NUMERO_MAMA, \n" +
-                                "DATE_FORMAT(fecha_muerte, '%d/%m/%Y') AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n" +
-                                "FROM animales \n" +
-                                "WHERE `id` = '"+id_Animal+"'";
-            
+        try {
+            String consulta = "SELECT `numero` AS NUMERO_ANIMAL, IF(`numero_mama_adoptiva` IS NULL,`numero_mama`, `numero_mama_adoptiva`) AS NUMERO_MAMA, \n"
+                    + "DATE_FORMAT(fecha_muerte, '%d/%m/%Y') AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n"
+                    + "FROM animales \n"
+                    + "WHERE `id` = '" + id_Animal + "'";
+
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
 
-        
             return traslados.get(0);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new HashMap<String, String>();
         }
     }
 
     public List<Map<String, String>> GetDatosTraslado(String id_Animal) {
-        try{
-            String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,\n" +
-                                "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n" +
-                                "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n" +
-                                "FROM `traslado_animalxgrupo` traslado\n" +
-                                "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n" +
-                                "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n" +
-                                "WHERE traslado.`id_animal` = '"+id_Animal+"'\n" +
-                                "ORDER BY traslado.`id` DESC";
-            
+        try {
+            String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,\n"
+                    + "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
+                    + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n"
+                    + "FROM `traslado_animalxgrupo` traslado\n"
+                    + "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n"
+                    + "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n"
+                    + "WHERE traslado.`id_animal` = '" + id_Animal + "'\n"
+                    + "ORDER BY traslado.`id` DESC";
+
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
 
-        
             return traslados;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
+
     public List<Map<String, String>> GetDatosrotaciones(String id_Animal) {
-        try{
-            String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n" +
-                                "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
-                                "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n" +
-                                "traslado.`id`, anim.`numero` AS NUMERO_ANIMAL,\n" +
-                                "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO,\n" +
-                                "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n" +
-                                "DATE_FORMAT(tbl.FECHA_ENTRADA, '%d/%m/%Y') AS FECHA_ENTRADA,\n" +
-                                "IFNULL(DATE_FORMAT(tbl.FECHA_SALIDA, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n" +
-                                "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n" +
-                                "FROM `traslado_animalxgrupo` traslado\n" +
-                                "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n" +
-                                "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n" +
-                                "LEFT JOIN (\n" +
-                                "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n" +
-                                "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n" +
-                                "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n" +
-                                "FROM `rotacion_lotesxestado` rot\n" +
-                                "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n" +
-                                "INNER JOIN traslado_animalxgrupo tras ON tras.`id_grupo` = rotgrup.id_grupo\n" +
-                                "\n" +
-                                "WHERE tras.`id_animal` = '"+id_Animal+"'\n" +
-                                ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n" +
-                                "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n" +
-                                "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n" +
-                                "WHERE traslado.`id_animal` = '"+id_Animal+"'\n" +
-                                "ORDER BY traslado.`id` DESC;";
-            
+        try {
+            String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n"
+                    + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
+                    + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n"
+                    + "traslado.`id`, anim.`numero` AS NUMERO_ANIMAL,\n"
+                    + "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO,\n"
+                    + "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
+                    + "DATE_FORMAT(tbl.FECHA_ENTRADA, '%d/%m/%Y') AS FECHA_ENTRADA,\n"
+                    + "IFNULL(DATE_FORMAT(tbl.FECHA_SALIDA, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n"
+                    + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n"
+                    + "FROM `traslado_animalxgrupo` traslado\n"
+                    + "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n"
+                    + "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n"
+                    + "LEFT JOIN (\n"
+                    + "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n"
+                    + "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n"
+                    + "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n"
+                    + "FROM `rotacion_lotesxestado` rot\n"
+                    + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n"
+                    + "INNER JOIN traslado_animalxgrupo tras ON tras.`id_grupo` = rotgrup.id_grupo\n"
+                    + "\n"
+                    + "WHERE tras.`id_animal` = '" + id_Animal + "'\n"
+                    + ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n"
+                    + "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n"
+                    + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
+                    + "WHERE traslado.`id_animal` = '" + id_Animal + "'\n"
+                    + "ORDER BY traslado.`id` DESC;";
+
             List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();
 
             rotaciones = mySQL.ListSQL(consulta);
 
-        
             return rotaciones;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
-    
+
 }
