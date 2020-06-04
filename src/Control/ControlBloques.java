@@ -106,7 +106,7 @@ public class ControlBloques implements IControl{
         ModeloBloques bloque = (ModeloBloques) _bloque;
 
         consultas.add(
-//                //<editor-fold defaultstate="collapsed" desc="INSERT">
+//                //<editor-fold defaultstate="collapsed" desc="DELETE">
                     "DELETE FROM `bloques` WHERE `id` = "+bloque.getId()+";"
 //        //</editor-fold>
         );

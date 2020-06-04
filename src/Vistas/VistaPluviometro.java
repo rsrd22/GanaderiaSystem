@@ -367,10 +367,14 @@ public class VistaPluviometro extends javax.swing.JPanel {
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         //LimpiarFomulario();
+        idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
+        LlenarDatosTabla();
+
+    }//GEN-LAST:event_cbFincaActionPerformed
+
+    public void LlenarDatosTabla(){
         Utilidades.LimpiarTabla(tbl_Pluviometro);
         System.out.println("CBFINCA ---->"+listaFincas.size());
-        idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-        
         System.out.println("cbFincaActionPerformed cb-->"+idFinca);
         modeloPluviometro.setId_finca(""+idFinca);
         if(Integer.parseInt(idFinca)>0){
@@ -388,9 +392,8 @@ public class VistaPluviometro extends javax.swing.JPanel {
             }else{
                 Utilidades.LimpiarTabla(tbl_Pluviometro);
             }
-
-    }//GEN-LAST:event_cbFincaActionPerformed
-
+    }
+    
     private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadFocusLost
@@ -441,7 +444,12 @@ public class VistaPluviometro extends javax.swing.JPanel {
         }else if(cola == 4){ //ELIMINAR
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
             if(resp == JOptionPane.YES_OPTION){
-                JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
+                modeloPluviometro = ListamodeloPluviometro.get(fila);
+                int ret = controlPluviometro.Eliminar(modeloPluviometro);
+                if(ret == 0){
+                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                    LlenarDatosTabla();
+                }
             }
         }
     }//GEN-LAST:event_tbl_PluviometroMouseReleased

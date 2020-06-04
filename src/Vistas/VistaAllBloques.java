@@ -429,9 +429,14 @@ public class VistaAllBloques extends javax.swing.JPanel {
 //            new VistaGeneral(objetoVentana).setVisible(true);
 
         }else if(cola == 4){ //ELIMINAR
+            modeloBloques = ListamodeloBloques.get(fila);
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
             if(resp == JOptionPane.YES_OPTION){
-                JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
+                int ret = controlBloque.Eliminar(modeloBloques);
+                if(ret == 0){
+                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                    AccionCombo();
+                }
             }
         }
 

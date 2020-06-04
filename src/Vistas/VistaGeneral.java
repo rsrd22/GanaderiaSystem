@@ -442,8 +442,8 @@ public class VistaGeneral extends javax.swing.JFrame {
             
         } else if (modeloVista.getPanelHijo() instanceof VistaHistoriaAnimal) {
 
-//            VistaHistoriaAnimal vista = new VistaHistoriaAnimal(modeloVista);
-//            MostrarPanel(vista);
+            VistaHistoriaAnimal vista = new VistaHistoriaAnimal(modeloVista);
+            MostrarPanel(vista);
             
         } else if (modeloVista.getPanelHijo() instanceof VistaDuplicarGrupos) {
 
