@@ -243,7 +243,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, cbGenero);
-        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbGrupos);
@@ -572,6 +571,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkCapado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkCapado.setForeground(new java.awt.Color(59, 123, 50));
         chkCapado.setText("Capado");
+        chkCapado.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkCapadoStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -670,9 +674,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkMuerte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMuerte.setForeground(new java.awt.Color(59, 123, 50));
         chkMuerte.setText("Muerte");
-        chkMuerte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkMuerteActionPerformed(evt);
+        chkMuerte.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkMuerteStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -686,9 +690,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkVenta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkVenta.setForeground(new java.awt.Color(59, 123, 50));
         chkVenta.setText("Venta");
-        chkVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkVentaActionPerformed(evt);
+        chkVenta.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkVentaStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1491,14 +1495,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         setCalculosVenta();
     }//GEN-LAST:event_txtPesoKgKeyReleased
 
-    private void chkMuerteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMuerteActionPerformed
-        casoMuerte();
-    }//GEN-LAST:event_chkMuerteActionPerformed
-
-    private void chkVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkVentaActionPerformed
-        casoVenta();
-    }//GEN-LAST:event_chkVentaActionPerformed
-
     public void EstadoVenta(boolean chequeado) {
         jdFechaVenta.setVisible(chequeado);
         jdFechaVenta.setCalendar(Calendar.getInstance());
@@ -1561,6 +1557,21 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             ((JFrame) objetoVentana.getFrameVentana()).repaint();
         }
     }//GEN-LAST:event_formPropertyChange
+
+    private void chkCapadoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkCapadoStateChanged
+        boolean chequeado = chkCapado.isSelected();
+        if (chequeado) {
+            cbGenero.getModel().setSelectedItem("Macho");
+        }
+    }//GEN-LAST:event_chkCapadoStateChanged
+
+    private void chkMuerteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMuerteStateChanged
+        casoMuerte();
+    }//GEN-LAST:event_chkMuerteStateChanged
+
+    private void chkVentaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkVentaStateChanged
+        casoVenta();
+    }//GEN-LAST:event_chkVentaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
@@ -1842,9 +1853,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         }
 
-        if (verificarNroAnimal()) {
-            JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
-            return;
+        if (editar == Estado.GUARDAR) {
+            if (verificarNroAnimal()) {
+                JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+                return;
+            }
         }
 //</editor-fold>
 
@@ -2047,19 +2060,37 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void casoMuerte() {
-        boolean chequeado = chkMuerte.isSelected();
-        chkVenta.setEnabled(!chequeado);
-        chkVenta.setSelected(false);
-        EstadoVenta(false);
-        EstadoMuerte(chequeado);
+        if(chkMuerte.isSelected()){
+            EstadoVenta(false);
+            EstadoMuerte(true);
+            chkVenta.setEnabled(false);
+        }else{
+            chkVenta.setEnabled(true);
+        }
+//                boolean chequeado = chkMuerte.isSelected();
+//                chkVenta.setEnabled(!chequeado);
+//                chkVenta.setSelected(false);
+//                EstadoVenta(false);
+//                EstadoMuerte(chequeado);
     }
 
     private void casoVenta() {
-        boolean chequeado = chkVenta.isSelected();
-        chkMuerte.setEnabled(!chequeado);
-        chkMuerte.setSelected(false);
-        EstadoMuerte(false);
-        EstadoVenta(chequeado);
+        if(chkVenta.isSelected()){
+            EstadoVenta(true);
+            EstadoMuerte(false);
+            chkMuerte.setEnabled(false);
+        }else{
+            chkMuerte.setEnabled(true);
+        }
+//        if (chkVenta.isEnabled()) {
+//            if (editar == Estado.ACTUALIZAR) {
+//                boolean chequeado = chkVenta.isSelected();
+//                chkMuerte.setEnabled(!chequeado);
+//                chkMuerte.setSelected(false);
+//                EstadoMuerte(false);
+//                EstadoVenta(chequeado);
+//            }
+//        }
     }
 
     private void setCalculosVenta() {
