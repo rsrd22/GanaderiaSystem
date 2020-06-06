@@ -58,6 +58,7 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         controles = new GestionEstadoControles();
 
         Control control = new Control(true, txtDescripcion);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbEstado);
@@ -67,6 +68,7 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         controles.addControl(control);
 
         control = new Control(true, panelSeleccionarColor);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, panelColor);
@@ -392,6 +394,15 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         }
     }//GEN-LAST:event_panelColorMouseClicked
 
+    private void seleccionarColor() {
+        JColorChooser selecionarColor = new JColorChooser();
+        Color color = selecionarColor.showDialog(this, "Seleccione un color", Color.green);
+        color = color != null ? color : Color.green;
+        txtColor.setText("" + color.getRGB());
+        System.out.println("color: " +color.getRGB());
+
+        panelColor.setBackground(new Color(Integer.parseInt(txtColor.getText())));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnConsultar;
@@ -437,6 +448,10 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         }
 //</editor-fold>
 
+        if(txtColor.getText().trim().isEmpty()){
+            txtColor.setText(""+panelColor.getBackground().getRGB());
+        }
+        
         String codigoEstadoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoEstadoActividad.getText() : "0";
         modelo.setId(codigoEstadoAnimal);
         modelo.setDescripcion(txtDescripcion.getText().trim().toUpperCase());
@@ -459,6 +474,8 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
                 mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
                 Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
+                editar = Estado.GUARDAR;
+                txtDescripcion.requestFocusInWindow();
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
@@ -519,15 +536,4 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         }
     }
 
-    private void seleccionarColor() {
-        JColorChooser selecionarColor = new JColorChooser();
-        Color color = selecionarColor.showDialog(this, "Seleccione un color", Color.green);
-        color = color != null ? color : Color.green;
-//        panelColor.setBackground(color);
-        txtColor.setText("" + color.getRGB());
-        System.out.println(color.getRGB());
-        System.out.println(txtColor.getText());
-
-        panelColor.setBackground(new Color(Integer.parseInt(txtColor.getText())));
-    }
 }

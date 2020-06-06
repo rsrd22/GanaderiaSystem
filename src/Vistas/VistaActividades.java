@@ -57,6 +57,7 @@ public class VistaActividades extends javax.swing.JPanel implements IControlesUs
         controles = new GestionEstadoControles();
 
         Control control = new Control(true, txtDescripcion);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, cbEstado);
@@ -346,6 +347,8 @@ public class VistaActividades extends javax.swing.JPanel implements IControlesUs
                 mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
                 Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
+                editar = Estado.GUARDAR;
+                txtDescripcion.requestFocusInWindow();
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";

@@ -277,7 +277,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, jdFechaDestete);
-        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkVenta);
@@ -394,11 +393,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle4.setText("Tipo de animales");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(15, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         add(lbltitle4, gridBagConstraints);
 
         lblNumeroDescendiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -406,8 +406,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lblNumeroDescendiente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNumeroDescendiente.setText(" - ");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         add(lblNumeroDescendiente, gridBagConstraints);
 
@@ -423,23 +424,25 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 5);
         add(txtNumero, gridBagConstraints);
 
         jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 6);
         add(jSeparator10, gridBagConstraints);
 
@@ -448,10 +451,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lblAdoptiva.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblAdoptiva.setText("Número madre adoptiva");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         add(lblAdoptiva, gridBagConstraints);
 
@@ -472,22 +476,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 5);
         add(txtNumeroMama, gridBagConstraints);
 
         jSeparator11.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
         add(jSeparator11, gridBagConstraints);
 
@@ -496,10 +502,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lblFechaDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblFechaDestete.setText("Fecha de destete");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(lblFechaDestete, gridBagConstraints);
 
         cbGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -511,11 +518,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(cbGenero, gridBagConstraints);
 
@@ -524,9 +532,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle8.setText("Calificación");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lbltitle8, gridBagConstraints);
 
@@ -538,10 +547,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         jScrollPane2.setViewportView(txtNotas);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridheight = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BELOW_BASELINE_TRAILING;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(jScrollPane2, gridBagConstraints);
 
@@ -550,9 +561,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle10.setText("Genero");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         add(lbltitle10, gridBagConstraints);
 
@@ -561,10 +573,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle11.setText("Fecha de nacimiento");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(lbltitle11, gridBagConstraints);
 
         chkCapado.setBackground(new java.awt.Color(255, 255, 255));
@@ -577,9 +590,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(chkCapado, gridBagConstraints);
 
@@ -588,9 +602,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle13.setText("- ");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         add(lbltitle13, gridBagConstraints);
 
@@ -606,22 +620,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
         add(txtPeso, gridBagConstraints);
 
         jSeparator12.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 5);
         add(jSeparator12, gridBagConstraints);
 
@@ -635,11 +651,13 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         slCalificacion.setValue(3);
         slCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 30;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(slCalificacion, gridBagConstraints);
 
@@ -648,9 +666,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle14.setText("Peso (Kilos)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(lbltitle14, gridBagConstraints);
 
@@ -664,9 +683,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(chkDestete, gridBagConstraints);
 
@@ -680,7 +700,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
@@ -696,10 +716,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkVenta, gridBagConstraints);
 
         txtNumeroMamaAdoptiva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -714,20 +734,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(txtNumeroMamaAdoptiva, gridBagConstraints);
 
         jSeparatorAdoptiva.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         add(jSeparatorAdoptiva, gridBagConstraints);
 
         lbltitle7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -735,9 +759,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle7.setText("Número de la madre");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 5);
         add(lbltitle7, gridBagConstraints);
 
@@ -751,9 +776,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(8, 15, 0, 5);
         add(chkAdoptivo, gridBagConstraints);
 
@@ -762,9 +788,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle12.setText("Grupos");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 5);
         add(lbltitle12, gridBagConstraints);
 
@@ -777,12 +804,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 5);
         add(cbGrupos, gridBagConstraints);
 
@@ -791,10 +818,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle15.setText("Hierros");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(lbltitle15, gridBagConstraints);
 
         cbHierros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -806,28 +834,31 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbHierros, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jdFechaNacimiento, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jdFechaDestete, gridBagConstraints);
 
         lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -835,9 +866,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle6.setText("Finca");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 5);
         add(lbltitle6, gridBagConstraints);
 
@@ -850,13 +882,13 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.weightx = 0.06;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbTiposDeAnimales, gridBagConstraints);
 
         lbltitle16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -864,9 +896,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle16.setText("Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 5);
         add(lbltitle16, gridBagConstraints);
 
@@ -877,21 +910,23 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         txtNumeroDescendiente.setCaretColor(new java.awt.Color(59, 123, 50));
         txtNumeroDescendiente.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.ipadx = 50;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(txtNumeroDescendiente, gridBagConstraints);
 
         sepNumeroDescendiente.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.ipadx = 50;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(sepNumeroDescendiente, gridBagConstraints);
 
@@ -904,12 +939,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 5);
         add(cbFinca, gridBagConstraints);
 
@@ -918,10 +953,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle17.setText("Propietarios");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(lbltitle17, gridBagConstraints);
 
@@ -934,12 +970,13 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.012;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbPropietario, gridBagConstraints);
 
@@ -955,22 +992,25 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtPesoKg, gridBagConstraints);
 
         jSeparator13.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 120;
+        gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator13, gridBagConstraints);
 
@@ -979,9 +1019,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle18.setText("Peso (Libras)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 15);
         add(lbltitle18, gridBagConstraints);
 
@@ -990,9 +1031,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle19.setText("Notas");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(lbltitle19, gridBagConstraints);
 
@@ -1148,11 +1190,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         panelInfoVenta.add(txtCalculos, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.012;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
         add(panelInfoVenta, gridBagConstraints);
 
@@ -1209,11 +1252,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         panelInfoMuerte.add(ScrollCausaMuerte, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.012;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
         add(panelInfoMuerte, gridBagConstraints);
 
@@ -1322,7 +1366,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 19;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jPanel2, gridBagConstraints);
@@ -1397,8 +1441,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             sepNumeroDescendiente.setVisible(mostrar);
             txtNumeroDescendiente.setVisible(mostrar);
             if (!mostrar) {
-                if (verificarNroAnimal()) {
-                    JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+                if (editar == Estado.GUARDAR) {
+                    if (verificarNroAnimal()) {
+                        JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+                    }
                 }
             }
         }
@@ -1477,6 +1523,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }//GEN-LAST:event_cbPropietarioActionPerformed
 
     private void txtPesoKgKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKgKeyReleased
+        calcularPesoEnLibras();
+    }//GEN-LAST:event_txtPesoKgKeyReleased
+
+    private void calcularPesoEnLibras() {
         String peso = txtPesoKg.getText();
         String pesoSinPuntos = peso.indexOf(".") > -1 ? peso.replace(".", "") : peso;
         String pesoFormateado = Expresiones.procesarSoloNumP(pesoSinPuntos);
@@ -1493,7 +1543,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             txtPeso.setText(convertirALibras(pesoEnKilogramos));
         }
         setCalculosVenta();
-    }//GEN-LAST:event_txtPesoKgKeyReleased
+    }
 
     public void EstadoVenta(boolean chequeado) {
         jdFechaVenta.setVisible(chequeado);
@@ -1768,6 +1818,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
             Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_BUSCAR, botones);
+
+            calcularPesoEnLibras();
 //</editor-fold>
         } else if (objeto.getOpcion() == 3) {// SE LLAMA LA VISTA TIPOS DE ANIMALES DESDE LA VISTA ANIMALES 
             cbFinca.setSelectedItem(retorno.get("DESCRIPCION"));
@@ -1973,7 +2025,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private void Modificar() {
         Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_MODIFICAR, controles);
         Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_MODIFICAR, botones);
-//        cbGrupos.setEnabled(false);
+        cbGrupos.setEnabled(false);
         editar = Estado.ACTUALIZAR;
     }
 
@@ -2060,11 +2112,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void casoMuerte() {
-        if(chkMuerte.isSelected()){
+        if (chkMuerte.isSelected()) {
             EstadoVenta(false);
             EstadoMuerte(true);
             chkVenta.setEnabled(false);
-        }else{
+        } else {
             chkVenta.setEnabled(true);
         }
 //                boolean chequeado = chkMuerte.isSelected();
@@ -2075,11 +2127,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void casoVenta() {
-        if(chkVenta.isSelected()){
+        if (chkVenta.isSelected()) {
             EstadoVenta(true);
             EstadoMuerte(false);
             chkMuerte.setEnabled(false);
-        }else{
+        } else {
             chkMuerte.setEnabled(true);
         }
 //        if (chkVenta.isEnabled()) {
