@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import sun.font.FontDesignMetrics;
 
 /**
  *
@@ -52,7 +54,7 @@ public class PanelActividades extends JPanel {
     private List<Map<String, String>> listaActividades;
     private List<Map<String, String>> listaEstados;
     public int xinicial = 300, yinicial = 20;
-    public int mesesamostrar = 4;
+    public int mesesamostrar = 6;
     private ArrayList<Opciones> opciones;
     public MenuContextual menu;
     public static boolean clickDerechoPresionado;
@@ -65,8 +67,12 @@ public class PanelActividades extends JPanel {
         controlCronograma = new ControlCronograma();
         clickDerechoPresionado = false;
         arrastreDelMouse = false;
-        setPreferredSize(new Dimension(vp.getSize()));
-        this.setSize(vp.getSize());
+        
+        int anchoVentana = 300+160*mesesamostrar+120;
+        Dimension dim = new Dimension(anchoVentana,vp.getSize().height);
+        setPreferredSize(dim);
+        this.setSize(dim);
+        
         font = new Font("Tahoma", Font.BOLD, 12);
         controlGral = new ControlGeneral();
         this.cursor = Cursor.DEFAULT_CURSOR;
@@ -244,7 +250,7 @@ public class PanelActividades extends JPanel {
     public void cargarActividades() {
         String consulta = consultas.get("BUSQUEDA_ACTIVIDADES_SIN_ESPECIFICACIONES");
         listaActividades = controlGral.GetConsulta(consulta);
-
+        
         if (listaActividades.size() > 0) {
             int i = 0, alto = 30, yini = yinicial + 40, ancho = 290;
             for (Map<String, String> actividad : listaActividades) {

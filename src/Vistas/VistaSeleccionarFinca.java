@@ -179,7 +179,7 @@ public class VistaSeleccionarFinca extends javax.swing.JPanel {
         PanelActividades vista = new PanelActividades(vp);
         vp.scroll = new JScrollPane();
         vp.scroll.setViewportView(vista);
-        vp.scroll.setPreferredSize(new Dimension(this.getSize()));
+        vp.scroll.setPreferredSize(new Dimension(vp.getSize()));
         vp.MostrarPanel(vp.scroll);
         ((VistaGeneral)modeloVentanaGeneral.getFrameVentana()).dispose();
     }

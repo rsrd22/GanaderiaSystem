@@ -115,6 +115,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorTraslados = new javax.swing.JPanel();
         btnTrasladoAnimal = new javax.swing.JLabel();
         btnTrasladoGrupo = new javax.swing.JLabel();
+        btnMostrarEjecucionActividades = new javax.swing.JLabel();
+        pnlContenedorEjecucionActividades = new javax.swing.JPanel();
+        btnTarea = new javax.swing.JLabel();
+        btnEstadoTarea = new javax.swing.JLabel();
+        btnListaChequeo = new javax.swing.JLabel();
 
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
@@ -787,6 +792,71 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(60, 60, 60))
         );
 
+        btnMostrarEjecucionActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarEjecucionActividades.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarEjecucionActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarEjecucionActividades.setText("Ejecución Actividades");
+        btnMostrarEjecucionActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarEjecucionActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMostrarEjecucionActividadesMouseClicked(evt);
+            }
+        });
+
+        pnlContenedorEjecucionActividades.setBackground(new java.awt.Color(59, 145, 70));
+
+        btnTarea.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnTarea.setForeground(new java.awt.Color(255, 255, 255));
+        btnTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnTarea.setText("Tareas");
+        btnTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTarea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTareaRealMousePressed(evt);
+            }
+        });
+
+        btnEstadoTarea.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnEstadoTarea.setForeground(new java.awt.Color(255, 255, 255));
+        btnEstadoTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnEstadoTarea.setText("Estados");
+        btnEstadoTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstadoTarea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEstadoTareaMousePressed(evt);
+            }
+        });
+
+        btnListaChequeo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnListaChequeo.setForeground(new java.awt.Color(255, 255, 255));
+        btnListaChequeo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnListaChequeo.setText("Lista de Chequeo");
+        btnListaChequeo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnListaChequeo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnListaChequeoMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContenedorEjecucionActividadesLayout = new javax.swing.GroupLayout(pnlContenedorEjecucionActividades);
+        pnlContenedorEjecucionActividades.setLayout(pnlContenedorEjecucionActividadesLayout);
+        pnlContenedorEjecucionActividadesLayout.setHorizontalGroup(
+            pnlContenedorEjecucionActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnEstadoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnListaChequeo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        pnlContenedorEjecucionActividadesLayout.setVerticalGroup(
+            pnlContenedorEjecucionActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorEjecucionActividadesLayout.createSequentialGroup()
+                .addComponent(btnTarea)
+                .addGap(0, 0, 0)
+                .addComponent(btnEstadoTarea)
+                .addGap(0, 0, 0)
+                .addComponent(btnListaChequeo)
+                .addGap(30, 30, 30))
+        );
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -801,6 +871,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnMostrarActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnMostrarTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -828,6 +900,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnMostrarActividades)
                 .addGap(0, 0, 0)
                 .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarEjecucionActividades)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarTraslados)
                 .addGap(0, 0, 0)
@@ -1187,12 +1263,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnCronogramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCronogramaMousePressed
         if (evt.getClickCount() == 1) {
             SeleccionarFinca();
-//            EstablecerTituloVentana("Cronograma");
-//            PanelActividades vista = new PanelActividades(this);
-//            scroll = new JScrollPane();
-//            scroll.setViewportView(vista);
-//            scroll.setPreferredSize(new Dimension(this.getSize()));
-//            MostrarPanel(scroll);
         }
     }//GEN-LAST:event_btnCronogramaMousePressed
 
@@ -1316,6 +1386,32 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlTituloMouseClicked
 
+    private void btnMostrarEjecucionActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarEjecucionActividadesMouseClicked
+        if(!pnlContenedorEjecucionActividades.isVisible())
+            OcultarContenidoMenu();
+        
+        btnTarea.setVisible(!pnlContenedorEjecucionActividades.isVisible());
+        btnEstadoTarea.setVisible(!pnlContenedorEjecucionActividades.isVisible());
+        btnListaChequeo.setVisible(!pnlContenedorEjecucionActividades.isVisible());
+        pnlContenedorEjecucionActividades.setVisible(!pnlContenedorEjecucionActividades.isVisible());
+    }//GEN-LAST:event_btnMostrarEjecucionActividadesMouseClicked
+
+    private void btnTareaRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTareaRealMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Registro de tareas");
+            VistaTarea vista = new VistaTarea();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnTareaRealMousePressed
+
+    private void btnEstadoTareaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEstadoTareaMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEstadoTareaMousePressed
+
+    private void btnListaChequeoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaChequeoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnListaChequeoMousePressed
+
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
             if (max == 0) {
@@ -1380,11 +1476,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnCerrar;
     private javax.swing.JLabel btnCronograma;
     private javax.swing.JLabel btnEstadoActividades;
+    private javax.swing.JLabel btnEstadoTarea;
     private javax.swing.JLabel btnFincas;
     private javax.swing.JLabel btnFuenteHidrica;
     private javax.swing.JLabel btnGrupos;
     private javax.swing.JLabel btnHierros;
     private javax.swing.JLabel btnInicio;
+    private javax.swing.JLabel btnListaChequeo;
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
     private javax.swing.JLabel btnMaximizar;
@@ -1392,6 +1490,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel btnMostrarActividades;
     private javax.swing.JLabel btnMostrarAnimales;
+    private javax.swing.JLabel btnMostrarEjecucionActividades;
     private javax.swing.JLabel btnMostrarFincas;
     private javax.swing.JLabel btnMostrarGruposAnimales;
     private javax.swing.JLabel btnMostrarPropietarios;
@@ -1401,6 +1500,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnPropietarios;
     private javax.swing.JLabel btnRegistroActividades;
     private javax.swing.JLabel btnRotacion;
+    private javax.swing.JLabel btnTarea;
     private javax.swing.JLabel btnTipoAnimal;
     private javax.swing.JLabel btnTrasladoAnimal;
     private javax.swing.JLabel btnTrasladoGrupo;
@@ -1417,6 +1517,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlContenedorActividades;
     private javax.swing.JPanel pnlContenedorAnimales;
+    private javax.swing.JPanel pnlContenedorEjecucionActividades;
     private javax.swing.JPanel pnlContenedorFincas;
     private javax.swing.JPanel pnlContenedorGruposAnimales;
     private javax.swing.JPanel pnlContenedorPropietarios;
@@ -1436,6 +1537,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
         pnlContenedorTraslados.setVisible(false);
+        pnlContenedorEjecucionActividades.setVisible(false);
     }
 
     private void EstablecerTituloVentana(String titulo) {

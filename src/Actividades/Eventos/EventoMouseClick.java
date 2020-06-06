@@ -213,7 +213,7 @@ public class EventoMouseClick implements MouseListener {
         mes = (mes == 1 ? 12 : mes - 1);
 
         panRef.limpiarPeriodos();
-        panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, 4);
+        panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, panRef.mesesamostrar);
         panRef.cargarActividadesPorPeriodo();
         panRef.establecerActividadesSeleccionadas();
     }
@@ -228,7 +228,7 @@ public class EventoMouseClick implements MouseListener {
         mes = (mes == 12 ? 1 : mes + 1);
 
         panRef.limpiarPeriodos();
-        panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, 4);
+        panRef.cargarPeriodos(panRef.xinicial, panRef.yinicial, anio, mes, panRef.mesesamostrar);
         panRef.cargarActividadesPorPeriodo();
         panRef.establecerActividadesSeleccionadas();
     }

@@ -574,6 +574,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaEstadoActividad) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaActividades) {
                     ((VistaActividades) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaTarea) {
+                    ((VistaTarea) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 }
 
                 this.dispose();
@@ -670,6 +672,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
             ((VistaEstadoActividad) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaMacroGrupo) {
             ((VistaMacroGrupo) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaTarea) {
+            ((VistaTarea) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -775,7 +779,6 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

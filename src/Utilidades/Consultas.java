@@ -250,7 +250,9 @@ public class Consultas {
                 + "a.venta='1' AND a.id_tipo_animal=PARAMETRO1\n"
                 + "ORDER BY a.fecha_venta ASC");
 
-        consultas.put("OBTENER_HISTORICO_MUERTES", "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
+        consultas.put(
+                "OBTENER_HISTORICO_MUERTES",
+                "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
@@ -262,8 +264,32 @@ public class Consultas {
                 + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
                 + "WHERE\n"
                 + "a.muerte='1' AND a.id_tipo_animal=PARAMETRO1\n"
-                + "ORDER BY a.fecha_venta ASC");
+                + "ORDER BY a.fecha_venta ASC"
+        );
 
+        consultas.put(
+                "BUSQUEDA_TAREAS",
+                "SELECT "
+                + "a.id ID, \n"
+                + "b.descripcion ACTIVIDAD, \n"
+                + "a.descripcion DESCRIPCION,\n"
+                + "a.estado ESTADO\n"
+                + "FROM \n"
+                + "tareas a \n"
+                + "LEFT JOIN actividades b ON a.id_actividad=b.id"
+        );
+
+        consultas.put(
+                "CARGAR_COMBO_ACTIVIDADES",
+                "SELECT\n"
+                + "'-1' id,\n"
+                + "'Seleccionar' descripcion\n"
+                + "UNION\n"
+                + "SELECT\n"
+                + "id id,\n"
+                + "descripcion descripcion\n"
+                + "FROM actividades WHERE estado='Activo'"
+        );
     }
 
 }
