@@ -727,6 +727,10 @@ public class VistaAllLotes extends javax.swing.JPanel {
         
         String[] idsFuentes = getIDs();
         String[] Fuentes = getValues();
+        if(idFinca.equals("-1")){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una finca para realizar la operación.");
+            return;
+        }
         if(modeloLotes.getId().equals("0")){
             boolean Valnumero = controlLote.VerificarNumeroLotexBloque(id_Bloque, txtNumero.getText().trim());
             if(Valnumero){

@@ -98,18 +98,18 @@ public class VistaRotacion extends javax.swing.JPanel {
         for (int i = 0; i < modeloTblGrupos.getColumnCount(); i++) {
             tbl_Grupos.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-            tcr.setFont(new Font("Tahoma", 0, 12));
-            if(i > 0){
-                if(i == 2 ){
-                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-
-                }else{
-                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
-
-                }
+            if(i> 0){
+                tcr.setFont(new Font("Tahoma", 0, 12));
                 tcr.setForeground(new Color(26, 82, 118));
-                tbl_Grupos.getColumnModel().getColumn(i).setCellRenderer(tcr);
-        }
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+                
+            
+            tbl_Grupos.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            }
+            
+            
+        
             
         }
         JTableHeader header = tbl_Grupos.getTableHeader();
@@ -342,18 +342,33 @@ public class VistaRotacion extends javax.swing.JPanel {
                 
             }
         } else if(cola == 5){ // ROTAR
-            boolean sel = (boolean) tbl_Grupos.getValueAt(fila, 0);
-            if(sel){
-                System.out.println("**********ANTES*********"+ListaGruposSeleccionados.size());
-                getGruposAsociadosxLote();
-                System.out.println("**********DESPUES*********"+ListaGruposSeleccionados.size());
-                objetoVentana = new ModeloVentanaGeneral(this, new VistaRotar(), 1, ListaGruposSeleccionados);
-                System.out.println("EVENTO TABLA ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
-            }
+            tbl_Grupos.setValueAt(true, fila, 0);
+            
+            if(!ListaGruposSeleccionados.contains(ListaRotaciones.get(fila)))
+                ListaGruposSeleccionados.add(ListaRotaciones.get(fila));
+            
+            getGruposAsociadosxLote();
+            System.out.println("**********DESPUES*********"+ListaGruposSeleccionados.size());
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaRotar(), 1, ListaGruposSeleccionados);
+            System.out.println("EVENTO TABLA ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
+            objetoVentana.setFila(fila);
+            new VistaGeneral(objetoVentana).setVisible(true);
+            
+            
+            
+            
+//            boolean sel = (boolean) tbl_Grupos.getValueAt(fila, 0);
+//            if(sel){
+//                System.out.println("**********ANTES*********"+ListaGruposSeleccionados.size());
+//                getGruposAsociadosxLote();
+//                System.out.println("**********DESPUES*********"+ListaGruposSeleccionados.size());
+//                objetoVentana = new ModeloVentanaGeneral(this, new VistaRotar(), 1, ListaGruposSeleccionados);
+//                System.out.println("EVENTO TABLA ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
+//                objetoVentana.setFila(fila);
+//                new VistaGeneral(objetoVentana).setVisible(true);
+//            }else{
+//                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
+//            }
         }
         //MOstrarListaSeleccionados();
     }//GEN-LAST:event_tbl_GruposMouseReleased

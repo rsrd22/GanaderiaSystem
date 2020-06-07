@@ -481,7 +481,11 @@ public class VistaTrasladar extends javax.swing.JPanel {
                                                     "ORDER BY id ASC");
          
         Utilidades.LlenarComboBox(cbTipoAnimales, listaTipoAnimales, "DESCRIPCION");
-        cbTipoAnimales.setSelectedIndex(0);
+        if(ListaAnimalesSeleccionados.get(0).get("IDFINCA").equals(idFinca))
+            cbTipoAnimales.setSelectedItem("" + ListaAnimalesSeleccionados.get(0).get("TIPO_ANIMAL"));
+        else
+            cbTipoAnimales.setSelectedIndex(0);
+        
         //CargarListaGrupos(IDfINCA, idTipoAnimal);
     }
 
@@ -504,10 +508,10 @@ public class VistaTrasladar extends javax.swing.JPanel {
         String fechaT = sdf.format(fecha.getTime());
         String motivo = txtMotivo.getText().trim();
 
-        if (motivo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Por favor diligencie el motivo de traslado.");
-            return;
-        }
+//        if (motivo.equals("")) {
+//            JOptionPane.showMessageDialog(this, "Por favor diligencie el motivo de traslado.");
+//            return;
+//        }
         if (idGrupo.equals("-1")) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione el grupo a trasladar, e intentelo nuevamente.");
             return;

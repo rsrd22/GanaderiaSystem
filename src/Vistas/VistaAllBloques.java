@@ -523,6 +523,10 @@ public class VistaAllBloques extends javax.swing.JPanel {
         double AcuAreaBloques = getAcumuladoArea(modeloBloques.getId());
         double AreaTo = Double.parseDouble(AreaT);
         
+        if(idFinca.equals("-1")){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una finca para realizar la operación.");
+            return;
+        }
         
         if(modeloBloques.getId().equals("0")){
             boolean Valnumero = controlBloque.VerificarNumeroBloque(idFinca, txtNumero.getText().trim());

@@ -34,8 +34,13 @@ public class VistaInicio extends javax.swing.JPanel {
     public int cantpnlInformes = 0;
     public VistaPrincipal vPrin;
     public int ind = 0;
+    public int ban = 0;
     public ArrayList<ModeloDatosMultiple> Lista_Fincas_pnl = new ArrayList<>();
     public ArrayList<ModeloDatosMultiple> Lista_Informe_pnl = new ArrayList<>();
+    ArrayList<Integer> R = new ArrayList<>();
+    ArrayList<Integer> G = new ArrayList<>();
+    ArrayList<Integer> B = new ArrayList<>();
+    
     /**
      * Creates new form VistaInicio
      */
@@ -57,8 +62,10 @@ public class VistaInicio extends javax.swing.JPanel {
         ListaInformacionGrupos = new ArrayList<>();
         ListaGruposInforme = new ArrayList<>();
         ListaGruposEncabezado = new ArrayList<>();
+        
+        LlenarColores();
         CargarFincas();
-        LlenarPnlFincas();
+        
     }
 
     /**
@@ -69,6 +76,7 @@ public class VistaInicio extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         scrpnlsFincas = new javax.swing.JScrollPane();
         pnlFincas = new javax.swing.JPanel();
@@ -76,13 +84,18 @@ public class VistaInicio extends javax.swing.JPanel {
         pnlInforme = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         scrpnlsFincas.setBackground(new java.awt.Color(255, 255, 255));
         scrpnlsFincas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fincas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         scrpnlsFincas.setForeground(new java.awt.Color(59, 123, 50));
 
         pnlFincas.setBackground(new java.awt.Color(255, 255, 255));
+        pnlFincas.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlFincasComponentResized(evt);
+            }
+        });
         pnlFincas.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 pnlFincasComponentAdded(evt);
@@ -94,7 +107,17 @@ public class VistaInicio extends javax.swing.JPanel {
         pnlFincas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         scrpnlsFincas.setViewportView(pnlFincas);
 
-        add(scrpnlsFincas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 690, 80));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 659;
+        gridBagConstraints.ipady = 37;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 9);
+        add(scrpnlsFincas, gridBagConstraints);
 
         scrpnlsInforme.setBackground(new java.awt.Color(255, 255, 255));
         scrpnlsInforme.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -112,7 +135,17 @@ public class VistaInicio extends javax.swing.JPanel {
         pnlInforme.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         scrpnlsInforme.setViewportView(pnlInforme);
 
-        add(scrpnlsInforme, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 690, 330));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 667;
+        gridBagConstraints.ipady = 307;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 9);
+        add(scrpnlsInforme, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void pnlFincasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_pnlFincasComponentAdded
@@ -130,6 +163,11 @@ public class VistaInicio extends javax.swing.JPanel {
     private void pnlInformeComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_pnlInformeComponentRemoved
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlInformeComponentRemoved
+
+    private void pnlFincasComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlFincasComponentResized
+        System.out.println("*************pnlFincasComponentResized*************");
+        EstablecerColpnlFincas();
+    }//GEN-LAST:event_pnlFincasComponentResized
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -160,6 +198,8 @@ public class VistaInicio extends javax.swing.JPanel {
     private void LlenarPnlFincas() {
         System.out.println("********LlenarPnlGrupos********");
         System.out.println("ListaGruposSeleccionados.size()->" + ListaFincasMostrar.size());
+        System.out.println("Lista_Fincas_pnl-->"+Lista_Fincas_pnl.size());
+        //Lista_Fincas_pnl.clear();
         for (int i = 0; i < ListaFincasMostrar.size(); i++) {
             Lista_Fincas_pnl.add(
                     new ModeloDatosMultiple(
@@ -237,14 +277,16 @@ public class VistaInicio extends javax.swing.JPanel {
             System.out.println("obj.getX()-->" + obj.getX());
             System.out.println("obj.getY()-->" + obj.getY());
             pnlFincas.add(pnlDato, new org.netbeans.lib.awtextra.AbsoluteConstraints(obj.getX(), obj.getY(), obj.getWidthPnl(), obj.getHeightPnl()));
-            pnlFincas.repaint();
+            
         }
 
+        vPrin.revalidate();
+        vPrin.repaint();
         System.out.println("*********ancho=("+this.getWidth()+")***********");
         System.out.println("*********alto=("+this.getHeight()+")***********");
-        vPrin.pnlContenedor.setSize(this.getWidth(), this.getHeight()+40);
+        //vPrin.pnlContenedor.setSize(this.getWidth(), this.getHeight()+40);
         //vPrin.setSize(this.getWidth(), this.getHeight()+40);
-        vPrin.pack();
+        //vPrin.pack();
     }
 
     private void ActualizarGruposSeleccionados(int ind) {
@@ -261,7 +303,7 @@ public class VistaInicio extends javax.swing.JPanel {
         
         Lista_Informe_pnl = new ArrayList<>();
         pnlInforme.removeAll();
-        repaint();
+        //repaint();
         ImprimirDatos();
     }
 
@@ -356,7 +398,7 @@ public class VistaInicio extends javax.swing.JPanel {
                             (listaBloquesxFinca.size()*25), // heightPnl
                             20, // height
                             3,          // padding  
-                            Color.BLUE,          // padding
+                            new Color(R.get(i), G.get(i), B.get(i)),          // padding
                             true));          // padding
             
             for(int j = 0; j < listaBloquesxFinca.size(); j++){
@@ -373,7 +415,7 @@ public class VistaInicio extends javax.swing.JPanel {
                             25, // heightPnl
                             20, // height
                             3,          // padding  
-                            Color.BLUE,          // padding
+                            new Color(R.get(i), G.get(i), B.get(i)),          // padding
                             false));          // padding
                 
                 taX += 140;
@@ -403,7 +445,7 @@ public class VistaInicio extends javax.swing.JPanel {
                                                 25, // heightPnl
                                                 20, // height
                                                 3,          // padding  
-                                                Color.BLUE,          // padding
+                                                new Color(R.get(i), G.get(i), B.get(i)),          // padding
                                                 false));          // padding
                     }else{
                         sumaFila+=0;
@@ -419,7 +461,7 @@ public class VistaInicio extends javax.swing.JPanel {
                                                 25, // heightPnl
                                                 20, // height
                                                 3,          // padding  
-                                                Color.BLUE,          // padding
+                                                new Color(R.get(i), G.get(i), B.get(i)),          // padding
                                                 false));          // padding
                     }
                 }
@@ -489,7 +531,7 @@ public class VistaInicio extends javax.swing.JPanel {
                             25, // heightPnl
                             20, // height
                             3,          // padding
-                            Color.BLUE,          // padding
+                            new Color(R.get(i), G.get(i), B.get(i)),          // padding
                             false));          // padding
         }
         MostrarFincasSeleccionados();
@@ -645,16 +687,17 @@ public class VistaInicio extends javax.swing.JPanel {
 //            System.out.println("obj.getX()-->" + obj.getX());
 //            System.out.println("obj.getY()-->" + obj.getY());
 //            System.out.println("obj.isIsfinca()-->"+obj.isIsfinca());
-            
             pnlInforme.add(pnlDato, new org.netbeans.lib.awtextra.AbsoluteConstraints(obj.getX(), obj.getY(), obj.getWidthPnl(), obj.getHeightPnl()));
-            pnlInforme.repaint();
+            
         }
 
+        vPrin.revalidate();
+        vPrin.repaint();
 //        System.out.println("*********ancho=("+this.getWidth()+")***********");
 //        System.out.println("*********alto=("+this.getHeight()+")***********");
-        vPrin.pnlContenedor.setSize(this.getWidth(), this.getHeight()+40);
+//        vPrin.pnlContenedor.setSize(this.getWidth(), this.getHeight()+40);
         //vPrin.setSize(this.getWidth(), this.getHeight()+40);
-        vPrin.pack();
+//        vPrin.pack();
     }
     
     private void ActualizarFincasSeleccionadosMostrar(int indr) {
@@ -669,7 +712,7 @@ public class VistaInicio extends javax.swing.JPanel {
         ListaFincasInforme.remove(indi);
         Lista_Informe_pnl = new ArrayList<>();
         pnlInforme.removeAll();
-        repaint();
+        //repaint();
         ImprimirDatos();
         
         
@@ -767,6 +810,69 @@ public class VistaInicio extends javax.swing.JPanel {
                             false));          // isfalse
         
         
+    }
+    
+    public void LlenarColores(){
+        R.clear();
+        G.clear();
+        B.clear();
+        //Azul
+        R.add(93);G.add(173);B.add(226);
+        //AMArillo
+        R.add(244);G.add(208);B.add(63);
+        //Naranja  
+        R.add(220);G.add(118);B.add(51);
+        //Verde
+        R.add(82);G.add(190);B.add(128);
+        //Lila 175, 122, 197  
+        R.add(175);G.add(122);B.add(197);
+        //Verde Claro 72, 201, 176 
+        R.add(72);G.add(201);B.add(176);
+        //Rojo 205, 97, 85
+        R.add(205);G.add(97);B.add(85);
+        //Azul 84, 153, 199
+        R.add(84);G.add(153);B.add(199);
+        //Amarillo 245, 176, 65
+        R.add(245);G.add(176);B.add(65);
+        //Violeta 165, 105, 189  
+        R.add(165);G.add(105);B.add(189);
+        
+        //Azul 40, 116, 166
+        R.add(40);G.add(116);B.add(166);
+        //Verde 17, 122, 101
+        R.add(17);G.add(122);B.add(101);
+        //Amarillo  183, 149, 11  
+        R.add(183);G.add(149);B.add(11);
+        //Lila 118, 68, 138
+        R.add(118);G.add(68);B.add(138);
+        //Verde 20, 143, 119
+        R.add(20);G.add(143);B.add(119);
+        //Naraja 160, 64, 0
+        R.add(160);G.add(64);B.add(0);
+        //Azul 31, 97, 141
+        R.add(31);G.add(97);B.add(141);
+        //Rojo 146, 43, 33
+        R.add(146);G.add(43);B.add(33);
+        //Amarillo 185, 119, 14  
+        R.add(185);G.add(119);B.add(14);
+        //Violeta 108, 52, 131
+        R.add(108);G.add(52);B.add(131);
+        
+    }
+
+    private void EstablecerColpnlFincas() {
+        System.out.println("pnl---"+pnlFincas.getWidth());
+        System.out.println("scl---"+scrpnlsFincas.getWidth());
+        int div = scrpnlsFincas.getWidth() / 178;
+        System.out.println("div-->"+div);
+        cantpnlFincas = div;
+        if(ban == 0){
+            ban =1;
+            LlenarPnlFincas();
+        }else{   
+            RecargarListaSeleccionados();
+            MostrarFincasSeleccionados();
+        }
     }
     
 }

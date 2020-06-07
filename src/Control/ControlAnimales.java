@@ -518,6 +518,10 @@ public class ControlAnimales implements IControl {
                     + "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n"
                     + "WHERE traslado.`id_animal` = '" + id_Animal + "'\n"
                     + "ORDER BY traslado.`id` DESC";
+            
+            
+            System.out.println("GetDatosTraslado...>"+consulta);
+            
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
@@ -558,7 +562,9 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
                     + "WHERE traslado.`id_animal` = '" + id_Animal + "'\n"
                     + "ORDER BY traslado.`id` DESC;";
-
+            
+            System.out.println("GetDatosrotaciones...>"+consulta);
+            
             List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();
 
             rotaciones = mySQL.ListSQL(consulta);

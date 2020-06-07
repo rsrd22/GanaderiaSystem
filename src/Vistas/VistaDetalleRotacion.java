@@ -85,7 +85,7 @@ public class VistaDetalleRotacion extends javax.swing.JPanel {
         tbl_Rotaciones.getColumnModel().getColumn(2).setPreferredWidth(120);
         tbl_Rotaciones.getColumnModel().getColumn(3).setPreferredWidth(70);
         tbl_Rotaciones.getColumnModel().getColumn(4).setPreferredWidth(70);
-        tbl_Rotaciones.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tbl_Rotaciones.getColumnModel().getColumn(5).setPreferredWidth(70);
         tbl_Rotaciones.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblRotacion.getColumnCount(); i++) {

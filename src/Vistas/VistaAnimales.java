@@ -1542,7 +1542,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             double pesoEnKilogramos = Double.parseDouble(pesoSinPuntos);
             txtPeso.setText(convertirALibras(pesoEnKilogramos));
         }
-        setCalculosVenta();
+        if(chkVenta.isSelected())
+            setCalculosVenta();
     }
 
     public void EstadoVenta(boolean chequeado) {

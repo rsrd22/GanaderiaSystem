@@ -323,14 +323,21 @@ public class VistaTraslado extends javax.swing.JPanel {
                 ListaAnimaleSeleccionados.remove(ind);
             }
         } else if(cola == 9){
+            tbl_Traslado.setValueAt(true, fila, 0);
+            System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
+            if(!ListaAnimaleSeleccionados.contains(ListaTraslado.get(fila)))
+                ListaAnimaleSeleccionados.add(ListaTraslado.get(fila));
+            System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
+            
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaTrasladar(), 1, ListaAnimaleSeleccionados);
+            objetoVentana.setFila(fila);
+            new VistaGeneral(objetoVentana).setVisible(true);
             boolean sel = (boolean) tbl_Traslado.getValueAt(fila, 0);
-            if(sel){
-                objetoVentana = new ModeloVentanaGeneral(this, new VistaTrasladar(), 1, ListaAnimaleSeleccionados);
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-            }else{
-                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
-            }
+//            if(sel){
+//                
+//            }else{
+//                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
+//            }
         }
         
     }//GEN-LAST:event_tbl_TrasladoMouseReleased

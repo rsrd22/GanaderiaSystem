@@ -118,7 +118,6 @@ public class VistaVerAnimales extends javax.swing.JPanel {
             tbl_Animales.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            if(i > 0){
 //                if(i == 2 ){
 //                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //
@@ -128,7 +127,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
 //                }
                 tcr.setForeground(new Color(26, 82, 118));
                 tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            }
+            
             
         }
         JTableHeader header = tbl_Animales.getTableHeader();
@@ -375,20 +374,21 @@ public class VistaVerAnimales extends javax.swing.JPanel {
 //            
 //        
 //        } 
-        if(cola == 8 ){//GRUPO
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            
-                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleTraslado(), 1, idAnimal);
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-                
-        }  else if(cola == 9){//LOTE
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleRotacion(), 1, idAnimal);
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
-        }  else if(cola == 10){//VER MAS
+//        if(cola == 8 ){//GRUPO
+//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+//            
+//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleTraslado(), 1, idAnimal);
+//                objetoVentana.setFila(fila);
+//                new VistaGeneral(objetoVentana).setVisible(true);
+//                
+//        }  else if(cola == 9){//LOTE
+//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+//            
+//            objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleRotacion(), 1, idAnimal);
+//                objetoVentana.setFila(fila);
+//                new VistaGeneral(objetoVentana).setVisible(true);
+//        }  else 
+        if(cola == 10){//VER MAS
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             
                objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal); 
