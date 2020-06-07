@@ -244,8 +244,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         btnInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
         btnInicio.setText("INICIO");
         btnInicio.setToolTipText("INICIO");
+        btnInicio.setMaximumSize(new java.awt.Dimension(30, 30));
+        btnInicio.setMinimumSize(new java.awt.Dimension(30, 30));
+        btnInicio.setPreferredSize(new java.awt.Dimension(30, 30));
         btnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInicioMouseClicked(evt);
@@ -255,8 +259,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.007;
-        gridBagConstraints.insets = new java.awt.Insets(24, 10, 11, 0);
+        gridBagConstraints.weightx = 0.003;
+        gridBagConstraints.insets = new java.awt.Insets(11, 6, 11, 0);
         pnlTitulo.add(btnInicio, gridBagConstraints);
 
         btnMenuVertical.setBackground(new java.awt.Color(255, 255, 255));
