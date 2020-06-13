@@ -1,5 +1,6 @@
 package Vistas;
 
+import Charts.Panel;
 import Control.ControlAnimales;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloVentanaGeneral;
@@ -41,6 +42,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public String[] EncabezadoTblRotacion;
     private List<Map<String, String>> ListaDatosRotacion;
     public DefaultTableModel modeloTblRotacion;
+    public Panel graficoPeso;
+    private ArrayList<ArrayList<Object[]>> listaDatosPeso;
+    private ArrayList<Object[]> datosPeso;
     
     
     private int ancho;
@@ -60,12 +64,16 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         id_Animal = ""+modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
+        datosPeso = new ArrayList<>();
+//        [772, 293]
+        pnlPeso.setSize(739, 423);
+        listaDatosPeso = new ArrayList<>();
         EncabezadoTblTraslado = new String[]{
             "No",
              "Grupo", 
              "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Traslado</p></html>", 
-             "Motivo", 
-             "Estado"
+             "Motivo",  
+            "Estado"
         };
         ListaDatos = new ArrayList<>();
         EncabezadoTblRotacion= new String[]{
@@ -79,7 +87,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         InicializarTblRotacion();
         InicializarTblTralado();
         
-        GetDatosAnimal();   
+        GetDatosAnimal();
+        
+        graficoPeso = new Panel(listaDatosPeso, pnlPeso);
+        graficoPeso.setBounds(0, 0, pnlPeso.getWidth(), pnlPeso.getHeight());
+        pnlPeso.add(graficoPeso);
+        
     }
     public void InicializarTblRotacion() {
         tbl_Rotaciones.setDefaultRenderer(Object.class, new TablaRender());
@@ -249,6 +262,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlRotaciones = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Rotaciones = new javax.swing.JTable();
+        pnlPeso = new javax.swing.JPanel();
         lblPeso = new javax.swing.JLabel();
         lblTipoAnimal = new javax.swing.JLabel();
         lblPropietario = new javax.swing.JLabel();
@@ -1005,13 +1019,26 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Rotaciones", pnlRotaciones);
 
+        pnlPeso.setBackground(new java.awt.Color(255, 102, 102));
+
+        javax.swing.GroupLayout pnlPesoLayout = new javax.swing.GroupLayout(pnlPeso);
+        pnlPeso.setLayout(pnlPesoLayout);
+        pnlPesoLayout.setHorizontalGroup(
+            pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 772, Short.MAX_VALUE)
+        );
+        pnlPesoLayout.setVerticalGroup(
+            pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 293, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Peso", pnlPeso);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.ipady = 25;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
@@ -1277,6 +1304,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle8;
     private javax.swing.JLabel lbltitle9;
     private javax.swing.JPanel pnlMuerte;
+    private javax.swing.JPanel pnlPeso;
     private javax.swing.JPanel pnlRotaciones;
     private javax.swing.JPanel pnlTraslados;
     private javax.swing.JPanel pnlVenta;
@@ -1312,6 +1340,14 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPeso.setText(ListaDatos.get(0).getPeso());
         lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
+        ///////////////////////////   X        Y
+        datosPeso.add(new Object[]{"Fecha", "Peso"});
+        System.out.println("ListaDatos.get(0).getFechaNacimiento()--"+ListaDatos.get(0).getFechaNacimiento());
+        System.out.println("ListaDatos.get(0).getPeso()--"+ListaDatos.get(0).getPeso());
+        datosPeso.add(new Object[]{""+ListaDatos.get(0).getFechaNacimiento(), ""+ListaDatos.get(0).getPeso()});
+        listaDatosPeso.add(datosPeso);
+        
+        
         if(ListaDatos.get(0).getVenta().equals("1")){
             GetDatosVentaAnimal();
             jTabbedPane1.setEnabledAt(1, true);
