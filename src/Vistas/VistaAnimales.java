@@ -269,7 +269,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, jdFechaNacimiento);
-        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, chkDestete);
@@ -842,6 +841,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbHierros, gridBagConstraints);
+
+        jdFechaNacimiento.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -851,6 +852,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 0.06;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jdFechaNacimiento, gridBagConstraints);
+
+        jdFechaDestete.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
@@ -1395,7 +1398,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private void chkDesteteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkDesteteStateChanged
         boolean chequeado = chkDestete.isSelected();
         jdFechaDestete.setVisible(chequeado);
-        jdFechaDestete.setCalendar(Calendar.getInstance());
+//        jdFechaDestete.setCalendar(Calendar.getInstance());
         lblFechaDestete.setVisible(chequeado);
     }//GEN-LAST:event_chkDesteteStateChanged
 
@@ -1917,6 +1920,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : "0";
         String capado = chkCapado.isSelected() ? "Si" : "No";
+        Calendar fechaDestete=Calendar.getInstance();
 
         int indiceGrupo = cbGrupos.getSelectedIndex();
         modeloTraslado.setId("0");
@@ -1987,7 +1991,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         }
 
         if (chkDestete.isSelected()) {
-            Calendar fechaDestete = jdFechaDestete.getCalendar();
+            fechaDestete = jdFechaDestete.getCalendar();
             modelo.setFechaDestete(sdf.format(fechaDestete.getTime()));
         } else {
             modelo.setFechaDestete(FECHA_POR_DEFECTO);
@@ -2008,6 +2012,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
                 editar = Estado.GUARDAR;
+                jdFechaDestete.setCalendar(fechaDestete);
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
