@@ -9,6 +9,7 @@ package Vistas;
 import Control.*;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
+import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,9 +35,10 @@ public class VistaTraslado extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String idTipoAnimal;
-    
+    public ArrayList<String> NameColumnasFiltro;
     
     private List<Map<String, String>>  ListaTraslado;
+    private List<Map<String, String>>  ListaTrasladoMostrar;
     private List<Map<String, String>>  ListaAnimaleSeleccionados;
     private ControlTraslado controlTraslado = new ControlTraslado();
     public int allFincas;
@@ -49,6 +51,17 @@ public class VistaTraslado extends javax.swing.JPanel {
         initComponents();
         idFinca = "";
         idTipoAnimal = "";
+        NameColumnasFiltro = new ArrayList<>();
+        NameColumnasFiltro.add("NUMERO_MAMA");
+        NameColumnasFiltro.add("NUMERO_ANIMAL");
+        NameColumnasFiltro.add("GRUPO");
+        NameColumnasFiltro.add("FINCA");
+        NameColumnasFiltro.add("BLOQUE");
+        NameColumnasFiltro.add("LOTE");
+        NameColumnasFiltro.add("FECHA_NACIMIENTO");
+        NameColumnasFiltro.add("GENERO");
+        NameColumnasFiltro.add("PESO");
+        NameColumnasFiltro.add("ESTADO");
         EncabezadoTblTraslado = new String[]{
             "No", "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>", 
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>", "Grupo", "Lote", 
@@ -139,7 +152,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         lblTid1 = new javax.swing.JLabel();
         cbTipoAnimales = new javax.swing.JComboBox();
         lblTid2 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JTextField();
+        txtFiltro = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -251,47 +264,47 @@ public class VistaTraslado extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
         add(lblTid2, gridBagConstraints);
 
-        txtNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNumero.setForeground(new java.awt.Color(59, 123, 50));
-        txtNumero.setBorder(null);
-        txtNumero.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtNumero.setFocusCycleRoot(true);
-        txtNumero.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtFiltro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtFiltro.setForeground(new java.awt.Color(59, 123, 50));
+        txtFiltro.setBorder(null);
+        txtFiltro.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtFiltro.setFocusCycleRoot(true);
+        txtFiltro.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNumeroFocusLost(evt);
+                txtFiltroFocusLost(evt);
             }
         });
-        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNumeroKeyPressed(evt);
+                txtFiltroKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNumeroKeyReleased(evt);
+                txtFiltroKeyReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 510;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 50, 0, 20);
-        add(txtNumero, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 20);
+        add(txtFiltro, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 509;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 20);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 20);
         add(jSeparator6, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -354,17 +367,21 @@ public class VistaTraslado extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
 
-    private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
+    private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
 
-    }//GEN-LAST:event_txtNumeroFocusLost
+    }//GEN-LAST:event_txtFiltroFocusLost
 
-    private void txtNumeroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyPressed
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            MostrarTabla();
+        }
+    }//GEN-LAST:event_txtFiltroKeyPressed
 
-    }//GEN-LAST:event_txtNumeroKeyPressed
-
-    private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
-
-    }//GEN-LAST:event_txtNumeroKeyReleased
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        if (txtFiltro.getText().equals("")) {
+            MostrarTabla();
+        }
+    }//GEN-LAST:event_txtFiltroKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -376,7 +393,7 @@ public class VistaTraslado extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
     private javax.swing.JTable tbl_Traslado;
-    public javax.swing.JTextField txtNumero;
+    public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
     
     public void RetornoVistaGeneral(ModeloVentanaGeneral objeto, Object retorno) {
@@ -413,6 +430,15 @@ public class VistaTraslado extends javax.swing.JPanel {
         EventoComboFincas();
     }
 
+    private int getIndiceLista(String Dato) {
+        for(int i = 0; i < ListaAnimaleSeleccionados.size(); i++){
+            if(ListaAnimaleSeleccionados.get(i).get("ID_GRUPO").equals(Dato)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private void EventoComboFincas() {
         System.out.println("cbFincaActionPerformed---_>"+listaFincas.size());
         System.out.println("cbFinca.--->"+cbFinca.getItemCount());
@@ -428,38 +454,68 @@ public class VistaTraslado extends javax.swing.JPanel {
         }
         if(Integer.parseInt(idFinca)>0){
             ListaTraslado =(List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado(""+idFinca, idTipoAnimal);
+        
+        MostrarTabla();
+        }
+        
+    }
+    
+    private void MostrarTabla() {
+        System.out.println("****************MostrarTabla*****************");
+        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
+        System.out.println("filtro--"+filtro);
+        ListaTrasladoMostrar = getFiltroLista(filtro);
+        
+        if(Integer.parseInt(idFinca)>0){
+            //ListaTraslado =(List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado(""+idFinca, idTipoAnimal);
             Utilidades.LimpiarTabla(tbl_Traslado);
-            for(int i =0; i < ListaTraslado.size(); i++){
+            for(int i =0; i < ListaTrasladoMostrar.size(); i++){
                 Utilidades.agregarFilaTabla(
                         modeloTblTraslado,  
                         new Object[]{
                             false,//tbl_Grupos.getRowCount()+1,
-                            ListaTraslado.get(i).get("NUMERO_MAMA"),
-                            ListaTraslado.get(i).get("NUMERO_ANIMAL"),
-                            ListaTraslado.get(i).get("GRUPO"),
-                            (allFincas == 1?ListaTraslado.get(i).get("FINCA")+" / ":"") + 
-                            ListaTraslado.get(i).get("BLOQUE") + " / " + ListaTraslado.get(i).get("LOTE"),
-                            ListaTraslado.get(i).get("FECHA_NACIMIENTO"), 
-                            ListaTraslado.get(i).get("GENERO").toUpperCase(), 
-                            ListaTraslado.get(i).get("PESO"), 
-                            ListaTraslado.get(i).get("ESTADO"), 
+                            ListaTrasladoMostrar.get(i).get("NUMERO_MAMA"),
+                            ListaTrasladoMostrar.get(i).get("NUMERO_ANIMAL"),
+                            ListaTrasladoMostrar.get(i).get("GRUPO"),
+                            (allFincas == 1?ListaTrasladoMostrar.get(i).get("FINCA")+" / ":"") + 
+                            ListaTrasladoMostrar.get(i).get("BLOQUE") + " / " + ListaTraslado.get(i).get("LOTE"),
+                            ListaTrasladoMostrar.get(i).get("FECHA_NACIMIENTO"), 
+                            ListaTrasladoMostrar.get(i).get("GENERO").toUpperCase(), 
+                            ListaTrasladoMostrar.get(i).get("PESO"), 
+                            ListaTrasladoMostrar.get(i).get("ESTADO"), 
                             "Trasladar" 
                         } 
                     );
             }
         }
-
-        
     }
     
-    private int getIndiceLista(String Dato) {
-        for(int i = 0; i < ListaAnimaleSeleccionados.size(); i++){
-            if(ListaAnimaleSeleccionados.get(i).get("ID_GRUPO").equals(Dato)){
-                return i;
+    private List<Map<String, String>> getFiltroLista(String filtro) {
+        List<Map<String, String>> retorno = new ArrayList<>();
+        System.out.println("***************getFiltroLista*****************" + filtro);
+        int b = -1;
+        String[] filtros = filtro.isEmpty() ? null : filtro.replace(" ", "<::>").split("<::>");
+        String valores = "";
+        for (int i = 0; i < ListaTraslado.size(); i++) {
+            b = 1;
+            if (filtro.isEmpty()) {
+                retorno.add(ListaTraslado.get(i));
+            } else {
+                valores = "";
+                for (int j = 0; j < NameColumnasFiltro.size(); j++) {
+                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
+                    String value = ListaTraslado.get(i).get(NameColumnasFiltro.get(j));
+                    valores += "" + value;
+                }
+                boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
+                System.out.println("i-" + i + "-b-" + b);
+                if (encontro) {
+                    retorno.add(ListaTraslado.get(i));
+                }
             }
         }
-        return -1;
+        System.out.println("********************retorno --> " + retorno.size() + "***********************");
+        return retorno;
     }
-
     
 }

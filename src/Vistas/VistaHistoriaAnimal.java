@@ -1493,7 +1493,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                     new Object[]{
                         (i+1),//tbl_Grupos.getRowCount()+1,
                         ListaDatosRotacion.get(i).get("GRUPO"),
-                        ListaDatosRotacion.get(i).get("LOTE"),
+                        ListaDatosRotacion.get(i).get("BLOQUE")+" / "+ListaDatosRotacion.get(i).get("LOTE"),
                         ListaDatosRotacion.get(i).get("FECHA_ENTRADA"),
                         ListaDatosRotacion.get(i).get("FECHA_SALIDA"), 
                         ListaDatosRotacion.get(i).get("ESTADO")

@@ -46,6 +46,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
+    public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     
     /**
@@ -55,6 +56,18 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         initComponents();
         idFinca = "";
         idTipoAnimal = "";
+        NameColumnasFiltro = new ArrayList<>();
+        NameColumnasFiltro.add("NUMERO_ANIMAL");
+        NameColumnasFiltro.add("NUMERO_MAMA");
+        NameColumnasFiltro.add("GENERO");
+        NameColumnasFiltro.add("FECHA_NACIMIENTO");
+        NameColumnasFiltro.add("PESO");
+        NameColumnasFiltro.add("DESC_HIERRO");
+        NameColumnasFiltro.add("CAPADO");
+        NameColumnasFiltro.add("GRUPO");
+        NameColumnasFiltro.add("FINCA");
+        NameColumnasFiltro.add("BLOQUE");
+        NameColumnasFiltro.add("LOTE");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>", 
@@ -76,7 +89,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         InicializarTblAnimales();
         CargarListaFincas();
     }
-
+    
     public void InicializarTblAnimales() {
         tbl_Animales.setDefaultRenderer(Object.class, new TablaRender());
         
@@ -341,15 +354,19 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
 
     private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
-
+        //MostrarTabla();
     }//GEN-LAST:event_txtFiltroFocusLost
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
-
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            MostrarTabla();
+        }
     }//GEN-LAST:event_txtFiltroKeyPressed
 
     private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
-
+        if (txtFiltro.getText().equals("")) {
+            MostrarTabla();
+        }
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void tbl_AnimalesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_AnimalesMouseReleased
@@ -481,8 +498,9 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     }
 
     private void MostrarTabla() {
+        System.out.println("****************MostrarTabla*****************");
         String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
-        
+        System.out.println("filtro--"+filtro);
         ListaAnimalesMostrar = getFiltroLista(filtro);
         
         Utilidades.LimpiarTabla(tbl_Animales);
@@ -521,9 +539,9 @@ public class VistaVerAnimales extends javax.swing.JPanel {
                 retorno.add(ListaAnimales.get(i));
             } else {
                 valores = "";
-                for (int j = 0; j < NameColumnas.length; j++) {
-                    System.out.println("NAme-" + j + "->" + NameColumnas[j]);
-                    String value = ListaAnimales.get(i).get(PropiedadesColumnas.get(NameColumnas[j]).get("nameCol"));
+                for (int j = 0; j < NameColumnasFiltro.size(); j++) {
+                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
+                    String value = ListaAnimales.get(i).get(NameColumnasFiltro.get(j));
                     valores += "" + value;
                 }
                 boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
@@ -537,6 +555,8 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         return retorno;
     }
 
-
+    
+    
+    
 
 }
