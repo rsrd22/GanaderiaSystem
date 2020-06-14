@@ -99,6 +99,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         control = new Control(true, cbFinca);
         controles.addControl(control);
 
+        control = new Control(true, chkPesable);
+        controles.addControl(control);
+
         control = new Control(true, cbTipoAnimal);
         controles.addControl(control);
 
@@ -153,6 +156,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         btnConsultar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnDuplicar = new javax.swing.JButton();
+        chkPesable = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -163,7 +167,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle4.setText("Tipo de animales");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
@@ -176,8 +180,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         txtDescripcion.setCaretColor(new java.awt.Color(59, 123, 50));
         txtDescripcion.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 210;
         gridBagConstraints.ipady = 15;
@@ -187,8 +191,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
         jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 210;
         gridBagConstraints.ipady = 9;
@@ -201,8 +205,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle5.setText("Descripción");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
         add(lbltitle5, gridBagConstraints);
@@ -212,8 +216,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle6.setText("Estado");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(1, 109, 0, 109);
         add(lbltitle6, gridBagConstraints);
@@ -227,8 +231,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
@@ -240,7 +244,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle7.setText("Macro grupo");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
@@ -251,7 +255,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle8.setText("Fincas");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 109, 0, 109);
@@ -266,7 +270,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -283,7 +287,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -300,7 +304,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -438,10 +442,20 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jPanel1, gridBagConstraints);
+
+        chkPesable.setBackground(new java.awt.Color(255, 255, 255));
+        chkPesable.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkPesable.setForeground(new java.awt.Color(59, 123, 50));
+        chkPesable.setText("Pesable");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
+        add(chkPesable, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -516,6 +530,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbMacroGrupo;
     public javax.swing.JComboBox cbTipoAnimal;
+    private javax.swing.JCheckBox chkPesable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JLabel lbltitle4;
@@ -561,6 +576,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         String codigoMacroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : txtCodigoMacroGrupo.getText().trim();
         String codigoGrupo = (editar == Estado.ACTUALIZAR) ? txtCodigoGrupo.getText() : "0";
 
+        modelo.setPesable(chkPesable.isSelected() ? "1" : "0");
         modelo.setId(codigoGrupo);
         modelo.setFecha("NOW()");
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
@@ -659,10 +675,12 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             String macroGrupo = modelo.getDescMacrogrupo().equalsIgnoreCase("null") ? "Seleccionar" : modelo.getDescMacrogrupo();
             txtCodigoFinca.setText(modelo.getIdFinca());
             cbFinca.setSelectedItem(modelo.getDescFinca());
+            boolean pesable = modelo.getPesable().equalsIgnoreCase("1");
 
             cargarComboTipoAnimales();
             cargarComboMacroGrupos();
-
+            
+            chkPesable.setSelected(pesable);
             txtCodigoGrupo.setText(modelo.getId());
             cbMacroGrupo.setSelectedItem(macroGrupo);
             txtCodigoMacroGrupo.setText(modelo.getIdMacrogrupo());

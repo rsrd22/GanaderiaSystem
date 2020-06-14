@@ -43,7 +43,8 @@ public class ControlGrupos implements IControl {
                         grupo.get("descTipoAnimales"),
                         grupo.get("descMacroGrupo"),
                         grupo.get("idFinca"),
-                        grupo.get("desFinca")
+                        grupo.get("desFinca"),
+                        grupo.get("pesable")
                 ));
             }
             return lista;
@@ -77,7 +78,8 @@ public class ControlGrupos implements IControl {
                         grupo.get("descTipoAnimales"),
                         grupo.get("descMacroGrupo"),
                         grupo.get("idFinca"),
-                        grupo.get("desFinca")
+                        grupo.get("desFinca"),
+                        grupo.get("pesable")
                 ));
             }
             return lista;
@@ -93,14 +95,15 @@ public class ControlGrupos implements IControl {
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO grupos(id,id_tipo_animal,descripcion,estado,id_macrogrupo,fecha,id_usuario) VALUES(\n"
+                "INSERT INTO grupos(id,id_tipo_animal,descripcion,estado,id_macrogrupo,fecha,id_usuario,pesable) VALUES(\n"
                 + "0,\n"
                 + "" + grupo.getIdTipoAnimal() + ",\n"
                 + "'" + grupo.getDescripcion() + "',\n"
                 + "'" + grupo.getEstado() + "',\n"
                 + "" + grupo.getIdMacrogrupo() + ",\n"
                 + "" + grupo.getFecha() + ",\n"
-                + "" + grupo.getIdUsuario() + "\n"
+                + "" + grupo.getIdUsuario() + ",\n"
+                + "'" + grupo.getPesable() + "'\n"
                 + ")"
         //</editor-fold>
         );
@@ -134,6 +137,7 @@ public class ControlGrupos implements IControl {
                 + "estado = '" + grupo.getEstado() + "',\n"
                 + "id_macrogrupo = " + grupo.getIdMacrogrupo() + ",\n"
                 + "fecha = " + grupo.getFecha() + ",\n"
+                + "pesable = '" + grupo.getPesable()+ "',\n"
                 + "id_usuario = " + grupo.getIdUsuario() + "\n"
                 + "WHERE \n"
                 + "id = " + grupo.getId()
@@ -208,7 +212,8 @@ public class ControlGrupos implements IControl {
                         grupo.get("descTipoAnimales"),
                         grupo.get("descMacroGrupo"),
                         grupo.get("idFinca"),
-                        grupo.get("desFinca")
+                        grupo.get("desFinca"),
+                        grupo.get("pesable")
                 ));
             }
             return lista;

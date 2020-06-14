@@ -22,12 +22,13 @@ public class ModeloGrupos {
     private String descTipoAnimalOrigen;
     private String idFincaDestino;
     private String descFincaDestino;
+    private String pesable;
 
     public ModeloGrupos() {
     }
 
     /**
-     *
+     * Constructor de la clase
      * @param id
      * @param idTipoAnimal
      * @param descripcion
@@ -37,10 +38,14 @@ public class ModeloGrupos {
      * @param idUsuario
      * @param descTipoAnimal
      * @param descMacrogrupo
+     * @param idFinca
+     * @param descFinca
+     * @param pesable 
      */
     public ModeloGrupos(String id, String idTipoAnimal, String descripcion, 
             String estado, String idMacrogrupo, String fecha, String idUsuario, 
-            String descTipoAnimal, String descMacrogrupo, String idFinca, String descFinca) {
+            String descTipoAnimal, String descMacrogrupo, String idFinca, String descFinca,
+            String pesable) {
         this.id = id;
         this.idTipoAnimal = idTipoAnimal;
         this.descripcion = descripcion;
@@ -52,6 +57,15 @@ public class ModeloGrupos {
         this.descMacrogrupo = descMacrogrupo;
         this.idFinca = idFinca;
         this.descFinca = descFinca;
+        this.pesable = pesable;
+    }
+
+    public String getPesable() {
+        return pesable;
+    }
+
+    public void setPesable(String pesable) {
+        this.pesable = pesable;
     }
 
     public String getDescTipoAnimalOrigen() {
