@@ -537,7 +537,6 @@ public class ControlAnimales implements IControl {
 
     public List<Map<String, String>> GetDatosTraslado(String id_Animal) {
         try {
-<<<<<<< HEAD
             String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,\n"
                     + "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
                     + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO, traslado.id as IDTRASLADO\n"
@@ -550,18 +549,6 @@ public class ControlAnimales implements IControl {
             
             System.out.println("GetDatosTraslado...>"+consulta);
             
-=======
-            String consulta = "SELECT anim.numero AS NUMERO_ANIMAL, grup.descripcion AS GRUPO,\n"
-                    + "DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
-                    + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n"
-                    + "FROM traslado_animalxgrupo traslado\n"
-                    + "INNER JOIN animales anim ON anim.id = traslado.id_animal\n"
-                    + "INNER JOIN  grupos grup ON grup.id = traslado.id_grupo\n"
-                    + "WHERE traslado.id_animal = '" + id_Animal + "'\n"
-                    + "ORDER BY traslado.id DESC";
-
-            System.out.println("GetDatosTraslado...>" + consulta);
->>>>>>> 96472f0534949dbe1aec934c0b038788c1254bf8
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
@@ -576,7 +563,6 @@ public class ControlAnimales implements IControl {
 
     public List<Map<String, String>> GetDatosrotaciones(String id_Animal) {
         try {
-<<<<<<< HEAD
             String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n"
                                 + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
                                 + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n"
@@ -626,57 +612,6 @@ public class ControlAnimales implements IControl {
                         "ORDER BY tras.`id` DESC, rot.`id` DESC;";
             System.out.println("GetDatosrotaciones...>"+consulta);
             
-=======
-            String consulta = "SELECT anim.numero AS NUMERO_ANIMAL,\n"
-                    + "IFNULL(blo.id, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, \n"
-                    + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE,\n"
-                    + "traslado.id, anim.numero AS NUMERO_ANIMAL,\n"
-                    + "grup.id AS IDGRUPO, grup.descripcion AS GRUPO,\n"
-                    + "DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
-                    + "DATE_FORMAT(tbl.FECHA_ENTRADA, '%d/%m/%Y') AS FECHA_ENTRADA,\n"
-                    + "IFNULL(DATE_FORMAT(tbl.FECHA_SALIDA, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n"
-                    + "IF(traslado.estado = 'Activo' AND tbl.ESTADO_GRUPO = 'Activo' AND tbl.ESTADO_LOTE = 'Activo', 'Activo', 'Inactivo') ESTADO\n"
-                    + "FROM traslado_animalxgrupo traslado\n"
-                    + "INNER JOIN animales anim ON anim.id = traslado.id_animal\n"
-                    + "INNER JOIN  grupos grup ON grup.id = traslado.id_grupo\n"
-                    + "LEFT JOIN (\n"
-                    + "SELECT rot.id AS ID_ROTACION, rotgrup.id AS ID_ROT_GRUPO, rot.id_lote AS ID_LOTE, rotgrup.id_grupo AS ID_GRUPO,\n"
-                    + "rot.fecha_entrada AS FECHA_ENTRADA, rot.fecha_registro AS FECHA_REGISTRO,\n"
-                    + "rot.fecha_salida AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.estado AS ESTADO_GRUPO\n"
-                    + "FROM rotacion_lotesxestado rot\n"
-                    + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.id_rotacion_lotesxestado = rot.id\n"
-                    + "INNER JOIN traslado_animalxgrupo tras ON tras.id_grupo = rotgrup.id_grupo\n"
-                    + " AND ((rot.fecha_salida IS NULL AND rot.fecha_entrada <= tras.fecha_traslado)  OR (rot.fecha_salida IS NOT NULL AND tras.fecha_traslado BETWEEN rot.fecha_entrada AND rot.fecha_salida))\n"
-                    + "WHERE tras.id_animal = '" + id_Animal + "'\n"
-                    + ") AS tbl ON tbl.ID_GRUPO = traslado.id_grupo\n"
-                    + "LEFT JOIN lotes lot ON lot.id = tbl.ID_LOTE \n"
-                    + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
-                    + "WHERE traslado.id_animal = '" + id_Animal + "'\n"
-                    + "ORDER BY traslado.id DESC, tbl.ID_ROTACION DESC;";
-            consulta = "SELECT anim.numero AS NUMERO_ANIMAL,\n"
-                    + "IFNULL(blo.id, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, \n"
-                    + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE,\n"
-                    + "tras.id, anim.numero AS NUMERO_ANIMAL,\n"
-                    + "grup.id AS IDGRUPO, grup.descripcion AS GRUPO,\n"
-                    + "DATE_FORMAT(tras.fecha_traslado, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
-                    + "DATE_FORMAT(rot.fecha_entrada, '%d/%m/%Y') AS FECHA_ENTRADA,\n"
-                    + "IFNULL(DATE_FORMAT(rot.fecha_salida, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n"
-                    + "tras.motivo AS MOTIVO,\n"
-                    + "IF(tras.estado = 'Activo' AND rotgrup.estado = 'Activo' AND rot.estado = 'Activo', 'Activo', 'Inactivo') ESTADO\n"
-                    + "FROM rotacion_lotesxestado rot\n"
-                    + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.id_rotacion_lotesxestado = rot.id\n"
-                    + "INNER JOIN traslado_animalxgrupo tras ON tras.id_grupo = rotgrup.id_grupo\n"
-                    + "AND ((rot.fecha_salida IS NULL AND rot.fecha_entrada <= tras.fecha_traslado)  OR \n"
-                    + "(rot.fecha_salida IS NOT NULL AND tras.fecha_traslado BETWEEN rot.fecha_entrada AND rot.fecha_salida))\n"
-                    + "INNER JOIN animales anim ON anim.id = tras.id_animal\n"
-                    + "INNER JOIN  grupos grup ON grup.id = tras.id_grupo\n"
-                    + "LEFT JOIN lotes lot ON lot.id = rot.id_lote\n"
-                    + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
-                    + "WHERE tras.id_animal = '" + id_Animal + "' \n"
-                    + "ORDER BY tras.id DESC, rot.id DESC;";
-            System.out.println("GetDatosrotaciones...>" + consulta);
-
->>>>>>> 96472f0534949dbe1aec934c0b038788c1254bf8
             List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();
 
             rotaciones = mySQL.ListSQL(consulta);
