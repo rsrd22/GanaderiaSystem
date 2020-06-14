@@ -41,10 +41,15 @@ public class ModeloAnimales {
     private ModeloTraslado modelo;
     private String idPropietario;
     private String descPropietario;
-    private String venta;    
+    private String venta;
     private String precioVenta;
     private String tipoVenta;
     private String pesoCanal;
+    private String pesoDestete;
+    private String hierroFisico;
+    private String implante;
+    private String descornada;
+    private String fechaNovilla;
 
     public ModeloAnimales() {
     }
@@ -57,7 +62,9 @@ public class ModeloAnimales {
             String hierro, String descHierro, String idFinca, String descFinca,
             String numeroDescendiente, String estadoDescendiente, ModeloTraslado modelo,
             String idPropietario, String descPropietario, String muerte, String venta,
-            String precioVenta, String tipoVenta, String pesoCanal,String descripcionMuerte) {
+            String precioVenta, String tipoVenta, String pesoCanal, String descripcionMuerte,
+            String fechaNovilla, String pesoDestete, String hierroFisico, String implante,
+            String descornada) {
         this.descripcionMuerte = descripcionMuerte;
         this.precioVenta = precioVenta;
         this.tipoVenta = tipoVenta;
@@ -92,6 +99,51 @@ public class ModeloAnimales {
         this.descPropietario = descPropietario;
         this.muerte = muerte;
         this.venta = venta;
+        this.pesoDestete = pesoDestete;
+        this.hierroFisico = hierroFisico;
+        this.implante = implante;
+        this.descornada = descornada;
+        this.fechaNovilla = fechaNovilla;
+    }
+
+    public String getPesoDestete() {
+        return pesoDestete;
+    }
+
+    public void setPesoDestete(String pesoDestete) {
+        this.pesoDestete = pesoDestete;
+    }
+
+    public String getHierroFisico() {
+        return hierroFisico;
+    }
+
+    public void setHierroFisico(String hierroFisico) {
+        this.hierroFisico = hierroFisico;
+    }
+
+    public String getImplante() {
+        return implante;
+    }
+
+    public void setImplante(String implante) {
+        this.implante = implante;
+    }
+
+    public String getDescornada() {
+        return descornada;
+    }
+
+    public void setDescornada(String descornada) {
+        this.descornada = descornada;
+    }
+
+    public String getFechaNovilla() {
+        return fechaNovilla;
+    }
+
+    public void setFechaNovilla(String fechaNovilla) {
+        this.fechaNovilla = fechaNovilla;
     }
 
     public String getDescripcionMuerte() {

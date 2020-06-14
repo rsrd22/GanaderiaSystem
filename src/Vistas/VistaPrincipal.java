@@ -97,29 +97,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMacrogrupos = new javax.swing.JLabel();
         btnGrupos = new javax.swing.JLabel();
         btnTipoAnimal = new javax.swing.JLabel();
-        btnMostrarActividades = new javax.swing.JLabel();
+        btnMostrarAnimales = new javax.swing.JLabel();
         pnlContenedorAnimales = new javax.swing.JPanel();
         btnAnimales = new javax.swing.JLabel();
         btnMuerteAnimal = new javax.swing.JLabel();
         btnAnimalxHierro1 = new javax.swing.JLabel();
         btnVentasAnimal = new javax.swing.JLabel();
         btnVerAnimales = new javax.swing.JLabel();
-        btnMostrarTraslados = new javax.swing.JLabel();
-        btnRotacion = new javax.swing.JLabel();
-        btnUsuarios = new javax.swing.JLabel();
+        btnMostrarActividades = new javax.swing.JLabel();
         pnlContenedorActividades = new javax.swing.JPanel();
         btnRegistroActividades = new javax.swing.JLabel();
         btnEstadoActividades = new javax.swing.JLabel();
         btnCronograma = new javax.swing.JLabel();
-        btnMostrarAnimales = new javax.swing.JLabel();
+        btnPesaje = new javax.swing.JLabel();
+        btnPalpacion = new javax.swing.JLabel();
+        btnMostrarTraslados = new javax.swing.JLabel();
         pnlContenedorTraslados = new javax.swing.JPanel();
         btnTrasladoAnimal = new javax.swing.JLabel();
         btnTrasladoGrupo = new javax.swing.JLabel();
-        btnMostrarEjecucionActividades = new javax.swing.JLabel();
-        pnlContenedorEjecucionActividades = new javax.swing.JPanel();
-        btnTarea = new javax.swing.JLabel();
-        btnEstadoTarea = new javax.swing.JLabel();
-        btnListaChequeo = new javax.swing.JLabel();
+        btnRotacion = new javax.swing.JLabel();
+        btnUsuarios = new javax.swing.JLabel();
 
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
@@ -357,6 +354,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlMenu.setName(""); // NOI18N
         pnlMenu.setPreferredSize(new java.awt.Dimension(220, 780));
         pnlMenu.setRequestFocusEnabled(false);
+        pnlMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnMostrarPropietarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarPropietarios.setForeground(new java.awt.Color(255, 255, 255));
@@ -368,6 +366,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarPropietariosMouseClicked(evt);
             }
         });
+        pnlMenu.add(btnMostrarPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
 
         pnlContenedorPropietarios.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -408,6 +407,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnHierros))
         );
 
+        pnlMenu.add(pnlContenedorPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+
         btnMostrarFincas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarFincas.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -418,6 +419,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarFincasMouseClicked(evt);
             }
         });
+        pnlMenu.add(btnMostrarFincas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 200, -1));
 
         pnlContenedorFincas.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -500,6 +502,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnPluviometro))
         );
 
+        pnlMenu.add(pnlContenedorFincas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, -1));
+
         btnMostrarGruposAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarGruposAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarGruposAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -510,6 +514,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarGruposAnimalesMouseClicked(evt);
             }
         });
+        pnlMenu.add(btnMostrarGruposAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 200, -1));
 
         pnlContenedorGruposAnimales.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -565,19 +570,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        btnMostrarActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMostrarActividades.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrarActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMostrarActividades.setText("Actividades");
-        btnMostrarActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlMenu.add(pnlContenedorGruposAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, -1, 90));
+
+        btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarAnimales.setText("Animales");
+        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMostrarActividadesMouseClicked(evt);
+                btnMostrarAnimalesMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMostrarActividadesMousePressed(evt);
+                btnMostrarAnimalesMousePressed(evt);
             }
         });
+        pnlMenu.add(btnMostrarAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 200, -1));
 
         pnlContenedorAnimales.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -660,33 +668,22 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnMuerteAnimal))
         );
 
-        btnMostrarTraslados.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMostrarTraslados.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMostrarTraslados.setText("Traslados");
-        btnMostrarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarTraslados.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlMenu.add(pnlContenedorAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
+
+        btnMostrarActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarActividades.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarActividades.setText("Actividades");
+        btnMostrarActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarActividades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMostrarTrasladosMouseClicked(evt);
+                btnMostrarActividadesMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMostrarActividadesMousePressed(evt);
             }
         });
-
-        btnRotacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRotacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnRotacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnRotacion.setText("Rotación");
-        btnRotacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRotacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRotacionMouseClicked(evt);
-            }
-        });
-
-        btnUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnUsuarios.setText("Usuarios");
-        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlMenu.add(btnMostrarActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 200, -1));
 
         pnlContenedorActividades.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -723,6 +720,28 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnPesaje.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnPesaje.setForeground(new java.awt.Color(255, 255, 255));
+        btnPesaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnPesaje.setText("Pesajes");
+        btnPesaje.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPesaje.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPesajeMousePressed(evt);
+            }
+        });
+
+        btnPalpacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnPalpacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnPalpacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnPalpacion.setText("Palpación");
+        btnPalpacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPalpacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPalpacionMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlContenedorActividadesLayout = new javax.swing.GroupLayout(pnlContenedorActividades);
         pnlContenedorActividades.setLayout(pnlContenedorActividadesLayout);
         pnlContenedorActividadesLayout.setHorizontalGroup(
@@ -730,6 +749,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(btnRegistroActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnEstadoActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnCronograma, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnPesaje, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnPalpacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlContenedorActividadesLayout.setVerticalGroup(
             pnlContenedorActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -739,22 +760,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnEstadoActividades)
                 .addGap(0, 0, 0)
                 .addComponent(btnCronograma)
-                .addGap(30, 30, 30))
+                .addGap(0, 0, 0)
+                .addComponent(btnPesaje)
+                .addGap(0, 0, 0)
+                .addComponent(btnPalpacion))
         );
 
-        btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMostrarAnimales.setText("Animales");
-        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlMenu.add(pnlContenedorActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, -1, 150));
+
+        btnMostrarTraslados.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarTraslados.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarTraslados.setText("Traslados");
+        btnMostrarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarTraslados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMostrarAnimalesMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMostrarAnimalesMousePressed(evt);
+                btnMostrarTrasladosMouseClicked(evt);
             }
         });
+        pnlMenu.add(btnMostrarTraslados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 750, 200, -1));
 
         pnlContenedorTraslados.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -796,127 +820,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(60, 60, 60))
         );
 
-        btnMostrarEjecucionActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMostrarEjecucionActividades.setForeground(new java.awt.Color(255, 255, 255));
-        btnMostrarEjecucionActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMostrarEjecucionActividades.setText("Ejecución Actividades");
-        btnMostrarEjecucionActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarEjecucionActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlMenu.add(pnlContenedorTraslados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, -1, 60));
+
+        btnRotacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRotacion.setForeground(new java.awt.Color(255, 255, 255));
+        btnRotacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnRotacion.setText("Rotación");
+        btnRotacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRotacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMostrarEjecucionActividadesMouseClicked(evt);
+                btnRotacionMouseClicked(evt);
             }
         });
+        pnlMenu.add(btnRotacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 840, 200, -1));
 
-        pnlContenedorEjecucionActividades.setBackground(new java.awt.Color(59, 145, 70));
-
-        btnTarea.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnTarea.setForeground(new java.awt.Color(255, 255, 255));
-        btnTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnTarea.setText("Tareas");
-        btnTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTarea.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnTareaRealMousePressed(evt);
-            }
-        });
-
-        btnEstadoTarea.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEstadoTarea.setForeground(new java.awt.Color(255, 255, 255));
-        btnEstadoTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnEstadoTarea.setText("Estados");
-        btnEstadoTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEstadoTarea.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEstadoTareaMousePressed(evt);
-            }
-        });
-
-        btnListaChequeo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnListaChequeo.setForeground(new java.awt.Color(255, 255, 255));
-        btnListaChequeo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnListaChequeo.setText("Lista de Chequeo");
-        btnListaChequeo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnListaChequeo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnListaChequeoMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlContenedorEjecucionActividadesLayout = new javax.swing.GroupLayout(pnlContenedorEjecucionActividades);
-        pnlContenedorEjecucionActividades.setLayout(pnlContenedorEjecucionActividadesLayout);
-        pnlContenedorEjecucionActividadesLayout.setHorizontalGroup(
-            pnlContenedorEjecucionActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnEstadoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnListaChequeo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        pnlContenedorEjecucionActividadesLayout.setVerticalGroup(
-            pnlContenedorEjecucionActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlContenedorEjecucionActividadesLayout.createSequentialGroup()
-                .addComponent(btnTarea)
-                .addGap(0, 0, 0)
-                .addComponent(btnEstadoTarea)
-                .addGap(0, 0, 0)
-                .addComponent(btnListaChequeo)
-                .addGap(30, 30, 30))
-        );
-
-        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
-        pnlMenu.setLayout(pnlMenuLayout);
-        pnlMenuLayout.setHorizontalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnMostrarPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        pnlMenuLayout.setVerticalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addComponent(btnMostrarPropietarios)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarFincas)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarGruposAnimales)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarAnimales)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarActividades)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarEjecucionActividades)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorEjecucionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnMostrarTraslados)
-                .addGap(0, 0, 0)
-                .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btnRotacion)
-                .addGap(0, 0, 0)
-                .addComponent(btnUsuarios))
-        );
+        btnUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlMenu.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 870, 200, -1));
 
         jScrollPane1.setViewportView(pnlMenu);
 
@@ -1390,31 +1313,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pnlTituloMouseClicked
 
-    private void btnMostrarEjecucionActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarEjecucionActividadesMouseClicked
-        if(!pnlContenedorEjecucionActividades.isVisible())
-            OcultarContenidoMenu();
-        
-        btnTarea.setVisible(!pnlContenedorEjecucionActividades.isVisible());
-        btnEstadoTarea.setVisible(!pnlContenedorEjecucionActividades.isVisible());
-        btnListaChequeo.setVisible(!pnlContenedorEjecucionActividades.isVisible());
-        pnlContenedorEjecucionActividades.setVisible(!pnlContenedorEjecucionActividades.isVisible());
-    }//GEN-LAST:event_btnMostrarEjecucionActividadesMouseClicked
-
-    private void btnTareaRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTareaRealMousePressed
-        if (evt.getClickCount() == 1) {
-            EstablecerTituloVentana("Registro de tareas");
-            VistaTarea vista = new VistaTarea();
-            MostrarPanel(vista);
-        }
-    }//GEN-LAST:event_btnTareaRealMousePressed
-
-    private void btnEstadoTareaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEstadoTareaMousePressed
+    private void btnPesajeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesajeMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEstadoTareaMousePressed
+    }//GEN-LAST:event_btnPesajeMousePressed
 
-    private void btnListaChequeoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaChequeoMousePressed
+    private void btnPalpacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPalpacionMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnListaChequeoMousePressed
+    }//GEN-LAST:event_btnPalpacionMousePressed
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
@@ -1480,13 +1385,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnCerrar;
     private javax.swing.JLabel btnCronograma;
     private javax.swing.JLabel btnEstadoActividades;
-    private javax.swing.JLabel btnEstadoTarea;
     private javax.swing.JLabel btnFincas;
     private javax.swing.JLabel btnFuenteHidrica;
     private javax.swing.JLabel btnGrupos;
     private javax.swing.JLabel btnHierros;
     private javax.swing.JLabel btnInicio;
-    private javax.swing.JLabel btnListaChequeo;
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
     private javax.swing.JLabel btnMaximizar;
@@ -1494,17 +1397,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel btnMostrarActividades;
     private javax.swing.JLabel btnMostrarAnimales;
-    private javax.swing.JLabel btnMostrarEjecucionActividades;
     private javax.swing.JLabel btnMostrarFincas;
     private javax.swing.JLabel btnMostrarGruposAnimales;
     private javax.swing.JLabel btnMostrarPropietarios;
     private javax.swing.JLabel btnMostrarTraslados;
     private javax.swing.JLabel btnMuerteAnimal;
+    private javax.swing.JLabel btnPalpacion;
+    private javax.swing.JLabel btnPesaje;
     private javax.swing.JLabel btnPluviometro;
     private javax.swing.JLabel btnPropietarios;
     private javax.swing.JLabel btnRegistroActividades;
     private javax.swing.JLabel btnRotacion;
-    private javax.swing.JLabel btnTarea;
     private javax.swing.JLabel btnTipoAnimal;
     private javax.swing.JLabel btnTrasladoAnimal;
     private javax.swing.JLabel btnTrasladoGrupo;
@@ -1521,7 +1424,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlContenedorActividades;
     private javax.swing.JPanel pnlContenedorAnimales;
-    private javax.swing.JPanel pnlContenedorEjecucionActividades;
     private javax.swing.JPanel pnlContenedorFincas;
     private javax.swing.JPanel pnlContenedorGruposAnimales;
     private javax.swing.JPanel pnlContenedorPropietarios;
@@ -1541,7 +1443,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
         pnlContenedorTraslados.setVisible(false);
-        pnlContenedorEjecucionActividades.setVisible(false);
     }
 
     private void EstablecerTituloVentana(String titulo) {
