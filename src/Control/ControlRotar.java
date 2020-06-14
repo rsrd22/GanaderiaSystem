@@ -135,6 +135,8 @@ public class ControlRotar implements IControl{
     public int ActualizarRotacionLote(Map<String, String> datos) {
         ArrayList<String> consultas = new ArrayList<>();
         
+        
+        
         consultas.add("UPDATE `rotacion_lotesxgrupo` \n" +
                         "SET estado = 'Inactivo'\n" +
                         "WHERE id_rotacion_lotesxestado IN (\n" +

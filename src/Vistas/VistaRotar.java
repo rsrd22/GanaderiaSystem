@@ -382,6 +382,10 @@ public class VistaRotar extends javax.swing.JPanel {
         ListaGrupos = controlRotar.getGruposxFinca(idFinca);
     }
     
+    private void GuardarNEW(){
+        
+    }
+    
     private void Guardar() {
         
         modeloRotacionLotes.setId("0");

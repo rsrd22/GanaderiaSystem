@@ -512,7 +512,7 @@ public class ControlAnimales implements IControl {
         try {
             String consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,\n"
                     + "DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
-                    + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO\n"
+                    + "traslado.motivo AS MOTIVO, traslado.estado AS ESTADO, traslado.id as IDTRASLADO\n"
                     + "FROM `traslado_animalxgrupo` traslado\n"
                     + "INNER JOIN animales anim ON anim.`id` = traslado.`id_animal`\n"
                     + "INNER JOIN  grupos grup ON grup.`id` = traslado.`id_grupo`\n"
@@ -570,7 +570,7 @@ public class ControlAnimales implements IControl {
                         "DATE_FORMAT(tras.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n" +
                         "DATE_FORMAT(rot.`fecha_entrada`, '%d/%m/%Y') AS FECHA_ENTRADA,\n" +
                         "IFNULL(DATE_FORMAT(rot.`fecha_salida`, '%d/%m/%Y'), '') AS FECHA_SALIDA,\n" +
-                        "tras.motivo AS MOTIVO,\n" +
+                        "tras.motivo AS MOTIVO, rotgrup.id AS IDROTGRUPO,\n" +
                         "IF(tras.estado = 'Activo' AND rotgrup.`estado` = 'Activo' AND rot.estado = 'Activo', 'Activo', 'Inactivo') ESTADO\n" +
                         "FROM `rotacion_lotesxestado` rot\n" +
                         "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n" +

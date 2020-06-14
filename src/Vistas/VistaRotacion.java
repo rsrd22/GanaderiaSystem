@@ -38,7 +38,7 @@ public class VistaRotacion extends javax.swing.JPanel {
     private ModeloRotacionGrupos modeloGrupos;
     public List<Map<String, String>> listaFincas;
     public ControlGeneral controlgen = new ControlGeneral();
-    public ControlRotacion controlRotacion = new ControlRotacion();
+    public ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     public String idFinca;
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;

@@ -42,6 +42,7 @@ public class ModeloGrupos {
      * @param descFinca
      * @param pesable 
      */
+    
     public ModeloGrupos(String id, String idTipoAnimal, String descripcion, 
             String estado, String idMacrogrupo, String fecha, String idUsuario, 
             String descTipoAnimal, String descMacrogrupo, String idFinca, String descFinca,

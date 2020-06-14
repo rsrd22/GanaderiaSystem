@@ -130,8 +130,29 @@ public class ControlTraslado implements IControl {
     }
 
     @Override
-    public int Eliminar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int Eliminar(Object _traslado) {
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloTraslado traslado = (ModeloTraslado) _traslado;
+
+        consultas.add(
+//                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                "DELETE FROM `traslado_animalxgrupo` WHERE `id` = "+traslado.getId()+";"
+//        //</editor-fold>
+        );
+
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
@@ -301,6 +322,31 @@ public class ControlTraslado implements IControl {
             if (mySQL.EnviarConsultas(consultas)) {
                 return Retorno.EXITO;
             } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int EliminarTraslados(List<Map<String, String>> ListaDatosTrasladoEliminar) {
+        ArrayList<String> consultas = new ArrayList<>();
+        for(Map<String, String> datos:ListaDatosTrasladoEliminar){
+            consultas.add(
+            //                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                    "DELETE FROM `traslado_animalxgrupo` WHERE `id` = "+datos.get("IDTRASLADO")+";"
+    //        //</editor-fold>
+            );
+        }
+
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
                 return Retorno.ERROR;
             }
         } catch (ClassNotFoundException ex) {

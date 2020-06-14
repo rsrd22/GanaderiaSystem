@@ -1,7 +1,7 @@
 package Vistas;
 
 import Charts.Panel;
-import Control.ControlAnimales;
+import Control.*;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -33,18 +35,23 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     String id_Animal = "";
     String numero_Animal = "";
     private ControlAnimales controlAnimales = new ControlAnimales();
+    private ControlTraslado controlTraslado = new ControlTraslado();
+    private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     private ArrayList<ModeloAnimales> ListaDatos;
     private Map<String, String> DatosVenta;
     private Map<String, String> DatosMuerte;
     private List<Map<String, String>> ListaDatosTraslado;
+    private List<Map<String, String>> ListaDatosTrasladoEliminar;
     public DefaultTableModel modeloTblTraslado;
     public String[] EncabezadoTblTraslado;
     public String[] EncabezadoTblRotacion;
     private List<Map<String, String>> ListaDatosRotacion;
+    private List<Map<String, String>> ListaDatosRotacionEliminar;
     public DefaultTableModel modeloTblRotacion;
     public Panel graficoPeso;
     private ArrayList<ArrayList<Object[]>> listaDatosPeso;
     private ArrayList<Object[]> datosPeso;
+    private int countT = 0, countR = 0;
     
     
     private int ancho;
@@ -64,10 +71,14 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         id_Animal = ""+modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
+        ListaDatosTrasladoEliminar = new ArrayList<>();
+        ListaDatosRotacionEliminar = new ArrayList<>();
         datosPeso = new ArrayList<>();
 //        [772, 293]
         pnlPeso.setSize(739, 423);
         listaDatosPeso = new ArrayList<>();
+        btnEliminarTraslados.setEnabled(false);
+        btnEliminarRotaciones.setEnabled(false);
         EncabezadoTblTraslado = new String[]{
             "No",
              "Grupo", 
@@ -113,7 +124,33 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         };
 
         tbl_Rotaciones.setModel(modeloTblRotacion);
+        tbl_Rotaciones.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
 
+            public void setSelectionInterval(int index0, int index1) {
+                if(i0 == index0 && i1 == index1){
+                    if(getValueIsAdjusting()){
+                         setValueIsAdjusting(false);
+                         setSelection(index0, index1);
+                    }
+                }else{
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+            private void setSelection(int index0, int index1){
+                if(super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                }else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
+        
+        
         tbl_Rotaciones.getColumnModel().getColumn(0).setPreferredWidth(25);
         tbl_Rotaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
         tbl_Rotaciones.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -166,6 +203,31 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         };
 
         tbl_Traslados.setModel(modeloTblTraslado);
+        tbl_Traslados.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
+
+            public void setSelectionInterval(int index0, int index1) {
+                if(i0 == index0 && i1 == index1){
+                    if(getValueIsAdjusting()){
+                         setValueIsAdjusting(false);
+                         setSelection(index0, index1);
+                    }
+                }else{
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+            private void setSelection(int index0, int index1){
+                if(super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                }else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
 
         tbl_Traslados.getColumnModel().getColumn(0).setPreferredWidth(25);
         tbl_Traslados.getColumnModel().getColumn(1).setPreferredWidth(70);
@@ -259,9 +321,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlTraslados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Traslados = new javax.swing.JTable();
+        btnEliminarTraslados = new javax.swing.JButton();
         pnlRotaciones = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Rotaciones = new javax.swing.JTable();
+        btnEliminarRotaciones = new javax.swing.JButton();
         pnlPeso = new javax.swing.JPanel();
         lblPeso = new javax.swing.JLabel();
         lblTipoAnimal = new javax.swing.JLabel();
@@ -275,6 +339,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblCalificacion = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblNotas.setForeground(new java.awt.Color(59, 123, 50));
@@ -974,19 +1039,47 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Traslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbl_Traslados.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        tbl_Traslados.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbl_Traslados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_TrasladosMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Traslados);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
         pnlTraslados.add(jScrollPane1, gridBagConstraints);
+
+        btnEliminarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
+        btnEliminarTraslados.setBorderPainted(false);
+        btnEliminarTraslados.setContentAreaFilled(false);
+        btnEliminarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarTraslados.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnEliminarTraslados.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30_over.png"))); // NOI18N
+        btnEliminarTraslados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarTrasladosActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -29;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 20);
+        pnlTraslados.add(btnEliminarTraslados, gridBagConstraints);
 
         jTabbedPane1.addTab("Traslados", pnlTraslados);
 
@@ -1005,17 +1098,43 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Rotaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tbl_Rotaciones.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        tbl_Rotaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_RotacionesMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_Rotaciones);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 20, 20);
         pnlRotaciones.add(jScrollPane2, gridBagConstraints);
+
+        btnEliminarRotaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
+        btnEliminarRotaciones.setBorderPainted(false);
+        btnEliminarRotaciones.setContentAreaFilled(false);
+        btnEliminarRotaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarRotaciones.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30_over.png"))); // NOI18N
+        btnEliminarRotaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarRotacionesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -29;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 20);
+        pnlRotaciones.add(btnEliminarRotaciones, gridBagConstraints);
 
         jTabbedPane1.addTab("Rotaciones", pnlRotaciones);
 
@@ -1025,11 +1144,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlPeso.setLayout(pnlPesoLayout);
         pnlPesoLayout.setHorizontalGroup(
             pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 772, Short.MAX_VALUE)
+            .addGap(0, 770, Short.MAX_VALUE)
         );
         pnlPesoLayout.setVerticalGroup(
             pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 293, Short.MAX_VALUE)
+            .addGap(0, 291, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Peso", pnlPeso);
@@ -1254,8 +1373,62 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
+    private void tbl_TrasladosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TrasladosMousePressed
+        int tamfilas =tbl_Traslados.getSelectedRows().length;
+        if(tamfilas>0){
+            btnEliminarTraslados.setEnabled(true);
+        }else{
+            btnEliminarTraslados.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbl_TrasladosMousePressed
+
+    private void tbl_RotacionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_RotacionesMousePressed
+        int tamfilas =tbl_Rotaciones.getSelectedRows().length;
+        if(tamfilas>0){
+            btnEliminarTraslados.setEnabled(true);
+        }else{
+            btnEliminarTraslados.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbl_RotacionesMousePressed
+
+    private void btnEliminarTrasladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTrasladosActionPerformed
+        ListaDatosTrasladoEliminar = new ArrayList<>();
+        for(int fila: tbl_Traslados.getSelectedRows()){
+            ListaDatosTrasladoEliminar.add(ListaDatosTraslado.get(fila));
+        }
+        String text = (tbl_Traslados.getSelectedRows().length==1?"la fila seleccionada":"las filas seleccionadas");
+        
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar "+text+".?");
+        if(resp == JOptionPane.YES_OPTION){
+            int ret = controlTraslado.EliminarTraslados(ListaDatosTrasladoEliminar);
+            if(ret == 0){
+                JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                GetDatosTraslado();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarTrasladosActionPerformed
+
+    private void btnEliminarRotacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarRotacionesActionPerformed
+        ListaDatosRotacionEliminar = new ArrayList<>();
+        for(int fila: tbl_Rotaciones.getSelectedRows()){
+            ListaDatosRotacionEliminar.add(ListaDatosRotacion.get(fila));
+        }
+        String text = (tbl_Rotaciones.getSelectedRows().length==1?"la fila seleccionada":"las filas seleccionadas");
+        
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar "+text+".?");
+        if(resp == JOptionPane.YES_OPTION){
+            int ret = controlRotacion.EliminarRotaciones(ListaDatosRotacionEliminar);
+            if(ret == 0){
+                JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+                GetDatosRotaciones();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarRotacionesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminarRotaciones;
+    private javax.swing.JButton btnEliminarTraslados;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
