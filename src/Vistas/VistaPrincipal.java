@@ -354,7 +354,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlMenu.setName(""); // NOI18N
         pnlMenu.setPreferredSize(new java.awt.Dimension(220, 780));
         pnlMenu.setRequestFocusEnabled(false);
-        pnlMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnMostrarPropietarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarPropietarios.setForeground(new java.awt.Color(255, 255, 255));
@@ -366,7 +365,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarPropietariosMouseClicked(evt);
             }
         });
-        pnlMenu.add(btnMostrarPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
 
         pnlContenedorPropietarios.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -407,8 +405,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnHierros))
         );
 
-        pnlMenu.add(pnlContenedorPropietarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
-
         btnMostrarFincas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarFincas.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -419,7 +415,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarFincasMouseClicked(evt);
             }
         });
-        pnlMenu.add(btnMostrarFincas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 200, -1));
 
         pnlContenedorFincas.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -502,8 +497,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnPluviometro))
         );
 
-        pnlMenu.add(pnlContenedorFincas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, -1));
-
         btnMostrarGruposAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarGruposAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarGruposAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -514,7 +507,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarGruposAnimalesMouseClicked(evt);
             }
         });
-        pnlMenu.add(btnMostrarGruposAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 200, -1));
 
         pnlContenedorGruposAnimales.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -570,8 +562,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        pnlMenu.add(pnlContenedorGruposAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, -1, 90));
-
         btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -585,7 +575,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarAnimalesMousePressed(evt);
             }
         });
-        pnlMenu.add(btnMostrarAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 200, -1));
 
         pnlContenedorAnimales.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -668,8 +657,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnMuerteAnimal))
         );
 
-        pnlMenu.add(pnlContenedorAnimales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
-
         btnMostrarActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarActividades.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -683,7 +670,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarActividadesMousePressed(evt);
             }
         });
-        pnlMenu.add(btnMostrarActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 200, -1));
 
         pnlContenedorActividades.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -766,8 +752,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnPalpacion))
         );
 
-        pnlMenu.add(pnlContenedorActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 600, -1, 150));
-
         btnMostrarTraslados.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMostrarTraslados.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -778,7 +762,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnMostrarTrasladosMouseClicked(evt);
             }
         });
-        pnlMenu.add(btnMostrarTraslados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 750, 200, -1));
 
         pnlContenedorTraslados.setBackground(new java.awt.Color(59, 145, 70));
 
@@ -820,8 +803,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(60, 60, 60))
         );
 
-        pnlMenu.add(pnlContenedorTraslados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, -1, 60));
-
         btnRotacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRotacion.setForeground(new java.awt.Color(255, 255, 255));
         btnRotacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -832,14 +813,63 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnRotacionMouseClicked(evt);
             }
         });
-        pnlMenu.add(btnRotacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 840, 200, -1));
 
         btnUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlMenu.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 870, 200, -1));
+
+        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
+        pnlMenu.setLayout(pnlMenuLayout);
+        pnlMenuLayout.setHorizontalGroup(
+            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnMostrarPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarFincas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        pnlMenuLayout.setVerticalGroup(
+            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMenuLayout.createSequentialGroup()
+                .addComponent(btnMostrarPropietarios)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarFincas)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarGruposAnimales)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarAnimales)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarActividades)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnMostrarTraslados)
+                .addGap(0, 0, 0)
+                .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnRotacion)
+                .addGap(0, 0, 0)
+                .addComponent(btnUsuarios))
+        );
 
         jScrollPane1.setViewportView(pnlMenu);
 
