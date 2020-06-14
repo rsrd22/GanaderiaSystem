@@ -52,6 +52,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private GestionEstadoControles controles;
     private JButton[] botones;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
+    private final String NULL = "NULL";
     private List<Map<String, String>> grupos;
     private List<Map<String, String>> tipoAnimales;
     private List<Map<String, String>> hierros;
@@ -67,15 +68,18 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     public VistaAnimales() {
         initComponents();
         iniciarComponentes();
+
+        lblPesoDestete.setVisible(false);
+        txtPesoDestete.setVisible(false);
+        sepPesoDestete.setVisible(false);
+        lblFechaNovilla.setVisible(false);
+        jdFechaDeNovilla.setVisible(false);
+
         lblAdoptiva.setVisible(false);
         txtNumeroMamaAdoptiva.setVisible(false);
         jSeparatorAdoptiva.setVisible(false);
         jdFechaDestete.setVisible(false);
         lblFechaDestete.setVisible(false);
-        jdFechaMuerte.setVisible(false);
-        lblFechaMuerte.setVisible(false);
-        lblCausaMuerte.setVisible(false);
-        lblFechaVenta.setVisible(false);
         lblPesoCanal.setVisible(false);
         txtPesoCanal.setVisible(false);
         sepPesoCanal.setVisible(false);
@@ -102,23 +106,25 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         };
         cargarComboFincas();
         controles.habilitarControles();
-        txtObservacionMuerte.setVisible(false);
-        ScrollCausaMuerte.setVisible(false);
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
     }
 
     public VistaAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
+
+        lblPesoDestete.setVisible(false);
+        txtPesoDestete.setVisible(false);
+        sepPesoDestete.setVisible(false);
+        lblFechaNovilla.setVisible(false);
+        jdFechaDeNovilla.setVisible(false);
+
         lblAdoptiva.setVisible(false);
         txtNumeroMamaAdoptiva.setVisible(false);
         jSeparatorAdoptiva.setVisible(false);
         jdFechaDestete.setVisible(false);
         lblFechaDestete.setVisible(false);
-        jdFechaMuerte.setVisible(false);
-        lblFechaMuerte.setVisible(false);
-        lblCausaMuerte.setVisible(false);
-        lblFechaVenta.setVisible(false);
+
         lblPesoCanal.setVisible(false);
         txtPesoCanal.setVisible(false);
         sepPesoCanal.setVisible(false);
@@ -146,8 +152,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         };
         cargarComboFincas();
         controles.habilitarControles();
-        txtObservacionMuerte.setVisible(false);
-        ScrollCausaMuerte.setVisible(false);
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
     }
 
@@ -198,6 +202,30 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, cbFinca);
+        controles.addControl(control);
+
+        control = new Control(true, jdFechaDeNovilla);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkHierro);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkImplante);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkDescornada);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkNovilla);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtPesoDestete);
+        control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
         control = new Control(true, txtPesoKg);
@@ -376,14 +404,15 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         btnDescartar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        lblFechaDestete1 = new javax.swing.JLabel();
+        lblFechaNovilla = new javax.swing.JLabel();
         jdFechaDeNovilla = new com.toedter.calendar.JDateChooser();
-        lbltitle22 = new javax.swing.JLabel();
+        lblPesoDestete = new javax.swing.JLabel();
         txtPesoDestete = new javax.swing.JTextField();
-        jSeparator15 = new javax.swing.JSeparator();
+        sepPesoDestete = new javax.swing.JSeparator();
         chkImplante = new javax.swing.JCheckBox();
         chkHierro = new javax.swing.JCheckBox();
         chkDescornada = new javax.swing.JCheckBox();
+        chkNovilla = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -499,11 +528,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 120;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator11, gridBagConstraints);
 
         lblFechaDestete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -624,11 +653,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 15;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 120;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtPeso, gridBagConstraints);
 
         jSeparator12.setBackground(new java.awt.Color(59, 123, 50));
@@ -707,7 +736,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridy = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
         add(chkMuerte, gridBagConstraints);
 
         chkVenta.setBackground(new java.awt.Color(255, 255, 255));
@@ -720,11 +749,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 17;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkVenta, gridBagConstraints);
 
         txtNumeroMamaAdoptiva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1137,13 +1166,13 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         panelInfoVenta.add(txtPesoCanal, gridBagConstraints);
 
         lblPesoCanal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1151,23 +1180,23 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lblPesoCanal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPesoCanal.setText("Peso del canal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
         panelInfoVenta.add(lblPesoCanal, gridBagConstraints);
 
         sepPesoCanal.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         panelInfoVenta.add(sepPesoCanal, gridBagConstraints);
 
         lbltitle21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1175,12 +1204,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle21.setText("Tipo de venta");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         panelInfoVenta.add(lbltitle21, gridBagConstraints);
 
         cbTipoVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1192,13 +1221,13 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         panelInfoVenta.add(cbTipoVenta, gridBagConstraints);
 
         txtCalculos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1207,7 +1236,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 30;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -1311,10 +1340,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.ipady = -20;
         jPanel2.add(btnGuardar, gridBagConstraints);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
@@ -1331,10 +1358,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.ipady = -20;
         jPanel2.add(btnModificar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
@@ -1350,10 +1375,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.ipady = -20;
         jPanel2.add(btnDescartar, gridBagConstraints);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
@@ -1370,10 +1393,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.ipady = -20;
         jPanel2.add(btnConsultar, gridBagConstraints);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
@@ -1390,10 +1411,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = -20;
-        gridBagConstraints.ipady = -20;
         jPanel2.add(btnEliminar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1404,40 +1423,41 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jPanel2, gridBagConstraints);
 
-        lblFechaDestete1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblFechaDestete1.setForeground(new java.awt.Color(59, 123, 50));
-        lblFechaDestete1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFechaDestete1.setText("Fecha de novilla");
+        lblFechaNovilla.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblFechaNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaNovilla.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaNovilla.setText("Fecha de novilla");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
-        add(lblFechaDestete1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
+        add(lblFechaNovilla, gridBagConstraints);
 
         jdFechaDeNovilla.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 15;
         gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(jdFechaDeNovilla, gridBagConstraints);
 
-        lbltitle22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle22.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle22.setText("Peso de destete (Kilos)");
+        lblPesoDestete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblPesoDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPesoDestete.setText("Peso de destete (Kilos)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
-        add(lbltitle22, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
+        add(lblPesoDestete, gridBagConstraints);
 
         txtPesoDestete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
@@ -1453,22 +1473,23 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 12;
-        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(txtPesoDestete, gridBagConstraints);
 
-        jSeparator15.setBackground(new java.awt.Color(59, 123, 50));
+        sepPesoDestete.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 13;
-        gridBagConstraints.ipadx = 80;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 0.166666667;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
-        add(jSeparator15, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(sepPesoDestete, gridBagConstraints);
 
         chkImplante.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkImplante.setForeground(new java.awt.Color(59, 123, 50));
@@ -1497,12 +1518,29 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkDescornada.setForeground(new java.awt.Color(59, 123, 50));
         chkDescornada.setText("Descornada");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 17;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 0.166666667;
+        gridBagConstraints.weightx = 0.11111111;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkDescornada, gridBagConstraints);
+
+        chkNovilla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        chkNovilla.setText("Es novilla");
+        chkNovilla.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkNovillaStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
+        add(chkNovilla, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -1528,6 +1566,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private void chkDesteteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkDesteteStateChanged
         boolean chequeado = chkDestete.isSelected();
         jdFechaDestete.setVisible(chequeado);
+        lblPesoDestete.setVisible(chequeado);
+        txtPesoDestete.setVisible(chequeado);
+        sepPesoDestete.setVisible(chequeado);
 //        jdFechaDestete.setCalendar(Calendar.getInstance());
         lblFechaDestete.setVisible(chequeado);
     }//GEN-LAST:event_chkDesteteStateChanged
@@ -1751,16 +1792,32 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }//GEN-LAST:event_chkCapadoStateChanged
 
     private void chkMuerteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMuerteStateChanged
-        casoMuerte();
+        boolean chequeado = chkMuerte.isSelected();
+        panelInfoMuerte.setVisible(chequeado);
+        if (panelInfoVenta.isVisible()) {
+            panelInfoVenta.setVisible(!chequeado);
+            chkVenta.setSelected(!chequeado);
+        }
     }//GEN-LAST:event_chkMuerteStateChanged
 
     private void chkVentaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkVentaStateChanged
-        casoVenta();
+        boolean chequeado = chkVenta.isSelected();
+        panelInfoVenta.setVisible(chequeado);
+        if (panelInfoMuerte.isVisible()) {
+            panelInfoMuerte.setVisible(!chequeado);
+            chkMuerte.setSelected(!chequeado);
+        }
     }//GEN-LAST:event_chkVentaStateChanged
 
     private void txtPesoDesteteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoDesteteKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPesoDesteteKeyReleased
+
+    private void chkNovillaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkNovillaStateChanged
+        boolean chequeado = chkNovilla.isSelected();
+        lblFechaNovilla.setVisible(chequeado);
+        jdFechaDeNovilla.setVisible(chequeado);
+    }//GEN-LAST:event_chkNovillaStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
@@ -1783,6 +1840,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JCheckBox chkHierro;
     private javax.swing.JCheckBox chkImplante;
     private javax.swing.JCheckBox chkMuerte;
+    private javax.swing.JCheckBox chkNovilla;
     private javax.swing.JCheckBox chkVenta;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1791,7 +1849,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
-    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparatorAdoptiva;
     private com.toedter.calendar.JDateChooser jdFechaDeNovilla;
     private com.toedter.calendar.JDateChooser jdFechaDestete;
@@ -1801,11 +1858,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JLabel lblAdoptiva;
     private javax.swing.JLabel lblCausaMuerte;
     private javax.swing.JLabel lblFechaDestete;
-    private javax.swing.JLabel lblFechaDestete1;
     private javax.swing.JLabel lblFechaMuerte;
+    private javax.swing.JLabel lblFechaNovilla;
     private javax.swing.JLabel lblFechaVenta;
     private javax.swing.JLabel lblNumeroDescendiente;
     private javax.swing.JLabel lblPesoCanal;
+    private javax.swing.JLabel lblPesoDestete;
     private javax.swing.JLabel lbltitle10;
     private javax.swing.JLabel lbltitle11;
     private javax.swing.JLabel lbltitle12;
@@ -1817,7 +1875,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JLabel lbltitle19;
     private javax.swing.JLabel lbltitle20;
     private javax.swing.JLabel lbltitle21;
-    private javax.swing.JLabel lbltitle22;
     private javax.swing.JLabel lbltitle4;
     private javax.swing.JLabel lbltitle6;
     private javax.swing.JLabel lbltitle7;
@@ -1826,6 +1883,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JPanel panelInfoVenta;
     private javax.swing.JSeparator sepNumeroDescendiente;
     private javax.swing.JSeparator sepPesoCanal;
+    private javax.swing.JSeparator sepPesoDestete;
     private javax.swing.JSlider slCalificacion;
     private javax.swing.JLabel txtCalculos;
     private javax.swing.JLabel txtCodigoAnimal;
@@ -1856,6 +1914,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             boolean capado = modelo.getCapado().equalsIgnoreCase("si");
             boolean venta = modelo.getVenta().equalsIgnoreCase("1");
             boolean muerte = modelo.getMuerte().equalsIgnoreCase("1");
+            boolean implante = modelo.getImplante().equalsIgnoreCase("1");
+            boolean hierroFisico = modelo.getHierroFisico().equalsIgnoreCase("1");
+            boolean descornado = modelo.getDescornada().equalsIgnoreCase("1");
+            boolean esNovilla = !(modelo.getFechaNovilla().equals(FECHA_POR_DEFECTO) || modelo.getFechaNovilla().equalsIgnoreCase(NULL));
 
             String numeroMamaAdoptiva = modelo.getNumeroMamaAdoptiva();
             boolean adoptado = true;
@@ -1896,6 +1958,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             txtNotas.setText(modelo.getNotas());
             chkAdoptivo.setSelected(adoptado);
 
+            chkNovilla.setSelected(esNovilla);
+            chkHierro.setSelected(hierroFisico);
+            chkImplante.setSelected(implante);
+            chkDescornada.setSelected(descornado);
             chkVenta.setSelected(venta);
             chkMuerte.setSelected(muerte);
             txtObservacionMuerte.setVisible(chkMuerte.isSelected());
@@ -1920,14 +1986,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 Date fecha = formato.parse(modelo.getFechaNacimiento());
                 jdFechaNacimiento.setDate(fecha);
 
+                if (modelo.getFechaNovilla().equals(FECHA_POR_DEFECTO) || modelo.getFechaNovilla().equalsIgnoreCase(NULL)) {
+                    jdFechaDeNovilla.setCalendar(Calendar.getInstance());
+                } else {
+                    fecha = formato.parse(modelo.getFechaNovilla());
+                    jdFechaDeNovilla.setDate(fecha);
+                }
+
                 if (modelo.getFechaDestete().equals(FECHA_POR_DEFECTO)) {
                     chkDestete.setSelected(false);
                     lblFechaDestete.setVisible(false);
                     jdFechaDestete.setVisible(false);
+                    txtPesoDestete.setVisible(false);
                 } else {
                     chkDestete.setSelected(true);
                     lblFechaDestete.setVisible(true);
                     jdFechaDestete.setVisible(true);
+                    txtPesoDestete.setVisible(true);
+                    txtPesoDestete.setText(modelo.getPesoDestete());
                     fecha = formato.parse(modelo.getFechaDestete());
                     jdFechaDestete.setDate(fecha);
                 }
@@ -2084,6 +2160,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 + ")");
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
+        modelo.setDescornada(chkDescornada.isSelected() ? "1" : "0");
+        modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
+        modelo.setHierroFisico(chkHierro.isSelected() ? "1" : "0");
         modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");
         modelo.setVenta(chkVenta.isSelected() ? "1" : "0");
         modelo.setModeloTraslado(modeloTraslado);
@@ -2105,6 +2184,18 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         modelo.setFechaNacimiento(sdf.format(fechaNacimiento.getTime()));
+
+        if (chkNovilla.isSelected()) {
+            Calendar fechaDeNovilla = jdFechaDeNovilla.getCalendar();
+            modelo.setFechaNovilla(
+                    fechaDeNovilla == null
+                    ? FECHA_POR_DEFECTO
+                    : sdf.format(fechaDeNovilla.getTime())
+            );
+        }else{
+            modelo.setFechaNovilla(FECHA_POR_DEFECTO);
+        }
+
         modelo.setNumeroDescendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
         modelo.setEstadoDescendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
         modelo.setDescripcionMuerte(txtObservacionMuerte.getText());
@@ -2141,8 +2232,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         if (chkDestete.isSelected()) {
             fechaDestete = jdFechaDestete.getCalendar();
             modelo.setFechaDestete(sdf.format(fechaDestete.getTime()));
+            modelo.setPesoDestete(txtPesoDestete.getText().replace(".", "").replace(",", "."));
         } else {
             modelo.setFechaDestete(FECHA_POR_DEFECTO);
+            modelo.setPesoDestete("NULL");
         }
 
         int retorno = Retorno.DEFECTO;
