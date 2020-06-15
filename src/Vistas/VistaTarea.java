@@ -7,7 +7,7 @@ package Vistas;
 
 import Busqueda.VistaBusqueda;
 import Control.ControlGeneral;
-import Control.ControlTareas;
+import Control.ControlMedicamentos;
 import Control.Retorno;
 import GestionControles.Control;
 import GestionControles.EstadoControles;
@@ -32,7 +32,7 @@ public class VistaTarea extends javax.swing.JPanel implements IControlesUsuario 
 
     private ModeloGestorBusqueda objetoBusqueda;
     private ModeloTarea modelo;
-    private ControlTareas control;
+    private ControlMedicamentos control;
     private ControlGeneral controlGral;
     private int editar;
     private GestionEstadoControles controles;
@@ -43,7 +43,7 @@ public class VistaTarea extends javax.swing.JPanel implements IControlesUsuario 
         initComponents();
         iniciarComponentes();
         modelo = new ModeloTarea();
-        control = new ControlTareas();
+        control = new ControlMedicamentos();
         controlGral = new ControlGeneral();
         editar = Estado.GUARDAR;
         botones = new JButton[]{

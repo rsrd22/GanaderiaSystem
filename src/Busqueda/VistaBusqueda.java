@@ -576,6 +576,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaActividades) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaTarea) {
                     ((VistaTarea) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaMedicamentos) {
+                    ((VistaMedicamentos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 }
 
                 this.dispose();
@@ -672,8 +674,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
             ((VistaEstadoActividad) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaMacroGrupo) {
             ((VistaMacroGrupo) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
-        } else if (objeto.getPanelsolicitante() instanceof VistaTarea) {
-            ((VistaTarea) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaMedicamentos) {
+            ((VistaMedicamentos) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         }
     }//GEN-LAST:event_formWindowClosed
 

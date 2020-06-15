@@ -111,6 +111,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnCronograma = new javax.swing.JLabel();
         btnPesaje = new javax.swing.JLabel();
         btnPalpacion = new javax.swing.JLabel();
+        btnMedicamentos = new javax.swing.JLabel();
         btnMostrarTraslados = new javax.swing.JLabel();
         pnlContenedorTraslados = new javax.swing.JPanel();
         btnTrasladoAnimal = new javax.swing.JLabel();
@@ -728,6 +729,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnMedicamentos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMedicamentos.setForeground(new java.awt.Color(255, 255, 255));
+        btnMedicamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMedicamentos.setText("Medicamentos");
+        btnMedicamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMedicamentosMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlContenedorActividadesLayout = new javax.swing.GroupLayout(pnlContenedorActividades);
         pnlContenedorActividades.setLayout(pnlContenedorActividadesLayout);
         pnlContenedorActividadesLayout.setHorizontalGroup(
@@ -735,6 +747,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(btnRegistroActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnEstadoActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnCronograma, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMedicamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnPesaje, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnPalpacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
@@ -746,6 +759,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnEstadoActividades)
                 .addGap(0, 0, 0)
                 .addComponent(btnCronograma)
+                .addGap(0, 0, 0)
+                .addComponent(btnMedicamentos)
                 .addGap(0, 0, 0)
                 .addComponent(btnPesaje)
                 .addGap(0, 0, 0)
@@ -1344,12 +1359,24 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlTituloMouseClicked
 
     private void btnPesajeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesajeMousePressed
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Pesajes animales");
+            VistaPesaje vista = new VistaPesaje();
+            MostrarPanel(vista);
+        }
     }//GEN-LAST:event_btnPesajeMousePressed
 
     private void btnPalpacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPalpacionMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPalpacionMousePressed
+
+    private void btnMedicamentosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedicamentosMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Registro de medicamentos");
+            VistaMedicamentos vista = new VistaMedicamentos();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnMedicamentosMousePressed
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
@@ -1423,6 +1450,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
     private javax.swing.JLabel btnMaximizar;
+    private javax.swing.JLabel btnMedicamentos;
     private javax.swing.JLabel btnMenuVertical;
     private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel btnMostrarActividades;
