@@ -289,6 +289,18 @@ public class Consultas {
                 + "descripcion descripcion\n"
                 + "FROM actividades WHERE estado='Activo'"
         );
+
+        consultas.put(
+                "CARGAR_COMBO_MEDICAMENTOS",
+                "SELECT\n"
+                + "'-1' id,\n"
+                + "'Seleccionar' descripcion\n"
+                + "UNION\n"
+                + "SELECT\n"
+                + "id id,\n"
+                + "descripcion descripcion\n"
+                + "FROM medicamentos WHERE estado='Activo'"
+        );
     }
 
 }

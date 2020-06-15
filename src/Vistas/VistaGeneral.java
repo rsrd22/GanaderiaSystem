@@ -5,10 +5,7 @@
  */
 package Vistas;
 
-import AjustarControles.Ajustar;
 import AjustarControles.AjustarControles;
-import AjustarControles.ControlDeUsuario;
-import AjustarControles.tiposDeAjuste;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
 import java.awt.Dimension;
@@ -109,6 +106,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Ingrese Motivo");
+        } else if (panel instanceof VistaIngresoPesaje) {
+            VistaIngresoPesaje vista = (VistaIngresoPesaje) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Ingreso pesaje del animal");
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
@@ -462,6 +464,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaIngresarMotivo) {
 
             VistaIngresarMotivo vista = new VistaIngresarMotivo(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaIngresoPesaje) {
+
+            VistaIngresoPesaje vista = new VistaIngresoPesaje(modeloVista);
             MostrarPanel(vista);
 
         }

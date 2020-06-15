@@ -68,6 +68,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
         NameColumnasFiltro.add("FINCA");
+        NameColumnasFiltro.add("-");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -120,6 +121,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
         tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
         tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
+        tbl_Animales.getColumnModel().getColumn(11).setPreferredWidth(5);
 
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
@@ -263,6 +265,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weightx = 0.9;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
@@ -361,17 +364,18 @@ public class VistaPesaje extends javax.swing.JPanel {
     private void tbl_AnimalesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_AnimalesMouseReleased
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
-        String dato = "" + tbl_Animales.getValueAt(fila, cola);
+        String dato = tbl_Animales.getValueAt(fila, cola).toString();
+        tbl_Animales.setValueAt("*", fila, cola);
         
-        if (cola == 10) {//VER MAS
+        if (cola == 10) {//PESAJES
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal);
-            objetoVentana.setFila(fila);
+            String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
+            ArrayList<String> datosRef = new ArrayList<>();
+            datosRef.add(idAnimal);
+            datosRef.add(numero);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
             new VistaGeneral(objetoVentana).setVisible(true);
-
         }
-
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
 
 
