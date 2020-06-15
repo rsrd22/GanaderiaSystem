@@ -268,15 +268,14 @@ public class Consultas {
         );
 
         consultas.put(
-                "BUSQUEDA_TAREAS",
+                "BUSQUEDA_MEDICAMENTOS",
                 "SELECT "
                 + "a.id ID, \n"
-                + "b.descripcion ACTIVIDAD, \n"
-                + "a.descripcion DESCRIPCION,\n"
+                + "a.descripcion DESCRIPCION, \n"
+                + "a.unidad_medida UNIDAD_DE_MEDIDA,\n"
                 + "a.estado ESTADO\n"
                 + "FROM \n"
-                + "tareas a \n"
-                + "LEFT JOIN actividades b ON a.id_actividad=b.id"
+                + "medicamentos a ORDER BY a.descripcion ASC"
         );
 
         consultas.put(

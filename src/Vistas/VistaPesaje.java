@@ -67,7 +67,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         NameColumnasFiltro.add("GRUPO");
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
-        NameColumnasFiltro.add("LOTE");
+        NameColumnasFiltro.add("FINCA");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -78,8 +78,8 @@ public class VistaPesaje extends javax.swing.JPanel {
             "Hierro",
             "Capado",
             "Grupo",
-            "Lote",
-            "Ver Más"
+            "Finca",
+            "Acción"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
@@ -128,7 +128,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            tcr.setForeground(new Color(26, 82, 118));
+            tcr.setForeground(new Color(59,123,50));
             tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
 
         }
@@ -294,6 +294,8 @@ public class VistaPesaje extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Animales.setFocusTraversalPolicyProvider(true);
+        tbl_Animales.setGridColor(new java.awt.Color(59, 123, 50));
         tbl_Animales.setSelectionBackground(new java.awt.Color(59, 123, 50));
         tbl_Animales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -420,7 +422,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             allFincas = 0;
         }
         if (Integer.parseInt(idFinca) > 0) {
-            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + idFinca, idTipoAnimal);
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
@@ -467,9 +469,8 @@ public class VistaPesaje extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("DESC_HIERRO"),
                         ListaAnimalesMostrar.get(i).get("CAPADO"),
                         ListaAnimalesMostrar.get(i).get("GRUPO"),
-                        (allFincas == 1 ? ListaAnimalesMostrar.get(i).get("FINCA") + " / " : "")
-                        + ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE"),
-                        "Ver Más"
+                        ListaAnimalesMostrar.get(i).get("FINCA"),
+                        "PESAJE"
                     }
             );
         }
