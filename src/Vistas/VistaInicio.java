@@ -84,6 +84,8 @@ public class VistaInicio extends javax.swing.JPanel {
         pnlInforme = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setToolTipText("");
         setLayout(new java.awt.GridBagLayout());
 
         scrpnlsFincas.setBackground(new java.awt.Color(255, 255, 255));
@@ -339,7 +341,7 @@ public class VistaInicio extends javax.swing.JPanel {
     public void LlenarGrupos(){
         String in = getIN(ListaFincasInforme);
         ListaInformacionGrupos = new ArrayList<>();
-        ListaInformacionGrupos = controlgen.GetComboBox("SELECT finc.`id` AS IDFINCA, macr.`id` AS IDMACROGRUPO, macr.`descripcion` AS MACROGRUPO, \n" +
+        String consulta = "SELECT finc.`id` AS IDFINCA, macr.`id` AS IDMACROGRUPO, macr.`descripcion` AS MACROGRUPO, \n" +
                                                             "tipo.`id` AS IDTIPO, tipo.`descripcion` AS TIPOANIMAL,\n" +
                                                             "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO, \n" +
                                                             "IFNULL(bloq.`id`, 0) AS IDBLOQUE, CONCAT('Bloque ', IFNULL(bloq.`numero`, 0)) AS  BLOQUE, \n" +
@@ -358,7 +360,29 @@ public class VistaInicio extends javax.swing.JPanel {
                                                             "LEFT JOIN bloques bloq ON bloq.`id` = lot.`id_bloque` \n" +
                                                             "WHERE finc.`id` IN ("+in+") AND tipo.`estado` = 'Activo' AND grup.`estado` = 'Activo'\n" +
                                                             "GROUP BY finc.`id`, grup.`id` \n" +
-                                                            "ORDER BY grup.`id` ASC ");
+                                                            "ORDER BY grup.`id` ASC ";
+        consulta = "SELECT finc.`id` AS IDFINCA, macr.`id` AS IDMACROGRUPO, macr.`descripcion` AS MACROGRUPO, \n" +
+                    "tipo.`id` AS IDTIPO, tipo.`descripcion` AS TIPOANIMAL,\n" +
+                    "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO, \n" +
+                    "IFNULL(bloq.`id`, 0) AS IDBLOQUE, CONCAT('Bloque ', IFNULL(bloq.`numero`, 0)) AS  BLOQUE, \n" +
+                    "IFNULL(lot.`id`, 0) AS IDLOTE, CONCAT('Lote ', IFNULL(lot.numero, 0)) AS LOTE, \n" +
+                    "COUNT(grup.`id`) SUMAANIMALES\n" +
+                    "FROM fincas finc\n" +
+                    "INNER JOIN `tipo_animales` tipo ON tipo.`id_finca` = finc.`id`\n" +
+                    "INNER JOIN grupos grup ON grup.`id_tipo_animal` = tipo.`id`\n" +
+                    "LEFT JOIN `macrogrupos` macr ON macr.`id_finca` = finc.`id` AND grup.`id_macrogrupo` = macr.`id`\n" +
+                    "INNER JOIN `traslado_animalxgrupo` traslado ON traslado.`id_finca` = finc.`id` AND \n" +
+                    "traslado.`id_grupo` = grup.`id` AND traslado.`estado` = 'Activo'\n" +
+                    "INNER JOIN `animales` animal ON animal.`id` = `traslado`.`id_animal` AND animal.venta = '0' AND animal.`muerte` = '0'\n" +
+                    "LEFT JOIN `rotacion_lote` rot ON rot.`id_grupo` = grup.id AND rot.`estado` = 'Activo'\n" +
+                    "LEFT JOIN `lotes` lot ON lot.`id` = rot.`id_lote`\n" +
+                    "LEFT JOIN bloques bloq ON bloq.`id` = lot.`id_bloque` \n" +
+                    "WHERE finc.`id` IN ("+in+") AND tipo.`estado` = 'Activo' AND grup.`estado` = 'Activo'\n" +
+                    "GROUP BY finc.`id`, grup.`id` \n" +
+                    "ORDER BY grup.`id` ASC ";
+        
+        System.out.println("consulta --->"+consulta);
+        ListaInformacionGrupos = controlgen.GetComboBox(""+consulta);
     }
 
     private String getIN(List<Map<String, String>> ListaFincasInforme) {

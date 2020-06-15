@@ -132,6 +132,7 @@ public class ControlRotar implements IControl{
         }
     }
     
+    
     public int ActualizarRotacionLote(Map<String, String> datos) {
         ArrayList<String> consultas = new ArrayList<>();
         

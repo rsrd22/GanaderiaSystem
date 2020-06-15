@@ -30,11 +30,14 @@ import javax.swing.JFrame;
 public class VistaRotar extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public ControlRotar controlRotar = new ControlRotar();
+    public ControlRotacion controlRot = new ControlRotacion();
     public List<Map<String, String>> listaFincas;
     public List<Map<String, String>> listaLotes;
     private ModeloVentanaGeneral  modeloVentanaGeneral;
     private ModeloRotacionLotes  modeloRotacionLotes;
+    private ModeloRotacion  modeloRotacion;
     private ArrayList<ModeloRotacionGrupos>  ListamodeloRotacionGrupos;
+    private ArrayList<ModeloRotacion>  ListamodeloRotacion;
     private List<Map<String, String>>  ListaGruposSeleccionados;
     private List<Map<String, String>>  ListaGrupos;
     private ArrayList<ModeloDatosMultiple>  ListaGruposMostrar;
@@ -55,13 +58,16 @@ public class VistaRotar extends javax.swing.JPanel {
         setSize(608, 450);
         System.out.println("******************VistaRotar***************+fasdfasdfasd+");
         this.modeloVentanaGeneral = modeloVentanaGeneral;
-        controlRotar = new ControlRotar();
+        //controlRotar = new ControlRotar();
+        controlRot = new ControlRotacion();
         IniciarFecha();
         idFinca = "";
         idLote = "";
         listaLotes = new ArrayList<>();
         modeloRotacionLotes = new ModeloRotacionLotes();
+        modeloRotacion = new ModeloRotacion();
         ListamodeloRotacionGrupos = new ArrayList<>();
+        ListamodeloRotacion = new ArrayList<>();
         
         ListaGrupos = new ArrayList<>();
         
@@ -312,7 +318,7 @@ public class VistaRotar extends javax.swing.JPanel {
     }//GEN-LAST:event_cbLoteActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
+        GuardarNEW();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
@@ -379,10 +385,45 @@ public class VistaRotar extends javax.swing.JPanel {
     }
     
     private void getGruposSistema() {
-        ListaGrupos = controlRotar.getGruposxFinca(idFinca);
+        ListaGrupos = controlRot.getGruposxFinca(idFinca);
     }
     
     private void GuardarNEW(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFechaEntrada.getCalendar();
+        for(int i = 0; i < Lista_Grupos_Seleccionados.size(); i++){
+            ListamodeloRotacion.add(
+                new ModeloRotacion(
+                        "0", 
+                        idLote, 
+                        "",
+                        ""+Lista_Grupos_Seleccionados.get(i).getId(), 
+                        ""+Lista_Grupos_Seleccionados.get(i).getDatosMostrar(), 
+                        null,
+                        sdf.format(fecha.getTime()),
+                        sdf.format(fecha.getTime()),
+                        "Activo", 
+                        "NOW()", 
+                        datosUsuario.datos.get(0).get("ID_USUARIO")));
+        }
+        if(ListamodeloRotacion.size()>0){
+            int ret = -1, ret2 = -1 ;
+            ret2 = controlRot.ActualizarRotacion(ListamodeloRotacion); 
+             
+            ret = controlRot.Guardar(ListamodeloRotacion);
+            if(ret == 0){
+                if(modeloVentanaGeneral.getPanelPadre() instanceof VistaRotacion){
+                    ((VistaRotacion)modeloVentanaGeneral.getPanelPadre()).RetornoVistaGeneral(modeloVentanaGeneral, modeloRotacionLotes); 
+                }
+                ((VistaGeneral)modeloVentanaGeneral.getFrameVentana()).dispose();
+            }  
+            
+        }
+        
+        
+        
+        
+        
         
     }
     

@@ -16,4 +16,5 @@ public class Retorno {
     public static final int ERROR = 1;
     public static final int CLASE_NO_ENCONTRADA = 2;
     public static final int EXCEPCION_SQL = 3;
+    public static final int MENSAJE = 10;
 }

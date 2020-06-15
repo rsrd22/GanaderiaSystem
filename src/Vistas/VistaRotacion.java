@@ -39,6 +39,7 @@ public class VistaRotacion extends javax.swing.JPanel {
     public List<Map<String, String>> listaFincas;
     public ControlGeneral controlgen = new ControlGeneral();
     public ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
+    public ControlRotacion controlRot = new ControlRotacion();
     public String idFinca;
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
@@ -330,16 +331,16 @@ public class VistaRotacion extends javax.swing.JPanel {
             
             int ret = JOptionPane.showConfirmDialog(this, "¿Esta Seguro en Cancelar este registro "+tbl_Grupos.getValueAt(fila, 1)+"?");
             if(ret == JOptionPane.YES_OPTION){
-                int resp = controlRotacion.CancelarRegistroRotacion(ListaRotaciones.get(fila));
+                int resp = controlRot.CancelarRegistroRotacion(ListaRotaciones.get(fila));
                 if(resp == Retorno.EXITO){
-                    int resp2 = controlRotacion.ActivarAnteriorRegistroRotacion(ListaRotaciones.get(fila));
+                    int resp2 = controlRot.ActivarAnteriorRegistroRotacion(ListaRotaciones.get(fila));
                     if(resp2 == Retorno.EXITO){
                         JOptionPane.showMessageDialog(this, "La operación fue realizada con exito.");
                         EventoComboFincas();
                     }
+                }else if(resp == Retorno.MENSAJE){
+                    JOptionPane.showMessageDialog(this, "No se puede realizar la operación, debido a que solo exite un registro para este grupo.");
                 }
-                //CancelarRegistroRotacion();
-                
             }
         } else if(cola == 5){ // ROTAR
             tbl_Grupos.setValueAt(true, fila, 0);
@@ -354,23 +355,7 @@ public class VistaRotacion extends javax.swing.JPanel {
             objetoVentana.setFila(fila);
             new VistaGeneral(objetoVentana).setVisible(true);
             
-            
-            
-            
-//            boolean sel = (boolean) tbl_Grupos.getValueAt(fila, 0);
-//            if(sel){
-//                System.out.println("**********ANTES*********"+ListaGruposSeleccionados.size());
-//                getGruposAsociadosxLote();
-//                System.out.println("**********DESPUES*********"+ListaGruposSeleccionados.size());
-//                objetoVentana = new ModeloVentanaGeneral(this, new VistaRotar(), 1, ListaGruposSeleccionados);
-//                System.out.println("EVENTO TABLA ListaGruposSeleccionados-->"+ListaGruposSeleccionados.size());
-//                objetoVentana.setFila(fila);
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//            }else{
-//                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
-//            }
         }
-        //MOstrarListaSeleccionados();
     }//GEN-LAST:event_tbl_GruposMouseReleased
 
 
@@ -418,7 +403,7 @@ public class VistaRotacion extends javax.swing.JPanel {
                 allFincas = 0;
             }
             if(Integer.parseInt(idFinca)>0){
-                ListaRotaciones = controlRotacion.ObtenerRotacion(""+idFinca);
+                ListaRotaciones = controlRot.ObtenerRotacion(""+idFinca);
                 Utilidades.LimpiarTabla(tbl_Grupos);
                 for(int i =0; i < ListaRotaciones.size(); i++){
                     Utilidades.agregarFilaTabla(
