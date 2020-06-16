@@ -1491,6 +1491,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(sepPesoDestete, gridBagConstraints);
 
+        chkImplante.setBackground(new java.awt.Color(255, 255, 255));
         chkImplante.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkImplante.setForeground(new java.awt.Color(59, 123, 50));
         chkImplante.setText("Implante");
@@ -1503,6 +1504,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkImplante, gridBagConstraints);
 
+        chkHierro.setBackground(new java.awt.Color(255, 255, 255));
         chkHierro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkHierro.setForeground(new java.awt.Color(59, 123, 50));
         chkHierro.setText("Hierro");
@@ -1514,6 +1516,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkHierro, gridBagConstraints);
 
+        chkDescornada.setBackground(new java.awt.Color(255, 255, 255));
         chkDescornada.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkDescornada.setForeground(new java.awt.Color(59, 123, 50));
         chkDescornada.setText("Descornada");

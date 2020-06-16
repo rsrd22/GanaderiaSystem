@@ -5,6 +5,7 @@
  */
 package Tablas;
 
+import Actividades.Colores;
 import java.awt.Component;
 import java.awt.Cursor;
 import javax.swing.JButton;
@@ -17,27 +18,30 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Acer
  */
-public class TablaRender extends DefaultTableCellRenderer{
-    
+public class TablaRender extends DefaultTableCellRenderer {
+
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col){
-        
-        
-        if(value instanceof JButton){
-            JButton btn = (JButton)value;
-            if(isSelected){
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+        if (value instanceof JButton) {
+            JButton btn = (JButton) value;
+            if (isSelected) {
                 btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 btn.setForeground(table.getSelectionForeground());
                 btn.setBackground(table.getSelectionBackground());
-            }else{
+            } else {
                 btn.setForeground(table.getForeground());
-                btn.setBackground(UIManager.getColor("Button.background"));                
+                btn.setBackground(UIManager.getColor("Button.background"));
             }
             return btn;
         }
-        if(value instanceof JCheckBox){
-            JCheckBox ch = (JCheckBox)value;
+        if (value instanceof JCheckBox) {
+            JCheckBox ch = (JCheckBox) value;
             return ch;
+        }
+        if(table.getValueAt(row, 11).toString().equals("*")){
+            setBackground(Colores.DANGER);
+            setForeground(Colores.TEXT_DANGER);
         }
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
     }

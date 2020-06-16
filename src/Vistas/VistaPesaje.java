@@ -68,6 +68,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
         NameColumnasFiltro.add("FINCA");
+        NameColumnasFiltro.add("EST");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -79,7 +80,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             "Capado",
             "Grupo",
             "Finca",
-            "Acción"
+            "Acción", "Est"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
@@ -120,6 +121,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
         tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
         tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
+        tbl_Animales.getColumnModel().getColumn(11).setPreferredWidth(5);
 
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
@@ -128,7 +130,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            tcr.setForeground(new Color(59,123,50));
+            tcr.setForeground(new Color(59, 123, 50));
             tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
 
         }
@@ -158,7 +160,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         lblTid1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Animales = new javax.swing.JTable();
+        tbl_Animales = new Tablas.DiarioTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -263,6 +265,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weightx = 0.9;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
@@ -361,17 +364,19 @@ public class VistaPesaje extends javax.swing.JPanel {
     private void tbl_AnimalesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_AnimalesMouseReleased
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
-        String dato = "" + tbl_Animales.getValueAt(fila, cola);
-        
-        if (cola == 10) {//VER MAS
+        String dato = tbl_Animales.getValueAt(fila, cola).toString();
+
+        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1)==null) {
+            tbl_Animales.setValueAt("*", fila, cola+1);
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal);
-            objetoVentana.setFila(fila);
+            String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
+            ArrayList<String> datosRef = new ArrayList<>();
+            datosRef.add(idAnimal);
+            datosRef.add(numero);
+            datosRef.add(fila + "");
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
             new VistaGeneral(objetoVentana).setVisible(true);
-
         }
-
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
 
 
@@ -383,7 +388,7 @@ public class VistaPesaje extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JTable tbl_Animales;
+    public javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 

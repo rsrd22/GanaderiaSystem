@@ -346,6 +346,22 @@ public class Utilidades {
         return ret;
     }
 
+    /**
+     * Este metodo formatea los numeros escritos en un JTextField.<br>
+     * Por ejemplo si el texto escrito es 1234<br>
+     * al formatearlo qeedaria asi: 1.234<br>
+     * Si el numero escrito fuese 12345,6789<br>
+     * al formatearlo qeedaria asi: 12.345,6789<br>
+     * @param campoTexto Corresponde al compo de texto sobre el que se dara formato al texto.
+     */
+    public static void formatearNumeros(JTextField campoTexto) {
+        String texto = campoTexto.getText();
+        String textoSinPuntos = texto.indexOf(".") > -1 ? texto.replace(".", "") : texto;
+        String textoFormateado = Expresiones.procesarSoloNumP(textoSinPuntos);
+        textoFormateado = MascaraMonedaConDecimales(textoFormateado);
+        campoTexto.setText(textoFormateado);
+    }
+
     public String convertirNumeroEnLetras(int numero) {
         String moneda = "";
 

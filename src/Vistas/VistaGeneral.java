@@ -5,13 +5,11 @@
  */
 package Vistas;
 
-import AjustarControles.Ajustar;
 import AjustarControles.AjustarControles;
-import AjustarControles.ControlDeUsuario;
-import AjustarControles.tiposDeAjuste;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -49,16 +47,16 @@ public class VistaGeneral extends javax.swing.JFrame {
         pnlContenedor.removeAll();
         pnlContenedor.add(panel);
         dpanel = new Dimension(panel.getSize());
-        
+
         if (panel instanceof VistaTrasladar) {
             VistaTrasladar vista = (VistaTrasladar) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
-            
+
         } else if (panel instanceof VistaRotar) {
             VistaRotar vista = (VistaRotar) panel;
-            this.setSize(vista.getWidth(), vista.getHeight()+36);
-            pnlContenedor.setSize(vista.getWidth(), vista.getHeight()+36);
+            this.setSize(vista.getWidth(), vista.getHeight() + 36);
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight() + 36);
         } else if (panel instanceof VistaDetalleVenta) {
             VistaDetalleVenta vista = (VistaDetalleVenta) panel;
             this.setSize(vista.getWidth(), vista.getHeight());
@@ -109,6 +107,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Ingrese Motivo");
+        } else if (panel instanceof VistaIngresoPesaje) {
+            VistaIngresoPesaje vista = (VistaIngresoPesaje) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Ingreso pesaje del animal");
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
@@ -277,6 +280,14 @@ public class VistaGeneral extends javax.swing.JFrame {
             if (modeloVista.getPanelHijo() instanceof VistaHierros) {
                 ((VistaAllHierros) modeloVista.getPanelPadre()).btnAgregarHierro.setEnabled(true);
             }
+        } else if (modeloVista.getPanelPadre() instanceof VistaPesaje) {
+            ArrayList<String> datos = new ArrayList<>();
+            System.out.println("guardado: "+((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado );
+            if (((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado != 0) {
+                datos = (ArrayList<String>) modeloVista.getModeloDatos();
+                int fila = Integer.parseInt(datos.get(2));
+                ((VistaPesaje) modeloVista.getPanelPadre()).tbl_Animales.setValueAt("", fila, 11);
+            }
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -303,7 +314,7 @@ public class VistaGeneral extends javax.swing.JFrame {
                 icono = "maximizar";
             }
             lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            lblIcono.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+            lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_jLabel1MouseClicked
 
@@ -320,7 +331,7 @@ public class VistaGeneral extends javax.swing.JFrame {
                 icono = "maximizar";
             }
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            jLabel1.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+            jLabel1.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_jPanel6MouseClicked
 
@@ -399,7 +410,7 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaSeleccionarFinca vista = new VistaSeleccionarFinca(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaHierros) {
 
             VistaHierros vista = new VistaHierros(modeloVista);
@@ -419,42 +430,42 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaTrasladar vista = new VistaTrasladar(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleVenta) {
 
             VistaDetalleVenta vista = new VistaDetalleVenta(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleMuerte) {
 
             VistaDetalleMuerte vista = new VistaDetalleMuerte(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleTraslado) {
 
             VistaDetalleTraslado vista = new VistaDetalleTraslado(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaDetalleRotacion) {
 
             VistaDetalleRotacion vista = new VistaDetalleRotacion(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaHistoriaAnimal) {
 
             VistaHistoriaAnimal vista = new VistaHistoriaAnimal(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaDuplicarGrupos) {
 
             VistaDuplicarGrupos vista = new VistaDuplicarGrupos(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarVenta) {
 
             VistaModificarVenta vista = new VistaModificarVenta(modeloVista);
             MostrarPanel(vista);
-            
+
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarMuerte) {
 
             VistaModificarMuerte vista = new VistaModificarMuerte(modeloVista);
@@ -462,6 +473,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaIngresarMotivo) {
 
             VistaIngresarMotivo vista = new VistaIngresarMotivo(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaIngresoPesaje) {
+
+            VistaIngresoPesaje vista = new VistaIngresoPesaje(modeloVista);
             MostrarPanel(vista);
 
         }
@@ -472,12 +487,12 @@ public class VistaGeneral extends javax.swing.JFrame {
         pack();
     }
 
-    public void EstablecerPnlContenedor(){
-        if(pnlContenedor.getComponents().length>0){
-            System.out.println("band--->"+band);
-            if(band == 0){
+    public void EstablecerPnlContenedor() {
+        if (pnlContenedor.getComponents().length > 0) {
+            System.out.println("band--->" + band);
+            if (band == 0) {
                 pnlContenedor.getComponent(0).setSize(dpanel);
-            }else{
+            } else {
                 pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
             }
             java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
@@ -489,10 +504,10 @@ public class VistaGeneral extends javax.swing.JFrame {
             gridBagConstraints.weighty = 1.0;
             pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
 
-    //        pnlContenedor.add(panel);
+            //        pnlContenedor.add(panel);
             pnlContenedor.revalidate();
             pnlContenedor.repaint();
         }
     }
-    
+
 }
