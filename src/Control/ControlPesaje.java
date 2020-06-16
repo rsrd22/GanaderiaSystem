@@ -44,7 +44,7 @@ public class ControlPesaje implements IControl {
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
-                + "0,\n"
+                + "" + modelo.getId()+ ",\n"
                 + "" + modelo.getId_animal() + ",\n"
                 + "" + modelo.getFecha_pesado() + ",\n"
                 + "" + modelo.getPeso() + ",\n"
@@ -65,8 +65,7 @@ public class ControlPesaje implements IControl {
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
                     + "0,\n"
-                    + "(SELECT id FROM pesaje where id_animal=" + modelo.getId_animal() + " "
-                    + "and fecha_pesado=" + modelo.getFecha_pesado() + "),\n"
+                    + "" + modelo.getId()+ ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
                     + ")"

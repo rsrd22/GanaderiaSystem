@@ -301,6 +301,11 @@ public class Consultas {
                 + "descripcion descripcion\n"
                 + "FROM medicamentos WHERE estado='Activo'"
         );
+
+        consultas.put(
+                "GET_MAXIMO_ID_PESAJE",
+                "SELECT IFNULL(MAX(id)+1,0) AS IDPESAJE FROM pesaje"
+        );
     }
 
 }

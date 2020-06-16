@@ -11,7 +11,6 @@ import Control.Retorno;
 import Modelo.ModeloMedicamentosPorPesaje;
 import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
-import Tablas.TablaBackground;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
@@ -39,13 +38,16 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         "Eliminar"
     };
     private List<Map<String, String>> medicamentos;
+    private List<Map<String, String>> select;
     private ControlGeneral controlGral;
     private ArrayList<Object[]> listaMedicamentos;
     private DefaultTableModel dtm;
     private ModeloPesaje modelo;
     private ModeloMedicamentosPorPesaje modelompp;
     private ControlPesaje control;
-    private TablaBackground tbcr;
+    private ModeloVentanaGeneral modeloVistaGeneral;
+    private ArrayList<String> datos;
+    public static int guardado = -1;
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -64,13 +66,13 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     public VistaIngresoPesaje(ModeloVentanaGeneral modeloVistaGeneral) {
         initComponents();
         setSize(634, 600);
-        tbcr = new TablaBackground();
-        tablaMedicamentos.setDefaultRenderer(tablaMedicamentos.getColumnClass(1), tbcr);
         btnModificar.setVisible(false);
         consecutivo = 0;
         controlGral = new ControlGeneral();
         cargarComboMedicamento();
-        ArrayList<String> datos = new ArrayList<>();
+        getIdPesaje();
+        this.modeloVistaGeneral = modeloVistaGeneral;
+        datos = new ArrayList<>();
         datos = (ArrayList<String>) modeloVistaGeneral.getModeloDatos();
         idAnimal = datos.get(0);
         txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get(1) + "</b></p></html>");
@@ -82,7 +84,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             }
         };
         tablaMedicamentos.setModel(dtm);
-        
+
         modelo = new ModeloPesaje();
         modelompp = new ModeloMedicamentosPorPesaje();
         control = new ControlPesaje();
@@ -95,6 +97,14 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         Utilidades.LlenarComboBox(cbMedicamentos, medicamentos, "descripcion");
     }
 
+    private void getIdPesaje() {
+        String consulta = consultas.get("GET_MAXIMO_ID_PESAJE");
+        select = controlGral.GetComboBox(consulta);
+        for (Map<String, String> lista : select) {
+            txtCodigo.setText(lista.get("IDPESAJE"));
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,7 +115,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        txtPesoOculto = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JLabel();
         txtCodigoMedicamento = new javax.swing.JLabel();
         txtPesoKg = new javax.swing.JTextField();
         jSeparator13 = new javax.swing.JSeparator();
@@ -447,11 +457,15 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         txtReferenciaAnimal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtReferenciaAnimal.setForeground(new java.awt.Color(59, 123, 50));
-        txtReferenciaAnimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtReferenciaAnimal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(txtReferenciaAnimal, gridBagConstraints);
 
@@ -577,7 +591,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private String convertirAKilogramos(double pesoEnLibras) {
         Double resultado = pesoEnLibras / Utilidades.FACTOR_CONVERSION;
         long resultadoRedondeado = Math.round(resultado);
-        txtPesoOculto.setText("" + resultadoRedondeado);
+        txtCodigo.setText("" + resultadoRedondeado);
 
         return "" + resultadoRedondeado;
     }
@@ -632,7 +646,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+        int fila = Integer.parseInt(datos.get(2));
+        ((VistaPesaje) modeloVistaGeneral.getPanelPadre()).tbl_Animales.setValueAt("", fila, 11);
+        ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 
@@ -660,11 +676,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle18;
     private javax.swing.JTable tablaMedicamentos;
     public javax.swing.JTextField txtCantidadMedicamento;
+    private javax.swing.JLabel txtCodigo;
     private javax.swing.JLabel txtCodigoMedicamento;
     private javax.swing.JTextArea txtNotas;
     public javax.swing.JTextField txtPeso;
     public javax.swing.JTextField txtPesoKg;
-    private javax.swing.JLabel txtPesoOculto;
     private javax.swing.JLabel txtReferenciaAnimal;
     // End of variables declaration//GEN-END:variables
 
@@ -781,7 +797,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             return;
         }
 //</editor-fold>
-        
+
+        modelo.setId(txtCodigo.getText());
         modelo.setId_animal(idAnimal);
         modelo.setPeso(txtPesoKg.getText().replace(".", "").replace(",", "."));
         modelo.setNotas(txtNotas.getText().trim());
@@ -792,20 +809,21 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setFecha_pesado("NOW()");
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        
+
         for (int i = 0; i < listaMedicamentos.size(); i++) {
             modelompp = new ModeloMedicamentosPorPesaje();
             modelompp.setId_medicamento(listaMedicamentos.get(i)[0].toString());
-            modelompp.setDosis(listaMedicamentos.get(i)[2].toString());
+            modelompp.setDosis(listaMedicamentos.get(i)[2].toString().replace(".", "").replace(",", "."));
             modelo.addMedicamentos(modelompp);
         }
-        
+
         int retorno = control.Guardar(modelo);
 
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
+                guardado = 0;
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser guardado.";
@@ -819,5 +837,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         }
 
         JOptionPane.showMessageDialog(this, mensaje);
+        if (retorno == Retorno.EXITO) {
+            ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+        }
     }
 }

@@ -68,7 +68,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
         NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("-");
+        NameColumnasFiltro.add("EST");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -80,7 +80,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             "Capado",
             "Grupo",
             "Finca",
-            "Acción"
+            "Acción", "Est"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
@@ -130,7 +130,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            tcr.setForeground(new Color(59,123,50));
+            tcr.setForeground(new Color(59, 123, 50));
             tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
 
         }
@@ -160,7 +160,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         lblTid1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Animales = new javax.swing.JTable();
+        tbl_Animales = new Tablas.DiarioTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -365,14 +365,15 @@ public class VistaPesaje extends javax.swing.JPanel {
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = tbl_Animales.getValueAt(fila, cola).toString();
-        tbl_Animales.setValueAt("*", fila, cola);
-        
-        if (cola == 10) {//PESAJES
+
+        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1)==null) {
+            tbl_Animales.setValueAt("*", fila, cola+1);
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
             ArrayList<String> datosRef = new ArrayList<>();
             datosRef.add(idAnimal);
             datosRef.add(numero);
+            datosRef.add(fila + "");
             objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
             new VistaGeneral(objetoVentana).setVisible(true);
         }
@@ -387,7 +388,7 @@ public class VistaPesaje extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JTable tbl_Animales;
+    public javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 
