@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public String[] EncabezadoTblTraslado;
     public String[] EncabezadoTblRotacion;
     private List<Map<String, String>> ListaDatosRotacion;
+    private List<Map<String, String>> ListaDatosRotacionMostrar;
     private List<Map<String, String>> ListaDatosRotacionEliminar;
     public DefaultTableModel modeloTblRotacion;
     public Panel graficoPeso;
@@ -71,6 +73,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         id_Animal = ""+modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
+        ListaDatosRotacion = new ArrayList<>();
+        ListaDatosRotacionMostrar = new ArrayList<>();
         ListaDatosTrasladoEliminar = new ArrayList<>();
         ListaDatosRotacionEliminar = new ArrayList<>();
         datosPeso = new ArrayList<>();
@@ -1645,9 +1649,42 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ListaDatosRotacion = controlAnimales.GetDatosrotaciones(id_Animal); 
         
         numero_Animal = ListaDatosRotacion.get(0).get("NUMERO_ANIMAL");
-        LlenarTablaRotaciones();
+        EstablecerDatosRotacion();
+        
     }
 
+    private void EstablecerDatosRotacion() {
+        ListaDatosRotacionMostrar.clear();
+        int indAnt = -1;
+        String fechaSig="";
+        List<Map<String,String>> listaTraslados = Utilidades.data_list(1, ListaDatosRotacion, new String[]{"IDTRASLADO"});
+        for(Map<String,String> traslado: listaTraslados){
+            List<Map<String,String>> listaDatosTraslado = Utilidades.data_list(3, ListaDatosRotacion, new String[]{"IDTRASLADO<->"+traslado.get("IDTRASLADO")});
+            if(indAnt>-1){
+                fechaSig = listaTraslados.get(indAnt).get("FECHA_TRASLADO");
+            }
+            for(Map<String,String> datos:listaDatosTraslado){
+                if(fechaSig.equals("") && datos.get("FECHA_SALIDA").equals("") && datos.get("EST_TRASLADO").equals("Activo")){//ACTUAL
+                    ListaDatosRotacionMostrar.add(datos);
+                }else if(fechaSig.equals("") && !datos.get("FECHA_SALIDA").equals("") && 
+                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 && 
+                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                    ListaDatosRotacionMostrar.add(datos);
+                }else if(fechaSig.equals("") && !datos.get("FECHA_SALIDA").equals("") && 
+                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                    ListaDatosRotacionMostrar.add(datos);
+                }
+            }
+            
+            
+            
+            indAnt++;
+        }
+        
+        
+        LlenarTablaRotaciones();
+    }
+    
     private void LlenarTablaRotaciones() {
         Utilidades.LimpiarTabla(tbl_Rotaciones);
 //        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
@@ -1660,20 +1697,30 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>", 
 //             "Estado"
         
-        for(int i =0; i < ListaDatosRotacion.size(); i++){ 
+        for(int i =0; i < ListaDatosRotacionMostrar.size(); i++){ 
             Utilidades.agregarFilaTabla( 
                     modeloTblRotacion,  
                     new Object[]{
                         (i+1),//tbl_Grupos.getRowCount()+1,
-                        ListaDatosRotacion.get(i).get("GRUPO"),
-                        ListaDatosRotacion.get(i).get("BLOQUE")+" / "+ListaDatosRotacion.get(i).get("LOTE"),
-                        ListaDatosRotacion.get(i).get("FECHA_ENTRADA"),
-                        ListaDatosRotacion.get(i).get("FECHA_SALIDA"), 
-                        ListaDatosRotacion.get(i).get("ESTADO")
+                        ListaDatosRotacionMostrar.get(i).get("GRUPO"),
+                        ListaDatosRotacionMostrar.get(i).get("BLOQUE")+" / "+ListaDatosRotacion.get(i).get("LOTE"),
+                        ListaDatosRotacionMostrar.get(i).get("FECHA_ENTRADA"),
+                        ListaDatosRotacionMostrar.get(i).get("FECHA_SALIDA"), 
+                        ListaDatosRotacionMostrar.get(i).get("ESTADO")
                     } 
                 );
         }
     }
 //</editor-fold>
+
+    
+    public int CompararFechas(String fechaDesde, String fechaHasta){
+       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
+               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
+       int ret = fd.compareTo(fh);
+       return ret;
+   }
+
+    
     
 }
