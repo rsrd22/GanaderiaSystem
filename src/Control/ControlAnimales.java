@@ -9,6 +9,7 @@ import BaseDeDatos.gestorMySQL;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloTraslado;
 import static Utilidades.Consultas.consultas;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,6 +174,7 @@ public class ControlAnimales implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
 
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO animales (id,id_tipo_animal,numero,numero_mama,numero_mama_adoptiva,genero,"
@@ -181,7 +183,7 @@ public class ControlAnimales implements IControl {
                 + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
                 + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado)\n"
                 + "VALUES (\n"
-                + "0,\n"
+                + "" + animal.getId()+ ",\n"
                 + "" + animal.getIdTipoAnimal() + ",\n"
                 + "'" + animal.getNumero() + "',\n"
                 + "'" + animal.getNumeroMama() + "',\n"
@@ -215,15 +217,51 @@ public class ControlAnimales implements IControl {
                 + ")"
         //</editor-fold>
         );
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL PRIMER TRASLADO">
+        ModeloTraslado modeloTraslado = animal.getModeloTraslado();
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
+                + ")\n"
+                + "VALUES (\n"
+                + "0,\n"
+                + "" + animal.getId() + ",\n"
+                + "" + modeloTraslado.getIdFinca() + ",\n"
+                + "" + modeloTraslado.getIdGrupo() + ",\n"
+                + "" + Utilidades.ValorNULL(modeloTraslado.getFechaTraslado()) + ",\n"
+                + "'" + modeloTraslado.getMotivo() + "',\n"
+                + "'" + modeloTraslado.getEstado() + "',\n"
+                + "" + modeloTraslado.getFecha() + ",\n"
+                + "" + modeloTraslado.getIdUsuario() + ")"
+        //</editor-fold>
+        );
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL PRIMER PESO">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
+                + "0,\n"
+                + "" + animal.getId()+ ",\n"
+                + "'" + animal.getFechaNacimiento() + "',\n"
+                + "" + animal.getPeso() + ",\n"
+                + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
+                + "'0',\n"
+                + "'0',\n"
+                + "'0',\n"
+                + "'0',\n"
+                + "" + animal.getFecha() + ",\n"
+                + "" + animal.getIdUsuario() + "\n"
+                + ")" //</editor-fold>
+        );
+//</editor-fold>
 
         try {
             if (mySQL.EnviarConsultas(consultas)) {
-                ModeloTraslado modeloTraslado = animal.getModeloTraslado();
-                if (control.Guardar(modeloTraslado) == Retorno.EXITO) {
-                    return Retorno.EXITO;
-                } else {
-                    return Retorno.ERROR;
-                }
+                return Retorno.EXITO;
             } else {
                 return Retorno.ERROR;
             }
@@ -298,8 +336,18 @@ public class ControlAnimales implements IControl {
         ModeloAnimales animal = (ModeloAnimales) _animal;
 
         consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL ANIMAL">
                 "DELETE FROM animales WHERE id = " + animal.getId()
+        //</editor-fold>
+        );
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS EN EL TRASLADO">
+                "DELETE FROM traslado_animalxgrupo WHERE id_animal=" + animal.getId()
+        //</editor-fold>
+        );
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS DEL HISTORICO DE PESOS">
+                "DELETE FROM pesaje WHERE id_animal=" + animal.getId()
         //</editor-fold>
         );
 
@@ -426,30 +474,30 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo'\n"
                     + "ORDER BY animal.id ASC";
-            
-            consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n" +
-                        "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n" +
-                        "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL, animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n" +
-                        "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n" +
-                        "grup.descripcion AS GRUPO, \n" +
-                        "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n" +
-                        "IFNULL(blo.id, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, \n" +
-                        "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE\n" +
-                        ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n" +
-                        "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n" +
-                        "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO \n" +
-                        "FROM animales animal\n" +
-                        "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n" +
-                        "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n" +
-                        "LEFT JOIN traslado_animalxgrupo traslado ON traslado.id_animal = animal.id\n" +
-                        "LEFT JOIN grupos grup ON grup.id = traslado.id_grupo\n" +
-                        "LEFT JOIN `rotacion_lote` rot ON rot.`id_grupo` = traslado.`id_grupo` AND rot.`estado` = 'Activo'\n" +
-                        "LEFT JOIN lotes lot ON lot.id = rot.`id_lote`\n" +
-                        "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n" +
-                        "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n" +
-                        "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo'\n" +
-                        "ORDER BY animal.id ASC";
-            
+
+            consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
+                    + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL, animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
+                    + "grup.descripcion AS GRUPO, \n"
+                    + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
+                    + "IFNULL(blo.id, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, \n"
+                    + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE\n"
+                    + ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n"
+                    + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
+                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO \n"
+                    + "FROM animales animal\n"
+                    + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
+                    + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
+                    + "LEFT JOIN traslado_animalxgrupo traslado ON traslado.id_animal = animal.id\n"
+                    + "LEFT JOIN grupos grup ON grup.id = traslado.id_grupo\n"
+                    + "LEFT JOIN `rotacion_lote` rot ON rot.`id_grupo` = traslado.`id_grupo` AND rot.`estado` = 'Activo'\n"
+                    + "LEFT JOIN lotes lot ON lot.id = rot.`id_lote`\n"
+                    + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
+                    + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
+                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo'\n"
+                    + "ORDER BY animal.id ASC";
+
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
@@ -611,27 +659,27 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
                     + "WHERE traslado.`id_animal` = '" + id_Animal + "'\n"
                     + "ORDER BY traslado.`id` DESC, tbl.ID_ROTACION DESC;";
-            
-            consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n" +
-                        "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
-                        "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n" +
-                        "tras.`id`, anim.`numero` AS NUMERO_ANIMAL,\n" +
-                        "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO,\n" +
-                        "DATE_FORMAT(tras.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n" +
-                        "DATE_FORMAT(rot.`fecha_entrada`, '%d/%m/%Y') AS FECHA_ENTRADA,\n" +
-                        "IFNULL(DATE_FORMAT(rot.`fecha_salida`, '%d/%m/%Y'), '') AS FECHA_SALIDA, \n" +
-                        "tras.motivo AS MOTIVO,\n" +
-                        "lot.`id`, rot.id AS IDROTACION, tras.`id` AS IDTRASLADO,\n" +
-                        "IF(tras.estado = 'Activo' AND rot.`estado` = 'Activo', 'Activo', 'Inactivo') ESTADO,\n" +
-                        "tras.estado AS EST_TRASLADO, rot.`estado` AS EST_ROTACION\n" +
-                        "FROM `rotacion_lote` rot\n" +
-                        "INNER JOIN traslado_animalxgrupo tras ON tras.`id_grupo` = rot.id_grupo\n" +
-                        "INNER JOIN animales anim ON anim.`id` = tras.`id_animal`\n" +
-                        "INNER JOIN  grupos grup ON grup.`id` = tras.`id_grupo`\n" +
-                        "LEFT JOIN `lotes` lot ON lot.`id` = rot.`id_lote`\n" +
-                        "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n" +
-                        "WHERE tras.`id_animal` = '" + id_Animal + "' \n" +
-                        "ORDER BY tras.`id` DESC, rot.`id` DESC;	";
+
+            consulta = "SELECT anim.`numero` AS NUMERO_ANIMAL,\n"
+                    + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
+                    + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE,\n"
+                    + "tras.`id`, anim.`numero` AS NUMERO_ANIMAL,\n"
+                    + "grup.`id` AS IDGRUPO, grup.`descripcion` AS GRUPO,\n"
+                    + "DATE_FORMAT(tras.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,\n"
+                    + "DATE_FORMAT(rot.`fecha_entrada`, '%d/%m/%Y') AS FECHA_ENTRADA,\n"
+                    + "IFNULL(DATE_FORMAT(rot.`fecha_salida`, '%d/%m/%Y'), '') AS FECHA_SALIDA, \n"
+                    + "tras.motivo AS MOTIVO,\n"
+                    + "lot.`id`, rot.id AS IDROTACION, tras.`id` AS IDTRASLADO,\n"
+                    + "IF(tras.estado = 'Activo' AND rot.`estado` = 'Activo', 'Activo', 'Inactivo') ESTADO,\n"
+                    + "tras.estado AS EST_TRASLADO, rot.`estado` AS EST_ROTACION\n"
+                    + "FROM `rotacion_lote` rot\n"
+                    + "INNER JOIN traslado_animalxgrupo tras ON tras.`id_grupo` = rot.id_grupo\n"
+                    + "INNER JOIN animales anim ON anim.`id` = tras.`id_animal`\n"
+                    + "INNER JOIN  grupos grup ON grup.`id` = tras.`id_grupo`\n"
+                    + "LEFT JOIN `lotes` lot ON lot.`id` = rot.`id_lote`\n"
+                    + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
+                    + "WHERE tras.`id_animal` = '" + id_Animal + "' \n"
+                    + "ORDER BY tras.`id` DESC, rot.`id` DESC;	";
             System.out.println("GetDatosrotaciones...>" + consulta);
 
             List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();

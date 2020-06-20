@@ -591,7 +591,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private String convertirAKilogramos(double pesoEnLibras) {
         Double resultado = pesoEnLibras / Utilidades.FACTOR_CONVERSION;
         long resultadoRedondeado = Math.round(resultado);
-        txtCodigo.setText("" + resultadoRedondeado);
+//        txtCodigo.setText("" + resultadoRedondeado);
 
         return "" + resultadoRedondeado;
     }
@@ -798,6 +798,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         }
 //</editor-fold>
 
+        getIdPesaje();
         modelo.setId(txtCodigo.getText());
         modelo.setId_animal(idAnimal);
         modelo.setPeso(txtPesoKg.getText().replace(".", "").replace(",", "."));
