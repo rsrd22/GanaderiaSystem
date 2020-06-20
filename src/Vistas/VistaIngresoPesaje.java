@@ -48,6 +48,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private ModeloVentanaGeneral modeloVistaGeneral;
     private ArrayList<String> datos;
     public static int guardado = -1;
+    private VistaPesaje vp;
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -77,6 +78,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         idAnimal = datos.get(0);
         txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get(1) + "</b></p></html>");
         listaMedicamentos = new ArrayList<>();
+        this.vp = ((VistaPesaje) modeloVistaGeneral.getPanelPadre());
 
         dtm = new DefaultTableModel(encabezados, 0) {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -631,8 +633,6 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         AgregarMedicamentos();
-        txtCantidadMedicamento.setText("");
-        cbMedicamentos.setSelectedIndex(0);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -647,7 +647,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         int fila = Integer.parseInt(datos.get(2));
-        ((VistaPesaje) modeloVistaGeneral.getPanelPadre()).tbl_Animales.setValueAt("", fila, 11);
+        vp.tbl_Animales.setValueAt("", fila, 11);
+        vp.band=0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -717,6 +718,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             "Modificar",
             "Eliminar"
         });
+        txtCantidadMedicamento.setText("");
+        cbMedicamentos.setSelectedIndex(0);
+        cbMedicamentos.requestFocusInWindow();
     }
 
     private Object[] getFila() {
@@ -796,6 +800,13 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             txtCantidadMedicamento.requestFocusInWindow();
             return;
         }
+
+        if (listaMedicamentos.size() == 0) {
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de guardar el pesaje sin agregar los medicamentos?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.NO_OPTION) {
+                return;
+            }
+        }
 //</editor-fold>
 
         getIdPesaje();
@@ -839,7 +850,19 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         JOptionPane.showMessageDialog(this, mensaje);
         if (retorno == Retorno.EXITO) {
+            establecerRegistroPesado(idAnimal);
+            vp.band=0;
             ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+        }
+    }
+
+    private void establecerRegistroPesado(String idAnimal) {
+        for (int i = 0; i < vp.ListaAnimales.size(); i++) {
+            String id = vp.ListaAnimales.get(i).get("ID_ANIMAL");
+            if (id.equals(idAnimal)) {
+                vp.ListaAnimales.get(i).put("EST", "*");
+                return;
+            }
         }
     }
 }
