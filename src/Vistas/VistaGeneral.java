@@ -292,6 +292,7 @@ public class VistaGeneral extends javax.swing.JFrame {
                 datos = (ArrayList<String>) modeloVista.getModeloDatos();
                 int fila = Integer.parseInt(datos.get(2));
                 ((VistaPesaje) modeloVista.getPanelPadre()).tbl_Animales.setValueAt("", fila, 11);
+                ((VistaPesaje) modeloVista.getPanelPadre()).band=0;
             }
         }
     }//GEN-LAST:event_formWindowClosed

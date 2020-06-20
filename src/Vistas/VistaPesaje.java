@@ -40,14 +40,15 @@ public class VistaPesaje extends javax.swing.JPanel {
     public String idFinca;
     public String idTipoAnimal;
 
-    private List<Map<String, String>> ListaAnimales;
-    private List<Map<String, String>> ListaAnimalesMostrar;
+    public List<Map<String, String>> ListaAnimales;
+    public List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
+    public int band = 0;
 
     /**
      * Creates new form VistaVerAnimales
@@ -366,16 +367,19 @@ public class VistaPesaje extends javax.swing.JPanel {
         int cola = tbl_Animales.getSelectedColumn();
         String dato = tbl_Animales.getValueAt(fila, cola).toString();
 
-        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1).toString().isEmpty()) {
-            tbl_Animales.setValueAt("*", fila, cola+1);
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
-            ArrayList<String> datosRef = new ArrayList<>();
-            datosRef.add(idAnimal);
-            datosRef.add(numero);
-            datosRef.add(fila + "");
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
-            new VistaGeneral(objetoVentana).setVisible(true);
+        if (band == 0) {
+            if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola + 1).toString().isEmpty()) {
+                tbl_Animales.setValueAt("*", fila, cola + 1);
+                band=1;
+                String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+                String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
+                ArrayList<String> datosRef = new ArrayList<>();
+                datosRef.add(idAnimal);
+                datosRef.add(numero);
+                datosRef.add(fila + "");
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
+                new VistaGeneral(objetoVentana).setVisible(true);
+            }
         }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
 
@@ -476,8 +480,7 @@ public class VistaPesaje extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("GRUPO"),
                         ListaAnimalesMostrar.get(i).get("FINCA"),
                         "PESAJE",
-                        ListaAnimalesMostrar.get(i).get("EST"),
-                    }
+                        ListaAnimalesMostrar.get(i).get("EST"),}
             );
         }
     }
