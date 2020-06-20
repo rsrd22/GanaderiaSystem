@@ -1367,7 +1367,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesajeMousePressed
 
     private void btnPalpacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPalpacionMousePressed
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Palpación Animales");
+            VistaPalpacion vista = new VistaPalpacion();
+            MostrarPanel(vista);
+        }
     }//GEN-LAST:event_btnPalpacionMousePressed
 
     private void btnMedicamentosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMedicamentosMousePressed

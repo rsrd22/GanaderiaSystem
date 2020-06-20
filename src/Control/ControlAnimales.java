@@ -671,7 +671,7 @@ public class ControlAnimales implements IControl {
                     + "left join fincas d on b.id_finca=b.id_finca\n"
                     + "left join propietarioxhierro e on a.hierro=e.id\n"
                     + "WHERE\n"
-                    + "c.pesable=1 and d.id='" + IDFINCA + "' and b.id='" + IDTIPOFINCA + "'\n"
+                    + "c.pesable='1' and d.id='" + IDFINCA + "' and b.id='" + IDTIPOFINCA + "'\n"
                     + "ORDER BY\n"
                     + "a.id ASC";
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();

@@ -1659,24 +1659,41 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         String fechaSig="";
         List<Map<String,String>> listaTraslados = Utilidades.data_list(1, ListaDatosRotacion, new String[]{"IDTRASLADO"});
         for(Map<String,String> traslado: listaTraslados){
+            System.out.println("ind-->"+indAnt);
             List<Map<String,String>> listaDatosTraslado = Utilidades.data_list(3, ListaDatosRotacion, new String[]{"IDTRASLADO<->"+traslado.get("IDTRASLADO")});
             if(indAnt>-1){
                 fechaSig = listaTraslados.get(indAnt).get("FECHA_TRASLADO");
             }
             for(Map<String,String> datos:listaDatosTraslado){
-                if(fechaSig.equals("") && datos.get("FECHA_SALIDA").equals("") && datos.get("EST_TRASLADO").equals("Activo")){//ACTUAL
-                    ListaDatosRotacionMostrar.add(datos);
-                }else if(fechaSig.equals("") && !datos.get("FECHA_SALIDA").equals("") && 
-                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 && 
-                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
-                    ListaDatosRotacionMostrar.add(datos);
-                }else if(fechaSig.equals("") && !datos.get("FECHA_SALIDA").equals("") && 
-                        CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
-                    ListaDatosRotacionMostrar.add(datos);
+                if(fechaSig.equals("")){
+                    if(datos.get("FECHA_SALIDA").equals("") && datos.get("EST_TRASLADO").equals("Activo")){//ACTUAL
+                        ListaDatosRotacionMostrar.add(datos);
+                    }else if(!datos.get("FECHA_SALIDA").equals("") && 
+                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 && 
+                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                        ListaDatosRotacionMostrar.add(datos);
+                    }else if(!datos.get("FECHA_SALIDA").equals("") && 
+                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                        ListaDatosRotacionMostrar.add(datos);
+                    }
+                }else{
+                    if(!datos.get("FECHA_SALIDA").equals("") &&  CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 &&
+                            CompararFechas(datos.get("FECHA_ENTRADA"), fechaSig) <= 0 
+                            && CompararFechas(datos.get("FECHA_SALIDA"), fechaSig) >= 0
+                            ){
+                        ListaDatosRotacionMostrar.add(datos);
+                    }else if(!datos.get("FECHA_SALIDA").equals("") && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) >= 0 &&
+                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 
+                            ){
+                        ListaDatosRotacionMostrar.add(datos);
+                    }else if(datos.get("FECHA_SALIDA").equals("") && datos.get("EST_ROTACION").equals("Activo") && 
+                            CompararFechas(fechaSig, datos.get("FECHA_ENTRADA")) >= 0 
+                            ){
+                        ListaDatosRotacionMostrar.add(datos);
+                    }
                 }
+                
             }
-            
-            
             
             indAnt++;
         }
@@ -1687,23 +1704,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     
     private void LlenarTablaRotaciones() {
         Utilidades.LimpiarTabla(tbl_Rotaciones);
-//        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
-//DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,
-//traslado.motivo AS MOTIVO, traslado.estado AS ESTADO
-//        "No",
-//             "Grupo", 
-//             "Bloque / Lote",
-//             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Entrada</p></html>", 
-//             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>", 
-//             "Estado"
         
-        for(int i =0; i < ListaDatosRotacionMostrar.size(); i++){ 
+        for(int i =0; i < ListaDatosRotacionMostrar.size(); i++){
+            
             Utilidades.agregarFilaTabla( 
                     modeloTblRotacion,  
                     new Object[]{
                         (i+1),//tbl_Grupos.getRowCount()+1,
                         ListaDatosRotacionMostrar.get(i).get("GRUPO"),
-                        ListaDatosRotacionMostrar.get(i).get("BLOQUE")+" / "+ListaDatosRotacion.get(i).get("LOTE"),
+                        ListaDatosRotacionMostrar.get(i).get("BLOQUE")+" / "+ListaDatosRotacionMostrar.get(i).get("LOTE"),
                         ListaDatosRotacionMostrar.get(i).get("FECHA_ENTRADA"),
                         ListaDatosRotacionMostrar.get(i).get("FECHA_SALIDA"), 
                         ListaDatosRotacionMostrar.get(i).get("ESTADO")
