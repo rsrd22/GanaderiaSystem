@@ -59,28 +59,25 @@ public class VistaPalpacion extends javax.swing.JPanel {
         NameColumnasFiltro = new ArrayList<>();
         NameColumnasFiltro.add("NUMERO_ANIMAL");
         NameColumnasFiltro.add("NUMERO_MAMA");
-        NameColumnasFiltro.add("GENERO");
-        NameColumnasFiltro.add("FECHA_NACIMIENTO");
-        NameColumnasFiltro.add("PESO");
-        NameColumnasFiltro.add("DESC_HIERRO");
-        NameColumnasFiltro.add("CAPADO");
-        NameColumnasFiltro.add("GRUPO");
-        NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("BLOQUE");
-        NameColumnasFiltro.add("FINCA");
+        NameColumnasFiltro.add("NUMERO_HIJOS");
+        NameColumnasFiltro.add("NUMERO_PARTOS");
+        NameColumnasFiltro.add("FECHA_NOVILLA");
+        NameColumnasFiltro.add("ESTADO");
+        NameColumnasFiltro.add("NUMERO_MESES");
+        NameColumnasFiltro.add("FECHA_ULT_PARTO");
         NameColumnasFiltro.add("EST");
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
-            "Genero",
-            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Nacimiento</p></html>",
-            "Peso",
-            "Hierro",
-            "Capado",
-            "Grupo",
-            "Finca",
-            "Acción", "Est"
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de hijos</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de partos</p></html>",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Novilla</p></html>",
+            "Estado",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Meses</p></html>",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">ultimo parto</p></html>",
+            "Acción", 
+            "Est"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
