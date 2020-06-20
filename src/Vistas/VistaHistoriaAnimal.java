@@ -3,6 +3,7 @@ package Vistas;
 import Charts.Panel;
 import Control.*;
 import Modelo.ModeloAnimales;
+import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import Utilidades.Utilidades;
@@ -27,15 +28,16 @@ import javax.swing.table.JTableHeader;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author MERRY
  */
 public class VistaHistoriaAnimal extends javax.swing.JPanel {
+
     String id_Animal = "";
     String numero_Animal = "";
     private ControlAnimales controlAnimales = new ControlAnimales();
+    private ControlPesaje controlPesaje = new ControlPesaje();
     private ControlTraslado controlTraslado = new ControlTraslado();
     private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     private ArrayList<ModeloAnimales> ListaDatos;
@@ -54,24 +56,27 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private ArrayList<ArrayList<Object[]>> listaDatosPeso;
     private ArrayList<Object[]> datosPeso;
     private int countT = 0, countR = 0;
-    
-    
+    private ArrayList<ModeloPesaje> listaPesajes;
+
     private int ancho;
     private int alto;
+
     /**
      * Creates new form VistaHistoriaAnimal
      */
     public VistaHistoriaAnimal() {
         initComponents();
-        setSize(781 ,522);
+        setSize(781, 522);
     }
+
     public VistaHistoriaAnimal(ModeloVentanaGeneral modeloVentanaGeneral) {
         initComponents();
-        setSize(781 ,722);
+        setSize(781, 722);
         DatosVenta = new HashMap<String, String>();
         DatosMuerte = new HashMap<String, String>();
-        id_Animal = ""+modeloVentanaGeneral.getModeloDatos();
+        id_Animal = "" + modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
+        listaPesajes = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
         ListaDatosRotacion = new ArrayList<>();
         ListaDatosRotacionMostrar = new ArrayList<>();
@@ -85,33 +90,34 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         btnEliminarRotaciones.setEnabled(false);
         EncabezadoTblTraslado = new String[]{
             "No",
-             "Grupo", 
-             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Traslado</p></html>", 
-             "Motivo",  
+            "Grupo",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Traslado</p></html>",
+            "Motivo",
             "Estado"
         };
         ListaDatos = new ArrayList<>();
-        EncabezadoTblRotacion= new String[]{
+        EncabezadoTblRotacion = new String[]{
             "No",
-             "Grupo", 
-             "Bloque / Lote",
-             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Entrada</p></html>", 
-             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>", 
-             "Estado"
+            "Grupo",
+            "Bloque / Lote",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Entrada</p></html>",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>",
+            "Estado"
         };
         InicializarTblRotacion();
         InicializarTblTralado();
-        
+
         GetDatosAnimal();
-        
+
         graficoPeso = new Panel(listaDatosPeso, pnlPeso);
         graficoPeso.setBounds(0, 0, pnlPeso.getWidth(), pnlPeso.getHeight());
         pnlPeso.add(graficoPeso);
-        
+
     }
+
     public void InicializarTblRotacion() {
         tbl_Rotaciones.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblRotacion = new DefaultTableModel(EncabezadoTblRotacion, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
@@ -133,28 +139,28 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             private int i1 = -1;
 
             public void setSelectionInterval(int index0, int index1) {
-                if(i0 == index0 && i1 == index1){
-                    if(getValueIsAdjusting()){
-                         setValueIsAdjusting(false);
-                         setSelection(index0, index1);
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
                     }
-                }else{
+                } else {
                     i0 = index0;
                     i1 = index1;
                     setValueIsAdjusting(false);
                     setSelection(index0, index1);
                 }
             }
-            private void setSelection(int index0, int index1){
-                if(super.isSelectedIndex(index0)) {
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
                     super.removeSelectionInterval(index0, index1);
-                }else {
+                } else {
                     super.addSelectionInterval(index0, index1);
                 }
             }
         });
-        
-        
+
         tbl_Rotaciones.getColumnModel().getColumn(0).setPreferredWidth(25);
         tbl_Rotaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
         tbl_Rotaciones.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -167,30 +173,29 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             tbl_Rotaciones.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
+
 //                if(i == 2 ){
 //                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //
 //                }else{
-                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 //                }
-                tcr.setForeground(new Color(26, 82, 118));
-                tbl_Rotaciones.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
-            
+            tcr.setForeground(new Color(26, 82, 118));
+            tbl_Rotaciones.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
         }
         JTableHeader header = tbl_Rotaciones.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
     }
-    
+
     public void InicializarTblTralado() {
         tbl_Traslados.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblTraslado = new DefaultTableModel(EncabezadoTblTraslado, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
@@ -212,22 +217,23 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             private int i1 = -1;
 
             public void setSelectionInterval(int index0, int index1) {
-                if(i0 == index0 && i1 == index1){
-                    if(getValueIsAdjusting()){
-                         setValueIsAdjusting(false);
-                         setSelection(index0, index1);
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
                     }
-                }else{
+                } else {
                     i0 = index0;
                     i1 = index1;
                     setValueIsAdjusting(false);
                     setSelection(index0, index1);
                 }
             }
-            private void setSelection(int index0, int index1){
-                if(super.isSelectedIndex(index0)) {
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
                     super.removeSelectionInterval(index0, index1);
-                }else {
+                } else {
                     super.addSelectionInterval(index0, index1);
                 }
             }
@@ -244,28 +250,26 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             tbl_Traslados.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
+
 //                if(i == 2 ){
 //                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //
 //                }else{
-                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 //                }
-                tcr.setForeground(new Color(26, 82, 118));
-                tbl_Traslados.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
-                
-            
+            tcr.setForeground(new Color(26, 82, 118));
+            tbl_Traslados.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
         }
         JTableHeader header = tbl_Traslados.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1378,34 +1382,34 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
     private void tbl_TrasladosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TrasladosMousePressed
-        int tamfilas =tbl_Traslados.getSelectedRows().length;
-        if(tamfilas>0){
+        int tamfilas = tbl_Traslados.getSelectedRows().length;
+        if (tamfilas > 0) {
             btnEliminarTraslados.setEnabled(true);
-        }else{
+        } else {
             btnEliminarTraslados.setEnabled(false);
         }
     }//GEN-LAST:event_tbl_TrasladosMousePressed
 
     private void tbl_RotacionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_RotacionesMousePressed
-        int tamfilas =tbl_Rotaciones.getSelectedRows().length;
-        if(tamfilas>0){
+        int tamfilas = tbl_Rotaciones.getSelectedRows().length;
+        if (tamfilas > 0) {
             btnEliminarTraslados.setEnabled(true);
-        }else{
+        } else {
             btnEliminarTraslados.setEnabled(false);
         }
     }//GEN-LAST:event_tbl_RotacionesMousePressed
 
     private void btnEliminarTrasladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTrasladosActionPerformed
         ListaDatosTrasladoEliminar = new ArrayList<>();
-        for(int fila: tbl_Traslados.getSelectedRows()){
+        for (int fila : tbl_Traslados.getSelectedRows()) {
             ListaDatosTrasladoEliminar.add(ListaDatosTraslado.get(fila));
         }
-        String text = (tbl_Traslados.getSelectedRows().length==1?"la fila seleccionada":"las filas seleccionadas");
-        
-        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar "+text+".?");
-        if(resp == JOptionPane.YES_OPTION){
+        String text = (tbl_Traslados.getSelectedRows().length == 1 ? "la fila seleccionada" : "las filas seleccionadas");
+
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar " + text + ".?");
+        if (resp == JOptionPane.YES_OPTION) {
             int ret = controlTraslado.EliminarTraslados(ListaDatosTrasladoEliminar);
-            if(ret == 0){
+            if (ret == 0) {
                 JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
                 GetDatosTraslado();
             }
@@ -1414,15 +1418,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void btnEliminarRotacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarRotacionesActionPerformed
         ListaDatosRotacionEliminar = new ArrayList<>();
-        for(int fila: tbl_Rotaciones.getSelectedRows()){
+        for (int fila : tbl_Rotaciones.getSelectedRows()) {
             ListaDatosRotacionEliminar.add(ListaDatosRotacion.get(fila));
         }
-        String text = (tbl_Rotaciones.getSelectedRows().length==1?"la fila seleccionada":"las filas seleccionadas");
-        
-        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar "+text+".?");
-        if(resp == JOptionPane.YES_OPTION){
+        String text = (tbl_Rotaciones.getSelectedRows().length == 1 ? "la fila seleccionada" : "las filas seleccionadas");
+
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar " + text + ".?");
+        if (resp == JOptionPane.YES_OPTION) {
             int ret = controlRotacion.EliminarRotaciones(ListaDatosRotacionEliminar);
-            if(ret == 0){
+            if (ret == 0) {
                 JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
                 GetDatosRotaciones();
             }
@@ -1499,11 +1503,25 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void GetDatosAnimal() {
-        ListaDatos =(ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal); 
+        ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
         LlenarDatos();
-        
+        cargarHistoricoPesos();
     }
-    
+
+    private void cargarHistoricoPesos() {
+        listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
+        if (listaPesajes.size() > 0) {
+            ///////////////////////////   X        Y
+            datosPeso.add(new Object[]{"Fecha", "Peso"});
+            for (int i = 0; i < listaPesajes.size(); i++) {
+                datosPeso.add(new Object[]{
+                    listaPesajes.get(i).getFecha_pesado(),
+                    listaPesajes.get(i).getPeso()
+                });
+            }
+            listaDatosPeso.add(datosPeso);
+        }
+    }
 
     private void LlenarDatos() {
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
@@ -1517,33 +1535,25 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPeso.setText(ListaDatos.get(0).getPeso());
         lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
-        ///////////////////////////   X        Y
-        datosPeso.add(new Object[]{"Fecha", "Peso"});
-        System.out.println("ListaDatos.get(0).getFechaNacimiento()--"+ListaDatos.get(0).getFechaNacimiento());
-        System.out.println("ListaDatos.get(0).getPeso()--"+ListaDatos.get(0).getPeso());
-        datosPeso.add(new Object[]{""+ListaDatos.get(0).getFechaNacimiento(), ""+ListaDatos.get(0).getPeso()});
-        listaDatosPeso.add(datosPeso);
-        
-        
-        if(ListaDatos.get(0).getVenta().equals("1")){
+
+        if (ListaDatos.get(0).getVenta().equals("1")) {
             GetDatosVentaAnimal();
             jTabbedPane1.setEnabledAt(1, true);
-        }else{
+        } else {
             jTabbedPane1.setEnabledAt(1, false);
         }
-        if(ListaDatos.get(0).getMuerte().equals("1")){
-            GetDatosMuerteAnimal(); 
+        if (ListaDatos.get(0).getMuerte().equals("1")) {
+            GetDatosMuerteAnimal();
             jTabbedPane1.setEnabledAt(0, true);
-        }else{
+        } else {
             jTabbedPane1.setEnabledAt(0, false);
         }
-         
-        
+
         GetDatosTraslado();
         GetDatosRotaciones();
     }
-    
-    private void LimpiarFormulario(){
+
+    private void LimpiarFormulario() {
         lblCalificacion.setText("");
         lblFinca.setText("");
         lblGenero.setText("");
@@ -1559,24 +1569,23 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         LimpiarFormularioMuerte();
     }
 
-    
     //<editor-fold defaultstate="collapsed" desc="TabbletPane Venta">
     private void GetDatosVentaAnimal() {
-        DatosVenta = controlAnimales.GetDatosVenta(id_Animal); 
-        
+        DatosVenta = controlAnimales.GetDatosVenta(id_Animal);
+
         LimpiarFormularioVenta();
-        txtFechaVenta.setText(""+DatosVenta.get("FECHA_VENTA"));
-        txtTipoVenta.setText(""+DatosVenta.get("TIPO_VENTA"));
-        txtPeso.setText(""+DatosVenta.get("PESO"));
-        if(DatosVenta.get("TIPO_VENTA").equals("matadero")){
-            txtPesoCanal.setText(""+DatosVenta.get("PESO_CANAL"));
-            txtPorcentajeCanal.setText(""+DatosVenta.get("PORCENTAJE_CANAL"));  
+        txtFechaVenta.setText("" + DatosVenta.get("FECHA_VENTA"));
+        txtTipoVenta.setText("" + DatosVenta.get("TIPO_VENTA"));
+        txtPeso.setText("" + DatosVenta.get("PESO"));
+        if (DatosVenta.get("TIPO_VENTA").equals("matadero")) {
+            txtPesoCanal.setText("" + DatosVenta.get("PESO_CANAL"));
+            txtPorcentajeCanal.setText("" + DatosVenta.get("PORCENTAJE_CANAL"));
         }
-        txtPrecioVenta.setText(""+DatosVenta.get("PRECIO_VENTA"));
-        txtPrecioTotal.setText(""+DatosVenta.get("PRECIO_TOTAL"));
-    } 
-    
-    public void LimpiarFormularioVenta(){
+        txtPrecioVenta.setText("" + DatosVenta.get("PRECIO_VENTA"));
+        txtPrecioTotal.setText("" + DatosVenta.get("PRECIO_TOTAL"));
+    }
+
+    public void LimpiarFormularioVenta() {
         txtFechaVenta.setText("");
         txtTipoVenta.setText("");
         txtPeso.setText("");
@@ -1585,8 +1594,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         txtPrecioVenta.setText("");
         txtPrecioTotal.setText("");
     }
-    
-    public void BloquearFormularioVenta(){
+
+    public void BloquearFormularioVenta() {
         txtFechaVenta.setEnabled(false);
         txtTipoVenta.setEnabled(false);
         txtPeso.setEnabled(false);
@@ -1604,10 +1613,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }
 
     private void GetDatosMuerteAnimal() {
-        DatosMuerte = controlAnimales.GetDatosMuerte(id_Animal); 
+        DatosMuerte = controlAnimales.GetDatosMuerte(id_Animal);
         LimpiarFormularioMuerte();
-        txtFechaMuerte.setText(""+DatosMuerte.get("FECHA_MUERTE"));
-        txtMotivoMuerte.setText(""+DatosMuerte.get("MOTIVO"));
+        txtFechaMuerte.setText("" + DatosMuerte.get("FECHA_MUERTE"));
+        txtMotivoMuerte.setText("" + DatosMuerte.get("MOTIVO"));
     }
 
     private void LimpiarFormularioMuerte() {
@@ -1615,11 +1624,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         txtMotivoMuerte.setText("");
     }
     //</editor-fold>
- 
+
     //<editor-fold defaultstate="collapsed" desc="TabbletPane Traslados">
     private void GetDatosTraslado() {
-        ListaDatosTraslado = controlAnimales.GetDatosTraslado(id_Animal); 
-        
+        ListaDatosTraslado = controlAnimales.GetDatosTraslado(id_Animal);
+
         numero_Animal = ListaDatosTraslado.get(0).get("NUMERO_ANIMAL");
         LlenarTablaTraslado();
     }
@@ -1629,107 +1638,103 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
 //DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,
 //traslado.motivo AS MOTIVO, traslado.estado AS ESTADO
-        for(int i =0; i < ListaDatosTraslado.size(); i++){ 
-            Utilidades.agregarFilaTabla( 
-                    modeloTblTraslado,  
+        for (int i = 0; i < ListaDatosTraslado.size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTblTraslado,
                     new Object[]{
-                        (i+1),//tbl_Grupos.getRowCount()+1,
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaDatosTraslado.get(i).get("GRUPO"),
                         ListaDatosTraslado.get(i).get("FECHA_TRASLADO"),
-                        ListaDatosTraslado.get(i).get("MOTIVO"), 
+                        ListaDatosTraslado.get(i).get("MOTIVO"),
                         ListaDatosTraslado.get(i).get("ESTADO")
-                    } 
-                );
+                    }
+            );
         }
     }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="TabbletPane Rotacion">
     private void GetDatosRotaciones() {
-        ListaDatosRotacion = controlAnimales.GetDatosrotaciones(id_Animal); 
-        
-        numero_Animal = ListaDatosRotacion.get(0).get("NUMERO_ANIMAL");
-        EstablecerDatosRotacion();
-        
+        ListaDatosRotacion = controlAnimales.GetDatosrotaciones(id_Animal);
+
+        if (ListaDatosRotacion.size() > 0) {
+
+            numero_Animal = ListaDatosRotacion.get(0).get("NUMERO_ANIMAL");
+            EstablecerDatosRotacion();
+        }
+
     }
 
     private void EstablecerDatosRotacion() {
         ListaDatosRotacionMostrar.clear();
         int indAnt = -1;
-        String fechaSig="";
-        List<Map<String,String>> listaTraslados = Utilidades.data_list(1, ListaDatosRotacion, new String[]{"IDTRASLADO"});
-        for(Map<String,String> traslado: listaTraslados){
-            System.out.println("ind-->"+indAnt);
-            List<Map<String,String>> listaDatosTraslado = Utilidades.data_list(3, ListaDatosRotacion, new String[]{"IDTRASLADO<->"+traslado.get("IDTRASLADO")});
-            if(indAnt>-1){
+        String fechaSig = "";
+        List<Map<String, String>> listaTraslados = Utilidades.data_list(1, ListaDatosRotacion, new String[]{"IDTRASLADO"});
+        for (Map<String, String> traslado : listaTraslados) {
+            System.out.println("ind-->" + indAnt);
+            List<Map<String, String>> listaDatosTraslado = Utilidades.data_list(3, ListaDatosRotacion, new String[]{"IDTRASLADO<->" + traslado.get("IDTRASLADO")});
+            if (indAnt > -1) {
                 fechaSig = listaTraslados.get(indAnt).get("FECHA_TRASLADO");
             }
-            for(Map<String,String> datos:listaDatosTraslado){
-                if(fechaSig.equals("")){
-                    if(datos.get("FECHA_SALIDA").equals("") && datos.get("EST_TRASLADO").equals("Activo")){//ACTUAL
+            for (Map<String, String> datos : listaDatosTraslado) {
+                if (fechaSig.equals("")) {
+                    if (datos.get("FECHA_SALIDA").equals("") && datos.get("EST_TRASLADO").equals("Activo")) {//ACTUAL
                         ListaDatosRotacionMostrar.add(datos);
-                    }else if(!datos.get("FECHA_SALIDA").equals("") && 
-                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 && 
-                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                    } else if (!datos.get("FECHA_SALIDA").equals("")
+                            && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0
+                            && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0) {//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
                         ListaDatosRotacionMostrar.add(datos);
-                    }else if(!datos.get("FECHA_SALIDA").equals("") && 
-                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 ){//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
+                    } else if (!datos.get("FECHA_SALIDA").equals("")
+                            && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0) {//MENOR  QUE LA FECHA SALIDA Y FECHA DE ENTRADA
                         ListaDatosRotacionMostrar.add(datos);
                     }
-                }else{
-                    if(!datos.get("FECHA_SALIDA").equals("") &&  CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0 &&
-                            CompararFechas(datos.get("FECHA_ENTRADA"), fechaSig) <= 0 
-                            && CompararFechas(datos.get("FECHA_SALIDA"), fechaSig) >= 0
-                            ){
+                } else {
+                    if (!datos.get("FECHA_SALIDA").equals("") && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) <= 0
+                            && CompararFechas(datos.get("FECHA_ENTRADA"), fechaSig) <= 0
+                            && CompararFechas(datos.get("FECHA_SALIDA"), fechaSig) >= 0) {
                         ListaDatosRotacionMostrar.add(datos);
-                    }else if(!datos.get("FECHA_SALIDA").equals("") && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) >= 0 &&
-                            CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0 
-                            ){
+                    } else if (!datos.get("FECHA_SALIDA").equals("") && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_ENTRADA")) >= 0
+                            && CompararFechas(datos.get("FECHA_TRASLADO"), datos.get("FECHA_SALIDA")) <= 0) {
                         ListaDatosRotacionMostrar.add(datos);
-                    }else if(datos.get("FECHA_SALIDA").equals("") && datos.get("EST_ROTACION").equals("Activo") && 
-                            CompararFechas(fechaSig, datos.get("FECHA_ENTRADA")) >= 0 
-                            ){
+                    } else if (datos.get("FECHA_SALIDA").equals("") && datos.get("EST_ROTACION").equals("Activo")
+                            && CompararFechas(fechaSig, datos.get("FECHA_ENTRADA")) >= 0) {
                         ListaDatosRotacionMostrar.add(datos);
                     }
                 }
-                
+
             }
-            
+
             indAnt++;
         }
-        
-        
+
         LlenarTablaRotaciones();
     }
-    
+
     private void LlenarTablaRotaciones() {
         Utilidades.LimpiarTabla(tbl_Rotaciones);
-        
-        for(int i =0; i < ListaDatosRotacionMostrar.size(); i++){
-            
-            Utilidades.agregarFilaTabla( 
-                    modeloTblRotacion,  
+
+        for (int i = 0; i < ListaDatosRotacionMostrar.size(); i++) {
+
+            Utilidades.agregarFilaTabla(
+                    modeloTblRotacion,
                     new Object[]{
-                        (i+1),//tbl_Grupos.getRowCount()+1,
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaDatosRotacionMostrar.get(i).get("GRUPO"),
-                        ListaDatosRotacionMostrar.get(i).get("BLOQUE")+" / "+ListaDatosRotacionMostrar.get(i).get("LOTE"),
+                        ListaDatosRotacionMostrar.get(i).get("BLOQUE") + " / " + ListaDatosRotacionMostrar.get(i).get("LOTE"),
                         ListaDatosRotacionMostrar.get(i).get("FECHA_ENTRADA"),
-                        ListaDatosRotacionMostrar.get(i).get("FECHA_SALIDA"), 
+                        ListaDatosRotacionMostrar.get(i).get("FECHA_SALIDA"),
                         ListaDatosRotacionMostrar.get(i).get("ESTADO")
-                    } 
-                );
+                    }
+            );
         }
     }
 //</editor-fold>
 
-    
-    public int CompararFechas(String fechaDesde, String fechaHasta){
-       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
-               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
-       int ret = fd.compareTo(fh);
-       return ret;
-   }
+    public int CompararFechas(String fechaDesde, String fechaHasta) {
+        Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
+                fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
+        int ret = fd.compareTo(fh);
+        return ret;
+    }
 
-    
-    
 }

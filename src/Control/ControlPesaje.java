@@ -44,7 +44,7 @@ public class ControlPesaje implements IControl {
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
-                + "" + modelo.getId()+ ",\n"
+                + "" + modelo.getId() + ",\n"
                 + "" + modelo.getId_animal() + ",\n"
                 + "" + modelo.getFecha_pesado() + ",\n"
                 + "" + modelo.getPeso() + ",\n"
@@ -65,7 +65,7 @@ public class ControlPesaje implements IControl {
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
                     + "0,\n"
-                    + "" + modelo.getId()+ ",\n"
+                    + "" + modelo.getId() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
                     + ")"
@@ -111,7 +111,33 @@ public class ControlPesaje implements IControl {
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String consulta = "SELECT * FROM pesaje\n"
+                + " WHERE id_animal=" + o.toString() + "";
+        List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloPesaje> lista = new ArrayList<>();
+        pesajes = mySQL.ListSQL(consulta);
+
+        if (pesajes.size() > 0) {
+
+            for (Map<String, String> pesaje : pesajes) {
+                lista.add(new ModeloPesaje(
+                        pesaje.get("descornado"),
+                        pesaje.get("destete"),
+                        pesaje.get("fecha"),
+                        pesaje.get("fecha_pesado"),
+                        pesaje.get("hierro"),
+                        pesaje.get("id"),
+                        pesaje.get("id_animal"),
+                        pesaje.get("id_usuario"),
+                        pesaje.get("implante"),
+                        pesaje.get("notas"),
+                        pesaje.get("peso")
+                ));
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
     }
 
 }
