@@ -510,4 +510,5 @@ public class VistaPesaje extends javax.swing.JPanel {
         return retorno;
     }
 
+    
 }
