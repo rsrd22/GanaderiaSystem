@@ -23,6 +23,7 @@ public class ModeloGrupos {
     private String idFincaDestino;
     private String descFincaDestino;
     private String pesable;
+    private String palpable;
 
     public ModeloGrupos() {
     }
@@ -40,13 +41,13 @@ public class ModeloGrupos {
      * @param descMacrogrupo
      * @param idFinca
      * @param descFinca
-     * @param pesable 
+     * @param pesable
+     * @param palpable 
      */
-    
     public ModeloGrupos(String id, String idTipoAnimal, String descripcion, 
             String estado, String idMacrogrupo, String fecha, String idUsuario, 
             String descTipoAnimal, String descMacrogrupo, String idFinca, String descFinca,
-            String pesable) {
+            String pesable,String palpable) {
         this.id = id;
         this.idTipoAnimal = idTipoAnimal;
         this.descripcion = descripcion;
@@ -59,6 +60,15 @@ public class ModeloGrupos {
         this.idFinca = idFinca;
         this.descFinca = descFinca;
         this.pesable = pesable;
+        this.palpable = palpable;
+    }
+
+    public String getPalpable() {
+        return palpable;
+    }
+
+    public void setPalpable(String palpable) {
+        this.palpable = palpable;
     }
 
     public String getPesable() {

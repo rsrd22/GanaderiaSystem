@@ -366,7 +366,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         int cola = tbl_Animales.getSelectedColumn();
         String dato = tbl_Animales.getValueAt(fila, cola).toString();
 
-        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1)==null) {
+        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1).toString().isEmpty()) {
             tbl_Animales.setValueAt("*", fila, cola+1);
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
@@ -475,7 +475,8 @@ public class VistaPesaje extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("CAPADO"),
                         ListaAnimalesMostrar.get(i).get("GRUPO"),
                         ListaAnimalesMostrar.get(i).get("FINCA"),
-                        "PESAJE"
+                        "PESAJE",
+                        ListaAnimalesMostrar.get(i).get("EST"),
                     }
             );
         }
