@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -48,16 +49,8 @@ public class NewClass {
 //        }
 //        //</editor-fold>
         
-        DecimalFormat df = new DecimalFormat("#.0");
-        double valor = 999999999999.999999999999999999999999;
-        double mul = 9999.99999999;
-        double acum=1;
-        String val = "";
-        for (int i = 0; i < 10; i++) {
-            acum *= valor*mul;
-            val = ""+df.format(acum);
-            System.out.println(""+val);
-        }
+        
+        diferenciaEntreFechas("10/06/2020", "15/06/2020");
         
     }
 
@@ -80,5 +73,17 @@ public class NewClass {
             System.out.println("" + sdfMes.format(cal.getTime()));
             cal.add(Calendar.MONTH, 1);
         }
+        
+        
     }
+    
+    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
+   {
+       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
+               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
+       int d = fd.compareTo(fh);
+       System.out.println("d-->>>"+d);
+       
+   }
+    
 }

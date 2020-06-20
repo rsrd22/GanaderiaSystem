@@ -685,4 +685,43 @@ public class ControlAnimales implements IControl {
         }
     }
 
+    public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA) {
+        try {
+            String consulta = "SELECT\n"
+                    + "a.id as ID_ANIMAL,\n"
+                    + "a.numero as NUMERO_ANIMAL,\n"
+                    + "IF(a.numero_mama_adoptiva IS NULL, a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "a.peso AS PESO,\n"
+                    + "DATE_FORMAT(a.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO,\n"
+                    + "a.genero AS GENERO,\n"
+                    + "c.descripcion as GRUPO,\n"
+                    + "d.id as IDFINCA,\n"
+                    + "IFNULL(d.descripcion, '') AS FINCA,\n"
+                    + "b.id as IDTIPO_ANIMAL,\n"
+                    + "b.descripcion as TIPO_ANIMAL,\n"
+                    + "IFNULL(a.capado, 'No') AS CAPADO,\n"
+                    + "IF(a.muerte = '0', 'No', 'Si') AS MUERTE,\n"
+                    + "IF(a.venta = '0', 'No', 'Si') AS VENTA,\n"
+                    + "a.hierro AS IDHIERRO,\n"
+                    + "e.descripcion AS DESC_HIERRO\n"
+                    + "FROM\n"
+                    + "animales a\n"
+                    + "left join tipo_animales b on a.id_tipo_animal=b.id\n"
+                    + "left join grupos c on a.grupo=c.id\n"
+                    + "left join fincas d on b.id_finca=d.id\n"
+                    + "left join propietarioxhierro e on a.hierro=e.id\n"
+                    + "WHERE\n"
+                    + "c.pesable='1' and d.id='" + IDFINCA + "' and b.id='" + IDTIPOFINCA + "'\n"
+                    + "ORDER BY\n"
+                    + "a.id ASC";
+            List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
+
+            traslados = mySQL.ListSQL(consulta);
+
+            return traslados;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 }
