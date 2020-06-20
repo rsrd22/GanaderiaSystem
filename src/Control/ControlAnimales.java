@@ -734,35 +734,42 @@ public class ControlAnimales implements IControl {
         }
     }
 
+    
     public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA) {
         try {
-            String consulta = "SELECT\n"
-                    + "a.id as ID_ANIMAL,\n"
-                    + "a.numero as NUMERO_ANIMAL,\n"
-                    + "IF(a.numero_mama_adoptiva IS NULL, a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
-                    + "a.peso AS PESO,\n"
-                    + "DATE_FORMAT(a.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO,\n"
-                    + "a.genero AS GENERO,\n"
-                    + "c.descripcion as GRUPO,\n"
-                    + "d.id as IDFINCA,\n"
-                    + "IFNULL(d.descripcion, '') AS FINCA,\n"
-                    + "b.id as IDTIPO_ANIMAL,\n"
-                    + "b.descripcion as TIPO_ANIMAL,\n"
-                    + "IFNULL(a.capado, 'No') AS CAPADO,\n"
-                    + "IF(a.muerte = '0', 'No', 'Si') AS MUERTE,\n"
-                    + "IF(a.venta = '0', 'No', 'Si') AS VENTA,\n"
-                    + "a.hierro AS IDHIERRO,\n"
-                    + "e.descripcion AS DESC_HIERRO\n"
-                    + "FROM\n"
-                    + "animales a\n"
-                    + "left join tipo_animales b on a.id_tipo_animal=b.id\n"
-                    + "left join grupos c on a.grupo=c.id\n"
-                    + "left join fincas d on b.id_finca=d.id\n"
-                    + "left join propietarioxhierro e on a.hierro=e.id\n"
-                    + "WHERE\n"
-                    + "c.pesable='1' and d.id='" + IDFINCA + "' and b.id='" + IDTIPOFINCA + "'\n"
-                    + "ORDER BY\n"
-                    + "a.id ASC";
+//            NameColumnasFiltro.add("NUMERO_ANIMAL");
+//            NameColumnasFiltro.add("NUMERO_MAMA");
+//            NameColumnasFiltro.add("NUMERO_HIJOS");
+//            NameColumnasFiltro.add("NUMERO_PARTOS");
+//            NameColumnasFiltro.add("FECHA_NOVILLA");
+//            NameColumnasFiltro.add("ESTADO");
+//            NameColumnasFiltro.add("NUMERO_MESES");
+//            NameColumnasFiltro.add("FECHA_ULT_PARTO");
+//            NameColumnasFiltro.add("EST");
+            String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
+                                " DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y') FECHA_NOVILLA\n" +
+                                ", `NumeroHijos`(anim.`numero`) NUM_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '') NUM_PARTOS,\n" +
+                                "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
+                                "IFNULL(DATE_FORMAT(tbl.FULTPARTO, '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
+                                "IFNULL(tbl.NMESES, '') AS NUMERO_MESES,\n" +
+                                "\n" +
+                                "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n" +
+                                "FROM animales anim\n" +
+                                "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n" +
+                                "LEFT JOIN grupos grup ON anim.grupo=grup.id\n" +
+                                "LEFT JOIN fincas finc ON tpo.id_finca=finc.`id`\n" +
+                                "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n" +
+                                "LEFT JOIN (\n" +
+                                "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n" +
+                                "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL\n" +
+                                "	FROM `palpacion` palp\n" +
+                                "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n" +
+                                "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
+                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
+                                "	GROUP BY palp.`id_animal` \n" +
+                                ") tbl ON tbl.IDANIMAL = anim.`id`\n" +
+                                "WHERE grup.`palpable` = '1' AND finc.`id` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
+                                "ORDER BY anim.id ASC";
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);

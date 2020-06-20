@@ -457,6 +457,27 @@ public class VistaPalpacion extends javax.swing.JPanel {
         System.out.println("filtro--" + filtro);
         ListaAnimalesMostrar = getFiltroLista(filtro);
 
+        "No",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de hijos</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de partos</p></html>",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Novilla</p></html>",
+            "Estado",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Meses</p></html>",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">ultimo parto</p></html>",
+            "Acción", 
+            "Est"
+        NameColumnasFiltro.add("NUMERO_ANIMAL");
+        NameColumnasFiltro.add("NUMERO_MAMA");
+        NameColumnasFiltro.add("NUMERO_HIJOS");
+        NameColumnasFiltro.add("NUMERO_PARTOS");
+        NameColumnasFiltro.add("FECHA_NOVILLA");
+        NameColumnasFiltro.add("ESTADO");
+        NameColumnasFiltro.add("NUMERO_MESES");
+        NameColumnasFiltro.add("FECHA_ULT_PARTO");
+        NameColumnasFiltro.add("EST");
+        
         Utilidades.LimpiarTabla(tbl_Animales);
         for (int i = 0; i < ListaAnimalesMostrar.size(); i++) {
             Utilidades.agregarFilaTabla(
@@ -465,14 +486,14 @@ public class VistaPalpacion extends javax.swing.JPanel {
                         (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaAnimalesMostrar.get(i).get("NUMERO_ANIMAL"),
                         ListaAnimalesMostrar.get(i).get("NUMERO_MAMA"),
-                        ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
-                        ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
-                        ListaAnimalesMostrar.get(i).get("PESO"),
-                        ListaAnimalesMostrar.get(i).get("DESC_HIERRO"),
-                        ListaAnimalesMostrar.get(i).get("CAPADO"),
-                        ListaAnimalesMostrar.get(i).get("GRUPO"),
-                        ListaAnimalesMostrar.get(i).get("FINCA"),
-                        "PESAJE"
+                        ListaAnimalesMostrar.get(i).get("NUMERO_HIJOS"),
+                        ListaAnimalesMostrar.get(i).get("NUMERO_PARTOS"),
+                        ListaAnimalesMostrar.get(i).get("FECHA_NOVILLA"),
+                        ListaAnimalesMostrar.get(i).get("ESTADO"),
+                        ListaAnimalesMostrar.get(i).get("NUMERO_MESES"),
+                        ListaAnimalesMostrar.get(i).get("FECHA_ULT_PARTO"),
+                        "PALPAJE",
+                        ListaAnimalesMostrar.get(i).get("EST")
                     }
             );
         }
