@@ -7,12 +7,9 @@ package Charts.Eventos;
 
 import Charts.Panel;
 import Charts.Punto;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,13 +25,12 @@ public class EventoMouseMotion implements MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        panel.Actualizar();
+
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         actividadSobreElPunto(e);
-        panel.Actualizar();
     }
 
     private void actividadSobreElPunto(MouseEvent e) {
@@ -46,7 +42,7 @@ public class EventoMouseMotion implements MouseMotionListener {
                         + punto.getValorX()
                         + "<br>"
                         + "<b>" + punto.getEtiquetaEjeY() + ": </b>"
-                        + punto.getValorY()
+                        + punto.getValorY() + " Kg"
                         + "</p></html>"
                 );
                 return;

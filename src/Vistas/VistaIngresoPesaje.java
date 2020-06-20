@@ -86,6 +86,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             }
         };
         tablaMedicamentos.setModel(dtm);
+        tablaMedicamentos.getTableHeader().setReorderingAllowed(false);
 
         modelo = new ModeloPesaje();
         modelompp = new ModeloMedicamentosPorPesaje();
