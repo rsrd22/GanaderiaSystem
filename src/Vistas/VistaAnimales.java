@@ -58,6 +58,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private List<Map<String, String>> hierros;
     private List<Map<String, String>> fincas;
     private List<Map<String, String>> propietarios;
+    private List<Map<String, String>> select;
     private ControlGeneral controlGral;
     private ModeloTraslado modeloTraslado;
     private ControlTraslado controlTraslado;
@@ -2145,7 +2146,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 //</editor-fold>
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : "0";
         String capado = chkCapado.isSelected() ? "Si" : "No";
         Calendar fechaDestete = Calendar.getInstance();
 
@@ -2163,6 +2163,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 + ")");
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
+        
+        String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : getIdPesaje();
+        
         modelo.setDescornada(chkDescornada.isSelected() ? "1" : "0");
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
         modelo.setHierroFisico(chkHierro.isSelected() ? "1" : "0");
@@ -2195,7 +2198,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                     ? FECHA_POR_DEFECTO
                     : sdf.format(fechaDeNovilla.getTime())
             );
-        }else{
+        } else {
             modelo.setFechaNovilla(FECHA_POR_DEFECTO);
         }
 
@@ -2406,6 +2409,15 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 + "</p>"
                 + "</html>"
         );
+    }
+
+    private String getIdPesaje() {
+        String consulta = consultas.get("GET_MAXIMO_ID_PESAJE_ANIMAL");
+        select = controlGral.GetComboBox(consulta);
+        for (Map<String, String> lista : select) {
+            consulta = lista.get("IDPESAJE");
+        }
+        return consulta;
     }
 
 }

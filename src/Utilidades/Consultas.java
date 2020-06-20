@@ -306,6 +306,11 @@ public class Consultas {
                 "GET_MAXIMO_ID_PESAJE",
                 "SELECT IFNULL(MAX(id)+1,0) AS IDPESAJE FROM pesaje"
         );
+
+        consultas.put(
+                "GET_MAXIMO_ID_PESAJE_ANIMAL",
+                "SELECT IFNULL(MAX(id)+1,0) AS IDPESAJE FROM animales"
+        );
     }
 
 }
