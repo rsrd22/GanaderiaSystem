@@ -48,10 +48,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public DefaultTableModel modeloTblTraslado;
     public String[] EncabezadoTblTraslado;
     public String[] EncabezadoTblRotacion;
+    public String[] EncabezadoTblPeso;
     private List<Map<String, String>> ListaDatosRotacion;
     private List<Map<String, String>> ListaDatosRotacionMostrar;
     private List<Map<String, String>> ListaDatosRotacionEliminar;
     public DefaultTableModel modeloTblRotacion;
+    public DefaultTableModel modeloTblPeso;
     public Panel graficoPeso;
     private ArrayList<ArrayList<Object[]>> listaDatosPeso;
     private ArrayList<Object[]> datosPeso;
@@ -104,14 +106,30 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Salida</p></html>",
             "Estado"
         };
+        EncabezadoTblPeso = new String[]{
+            "No",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Pesado</p></html> ",
+            "Peso (Kg)",
+            "Notas",
+            "Hierro",
+            "Descornado",
+            "Implante",
+            "Destete",
+            "Modificar",
+            "Eliminar"
+        };
         InicializarTblRotacion();
         InicializarTblTralado();
+        InicializarTblPeso();
 
         GetDatosAnimal();
-
-        graficoPeso = new Panel(listaDatosPeso, pnlPeso);
-        graficoPeso.setBounds(0, 0, pnlPeso.getWidth(), pnlPeso.getHeight());
-        pnlPeso.add(graficoPeso);
+        pnlGrafico.setVisible(false);
+        btnGrilla.setEnabled(false);
+        if(listaDatosPeso.size()>0){
+            graficoPeso = new Panel(listaDatosPeso, pnlGrafico);
+            graficoPeso.setBounds(0, 0, pnlGrafico.getWidth(), pnlGrafico.getHeight());
+            pnlGrafico.add(graficoPeso);
+        }
 
     }
 
@@ -269,6 +287,89 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
 
     }
+    public void InicializarTblPeso() {
+        tblDatosPeso.setDefaultRenderer(Object.class, new TablaRender());
+
+        modeloTblPeso = new DefaultTableModel(EncabezadoTblPeso, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                , java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+
+        tblDatosPeso.setModel(modeloTblPeso);
+//        tbl_Traslados.setSelectionModel(new DefaultListSelectionModel() {
+//            private int i0 = -1;
+//            private int i1 = -1;
+//
+//            public void setSelectionInterval(int index0, int index1) {
+//                if (i0 == index0 && i1 == index1) {
+//                    if (getValueIsAdjusting()) {
+//                        setValueIsAdjusting(false);
+//                        setSelection(index0, index1);
+//                    }
+//                } else {
+//                    i0 = index0;
+//                    i1 = index1;
+//                    setValueIsAdjusting(false);
+//                    setSelection(index0, index1);
+//                }
+//            }
+//
+//            private void setSelection(int index0, int index1) {
+//                if (super.isSelectedIndex(index0)) {
+//                    super.removeSelectionInterval(index0, index1);
+//                } else {
+//                    super.addSelectionInterval(index0, index1);
+//                }
+//            }
+//        });
+
+        tblDatosPeso.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tblDatosPeso.getColumnModel().getColumn(1).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
+        tblDatosPeso.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(6).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(7).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(8).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(9).setPreferredWidth(70);
+        
+        tblDatosPeso.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloTblPeso.getColumnCount(); i++) {
+            tblDatosPeso.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 0, 12));
+
+//                if(i == 2 ){
+//                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
+//
+//                }else{
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+//                }
+            tcr.setForeground(new Color(26, 82, 118));
+            tblDatosPeso.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
+        }
+        JTableHeader header = tblDatosPeso.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -335,6 +436,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tbl_Rotaciones = new javax.swing.JTable();
         btnEliminarRotaciones = new javax.swing.JButton();
         pnlPeso = new javax.swing.JPanel();
+        btnGrilla = new javax.swing.JButton();
+        btnGrafico = new javax.swing.JButton();
+        pnlGrilla = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblDatosPeso = new javax.swing.JTable();
+        pnlGrafico = new javax.swing.JPanel();
         lblPeso = new javax.swing.JLabel();
         lblTipoAnimal = new javax.swing.JLabel();
         lblPropietario = new javax.swing.JLabel();
@@ -1146,18 +1253,110 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Rotaciones", pnlRotaciones);
 
-        pnlPeso.setBackground(new java.awt.Color(255, 102, 102));
+        pnlPeso.setBackground(new java.awt.Color(255, 255, 255));
+        pnlPeso.setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout pnlPesoLayout = new javax.swing.GroupLayout(pnlPeso);
-        pnlPeso.setLayout(pnlPesoLayout);
-        pnlPesoLayout.setHorizontalGroup(
-            pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
+        btnGrilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/tabla30.png"))); // NOI18N
+        btnGrilla.setToolTipText("Ver Datos");
+        btnGrilla.setBorderPainted(false);
+        btnGrilla.setContentAreaFilled(false);
+        btnGrilla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGrilla.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/tabla30_over.png"))); // NOI18N
+        btnGrilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrillaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = -29;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        pnlPeso.add(btnGrilla, gridBagConstraints);
+
+        btnGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/grafica30.png"))); // NOI18N
+        btnGrafico.setToolTipText("Ver Grafico");
+        btnGrafico.setBorderPainted(false);
+        btnGrafico.setContentAreaFilled(false);
+        btnGrafico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGrafico.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/grafica30_over.png"))); // NOI18N
+        btnGrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -29;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 15);
+        pnlPeso.add(btnGrafico, gridBagConstraints);
+
+        pnlGrilla.setBackground(new java.awt.Color(255, 255, 255));
+        pnlGrilla.setLayout(new java.awt.GridBagLayout());
+
+        tblDatosPeso.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblDatosPeso);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlGrilla.add(jScrollPane4, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlPeso.add(pnlGrilla, gridBagConstraints);
+
+        pnlGrafico.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout pnlGraficoLayout = new javax.swing.GroupLayout(pnlGrafico);
+        pnlGrafico.setLayout(pnlGraficoLayout);
+        pnlGraficoLayout.setHorizontalGroup(
+            pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
-        pnlPesoLayout.setVerticalGroup(
-            pnlPesoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 291, Short.MAX_VALUE)
+        pnlGraficoLayout.setVerticalGroup(
+            pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 427, Short.MAX_VALUE)
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlPeso.add(pnlGrafico, gridBagConstraints);
 
         jTabbedPane1.addTab("Peso", pnlPeso);
 
@@ -1433,16 +1632,33 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarRotacionesActionPerformed
 
+    private void btnGrillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrillaActionPerformed
+        pnlGrafico.setVisible(false);
+        pnlGrilla.setVisible(true);
+        btnGrilla.setEnabled(false);
+        btnGrafico.setEnabled(true);
+    }//GEN-LAST:event_btnGrillaActionPerformed
+
+    private void btnGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoActionPerformed
+        pnlGrafico.setVisible(true);
+        pnlGrilla.setVisible(false);
+        btnGrilla.setEnabled(true);
+        btnGrafico.setEnabled(false);
+    }//GEN-LAST:event_btnGraficoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarRotaciones;
     private javax.swing.JButton btnEliminarTraslados;
+    private javax.swing.JButton btnGrafico;
+    private javax.swing.JButton btnGrilla;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
@@ -1484,11 +1700,14 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle7;
     private javax.swing.JLabel lbltitle8;
     private javax.swing.JLabel lbltitle9;
+    private javax.swing.JPanel pnlGrafico;
+    private javax.swing.JPanel pnlGrilla;
     private javax.swing.JPanel pnlMuerte;
     private javax.swing.JPanel pnlPeso;
     private javax.swing.JPanel pnlRotaciones;
     private javax.swing.JPanel pnlTraslados;
     private javax.swing.JPanel pnlVenta;
+    private javax.swing.JTable tblDatosPeso;
     private javax.swing.JTable tbl_Rotaciones;
     private javax.swing.JTable tbl_Traslados;
     public javax.swing.JTextField txtFechaMuerte;
@@ -1505,23 +1724,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void GetDatosAnimal() {
         ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
         LlenarDatos();
-        cargarHistoricoPesos();
+        
     }
 
-    private void cargarHistoricoPesos() {
-        listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
-        if (listaPesajes.size() > 0) {
-            ///////////////////////////   X        Y
-            datosPeso.add(new Object[]{"Fecha", "Peso"});
-            for (int i = 0; i < listaPesajes.size(); i++) {
-                datosPeso.add(new Object[]{
-                    listaPesajes.get(i).getFecha_pesado(),
-                    listaPesajes.get(i).getPeso()
-                });
-            }
-            listaDatosPeso.add(datosPeso);
-        }
-    }
+   
 
     private void LlenarDatos() {
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
@@ -1539,18 +1745,24 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         if (ListaDatos.get(0).getVenta().equals("1")) {
             GetDatosVentaAnimal();
             jTabbedPane1.setEnabledAt(1, true);
+            jTabbedPane1.setSelectedIndex(1);
         } else {
             jTabbedPane1.setEnabledAt(1, false);
         }
         if (ListaDatos.get(0).getMuerte().equals("1")) {
             GetDatosMuerteAnimal();
             jTabbedPane1.setEnabledAt(0, true);
+            jTabbedPane1.setSelectedIndex(0);
         } else {
             jTabbedPane1.setEnabledAt(0, false);
         }
+        if(ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0"))
+            jTabbedPane1.setSelectedIndex(2);
 
         GetDatosTraslado();
         GetDatosRotaciones();
+        cargarHistoricoPesos();
+        
     }
 
     private void LimpiarFormulario() {
@@ -1729,6 +1941,45 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }
 //</editor-fold>
+    
+    private void cargarHistoricoPesos() {
+        listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
+        if (listaPesajes.size() > 0) {
+            ///////////////////////////   X        Y
+            datosPeso.add(new Object[]{"Fecha", "Peso"});
+            for (int i = 0; i < listaPesajes.size(); i++) {
+                datosPeso.add(new Object[]{
+                    listaPesajes.get(i).getFecha_pesado(),
+                    listaPesajes.get(i).getPeso()
+                });
+            }
+            listaDatosPeso.add(datosPeso);
+            LlenarTablaPesos();
+        }
+    }
+    
+    private void LlenarTablaPesos() {
+        Utilidades.LimpiarTabla(tblDatosPeso);
+
+        for (int i = 0; i < listaPesajes.size(); i++) {
+
+            Utilidades.agregarFilaTabla(
+                    modeloTblPeso,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        listaPesajes.get(i).getFecha_pesado(),
+                        listaPesajes.get(i).getPeso(),
+                        listaPesajes.get(i).getNotas(),
+                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
+                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
+                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
+                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
+                        "Modificar",
+                        "Eliminar"
+                    }
+            );
+        }
+    }
 
     public int CompararFechas(String fechaDesde, String fechaHasta) {
         Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
