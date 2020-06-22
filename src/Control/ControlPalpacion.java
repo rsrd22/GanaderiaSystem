@@ -41,12 +41,12 @@ public class ControlPalpacion implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloPalpacion modelo = (ModeloPalpacion) o;
 
-        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJE">
+        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PALPACION">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO `palpacion`\n" +
                     "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, `fecha`, `id_usuario`)\n" +
-                    "VALUES (" + modelo.getId() + ",\n" +
+                    "VALUES (0,\n" +
                     "        " + modelo.getId_animal()+ ",\n" +
                     "        "+Utilidades.ValorNULL(modelo.getFecha_palpacion())+",\n" +
                     "        '" + modelo.getDiagnostico()+ "',\n" +
@@ -59,13 +59,13 @@ public class ControlPalpacion implements IControl {
         );
 //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJEPORMEDICAMENTOS">
+        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PALPACIONPORMEDICAMENTOS">
         for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
             consultas.add(
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO palpacionxtratamiento (id,id_palpacion,id_medicamento,dosis) VALUES(\n"
                     + "0,\n"
-                    + "" + modelo.getId() + ",\n"
+                    + " (SELECT id FROM palpacion where id_animal = " + modelo.getId_animal()+ " AND DATE_FORMAT(`fecha`,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n" // AND fecha_palpacion = '"+modelo.getFecha_palpacion()+"' AND diagnostico = '"+modelo.getDiagnostico()+"'
                     + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
                     + ")"

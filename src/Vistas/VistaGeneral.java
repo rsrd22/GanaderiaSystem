@@ -294,6 +294,15 @@ public class VistaGeneral extends javax.swing.JFrame {
                 ((VistaPesaje) modeloVista.getPanelPadre()).tbl_Animales.setValueAt("", fila, 11);
                 ((VistaPesaje) modeloVista.getPanelPadre()).band=0;
             }
+        } else if (modeloVista.getPanelPadre() instanceof VistaPalpacion) {
+            ArrayList<String> datos = new ArrayList<>();
+            System.out.println("guardado: "+((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado );
+            if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
+                datos = (ArrayList<String>) modeloVista.getModeloDatos();
+                int fila = Integer.parseInt(datos.get(2));
+                ((VistaPalpacion) modeloVista.getPanelPadre()).tbl_Animales.setValueAt("", fila, 10);
+                ((VistaPalpacion) modeloVista.getPanelPadre()).band=0;
+            }
         }
     }//GEN-LAST:event_formWindowClosed
 

@@ -121,7 +121,7 @@ public class ControlRotacion implements IControl{
             return new ArrayList<>();
         }
         
-    }
+    } 
     
     public int CancelarRegistroRotacion(Map<String, String> datos) {
         ArrayList<String> consultas = new ArrayList<>();

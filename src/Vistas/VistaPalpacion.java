@@ -40,14 +40,15 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public String idFinca;
     public String idTipoAnimal;
 
-    private List<Map<String, String>> ListaAnimales;
-    private List<Map<String, String>> ListaAnimalesMostrar;
+    public List<Map<String, String>> ListaAnimales;
+    public List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
+    public int band = 0;
 
     /**
      * Creates new form VistaVerAnimales
@@ -363,17 +364,19 @@ public class VistaPalpacion extends javax.swing.JPanel {
         String dato = tbl_Animales.getValueAt(fila, cola).toString();
         System.out.println("datoo--->"+dato);
         System.out.println("tbl_Animales.getValueAt(fila, cola+1)--->"+tbl_Animales.getValueAt(fila, cola+1));
-        
-        if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(fila, cola+1).equals("")) {
-            tbl_Animales.setValueAt("*", fila, cola+1);
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("IDANIMAL");
-            String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
-            ArrayList<String> datosRef = new ArrayList<>();
-            datosRef.add(idAnimal);
-            datosRef.add(numero);
-            datosRef.add(fila + "");
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPalpacion(), 1, datosRef);
-            new VistaGeneral(objetoVentana).setVisible(true);
+        if (band == 0) {
+            if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(fila, cola+1).equals("")) {
+                tbl_Animales.setValueAt("*", fila, cola+1);
+                band = 1;
+                String idAnimal = ListaAnimalesMostrar.get(fila).get("IDANIMAL");
+                String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
+                ArrayList<String> datosRef = new ArrayList<>();
+                datosRef.add(idAnimal);
+                datosRef.add(numero);
+                datosRef.add(fila + "");
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPalpacion(), 1, datosRef);
+                new VistaGeneral(objetoVentana).setVisible(true);
+            }
         }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
 
@@ -507,4 +510,5 @@ public class VistaPalpacion extends javax.swing.JPanel {
         return retorno;
     }
 
+    
 }

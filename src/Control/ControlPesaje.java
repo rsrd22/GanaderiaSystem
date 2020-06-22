@@ -65,7 +65,7 @@ public class ControlPesaje implements IControl {
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
                     + "0,\n"
-                    + "" + modelo.getId() + ",\n"
+                    + "(SELECT id FROM pesaje WHERE id_animal = " + modelo.getId_animal() + " AND DATE_FORMAT(`fecha`,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n"
                     + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
                     + ")"

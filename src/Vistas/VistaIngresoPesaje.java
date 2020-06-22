@@ -71,7 +71,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         consecutivo = 0;
         controlGral = new ControlGeneral();
         cargarComboMedicamento();
-        getIdPesaje();
+        //getIdPesaje();
         this.modeloVistaGeneral = modeloVistaGeneral;
         datos = new ArrayList<>();
         datos = (ArrayList<String>) modeloVistaGeneral.getModeloDatos();
@@ -648,7 +648,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         int fila = Integer.parseInt(datos.get(2));
-        vp.tbl_Animales.setValueAt("", fila, 11);
+        vp.tbl_Animales.setValueAt("", fila, 10);
         vp.band=0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
