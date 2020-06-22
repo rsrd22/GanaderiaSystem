@@ -8,6 +8,7 @@ package Charts;
 import Charts.Eventos.EventoMouseMotion;
 import Charts.Eventos.EventoVentana;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -40,6 +41,7 @@ public class Panel extends JPanel {
     private String nombreEjeY;
     private FontMetrics fm;
     private String titulo;
+    public int band = 0;
 
     public Panel(Object datos, JPanel contenedor) {
         titulo = "HISTORICO PESOS DEL ANIMAL";
@@ -90,6 +92,7 @@ public class Panel extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON
         );
 
+        g.setFont(new Font("Calibri", Font.PLAIN, 14));
         pintarFondo(g2d);
         pintarEjeX(g2d);
         pintarEjeY(g2d);
@@ -98,6 +101,10 @@ public class Panel extends JPanel {
         pintarTituloGrafica(g2d);
         pintarTituloEjeX(g2d);
         pintarTituloEjeY(g2d);
+        if (band == 0) {
+            band = 1;
+            cargarListaDePuntos();
+        }
         pintarPuntos(g2d);
         pintarRectas(g2d);
 
@@ -247,10 +254,11 @@ public class Panel extends JPanel {
         return new Color(rc, gc, bc);
     }
 
-    private void pintarPuntos(Graphics2D g) {
+    private void cargarListaDePuntos() {
         ArrayList<ArrayList<Object[]>> data = new ArrayList<>();
         data = (ArrayList<ArrayList<Object[]>>) datos;
         listaDePuntos = new ArrayList<>();
+        sepLogicaY = minimo;
 
         for (int a = 0; a < data.size(); a++) {
             Color color = colores.get(a);
@@ -265,13 +273,15 @@ public class Panel extends JPanel {
                         data.get(a).get(i)[1].toString(),
                         getTX(sepX * i),
                         getTY(ty),
-                        8, 8,
+                        10, 10,
                         color,
                         color)
                 );
             }
         }
+    }
 
+    private void pintarPuntos(Graphics2D g) {
         for (int i = 0; i < listaDePuntos.size(); i++) {
             listaDePuntos.get(i).pintar(g);
         }

@@ -24,6 +24,7 @@ public class EventoVentana implements ComponentListener {
     @Override
     public void componentResized(ComponentEvent e) {
         panel.setSize(e.getComponent().getSize());
+        panel.band=0;
         panel.Actualizar();
     }
 
