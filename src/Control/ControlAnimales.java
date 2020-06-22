@@ -747,8 +747,8 @@ public class ControlAnimales implements IControl {
 //            NameColumnasFiltro.add("FECHA_ULT_PARTO");
 //            NameColumnasFiltro.add("EST");
             String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
-                                " DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y') FECHA_NOVILLA\n" +
-                                ", `NumeroHijos`(anim.`numero`) NUM_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '') NUM_PARTOS,\n" +
+                                " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA\n" +
+                                ", `NumeroHijos`(anim.`numero`) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
                                 "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
                                 "IFNULL(DATE_FORMAT(tbl.FULTPARTO, '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
                                 "IFNULL(tbl.NMESES, '') AS NUMERO_MESES,\n" +

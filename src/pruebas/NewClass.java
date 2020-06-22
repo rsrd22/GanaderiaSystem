@@ -50,7 +50,7 @@ public class NewClass {
 //        //</editor-fold>
         
         
-        diferenciaEntreFechas("10/06/2020", "15/06/2020");
+//        diferenciaEntreFechas("10/06/2020", "15/06/2020");
         
     }
 
@@ -77,13 +77,13 @@ public class NewClass {
         
     }
     
-    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
-   {
-       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
-               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
-       int d = fd.compareTo(fh);
-       System.out.println("d-->>>"+d);
-       
-   }
+//    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
+//   {
+//       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
+//               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
+//       int d = fd.compareTo(fh);
+//       System.out.println("d-->>>"+d);
+//       
+//   }
     
 }

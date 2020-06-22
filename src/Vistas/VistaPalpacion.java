@@ -114,11 +114,10 @@ public class VistaPalpacion extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(4).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(5).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(6).setPreferredWidth(70);
-        tbl_Animales.getColumnModel().getColumn(7).setPreferredWidth(50);
-        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
-        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
-        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
-        tbl_Animales.getColumnModel().getColumn(11).setPreferredWidth(5);
+        tbl_Animales.getColumnModel().getColumn(7).setPreferredWidth(70);
+        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(70);
+        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(80);
+        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(5);
 
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
@@ -157,7 +156,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         lblTid1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Animales = new Tablas.DiarioTable();
+        tbl_Animales = new Tablas.PesajeTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -362,16 +361,18 @@ public class VistaPalpacion extends javax.swing.JPanel {
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = tbl_Animales.getValueAt(fila, cola).toString();
-
-        if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(fila, cola+1)==null) {
+        System.out.println("datoo--->"+dato);
+        System.out.println("tbl_Animales.getValueAt(fila, cola+1)--->"+tbl_Animales.getValueAt(fila, cola+1));
+        
+        if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(fila, cola+1).equals("")) {
             tbl_Animales.setValueAt("*", fila, cola+1);
-            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
+            String idAnimal = ListaAnimalesMostrar.get(fila).get("IDANIMAL");
             String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
             ArrayList<String> datosRef = new ArrayList<>();
             datosRef.add(idAnimal);
             datosRef.add(numero);
             datosRef.add(fila + "");
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPesaje(), 1, datosRef);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPalpacion(), 1, datosRef);
             new VistaGeneral(objetoVentana).setVisible(true);
         }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
@@ -424,7 +425,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
             allFincas = 0;
         }
         if (Integer.parseInt(idFinca) > 0) {
-            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal);
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPalpacion(idFinca, idTipoAnimal);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
@@ -456,27 +457,6 @@ public class VistaPalpacion extends javax.swing.JPanel {
         String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
         System.out.println("filtro--" + filtro);
         ListaAnimalesMostrar = getFiltroLista(filtro);
-
-        "No",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de hijos</p></html>",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\"> de partos</p></html>",
-            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Novilla</p></html>",
-            "Estado",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Meses</p></html>",
-            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">ultimo parto</p></html>",
-            "Acción", 
-            "Est"
-        NameColumnasFiltro.add("NUMERO_ANIMAL");
-        NameColumnasFiltro.add("NUMERO_MAMA");
-        NameColumnasFiltro.add("NUMERO_HIJOS");
-        NameColumnasFiltro.add("NUMERO_PARTOS");
-        NameColumnasFiltro.add("FECHA_NOVILLA");
-        NameColumnasFiltro.add("ESTADO");
-        NameColumnasFiltro.add("NUMERO_MESES");
-        NameColumnasFiltro.add("FECHA_ULT_PARTO");
-        NameColumnasFiltro.add("EST");
         
         Utilidades.LimpiarTabla(tbl_Animales);
         for (int i = 0; i < ListaAnimalesMostrar.size(); i++) {
