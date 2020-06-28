@@ -806,7 +806,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     
     private void EstablecerRegistroPalpado(String idAnimal) { 
         for (int i = 0; i < vp.ListaAnimales.size(); i++) {
-            String id = vp.ListaAnimales.get(i).get("ID_ANIMAL");
+            String id = vp.ListaAnimales.get(i).get("IDANIMAL");
             if (id.equals(idAnimal)) {
                 vp.ListaAnimales.get(i).put("EST", "*");
                 return;

@@ -80,7 +80,9 @@ public class ControlPesaje implements IControl {
                 + "peso = " + modelo.getPeso() + ",\n"
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
-                + "descornado = '" + modelo.getDescornado() + "'\n"
+                + "descornado = '" + modelo.getDescornado() + "',\n"
+                + "fecha_destete = '" + modelo.getFechaDestete()+ "',\n"
+                + "hierro = " + modelo.getIdHierro()+ "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
 
@@ -131,7 +133,8 @@ public class ControlPesaje implements IControl {
                         pesaje.get("id_usuario"),
                         pesaje.get("implante"),
                         pesaje.get("notas"),
-                        pesaje.get("peso")
+                        pesaje.get("peso"),
+                        "","",""
                 ));
             }
             return lista;

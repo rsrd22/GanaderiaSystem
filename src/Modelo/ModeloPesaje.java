@@ -13,6 +13,9 @@ public class ModeloPesaje {
     private String fecha;
     private String fecha_pesado;
     private String hierro;
+    private String idHierro;
+    private String descripcionHierro;
+    private String fechaDestete;
     private String id;
     private String id_animal;
     private String id_usuario;
@@ -25,7 +28,10 @@ public class ModeloPesaje {
         listaMedicamentos = new ArrayList<>();
     }
 
-    public ModeloPesaje(String descornado, String destete, String fecha, String fecha_pesado, String hierro, String id, String id_animal, String id_usuario, String implante, String notas, String peso) {
+    public ModeloPesaje(String descornado, String destete, String fecha, 
+            String fecha_pesado, String hierro, String id, String id_animal, 
+            String id_usuario, String implante, String notas, String peso,
+            String descripcionHierro,String idHierro,String fechaDestete) {
         this.descornado = descornado;
         this.destete = destete;
         this.fecha = fecha;
@@ -37,7 +43,34 @@ public class ModeloPesaje {
         this.implante = implante;
         this.notas = notas;
         this.peso = peso;
+        this.descripcionHierro = descripcionHierro;
+        this.idHierro = idHierro;
+        this.fechaDestete = fechaDestete;
         listaMedicamentos = new ArrayList<>();
+    }
+
+    public String getIdHierro() {
+        return idHierro;
+    }
+
+    public void setIdHierro(String idHierro) {
+        this.idHierro = idHierro;
+    }
+
+    public String getFechaDestete() {
+        return fechaDestete;
+    }
+
+    public void setFechaDestete(String fechaDestete) {
+        this.fechaDestete = fechaDestete;
+    }
+
+    public String getDescripcionHierro() {
+        return descripcionHierro;
+    }
+
+    public void setDescripcionHierro(String descripcionHierro) {
+        this.descripcionHierro = descripcionHierro;
     }
     
     public void addMedicamentos(ModeloMedicamentosPorPesaje mmpp){
