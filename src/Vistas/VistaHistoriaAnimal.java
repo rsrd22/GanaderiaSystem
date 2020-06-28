@@ -111,10 +111,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Pesado</p></html> ",
             "Peso (Kg)",
             "Notas",
-            "Hierro",
-            "Descornado",
-            "Implante",
-            "Destete",
+            "Ver Más",
             "Modificar",
             "Eliminar"
         };
@@ -294,7 +291,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-                , java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                , java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -335,15 +332,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //        });
 
         tblDatosPeso.getColumnModel().getColumn(0).setPreferredWidth(25);
-        tblDatosPeso.getColumnModel().getColumn(1).setPreferredWidth(70);
-        tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(70);
+        tblDatosPeso.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
         tblDatosPeso.getColumnModel().getColumn(4).setPreferredWidth(70);
         tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
         tblDatosPeso.getColumnModel().getColumn(6).setPreferredWidth(70);
-        tblDatosPeso.getColumnModel().getColumn(7).setPreferredWidth(70);
-        tblDatosPeso.getColumnModel().getColumn(8).setPreferredWidth(70);
-        tblDatosPeso.getColumnModel().getColumn(9).setPreferredWidth(70);
         
         tblDatosPeso.getTableHeader().setReorderingAllowed(false);
 
@@ -1312,6 +1306,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDatosPeso.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        tblDatosPeso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblDatosPesoMouseReleased(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblDatosPeso);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1592,9 +1592,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void tbl_RotacionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_RotacionesMousePressed
         int tamfilas = tbl_Rotaciones.getSelectedRows().length;
         if (tamfilas > 0) {
-            btnEliminarTraslados.setEnabled(true);
+            btnEliminarRotaciones.setEnabled(true);
         } else {
-            btnEliminarTraslados.setEnabled(false);
+            btnEliminarRotaciones.setEnabled(false);
         }
     }//GEN-LAST:event_tbl_RotacionesMousePressed
 
@@ -1645,6 +1645,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         btnGrilla.setEnabled(true);
         btnGrafico.setEnabled(false);
     }//GEN-LAST:event_btnGraficoActionPerformed
+
+    private void tblDatosPesoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosPesoMouseReleased
+        
+    }//GEN-LAST:event_tblDatosPesoMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1947,7 +1951,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         if (listaPesajes.size() > 0) {
             ///////////////////////////   X        Y
             datosPeso.add(new Object[]{"Fecha", "Peso"});
-            for (int i = 0; i < listaPesajes.size(); i++) {
+            for (int i = listaPesajes.size()-1; i >= 0; i--) {
                 datosPeso.add(new Object[]{
                     listaPesajes.get(i).getFecha_pesado(),
                     listaPesajes.get(i).getPeso()
@@ -1970,10 +1974,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                         listaPesajes.get(i).getFecha_pesado(),
                         listaPesajes.get(i).getPeso(),
                         listaPesajes.get(i).getNotas(),
-                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
-                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
-                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
-                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
+                        "Ver Mas",
+//                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
+//                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
+//                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
+//                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
                         "Modificar",
                         "Eliminar"
                     }

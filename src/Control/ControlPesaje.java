@@ -179,7 +179,7 @@ public class ControlPesaje implements IControl {
     @Override
     public Object ObtenerDatosFiltro(Object o) {
         String consulta = "SELECT * FROM pesaje\n"
-                + " WHERE id_animal=" + o.toString() + "";
+                + " WHERE id_animal=" + o.toString() + " ORDER BY id DESC";
         List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
         pesajes = mySQL.ListSQL(consulta);
