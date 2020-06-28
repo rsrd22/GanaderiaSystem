@@ -325,6 +325,14 @@ public class Consultas {
                 + "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n"
                 + "WHERE id_pesaje="
         );
+        
+        consultas.put(
+                "GET_MEDICAMENTOS_POR_PALPACION",
+                "SELECT a.id_medicamento AS ID, CONCAT(b.descripcion, ' (', b.unidad_medida,')') AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO, '0' AS 'UPDATE'\n" +
+                "FROM `palpacionxtratamiento` a\n" +
+                "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n" +
+                "WHERE a.`id_palpacion`="
+        );
 
         consultas.put(
                 "GET_MAXIMO_ID_PESAJE_ANIMAL",

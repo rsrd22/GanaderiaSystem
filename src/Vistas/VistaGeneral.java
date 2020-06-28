@@ -297,10 +297,10 @@ public class VistaGeneral extends javax.swing.JFrame {
             ArrayList<String> datos = new ArrayList<>();
             System.out.println("guardado: " + ((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado);
             if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
-                datos = (ArrayList<String>) modeloVista.getModeloDatos();
-                int fila = Integer.parseInt(datos.get(2));
-                ((VistaPalpacion) modeloVista.getPanelPadre()).tbl_Animales.setValueAt("", fila, 10);
-                ((VistaPalpacion) modeloVista.getPanelPadre()).band = 0;
+                VistaPalpacion vp = ((VistaPalpacion) modeloVista.getPanelPadre());
+                //vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 10);
+                vp.MostrarTabla();
+                vp.band=0;
             }
         }
     }//GEN-LAST:event_formWindowClosed

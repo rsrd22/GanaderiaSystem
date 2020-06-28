@@ -742,37 +742,38 @@ public class ControlAnimales implements IControl {
 
     public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA, String FECHA) {
         try {
+            
+            String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
+                                " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n" +
+                                ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
+                                "IFNULL(CONCAT(UPPER(SUBSTRING(tbl.DIAG, 1, 1)), SUBSTRING(tbl.DIAG, 2)), '') ESTADO, IFNULL(tbl.FPALP, '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
+                                "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
+                                "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, \n" +
+                                "finc.`id` as IDFINCA, tpo.`id` as IDTIPOA, \n" +
+                                "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n" +
+                                "FROM animales anim\n" +
+                                "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n" +
+                                "LEFT JOIN grupos grup ON anim.grupo=grup.id\n" +
+                                "LEFT JOIN fincas finc ON tpo.id_finca=finc.`id`\n" +
+                                "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n" +
+                                "LEFT JOIN (\n" +
+                                "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n" +
+                                "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL, IFNULL(palp.notas, '') as NOTAS\n" +
+                                "	FROM `palpacion` palp\n" +
+                                "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n" +
+                                "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
+                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"' AND fecha_palpacion = '"+FECHA+"'\n" +
+                                "	GROUP BY palp.`id_animal` \n" +
+                                ") tbl ON tbl.IDANIMAL = anim.`id` \n" +
+                                "WHERE grup.`palpable` = '1' AND finc.`id` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
+                                "ORDER BY anim.id ASC";
 
-            String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n"
-                    + " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA\n"
-                    + ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n"
-                    + "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n"
-                    + "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n"
-                    + "IFNULL(tbl.NMESES, '') AS NUMERO_MESES,\n"
-                    + "\n"
-                    + "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n"
-                    + "FROM animales anim\n"
-                    + "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n"
-                    + "LEFT JOIN grupos grup ON anim.grupo=grup.id\n"
-                    + "LEFT JOIN fincas finc ON tpo.id_finca=finc.`id`\n"
-                    + "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n"
-                    + "LEFT JOIN (\n"
-                    + "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n"
-                    + "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL\n"
-                    + "	FROM `palpacion` palp\n"
-                    + "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n"
-                    + "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n"
-                    + "	WHERE tpo.`id_finca` = '" + IDFINCA + "' AND tpo.`id` = '" + IDTIPOFINCA + "' AND fecha_palpacion = '" + FECHA + "'\n"
-                    + "	GROUP BY palp.`id_animal` \n"
-                    + ") tbl ON tbl.IDANIMAL = anim.`id` \n"
-                    + "WHERE grup.`palpable` = '1' AND finc.`id` = '" + IDFINCA + "' AND tpo.`id` = '" + IDTIPOFINCA + "'\n"
-                    + "ORDER BY anim.id ASC";
 
-            List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> palpacion = new ArrayList<Map<String, String>>();
 
-            traslados = mySQL.ListSQL(consulta);
+            palpacion = mySQL.ListSQL(consulta);
 
-            return traslados;
+            return palpacion;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

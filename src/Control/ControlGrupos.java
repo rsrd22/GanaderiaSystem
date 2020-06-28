@@ -267,4 +267,39 @@ public class ControlGrupos implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
+    
+    public Object ObtenerIdGrupoxDescripcion(String idFinca, String tipoAnimal, String descripcion) {
+        String consulta = "SELECT a.*, c.descripcion descTipoAnimales,b.descripcion descMacroGrupo,"
+                + "d.id idFinca,d.descripcion desFinca FROM grupos a\n"
+                + "LEFT JOIN macrogrupos b ON a.id_macrogrupo=b.id\n"
+                + "LEFT JOIN tipo_animales c ON a.id_tipo_animal=c.id \n"
+                + "LEFT JOIN fincas d ON c.id_finca=d.id WHERE d.id = '"+idFinca+"' AND c.id = '"+tipoAnimal+"' AND UPPER(a.descripcion) = '" + descripcion + "'";
+        List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloGrupos> lista = new ArrayList<>();
+        grupos = mySQL.ListSQL(consulta);
+
+        if (grupos.size() > 0) {
+
+            for (Map<String, String> grupo : grupos) {
+                lista.add(new ModeloGrupos(
+                        grupo.get("id"),
+                        grupo.get("id_tipo_animal"),
+                        grupo.get("descripcion"),
+                        grupo.get("estado"),
+                        grupo.get("id_macrogrupo"),
+                        grupo.get("fecha"),
+                        grupo.get("id_usuario"),
+                        grupo.get("descTipoAnimales"),
+                        grupo.get("descMacroGrupo"),
+                        grupo.get("idFinca"),
+                        grupo.get("desFinca"),
+                        grupo.get("pesable"),
+                        grupo.get("palpable")
+                ));
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
+    }
 }
