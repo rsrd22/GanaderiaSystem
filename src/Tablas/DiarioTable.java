@@ -22,8 +22,8 @@ public class DiarioTable extends JTable {
         Component component = super.prepareRenderer(renderer, row, col);
         String dato = String.valueOf(getValueAt(row, 11));
         if (dato.equals("*")) {
-            component.setBackground(Colores.WARNING);
-            component.setForeground(Colores.TEXT_WARNING);
+            component.setBackground(Colores.YELLOW);
+            component.setForeground(Colores.TEXT_TABLE);
         }else{
             component.setForeground(new Color(59, 123, 50));
             component.setBackground(Color.WHITE);

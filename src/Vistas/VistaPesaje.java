@@ -15,7 +15,9 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,9 @@ public class VistaPesaje extends javax.swing.JPanel {
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public int band = 0;
     public int filaSeleccionada;
+    public String fechaAnterior = "";
+    private String fechaFiltro = "";
+    private String ban = "0";
 
     /**
      * Creates new form VistaVerAnimales
@@ -88,6 +93,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         listaFincas = new ArrayList<>();
         listaTipoAnimales = new ArrayList<>();
         InicializarTblAnimales();
+        IniciarFechaFiltro();
         CargarListaFincas();
     }
 
@@ -142,6 +148,11 @@ public class VistaPesaje extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
 
+    }
+
+    public void IniciarFechaFiltro() {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        jdFechaPesaje.setCalendar(Calendar.getInstance());
     }
 
     /**
@@ -331,6 +342,12 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.weightx = 0.625;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(lbltitle19, gridBagConstraints);
+
+        jdFechaPesaje.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdFechaPesajePropertyChange(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -358,6 +375,7 @@ public class VistaPesaje extends javax.swing.JPanel {
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         if (cbTipoAnimales.getItemCount() > 0) {
+            ban = "1";
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
@@ -392,6 +410,9 @@ public class VistaPesaje extends javax.swing.JPanel {
             if (dato.equalsIgnoreCase("PESAJE") && tbl_Animales.getValueAt(filaSeleccionada, cola + 1).toString().isEmpty()) {
                 tbl_Animales.setValueAt("*", filaSeleccionada, cola + 1);
                 band = 1;
+                if (fechaAnterior.equals("")) {
+                    fechaAnterior = fechaFiltro;
+                }
                 objetoVentana = new ModeloVentanaGeneral(
                         this,
                         new VistaIngresoPesaje(),
@@ -401,7 +422,28 @@ public class VistaPesaje extends javax.swing.JPanel {
                 new VistaGeneral(objetoVentana).setVisible(true);
             }
         }
+        if (dato.equalsIgnoreCase("*")) {
+            if (fechaAnterior.equals("")) {
+                fechaAnterior = fechaFiltro;
+            }
+            objetoVentana = new ModeloVentanaGeneral(
+                    this,
+                    new VistaIngresoPesaje(),
+                    2,
+                    ListaAnimalesMostrar.get(filaSeleccionada)
+            );
+            new VistaGeneral(objetoVentana).setVisible(true);
+        }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
+
+    private void jdFechaPesajePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPesajePropertyChange
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fechaC = jdFechaPesaje.getCalendar();
+        fechaFiltro = sdf.format(fechaC.getTime());
+        if (ban.equals("1")) {
+            EventoComboFincas();
+        }
+    }//GEN-LAST:event_jdFechaPesajePropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -446,7 +488,6 @@ public class VistaPesaje extends javax.swing.JPanel {
     }
 
     private void EventoComboFincas() {
-        System.out.println("EventoComboFincas >> idFinca-->" + idFinca);
         cargarTablaFiltro();
     }
 
@@ -457,7 +498,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             allFincas = 0;
         }
         if (Integer.parseInt(idFinca) > 0) {
-            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal);
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal, fechaFiltro);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
