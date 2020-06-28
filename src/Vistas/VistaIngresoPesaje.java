@@ -15,7 +15,11 @@ import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -46,9 +50,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private ModeloMedicamentosPorPesaje modelompp;
     private ControlPesaje control;
     private ModeloVentanaGeneral modeloVistaGeneral;
-    private ArrayList<String> datos;
+    private Map<String, String> datos;
     public static int guardado = -1;
     private VistaPesaje vp;
+    private List<Map<String, String>> hierros;
+    private final String FECHA_POR_DEFECTO = "1900-01-01";
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -71,12 +77,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         consecutivo = 0;
         controlGral = new ControlGeneral();
         cargarComboMedicamento();
-        //getIdPesaje();
         this.modeloVistaGeneral = modeloVistaGeneral;
-        datos = new ArrayList<>();
-        datos = (ArrayList<String>) modeloVistaGeneral.getModeloDatos();
-        idAnimal = datos.get(0);
-        txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get(1) + "</b></p></html>");
+        datos = new HashMap<>();
+        datos = (Map<String, String>) modeloVistaGeneral.getModeloDatos();
         listaMedicamentos = new ArrayList<>();
         this.vp = ((VistaPesaje) modeloVistaGeneral.getPanelPadre());
 
@@ -91,6 +94,40 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo = new ModeloPesaje();
         modelompp = new ModeloMedicamentosPorPesaje();
         control = new ControlPesaje();
+
+        iniciarChecks();
+        cargarComboHierros();
+        cargarDatosActuales();
+
+        lblFechaDestete.setVisible(chkDestete.isSelected());
+        jdFechaDestete.setVisible(chkDestete.isSelected());
+        lblHierro.setVisible(chkHierro.isSelected());
+        cbHierros.setVisible(chkHierro.isSelected());
+    }
+
+    private void iniciarChecks() {
+        chkImplante.setSelected(datos.get("IMPLANTE").equals("1"));
+        chkDescornada.setSelected(datos.get("DESCORNADO").equals("1"));
+        chkDestete.setSelected(!datos.get("FECHA_DESTETE").equals(FECHA_POR_DEFECTO));
+        chkHierro.setSelected(datos.get("DESC_HIERRO").length() > 0);
+    }
+
+    private void cargarDatosActuales() {
+        idAnimal = datos.get("ID_ANIMAL");
+        txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
+        txtPesoActual.setText(datos.get("PESO")+" Kg");
+        cbHierros.setSelectedItem(datos.get("DESC_HIERRO"));
+        txtCodigoHierro.setText(datos.get("IDHIERRO"));
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formato.parse(datos.get("FECHA_DESTETE"));
+            jdFechaDestete.setDate(fecha);
+            
+            Calendar cal = Calendar.getInstance();
+            jdFechaPesaje.setCalendar(cal);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error cargando la fecha de destete.");
+        }
     }
 
     private void cargarComboMedicamento() {
@@ -98,6 +135,13 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         medicamentos = controlGral.GetComboBox(consulta);
 
         Utilidades.LlenarComboBox(cbMedicamentos, medicamentos, "descripcion");
+    }
+
+    private void cargarComboHierros() {
+        String consulta = consultas.get("CARGAR_COMBO_HIERROS_TOTAL");
+        hierros = controlGral.GetComboBox(consulta);
+
+        Utilidades.LlenarComboBox(cbHierros, hierros, "descripcion");
     }
 
     private void getIdPesaje() {
@@ -120,6 +164,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         txtCodigo = new javax.swing.JLabel();
         txtCodigoMedicamento = new javax.swing.JLabel();
+        txtCodigoHierro = new javax.swing.JLabel();
         txtPesoKg = new javax.swing.JTextField();
         jSeparator13 = new javax.swing.JSeparator();
         lbltitle14 = new javax.swing.JLabel();
@@ -147,6 +192,13 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         btnGuardar1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         chkDestete = new javax.swing.JCheckBox();
+        jdFechaPesaje = new com.toedter.calendar.JDateChooser();
+        lbltitle19 = new javax.swing.JLabel();
+        lblHierro = new javax.swing.JLabel();
+        cbHierros = new javax.swing.JComboBox();
+        jdFechaDestete = new com.toedter.calendar.JDateChooser();
+        lblFechaDestete = new javax.swing.JLabel();
+        txtPesoActual = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -158,6 +210,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         txtPesoKg.setBorder(null);
         txtPesoKg.setCaretColor(new java.awt.Color(59, 123, 50));
         txtPesoKg.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPesoKg.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPesoKgFocusLost(evt);
+            }
+        });
         txtPesoKg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesoKgKeyReleased(evt);
@@ -165,22 +222,22 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtPesoKg, gridBagConstraints);
 
         jSeparator13.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator13, gridBagConstraints);
 
@@ -190,10 +247,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         lbltitle14.setText("Notas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lbltitle14, gridBagConstraints);
 
         lbltitle18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -202,10 +260,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         lbltitle18.setText("Peso (Libras)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.001666667;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
         add(lbltitle18, gridBagConstraints);
 
         txtPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -214,6 +272,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         txtPeso.setBorder(null);
         txtPeso.setCaretColor(new java.awt.Color(59, 123, 50));
         txtPeso.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPeso.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPesoFocusLost(evt);
+            }
+        });
         txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesoKeyReleased(evt);
@@ -221,22 +284,22 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtPeso, gridBagConstraints);
 
         jSeparator11.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator11, gridBagConstraints);
 
@@ -246,9 +309,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         chkHierro.setText("Hierro");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(chkHierro, gridBagConstraints);
 
@@ -258,9 +322,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         chkImplante.setText("Implante");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(chkImplante, gridBagConstraints);
 
@@ -269,9 +333,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         chkDescornada.setForeground(new java.awt.Color(59, 123, 50));
         chkDescornada.setText("Descornada");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(chkDescornada, gridBagConstraints);
 
@@ -434,12 +499,12 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.466666667;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jPanel1, gridBagConstraints);
 
@@ -449,12 +514,12 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.233333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(jScrollPane2, gridBagConstraints);
 
@@ -464,12 +529,12 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 300;
-        gridBagConstraints.ipady = 15;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
         add(txtReferenciaAnimal, gridBagConstraints);
 
         lbltitle17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -478,10 +543,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         lbltitle17.setText("Peso (Kilos)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.001666667;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
         add(lbltitle17, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -525,9 +590,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         add(jPanel2, gridBagConstraints);
 
@@ -536,12 +602,104 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         chkDestete.setForeground(new java.awt.Color(59, 123, 50));
         chkDestete.setText("Destete");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 0.001666667;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(chkDestete, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(jdFechaPesaje, gridBagConstraints);
+
+        lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle19.setText("Fecha");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
+        add(lbltitle19, gridBagConstraints);
+
+        lblHierro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblHierro.setForeground(new java.awt.Color(59, 123, 50));
+        lblHierro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblHierro.setText("Hierros");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
+        add(lblHierro, gridBagConstraints);
+
+        cbHierros.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbHierros.setForeground(new java.awt.Color(59, 123, 50));
+        cbHierros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        cbHierros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHierrosActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(cbHierros, gridBagConstraints);
+
+        jdFechaDestete.setDateFormatString("dd/MM/yyyy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(jdFechaDestete, gridBagConstraints);
+
+        lblFechaDestete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblFechaDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaDestete.setText("Fecha de destete");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
+        add(lblFechaDestete, gridBagConstraints);
+
+        txtPesoActual.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtPesoActual.setForeground(new java.awt.Color(59, 123, 50));
+        txtPesoActual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtPesoActual.setToolTipText("Peso anterior (Kilogramos)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        add(txtPesoActual, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPesoKgKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKgKeyReleased
@@ -647,18 +805,44 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        int fila = Integer.parseInt(datos.get(2));
-        vp.tbl_Animales.setValueAt("", fila, 10);
-        vp.band=0;
+        vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
+        vp.band = 0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void cbHierrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHierrosActionPerformed
+        int indice = cbHierros.getSelectedIndex();
+        if (indice > 0) {
+            String idHierro = hierros.get(indice).get("id");
+            txtCodigoHierro.setText(idHierro);
+        }
+    }//GEN-LAST:event_cbHierrosActionPerformed
+
+    private void txtPesoKgFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoKgFocusLost
+        calcularDiferenciaPesos();
+    }//GEN-LAST:event_txtPesoKgFocusLost
+
+    private void txtPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusLost
+        calcularDiferenciaPesos();
+    }//GEN-LAST:event_txtPesoFocusLost
+
+    private void calcularDiferenciaPesos() {
+        if (txtPesoKg.getText().length() == 0) {
+            txtPesoActual.setText(datos.get("PESO") + " Kg");
+        } else {
+            int pesoAnterior = Integer.parseInt(datos.get("PESO"));
+            int pesoActual = Integer.parseInt(txtPesoKg.getText());
+            int diferencia = pesoActual - pesoAnterior;
+            txtPesoActual.setText(pesoActual + " Kg - " + pesoAnterior + " Kg = " + diferencia + " Kg");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnModificar;
+    public javax.swing.JComboBox cbHierros;
     public javax.swing.JComboBox cbMedicamentos;
     private javax.swing.JCheckBox chkDescornada;
     private javax.swing.JCheckBox chkDestete;
@@ -671,17 +855,24 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
+    private com.toedter.calendar.JDateChooser jdFechaDestete;
+    private com.toedter.calendar.JDateChooser jdFechaPesaje;
+    private javax.swing.JLabel lblFechaDestete;
+    private javax.swing.JLabel lblHierro;
     private javax.swing.JLabel lbltitle10;
     private javax.swing.JLabel lbltitle14;
     private javax.swing.JLabel lbltitle16;
     private javax.swing.JLabel lbltitle17;
     private javax.swing.JLabel lbltitle18;
+    private javax.swing.JLabel lbltitle19;
     private javax.swing.JTable tablaMedicamentos;
     public javax.swing.JTextField txtCantidadMedicamento;
     private javax.swing.JLabel txtCodigo;
+    private javax.swing.JLabel txtCodigoHierro;
     private javax.swing.JLabel txtCodigoMedicamento;
     private javax.swing.JTextArea txtNotas;
     public javax.swing.JTextField txtPeso;
+    private javax.swing.JLabel txtPesoActual;
     public javax.swing.JTextField txtPesoKg;
     private javax.swing.JLabel txtReferenciaAnimal;
     // End of variables declaration//GEN-END:variables
@@ -819,9 +1010,18 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
         modelo.setHierro(chkHierro.isSelected() ? "1" : "0");
         modelo.setDestete(chkDestete.isSelected() ? "1" : "0");
+        modelo.setDescripcionHierro(cbHierros.getSelectedItem().toString());
         modelo.setFecha_pesado("NOW()");
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modelo.setIdHierro(txtCodigoHierro.getText());
+        if (chkDestete.isSelected()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar fechaDestete = jdFechaDestete.getCalendar();
+            modelo.setFechaDestete(sdf.format(fechaDestete.getTime()));
+        } else {
+            modelo.setFechaDestete(FECHA_POR_DEFECTO);
+        }
 
         for (int i = 0; i < listaMedicamentos.size(); i++) {
             modelompp = new ModeloMedicamentosPorPesaje();
@@ -852,7 +1052,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, mensaje);
         if (retorno == Retorno.EXITO) {
             establecerRegistroPesado(idAnimal);
-            vp.band=0;
+            vp.band = 0;
             ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
         }
     }
@@ -862,6 +1062,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             String id = vp.ListaAnimales.get(i).get("ID_ANIMAL");
             if (id.equals(idAnimal)) {
                 vp.ListaAnimales.get(i).put("EST", "*");
+                vp.ListaAnimales.get(i).put("PESO", modelo.getPeso());
+                vp.ListaAnimales.get(i).put("DESC_HIERRO", modelo.getDescripcionHierro());
+                vp.cargarTablaFiltro();
                 return;
             }
         }

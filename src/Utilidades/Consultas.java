@@ -188,6 +188,18 @@ public class Consultas {
                 + "WHERE\n"
                 + "a.estado='Activo' AND a.id_propietario=");
 
+        consultas.put("CARGAR_COMBO_HIERROS_TOTAL", "SELECT\n"
+                + "-1 id,\n"
+                + "'Seleccionar' descripcion\n"
+                + "UNION\n"
+                + "SELECT \n"
+                + "a.id id,\n"
+                + "a.descripcion descripcion\n"
+                + "FROM\n"
+                + "propietarioxhierro a\n"
+                + "WHERE\n"
+                + "a.estado='Activo'");
+
         consultas.put("CARGAR_COMBO_FINCAS", "SELECT\n"
                 + "'-1' id,\n"
                 + "'Seleccionar' descripcion\n"
