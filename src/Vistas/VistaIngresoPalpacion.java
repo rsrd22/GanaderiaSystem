@@ -1001,4 +1001,48 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         }
     }
     
+    private void calcularPesoEnLibras() {
+        String peso = txtPesoKg.getText();
+        String pesoSinPuntos = peso.indexOf(".") > -1 ? peso.replace(".", "") : peso;
+        String pesoFormateado = Expresiones.procesarSoloNumP(pesoSinPuntos);
+        pesoFormateado = Utilidades.MascaraMonedaConDecimales(pesoFormateado);
+        txtPesoKg.setText(pesoFormateado);
+
+        int indice = pesoSinPuntos.lastIndexOf(",");
+        int indiceFinal = pesoSinPuntos.length() - 1;
+        pesoSinPuntos = pesoSinPuntos.replace(",", ".");
+        boolean convertir = indice == indiceFinal;
+
+        if (!convertir) {
+            double pesoEnKilogramos = Double.parseDouble(pesoSinPuntos);
+            txtPeso.setText(convertirALibras(pesoEnKilogramos));
+            Utilidades.formatearNumeros(txtPeso);
+        }
+    }
+
+    private String convertirALibras(double pesoEnKilos) {
+        Double resultado = pesoEnKilos * Utilidades.FACTOR_CONVERSION;
+        long resultadoRedondeado = Math.round(resultado);
+        return "" + resultadoRedondeado;
+    }
+    
+    private String convertirAKilogramos(double pesoEnLibras) {
+        Double resultado = pesoEnLibras / Utilidades.FACTOR_CONVERSION;
+        long resultadoRedondeado = Math.round(resultado);
+//        txtCodigo.setText("" + resultadoRedondeado);
+
+        return "" + resultadoRedondeado;
+    }
+    
+    private void calcularDiferenciaPesos() {
+//        if (txtPesoKg.getText().length() == 0) {
+//            txtPesoActual.setText(datos.get("PESO") + " Kg");
+//        } else {
+//            int pesoAnterior = Integer.parseInt(datos.get("PESO"));
+//            int pesoActual = Integer.parseInt(txtPesoKg.getText());
+//            int diferencia = pesoActual - pesoAnterior;
+//            txtPesoActual.setText(pesoActual + " Kg - " + pesoAnterior + " Kg = " + diferencia + " Kg");
+//        }
+    }
+    
 }
