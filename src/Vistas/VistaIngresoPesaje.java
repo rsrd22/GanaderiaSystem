@@ -58,7 +58,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private VistaPesaje vp;
     private List<Map<String, String>> hierros;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
-    private int editar=Estado.DEFECTO;
+    private int editar = Estado.DEFECTO;
+    private boolean eliminar;
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -76,6 +77,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
     public VistaIngresoPesaje(ModeloVentanaGeneral modeloVistaGeneral) {
         initComponents();
+        eliminar = false;
         setSize(634, 600);
         btnModificar.setVisible(false);
         consecutivo = 0;
@@ -146,9 +148,6 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha = formato.parse(datos.get("FECHA_DESTETE"));
             jdFechaDestete.setDate(fecha);
-
-            Calendar cal = Calendar.getInstance();
-            jdFechaPesaje.setCalendar(cal);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error cargando la fecha de destete.");
         }
@@ -185,6 +184,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         String consulta = consultas.get("GET_MEDICAMENTOS_POR_PESAJE") + idPesaje;
         select = controlGral.GetComboBox(consulta);
         dtm = (DefaultTableModel) tablaMedicamentos.getModel();
+        eliminar = select.size() > 0;
 
         for (Map<String, String> lista : select) {
             Object[] fila = new Object[]{
@@ -200,10 +200,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             listaMedicamentos.add(fila);
         }
     }
-    
-    public boolean isEditando(){
-        return editar==Estado.ACTUALIZAR;
+
+    public boolean isEditando() {
+        return editar == Estado.ACTUALIZAR;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -855,7 +856,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("editar: "+editar);
+        System.out.println("editar: " + editar);
         if (!isEditando()) {
             vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
         }
@@ -1089,6 +1090,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < listaMedicamentos.size(); i++) {
+            modelompp.setEliminar(eliminar);
             modelompp = new ModeloMedicamentosPorPesaje();
             modelompp.setId_medicamento(listaMedicamentos.get(i)[0].toString());
             modelompp.setDosis(listaMedicamentos.get(i)[2].toString().replace(".", "").replace(",", "."));
@@ -1136,6 +1138,13 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
                 vp.ListaAnimales.get(i).put("PESO", modelo.getPeso());
                 vp.ListaAnimales.get(i).put("DESC_HIERRO", modelo.getDescripcionHierro());
                 vp.fechaAnterior = modelo.getFecha_pesado();
+                try {
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fecha = formato.parse(vp.fechaAnterior);
+                    vp.jdFechaPesaje.setDate(fecha);
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this, "Error tratando de establecer la fecha de pesaje");
+                }
                 vp.cargarTablaFiltro();
                 return;
             }
