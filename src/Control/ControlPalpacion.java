@@ -92,7 +92,64 @@ public class ControlPalpacion implements IControl {
 
     @Override
     public int Actualizar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloPalpacion modelo = (ModeloPalpacion) o;
+
+        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PALPACION">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "UPDATE `palpacion`\n" +
+                    "SET \n" +
+                    "  `fecha_palpacion` = "+Utilidades.ValorNULL(modelo.getFecha_palpacion())+",\n" +
+                    "  `diagnostico` = '" + modelo.getDiagnostico().toLowerCase()+ "',\n" +
+                    "  `notas` = '" + modelo.getNotas()+ "',\n" +
+                    "  `num_meses` = " + modelo.getNum_meses()+ ",\n" +
+                    "  `fecha_ultimo_parto` = "+Utilidades.ValorNULL(modelo.getFecha_ultimo_parto())+",\n" +
+                    "  `descarte` = '" + modelo.getDescarte()+ "',\n" +
+                    "  `razondescarte` = '" + modelo.getRazondescarte()+ "'\n" +
+                    "WHERE `id` = " + modelo.getId()+ ";"
+        );
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PALPACIONPORMEDICAMENTOS">
+        for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
+            if(modelo.getListaMedicamentos().get(i).getEstadoG().equals("0")){
+                consultas.add(
+                        //<editor-fold defaultstate="collapsed" desc="INSERT">
+                        "INSERT INTO palpacionxtratamiento (id,id_palpacion,id_medicamento,dosis) VALUES(\n"
+                        + "0,\n"
+                        + ""+modelo.getId()+" ,\n" 
+                        + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
+                        + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
+                        + ")"
+                //</editor-fold>
+                );
+            }else if(modelo.getListaMedicamentos().get(i).getEstadoG().equals("1")){
+                consultas.add(
+                        //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                        "UPDATE `palpacionxtratamiento`\n" +
+                            "SET `id_medicamento` = " + modelo.getListaMedicamentos().get(i).getId_medicamento() + ", \n"+
+                            "`dosis` = " + modelo.getListaMedicamentos().get(i).getDosis() + "\n" +
+                            "WHERE `id` =" + modelo.getListaMedicamentos().get(i).getId()+ ";"
+                //</editor-fold>
+                );
+            }
+        }
+//</editor-fold>
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
@@ -129,6 +186,30 @@ public class ControlPalpacion implements IControl {
             return lista;
         } else {
             return LISTA_VACIA;
+        }
+    }
+
+    public int deletePalpacionMedicamento(String id) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+//                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                    "DELETE FROM `palpacionxtratamiento` WHERE `id` = "+id+";"
+    //              //</editor-fold>
+        );
+        
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
         }
     }
 

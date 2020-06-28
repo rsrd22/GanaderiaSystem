@@ -693,7 +693,7 @@ public class ControlAnimales implements IControl {
         }
     }
 
-    public Object ObtenerDatosAnimalesPesables(String IDFINCA, String IDTIPOANIMAL) {
+    public Object ObtenerDatosAnimalesPesables(String IDFINCA, String IDTIPOANIMAL, String FECHA) {
         try {
             String consulta = "SELECT\n"
                     + "a.id AS ID_ANIMAL,\n"
@@ -716,7 +716,9 @@ public class ControlAnimales implements IControl {
                     + "a.`hierro_fisico` AS HIERRO_FISICO,\n"
                     + "a.hierro AS IDHIERRO,\n"
                     + "e.descripcion AS DESC_HIERRO,\n"
-                    + "IFNULL((SELECT '*' FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')),'') AS EST\n"
+                    + "IFNULL((SELECT '*' FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS EST,\n"
+                    + "IFNULL((SELECT id FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS ID_PESAJE,\n"
+                    + "IFNULL((SELECT notas FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS NOTAS\n"
                     + "FROM\n"
                     + "animales a\n"
                     + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
@@ -738,15 +740,13 @@ public class ControlAnimales implements IControl {
         }
     }
 
-
-    
     public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA, String FECHA) {
         try {
             
             String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
                                 " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n" +
                                 ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
-                                "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
+                                "IFNULL(CONCAT(UPPER(SUBSTRING(tbl.DIAG, 1, 1)), SUBSTRING(tbl.DIAG, 2)), '') ESTADO, IFNULL(tbl.FPALP, '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
                                 "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
                                 "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, \n" +
                                 "finc.`id` as IDFINCA, tpo.`id` as IDTIPOA, \n" +
@@ -768,11 +768,12 @@ public class ControlAnimales implements IControl {
                                 "WHERE grup.`palpable` = '1' AND finc.`id` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
                                 "ORDER BY anim.id ASC";
 
-            List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
-            traslados = mySQL.ListSQL(consulta);
+            List<Map<String, String>> palpacion = new ArrayList<Map<String, String>>();
 
-            return traslados;
+            palpacion = mySQL.ListSQL(consulta);
+
+            return palpacion;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

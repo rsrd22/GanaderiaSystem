@@ -46,7 +46,7 @@ public class ControlPesaje implements IControl {
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "" + modelo.getId() + ",\n"
                 + "" + modelo.getId_animal() + ",\n"
-                + "" + modelo.getFecha_pesado() + ",\n"
+                + "'" + modelo.getFecha_pesado() + "',\n"
                 + "" + modelo.getPeso() + ",\n"
                 + "'" + modelo.getNotas() + "',\n"
                 + "'" + modelo.getHierro() + "',\n"
@@ -65,7 +65,7 @@ public class ControlPesaje implements IControl {
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
                     + "0,\n"
-                    + "(SELECT id FROM pesaje WHERE id_animal = " + modelo.getId_animal() + " AND DATE_FORMAT(`fecha`,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n"
+                    + "(SELECT id FROM pesaje WHERE id_animal = " + modelo.getId_animal() + " AND DATE_FORMAT(fecha,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n"
                     + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
                     + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
                     + ")"
@@ -81,8 +81,8 @@ public class ControlPesaje implements IControl {
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
-                + "fecha_destete = '" + modelo.getFechaDestete()+ "',\n"
-                + "hierro = " + modelo.getIdHierro()+ "\n"
+                + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
 
@@ -103,7 +103,72 @@ public class ControlPesaje implements IControl {
 
     @Override
     public int Actualizar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloPesaje modelo = (ModeloPesaje) o;
+
+        //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA PESAJE">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE pesaje SET\n"
+                + "id_animal=" + modelo.getId_animal() + ",\n"
+                + "fecha_pesado='" + modelo.getFecha_pesado() + "',\n"
+                + "peso=" + modelo.getPeso() + ",\n"
+                + "notas='" + modelo.getNotas() + "',\n"
+                + "hierro='" + modelo.getHierro() + "',\n"
+                + "descornado='" + modelo.getDescornado() + "',\n"
+                + "implante='" + modelo.getImplante() + "',\n"
+                + "destete='" + modelo.getDestete() + "',\n"
+                + "fecha=" + modelo.getFecha() + ",\n"
+                + "id_usuario=" + modelo.getId_usuario() + "\n"
+                + " WHERE id=" + modelo.getId() //</editor-fold>
+        );
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJEPORMEDICAMENTOS">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
+        //</editor-fold>
+        );
+        for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="INSERT">
+                    "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
+                    + "0,\n"
+                    + "" + modelo.getId() + ",\n"
+                    + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
+                    + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
+                    + ")"
+            //</editor-fold>
+            );
+        }
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
+        consultas.add("update animales\n"
+                + "set \n"
+                + "peso = " + modelo.getPeso() + ",\n"
+                + "hierro_fisico = '" + modelo.getHierro() + "',\n"
+                + "implante = '" + modelo.getImplante() + "',\n"
+                + "descornado = '" + modelo.getDescornado() + "',\n"
+                + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "hierro = " + modelo.getIdHierro() + "\n"
+                + "where id = " + modelo.getId_animal() + "");
+//</editor-fold>
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
@@ -134,7 +199,7 @@ public class ControlPesaje implements IControl {
                         pesaje.get("implante"),
                         pesaje.get("notas"),
                         pesaje.get("peso"),
-                        "","",""
+                        "", "", ""
                 ));
             }
             return lista;

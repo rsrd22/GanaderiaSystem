@@ -25,14 +25,14 @@ public class Consultas {
      */
     public static void Agregar() {
 
-        consultas.put("BQD_USER", "SELECT usr.`id` AS IDUSUARIO, usr.`usuario` AS USUARIO, \n"
-                + "perf.`descripcion` AS PERFIL, usr.`estado` AS ESTADO\n"
+        consultas.put("BQD_USER", "SELECT usr.id AS IDUSUARIO, usr.usuario AS USUARIO, \n"
+                + "perf.descripcion AS PERFIL, usr.estado AS ESTADO\n"
                 + "FROM usuarios usr \n"
-                + "INNER JOIN perfiles perf ON perf.id = usr.`id_perfil`\n"
+                + "INNER JOIN perfiles perf ON perf.id = usr.id_perfil\n"
                 + "ORDER BY usr.id ASC ");
 
         consultas.put("BQD_FNT_HDRC", "SELECT id AS ID__10__C, descripcion AS DESCRIPCION__70__L, estado  AS ESTADO__20__L\n"
-                + "FROM `fuentes_hidricas`\n"
+                + "FROM fuentes_hidricas\n"
                 + "ORDER BY id ASC");
 
         consultas.put("BQD_PROP", "SELECT id as ID__20__R, "
@@ -41,16 +41,16 @@ public class Consultas {
                 + " ORDER BY primer_apellido ASC, primer_nombre ASC");
 
         consultas.put("BQD_FNCS", "SELECT fnc.id AS ID, fnc.descripcion AS DESCRIPCION, \n"
-                + "`MascaraMonedaDecimal`(REPLACE(fnc.area, '.', ',')) AS AREAT, fnc.`direccion` AS DIRECCION, \n"
+                + "MascaraMonedaDecimal(REPLACE(fnc.area, '.', ',')) AS AREAT, fnc.direccion AS DIRECCION, \n"
                 + "CONCAT_WS(' ',\n"
-                + " prop.`primer_nombre`, \n"
-                + " IFNULL(prop.`segundo_nombre`, ''),\n"
-                + "  prop.`primer_apellido`, \n"
-                + "  IFNULL(prop.`segundo_apellido`, '')\n"
+                + " prop.primer_nombre, \n"
+                + " IFNULL(prop.segundo_nombre, ''),\n"
+                + "  prop.primer_apellido, \n"
+                + "  IFNULL(prop.segundo_apellido, '')\n"
                 + "  ) AS PROPIETARIO,\n"
-                + "prop.`id` AS IDPROP\n"
+                + "prop.id AS IDPROP\n"
                 + "FROM fincas fnc\n"
-                + "INNER JOIN `propietarios` prop ON prop.`id` = fnc.`id_propietario`");
+                + "INNER JOIN propietarios prop ON prop.id = fnc.id_propietario");
 
         consultas.put("BUSQUEDA_TIPOS_ANIMALES", "SELECT\n"
                 + "a.id ID,\n"
@@ -134,8 +134,8 @@ public class Consultas {
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN fincas c ON b.id_finca=c.id\n"
                 + "LEFT JOIN propietarios d ON c.id_propietario=d.id\n"
-                + "LEFT JOIN grupos e ON e.id=a.`grupo`\n"
-                + "LEFT JOIN propietarioxhierro f ON f.id_propietario=d.id AND a.`hierro`=f.`id`\n"
+                + "LEFT JOIN grupos e ON e.id=a.grupo\n"
+                + "LEFT JOIN propietarioxhierro f ON f.id_propietario=d.id AND a.hierro=f.id\n"
                 + "ORDER BY\n"
                 + "a.numero ASC");
 
@@ -310,20 +310,35 @@ public class Consultas {
                 + "UNION\n"
                 + "SELECT\n"
                 + "id id,\n"
-                + "descripcion descripcion\n"
+                + "CONCAT(descripcion,' (',unidad_medida,')') descripcion\n"
                 + "FROM medicamentos WHERE estado='Activo'"
         );
 
         consultas.put(
-                "GET_MAXIMO_ID_PESAJE",
-                "SELECT IFNULL(MAX(id)+1,0) AS IDPESAJE FROM pesaje"
+                "GET_MEDICAMENTOS_POR_PESAJE",
+                "SELECT\n"
+                + "a.id_medicamento AS ID,\n"
+                + "b.descripcion AS DESCRIPCION,\n"
+                + "a.dosis AS CANTIDAD,\n"
+                + "b.unidad_medida AS UNIDAD_MEDIDA\n"
+                + "FROM pesajexmedicamento a\n"
+                + "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n"
+                + "WHERE id_pesaje="
+        );
+        
+        consultas.put(
+                "GET_MEDICAMENTOS_POR_PALPACION",
+                "SELECT a.id_medicamento AS ID, CONCAT(b.descripcion, ' (', b.unidad_medida,')') AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO, '0' AS 'UPDATE'\n" +
+                "FROM `palpacionxtratamiento` a\n" +
+                "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n" +
+                "WHERE a.`id_palpacion`="
         );
 
         consultas.put(
                 "GET_MAXIMO_ID_PESAJE_ANIMAL",
                 "SELECT IFNULL(MAX(id)+1,0) AS IDPESAJE FROM animales"
         );
-        
+
         consultas.put(
                 "GET_MAXIMO_ID_PALPACION",
                 "SELECT IFNULL(MAX(id)+1,0) AS IDPALPACION FROM palpacion"

@@ -45,7 +45,8 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     private List<Map<String, String>> medicamentos;
     private List<Map<String, String>> select;
     private ControlGeneral controlGral;
-    private ArrayList<Object[]> listaMedicamentos;
+    private ArrayList<Object[]> listaMedicamentosO;
+    private ArrayList<Map<String, String>> listaMedicamentos;
     private DefaultTableModel dtm;
     private ModeloPalpacion modelo;
     private ModeloMedicamentosPorPesaje modelompp;
@@ -111,12 +112,13 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         modelompp = new ModeloMedicamentosPorPesaje();
         control = new ControlPalpacion();
         txtNumMeses.setEnabled(false);
-        IniciarFecha();
+        
         
         if(!datos.get("IDPALPACION").equals("")){
             guardar = 1;
             LlenarFormulario();
         }
+        IniciarFecha();
     }
 
     private void cargarComboMedicamento() {
@@ -748,6 +750,10 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             }
             int opcion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de elimar el medicamento?", "Confirmacion", JOptionPane.YES_NO_OPTION);
             if (opcion == JOptionPane.YES_OPTION) {
+                if(!listaMedicamentos.get(fila).get("IDPALPMEDICAMENTO").equals("0")){
+                    int rep = control.deletePalpacionMedicamento(listaMedicamentos.get(fila).get("IDPALPMEDICAMENTO"));
+                    JOptionPane.showMessageDialog(this, "El registro se elimino exitosamente.");
+                }
                 listaMedicamentos.remove(fila);
                 reorganizarMedicamentos();
             }
@@ -778,8 +784,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        int fila = Integer.parseInt(datos.get(2));
-        vp.tbl_Animales.setValueAt("", fila, 11);
+        vp.MostrarTabla();
         vp.band=0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -892,7 +897,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             return;
         }
         for (int i = 0; i < listaMedicamentos.size(); i++) {
-            if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i)[0])) {
+            if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i).get("ID"))) {
                 JOptionPane.showMessageDialog(this, "El medicamento ya se encuentra en la lista.");
                 cbMedicamentos.setSelectedIndex(0);
                 cbMedicamentos.requestFocusInWindow();
@@ -904,14 +909,16 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         dtm = (DefaultTableModel) tablaMedicamentos.getModel();
         dtm.addRow(getFila());
         tablaMedicamentos.setModel(dtm);
-
-        listaMedicamentos.add(new Object[]{
-            txtCodigoMedicamento.getText(),//idMedicamento
-            cbMedicamentos.getSelectedItem().toString(),//descripcionMedicamento
-            txtCantidadMedicamento.getText(),//CantidadMedicamento
-            "Modificar",
-            "Eliminar"
-        });
+        
+// a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
+        Map<String, String> mp = new HashMap<String, String>();
+        mp.put("ID", txtCodigoMedicamento.getText());
+        mp.put("DESCRIPCION", cbMedicamentos.getSelectedItem().toString());
+        mp.put("CANTIDAD", txtCantidadMedicamento.getText());
+        mp.put("IDPALPMEDICAMENTO", "0");
+        mp.put("UPDATE", "0");
+        listaMedicamentos.add(mp);
+        
     }
 
     private Object[] getFila() {
@@ -932,10 +939,10 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         for (int i = 0; i < listaMedicamentos.size(); i++) {
             dtm.addRow(new Object[]{
                 ++consecutivo,
-                listaMedicamentos.get(i)[1],
-                listaMedicamentos.get(i)[2],
-                listaMedicamentos.get(i)[3],
-                listaMedicamentos.get(i)[4]
+                listaMedicamentos.get(i).get("DESCRIPCION"),
+                listaMedicamentos.get(i).get("CANTIDAD"),
+                "Modificar",
+                "Eliminar"
             });
         }
         tablaMedicamentos.setModel(dtm);
@@ -964,7 +971,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         }
         for (int i = 0; i < listaMedicamentos.size(); i++) {
             if (filaAModificar != i) {
-                if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i)[0])) {
+                if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i).get("ID"))) {
                     JOptionPane.showMessageDialog(this, "El medicamento ya se encuentra en la lista.");
                     cbMedicamentos.setSelectedIndex(0);
                     cbMedicamentos.requestFocusInWindow();
@@ -974,10 +981,10 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         }
 //</editor-fold>
 
-        listaMedicamentos.get(filaAModificar)[0] = txtCodigoMedicamento.getText();
-        listaMedicamentos.get(filaAModificar)[1] = cbMedicamentos.getSelectedItem().toString();
-        listaMedicamentos.get(filaAModificar)[2] = txtCantidadMedicamento.getText();
-
+        listaMedicamentos.get(filaAModificar).put("ID", txtCodigoMedicamento.getText());
+        listaMedicamentos.get(filaAModificar).put("DESCRIPCION", cbMedicamentos.getSelectedItem().toString());
+        listaMedicamentos.get(filaAModificar).put("CANTIDAD", txtCantidadMedicamento.getText());
+        listaMedicamentos.get(filaAModificar).put("UPDATE", "1");
         reorganizarMedicamentos();
         btnAgregar.setVisible(true);
         btnModificar.setVisible(false);
@@ -1034,14 +1041,21 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 
         for (int i = 0; i < listaMedicamentos.size(); i++) {
             modelompp = new ModeloMedicamentosPorPesaje();
-            modelompp.setId_medicamento(listaMedicamentos.get(i)[0].toString());
-            modelompp.setDosis(listaMedicamentos.get(i)[2].toString().replace(".", "").replace(",", "."));
+            modelompp.setId(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO"));
+            modelompp.setId_medicamento(listaMedicamentos.get(i).get("ID"));
+            modelompp.setDosis(listaMedicamentos.get(i).get("CANTIDAD").toString().replace(".", "").replace(",", "."));
+            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0")?"0":(listaMedicamentos.get(i).get("UPDATE").equals("1")?"1":"-1"));
             modelo.addMedicamentos(modelompp);
         }
         
         
-        int retorno = control.Guardar(modelo);
-        
+        int retorno = -1;
+            
+        if(guardar == 0)
+            retorno = control.Guardar(modelo);
+        else
+            retorno = control.Actualizar(modelo);
+        //<editor-fold defaultstate="collapsed" desc="DESCARTE">
         if(chkDescarte.isSelected() && !idgrupoDescarte.equals("")){//REALIZAR TRASLADO
                 controlTraslado = new ControlTraslado();
                 ModeloTraslado modeloT = new ModeloTraslado();
@@ -1079,11 +1093,12 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 
             }
         }
+//</editor-fold>
         
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
-                mensaje = "Registro guardado satisfactoriamente.";
+                mensaje = "Registro "+(guardar == 0?"guardado":"actualizado") +" satisfactoriamente.";
                 guardado = 0;
                 break;
             case Retorno.ERROR:
@@ -1123,9 +1138,9 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 vp.ListaAnimales.get(i).put("EST", "*");
                 vp.ListaAnimales.get(i).put("NUMERO_MESES", ""+modelo.getNum_meses());
                 vp.ListaAnimales.get(i).put("ESTADO", ""+modelo.getDiagnostico());
-                vp.ListaAnimales.get(i).put("NUMERO_MESES", ""+modelo.getNum_meses());
-                
+                vp.ListaAnimales.get(i).put("NOTAS", ""+modelo.getNotas());
                 vp.fechaAnterior = modelo.getFecha_palpacion();
+                vp.EventoComboFincas();
                 return;
             }
         }
@@ -1176,22 +1191,39 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     }
 
     private void LlenarFormulario() {
-        modlistDiagnostico = (DefaultListModel)lstDiagnostico.getModel();
-        for(int i = 0; i < modlistDiagnostico.size(); i++){
-            if(modlistDiagnostico.getElementAt(i).equals(datos.get("ESTADO"))){
-                lstDiagnostico.setSelectedIndex(i);
-                break;
-            }
-        }
+        lstDiagnostico.setSelectedValue(datos.get("ESTADO"), true);
         if(datos.get("ESTADO").equals("Preñada")){
             txtNumMeses.setText(""+datos.get("NUMERO_MESES"));
             txtNumMeses.setEnabled(true);
         }
+        txtCodigo.setText(""+datos.get("IDPALPACION"));
+        fechaA = datos.get("FECHA_PALP");
         txtNotas.setText(""+datos.get("NOTAS"));
+        getMedicamentos(datos.get("IDPALPACION"));
         
+    }
+    
+    private void getMedicamentos(String id) {
+        String consulta = consultas.get("GET_MEDICAMENTOS_POR_PALPACION") + id;
+        select = controlGral.GetComboBox(consulta);
+        dtm = (DefaultTableModel) tablaMedicamentos.getModel();
         
-        
-//lstDiagnostico.set
+// a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
+        for (Map<String, String> lista : select) {
+            Object[] fila = new Object[]{
+                ++consecutivo,//idMedicamento
+                lista.get("DESCRIPCION"),//descripcionMedicamento
+                lista.get("CANTIDAD"),//CantidadMedicamento
+                "Modificar",
+                "Eliminar"
+            };
+            dtm.addRow(fila);
+            tablaMedicamentos.setModel(dtm);
+            
+            // a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
+            
+            listaMedicamentos.add(lista);
+        }
     }
     
 }

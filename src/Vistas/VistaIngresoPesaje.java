@@ -12,9 +12,11 @@ import Modelo.ModeloMedicamentosPorPesaje;
 import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
 import static Utilidades.Consultas.consultas;
+import Utilidades.Estado;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         "No",
         "Medicamento",
         "Cantidad",
+        "U. medida",
         "Modificar",
         "Eliminar"
     };
@@ -55,6 +58,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private VistaPesaje vp;
     private List<Map<String, String>> hierros;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
+    private int editar=Estado.DEFECTO;
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -80,8 +84,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         this.modeloVistaGeneral = modeloVistaGeneral;
         datos = new HashMap<>();
         datos = (Map<String, String>) modeloVistaGeneral.getModeloDatos();
-        listaMedicamentos = new ArrayList<>();
         this.vp = ((VistaPesaje) modeloVistaGeneral.getPanelPadre());
+        listaMedicamentos = new ArrayList<>();
+        editar = modeloVistaGeneral.getOpcion() == 1 ? Estado.GUARDAR : Estado.ACTUALIZAR;
 
         dtm = new DefaultTableModel(encabezados, 0) {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -90,19 +95,38 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         };
         tablaMedicamentos.setModel(dtm);
         tablaMedicamentos.getTableHeader().setReorderingAllowed(false);
-
         modelo = new ModeloPesaje();
         modelompp = new ModeloMedicamentosPorPesaje();
         control = new ControlPesaje();
 
-        iniciarChecks();
-        cargarComboHierros();
-        cargarDatosActuales();
+        IniciarFecha();
+        if (editar == Estado.GUARDAR) {
+            iniciarChecks();
+            cargarComboHierros();
+            cargarDatosActuales();
+        } else {
+            cargarDatosEditar();
+        }
 
         lblFechaDestete.setVisible(chkDestete.isSelected());
         jdFechaDestete.setVisible(chkDestete.isSelected());
         lblHierro.setVisible(chkHierro.isSelected());
         cbHierros.setVisible(chkHierro.isSelected());
+    }
+
+    public void IniciarFecha() {
+        if (vp.fechaAnterior.isEmpty()) {
+            Calendar cal = Calendar.getInstance();
+            jdFechaPesaje.setCalendar(cal);
+            return;
+        }
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha = formato.parse(vp.fechaAnterior);
+            jdFechaPesaje.setDate(fecha);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Error tratando de establecer la fecha de pesaje");
+        }
     }
 
     private void iniciarChecks() {
@@ -115,14 +139,14 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private void cargarDatosActuales() {
         idAnimal = datos.get("ID_ANIMAL");
         txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
-        txtPesoActual.setText(datos.get("PESO")+" Kg");
+        txtPesoActual.setText(datos.get("PESO") + " Kg");
         cbHierros.setSelectedItem(datos.get("DESC_HIERRO"));
         txtCodigoHierro.setText(datos.get("IDHIERRO"));
         try {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha = formato.parse(datos.get("FECHA_DESTETE"));
             jdFechaDestete.setDate(fecha);
-            
+
             Calendar cal = Calendar.getInstance();
             jdFechaPesaje.setCalendar(cal);
         } catch (Exception ex) {
@@ -144,14 +168,42 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         Utilidades.LlenarComboBox(cbHierros, hierros, "descripcion");
     }
 
-    private void getIdPesaje() {
-        String consulta = consultas.get("GET_MAXIMO_ID_PESAJE");
-        select = controlGral.GetComboBox(consulta);
-        for (Map<String, String> lista : select) {
-            txtCodigo.setText(lista.get("IDPESAJE"));
-        }
+    private void cargarDatosEditar() {
+        iniciarChecks();
+        cargarComboHierros();
+        cargarDatosActuales();
+        txtPesoKg.setText(datos.get("PESO"));
+        txtNotas.setText(datos.get("NOTAS"));
+        txtCodigo.setText(datos.get("ID_PESAJE"));
+        calcularPesoEnLibras();
+        calcularDiferenciaPesos();
+        getMedicamentos(datos.get("ID_PESAJE"));
+
     }
 
+    private void getMedicamentos(String idPesaje) {
+        String consulta = consultas.get("GET_MEDICAMENTOS_POR_PESAJE") + idPesaje;
+        select = controlGral.GetComboBox(consulta);
+        dtm = (DefaultTableModel) tablaMedicamentos.getModel();
+
+        for (Map<String, String> lista : select) {
+            Object[] fila = new Object[]{
+                ++consecutivo,//idMedicamento
+                lista.get("DESCRIPCION"),//descripcionMedicamento
+                lista.get("CANTIDAD"),//CantidadMedicamento
+                lista.get("UNIDAD_MEDIDA"),//UnidadDeMedida
+                "Modificar",
+                "Eliminar"
+            };
+            dtm.addRow(fila);
+            tablaMedicamentos.setModel(dtm);
+            listaMedicamentos.add(fila);
+        }
+    }
+    
+    public boolean isEditando(){
+        return editar==Estado.ACTUALIZAR;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -752,8 +804,6 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private String convertirAKilogramos(double pesoEnLibras) {
         Double resultado = pesoEnLibras / Utilidades.FACTOR_CONVERSION;
         long resultadoRedondeado = Math.round(resultado);
-//        txtCodigo.setText("" + resultadoRedondeado);
-
         return "" + resultadoRedondeado;
     }
 
@@ -805,7 +855,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
+        System.out.println("editar: "+editar);
+        if (!isEditando()) {
+            vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
+        }
         vp.band = 0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -905,8 +958,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         listaMedicamentos.add(new Object[]{
             txtCodigoMedicamento.getText(),//idMedicamento
-            cbMedicamentos.getSelectedItem().toString(),//descripcionMedicamento
+            cbMedicamentos.getSelectedItem().toString().split("\\(")[0].trim(),//descripcionMedicamento
             txtCantidadMedicamento.getText(),//CantidadMedicamento
+            getUnidadMedida(),//CantidadMedicamento
             "Modificar",
             "Eliminar"
         });
@@ -918,12 +972,18 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     private Object[] getFila() {
         return new Object[]{
             ++consecutivo,
-            cbMedicamentos.getSelectedItem().toString(),//descripcionMedicamento
+            cbMedicamentos.getSelectedItem().toString().split("\\(")[0].trim(),//descripcionMedicamento
             txtCantidadMedicamento.getText(),//CantidadMedicamento
+            getUnidadMedida(),//CantidadMedicamento
             "Modificar",
             "Eliminar"
         };
+    }
 
+    private String getUnidadMedida() {
+        String unidadMedida = cbMedicamentos.getSelectedItem().toString().split("\\(")[1];
+        unidadMedida = unidadMedida.substring(0, unidadMedida.length() - 1);
+        return unidadMedida;
     }
 
     private void reorganizarMedicamentos() {
@@ -936,7 +996,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
                 listaMedicamentos.get(i)[1],
                 listaMedicamentos.get(i)[2],
                 listaMedicamentos.get(i)[3],
-                listaMedicamentos.get(i)[4]
+                listaMedicamentos.get(i)[4],
+                listaMedicamentos.get(i)[5]
             });
         }
         tablaMedicamentos.setModel(dtm);
@@ -947,7 +1008,8 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         btnAgregar.setVisible(false);
         String medicamento = tablaMedicamentos.getValueAt(filaAModificar, 1).toString();
         String cantidad = tablaMedicamentos.getValueAt(filaAModificar, 2).toString();
-        cbMedicamentos.setSelectedItem(medicamento);
+        String unidadMedida = tablaMedicamentos.getValueAt(filaAModificar, 3).toString();
+        cbMedicamentos.setSelectedItem(medicamento + " (" + unidadMedida + ")");
         txtCantidadMedicamento.setText(cantidad);
     }
 
@@ -976,8 +1038,9 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 //</editor-fold>
 
         listaMedicamentos.get(filaAModificar)[0] = txtCodigoMedicamento.getText();
-        listaMedicamentos.get(filaAModificar)[1] = cbMedicamentos.getSelectedItem().toString();
+        listaMedicamentos.get(filaAModificar)[1] = cbMedicamentos.getSelectedItem().toString().split("\\(")[0].trim();
         listaMedicamentos.get(filaAModificar)[2] = txtCantidadMedicamento.getText();
+        listaMedicamentos.get(filaAModificar)[3] = getUnidadMedida();
 
         reorganizarMedicamentos();
         btnAgregar.setVisible(true);
@@ -1001,8 +1064,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         }
 //</editor-fold>
 
-        getIdPesaje();
-        modelo.setId(txtCodigo.getText());
+        modelo.setId(editar == Estado.GUARDAR ? "0" : txtCodigo.getText());
         modelo.setId_animal(idAnimal);
         modelo.setPeso(txtPesoKg.getText().replace(".", "").replace(",", "."));
         modelo.setNotas(txtNotas.getText().trim());
@@ -1011,12 +1073,15 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setHierro(chkHierro.isSelected() ? "1" : "0");
         modelo.setDestete(chkDestete.isSelected() ? "1" : "0");
         modelo.setDescripcionHierro(cbHierros.getSelectedItem().toString());
-        modelo.setFecha_pesado("NOW()");
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setIdHierro(txtCodigoHierro.getText());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fechaPesaje = jdFechaPesaje.getCalendar();
+        modelo.setFecha_pesado(sdf.format(fechaPesaje.getTime()));
+
         if (chkDestete.isSelected()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Calendar fechaDestete = jdFechaDestete.getCalendar();
             modelo.setFechaDestete(sdf.format(fechaDestete.getTime()));
         } else {
@@ -1030,16 +1095,22 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             modelo.addMedicamentos(modelompp);
         }
 
-        int retorno = control.Guardar(modelo);
+        int retorno = Retorno.DEFECTO;
+
+        if (editar == Estado.GUARDAR) {
+            retorno = control.Guardar(modelo);
+        } else {
+            retorno = control.Actualizar(modelo);
+        }
 
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
-                mensaje = "Registro guardado satisfactoriamente.";
-                guardado = 0;
+                mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
+                guardado = editar;
                 break;
             case Retorno.ERROR:
-                mensaje = "El registro no pudo ser guardado.";
+                mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
                 break;
             case Retorno.EXCEPCION_SQL:
                 mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
@@ -1064,6 +1135,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
                 vp.ListaAnimales.get(i).put("EST", "*");
                 vp.ListaAnimales.get(i).put("PESO", modelo.getPeso());
                 vp.ListaAnimales.get(i).put("DESC_HIERRO", modelo.getDescripcionHierro());
+                vp.fechaAnterior = modelo.getFecha_pesado();
                 vp.cargarTablaFiltro();
                 return;
             }

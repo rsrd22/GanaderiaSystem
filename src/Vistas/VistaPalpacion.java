@@ -395,8 +395,13 @@ public class VistaPalpacion extends javax.swing.JPanel {
         filaSeleccionada = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = tbl_Animales.getValueAt(filaSeleccionada, cola).toString();
+        System.out.println("band-->"+band);
         if (band == 0) {
-            if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(filaSeleccionada, cola+1).equals("")) {
+            if(cola == 10 && dato.equals("*")){
+                band = 1;
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPalpacion(), 2, ListaAnimalesMostrar.get(filaSeleccionada));
+                new VistaGeneral(objetoVentana).setVisible(true);
+            }else if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(filaSeleccionada, cola+1).equals("")) {
                 tbl_Animales.setValueAt("*", filaSeleccionada, cola+1);
                 if(fechaAnterior.equals("")){
                     fechaAnterior = fecha;
@@ -462,7 +467,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         EventoComboFincas();
     }
 
-    private void EventoComboFincas() {
+    public void EventoComboFincas() {
         System.out.println("EventoComboFincas >> idFinca-->" + idFinca);
         if (idFinca.equals("ALL")) {
             allFincas = 1;

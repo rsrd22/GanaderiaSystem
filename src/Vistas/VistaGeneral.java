@@ -286,16 +286,16 @@ public class VistaGeneral extends javax.swing.JFrame {
                 ((VistaAllHierros) modeloVista.getPanelPadre()).btnAgregarHierro.setEnabled(true);
             }
         } else if (modeloVista.getPanelPadre() instanceof VistaPesaje) {
-            ArrayList<String> datos = new ArrayList<>();
-            System.out.println("guardado: "+((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado );
             if (((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPesaje vp = ((VistaPesaje) modeloVista.getPanelPadre());
-                vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
-                vp.band=0;
+                if (modeloVista.getOpcion()==1) {
+                    vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
+                }
+                vp.band = 0;
             }
         } else if (modeloVista.getPanelPadre() instanceof VistaPalpacion) {
             ArrayList<String> datos = new ArrayList<>();
-            System.out.println("guardado: "+((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado );
+            System.out.println("guardado: " + ((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado);
             if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPalpacion vp = ((VistaPalpacion) modeloVista.getPanelPadre());
                 //vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 10);
