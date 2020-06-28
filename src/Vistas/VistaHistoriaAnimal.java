@@ -291,7 +291,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-                , java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -302,40 +301,39 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 return false;
             }
         };
+        tblDatosPeso.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
+
+            public void setSelectionInterval(int index0, int index1) {
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
+                    }
+                } else {
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                } else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
 
         tblDatosPeso.setModel(modeloTblPeso);
-//        tbl_Traslados.setSelectionModel(new DefaultListSelectionModel() {
-//            private int i0 = -1;
-//            private int i1 = -1;
-//
-//            public void setSelectionInterval(int index0, int index1) {
-//                if (i0 == index0 && i1 == index1) {
-//                    if (getValueIsAdjusting()) {
-//                        setValueIsAdjusting(false);
-//                        setSelection(index0, index1);
-//                    }
-//                } else {
-//                    i0 = index0;
-//                    i1 = index1;
-//                    setValueIsAdjusting(false);
-//                    setSelection(index0, index1);
-//                }
-//            }
-//
-//            private void setSelection(int index0, int index1) {
-//                if (super.isSelectedIndex(index0)) {
-//                    super.removeSelectionInterval(index0, index1);
-//                } else {
-//                    super.addSelectionInterval(index0, index1);
-//                }
-//            }
-//        });
 
         tblDatosPeso.getColumnModel().getColumn(0).setPreferredWidth(25);
         tblDatosPeso.getColumnModel().getColumn(1).setPreferredWidth(80);
         tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
-        tblDatosPeso.getColumnModel().getColumn(4).setPreferredWidth(70);
         tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
         tblDatosPeso.getColumnModel().getColumn(6).setPreferredWidth(70);
         
@@ -346,10 +344,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
 
-//                if(i == 2 ){
-//                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-//
-//                }else{
             tcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 //                }
@@ -1647,7 +1641,22 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGraficoActionPerformed
 
     private void tblDatosPesoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosPesoMouseReleased
-        
+        int fila = tblDatosPeso.getSelectedRow();
+        int cola = tblDatosPeso.getSelectedColumn();
+        if(cola == 4){// Ver MAs
+            
+
+        }else if(cola == 5){ //ELIMINAR
+//            modeloLotes = ListamodeloLotes.get(fila);
+//            int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
+//            if(resp == JOptionPane.YES_OPTION){
+//                int ret = controlLote.Eliminar(modeloLotes);
+//                if(ret == 0){
+//                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+//                    AccionCombo();
+//                }
+//            }
+        }
     }//GEN-LAST:event_tblDatosPesoMouseReleased
 
 
