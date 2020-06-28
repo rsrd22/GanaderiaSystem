@@ -15,7 +15,9 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,11 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public int band = 0;
+    public String fechaAnterior = "";
+    public String fecha = "";
+    public String ban = "0";
+    
+    
 
     /**
      * Creates new form VistaVerAnimales
@@ -84,6 +91,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         listaFincas = new ArrayList<>();
         listaTipoAnimales = new ArrayList<>();
         InicializarTblAnimales();
+        IniciarFecha();
         CargarListaFincas();
     }
 
@@ -157,7 +165,9 @@ public class VistaPalpacion extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         lblTid1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_Animales = new Tablas.PesajeTable();
+        tbl_Animales = new Tablas.PalpacionTable();
+        lbltitle19 = new javax.swing.JLabel();
+        jdFechaPalpacion = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -247,20 +257,16 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(txtFiltro, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
@@ -275,11 +281,10 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         add(lblTid1, gridBagConstraints);
 
         tbl_Animales.setForeground(new java.awt.Color(59, 123, 50));
@@ -306,7 +311,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -314,6 +319,32 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jScrollPane1, gridBagConstraints);
+
+        lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle19.setText("Fecha");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 0);
+        add(lbltitle19, gridBagConstraints);
+
+        jdFechaPalpacion.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdFechaPalpacionPropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 123;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(jdFechaPalpacion, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -333,6 +364,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         if (cbTipoAnimales.getItemCount() > 0) {
             //EventoComboFincas();
+            ban = "1";
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
@@ -367,6 +399,9 @@ public class VistaPalpacion extends javax.swing.JPanel {
         if (band == 0) {
             if (dato.equalsIgnoreCase("PALPAJE") && tbl_Animales.getValueAt(fila, cola+1).equals("")) {
                 tbl_Animales.setValueAt("*", fila, cola+1);
+                if(fechaAnterior.equals("")){
+                    fechaAnterior = fecha;
+                }
                 band = 1;
                 String idAnimal = ListaAnimalesMostrar.get(fila).get("IDANIMAL");
                 String numero = ListaAnimalesMostrar.get(fila).get("NUMERO_ANIMAL");
@@ -374,11 +409,20 @@ public class VistaPalpacion extends javax.swing.JPanel {
                 datosRef.add(idAnimal);
                 datosRef.add(numero);
                 datosRef.add(fila + "");
+                datosRef.add(fechaAnterior);
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaIngresoPalpacion(), 1, datosRef);
                 new VistaGeneral(objetoVentana).setVisible(true);
             }
         }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
+
+    private void jdFechaPalpacionPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPalpacionPropertyChange
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fechaC = jdFechaPalpacion.getCalendar();
+        fecha = sdf.format(fechaC.getTime());
+        if(ban.equals("1"))
+            EventoComboFincas();
+    }//GEN-LAST:event_jdFechaPalpacionPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -386,9 +430,11 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator6;
+    private com.toedter.calendar.JDateChooser jdFechaPalpacion;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
+    private javax.swing.JLabel lbltitle19;
     public javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
@@ -428,7 +474,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
             allFincas = 0;
         }
         if (Integer.parseInt(idFinca) > 0) {
-            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPalpacion(idFinca, idTipoAnimal);
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPalpacion(idFinca, idTipoAnimal, fecha);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
@@ -508,6 +554,11 @@ public class VistaPalpacion extends javax.swing.JPanel {
         }
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
+    }
+    
+    public void IniciarFecha(){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        jdFechaPalpacion.setCalendar(Calendar.getInstance());    
     }
 
     

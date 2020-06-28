@@ -735,22 +735,14 @@ public class ControlAnimales implements IControl {
     }
 
     
-    public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA) {
+    public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA, String FECHA) {
         try {
-//            NameColumnasFiltro.add("NUMERO_ANIMAL");
-//            NameColumnasFiltro.add("NUMERO_MAMA");
-//            NameColumnasFiltro.add("NUMERO_HIJOS");
-//            NameColumnasFiltro.add("NUMERO_PARTOS");
-//            NameColumnasFiltro.add("FECHA_NOVILLA");
-//            NameColumnasFiltro.add("ESTADO");
-//            NameColumnasFiltro.add("NUMERO_MESES");
-//            NameColumnasFiltro.add("FECHA_ULT_PARTO");
-//            NameColumnasFiltro.add("EST");
+            
             String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
                                 " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA\n" +
-                                ", `NumeroHijos`(anim.`numero`) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
+                                ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
                                 "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
-                                "IFNULL(DATE_FORMAT(tbl.FULTPARTO, '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
+                                "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
                                 "IFNULL(tbl.NMESES, '') AS NUMERO_MESES,\n" +
                                 "\n" +
                                 "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n" +
@@ -765,9 +757,9 @@ public class ControlAnimales implements IControl {
                                 "	FROM `palpacion` palp\n" +
                                 "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n" +
                                 "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
-                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
+                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"' AND fecha_palpacion = '"+FECHA+"'\n" +
                                 "	GROUP BY palp.`id_animal` \n" +
-                                ") tbl ON tbl.IDANIMAL = anim.`id`\n" +
+                                ") tbl ON tbl.IDANIMAL = anim.`id` \n" +
                                 "WHERE grup.`palpable` = '1' AND finc.`id` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
                                 "ORDER BY anim.id ASC";
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();

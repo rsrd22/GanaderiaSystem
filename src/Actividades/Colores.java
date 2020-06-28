@@ -21,6 +21,7 @@ public class Colores {
     public final static Color INVERSE = new Color(41, 43, 44);
     public final static Color FADED = new Color(240, 240, 240);
     public final static Color DEFAULT = new Color(0, 105, 92);
+    public final static Color YELLOW = new Color(234, 238, 13);
     
     public final static Color LIGHT_PPRIMARY = new Color(66, 133, 244);
     public final static Color LIGHT_SUCCESS = new Color(0, 200, 81);
@@ -41,4 +42,7 @@ public class Colores {
     public final static Color TEXT_DANGER = new Color(247, 247, 247);
     public final static Color TEXT_INVERSE = new Color(247, 247, 247);
     public final static Color TEXT_FADED = new Color(41, 43, 44);
+    public final static Color TEXT_TABLE = new Color(59,123,50);
+    
+    
 }
