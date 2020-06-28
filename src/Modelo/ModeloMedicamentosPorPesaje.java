@@ -15,6 +15,7 @@ public class ModeloMedicamentosPorPesaje {
     private String id;
     private String id_medicamento;
     private String id_pesaje;
+    private boolean eliminar;
     private String estadoG;
 
     public ModeloMedicamentosPorPesaje() {
@@ -33,6 +34,14 @@ public class ModeloMedicamentosPorPesaje {
         this.id_medicamento = id_medicamento;
         this.id_pesaje = id_pesaje;
         this.estadoG = estadoG;
+    }
+
+    public boolean isEliminar() {
+        return eliminar;
+    }
+
+    public void setEliminar(boolean eliminar) {
+        this.eliminar = eliminar;
     }
 
     public String getDosis() {

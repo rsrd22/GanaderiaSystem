@@ -420,19 +420,19 @@ public class VistaPesaje extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(filaSeleccionada)
                 );
                 new VistaGeneral(objetoVentana).setVisible(true);
+            } else if (dato.equalsIgnoreCase("*")) {
+                band = 1;
+                if (fechaAnterior.equals("")) {
+                    fechaAnterior = fechaFiltro;
+                }
+                objetoVentana = new ModeloVentanaGeneral(
+                        this,
+                        new VistaIngresoPesaje(),
+                        2,
+                        ListaAnimalesMostrar.get(filaSeleccionada)
+                );
+                new VistaGeneral(objetoVentana).setVisible(true);
             }
-        }
-        if (dato.equalsIgnoreCase("*")) {
-            if (fechaAnterior.equals("")) {
-                fechaAnterior = fechaFiltro;
-            }
-            objetoVentana = new ModeloVentanaGeneral(
-                    this,
-                    new VistaIngresoPesaje(),
-                    2,
-                    ListaAnimalesMostrar.get(filaSeleccionada)
-            );
-            new VistaGeneral(objetoVentana).setVisible(true);
         }
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
 
@@ -451,7 +451,7 @@ public class VistaPesaje extends javax.swing.JPanel {
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator6;
-    private com.toedter.calendar.JDateChooser jdFechaPesaje;
+    public com.toedter.calendar.JDateChooser jdFechaPesaje;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;

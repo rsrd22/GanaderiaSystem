@@ -125,11 +125,13 @@ public class ControlPesaje implements IControl {
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJEPORMEDICAMENTOS">
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
-                "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
-        //</editor-fold>
-        );
+        if (modelo.getListaMedicamentos().get(0).isEliminar()) {
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                    "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
+            //</editor-fold>
+            );
+        }
         for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
             consultas.add(
                     //<editor-fold defaultstate="collapsed" desc="INSERT">
