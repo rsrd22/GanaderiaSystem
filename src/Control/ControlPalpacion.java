@@ -45,15 +45,16 @@ public class ControlPalpacion implements IControl {
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO `palpacion`\n" +
-                    "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, `fecha`, `id_usuario`)\n" +
+                    "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, razondescarte, `fecha`, `id_usuario`)\n" +
                     "VALUES (0,\n" +
                     "        " + modelo.getId_animal()+ ",\n" +
                     "        "+Utilidades.ValorNULL(modelo.getFecha_palpacion())+",\n" +
-                    "        '" + modelo.getDiagnostico()+ "',\n" +
+                    "        '" + modelo.getDiagnostico().toLowerCase()+ "',\n" +
                     "        '" + modelo.getNotas()+ "',\n" +
                     "        " + modelo.getNum_meses()+ ",\n" +
                     "        "+Utilidades.ValorNULL(modelo.getFecha_ultimo_parto())+",\n" +
                     "        '" + modelo.getDescarte()+ "',\n" +
+                    "        '" + modelo.getRazondescarte()+ "',\n" +
                     "        "+modelo.getFecha()+",\n" +
                     "        "+modelo.getId_usuario()+");"
         );
@@ -119,6 +120,7 @@ public class ControlPalpacion implements IControl {
                         palpacion.get("num_meses"), 
                         palpacion.get("fecha_ultimo_parto"), 
                         palpacion.get("descarte"), 
+                        palpacion.get("razondescarte"), 
                         palpacion.get("fecha"), 
                         palpacion.get("id_usuario")
                         

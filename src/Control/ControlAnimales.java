@@ -744,12 +744,12 @@ public class ControlAnimales implements IControl {
         try {
             
             String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n" +
-                                " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA\n" +
+                                " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n" +
                                 ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n" +
                                 "IFNULL(tbl.DIAG, '') ESTADO, IFNULL(DATE_FORMAT(tbl.FPALP, '%d/%m/%Y'), '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n" +
                                 "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n" +
-                                "IFNULL(tbl.NMESES, '') AS NUMERO_MESES,\n" +
-                                "\n" +
+                                "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, \n" +
+                                "finc.`id` as IDFINCA, tpo.`id` as IDTIPOA, \n" +
                                 "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n" +
                                 "FROM animales anim\n" +
                                 "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n" +
@@ -758,7 +758,7 @@ public class ControlAnimales implements IControl {
                                 "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n" +
                                 "LEFT JOIN (\n" +
                                 "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n" +
-                                "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL\n" +
+                                "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL, IFNULL(palp.notas, '') as NOTAS\n" +
                                 "	FROM `palpacion` palp\n" +
                                 "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n" +
                                 "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
