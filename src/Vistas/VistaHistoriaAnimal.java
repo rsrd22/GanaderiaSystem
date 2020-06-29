@@ -42,6 +42,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
     private ControlTraslado controlTraslado = new ControlTraslado();
     private ModeloPalpacion modeloPalpacion = new ModeloPalpacion();
+    private ModeloPesaje modeloPesaje = new ModeloPesaje();
     private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     private ArrayList<ModeloAnimales> ListaDatos;
     private Map<String, String> DatosVenta;
@@ -139,7 +140,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosAnimal();
         pnlGrafico.setVisible(false);
         btnGrilla.setEnabled(false);
-        if(listaDatosPeso.size()>0){
+        if (listaDatosPeso.size() > 0) {
             graficoPeso = new Panel(listaDatosPeso, pnlGrafico);
             graficoPeso.setBounds(0, 0, pnlGrafico.getWidth(), pnlGrafico.getHeight());
             pnlGrafico.add(graficoPeso);
@@ -301,6 +302,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
 
     }
+
     public void InicializarTblPeso() {
         tblDatosPeso.setDefaultRenderer(Object.class, new TablaRender());
 
@@ -353,7 +355,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
         tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
         tblDatosPeso.getColumnModel().getColumn(6).setPreferredWidth(70);
-        
+
         tblDatosPeso.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblPeso.getColumnCount(); i++) {
@@ -428,7 +430,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tbl_Palpacion.getColumnModel().getColumn(3).setPreferredWidth(130);
         tbl_Palpacion.getColumnModel().getColumn(5).setPreferredWidth(70);
         tbl_Palpacion.getColumnModel().getColumn(6).setPreferredWidth(70);
-        
+
         tbl_Palpacion.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblPalpacion.getColumnCount(); i++) {
@@ -449,7 +451,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1776,31 +1778,49 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void tblDatosPesoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosPesoMouseReleased
         int fila = tblDatosPeso.getSelectedRow();
         int cola = tblDatosPeso.getSelectedColumn();
-        if(cola == 4){// Ver MAs
-            
+        if (cola == 4) {// Ver MAs
+            modeloPesaje = listaPesajes.get(fila);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPalpacion);
+            new VistaGeneral(objetoVentana).setVisible(true);
+        } else if (cola == 5) {
+            modeloPesaje = listaPesajes.get(fila);
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
+            if (respuesta == JOptionPane.YES_OPTION) {
+                int retorno = controlPesaje.Eliminar(modeloPesaje);
 
-        }else if(cola == 5){ //ELIMINAR
-//            modeloLotes = ListamodeloLotes.get(fila);
-//            int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
-//            if(resp == JOptionPane.YES_OPTION){
-//                int ret = controlLote.Eliminar(modeloLotes);
-//                if(ret == 0){
-//                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
-//                    AccionCombo();
-//                }
-//            }
+                String mensaje = "";
+                switch (retorno) {
+                    case Retorno.EXITO:
+                        mensaje = "Registro eliminado satisfactoriamente.";
+                        break;
+                    case Retorno.ERROR:
+                        mensaje = "El registro no pudo ser eliminado.";
+                        break;
+                    case Retorno.EXCEPCION_SQL:
+                        mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                        break;
+                    case Retorno.CLASE_NO_ENCONTRADA:
+                        mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                        break;
+                    case Retorno.MENSAJE:
+                        mensaje = "No es posible eliminar el registro del peso.";
+                        break;
+                }
+
+                JOptionPane.showMessageDialog(this, mensaje);
+            }
         }
     }//GEN-LAST:event_tblDatosPesoMouseReleased
 
     private void tbl_PalpacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PalpacionMouseReleased
         int fila = tbl_Palpacion.getSelectedRow();
         int cola = tbl_Palpacion.getSelectedColumn();
-        if(cola == 4){// Ver MAs
+        if (cola == 4) {// Ver MAs
             modeloPalpacion = ListaDatosPalpacion.get(fila);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPalpacion(), 1, modeloPalpacion);
             new VistaGeneral(objetoVentana).setVisible(true);
 
-        }else if(cola == 5){ //ELIMINAR
+        } else if (cola == 5) { //ELIMINAR
 //            modeloLotes = ListamodeloLotes.get(fila);
 //            int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
 //            if(resp == JOptionPane.YES_OPTION){
@@ -1894,10 +1914,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void GetDatosAnimal() {
         ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
         LlenarDatos();
-        
-    }
 
-   
+    }
 
     private void LlenarDatos() {
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
@@ -1926,12 +1944,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         } else {
             jTabbedPane1.setEnabledAt(0, false);
         }
-        if(ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0"))
+        if (ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0")) {
             jTabbedPane1.setSelectedIndex(2);
-        
-        //jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
-        
+        }
 
+        //jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
@@ -2116,14 +2133,14 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="PESO">
     private void cargarHistoricoPesos() {
         listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
         if (listaPesajes.size() > 0) {
             ///////////////////////////   X        Y
             datosPeso.add(new Object[]{"Fecha", "Peso"});
-            for (int i = listaPesajes.size()-1; i >= 0; i--) {
+            for (int i = listaPesajes.size() - 1; i >= 0; i--) {
                 datosPeso.add(new Object[]{
                     listaPesajes.get(i).getFecha_pesado(),
                     listaPesajes.get(i).getPeso()
@@ -2133,7 +2150,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             LlenarTablaPesos();
         }
     }
-    
+
     private void LlenarTablaPesos() {
         Utilidades.LimpiarTabla(tblDatosPeso);
 
@@ -2147,10 +2164,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                         listaPesajes.get(i).getPeso(),
                         listaPesajes.get(i).getNotas(),
                         "Ver Mas",
-//                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
-//                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
-//                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
-//                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
+                        //                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
+                        //                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
+                        //                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
+                        //                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
                         "Eliminar"
                     }
             );
@@ -2164,10 +2181,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         return ret;
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="TabbletPane Palpacion">
     private void GetDatosPalpacion() {
-        ListaDatosPalpacion =( ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltro(id_Animal);
+        ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltro(id_Animal);
 
         if (ListaDatosPalpacion.size() > 0) {
 
@@ -2175,6 +2192,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             LlenarTablaPalpacion();
         }
     }
+
     private void LlenarTablaPalpacion() {
         Utilidades.LimpiarTabla(tbl_Palpacion);
 //        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
@@ -2194,10 +2212,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             );
         }
     }
-    
+
 //</editor-fold>
-    
-
-    
-
 }

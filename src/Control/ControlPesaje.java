@@ -32,7 +32,33 @@ public class ControlPesaje implements IControl {
 
     @Override
     public Object ObtenerDatosKey(String ID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String consulta = "SELECT * FROM pesaje\n"
+                + " WHERE id_animal=" + ID + " ORDER BY fecha DESC";
+        List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloPesaje> lista = new ArrayList<>();
+        pesajes = mySQL.ListSQL(consulta);
+
+        if (pesajes.size() > 0) {
+            for (Map<String, String> pesaje : pesajes) {
+                lista.add(new ModeloPesaje(
+                        pesaje.get("descornado"),
+                        pesaje.get("destete"),
+                        pesaje.get("fecha"),
+                        pesaje.get("fecha_pesado"),
+                        pesaje.get("hierro"),
+                        pesaje.get("id"),
+                        pesaje.get("id_animal"),
+                        pesaje.get("id_usuario"),
+                        pesaje.get("implante"),
+                        pesaje.get("notas"),
+                        pesaje.get("peso"),
+                        "", "", ""
+                ));
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
     }
 
     @Override
@@ -175,7 +201,60 @@ public class ControlPesaje implements IControl {
 
     @Override
     public int Eliminar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloPesaje modelo = (ModeloPesaje) o;
+
+        ArrayList<ModeloPesaje> lista = new ArrayList<>();
+        lista = (ArrayList<ModeloPesaje>) ObtenerDatosKey(modelo.getId_animal());
+
+        if (lista.size() > 1) {
+            //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS VALORES DEL REGISTRO ANTERIOR">
+            modelo.setPeso(lista.get(1).getPeso());
+            modelo.setHierro(lista.get(1).getHierro());
+            modelo.setImplante(lista.get(1).getImplante());
+            modelo.setDescornado(lista.get(1).getDescornado());
+            modelo.setFechaDestete(lista.get(1).getFechaDestete());
+            modelo.setIdHierro(lista.get(1).getIdHierro());
+//</editor-fold>
+
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                    "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
+            //</editor-fold>
+            );
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DEL PESO">
+                    "DELETE FROM pesaje WHERE id_pesaje=" + modelo.getId()
+            //</editor-fold>
+            );
+            //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
+            consultas.add("update animales\n"
+                    + "set \n"
+                    + "peso = " + modelo.getPeso() + ",\n"
+                    + "hierro_fisico = '" + modelo.getHierro() + "',\n"
+                    + "implante = '" + modelo.getImplante() + "',\n"
+                    + "descornado = '" + modelo.getDescornado() + "',\n"
+                    + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                    + "hierro = " + modelo.getIdHierro() + "\n"
+                    + "where id = " + modelo.getId_animal() + "");
+//</editor-fold>
+
+            try {
+                if (mySQL.EnviarConsultas(consultas)) {
+                    return Retorno.EXITO;
+                } else {
+                    return Retorno.ERROR;
+                }
+            } catch (ClassNotFoundException ex) {
+                System.out.println("" + ex.getMessage());
+                return Retorno.CLASE_NO_ENCONTRADA;
+            } catch (SQLException ex) {
+                System.out.println("" + ex.getMessage());
+                return Retorno.EXCEPCION_SQL;
+            }
+        } else {
+            return Retorno.MENSAJE;
+        }
     }
 
     @Override
@@ -189,7 +268,7 @@ public class ControlPesaje implements IControl {
         if (pesajes.size() > 0) {
 
             for (Map<String, String> pesaje : pesajes) {
-                lista.add(new ModeloPesaje(
+                ModeloPesaje modelo =new ModeloPesaje(
                         pesaje.get("descornado"),
                         pesaje.get("destete"),
                         pesaje.get("fecha"),
@@ -202,7 +281,9 @@ public class ControlPesaje implements IControl {
                         pesaje.get("notas"),
                         pesaje.get("peso"),
                         "", "", ""
-                ));
+                );
+                modelo.setListaMedicamentos(null);
+                lista.add(modelo);
             }
             return lista;
         } else {
@@ -269,5 +350,5 @@ public class ControlPesaje implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
-    
+
 }
