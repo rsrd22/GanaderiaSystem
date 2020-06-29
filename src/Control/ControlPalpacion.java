@@ -190,16 +190,16 @@ public class ControlPalpacion implements IControl {
     public Object ObtenerDatosFiltro(Object o) {
         String consulta = "SELECT * FROM palpacion\n"
                 + " WHERE id_animal=" + o.toString() + "";
-        consulta = "SELECT palp.`id` AS ID, palp.`id_animal` AS IDANIMAL, palp.`fecha_palpacion` AS FECHAPALP,\n" +
-                    "palp.`diagnostico` AS DIAGNOSTICO, palp.`notas` AS NOTAS, palp.`num_meses` AS NUM_MESES,\n" +
-                    "palp.`fecha_ultimo_parto` AS FECHAULTPARTO, palp.`descarte` AS DESCARTE, palp.`razondescarte` AS RAZON_DESCARTE,\n" +
-                    "palpm.`id` AS IDPALPMEDICAMENTOS, palpm.`id_medicamento` AS IDMEDICAMENTO,\n" +
-                    "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA\n" +
-                    "FROM palpacion palp\n" +
-                    "LEFT JOIN palpacionxtratamiento palpm ON palpm.`id_palpacion` = palp.id\n" +
-                    "LEFT JOIN medicamentos med ON med.`id` = palpm.`id_medicamento`\n" +
-                    "WHERE palp.id_animal = '" + o.toString() + "'\n" +
-                    "ORDER BY palp.`id` DESC";
+//        consulta = "SELECT palp.`id` AS ID, palp.`id_animal` AS IDANIMAL, palp.`fecha_palpacion` AS FECHAPALP,\n" +
+//                    "palp.`diagnostico` AS DIAGNOSTICO, palp.`notas` AS NOTAS, palp.`num_meses` AS NUM_MESES,\n" +
+//                    "palp.`fecha_ultimo_parto` AS FECHAULTPARTO, palp.`descarte` AS DESCARTE, palp.`razondescarte` AS RAZON_DESCARTE,\n" +
+//                    "palpm.`id` AS IDPALPMEDICAMENTOS, palpm.`id_medicamento` AS IDMEDICAMENTO,\n" +
+//                    "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA\n" +
+//                    "FROM palpacion palp\n" +
+//                    "LEFT JOIN palpacionxtratamiento palpm ON palpm.`id_palpacion` = palp.id\n" +
+//                    "LEFT JOIN medicamentos med ON med.`id` = palpm.`id_medicamento`\n" +
+//                    "WHERE palp.id_animal = '" + o.toString() + "'\n" +
+//                    "ORDER BY palp.`id` DESC";
         
         List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPalpacion> lista = new ArrayList<>();
