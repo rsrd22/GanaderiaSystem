@@ -14,6 +14,8 @@ public class ModeloMedicamentosPorPesaje {
     private String dosis;
     private String id;
     private String id_medicamento;
+    private String medicamento;
+    private String unidad_medida;
     private String id_pesaje;
     private boolean eliminar;
     private String estadoG;
@@ -36,6 +38,7 @@ public class ModeloMedicamentosPorPesaje {
         this.estadoG = estadoG;
     }
 
+    
     public boolean isEliminar() {
         return eliminar;
     }
@@ -82,6 +85,22 @@ public class ModeloMedicamentosPorPesaje {
 
     public void setEstadoG(String estadoG) {
         this.estadoG = estadoG;
+    }
+
+    public String getMedicamento() {
+        return medicamento;
+    }
+
+    public void setMedicamento(String medicamento) {
+        this.medicamento = medicamento;
+    }
+
+    public String getUnidad_medida() {
+        return unidad_medida;
+    }
+
+    public void setUnidad_medida(String unidad_medida) {
+        this.unidad_medida = unidad_medida;
     }
     
     

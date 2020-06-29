@@ -6,19 +6,129 @@
 
 package Vistas;
 
+import Modelo.ModeloPalpacion;
+import Modelo.ModeloVentanaGeneral;
+import Tablas.TablaRender;
+import Utilidades.Utilidades;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.DefaultListSelectionModel;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author MERRY
  */
 public class VistaInfoPalpacion extends javax.swing.JPanel {
-
+    public String[] EncabezadoTbl;
+    public DefaultTableModel modeloTbl;
+    public ModeloPalpacion modelo= new ModeloPalpacion();
     /**
      * Creates new form VistaInfoPalpacion
      */
     public VistaInfoPalpacion() {
         initComponents();
+        EncabezadoTbl = new String[]{
+            "No",
+            "Medicamento",
+            "Dosis",
+            "Unidad de Medida"
+        };
+        InicializarTbl();
     }
 
+    public VistaInfoPalpacion(ModeloVentanaGeneral modeloVista) {
+        initComponents();
+        setSize(468, 411);
+        EncabezadoTbl = new String[]{
+            "No",
+            "Medicamento",
+            "Dosis",
+            "Unidad de Medida"
+        };
+        InicializarTbl();
+        modelo = (ModeloPalpacion) modeloVista.getModeloDatos();
+        
+        LlenarFormulario();
+    }
+
+    public void InicializarTbl() {
+        tblMedicamentos.setDefaultRenderer(Object.class, new TablaRender());
+
+        modeloTbl = new DefaultTableModel(EncabezadoTbl, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        tblMedicamentos.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
+
+            public void setSelectionInterval(int index0, int index1) {
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
+                    }
+                } else {
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                } else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
+
+        tblMedicamentos.setModel(modeloTbl);
+
+        tblMedicamentos.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tblMedicamentos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblMedicamentos.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblMedicamentos.getColumnModel().getColumn(3).setPreferredWidth(130);
+        
+        tblMedicamentos.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloTbl.getColumnCount(); i++) {
+            tblMedicamentos.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 0, 12));
+
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+//                }
+            tcr.setForeground(new Color(26, 82, 118));
+            tblMedicamentos.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
+        }
+        JTableHeader header = tblMedicamentos.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,20 +137,286 @@ public class VistaInfoPalpacion extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        lblTid1 = new javax.swing.JLabel();
+        lbltitle9 = new javax.swing.JLabel();
+        lblFechaPalpacion = new javax.swing.JLabel();
+        lbltitle10 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
+        lbltitle11 = new javax.swing.JLabel();
+        lblNotas = new javax.swing.JLabel();
+        lblNumMeses = new javax.swing.JLabel();
+        lbltitle12 = new javax.swing.JLabel();
+        lbltitle13 = new javax.swing.JLabel();
+        lblFechaUltParto = new javax.swing.JLabel();
+        lbltitle14 = new javax.swing.JLabel();
+        lblDescarte = new javax.swing.JLabel();
+        lbltitle15 = new javax.swing.JLabel();
+        lblRazonDescarte = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMedicamentos = new javax.swing.JTable();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setLayout(new java.awt.GridBagLayout());
+
+        lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid1.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTid1.setText("Palpación");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 402;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 6);
+        add(lblTid1, gridBagConstraints);
+
+        lbltitle9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle9.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle9.setText("Fecha Palpacion");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        add(lbltitle9, gridBagConstraints);
+
+        lblFechaPalpacion.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaPalpacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaPalpacion.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lblFechaPalpacion, gridBagConstraints);
+
+        lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle10.setText("Estado");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 58;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 30, 0, 0);
+        add(lbltitle10, gridBagConstraints);
+
+        lblEstado.setForeground(new java.awt.Color(59, 123, 50));
+        lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblEstado.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 75;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lblEstado, gridBagConstraints);
+
+        lbltitle11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle11.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle11.setText("Notas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 75;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        add(lbltitle11, gridBagConstraints);
+
+        lblNotas.setForeground(new java.awt.Color(59, 123, 50));
+        lblNotas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNotas.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 305;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lblNotas, gridBagConstraints);
+
+        lblNumMeses.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumMeses.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumMeses.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 0);
+        add(lblNumMeses, gridBagConstraints);
+
+        lbltitle12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle12.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle12.setText("Numero Meses");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 22;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        add(lbltitle12, gridBagConstraints);
+
+        lbltitle13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle13.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle13.setText("Fecha Ultimo Parto");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 0);
+        add(lbltitle13, gridBagConstraints);
+
+        lblFechaUltParto.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaUltParto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaUltParto.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 75;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 0);
+        add(lblFechaUltParto, gridBagConstraints);
+
+        lbltitle14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle14.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle14.setText("Descarte");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 57;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        add(lbltitle14, gridBagConstraints);
+
+        lblDescarte.setForeground(new java.awt.Color(59, 123, 50));
+        lblDescarte.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDescarte.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lblDescarte, gridBagConstraints);
+
+        lbltitle15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle15.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle15.setText("Razon Descarte");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 25;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lbltitle15, gridBagConstraints);
+
+        lblRazonDescarte.setForeground(new java.awt.Color(59, 123, 50));
+        lblRazonDescarte.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblRazonDescarte.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 75;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        add(lblRazonDescarte, gridBagConstraints);
+
+        tblMedicamentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblMedicamentos);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 183;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(25, 20, 19, 20);
+        add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDescarte;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFechaPalpacion;
+    private javax.swing.JLabel lblFechaUltParto;
+    private javax.swing.JLabel lblNotas;
+    private javax.swing.JLabel lblNumMeses;
+    private javax.swing.JLabel lblRazonDescarte;
+    private javax.swing.JLabel lblTid1;
+    private javax.swing.JLabel lbltitle10;
+    private javax.swing.JLabel lbltitle11;
+    private javax.swing.JLabel lbltitle12;
+    private javax.swing.JLabel lbltitle13;
+    private javax.swing.JLabel lbltitle14;
+    private javax.swing.JLabel lbltitle15;
+    private javax.swing.JLabel lbltitle9;
+    private javax.swing.JTable tblMedicamentos;
     // End of variables declaration//GEN-END:variables
+
+    private void LlenarFormulario() {
+        lblDescarte.setText(""+modelo.getDescarte());
+        lblEstado.setText(""+modelo.getDiagnostico());
+        lblFechaPalpacion.setText(""+modelo.getFecha_palpacion());
+        lblFechaUltParto.setText(""+modelo.getFecha_ultimo_parto());
+        lblNotas.setText(""+modelo.getNotas());
+        lblNumMeses.setText(""+modelo.getNum_meses());
+        lblRazonDescarte.setText(""+modelo.getRazondescarte());
+        
+        if(modelo.getListaMedicamentos().size()>0){
+            LlenarTabla();
+        }
+    }
+
+    private void LlenarTabla() {
+        Utilidades.LimpiarTabla(tblMedicamentos);
+        for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTbl,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        modelo.getListaMedicamentos().get(i).getMedicamento(),
+                        modelo.getListaMedicamentos().get(i).getDosis(),
+                        modelo.getListaMedicamentos().get(i).getUnidad_medida()
+                    }
+            );
+        }
+    }
 }
