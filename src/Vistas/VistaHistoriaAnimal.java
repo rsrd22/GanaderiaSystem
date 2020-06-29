@@ -88,6 +88,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaPesajes = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
         ListaDatosRotacion = new ArrayList<>();
+        ListaDatosPalpacion = new ArrayList<>();
         ListaDatosRotacionMostrar = new ArrayList<>();
         ListaDatosTrasladoEliminar = new ArrayList<>();
         ListaDatosRotacionEliminar = new ArrayList<>();
@@ -393,32 +394,32 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 return false;
             }
         };
-        tbl_Palpacion.setSelectionModel(new DefaultListSelectionModel() {
-            private int i0 = -1;
-            private int i1 = -1;
-
-            public void setSelectionInterval(int index0, int index1) {
-                if (i0 == index0 && i1 == index1) {
-                    if (getValueIsAdjusting()) {
-                        setValueIsAdjusting(false);
-                        setSelection(index0, index1);
-                    }
-                } else {
-                    i0 = index0;
-                    i1 = index1;
-                    setValueIsAdjusting(false);
-                    setSelection(index0, index1);
-                }
-            }
-
-            private void setSelection(int index0, int index1) {
-                if (super.isSelectedIndex(index0)) {
-                    super.removeSelectionInterval(index0, index1);
-                } else {
-                    super.addSelectionInterval(index0, index1);
-                }
-            }
-        });
+//        tbl_Palpacion.setSelectionModel(new DefaultListSelectionModel() {
+//            private int i0 = -1;
+//            private int i1 = -1;
+//
+//            public void setSelectionInterval(int index0, int index1) {
+//                if (i0 == index0 && i1 == index1) {
+//                    if (getValueIsAdjusting()) {
+//                        setValueIsAdjusting(false);
+//                        setSelection(index0, index1);
+//                    }
+//                } else {
+//                    i0 = index0;
+//                    i1 = index1;
+//                    setValueIsAdjusting(false);
+//                    setSelection(index0, index1);
+//                }
+//            }
+//
+//            private void setSelection(int index0, int index1) {
+//                if (super.isSelectedIndex(index0)) {
+//                    super.removeSelectionInterval(index0, index1);
+//                } else {
+//                    super.addSelectionInterval(index0, index1);
+//                }
+//            }
+//        });
 
         tbl_Palpacion.setModel(modeloTblPalpacion);
 
@@ -1796,6 +1797,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         int fila = tbl_Palpacion.getSelectedRow();
         int cola = tbl_Palpacion.getSelectedColumn();
         if(cola == 4){// Ver MAs
+            System.out.println("---->"+fila);
+            System.out.println("lis--<"+ListaDatosPalpacion.size());
             modeloPalpacion = ListaDatosPalpacion.get(fila);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPalpacion(), 1, modeloPalpacion);
             new VistaGeneral(objetoVentana).setVisible(true);
@@ -1929,7 +1932,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         if(ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0"))
             jTabbedPane1.setSelectedIndex(2);
         
-        //jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
+        jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
         
 
         GetDatosTraslado();

@@ -167,19 +167,41 @@ public class ControlPalpacion implements IControl {
  
         if (palpaciones.size() > 0) {
             for (Map<String, String> palpacion : palpaciones) {
-                lista.add(new ModeloPalpacion(
-                        palpacion.get("id"), 
-                        palpacion.get("id_animal"), 
-                        palpacion.get("fecha_palpacion"), 
-                        palpacion.get("diagnostico"), 
-                        palpacion.get("notas"), 
-                        palpacion.get("num_meses"), 
-                        palpacion.get("fecha_ultimo_parto"), 
-                        palpacion.get("descarte"), 
-                        palpacion.get("razondescarte"), 
-                        palpacion.get("fecha"), 
-                        palpacion.get("id_usuario")
-                ));
+                ModeloPalpacion mod = new ModeloPalpacion();
+                mod.setId(palpacion.get("id"));
+                mod.setId_animal(palpacion.get("id_animal"));
+                mod.setFecha_palpacion(palpacion.get("fecha_palpacion"));
+                mod.setDiagnostico(palpacion.get("diagnostico"));
+                mod.setNotas(palpacion.get("notas"));
+                mod.setNum_meses(palpacion.get("num_meses"));
+                mod.setFecha_ultimo_parto(palpacion.get("fecha_ultimo_parto"));
+                mod.setDescarte(palpacion.get("descarte"));
+                mod.setRazondescarte(palpacion.get("razondescarte"));
+                mod.setFecha(palpacion.get("fecha"));
+                mod.setId_usuario(palpacion.get("id_usuario"));
+                
+                consulta = "SELECT palpm.`id` AS ID, palpm.`id_medicamento` AS IDMEDICAMENTO,\n" +
+                            "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA\n" +
+                            "FROM `palpacionxtratamiento` palpm\n" +
+                            "INNER JOIN `medicamentos` med ON med.`id` = palpm.`id_medicamento`\n" +
+                            "WHERE palpm.`id_palpacion` = "+palpacion.get("id");
+                List<Map<String, String>> medicamentos = new ArrayList<Map<String, String>>();
+                ArrayList<ModeloMedicamentosPorPesaje> lisMed = new ArrayList<>();
+                medicamentos = mySQL.ListSQL(consulta);
+                if(medicamentos.size()>0){
+                    for (Map<String, String> meds : medicamentos) {
+                        ModeloMedicamentosPorPesaje m = new ModeloMedicamentosPorPesaje();
+                        m.setId(meds.get("ID"));
+                        m.setId_medicamento(meds.get("IDMEDICAMENTO"));
+                        m.setMedicamento(meds.get("MEDICAMENTO"));
+                        m.setDosis(meds.get("DOSIS"));
+                        m.setUnidad_medida(meds.get("UNIDAD_MEDIDA"));
+                        lisMed.add(m);
+                    }
+                    
+                }
+                mod.setListaMedicamentos(lisMed);
+                lista.add(mod);
             }
             return lista;
         } else {
