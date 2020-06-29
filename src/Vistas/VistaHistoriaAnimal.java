@@ -327,7 +327,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(100);
         tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
         tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
-        tblDatosPeso.getColumnModel().getColumn(6).setPreferredWidth(70);
 
         tblDatosPeso.getTableHeader().setReorderingAllowed(false);
 
@@ -376,7 +375,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tbl_Palpacion.getColumnModel().getColumn(2).setPreferredWidth(100);
         tbl_Palpacion.getColumnModel().getColumn(3).setPreferredWidth(130);
         tbl_Palpacion.getColumnModel().getColumn(5).setPreferredWidth(70);
-        tbl_Palpacion.getColumnModel().getColumn(6).setPreferredWidth(70);
 
         tbl_Palpacion.getTableHeader().setReorderingAllowed(false);
 
@@ -1727,7 +1725,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         int cola = tblDatosPeso.getSelectedColumn();
         if (cola == 4) {// Ver MAs
             modeloPesaje = listaPesajes.get(fila);
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPalpacion);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPesaje);
             new VistaGeneral(objetoVentana).setVisible(true);
         } else if (cola == 5) {
             modeloPesaje = listaPesajes.get(fila);
