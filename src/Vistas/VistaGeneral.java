@@ -308,7 +308,6 @@ public class VistaGeneral extends javax.swing.JFrame {
             System.out.println("guardado: " + ((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado);
             if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPalpacion vp = ((VistaPalpacion) modeloVista.getPanelPadre());
-                //vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 10);
                 vp.MostrarTabla();
                 vp.band=0;
             }

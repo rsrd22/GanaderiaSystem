@@ -83,6 +83,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         consecutivo = 0;
         controlGral = new ControlGeneral();
         cargarComboMedicamento();
+        guardado = -1;
         this.modeloVistaGeneral = modeloVistaGeneral;
         datos = new HashMap<>();
         datos = (Map<String, String>) modeloVistaGeneral.getModeloDatos();

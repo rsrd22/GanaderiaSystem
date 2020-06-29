@@ -333,7 +333,7 @@ public class ControlPesaje implements IControl {
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "0,\n"
                 + "" + modelo.getId_animal() + ",\n"
-                + "" + modelo.getFecha_pesado() + ",\n"
+                + "'" + modelo.getFecha_pesado() + "',\n"
                 + "" + modelo.getPeso() + ",\n"
                 + "'" + modelo.getNotas() + "',\n"
                 + "'" + modelo.getHierro() + "',\n"

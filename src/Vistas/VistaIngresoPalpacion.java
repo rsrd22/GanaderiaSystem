@@ -81,6 +81,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         setSize(634, 600);
         btnModificar.setVisible(false);
         consecutivo = 0;
+        guardado = -1;
         controlGral = new ControlGeneral();
         cargarComboMedicamento();
         getIdPalpacion();

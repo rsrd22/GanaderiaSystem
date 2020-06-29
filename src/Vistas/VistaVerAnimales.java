@@ -373,44 +373,13 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = ""+tbl_Animales.getValueAt(fila, cola);
-//        if(cola == 8 && dato.toUpperCase().equals("SI")){//Muerte
-//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-//            
-//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleMuerte(), 1, idAnimal);
-//                objetoVentana.setFila(fila);
-//                new VistaGeneral(objetoVentana).setVisible(true);
-////            }
-//        }
-//        else if(cola == 9 && dato.toUpperCase().equals("SI")){//VENTA
-//            
-//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-//            
-//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleVenta(), 1, idAnimal);
-//                objetoVentana.setFila(fila);
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//            
-//        
-//        } 
-//        if(cola == 8 ){//GRUPO
-//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-//            
-//                objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleTraslado(), 1, idAnimal);
-//                objetoVentana.setFila(fila);
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//                
-//        }  else if(cola == 9){//LOTE
-//            String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-//            
-//            objetoVentana = new ModeloVentanaGeneral(this, new VistaDetalleRotacion(), 1, idAnimal);
-//                objetoVentana.setFila(fila);
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//        }  else 
         if(cola == 10){//VER MAS
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
-            
-               objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal); 
-                objetoVentana.setFila(fila);
-                new VistaGeneral(objetoVentana).setVisible(true);
+            //JOptionPane.showMessageDialog(null, "ID ANIMAL-->"+idAnimal);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal); 
+            objetoVentana.setFila(fila);
+            VistaGeneral vis = new VistaGeneral(objetoVentana);
+            vis.setVisible(true);
         
            
         }
