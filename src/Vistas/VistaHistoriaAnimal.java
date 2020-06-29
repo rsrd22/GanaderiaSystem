@@ -1375,7 +1375,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGap(0, 774, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1396,6 +1396,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jTabbedPane1.addTab("Peso", pnlPeso);
 
         pnlPalpacion.setBackground(new java.awt.Color(255, 255, 255));
+        pnlPalpacion.setLayout(new java.awt.GridBagLayout());
 
         tbl_Palpacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1415,22 +1416,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         });
         jScrollPane5.setViewportView(tbl_Palpacion);
 
-        javax.swing.GroupLayout pnlPalpacionLayout = new javax.swing.GroupLayout(pnlPalpacion);
-        pnlPalpacion.setLayout(pnlPalpacionLayout);
-        pnlPalpacionLayout.setHorizontalGroup(
-            pnlPalpacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPalpacionLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-        pnlPalpacionLayout.setVerticalGroup(
-            pnlPalpacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPalpacionLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlPalpacion.add(jScrollPane5, gridBagConstraints);
 
         jTabbedPane1.addTab("Palpacion", pnlPalpacion);
 
