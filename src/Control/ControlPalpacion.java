@@ -154,17 +154,78 @@ public class ControlPalpacion implements IControl {
 
     @Override
     public int Eliminar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloPalpacion palpacion = (ModeloPalpacion) o;
+
+        if(palpacion.getListaMedicamentos().size()>0){
+            consultas.add("DELETE\n"
+                + "FROM palpacionxtratamiento\n"
+                + "WHERE id_palpacion = " + palpacion.getId());
+        }
+        
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                "DELETE\n"
+                + "FROM palpacion\n"
+                + "WHERE id = " + palpacion.getId()
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
         String consulta = "SELECT * FROM palpacion\n"
                 + " WHERE id_animal=" + o.toString() + "";
+        consulta = "SELECT palp.`id` AS ID, palp.`id_animal` AS IDANIMAL, palp.`fecha_palpacion` AS FECHAPALP,\n" +
+                    "palp.`diagnostico` AS DIAGNOSTICO, palp.`notas` AS NOTAS, palp.`num_meses` AS NUM_MESES,\n" +
+                    "palp.`fecha_ultimo_parto` AS FECHAULTPARTO, palp.`descarte` AS DESCARTE, palp.`razondescarte` AS RAZON_DESCARTE,\n" +
+                    "palpm.`id` AS IDPALPMEDICAMENTOS, palpm.`id_medicamento` AS IDMEDICAMENTO,\n" +
+                    "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA\n" +
+                    "FROM palpacion palp\n" +
+                    "LEFT JOIN palpacionxtratamiento palpm ON palpm.`id_palpacion` = palp.id\n" +
+                    "LEFT JOIN medicamentos med ON med.`id` = palpm.`id_medicamento`\n" +
+                    "WHERE palp.id_animal = '" + o.toString() + "'\n" +
+                    "ORDER BY palp.`id` DESC";
+        
         List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPalpacion> lista = new ArrayList<>();
         palpaciones = mySQL.ListSQL(consulta);
- 
+//        List<Map<String, String>> listaPalpaciones = Utilidades.data_list(1, palpaciones, new String[]{"ID"});
+//        
+//        if(listaPalpaciones.size()>0){
+//            for (Map<String, String> palpacion : listaPalpaciones) {
+//                List<Map<String, String>> listaDatosPalpaciones = Utilidades.data_list(3, palpaciones, new String[]{"ID<->" + palpacion.get("ID")});
+//                ModeloPalpacion mod = new ModeloPalpacion();
+//                mod.setId(palpacion.get("ID"));
+//                mod.setId_animal(palpacion.get("IDANIMAL"));
+//                mod.setFecha_palpacion(palpacion.get("FECHAPALP"));
+//                mod.setDiagnostico(palpacion.get("DIAGNOSTICO"));
+//                mod.setNotas(palpacion.get("NOTAS"));
+//                mod.setNum_meses(palpacion.get("NUM_MESES"));
+//                mod.setFecha_ultimo_parto(palpacion.get("FECHAULTPARTO"));
+//                mod.setDescarte(palpacion.get("DESCARTE"));
+//                mod.setRazondescarte(palpacion.get("RAZON_DESCARTE"));
+//                
+//                if(listaDatosPalpaciones.size()>0){
+//                    
+//                }
+//            }
+//        }
+        
         if (palpaciones.size() > 0) {
             for (Map<String, String> palpacion : palpaciones) {
                 ModeloPalpacion mod = new ModeloPalpacion();

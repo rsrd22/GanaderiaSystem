@@ -1727,7 +1727,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         int cola = tblDatosPeso.getSelectedColumn();
         if (cola == 4) {// Ver MAs
             modeloPesaje = listaPesajes.get(fila);
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPalpacion);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPesaje);
             new VistaGeneral(objetoVentana).setVisible(true);
         } else if (cola == 5) {
             modeloPesaje = listaPesajes.get(fila);
@@ -1763,22 +1763,37 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         int fila = tbl_Palpacion.getSelectedRow();
         int cola = tbl_Palpacion.getSelectedColumn();
         if(cola == 4){// Ver MAs
-            System.out.println("---->"+fila);
-            System.out.println("lis--<"+ListaDatosPalpacion.size());
             modeloPalpacion = ListaDatosPalpacion.get(fila);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPalpacion(), 1, modeloPalpacion);
             new VistaGeneral(objetoVentana).setVisible(true);
 
         } else if (cola == 5) { //ELIMINAR
-//            modeloLotes = ListamodeloLotes.get(fila);
-//            int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
-//            if(resp == JOptionPane.YES_OPTION){
-//                int ret = controlLote.Eliminar(modeloLotes);
-//                if(ret == 0){
-//                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
-//                    AccionCombo();
-//                }
-//            }
+            modeloPalpacion = ListaDatosPalpacion.get(fila);
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
+            if (respuesta == JOptionPane.YES_OPTION) {
+                int retorno = controlPalpacion.Eliminar(modeloPesaje);
+
+                String mensaje = "";
+                switch (retorno) {
+                    case Retorno.EXITO:
+                        mensaje = "Registro eliminado satisfactoriamente.";
+                        break;
+                    case Retorno.ERROR:
+                        mensaje = "El registro no pudo ser eliminado.";
+                        break;
+                    case Retorno.EXCEPCION_SQL:
+                        mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                        break;
+                    case Retorno.CLASE_NO_ENCONTRADA:
+                        mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                        break;
+                    case Retorno.MENSAJE:
+                        mensaje = "No es posible eliminar el registro del peso.";
+                        break;
+                }
+
+                JOptionPane.showMessageDialog(this, mensaje);
+            }
         }
     }//GEN-LAST:event_tbl_PalpacionMouseReleased
 
