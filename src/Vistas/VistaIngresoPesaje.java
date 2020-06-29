@@ -172,7 +172,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         cargarComboHierros();
         cargarDatosActuales();
         txtPesoKg.setText(datos.get("PESO"));
-        txtNotas.setText(datos.get("NOTAS"));
+        txtNotas.setText(Utilidades.decodificarElemento(datos.get("NOTAS")));
         txtCodigo.setText(datos.get("ID_PESAJE"));
         calcularPesoEnLibras();
         calcularDiferenciaPesos();
@@ -190,7 +190,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             Object[] fila = new Object[]{
                 ++consecutivo,//idMedicamento
                 lista.get("DESCRIPCION"),//descripcionMedicamento
-                lista.get("CANTIDAD"),//CantidadMedicamento
+                lista.get("CANTIDAD").replace(".", ","),//CantidadMedicamento
                 lista.get("UNIDAD_MEDIDA"),//UnidadDeMedida
                 "Modificar",
                 "Eliminar"
@@ -944,7 +944,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             return;
         }
         for (int i = 0; i < listaMedicamentos.size(); i++) {
-            if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i)[0])) {
+            if (txtCodigoMedicamento.getText().equals(listaMedicamentos.get(i)[0].toString())) {
                 JOptionPane.showMessageDialog(this, "El medicamento ya se encuentra en la lista.");
                 cbMedicamentos.setSelectedIndex(0);
                 cbMedicamentos.requestFocusInWindow();
@@ -1068,7 +1068,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setId(editar == Estado.GUARDAR ? "0" : txtCodigo.getText());
         modelo.setId_animal(idAnimal);
         modelo.setPeso(txtPesoKg.getText().replace(".", "").replace(",", "."));
-        modelo.setNotas(txtNotas.getText().trim());
+        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         modelo.setDescornado(chkDescornada.isSelected() ? "1" : "0");
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
         modelo.setHierro(chkHierro.isSelected() ? "1" : "0");

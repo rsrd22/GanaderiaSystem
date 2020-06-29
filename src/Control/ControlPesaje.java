@@ -6,6 +6,7 @@
 package Control;
 
 import BaseDeDatos.gestorMySQL;
+import Modelo.ModeloMedicamentosPorPesaje;
 import Modelo.ModeloPesaje;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -259,8 +260,14 @@ public class ControlPesaje implements IControl {
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
-        String consulta = "SELECT * FROM pesaje\n"
-                + " WHERE id_animal=" + o.toString() + " ORDER BY id DESC";
+        String consulta = "SELECT a.*,\n"
+                + "b.hierro AS IDHIERRO,\n"
+                + "c.descripcion AS DESCRIPCION_HIERRO,\n"
+                + "b.fecha_destete AS FECHA_DESTETE\n"
+                + "FROM pesaje a\n"
+                + "LEFT JOIN animales b ON a.id_animal=b.id\n"
+                + "LEFT JOIN propietarioxhierro c ON b.hierro=c.id\n"
+                + "WHERE id_animal=" + o.toString() + " ORDER BY id DESC";
         List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
         pesajes = mySQL.ListSQL(consulta);
@@ -268,7 +275,7 @@ public class ControlPesaje implements IControl {
         if (pesajes.size() > 0) {
 
             for (Map<String, String> pesaje : pesajes) {
-                ModeloPesaje modelo =new ModeloPesaje(
+                ModeloPesaje modelo = new ModeloPesaje(
                         pesaje.get("descornado"),
                         pesaje.get("destete"),
                         pesaje.get("fecha"),
@@ -280,9 +287,34 @@ public class ControlPesaje implements IControl {
                         pesaje.get("implante"),
                         pesaje.get("notas"),
                         pesaje.get("peso"),
-                        "", "", ""
+                        pesaje.get("DESCRIPCION_HIERRO"),
+                        pesaje.get("IDHIERRO"),
+                        pesaje.get("FECHA_DESTETE")
                 );
-                modelo.setListaMedicamentos(null);
+                consulta = "SELECT \n"
+                        + "a.id AS ID, \n"
+                        + "a.id_medicamento AS IDMEDICAMENTO,\n"
+                        + "b.descripcion AS MEDICAMENTO, \n"
+                        + "a.dosis AS DOSIS, \n"
+                        + "b.unidad_medida AS UNIDAD_MEDIDA\n"
+                        + "FROM pesajexmedicamento a\n"
+                        + "INNER JOIN medicamentos b ON b.id = a.id_medicamento\n"
+                        + "WHERE a.id_pesaje = " + modelo.getId();
+                List<Map<String, String>> medicamentos = new ArrayList<Map<String, String>>();
+                ArrayList<ModeloMedicamentosPorPesaje> lisMed = new ArrayList<>();
+                medicamentos = mySQL.ListSQL(consulta);
+                if (medicamentos.size() > 0) {
+                    for (Map<String, String> meds : medicamentos) {
+                        ModeloMedicamentosPorPesaje m = new ModeloMedicamentosPorPesaje();
+                        m.setId(meds.get("ID"));
+                        m.setId_medicamento(meds.get("IDMEDICAMENTO"));
+                        m.setMedicamento(meds.get("MEDICAMENTO"));
+                        m.setDosis(meds.get("DOSIS"));
+                        m.setUnidad_medida(meds.get("UNIDAD_MEDIDA"));
+                        lisMed.add(m);
+                    }
+                }
+                modelo.setListaMedicamentos(lisMed);
                 lista.add(modelo);
             }
             return lista;
@@ -320,7 +352,7 @@ public class ControlPesaje implements IControl {
 //                    //<editor-fold defaultstate="collapsed" desc="INSERT">
 //                    "INSERT INTO pesajexmedicamento (id,id_pesaje,id_medicamento,dosis) VALUES(\n"
 //                    + "0,\n"
-//                    + "(SELECT id FROM pesaje WHERE id_animal = " + modelo.getId_animal() + " AND DATE_FORMAT(`fecha`,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n"
+//                    + "(SELECT id FROM pesaje WHERE id_animal = " + modelo.getId_animal() + " AND DATE_FORMAT(fecha,'%d/%m/%Y') = DATE_FORMAT(NOW(),'%d/%m/%Y')),\n"
 //                    + "" + modelo.getListaMedicamentos().get(i).getId_medicamento() + ",\n"
 //                    + "" + modelo.getListaMedicamentos().get(i).getDosis() + "\n"
 //                    + ")"

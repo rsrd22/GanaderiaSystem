@@ -183,6 +183,7 @@ public class Utilidades {
             dato = dato.replace("_L_", "\\");//ESLAS.....
             dato = dato.replace("_A_", "&");//AMPERSAN.....Â
             dato = dato.replace("_Ord_", "°");//°    
+            dato = dato.replace("_ComSpl_", "'");//'    
             //System.out.println("html-->"+HTML);
 //            dato = dato.replace("\\n", "<br/>");//° 
             //System.out.println("html2-->"+HTML);
@@ -243,6 +244,7 @@ public class Utilidades {
             dato = dato.replace("\\", "_L_");//ESLAS.....
             dato = dato.replace("&", "_A_");//AMPERSAN.....Â
             dato = dato.replace("°", "_Ord_");//°   
+            dato = dato.replace("'", "_ComSpl_");//°   
 
             //  alert(HTML);
         } catch (Exception e) {

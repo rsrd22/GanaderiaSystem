@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
+
+import Modelo.ModeloPesaje;
+import Modelo.ModeloVentanaGeneral;
 
 /**
  *
@@ -12,11 +14,19 @@ package Vistas;
  */
 public class VistaInfoPesaje extends javax.swing.JPanel {
 
-    /**
-     * Creates new form VistaInfoPesaje
-     */
+    private ModeloPesaje modelo;
+
     public VistaInfoPesaje() {
         initComponents();
+    }
+
+    public VistaInfoPesaje(ModeloVentanaGeneral modeloVista) {
+        initComponents();
+        setSize(644, 427);
+        modelo = new ModeloPesaje();
+        modelo = (ModeloPesaje) modeloVista.getModeloDatos();
+
+        cargarInformacion();
     }
 
     /**
@@ -44,7 +54,7 @@ public class VistaInfoPesaje extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.ABOVE_BASELINE_LEADING;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
@@ -55,4 +65,67 @@ public class VistaInfoPesaje extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel txtInfoPesaje;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarInformacion() {
+        txtInfoPesaje.setText("<html>\n"
+                + "<body>\n"
+                + "    <table>\n"
+                + "        <tr>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Fecha de pesaje:</td>\n"
+                + "            <td>" + modelo.getFecha_pesado() + "</td>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Implante:</td>\n"
+                + "            <td>" + (modelo.getImplante().equals("1") ? "SI" : "NO") + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Peso:</td>\n"
+                + "            <td>" + modelo.getPeso() + " Kg</td>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Descornado:</td>\n"
+                + "            <td>" + (modelo.getDescornado().equals("1") ? "SI" : "NO") + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Destete:</td>\n"
+                + "            <td>" + (modelo.getDestete().equals("1") ? "SI" : "NO") + "</td>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Hierro:</td>\n"
+                + "            <td>" + (modelo.getHierro().equals("1") ? "SI" : "NO") + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Fecha de destete:</td>\n"
+                + "            <td>" + (modelo.getDestete().equals("1") ? modelo.getFechaDestete() : "") + "</td>\n"
+                + "            <td style=\"text-align: right; font-weight: bold;\">Descripción:</td>\n"
+                + "            <td>" + (modelo.getHierro().equals("1") ? modelo.getDescripcionHierro() : "") + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td colspan=\"4\"><b>Notas:</b><br>" + modelo.getNotas() + "</td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td colspan=\"4\" style=\"text-align: center;\">###</td>"
+                + "        </tr>\n"
+                + "    </table>\n"
+                + "</body>\n"
+                + "</html>");
+
+        if (modelo.getListaMedicamentos().size() > 0) {
+            String tablaMedicamentos = "<table style=\"border-collapse: collapse;\">\n"
+                    + "                    <tr style=\"background-color: #3B7B32; color: white;\">\n"
+                    + "                        <td style=\"border: 1px solid #3B7B32;\">#</td>\n"
+                    + "                        <td style=\"border: 1px solid #3B7B32;\">Medicamento</td>\n"
+                    + "                        <td style=\"border: 1px solid #3B7B32;\">Cantidad</td>\n"
+                    + "                        <td style=\"border: 1px solid #3B7B32;\">Unidad de medida</td>\n"
+                    + "                    </tr>";
+            for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
+                tablaMedicamentos += "<tr style=\"background-color: " + (i % 2 == 0 ? "#ededed" : "#62885d") + "; "
+                        + "" + (i % 2 != 0 ? "color: #FFFFFF;" : "") + "\">\n"
+                        + "                        <td>" + (i + 1) + "</td>\n"
+                        + "                        <td>" + modelo.getListaMedicamentos().get(i).getMedicamento() + "</td>\n"
+                        + "                        <td style='text-align: right;'>" + modelo.getListaMedicamentos().get(i).getDosis() + "</td>\n"
+                        + "                        <td>" + modelo.getListaMedicamentos().get(i).getUnidad_medida() + "</td>\n"
+                        + "                    </tr>";
+            }
+            tablaMedicamentos += "</table>";
+            txtInfoPesaje.setText(txtInfoPesaje.getText().replace("###", tablaMedicamentos));
+        } else {
+            txtInfoPesaje.setText(txtInfoPesaje.getText().replace("###", ""));
+        }
+
+    }
 }
