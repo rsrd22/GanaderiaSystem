@@ -166,7 +166,6 @@ public class ControlPalpacion implements IControl {
         palpaciones = mySQL.ListSQL(consulta);
  
         if (palpaciones.size() > 0) {
-
             for (Map<String, String> palpacion : palpaciones) {
                 lista.add(new ModeloPalpacion(
                         palpacion.get("id"), 
@@ -180,7 +179,6 @@ public class ControlPalpacion implements IControl {
                         palpacion.get("razondescarte"), 
                         palpacion.get("fecha"), 
                         palpacion.get("id_usuario")
-                        
                 ));
             }
             return lista;

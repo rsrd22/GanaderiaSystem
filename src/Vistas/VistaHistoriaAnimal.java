@@ -3,6 +3,7 @@ package Vistas;
 import Charts.Panel;
 import Control.*;
 import Modelo.ModeloAnimales;
+import Modelo.ModeloPalpacion;
 import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
@@ -38,7 +39,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     String numero_Animal = "";
     private ControlAnimales controlAnimales = new ControlAnimales();
     private ControlPesaje controlPesaje = new ControlPesaje();
+    private ControlPalpacion controlPalpacion = new ControlPalpacion();
     private ControlTraslado controlTraslado = new ControlTraslado();
+    private ModeloPalpacion modeloPalpacion = new ModeloPalpacion();
     private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     private ArrayList<ModeloAnimales> ListaDatos;
     private Map<String, String> DatosVenta;
@@ -49,17 +52,21 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public String[] EncabezadoTblTraslado;
     public String[] EncabezadoTblRotacion;
     public String[] EncabezadoTblPeso;
+    public String[] EncabezadoTblPalpacion;
     private List<Map<String, String>> ListaDatosRotacion;
+    //private List<Map<String, String>> ListaDatosPalpacion;
     private List<Map<String, String>> ListaDatosRotacionMostrar;
     private List<Map<String, String>> ListaDatosRotacionEliminar;
     public DefaultTableModel modeloTblRotacion;
     public DefaultTableModel modeloTblPeso;
+    public DefaultTableModel modeloTblPalpacion;
     public Panel graficoPeso;
     private ArrayList<ArrayList<Object[]>> listaDatosPeso;
     private ArrayList<Object[]> datosPeso;
     private int countT = 0, countR = 0;
     private ArrayList<ModeloPesaje> listaPesajes;
-
+    private ArrayList<ModeloPalpacion> ListaDatosPalpacion;
+    public ModeloVentanaGeneral objetoVentana;
     private int ancho;
     private int alto;
 
@@ -115,9 +122,19 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "Modificar",
             "Eliminar"
         };
+        EncabezadoTblPalpacion = new String[]{
+            "No",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Palpación</p></html> ",
+            "Estado",
+            "Notas",
+            "Ver Más",
+            "Modificar",
+            "Eliminar"
+        };
         InicializarTblRotacion();
         InicializarTblTralado();
         InicializarTblPeso();
+        InicializarTblPalpacion();
 
         GetDatosAnimal();
         pnlGrafico.setVisible(false);
@@ -359,6 +376,80 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     }
 
+    public void InicializarTblPalpacion() {
+        tbl_Palpacion.setDefaultRenderer(Object.class, new TablaRender());
+
+        modeloTblPalpacion = new DefaultTableModel(EncabezadoTblPalpacion, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        tbl_Palpacion.setSelectionModel(new DefaultListSelectionModel() {
+            private int i0 = -1;
+            private int i1 = -1;
+
+            public void setSelectionInterval(int index0, int index1) {
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
+                    }
+                } else {
+                    i0 = index0;
+                    i1 = index1;
+                    setValueIsAdjusting(false);
+                    setSelection(index0, index1);
+                }
+            }
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
+                    super.removeSelectionInterval(index0, index1);
+                } else {
+                    super.addSelectionInterval(index0, index1);
+                }
+            }
+        });
+
+        tbl_Palpacion.setModel(modeloTblPalpacion);
+
+        tbl_Palpacion.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tbl_Palpacion.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tbl_Palpacion.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tbl_Palpacion.getColumnModel().getColumn(3).setPreferredWidth(130);
+        tbl_Palpacion.getColumnModel().getColumn(5).setPreferredWidth(70);
+        tbl_Palpacion.getColumnModel().getColumn(6).setPreferredWidth(70);
+        
+        tbl_Palpacion.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloTblPalpacion.getColumnCount(); i++) {
+            tbl_Palpacion.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 0, 12));
+
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
+//                }
+            tcr.setForeground(new Color(26, 82, 118));
+            tbl_Palpacion.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
+        }
+        JTableHeader header = tbl_Palpacion.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -430,6 +521,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblDatosPeso = new javax.swing.JTable();
         pnlGrafico = new javax.swing.JPanel();
+        pnlPalpacion = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbl_Palpacion = new javax.swing.JTable();
         lblPeso = new javax.swing.JLabel();
         lblTipoAnimal = new javax.swing.JLabel();
         lblPropietario = new javax.swing.JLabel();
@@ -1334,11 +1428,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 778, Short.MAX_VALUE)
+            .addGap(0, 775, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1353,6 +1447,45 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlPeso.add(pnlGrafico, gridBagConstraints);
 
         jTabbedPane1.addTab("Peso", pnlPeso);
+
+        pnlPalpacion.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbl_Palpacion.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_Palpacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_PalpacionMouseReleased(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tbl_Palpacion);
+
+        javax.swing.GroupLayout pnlPalpacionLayout = new javax.swing.GroupLayout(pnlPalpacion);
+        pnlPalpacion.setLayout(pnlPalpacionLayout);
+        pnlPalpacionLayout.setHorizontalGroup(
+            pnlPalpacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPalpacionLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        pnlPalpacionLayout.setVerticalGroup(
+            pnlPalpacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPalpacionLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Palpacion", pnlPalpacion);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1659,6 +1792,27 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblDatosPesoMouseReleased
 
+    private void tbl_PalpacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PalpacionMouseReleased
+        int fila = tbl_Palpacion.getSelectedRow();
+        int cola = tbl_Palpacion.getSelectedColumn();
+        if(cola == 4){// Ver MAs
+            modeloPalpacion = ListaDatosPalpacion.get(fila);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPalpacion(), 1, modeloPalpacion);
+            new VistaGeneral(objetoVentana).setVisible(true);
+
+        }else if(cola == 5){ //ELIMINAR
+//            modeloLotes = ListamodeloLotes.get(fila);
+//            int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
+//            if(resp == JOptionPane.YES_OPTION){
+//                int ret = controlLote.Eliminar(modeloLotes);
+//                if(ret == 0){
+//                    JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
+//                    AccionCombo();
+//                }
+//            }
+        }
+    }//GEN-LAST:event_tbl_PalpacionMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarRotaciones;
@@ -1672,6 +1826,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
@@ -1716,11 +1871,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel pnlGrafico;
     private javax.swing.JPanel pnlGrilla;
     private javax.swing.JPanel pnlMuerte;
+    private javax.swing.JPanel pnlPalpacion;
     private javax.swing.JPanel pnlPeso;
     private javax.swing.JPanel pnlRotaciones;
     private javax.swing.JPanel pnlTraslados;
     private javax.swing.JPanel pnlVenta;
     private javax.swing.JTable tblDatosPeso;
+    private javax.swing.JTable tbl_Palpacion;
     private javax.swing.JTable tbl_Rotaciones;
     private javax.swing.JTable tbl_Traslados;
     public javax.swing.JTextField txtFechaMuerte;
@@ -1771,11 +1928,16 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
         if(ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0"))
             jTabbedPane1.setSelectedIndex(2);
+        
+        //jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
+        
 
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
-        
+        if (ListaDatos.get(0).getGenero().equals("hembra")) {
+            GetDatosPalpacion();
+        }
     }
 
     private void LimpiarFormulario() {
@@ -1955,6 +2117,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }
 //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="PESO">
     private void cargarHistoricoPesos() {
         listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
         if (listaPesajes.size() > 0) {
@@ -1988,7 +2151,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
 //                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
 //                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
-                        "Modificar",
                         "Eliminar"
                     }
             );
@@ -2001,5 +2163,41 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         int ret = fd.compareTo(fh);
         return ret;
     }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="TabbletPane Palpacion">
+    private void GetDatosPalpacion() {
+        ListaDatosPalpacion =( ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltro(id_Animal);
+
+        if (ListaDatosPalpacion.size() > 0) {
+
+            //numero_Animal = ListaDatosPalpacion.get(0).get("NUMERO_ANIMAL");
+            LlenarTablaPalpacion();
+        }
+    }
+    private void LlenarTablaPalpacion() {
+        Utilidades.LimpiarTabla(tbl_Palpacion);
+//        SELECT anim.`numero` AS NUMERO_ANIMAL, grup.`descripcion` AS GRUPO,
+//DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y') AS FECHA_TRASLADO,
+//traslado.motivo AS MOTIVO, traslado.estado AS ESTADO
+        for (int i = 0; i < ListaDatosPalpacion.size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTblPalpacion,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        ListaDatosPalpacion.get(i).getFecha_palpacion(),
+                        ListaDatosPalpacion.get(i).getDiagnostico(),
+                        ListaDatosPalpacion.get(i).getNotas(),
+                        "Ver Mas",
+                        "Eliminar"
+                    }
+            );
+        }
+    }
+    
+//</editor-fold>
+    
+
+    
 
 }
