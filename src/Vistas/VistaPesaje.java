@@ -494,7 +494,7 @@ public class VistaPesaje extends javax.swing.JPanel {
                     Date fecha = formato.parse(fechaSeleccionada);
                     jdFechaPesaje.setDate(fecha);
                 } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n"+ex.getMessage());
+                    JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
                 }
             }
         }
@@ -640,11 +640,12 @@ public class VistaPesaje extends javax.swing.JPanel {
     private void cargarListaFechasPesajes() {
         ListadoFechas = controlgen.GetComboBox("SELECT 'Seleccionar' AS DESCRIPCION\n"
                 + "UNION\n"
-                + "(SELECT DISTINCT DATE_FORMAT(a.fecha_pesado, '%d/%m/%Y')  AS DESCRIPCION\n" +
-                "FROM pesaje a\n" +
-                "INNER JOIN animales b ON b.id = a.id_animal\n" +
-                "INNER JOIN tipo_animales c ON c.id = b.id_tipo_animal\n" +
-                "WHERE c.id_finca = '"+idFinca+"' AND c.id = '"+idTipoAnimal+"' ORDER BY a.fecha_pesado DESC)");
+                + "select tabla.DESCRIPCION FROM (SELECT DISTINCT DATE_FORMAT(a.fecha_pesado, '%d/%m/%Y')  AS DESCRIPCION\n"
+                + "FROM pesaje a\n"
+                + "INNER JOIN animales b ON b.id = a.id_animal\n"
+                + "INNER JOIN tipo_animales c ON c.id = b.id_tipo_animal\n"
+                + "WHERE c.id_finca = '" + idFinca + "' AND c.id = '" + idTipoAnimal + "' AND a.notas not in('PRIMER PESO (AUTOMATICO)') "
+                + "ORDER BY a.fecha_pesado DESC) tabla");
 
         Utilidades.LlenarComboBox(cbListadoFechas, ListadoFechas, "DESCRIPCION");
         cbListadoFechas.setSelectedIndex(0);
