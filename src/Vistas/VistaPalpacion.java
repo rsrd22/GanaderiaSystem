@@ -627,13 +627,15 @@ public class VistaPalpacion extends javax.swing.JPanel {
     }
 
     public void CargarListadoFechas(){     
-        ListadoFechas = controlgen.GetComboBox("SELECT 'Seleccionar' AS DESCRIPCION\n"
-                + "UNION\n"
-                + "SELECT DISTINCT DATE_FORMAT(`fecha_palpacion`, '%d/%m/%Y')  AS DESCRIPCION\n" +
-                "FROM `palpacion` palp\n" +
-                "INNER JOIN animales anim ON anim.`id` = palp.`id_animal`\n" +
-                "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
-                "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"' order by fecha_palpacion desc");
+        ListadoFechas = controlgen.GetComboBox("SELECT 'Seleccionar' AS DESCRIPCION\n" +
+                                                "UNION\n" +
+                                                "SELECT tbl.DESCRIPCION\n" +
+                                                "FROM (SELECT DISTINCT DATE_FORMAT(`fecha_palpacion`, '%d/%m/%Y')  AS DESCRIPCION\n" +
+                                                "FROM `palpacion` palp\n" +
+                                                "INNER JOIN animales anim ON anim.`id` = palp.`id_animal`\n" +
+                                                "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
+                                                "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"' \n" +
+                                                "ORDER BY palp.fecha_palpacion DESC) tbl");
 
         Utilidades.LlenarComboBox(cbListadoFechas, ListadoFechas, "DESCRIPCION");
         cbListadoFechas.setSelectedIndex(0);
