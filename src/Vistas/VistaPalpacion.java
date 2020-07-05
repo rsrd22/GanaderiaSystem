@@ -633,7 +633,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
                 "FROM `palpacion` palp\n" +
                 "INNER JOIN animales anim ON anim.`id` = palp.`id_animal`\n" +
                 "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
-                "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"'");
+                "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"' order by fecha_palpacion desc");
 
         Utilidades.LlenarComboBox(cbListadoFechas, ListadoFechas, "DESCRIPCION");
         cbListadoFechas.setSelectedIndex(0);
