@@ -58,6 +58,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     private Map<String, String> datos;
     public static int guardado = -1;
     public int guardar = 0;
+    public String pesoAnterior = "";
     private VistaPalpacion vp;
     public DefaultListModel modlistDiagnostico = new DefaultListModel();
     
@@ -91,6 +92,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         idAnimal = datos.get("IDANIMAL");
         
         txtReferenciaAnimal.setText("<html><p>Número Mamá: <b>" + datos.get("NUMERO_MAMA") + "</b></p><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
+        pesoAnterior=datos.get("PESO");
         listaMedicamentos = new ArrayList<>();
         this.vp = ((VistaPalpacion) modeloVistaGeneral.getPanelPadre());
         fechaA = vp.fechaAnterior;
@@ -1105,6 +1107,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 modeloP.setImplante("0");
                 modeloP.setNotas(""+txtRazon.getText());
                 modeloP.setPeso(""+txtPesoKg.getText());
+                modeloP.setPeso_anterior(pesoAnterior);
                 
                 ret = controlPesaje.GuardarPesajeDescarte(modeloP);
                 
