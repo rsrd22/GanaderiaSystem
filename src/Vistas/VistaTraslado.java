@@ -74,6 +74,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         
         InicializarTblBloques();
         CargarListaFincas();
+        
     }
     
     public void InicializarTblBloques() {
@@ -330,16 +331,16 @@ public class VistaTraslado extends javax.swing.JPanel {
             boolean sel = (boolean) tbl_Traslado.getValueAt(fila, cola);
             tbl_Traslado.getModel().setValueAt(!sel, fila, cola);
             if(!sel){//SELECCIONADO
-                ListaAnimaleSeleccionados.add(ListaTraslado.get(fila));
+                ListaAnimaleSeleccionados.add(ListaTrasladoMostrar.get(fila));
             }else{// NO SELECCIONADO
-                int ind = getIndiceLista(ListaTraslado.get(fila).get("ID_GRUPO"));
+                int ind = getIndiceLista(ListaTrasladoMostrar.get(fila).get("ID_GRUPO"));
                 ListaAnimaleSeleccionados.remove(ind);
             }
         } else if(cola == 9){
             tbl_Traslado.setValueAt(true, fila, 0);
             System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
-            if(!ListaAnimaleSeleccionados.contains(ListaTraslado.get(fila)))
-                ListaAnimaleSeleccionados.add(ListaTraslado.get(fila));
+            if(!ListaAnimaleSeleccionados.contains(ListaTrasladoMostrar.get(fila)))
+                ListaAnimaleSeleccionados.add(ListaTrasladoMostrar.get(fila));
             System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
             
             objetoVentana = new ModeloVentanaGeneral(this, new VistaTrasladar(), 1, ListaAnimaleSeleccionados);
@@ -358,11 +359,13 @@ public class VistaTraslado extends javax.swing.JPanel {
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         if(cbTipoAnimales.getItemCount() > 0){
             //EventoComboFincas();
-            if(cbTipoAnimales.getSelectedIndex() >= 0){
+            System.out.println("cbTipoAnimales.getSelectedIndex()>"+cbTipoAnimales.getSelectedIndex());
+            if(cbTipoAnimales.getSelectedIndex() > 0){
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
             }else{
                 Utilidades.LimpiarTabla(tbl_Traslado);
+                cbTipoAnimales.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
@@ -414,7 +417,9 @@ public class VistaTraslado extends javax.swing.JPanel {
          
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
         cbFinca.setSelectedIndex(1);
+        cbTipoAnimales.requestFocusInWindow();
         CargarListaTipoAnimales();
+        
         //EventoComboFincas();
     }
     private void CargarListaTipoAnimales() {
@@ -427,7 +432,8 @@ public class VistaTraslado extends javax.swing.JPanel {
          
         Utilidades.LlenarComboBox(cbTipoAnimales, listaTipoAnimales, "DESCRIPCION");
         cbTipoAnimales.setSelectedIndex(0);
-        EventoComboFincas();
+        cbTipoAnimales.requestFocusInWindow();
+        //EventoComboFincas();
     }
 
     private int getIndiceLista(String Dato) {
@@ -455,7 +461,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         if(Integer.parseInt(idFinca)>0){
             ListaTraslado =(List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado(""+idFinca, idTipoAnimal);
         
-        MostrarTabla();
+            MostrarTabla();
         }
         
     }
@@ -487,7 +493,9 @@ public class VistaTraslado extends javax.swing.JPanel {
                         } 
                     );
             }
+            cbTipoAnimales.requestFocusInWindow();
         }
+        
     }
     
     private List<Map<String, String>> getFiltroLista(String filtro) {

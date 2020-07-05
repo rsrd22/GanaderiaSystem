@@ -444,6 +444,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 //                vprin.passdin = usuarios.get(indice)[4]; 
                 this.dispose();
                 vprin.setVisible(true);
+                vprin.EstablecerVistaInicial();
                 //vprin.IniciarComponentes();
                 
             }

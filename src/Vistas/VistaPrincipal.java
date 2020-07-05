@@ -52,6 +52,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         OcultarContenidoMenu();
         dpanel = new Dimension(pnlContenedor.getSize());
         //OcultarMenu();
+        
     }
 
     /**
@@ -1515,6 +1516,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         VistaSeleccionarFinca vsf = new VistaSeleccionarFinca();
         ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(this, vsf, 1);
         new VistaGeneral(objetoVentana).setVisible(true);
+    }
+
+    public void EstablecerVistaInicial() {
+        EstablecerTituloVentana("Estadisticas");
+        VistaInicio vista = new VistaInicio(this);
+        MostrarPanel(vista);
     }
 
 

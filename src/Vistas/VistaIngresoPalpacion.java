@@ -90,7 +90,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         datos = (Map<String, String>) modeloVistaGeneral.getModeloDatos();
         idAnimal = datos.get("IDANIMAL");
         
-        txtReferenciaAnimal.setText("<html><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
+        txtReferenciaAnimal.setText("<html><p>Número Mamá: <b>" + datos.get("NUMERO_MAMA") + "</b></p><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
         listaMedicamentos = new ArrayList<>();
         this.vp = ((VistaPalpacion) modeloVistaGeneral.getPanelPadre());
         fechaA = vp.fechaAnterior;
@@ -1086,7 +1086,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 modeloT.setFecha("NOW()");
                 modeloT.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
                 
-                int ret = controlTraslado.ActulizarAnimal(modeloT);
+                int ret = controlTraslado.ActulizarAnimal(modeloT, false);
                 ret = controlTraslado.InactivarTraslado(modeloT);
                 if (ret == 0) {
                     ret = controlTraslado.Guardar(modeloT);

@@ -215,12 +215,22 @@ public class ControlTraslado implements IControl {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public int ActulizarAnimal(ModeloTraslado datos) {
+    public int ActulizarAnimal(ModeloTraslado datos, boolean novilla) {
         ArrayList<String> consultas = new ArrayList<>();
+        String add = "";
+        
+        boolean exist = mySQL.ExistenDatos("select * from animales where id = '"+datos.getIdAnimal()+"' and `fecha_novilla` is not null AND fecha_novilla > '1900-01-01' ");
+        
+        System.out.println("exist-->"+exist);
+        
+        if(novilla && !exist){
+            add = ", fecha_novilla = "+Utilidades.ValorNULL(datos.getFechaTraslado())+" \n";
+        }
         
         consultas.add("UPDATE `animales`\n" +
                         "SET `id_tipo_animal` = '"+datos.getLote()+"', \n" +
                         "grupo = '"+datos.getIdGrupo()+"'\n"+    
+                        add+
                         "WHERE `id` = '"+datos.getIdAnimal()+"';");
         
         try {

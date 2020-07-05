@@ -46,6 +46,7 @@ public class VistaInicio extends javax.swing.JPanel {
      */
     public VistaInicio() {
         initComponents();
+        System.out.println("***********VistaInicio************");
         ListaFincas = new ArrayList<>();
         ListaFincasMostrar = new ArrayList<>();
         ListaFincasInforme = new ArrayList<>();
@@ -55,6 +56,7 @@ public class VistaInicio extends javax.swing.JPanel {
 
     public VistaInicio(VistaPrincipal vPrin) {
         initComponents();
+        System.out.println("******VistaInicio****vPrin*");
         this.vPrin = vPrin;
         ListaFincas = new ArrayList<>();
         ListaFincasMostrar = new ArrayList<>();
@@ -65,7 +67,6 @@ public class VistaInicio extends javax.swing.JPanel {
         
         LlenarColores();
         CargarFincas();
-        
     }
 
     /**
@@ -180,6 +181,7 @@ public class VistaInicio extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void CargarFincas() {
+        System.out.println("***************************************************");
         ListaFincas = controlgen.GetComboBox("SELECT distinct finc.`id` AS ID, finc.`descripcion` AS DESCRIPCION\n" +
                                                 "FROM `fincas` finc\n" +
                                                 "INNER JOIN `tipo_animales` tipo ON tipo.`id_finca` = finc.`id`\n" +
@@ -190,6 +192,7 @@ public class VistaInicio extends javax.swing.JPanel {
                                                 "ORDER BY grup.`id` ASC ");
         LLenarListaMostrar();
     }
+    
     private void LLenarListaMostrar(){
         for(Map<String, String> obj: ListaFincas){
             ListaFincasMostrar.add(obj);

@@ -762,7 +762,8 @@ public class ControlAnimales implements IControl {
                                 "	FROM `palpacion` palp\n" +
                                 "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n" +
                                 "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
-                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"' AND fecha_palpacion = '"+FECHA+"'\n" +
+                                "	WHERE tpo.`id_finca` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"' \n" +
+                                "       AND fecha_palpacion BETWEEN DATE_SUB('"+FECHA+"',  INTERVAL 15 DAY) AND DATE_ADD('"+FECHA+"',  INTERVAL 15 DAY)\n"+
                                 "	GROUP BY palp.`id_animal` \n" +
                                 ") tbl ON tbl.IDANIMAL = anim.`id` \n" +
                                 "WHERE grup.`palpable` = '1' AND finc.`id` = '"+IDFINCA+"' AND tpo.`id` = '"+IDTIPOFINCA+"'\n" +
