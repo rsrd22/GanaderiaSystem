@@ -119,6 +119,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "No",
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Pesado</p></html> ",
             "Peso (Kg)",
+            "Peso Anterior (Kg)",
+            "dif (Kg)",
             "Notas",
             "Ver Más",
             "Eliminar"
@@ -308,7 +310,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         modeloTblPeso = new DefaultTableModel(EncabezadoTblPeso, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
+                java.lang.Object.class, java.lang.Object.class,
             };
 
             public Class getColumnClass(int col) {
@@ -325,6 +328,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         tblDatosPeso.getColumnModel().getColumn(0).setPreferredWidth(25);
         tblDatosPeso.getColumnModel().getColumn(1).setPreferredWidth(80);
         tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblDatosPeso.getColumnModel().getColumn(2).setPreferredWidth(80);
         tblDatosPeso.getColumnModel().getColumn(3).setPreferredWidth(130);
         tblDatosPeso.getColumnModel().getColumn(5).setPreferredWidth(70);
 
@@ -2119,12 +2124,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                         (i + 1),//tbl_Grupos.getRowCount()+1,
                         listaPesajes.get(i).getFecha_pesado(),
                         listaPesajes.get(i).getPeso(),
+                        listaPesajes.get(i).getPeso_anterior(),
+                        Double.parseDouble(listaPesajes.get(i).getPeso())-Double.parseDouble(listaPesajes.get(i).getPeso_anterior()),
                         listaPesajes.get(i).getNotas(),
                         "Ver Mas",
-                        //                        listaPesajes.get(i).getHierro().equals("1")?"Si":"No",
-                        //                        listaPesajes.get(i).getDescornado().equals("1")?"Si":"No",
-                        //                        listaPesajes.get(i).getImplante().equals("1")?"Si":"No",
-                        //                        listaPesajes.get(i).getDestete().equals("1")?"Si":"No",
                         "Eliminar"
                     }
             );

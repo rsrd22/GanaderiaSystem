@@ -15,9 +15,11 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class VistaPesaje extends javax.swing.JPanel {
 
     public List<Map<String, String>> ListaAnimales;
     public List<Map<String, String>> ListaAnimalesMostrar;
+    public List<Map<String, String>> ListadoFechas;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
@@ -176,6 +179,8 @@ public class VistaPesaje extends javax.swing.JPanel {
         tbl_Animales = new Tablas.DiarioTable();
         lbltitle19 = new javax.swing.JLabel();
         jdFechaPesaje = new com.toedter.calendar.JDateChooser();
+        cbListadoFechas = new javax.swing.JComboBox();
+        lblTid3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -190,7 +195,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         add(lblTid, gridBagConstraints);
 
@@ -208,7 +213,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 230;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 10, 0);
         add(cbFinca, gridBagConstraints);
 
@@ -222,11 +227,12 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 240;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 10, 15);
         add(cbTipoAnimales, gridBagConstraints);
 
@@ -237,9 +243,10 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weightx = 0.6;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lblTid2, gridBagConstraints);
 
@@ -268,7 +275,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtFiltro, gridBagConstraints);
 
@@ -279,7 +286,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator6, gridBagConstraints);
 
@@ -292,7 +299,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(lblTid1, gridBagConstraints);
 
@@ -321,7 +328,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -339,7 +346,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.625;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(lbltitle19, gridBagConstraints);
 
@@ -355,9 +362,40 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.625;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(jdFechaPesaje, gridBagConstraints);
+
+        cbListadoFechas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbListadoFechas.setForeground(new java.awt.Color(59, 123, 50));
+        cbListadoFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbListadoFechasActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(cbListadoFechas, gridBagConstraints);
+
+        lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid3.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid3.setText("Listado Fechas");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(lblTid3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -379,6 +417,7 @@ public class VistaPesaje extends javax.swing.JPanel {
             ban = "1";
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
+                cargarListaFechasPesajes();
                 EventoComboFincas();
             } else {
                 Utilidades.LimpiarTabla(tbl_Animales);
@@ -446,9 +485,25 @@ public class VistaPesaje extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jdFechaPesajePropertyChange
 
+    private void cbListadoFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListadoFechasActionPerformed
+        if (cbListadoFechas.getItemCount() > 0) {
+            if (cbListadoFechas.getSelectedIndex() > 0) {
+                try {
+                    String fechaSeleccionada = cbListadoFechas.getSelectedItem().toString();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                    Date fecha = formato.parse(fechaSeleccionada);
+                    jdFechaPesaje.setDate(fecha);
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n"+ex.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_cbListadoFechasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox cbFinca;
+    public javax.swing.JComboBox cbListadoFechas;
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator6;
@@ -456,6 +511,7 @@ public class VistaPesaje extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
+    private javax.swing.JLabel lblTid3;
     private javax.swing.JLabel lbltitle19;
     public javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
@@ -464,8 +520,8 @@ public class VistaPesaje extends javax.swing.JPanel {
     private void CargarListaFincas() {
         listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
                 + "UNION\n"
-                + "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n"
-                + "FROM `fincas`\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM fincas\n"
                 + "/*UNION \n"
                 + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
 
@@ -479,7 +535,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
                 + "UNION\n"
                 + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
-                + "FROM `tipo_animales`\n"
+                + "FROM tipo_animales\n"
                 + "WHERE id_finca = '" + idFinca + "' AND estado = 'Activo'\n"
                 + "ORDER BY id ASC");
 
@@ -579,6 +635,19 @@ public class VistaPesaje extends javax.swing.JPanel {
         }
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
+    }
+
+    private void cargarListaFechasPesajes() {
+        ListadoFechas = controlgen.GetComboBox("SELECT 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "(SELECT DISTINCT DATE_FORMAT(a.fecha_pesado, '%d/%m/%Y')  AS DESCRIPCION\n" +
+                "FROM pesaje a\n" +
+                "INNER JOIN animales b ON b.id = a.id_animal\n" +
+                "INNER JOIN tipo_animales c ON c.id = b.id_tipo_animal\n" +
+                "WHERE c.id_finca = '"+idFinca+"' AND c.id = '"+idTipoAnimal+"' ORDER BY a.fecha_pesado DESC)");
+
+        Utilidades.LlenarComboBox(cbListadoFechas, ListadoFechas, "DESCRIPCION");
+        cbListadoFechas.setSelectedIndex(0);
     }
 
 }
