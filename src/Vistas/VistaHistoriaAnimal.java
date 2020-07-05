@@ -1722,11 +1722,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void tblDatosPesoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosPesoMouseReleased
         int fila = tblDatosPeso.getSelectedRow();
         int cola = tblDatosPeso.getSelectedColumn();
-        if (cola == 4) {// Ver MAs
+        if (cola == 6) {// Ver MAs
             modeloPesaje = listaPesajes.get(fila);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPesaje(), 1, modeloPesaje);
             new VistaGeneral(objetoVentana).setVisible(true);
-        } else if (cola == 5) {
+        } else if (cola == 7) {
             modeloPesaje = listaPesajes.get(fila);
             int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
             if (respuesta == JOptionPane.YES_OPTION) {
