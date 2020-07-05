@@ -124,6 +124,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         pnlAnimalesMostrar = new javax.swing.JPanel();
         lblTid5 = new javax.swing.JLabel();
         cbTipoAnimales = new javax.swing.JComboBox();
+        chNovilla = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -382,6 +383,14 @@ public class VistaTrasladar extends javax.swing.JPanel {
         gridBagConstraints.weightx = 0.45;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
         add(cbTipoAnimales, gridBagConstraints);
+
+        chNovilla.setBackground(new java.awt.Color(255, 255, 255));
+        chNovilla.setText("Novilla?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        add(chNovilla, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -445,6 +454,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbGrupo;
     public javax.swing.JComboBox cbTipoAnimales;
+    private javax.swing.JCheckBox chNovilla;
     private javax.swing.JScrollPane jScrollPane2;
     private com.toedter.calendar.JDateChooser jdFechaTraslado;
     private javax.swing.JLabel lblTid;
@@ -507,6 +517,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         Calendar fecha = jdFechaTraslado.getCalendar();
         String fechaT = sdf.format(fecha.getTime());
         String motivo = txtMotivo.getText().trim();
+        boolean novilla = chNovilla.isSelected();
 
 //        if (motivo.equals("")) {
 //            JOptionPane.showMessageDialog(this, "Por favor diligencie el motivo de traslado.");
@@ -543,7 +554,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < ListamodeloTraslado.size(); i++) {
-            ret = controlTraslado.ActulizarAnimal(ListamodeloTraslado.get(i));
+            ret = controlTraslado.ActulizarAnimal(ListamodeloTraslado.get(i), novilla);
             ret = controlTraslado.InactivarTraslado(ListamodeloTraslado.get(i));
             if (ret == 0) {
                 ret = controlTraslado.Guardar(ListamodeloTraslado.get(i));

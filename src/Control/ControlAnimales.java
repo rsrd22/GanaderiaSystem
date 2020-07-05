@@ -745,6 +745,7 @@ public class ControlAnimales implements IControl {
     public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA, String FECHA) {
         try {
             
+            
             String consulta = "SELECT anim.id AS IDANIMAL, anim.numero AS NUMERO_ANIMAL, anim.numero_mama AS NUMERO_MAMA,\n" +
                                 " IFNULL(DATE_FORMAT(anim.fecha_novilla, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n" +
                                 ", NumeroHijos(anim.numero, 0) NUMERO_HIJOS, IFNULL(NumeroPartos(anim.numero), '0') NUMERO_PARTOS,\n" +

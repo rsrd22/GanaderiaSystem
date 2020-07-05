@@ -2141,7 +2141,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="TabbletPane Palpacion">
     private void GetDatosPalpacion() {
-        ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltro(id_Animal);
+        ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltroNew(id_Animal);
 
         if (ListaDatosPalpacion.size() > 0) {
 
