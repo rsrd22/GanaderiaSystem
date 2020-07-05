@@ -21,17 +21,16 @@ public class gestorMySQL implements IBaseDeDatos {
     public gestorMySQL() {
         con = null;
         mensaje = "";
-        
+
         BD = baseDeDatos.BIENESRAICES;
         usuario = baseDeDatos.BIENESUSER;
         hostName = baseDeDatos.HOSTALLONE;
-        contrasena = baseDeDatos.PASSWORD_DB_SERVIDOR_CASA;  
+        contrasena = baseDeDatos.PASSWORD_DB_SERVIDOR_CASA;
 
 //        BD = baseDeDatos.BIENESRAICES;
 //        usuario = baseDeDatos.BIENESUSER;
 //        hostName = baseDeDatos.HOSTLOCAL;
 //        contrasena = baseDeDatos.PASSWORD_DB_BIENES;  
-        
     }
 
     public ResultSet Consultar(String sentenciaSQL) {
@@ -45,7 +44,7 @@ public class gestorMySQL implements IBaseDeDatos {
             Statement s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             contenedorQUERY = s.executeQuery(sentenciaSQL);
             s.close();
-            Desconectar();   
+            Desconectar();
             return contenedorQUERY;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
@@ -66,7 +65,7 @@ public class gestorMySQL implements IBaseDeDatos {
             boolean existenDatos = false;
 
             if (!Conectar()) {
-                JOptionPane.showMessageDialog(null, "ERROR EN EL SELECT "+mensaje);
+                JOptionPane.showMessageDialog(null, "ERROR EN EL SELECT " + mensaje);
             } else {
                 Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 contenedorQUERY = st.executeQuery(sentenciaSQL);
@@ -223,7 +222,7 @@ public class gestorMySQL implements IBaseDeDatos {
     private boolean Conectar() {
         try {
 
-            Class.forName("com.mysql.jdbc.Driver"); 
+            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
             return true;
         } catch (ClassNotFoundException e) {
@@ -234,8 +233,8 @@ public class gestorMySQL implements IBaseDeDatos {
 
             return false;
         } catch (SQLException ex) {
-            System.out.println("ERROR CONECTAR -- "+ex.getMessage());
-            
+            System.out.println("ERROR CONECTAR -- " + ex.getMessage());
+
             ex.printStackTrace();
 //            boolean ret = PING(""+hostName);
 //            if(ret){
@@ -317,6 +316,22 @@ public class gestorMySQL implements IBaseDeDatos {
         }
     }
 
+    public boolean DesconectarConexion() {
+        try {
+            if (!con.isClosed()) {
+                con.close();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            String mensaje = "Error al tratar de cerrar la conexión.\n"
+                    + "___________________________________________________________________\n" + ex.getMessage();
+            return false;
+
+        }
+    }
+
     @Override
     public boolean EnviarConsultas(ArrayList consultas) throws ClassNotFoundException, SQLException {
         String QuerySQL = null;
@@ -359,10 +374,10 @@ public class gestorMySQL implements IBaseDeDatos {
             }
 
         } catch (Exception e) {
-            System.out.println("eroor--"+e.getMessage());
+            System.out.println("eroor--" + e.getMessage());
             con.rollback();
             con.setAutoCommit(true);
-            
+
             if (mensaje != null && QuerySQL.toUpperCase().indexOf("WHERE") > 0) {
                 mensaje += QuerySQL.toUpperCase().split("WHERE")[1];
             }
@@ -447,6 +462,42 @@ public class gestorMySQL implements IBaseDeDatos {
                 contenedorQUERY.close();
                 Desconectar();
             }
+
+            if (existenDatos) {
+                return resultConsulta;
+            } else {
+                return null;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Ocurrio un error al tratar de obtener los datos\n"
+                    + "______________________________________________________\n"
+                    + "Detalles:\n" + ex.getMessage());
+            Desconectar();
+            return null;
+        }
+    }
+
+    public String unicoDato(String sentenciaSQL, int a) {
+        try {
+            //System.out.println("SELECT -->"+sentenciaSQL);
+            ResultSet contenedorQUERY = null;
+            String resultConsulta = "";
+            boolean existenDatos = false;
+
+            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            contenedorQUERY = st.executeQuery(sentenciaSQL);
+
+            int numeroDeColumnas = contenedorQUERY.getMetaData().getColumnCount();
+
+            if (contenedorQUERY.next()) {
+                existenDatos = true;
+
+                resultConsulta = contenedorQUERY.getString(1);
+
+            }
+            st.close();
+            contenedorQUERY.close();
 
             if (existenDatos) {
                 return resultConsulta;

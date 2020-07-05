@@ -343,6 +343,7 @@ public class VistaPesaje extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(lbltitle19, gridBagConstraints);
 
+        jdFechaPesaje.setDateFormatString("dd/MM/yyyy");
         jdFechaPesaje.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jdFechaPesajePropertyChange(evt);

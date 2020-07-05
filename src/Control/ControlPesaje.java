@@ -53,7 +53,9 @@ public class ControlPesaje implements IControl {
                         pesaje.get("implante"),
                         pesaje.get("notas"),
                         pesaje.get("peso"),
-                        "", "", ""
+                        "", "", "",
+                        pesaje.get("peso_anterior"),
+                        "0"
                 ));
             }
             return lista;
@@ -70,7 +72,9 @@ public class ControlPesaje implements IControl {
         //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJE">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
+                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,"
+                + "hierro,descornado,implante,destete,fecha,id_usuario,"
+                + "peso_anterior) VALUES(\n"
                 + "" + modelo.getId() + ",\n"
                 + "" + modelo.getId_animal() + ",\n"
                 + "'" + modelo.getFecha_pesado() + "',\n"
@@ -81,7 +85,8 @@ public class ControlPesaje implements IControl {
                 + "'" + modelo.getImplante() + "',\n"
                 + "'" + modelo.getDestete() + "',\n"
                 + "" + modelo.getFecha() + ",\n"
-                + "" + modelo.getId_usuario() + "\n"
+                + "" + modelo.getId_usuario() + ",\n"
+                + "" + modelo.getPeso_anterior() + "\n"
                 + ")" //</editor-fold>
         );
 //</editor-fold>
@@ -109,6 +114,7 @@ public class ControlPesaje implements IControl {
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
@@ -152,12 +158,14 @@ public class ControlPesaje implements IControl {
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJEPORMEDICAMENTOS">
-        if (modelo.getListaMedicamentos().get(0).isEliminar()) {
-            consultas.add(
-                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
-                    "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
-            //</editor-fold>
-            );
+        if (modelo.getListaMedicamentos().size() > 0) {
+            if (modelo.getListaMedicamentos().get(0).isEliminar()) {
+                consultas.add(
+                        //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                        "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
+                //</editor-fold>
+                );
+            }
         }
         for (int i = 0; i < modelo.getListaMedicamentos().size(); i++) {
             consultas.add(
@@ -181,6 +189,7 @@ public class ControlPesaje implements IControl {
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
@@ -263,7 +272,8 @@ public class ControlPesaje implements IControl {
         String consulta = "SELECT a.*,\n"
                 + "b.hierro AS IDHIERRO,\n"
                 + "c.descripcion AS DESCRIPCION_HIERRO,\n"
-                + "b.fecha_destete AS FECHA_DESTETE\n"
+                + "b.fecha_destete AS FECHA_DESTETE,\n"
+                + "b.peso_destete AS PESO_DESTETE\n"
                 + "FROM pesaje a\n"
                 + "LEFT JOIN animales b ON a.id_animal=b.id\n"
                 + "LEFT JOIN propietarioxhierro c ON b.hierro=c.id\n"
@@ -289,7 +299,9 @@ public class ControlPesaje implements IControl {
                         pesaje.get("peso"),
                         pesaje.get("DESCRIPCION_HIERRO"),
                         pesaje.get("IDHIERRO"),
-                        pesaje.get("FECHA_DESTETE")
+                        pesaje.get("FECHA_DESTETE"),
+                        pesaje.get("peso_anterior"),
+                        pesaje.get("PESO_DESTETE")
                 );
                 consulta = "SELECT \n"
                         + "a.id AS ID, \n"
