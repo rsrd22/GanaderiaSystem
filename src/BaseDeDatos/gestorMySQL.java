@@ -283,7 +283,7 @@ public class gestorMySQL implements IBaseDeDatos {
 
     }
 
-    public Connection ConectarConnection() {
+    private Connection ConectarConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
@@ -316,7 +316,7 @@ public class gestorMySQL implements IBaseDeDatos {
         }
     }
 
-    public boolean DesconectarConexion() {
+    private boolean DesconectarConexion() {
         try {
             if (!con.isClosed()) {
                 con.close();

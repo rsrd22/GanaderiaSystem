@@ -3,18 +3,21 @@ package pruebas;
 import Actividades.Periodo;
 import AjustarControles.tiposDeAjuste;
 import Alerta.*;
+import Archivos.ControlArchivos;
 import BaseDeDatos.gestorMySQL;
 import Control.ControlGrupos;
 import Control.Retorno;
 import Modelo.ModeloGrupos;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -23,8 +26,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.JPanel;
-import Archivos.ControlArchivos;
-import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -53,52 +54,6 @@ public class NewClass {
 //        }
 //        //</editor-fold>
 
-        ArrayList<String> consultas = new ArrayList<>();
-        gestorMySQL g = new gestorMySQL();
-
-        ControlArchivos contArchivo = new ControlArchivos("D:\\relrecext.txt");
-        contArchivo.LeerArchivo();
-        BufferedReader br = contArchivo.getBuferDeLectura();
-        String lineaDeTexto;
-        String texto = "";
-
-        if (br != null) {
-            g.ConectarConnection();
-            try {
-                while ((lineaDeTexto = br.readLine()) != null) {
-                    String[] linea = lineaDeTexto.split("\\t");
-                    String pesoant = g.unicoDato("SELECT\n"
-                            + "CASE WHEN (SELECT COUNT(*) FROM pesaje b WHERE b.id_animal="+linea[1]+") > 1 THEN\n"
-                            + "(SELECT c.peso FROM pesaje c WHERE c.id_animal="+linea[1]+" AND c.fecha_pesado < "
-                            + "(SELECT MAX(d.fecha_pesado) FROM pesaje d WHERE d.id_animal="+linea[1]+") ORDER BY c.fecha_pesado DESC LIMIT 1)\n"
-                            + "ELSE a.peso END AS pesoAnterior\n"
-                            + "FROM pesaje a WHERE a.id_animal="+linea[1]+" LIMIT 1");
-                    consultas.add("UPDATE pesaje SET peso_anterior=" + pesoant + " WHERE id_animal=" + linea[1]);
-                }
-
-                try {
-                    if (g.EnviarConsultas(consultas)) {
-                        System.out.println("actualizado");
-                    } else {
-                        System.out.println("error");
-                    }
-                } catch (ClassNotFoundException ex) {
-                    System.out.println("" + ex.getMessage());
-                } catch (SQLException ex) {
-                    System.out.println("" + ex.getMessage());
-                }
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                g.DesconectarConexion();
-            }
-            g.DesconectarConexion();
-        }
-
-    }
-
-    public static void mostrar() {
-        System.out.println("hola a todos");
     }
 
     private static void cargarPeriodos() {
@@ -117,6 +72,52 @@ public class NewClass {
             cal.add(Calendar.MONTH, 1);
         }
 
+    }
+
+    public static boolean ActualizarPesajes() {
+        List<Map<String, String>> pesajes = new ArrayList<>();
+        ArrayList<String> consultas = new ArrayList<>();
+        gestorMySQL g = new gestorMySQL();
+        pesajes = g.ListSQL("SELECT a.*,(SELECT COUNT(id_animal) FROM pesaje WHERE id_animal=a.id_animal) cantidad FROM pesaje a ORDER BY a.id_animal,a.fecha_pesado DESC");
+
+        int cant = 0;
+        String consulta = "";
+        for (int i = 0; i < pesajes.size(); i++) {
+            Map<String, String> pesajeAct = pesajes.get(i);
+            Map<String, String> pesajeSig = pesajes.get(i);
+            if (i < pesajes.size() - 1) {
+                pesajeSig = pesajes.get(i + 1);
+            }
+
+            int cantidad = Integer.parseInt(pesajeAct.get("cantidad"));
+            if (cantidad > 1) {
+                cant++;
+                if (cant == cantidad) {
+                    consulta = "update pesaje set peso_anterior=0 where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                } else {
+                    consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") + " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                }
+                System.out.println("consulta: " + consulta);
+                consultas.add(consulta);
+                cant = (cant == cantidad ? 0 : cant);
+            }
+        }
+
+        try {
+            if (g.EnviarConsultas(consultas)) {
+                System.out.println("PESAJES ACTUALIZADOS...");
+                return true;
+            } else {
+                System.out.println("ERROR");
+                return false;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return false;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return false;
+        }
     }
 
 //    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
