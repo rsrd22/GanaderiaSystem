@@ -5,8 +5,10 @@ import AjustarControles.tiposDeAjuste;
 import Alerta.*;
 import Archivos.ControlArchivos;
 import BaseDeDatos.gestorMySQL;
+import Control.ControlAnimales;
 import Control.ControlGrupos;
 import Control.Retorno;
+import Modelo.ModeloAnimales;
 import Modelo.ModeloGrupos;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +39,14 @@ import javax.swing.JPanel;
  * @author DOLFHANDLER
  */
 public class NewClass {
-
+    
+    private static ArrayList<ModeloAnimales> l;
+    private static ControlAnimales controlAnimales = new ControlAnimales();
+    private static ModeloAnimales ma = new ModeloAnimales();
+    private static String POR_ESTABLECER = "por establecer";
+    private static String PREGUNTAR = "preguntar";
+    private static final String FECHA_POR_DEFECTO = "1900-01-01";
+    
     public static void main(String[] args) {
 //        //<editor-fold defaultstate="collapsed" desc="Prueba crud">
         Configuracion.ConfiguracionPropiedades.cargarConfiguracion();
@@ -55,7 +64,7 @@ public class NewClass {
 //        //</editor-fold>
 
     }
-
+    
     private static void cargarPeriodos() {
         ArrayList<Periodo> periodos = new ArrayList<Periodo>();
         Calendar cal = Calendar.getInstance();
@@ -63,23 +72,23 @@ public class NewClass {
         SimpleDateFormat sdfDescripcionMes = new SimpleDateFormat("MMMM");
         SimpleDateFormat sdfMes = new SimpleDateFormat("M");
         int anioActual = Integer.parseInt(sdfAnio.format(cal.getTime()));
-
+        
         cal.set(anioActual, 0, 1);
-
+        
         for (int i = 0; i < 12; i++) {
             System.out.println("" + sdfDescripcionMes.format(cal.getTime()));
             System.out.println("" + sdfMes.format(cal.getTime()));
             cal.add(Calendar.MONTH, 1);
         }
-
+        
     }
-
+    
     public static boolean ActualizarPesajes() {
         List<Map<String, String>> pesajes = new ArrayList<>();
         ArrayList<String> consultas = new ArrayList<>();
         gestorMySQL g = new gestorMySQL();
         pesajes = g.ListSQL("SELECT a.*,(SELECT COUNT(id_animal) FROM pesaje WHERE id_animal=a.id_animal) cantidad FROM pesaje a ORDER BY a.id_animal,a.fecha_pesado DESC");
-
+        
         int cant = 0;
         String consulta = "";
         for (int i = 0; i < pesajes.size(); i++) {
@@ -88,7 +97,7 @@ public class NewClass {
             if (i < pesajes.size() - 1) {
                 pesajeSig = pesajes.get(i + 1);
             }
-
+            
             int cantidad = Integer.parseInt(pesajeAct.get("cantidad"));
             if (cantidad > 1) {
                 cant++;
@@ -102,7 +111,7 @@ public class NewClass {
                 cant = (cant == cantidad ? 0 : cant);
             }
         }
-
+        
         try {
             if (g.EnviarConsultas(consultas)) {
                 System.out.println("PESAJES ACTUALIZADOS...");
@@ -119,7 +128,44 @@ public class NewClass {
             return false;
         }
     }
-
+    
+    public static void NacimientoAnimal(String numeroAnimal) {
+        l = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(numeroAnimal);
+        ModeloAnimales mm = l.get(0);
+        
+        ma.setNumeroMama(numeroAnimal);
+        ma.setNumero(numeroAnimal);
+        ma.setIdFinca(mm.getIdFinca());
+        ma.setIdTipoAnimal(mm.getIdTipoAnimal());
+        ma.setIdPropietario(mm.getIdPropietario());
+        ma.setGrupo("cria hembra o macho");
+        ma.setHierro(PREGUNTAR);
+        ma.setHierroFisico(PREGUNTAR);
+        ma.setGenero("Macho o Hembra");
+        ma.setCapado(POR_ESTABLECER);
+        ma.setPeso(POR_ESTABLECER);
+        ma.setCalificacion(POR_ESTABLECER);
+        ma.setNotas(POR_ESTABLECER);
+        ma.setFechaNacimiento(POR_ESTABLECER);
+        ma.setImplante(PREGUNTAR);
+        ma.setDescornada("0");
+        ma.setFecha("NOW()");
+        ma.setFechaDestete(FECHA_POR_DEFECTO);
+        ma.setFechaMuerte(FECHA_POR_DEFECTO);
+        ma.setFechaNovilla(FECHA_POR_DEFECTO);
+        ma.setFechaVenta(FECHA_POR_DEFECTO);
+        ma.setVenta(PREGUNTAR);
+        ma.setMuerte(PREGUNTAR);
+        ma.setPesoDestete(PREGUNTAR);
+        ma.setPesoCanal("0");
+        ma.setDescripcionMuerte(POR_ESTABLECER);
+        ma.setTipoVenta(POR_ESTABLECER);
+        ma.setPrecioVenta(POR_ESTABLECER);
+    }
+    
+    private static void GetDatosAnimal(String id_Animal) {
+        
+    }
 //    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
 //   {
 //       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
