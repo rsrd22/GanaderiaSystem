@@ -24,6 +24,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     public VistaNacimientoAnimal() {
         initComponents();
         controlGral = new ControlGeneral();
+//        boolean chequeado = false;
+//        lblFechaMuerte.setVisible(chequeado);
+//        jdFechaMuerte.setVisible(chequeado);
+//        lblCausaMuerte.setVisible(chequeado);
+//        txtObservacionMuerte.setVisible(chequeado);
+//        cargarComboGrupos(TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY);
     }
 
     private void cargarComboGrupos(String idFinca, String idTipoAnimal) {
