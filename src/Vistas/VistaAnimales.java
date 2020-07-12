@@ -600,7 +600,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle10.setText("Genero");
+        lbltitle10.setText("Sexo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -1530,6 +1530,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
         add(chkDescornada, gridBagConstraints);
 
+        chkNovilla.setBackground(new java.awt.Color(255, 255, 255));
         chkNovilla.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkNovilla.setForeground(new java.awt.Color(59, 123, 50));
         chkNovilla.setText("Es novilla");

@@ -139,39 +139,31 @@ public class NewClass {
         ma.setIdTipoAnimal(mm.getIdTipoAnimal());
         ma.setIdPropietario(mm.getIdPropietario());
         ma.setGrupo("cria hembra o macho");
-        ma.setHierro(PREGUNTAR);
-        ma.setHierroFisico(PREGUNTAR);
+        ma.setHierro(mm.getHierro());
+        ma.setHierroFisico("0");
         ma.setGenero("Macho o Hembra");
-        ma.setCapado(POR_ESTABLECER);
+        ma.setCapado("0");
         ma.setPeso(POR_ESTABLECER);
         ma.setCalificacion(POR_ESTABLECER);
         ma.setNotas(POR_ESTABLECER);
         ma.setFechaNacimiento(POR_ESTABLECER);
-        ma.setImplante(PREGUNTAR);
+        ma.setImplante("0");
         ma.setDescornada("0");
         ma.setFecha("NOW()");
         ma.setFechaDestete(FECHA_POR_DEFECTO);
         ma.setFechaMuerte(FECHA_POR_DEFECTO);
         ma.setFechaNovilla(FECHA_POR_DEFECTO);
         ma.setFechaVenta(FECHA_POR_DEFECTO);
-        ma.setVenta(PREGUNTAR);
-        ma.setMuerte(PREGUNTAR);
-        ma.setPesoDestete(PREGUNTAR);
+        ma.setVenta(POR_ESTABLECER);
+        ma.setMuerte(POR_ESTABLECER);
+        ma.setPesoDestete("0");
         ma.setPesoCanal("0");
-        ma.setDescripcionMuerte(POR_ESTABLECER);
-        ma.setTipoVenta(POR_ESTABLECER);
-        ma.setPrecioVenta(POR_ESTABLECER);
+        ma.setDescripcionMuerte("");
+        ma.setTipoVenta("");
+        ma.setPrecioVenta("");
     }
     
     private static void GetDatosAnimal(String id_Animal) {
         
     }
-//    public static boolean diferenciaEntreFechas(String fechaDesde, String fechaHasta)//si retorna false es porque la fecha desde es mayor que la hasta lo cual es erroneo
-//   {
-//       Date fd = new Date(Integer.parseInt(fechaDesde.split("/")[2]) - 1900, Integer.parseInt(fechaDesde.split("/")[1]) - 1, Integer.parseInt(fechaDesde.split("/")[0])),
-//               fh = new Date(Integer.parseInt(fechaHasta.split("/")[2]) - 1900, Integer.parseInt(fechaHasta.split("/")[1]) - 1, Integer.parseInt(fechaHasta.split("/")[0]));
-//       int d = fd.compareTo(fh);
-//       System.out.println("d-->>>"+d);
-//       
-//   }
 }
