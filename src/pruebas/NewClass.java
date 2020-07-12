@@ -56,7 +56,7 @@ public class NewClass {
         ArrayList<String> consultas = new ArrayList<>();
         gestorMySQL g = new gestorMySQL();
 
-        ControlArchivos contArchivo = new ControlArchivos("D:\\relrecext.txt");
+        ControlArchivos contArchivo = new ControlArchivos("E:\\ganadero.txt");
         contArchivo.LeerArchivo();
         BufferedReader br = contArchivo.getBuferDeLectura();
         String lineaDeTexto;

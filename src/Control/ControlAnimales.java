@@ -33,6 +33,7 @@ public class ControlAnimales implements IControl {
 
     @Override
     public Object ObtenerDatos() {
+        System.out.println("***************ObtenerDatos****************");
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"

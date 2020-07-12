@@ -10,6 +10,7 @@ import Modelo.*;
 import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -345,6 +346,35 @@ public class ControlPalpacion implements IControl {
             return lista;
         } else {
             return LISTA_VACIA;
+        }
+    }
+
+    public Map<String, String> getDatosPalpacion(String id) {
+        String consulta = "SELECT palp.`diagnostico` AS ESTADO, IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n" +
+                            "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES\n" +
+                            "FROM `palpacion` palp \n" +
+                            "INNER JOIN `animales` a ON a.`id` = palp.`id_animal`\n" +
+                            "WHERE id_animal = '"+id+"'\n" +
+                            "ORDER BY palp.id DESC\n" +
+                            "LIMIT 1;";
+        
+        List<Map<String, String>> datos = new ArrayList<Map<String, String>>();
+        datos = mySQL.ListSQL(consulta);
+        Map<String, String> retorno = new HashMap<>();
+//        
+        if(datos.size()>0){
+            retorno.put("ESTADO", datos.get(0).get("ESTADO"));
+            retorno.put("NUM_PARTOS", datos.get(0).get("NUM_PARTOS"));
+            retorno.put("CRIA", datos.get(0).get("CRIA"));
+            retorno.put("NUM_MESES", datos.get(0).get("NUM_MESES"));
+            
+            return retorno;
+        } else {
+            retorno.put("ESTADO", "");
+            retorno.put("NUM_PARTOS", "");
+            retorno.put("CRIA", "");
+            retorno.put("NUM_MESES", "");
+            return retorno;
         }
     }
 

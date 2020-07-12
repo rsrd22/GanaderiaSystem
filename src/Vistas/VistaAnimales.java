@@ -2241,7 +2241,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             modelo.setPesoDestete(txtPesoDestete.getText().replace(".", "").replace(",", "."));
         } else {
             modelo.setFechaDestete(FECHA_POR_DEFECTO);
-            modelo.setPesoDestete("NULL");
+            modelo.setPesoDestete("0");
         }
 
         int retorno = Retorno.DEFECTO;
