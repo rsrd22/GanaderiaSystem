@@ -2304,12 +2304,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
         
-        lblNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+//        lblNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+//        lbltitNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        
         lblNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lbltitNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblTitNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lbltitNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lbltitNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
@@ -2318,11 +2319,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         if(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA")){
             Map<String, String> datosHembra = new HashMap<>();
             datosHembra = controlPalpacion.getDatosPalpacion(id_Animal); 
+            lbltitNovilla.setText("Novilla?");
             lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("0")?"No":"Si");        
             lblNumMeses.setText(""+datosHembra.get("NUM_MESES"));
             lblNumCriaAdoptiva.setText(""+datosHembra.get("CRIA"));
             lblNumPartos.setText(""+datosHembra.get("NUM_PARTOS"));
             lblEstado.setText(""+datosHembra.get("ESTADO"));
+        }else{
+            lblNovilla.setText(ListaDatos.get(0).getCapado());
+            lbltitNovilla.setText("Capado?");
         }
 
         
