@@ -55,7 +55,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public String[] EncabezadoTblPeso;
     public String[] EncabezadoTblPalpacion;
     private List<Map<String, String>> ListaDatosRotacion;
-    //private List<Map<String, String>> ListaDatosPalpacion;
+    private ModeloAnimales modeloMadre = new ModeloAnimales();
     private List<Map<String, String>> ListaDatosRotacionMostrar;
     private List<Map<String, String>> ListaDatosRotacionEliminar;
     public DefaultTableModel modeloTblRotacion;
@@ -310,9 +310,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         modeloTblPeso = new DefaultTableModel(EncabezadoTblPeso, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, 
-                java.lang.Object.class, java.lang.Object.class,
-            };
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class,};
 
             public Class getColumnClass(int col) {
                 return types[col];
@@ -372,7 +371,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 return false;
             }
         };
-        
+
         tbl_Palpacion.setModel(modeloTblPalpacion);
 
         tbl_Palpacion.getColumnModel().getColumn(0).setPreferredWidth(25);
@@ -412,20 +411,60 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnlDatosBasicos = new javax.swing.JPanel();
         lblNotas = new javax.swing.JLabel();
         lbltitle4 = new javax.swing.JLabel();
         lbltitle17 = new javax.swing.JLabel();
         lbltitle12 = new javax.swing.JLabel();
         lbltitle15 = new javax.swing.JLabel();
-        lbltitle7 = new javax.swing.JLabel();
+        lbltitNumCriaAdoptiva = new javax.swing.JLabel();
         lbltitle16 = new javax.swing.JLabel();
         lbltitle14 = new javax.swing.JLabel();
-        lbltitle10 = new javax.swing.JLabel();
+        lbltitNovilla = new javax.swing.JLabel();
         lbltitle8 = new javax.swing.JLabel();
         lbltitle19 = new javax.swing.JLabel();
         lblTid1 = new javax.swing.JLabel();
         lbltitle9 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        lblPeso = new javax.swing.JLabel();
+        lblTipoAnimal = new javax.swing.JLabel();
+        lblPropietario = new javax.swing.JLabel();
+        lblGrupo = new javax.swing.JLabel();
+        lblPesoDestete = new javax.swing.JLabel();
+        lblFinca = new javax.swing.JLabel();
+        lblNumCriaAdoptiva = new javax.swing.JLabel();
+        lblPartoNumero = new javax.swing.JLabel();
+        lblNovilla = new javax.swing.JLabel();
+        lblCalificacion = new javax.swing.JLabel();
+        lbltitle18 = new javax.swing.JLabel();
+        lblHierroColocado = new javax.swing.JLabel();
+        lblNumPartos = new javax.swing.JLabel();
+        lbltitle20 = new javax.swing.JLabel();
+        lbltitle21 = new javax.swing.JLabel();
+        lblFechaDestete = new javax.swing.JLabel();
+        lbltitle11 = new javax.swing.JLabel();
+        lblGenero = new javax.swing.JLabel();
+        lblHierro = new javax.swing.JLabel();
+        lbltitle22 = new javax.swing.JLabel();
+        lbltitle23 = new javax.swing.JLabel();
+        lblDestete = new javax.swing.JLabel();
+        lblDescornado = new javax.swing.JLabel();
+        lbltitNumPartos = new javax.swing.JLabel();
+        lblNumMama = new javax.swing.JLabel();
+        lbltitle13 = new javax.swing.JLabel();
+        lbltitle25 = new javax.swing.JLabel();
+        lblNumMamaAdoptiva = new javax.swing.JLabel();
+        lblImplante = new javax.swing.JLabel();
+        lbltitle26 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
+        lbltitEstado = new javax.swing.JLabel();
+        lblNumMeses = new javax.swing.JLabel();
+        lblTitNumMeses = new javax.swing.JLabel();
+        lblNumero = new javax.swing.JLabel();
+        lbltitle29 = new javax.swing.JLabel();
+        panelBtnParto = new javax.swing.JPanel();
+        btnParto = new javax.swing.JButton();
         pnlMuerte = new javax.swing.JPanel();
         lblTid4 = new javax.swing.JLabel();
         txtFechaMuerte = new javax.swing.JTextField();
@@ -476,35 +515,40 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlPalpacion = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbl_Palpacion = new javax.swing.JTable();
-        lblPeso = new javax.swing.JLabel();
-        lblTipoAnimal = new javax.swing.JLabel();
-        lblPropietario = new javax.swing.JLabel();
-        lblGrupo = new javax.swing.JLabel();
-        lblHierro = new javax.swing.JLabel();
-        lblFinca = new javax.swing.JLabel();
-        lblNumMama = new javax.swing.JLabel();
-        lblNumero = new javax.swing.JLabel();
-        lblGenero = new javax.swing.JLabel();
-        lblCalificacion = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
+
+        jTabbedPane1.setForeground(new java.awt.Color(59, 123, 50));
+        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
+        pnlDatosBasicos.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDatosBasicos.setLayout(new java.awt.GridBagLayout());
 
         lblNotas.setForeground(new java.awt.Color(59, 123, 50));
         lblNotas.setText("Finca");
         lblNotas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 400;
-        gridBagConstraints.ipady = 26;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 21);
-        add(lblNotas, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblNotas, gridBagConstraints);
 
         lbltitle4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle4.setForeground(new java.awt.Color(59, 123, 50));
@@ -513,11 +557,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        add(lbltitle4, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle4, gridBagConstraints);
 
         lbltitle17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle17.setForeground(new java.awt.Color(59, 123, 50));
@@ -526,11 +570,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        add(lbltitle17, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle17, gridBagConstraints);
 
         lbltitle12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle12.setForeground(new java.awt.Color(59, 123, 50));
@@ -539,85 +583,89 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 53;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        add(lbltitle12, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle12, gridBagConstraints);
 
         lbltitle15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle15.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbltitle15.setText("Hierro");
+        lbltitle15.setText("Peso Destete");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 53;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        add(lbltitle15, gridBagConstraints);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle15, gridBagConstraints);
 
-        lbltitle7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle7.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbltitle7.setText("# de la madre");
+        lbltitNumCriaAdoptiva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitNumCriaAdoptiva.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitNumCriaAdoptiva.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitNumCriaAdoptiva.setText(" # Cria Adoptiva?");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.001;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        add(lbltitle7, gridBagConstraints);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitNumCriaAdoptiva, gridBagConstraints);
 
         lbltitle16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle16.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbltitle16.setText("Número");
+        lbltitle16.setText("Parto Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 43;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        add(lbltitle16, gridBagConstraints);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle16, gridBagConstraints);
 
         lbltitle14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle14.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbltitle14.setText("Peso (Kilos)");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 19;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        add(lbltitle14, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle14, gridBagConstraints);
 
-        lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbltitle10.setText("Genero");
+        lbltitNovilla.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitNovilla.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitNovilla.setText("Novilla?");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 47;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        add(lbltitle10, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitNovilla, gridBagConstraints);
 
         lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbltitle8.setText("Calificación");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 23;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        add(lbltitle8, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle8, gridBagConstraints);
 
         lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
@@ -625,11 +673,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lbltitle19.setText("Notas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        add(lbltitle19, gridBagConstraints);
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle19, gridBagConstraints);
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
@@ -638,11 +686,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        add(lblTid1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlDatosBasicos.add(lblTid1, gridBagConstraints);
 
         lbltitle9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle9.setForeground(new java.awt.Color(59, 123, 50));
@@ -651,15 +700,502 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 60;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.001;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        add(lbltitle9, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle9, gridBagConstraints);
 
-        jTabbedPane1.setForeground(new java.awt.Color(59, 123, 50));
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPeso.setForeground(new java.awt.Color(59, 123, 50));
+        lblPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPeso.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblPeso, gridBagConstraints);
+
+        lblTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
+        lblTipoAnimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTipoAnimal.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblTipoAnimal, gridBagConstraints);
+
+        lblPropietario.setForeground(new java.awt.Color(59, 123, 50));
+        lblPropietario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPropietario.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblPropietario, gridBagConstraints);
+
+        lblGrupo.setForeground(new java.awt.Color(59, 123, 50));
+        lblGrupo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblGrupo.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblGrupo, gridBagConstraints);
+
+        lblPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblPesoDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPesoDestete.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblPesoDestete, gridBagConstraints);
+
+        lblFinca.setForeground(new java.awt.Color(59, 123, 50));
+        lblFinca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFinca.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblFinca, gridBagConstraints);
+
+        lblNumCriaAdoptiva.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumCriaAdoptiva.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumCriaAdoptiva.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblNumCriaAdoptiva, gridBagConstraints);
+
+        lblPartoNumero.setForeground(new java.awt.Color(59, 123, 50));
+        lblPartoNumero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPartoNumero.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblPartoNumero, gridBagConstraints);
+
+        lblNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lblNovilla.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNovilla.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblNovilla, gridBagConstraints);
+
+        lblCalificacion.setForeground(new java.awt.Color(59, 123, 50));
+        lblCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblCalificacion.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblCalificacion, gridBagConstraints);
+
+        lbltitle18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle18.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle18.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle18.setText("Colocado?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle18, gridBagConstraints);
+
+        lblHierroColocado.setForeground(new java.awt.Color(59, 123, 50));
+        lblHierroColocado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblHierroColocado.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblHierroColocado, gridBagConstraints);
+
+        lblNumPartos.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumPartos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumPartos.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblNumPartos, gridBagConstraints);
+
+        lbltitle20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle20.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle20.setText("Descornado?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle20, gridBagConstraints);
+
+        lbltitle21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle21.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle21.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle21.setText("Fecha Destete");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle21, gridBagConstraints);
+
+        lblFechaDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaDestete.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblFechaDestete, gridBagConstraints);
+
+        lbltitle11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle11.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle11.setText("Sexo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle11, gridBagConstraints);
+
+        lblGenero.setForeground(new java.awt.Color(59, 123, 50));
+        lblGenero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblGenero.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblGenero, gridBagConstraints);
+
+        lblHierro.setForeground(new java.awt.Color(59, 123, 50));
+        lblHierro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblHierro.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblHierro, gridBagConstraints);
+
+        lbltitle22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle22.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle22.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle22.setText("Hierro");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle22, gridBagConstraints);
+
+        lbltitle23.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle23.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle23.setText("Destete");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle23, gridBagConstraints);
+
+        lblDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDestete.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblDestete, gridBagConstraints);
+
+        lblDescornado.setForeground(new java.awt.Color(59, 123, 50));
+        lblDescornado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDescornado.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblDescornado, gridBagConstraints);
+
+        lbltitNumPartos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitNumPartos.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitNumPartos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitNumPartos.setText("# de Partos");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitNumPartos, gridBagConstraints);
+
+        lblNumMama.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumMama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumMama.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblNumMama, gridBagConstraints);
+
+        lbltitle13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle13.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle13.setText("# de la madre");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle13, gridBagConstraints);
+
+        lbltitle25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle25.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle25.setText(" # Madre Adoptiva?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle25, gridBagConstraints);
+
+        lblNumMamaAdoptiva.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumMamaAdoptiva.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumMamaAdoptiva.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 15);
+        pnlDatosBasicos.add(lblNumMamaAdoptiva, gridBagConstraints);
+
+        lblImplante.setForeground(new java.awt.Color(59, 123, 50));
+        lblImplante.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblImplante.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblImplante, gridBagConstraints);
+
+        lbltitle26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle26.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle26.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle26.setText("Implante?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle26, gridBagConstraints);
+
+        lblEstado.setForeground(new java.awt.Color(59, 123, 50));
+        lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblEstado.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblEstado, gridBagConstraints);
+
+        lbltitEstado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitEstado.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitEstado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitEstado.setText("Estado");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitEstado, gridBagConstraints);
+
+        lblNumMeses.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumMeses.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumMeses.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblNumMeses, gridBagConstraints);
+
+        lblTitNumMeses.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTitNumMeses.setForeground(new java.awt.Color(59, 123, 50));
+        lblTitNumMeses.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTitNumMeses.setText("# de meses");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblTitNumMeses, gridBagConstraints);
+
+        lblNumero.setForeground(new java.awt.Color(59, 123, 50));
+        lblNumero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNumero.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblNumero, gridBagConstraints);
+
+        lbltitle29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle29.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle29.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitle29.setText("Número");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitle29, gridBagConstraints);
+
+        panelBtnParto.setBackground(new java.awt.Color(59, 123, 50));
+        panelBtnParto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+
+        btnParto.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnParto.setForeground(new java.awt.Color(255, 255, 255));
+        btnParto.setText("Ingresar Parto");
+        btnParto.setBorderPainted(false);
+        btnParto.setContentAreaFilled(false);
+        btnParto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnParto.setFocusPainted(false);
+        btnParto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPartoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnPartoMouseExited(evt);
+            }
+        });
+        btnParto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPartoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelBtnPartoLayout = new javax.swing.GroupLayout(panelBtnParto);
+        panelBtnParto.setLayout(panelBtnPartoLayout);
+        panelBtnPartoLayout.setHorizontalGroup(
+            panelBtnPartoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnParto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelBtnPartoLayout.setVerticalGroup(
+            panelBtnPartoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnParto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 15);
+        pnlDatosBasicos.add(panelBtnParto, gridBagConstraints);
+
+        jTabbedPane1.addTab("Datos Basicos", pnlDatosBasicos);
 
         pnlMuerte.setBackground(new java.awt.Color(255, 255, 255));
         pnlMuerte.setLayout(new java.awt.GridBagLayout());
@@ -1380,11 +1916,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 774, Short.MAX_VALUE)
+            .addGap(0, 636, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 269, Short.MAX_VALUE)
+            .addGap(0, 221, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1435,126 +1971,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 11, 20);
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jTabbedPane1, gridBagConstraints);
-
-        lblPeso.setForeground(new java.awt.Color(59, 123, 50));
-        lblPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblPeso.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 125;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblPeso, gridBagConstraints);
-
-        lblTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
-        lblTipoAnimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTipoAnimal.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 205;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblTipoAnimal, gridBagConstraints);
-
-        lblPropietario.setForeground(new java.awt.Color(59, 123, 50));
-        lblPropietario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblPropietario.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 205;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblPropietario, gridBagConstraints);
-
-        lblGrupo.setForeground(new java.awt.Color(59, 123, 50));
-        lblGrupo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblGrupo.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 205;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblGrupo, gridBagConstraints);
-
-        lblHierro.setForeground(new java.awt.Color(59, 123, 50));
-        lblHierro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblHierro.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 205;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblHierro, gridBagConstraints);
-
-        lblFinca.setForeground(new java.awt.Color(59, 123, 50));
-        lblFinca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFinca.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 205;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblFinca, gridBagConstraints);
-
-        lblNumMama.setForeground(new java.awt.Color(59, 123, 50));
-        lblNumMama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumMama.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 125;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblNumMama, gridBagConstraints);
-
-        lblNumero.setForeground(new java.awt.Color(59, 123, 50));
-        lblNumero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumero.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 125;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblNumero, gridBagConstraints);
-
-        lblGenero.setForeground(new java.awt.Color(59, 123, 50));
-        lblGenero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblGenero.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 125;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblGenero, gridBagConstraints);
-
-        lblCalificacion.setForeground(new java.awt.Color(59, 123, 50));
-        lblCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblCalificacion.setText("Finca");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 125;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
-        add(lblCalificacion, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFechaMuerteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaMuerteFocusLost
@@ -1759,7 +2182,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void tbl_PalpacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PalpacionMouseReleased
         int fila = tbl_Palpacion.getSelectedRow();
         int cola = tbl_Palpacion.getSelectedColumn();
-        if(cola == 4){// Ver MAs
+        if (cola == 4) {// Ver MAs
             modeloPalpacion = ListaDatosPalpacion.get(fila);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaInfoPalpacion(), 1, modeloPalpacion);
             new VistaGeneral(objetoVentana).setVisible(true);
@@ -1794,15 +2217,39 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbl_PalpacionMouseReleased
 
+    private void btnPartoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPartoMouseEntered
+        if (btnParto.isEnabled()) {
+            Utilidades.establecerColorDeFondo(panelBtnParto, true);
+        }
+    }//GEN-LAST:event_btnPartoMouseEntered
+
+    private void btnPartoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPartoMouseExited
+        if (btnParto.isEnabled()) {
+            Utilidades.establecerColorDeFondo(panelBtnParto, false);
+        }
+    }//GEN-LAST:event_btnPartoMouseExited
+
+    private void btnPartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartoActionPerformed
+        objetoVentana = new ModeloVentanaGeneral(
+                this, //panelPadre
+                new VistaNacimientoAnimal(), //panelHijo
+                1, //opcion
+                modeloMadre //modeloDeDatos
+        );
+        new VistaGeneral(objetoVentana).setVisible(true);
+    }//GEN-LAST:event_btnPartoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarRotaciones;
     private javax.swing.JButton btnEliminarTraslados;
     private javax.swing.JButton btnGrafico;
     private javax.swing.JButton btnGrilla;
+    private javax.swing.JButton btnParto;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1818,14 +2265,27 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblCalificacion;
+    private javax.swing.JLabel lblDescornado;
+    private javax.swing.JLabel lblDestete;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFechaDestete;
     private javax.swing.JLabel lblFinca;
     private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblHierro;
+    private javax.swing.JLabel lblHierroColocado;
+    private javax.swing.JLabel lblImplante;
     private javax.swing.JLabel lblNotas;
+    private javax.swing.JLabel lblNovilla;
+    private javax.swing.JLabel lblNumCriaAdoptiva;
     private javax.swing.JLabel lblNumMama;
+    private javax.swing.JLabel lblNumMamaAdoptiva;
+    private javax.swing.JLabel lblNumMeses;
+    private javax.swing.JLabel lblNumPartos;
     private javax.swing.JLabel lblNumero;
+    private javax.swing.JLabel lblPartoNumero;
     private javax.swing.JLabel lblPeso;
+    private javax.swing.JLabel lblPesoDestete;
     private javax.swing.JLabel lblPropietario;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid10;
@@ -1838,17 +2298,32 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid8;
     private javax.swing.JLabel lblTid9;
     private javax.swing.JLabel lblTipoAnimal;
-    private javax.swing.JLabel lbltitle10;
+    private javax.swing.JLabel lblTitNumMeses;
+    private javax.swing.JLabel lbltitEstado;
+    private javax.swing.JLabel lbltitNovilla;
+    private javax.swing.JLabel lbltitNumCriaAdoptiva;
+    private javax.swing.JLabel lbltitNumPartos;
+    private javax.swing.JLabel lbltitle11;
     private javax.swing.JLabel lbltitle12;
+    private javax.swing.JLabel lbltitle13;
     private javax.swing.JLabel lbltitle14;
     private javax.swing.JLabel lbltitle15;
     private javax.swing.JLabel lbltitle16;
     private javax.swing.JLabel lbltitle17;
+    private javax.swing.JLabel lbltitle18;
     private javax.swing.JLabel lbltitle19;
+    private javax.swing.JLabel lbltitle20;
+    private javax.swing.JLabel lbltitle21;
+    private javax.swing.JLabel lbltitle22;
+    private javax.swing.JLabel lbltitle23;
+    private javax.swing.JLabel lbltitle25;
+    private javax.swing.JLabel lbltitle26;
+    private javax.swing.JLabel lbltitle29;
     private javax.swing.JLabel lbltitle4;
-    private javax.swing.JLabel lbltitle7;
     private javax.swing.JLabel lbltitle8;
     private javax.swing.JLabel lbltitle9;
+    private javax.swing.JPanel panelBtnParto;
+    private javax.swing.JPanel pnlDatosBasicos;
     private javax.swing.JPanel pnlGrafico;
     private javax.swing.JPanel pnlGrilla;
     private javax.swing.JPanel pnlMuerte;
@@ -1874,14 +2349,23 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void GetDatosAnimal() {
         ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
+        modeloMadre = ListaDatos.get(0);
         LlenarDatos();
 
     }
 
     private void LlenarDatos() {
+        lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
+        lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
+        lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("") ? "No" : "Si");
+        lblFechaDestete.setText("" + ListaDatos.get(0).getFechaDestete());
+        lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("") ? "No" : "Si");
+        lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
+        lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
+        lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
         lblFinca.setText(ListaDatos.get(0).getDescFinca());
-        lblGenero.setText(ListaDatos.get(0).getGenero());
+        lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblGrupo.setText(ListaDatos.get(0).getDescGrupo());
         lblHierro.setText(ListaDatos.get(0).getDescHierro());
         lblNotas.setText(ListaDatos.get(0).getNotas());
@@ -1891,26 +2375,57 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
 
+//        lblNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+//        lbltitNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        btnParto.setEnabled(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        if(btnParto.isEnabled()){
+            panelBtnParto.setBackground(new Color(59, 123, 50));
+        }else{
+            panelBtnParto.setBackground(new Color(101, 101, 101));
+        }
+        lblNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lblNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lblNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lblEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lblTitNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lbltitNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lbltitNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lbltitEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+
+        if (ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA")) {
+            Map<String, String> datosHembra = new HashMap<>();
+            datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
+            lbltitNovilla.setText("Novilla?");
+            lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("0") ? "No" : "Si");
+            lblNumMeses.setText("" + datosHembra.get("NUM_MESES"));
+            lblNumCriaAdoptiva.setText("" + datosHembra.get("CRIA"));
+            lblNumPartos.setText("" + datosHembra.get("NUM_PARTOS"));
+            lblEstado.setText("" + datosHembra.get("ESTADO"));
+        } else {
+            lblNovilla.setText(ListaDatos.get(0).getCapado());
+            lbltitNovilla.setText("Capado?");
+        }
+
         if (ListaDatos.get(0).getVenta().equals("1")) {
             GetDatosVentaAnimal();
-            jTabbedPane1.setEnabledAt(1, true);
-            jTabbedPane1.setSelectedIndex(1);
+            jTabbedPane1.setEnabledAt(2, true);
+//            jTabbedPane1.setSelectedIndex(2);
         } else {
-            jTabbedPane1.setEnabledAt(1, false);
+            jTabbedPane1.setEnabledAt(2, false);
         }
         if (ListaDatos.get(0).getMuerte().equals("1")) {
             GetDatosMuerteAnimal();
-            jTabbedPane1.setEnabledAt(0, true);
-            jTabbedPane1.setSelectedIndex(0);
+            jTabbedPane1.setEnabledAt(1, true);
+//            jTabbedPane1.setSelectedIndex(1);
         } else {
-            jTabbedPane1.setEnabledAt(0, false);
+            jTabbedPane1.setEnabledAt(1, false);
         }
-        if (ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0")) {
-            jTabbedPane1.setSelectedIndex(2);
-        }
-        
-        jTabbedPane1.setEnabledAt(5, ListaDatos.get(0).getGenero().equals("hembra"));
-        
+//        if (ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0")) {
+//            jTabbedPane1.setSelectedIndex(2);
+//        }
+
+        jTabbedPane1.setEnabledAt(6, ListaDatos.get(0).getGenero().equals("hembra"));
+        jTabbedPane1.setSelectedIndex(0);
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
@@ -1922,12 +2437,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void LimpiarFormulario() {
         lblCalificacion.setText("");
         lblFinca.setText("");
-        lblGenero.setText("");
+        lblNovilla.setText("");
         lblGrupo.setText("");
-        lblHierro.setText("");
+        lblPesoDestete.setText("");
         lblNotas.setText("");
-        lblNumMama.setText("");
-        lblNumero.setText("");
+        lblNumCriaAdoptiva.setText("");
+        lblPartoNumero.setText("");
         lblPeso.setText("");
         lblPropietario.setText("");
         lblTipoAnimal.setText("");
@@ -2125,7 +2640,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                         listaPesajes.get(i).getFecha_pesado(),
                         listaPesajes.get(i).getPeso(),
                         listaPesajes.get(i).getPeso_anterior(),
-                        Double.parseDouble(listaPesajes.get(i).getPeso())-Double.parseDouble(listaPesajes.get(i).getPeso_anterior()),
+                        Double.parseDouble(listaPesajes.get(i).getPeso()) - Double.parseDouble(listaPesajes.get(i).getPeso_anterior()),
                         listaPesajes.get(i).getNotas(),
                         "Ver Mas",
                         "Eliminar"
