@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -44,6 +45,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private List<Map<String, String>> tipoAnimales;
     private List<Map<String, String>> macroGrupos;
     private ControlGeneral controlGral;
+    private JRadioButton[] radios;
 
     /**
      * Creates new form VistaGrupos
@@ -64,6 +66,11 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             btnDuplicar
         };
         cargarComboFincas();
+        radios = new JRadioButton[]{
+            radioCriaH,
+            radioCriaM,
+            radioDescarte
+        };
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
     }
@@ -114,6 +121,18 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
+        control = new Control(true, radioCriaH);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, radioCriaM);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, radioDescarte);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
         control = new Control(true, txtCodigoTipoAnimal);
         controles.addControl(control);
 
@@ -143,6 +162,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         txtCodigoTipoAnimal = new javax.swing.JLabel();
         txtCodigoGrupo = new javax.swing.JLabel();
         txtCodigoFinca = new javax.swing.JLabel();
+        bgTipoGrupos = new javax.swing.ButtonGroup();
         lbltitle4 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         jSeparator10 = new javax.swing.JSeparator();
@@ -163,6 +183,10 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         btnDuplicar = new javax.swing.JButton();
         chkPesable = new javax.swing.JCheckBox();
         chkPalpable = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        radioCriaH = new javax.swing.JRadioButton();
+        radioCriaM = new javax.swing.JRadioButton();
+        radioDescarte = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -188,7 +212,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         txtDescripcion.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 210;
@@ -200,7 +224,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 210;
@@ -215,7 +239,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle5.setText("Descripción");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
@@ -227,7 +251,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         lbltitle6.setText("Estado");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(1, 109, 0, 109);
@@ -243,7 +267,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -459,7 +483,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(jPanel1, gridBagConstraints);
@@ -485,6 +509,37 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 109);
         add(chkPalpable, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        radioCriaH.setBackground(new java.awt.Color(255, 255, 255));
+        bgTipoGrupos.add(radioCriaH);
+        radioCriaH.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        radioCriaH.setForeground(new java.awt.Color(59, 123, 50));
+        radioCriaH.setText("Cria Hembra");
+        jPanel2.add(radioCriaH);
+
+        radioCriaM.setBackground(new java.awt.Color(255, 255, 255));
+        bgTipoGrupos.add(radioCriaM);
+        radioCriaM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        radioCriaM.setForeground(new java.awt.Color(59, 123, 50));
+        radioCriaM.setText("Cria Macho");
+        jPanel2.add(radioCriaM);
+
+        radioDescarte.setBackground(new java.awt.Color(255, 255, 255));
+        bgTipoGrupos.add(radioDescarte);
+        radioDescarte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        radioDescarte.setForeground(new java.awt.Color(59, 123, 50));
+        radioDescarte.setText("Descarte");
+        jPanel2.add(radioDescarte);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 109);
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -518,7 +573,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             txtCodigoFinca.setText(idFinca);
             cargarComboTipoAnimales();
             cargarComboMacroGrupos();
-        }else{
+        } else {
             txtCodigoFinca.setText("");
         }
     }//GEN-LAST:event_cbFincaActionPerformed
@@ -528,7 +583,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
             txtCodigoTipoAnimal.setText(idTipoAnimal);
-        }else{
+        } else {
             txtCodigoTipoAnimal.setText("");
         }
     }//GEN-LAST:event_cbTipoAnimalActionPerformed
@@ -538,7 +593,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         if (indice > 0) {
             String idMacroGrupo = macroGrupos.get(indice).get("id");
             txtCodigoMacroGrupo.setText(idMacroGrupo);
-        }else{
+        } else {
             txtCodigoMacroGrupo.setText("");
         }
     }//GEN-LAST:event_cbMacroGrupoActionPerformed
@@ -549,6 +604,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgTipoGrupos;
     public javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnDuplicar;
@@ -562,12 +618,16 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private javax.swing.JCheckBox chkPalpable;
     private javax.swing.JCheckBox chkPesable;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JLabel lbltitle4;
     private javax.swing.JLabel lbltitle5;
     private javax.swing.JLabel lbltitle6;
     private javax.swing.JLabel lbltitle7;
     private javax.swing.JLabel lbltitle8;
+    private javax.swing.JRadioButton radioCriaH;
+    private javax.swing.JRadioButton radioCriaM;
+    private javax.swing.JRadioButton radioDescarte;
     public javax.swing.JLabel txtCodigoFinca;
     private javax.swing.JLabel txtCodigoGrupo;
     private javax.swing.JLabel txtCodigoMacroGrupo;
@@ -605,7 +665,14 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         String macroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : cbMacroGrupo.getSelectedItem().toString();
         String codigoMacroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : txtCodigoMacroGrupo.getText().trim();
         String codigoGrupo = (editar == Estado.ACTUALIZAR) ? txtCodigoGrupo.getText() : "0";
+        String tipo = "";
+        for (int i = 0; i < radios.length; i++) {
+            if (radios[i].isSelected()) {
+                tipo = "'" + radios[i].getText().toLowerCase() + "'";
+            }
+        }
 
+        modelo.setTipo(tipo.isEmpty() ? "null" : tipo);
         modelo.setPesable(chkPesable.isSelected() ? "1" : "0");
         modelo.setPalpable(chkPalpable.isSelected() ? "1" : "0");
         modelo.setId(codigoGrupo);
@@ -634,6 +701,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
                 editar = Estado.GUARDAR;
                 txtDescripcion.requestFocusInWindow();
+                bgTipoGrupos.clearSelection();
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
@@ -678,6 +746,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
                     mensaje = "Registro eliminado satisfactoriamente.";
                     Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_ELIMINAR, controles);
                     Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_ELIMINAR, botones);
+                    bgTipoGrupos.clearSelection();
                     break;
                 case Retorno.ERROR:
                     mensaje = "El registro no pudo ser eliminado.";
@@ -708,10 +777,20 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             cbFinca.setSelectedItem(modelo.getDescFinca());
             boolean pesable = modelo.getPesable().equalsIgnoreCase("1");
             boolean palpable = modelo.getPalpable().equalsIgnoreCase("1");
+            bgTipoGrupos.clearSelection();
+            String tipoGrupo = modelo.getTipo();
+            if (!tipoGrupo.isEmpty()) {
+                for (int i = 0; i < radios.length; i++) {
+                    if (radios[i].getText().toLowerCase().equals(tipoGrupo)) {
+                        radios[i].setSelected(true);
+                        break;
+                    }
+                }
+            }
 
             cargarComboTipoAnimales();
             cargarComboMacroGrupos();
-            
+
             chkPesable.setSelected(pesable);
             chkPalpable.setSelected(palpable);
             txtCodigoGrupo.setText(modelo.getId());

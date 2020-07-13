@@ -5,12 +5,22 @@
  */
 package Vistas;
 
+import Control.ControlAnimales;
 import Control.ControlGeneral;
+import Control.Retorno;
+import Modelo.ModeloAnimales;
+import Modelo.ModeloTraslado;
+import Modelo.ModeloVentanaGeneral;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,21 +29,41 @@ import java.util.Map;
 public class VistaNacimientoAnimal extends javax.swing.JPanel {
 
     private List<Map<String, String>> grupos;
+    private List<Map<String, String>> idGrupos;
     private ControlGeneral controlGral;
+    private ModeloAnimales modeloDatos;
+    private ModeloAnimales modelo;
+    private ModeloVentanaGeneral modeloVistaGeneral;
+    private ModeloTraslado modeloTraslado;
+    private ControlAnimales control;
+    private final String FECHA_POR_DEFECTO = "1900-01-01";
+    private final String GRUPO_VACIAS = "VACIAS";
 
     public VistaNacimientoAnimal() {
         initComponents();
+    }
+
+    VistaNacimientoAnimal(ModeloVentanaGeneral modeloVista) {
+        initComponents();
+        setSize(644, 427);
+        grupos = new ArrayList<>();
         controlGral = new ControlGeneral();
-//        boolean chequeado = false;
-//        lblFechaMuerte.setVisible(chequeado);
-//        jdFechaMuerte.setVisible(chequeado);
-//        lblCausaMuerte.setVisible(chequeado);
-//        txtObservacionMuerte.setVisible(chequeado);
-//        cargarComboGrupos(TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY);
+        modeloDatos = new ModeloAnimales();
+        control = new ControlAnimales();
+        modeloTraslado = new ModeloTraslado();
+        modelo = new ModeloAnimales();
+        modeloDatos = (ModeloAnimales) modeloVista.getModeloDatos();
+        cargarComboGrupos(modeloDatos.getIdFinca(), modeloDatos.getIdTipoAnimal());
+        modeloVistaGeneral = modeloVista;
+        cbGrupos.setEnabled(false);
+        chkMuerte.setSelected(false);
+        mostrarDatosMuerte();
     }
 
     private void cargarComboGrupos(String idFinca, String idTipoAnimal) {
-        String consulta = consultas.get("CARGAR_COMBO_GRUPOS").replace("PARAMETRO1",idFinca).replace("PARAMETRO2", idTipoAnimal);
+        String consulta = consultas.get("CARGAR_COMBO_GRUPOS")
+                .replace("PARAMETRO1", idFinca)
+                .replace("PARAMETRO2", idTipoAnimal);
         grupos = controlGral.GetComboBox(consulta);
 
         Utilidades.LlenarComboBox(cbGrupos, grupos, "descripcion");
@@ -74,6 +104,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         lblCausaMuerte = new javax.swing.JLabel();
         ScrollCausaMuerte = new javax.swing.JScrollPane();
         txtObservacionMuerte = new javax.swing.JTextArea();
+        jPanel4 = new javax.swing.JPanel();
+        btnGuardar3 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -84,12 +117,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         lbltitle12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle12.setText("Grupos");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 15);
         add(lbltitle12, gridBagConstraints);
 
         cbGrupos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -101,19 +134,6 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
-        add(cbGrupos, gridBagConstraints);
-
-        cbGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbGenero.setForeground(new java.awt.Color(59, 123, 50));
-        cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Hembra", "Macho" }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -121,6 +141,24 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        add(cbGrupos, gridBagConstraints);
+
+        cbGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbGenero.setForeground(new java.awt.Color(59, 123, 50));
+        cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Hembra", "Macho" }));
+        cbGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbGeneroActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(cbGenero, gridBagConstraints);
 
         lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -128,12 +166,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle10.setText("Sexo");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
-        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lbltitle10, gridBagConstraints);
 
         lbltitle14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -389,6 +427,54 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.89;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 15);
         add(ScrollCausaMuerte, gridBagConstraints);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        btnGuardar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
+        btnGuardar3.setToolTipText("Guardar");
+        btnGuardar3.setBorderPainted(false);
+        btnGuardar3.setContentAreaFilled(false);
+        btnGuardar3.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnGuardar3.setName("btnGuardar"); // NOI18N
+        btnGuardar3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel4.add(btnGuardar3, gridBagConstraints);
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar.png"))); // NOI18N
+        btnCancelar.setToolTipText("Eliminar");
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnCancelar.setName("btnCancelar"); // NOI18N
+        btnCancelar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar_over.png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar_over.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel4.add(btnCancelar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
+        add(jPanel4, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGruposActionPerformed
@@ -423,19 +509,55 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPesoKeyReleased
 
     private void chkMuerteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMuerteStateChanged
-        boolean chequeado = chkMuerte.isSelected();
-        lblFechaMuerte.setVisible(chequeado);
-        jdFechaMuerte.setVisible(chequeado);
-        lblCausaMuerte.setVisible(chequeado);
-        txtObservacionMuerte.setVisible(chequeado);
+        mostrarDatosMuerte();
     }//GEN-LAST:event_chkMuerteStateChanged
+
+    private void btnGuardar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar3ActionPerformed
+        Guardar();
+    }//GEN-LAST:event_btnGuardar3ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGeneroActionPerformed
+        cbGrupos.setSelectedIndex(0);
+        String tipo = "";
+        if (cbGenero.getSelectedIndex() == 1) {//HEMBRA
+            tipo = "cria hembra";
+        } else if (cbGenero.getSelectedIndex() == 2) {//MACHO
+            tipo = "cria macho";
+        } else {
+            return;
+        }
+
+        for (int i = 0; i < grupos.size(); i++) {
+            if (grupos.get(i).get("tipo_grupo").equals(tipo)) {
+                cbGrupos.setSelectedIndex(i);
+                return;
+            }
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                "No existe un grupo al cual enviar las crias.\n"
+                + "Diríjase al menú de grupos y cree el grupo correspondiente."
+        );
+    }//GEN-LAST:event_cbGeneroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar1;
+    private javax.swing.JButton btnGuardar2;
+    private javax.swing.JButton btnGuardar3;
     public javax.swing.JComboBox cbGenero;
     public javax.swing.JComboBox cbGrupos;
     private javax.swing.JCheckBox chkMuerte;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator13;
@@ -494,6 +616,157 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         txtPesoOculto.setText("" + resultadoRedondeado);
 
         return "" + resultadoRedondeado;
+    }
+
+    private void mostrarDatosMuerte() {
+        boolean chequeado = chkMuerte.isSelected();
+        lblFechaMuerte.setVisible(chequeado);
+        jdFechaMuerte.setVisible(chequeado);
+        lblCausaMuerte.setVisible(chequeado);
+        ScrollCausaMuerte.setVisible(chequeado);
+        txtObservacionMuerte.setVisible(chequeado);
+    }
+
+    private void Guardar() {
+        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
+        if (cbGrupos.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un grupo para el animal a crear.");
+            return;
+        }
+
+        if (jdFechaNacimiento.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe especificar la fecha de nacimiento del animal.");
+            jdFechaNacimiento.requestFocusInWindow();
+            return;
+        }
+
+        if (cbGenero.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione el genero del animal a crear.");
+            cbGenero.requestFocusInWindow();
+            return;
+        }
+
+        if (chkMuerte.isSelected()) {
+            if (jdFechaMuerte.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debe especificar la fecha de muerte del animal.");
+                jdFechaMuerte.requestFocusInWindow();
+                return;
+            }
+        }
+
+        String idGrupoVacias = "";
+        for (Map<String, String> grupo : grupos) {
+            if (grupo.get("descripcion").equalsIgnoreCase(GRUPO_VACIAS)) {
+                idGrupoVacias = grupo.get("id");
+                break;
+            }
+        }
+        if (idGrupoVacias.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encuentra el grupo VACIAS, Debe crear el grupo.");
+            return;
+        }
+//</editor-fold>
+
+        ArrayList<ModeloTraslado> traslados = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String numeroMadre = modeloDatos.getNumero();
+        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre);
+        String idAnimal = "(SELECT a.id FROM animales a WHERE a.numero='" + modeloDatos.getNumero() + "' "
+                + "AND a.numero_descendiente=" + nroDescendiente+" AND a.estado_descendiente=0"
+                + ")";
+        String idMadre = modeloDatos.getId();
+
+        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO TRASLADO">
+        String datosAdicionales = modeloDatos.getGrupo();
+        int indiceGrupo = cbGrupos.getSelectedIndex();
+        modeloTraslado.setId("0");
+        modeloTraslado.setIdFinca(modeloDatos.getIdFinca());
+        modeloTraslado.setFecha("NOW()");
+        modeloTraslado.setEstado("Activo");
+        modeloTraslado.setFechaTraslado("NOW()");
+        modeloTraslado.setIdGrupo(grupos.get(indiceGrupo).get("id"));
+        modeloTraslado.setIdUsuario("5");
+        modeloTraslado.setMotivo("NACIMIENTO");
+        modeloTraslado.setIdAnimal(idAnimal);
+        traslados.add(modeloTraslado);
+        modeloTraslado = new ModeloTraslado();
+        modeloTraslado.setId("0");
+        modeloTraslado.setIdFinca(modeloDatos.getIdFinca());
+        modeloTraslado.setFecha("NOW()");
+        modeloTraslado.setEstado("Activo");
+        modeloTraslado.setFechaTraslado("NOW()");
+        modeloTraslado.setIdGrupo(idGrupoVacias);
+        modeloTraslado.setIdUsuario("5");
+        modeloTraslado.setMotivo("PARTO");
+        modeloTraslado.setIdAnimal(idMadre);
+        traslados.add(modeloTraslado);
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO ANIMAL">
+        modelo.setDescornada("0");
+        modelo.setImplante("0");
+        modelo.setHierroFisico("0");
+        modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");
+        modelo.setVenta("0");
+        modelo.setModeloTraslado(traslados);
+        modelo.setId(idAnimal);
+        modelo.setFecha("NOW()");
+        modelo.setDescHierro(modeloDatos.getDescHierro());
+        modelo.setHierro(modeloDatos.getHierro());
+        modelo.setGrupo(grupos.get(indiceGrupo).get("id"));
+        modelo.setDescGrupo(cbGrupos.getSelectedItem().toString());
+        modelo.setIdTipoAnimal(modeloDatos.getIdTipoAnimal());
+        modelo.setCalificacion("" + slCalificacion.getValue());
+        modelo.setCapado("NO");
+        modelo.setDescTipoAnimal(modeloDatos.getDescTipoAnimal());
+        modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
+        modelo.setIdUsuario("5");
+        modelo.setNotas(txtNotas.getText().trim());
+        modelo.setNumero(modeloDatos.getNumero());
+        modelo.setNumeroMama(modeloDatos.getNumero());
+        modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
+        Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
+        modelo.setFechaNacimiento(sdf.format(fechaNacimiento.getTime()));
+        modelo.setFechaNovilla(FECHA_POR_DEFECTO);
+        modelo.setNumeroDescendiente(nroDescendiente);
+        modelo.setEstadoDescendiente("0");
+        modelo.setDescripcionMuerte(txtObservacionMuerte.getText());
+        modelo.setPrecioVenta("NULL");
+        modelo.setPesoCanal("NULL");
+        modelo.setTipoVenta("NULL");
+        modelo.setFechaVenta(FECHA_POR_DEFECTO);
+        modelo.setNumeroMamaAdoptiva("NULL");
+        modelo.setFechaDestete(FECHA_POR_DEFECTO);
+        modelo.setPesoDestete("0");
+
+        if (chkMuerte.isSelected()) {
+            Calendar fechaMuerte = jdFechaMuerte.getCalendar();
+            modelo.setFechaMuerte(sdf.format(fechaMuerte.getTime()));
+        } else {
+            modelo.setFechaMuerte(FECHA_POR_DEFECTO);
+        }
+        //</editor-fold>
+        
+        int retorno = control.GuardarCria(modelo,datosAdicionales);
+
+        String mensaje = "";
+        switch (retorno) {
+            case Retorno.EXITO:
+                mensaje = "Registro guardado satisfactoriamente.";
+                ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+                break;
+            case Retorno.ERROR:
+                mensaje = "El registro no pudo ser guardado.";
+                break;
+            case Retorno.EXCEPCION_SQL:
+                mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                break;
+            case Retorno.CLASE_NO_ENCONTRADA:
+                mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                break;
+        }
+
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 
 }

@@ -38,7 +38,7 @@ public class ModeloAnimales {
     private String descFinca;
     private String numeroDescendiente;
     private String estadoDescendiente;
-    private ModeloTraslado modelo;
+    private Object modelo;
     private String idPropietario;
     private String descPropietario;
     private String venta;
@@ -60,7 +60,7 @@ public class ModeloAnimales {
             String notas, String numero, String numero_mama, String descTipoAnimal,
             String peso, String numero_mama_adoptiva, String grupo, String descGrupo,
             String hierro, String descHierro, String idFinca, String descFinca,
-            String numeroDescendiente, String estadoDescendiente, ModeloTraslado modelo,
+            String numeroDescendiente, String estadoDescendiente, Object modelo,
             String idPropietario, String descPropietario, String muerte, String venta,
             String precioVenta, String tipoVenta, String pesoCanal, String descripcionMuerte,
             String fechaNovilla, String pesoDestete, String hierroFisico, String implante,
@@ -226,11 +226,11 @@ public class ModeloAnimales {
         this.estadoDescendiente = estadoDescendiente;
     }
 
-    public ModeloTraslado getModeloTraslado() {
+    public Object getModeloTraslado() {
         return modelo;
     }
 
-    public void setModeloTraslado(ModeloTraslado modelo) {
+    public void setModeloTraslado(Object modelo) {
         this.modelo = modelo;
     }
 

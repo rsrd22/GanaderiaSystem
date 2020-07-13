@@ -3,26 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pruebas;
 
 import Busqueda.VistaBusqueda;
+import Configuracion.ConfiguracionPropiedades;
+import Control.ControlAnimales;
 import Control.IBusqueda;
+import Modelo.ModeloAnimales;
 import Modelo.ModeloGestorBusqueda;
+import Modelo.ModeloVentanaGeneral;
+import Utilidades.Consultas;
+import Vistas.VistaGeneral;
+import Vistas.VistaIngresoPesaje;
+import Vistas.VistaInicioSesion;
+import Vistas.VistaNacimientoAnimal;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author DOLFHANDLER
  */
-public class ventanados extends javax.swing.JFrame implements IBusqueda{
-ModeloGestorBusqueda objeto;
-    /**
-     * Creates new form ventanados
-     */
+public class ventanados extends javax.swing.JFrame {
+
+    private ArrayList<ModeloAnimales> l;
+    private ControlAnimales controlAnimales = new ControlAnimales();
+    private ModeloAnimales mh = new ModeloAnimales();
+    private ModeloAnimales mm = new ModeloAnimales();
+    private ModeloVentanaGeneral objetoVentana;
+
     public ventanados() {
         initComponents();
-        Configuracion.ConfiguracionPropiedades.cargarConfiguracion();
+        GetDatosAnimal("32");
+    }
+
+    private void GetDatosAnimal(String numeroAnimal) {
+        l = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(numeroAnimal);
+        mm = l.get(0);
     }
 
     /**
@@ -34,40 +55,14 @@ ModeloGestorBusqueda objeto;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-
-        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("dos");
-
-        jButton1.setText("jButton1");
+        jButton1.setText("Registrar cria");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 294, Short.MAX_VALUE)
-        );
-
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -75,52 +70,26 @@ ModeloGestorBusqueda objeto;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(jButton1)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton3)))
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(73, 73, 73)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        prueba p = new prueba();
-        p.setBounds(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-        jPanel1.removeAll();
-        jPanel1.add(p);
-        jPanel1.revalidate();
-        jPanel1.repaint();
+        Consultas.Agregar();
+        AbrirVistaNacimientoCria();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        NewJPanel p = new NewJPanel();
-        p.setBounds(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-        jPanel1.removeAll();
-        jPanel1.add(p);
-        jPanel1.revalidate();
-        jPanel1.repaint();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,6 +121,18 @@ ModeloGestorBusqueda objeto;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    ConfiguracionPropiedades.cargarConfiguracion();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 new ventanados().setVisible(true);
             }
         });
@@ -159,15 +140,16 @@ ModeloGestorBusqueda objeto;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void RetornoBusqueda(Map<String, String> retorno) {
-        System.out.println("HACER dos");
+    private void AbrirVistaNacimientoCria() {
+        objetoVentana = new ModeloVentanaGeneral(
+                this, //panelPadre
+                new VistaNacimientoAnimal(), //panelHijo
+                1, //opcion
+                mm //modeloDeDatos
+        );
+        new VistaGeneral(objetoVentana).setVisible(true);
     }
 
 }

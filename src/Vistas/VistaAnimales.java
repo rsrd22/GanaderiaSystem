@@ -2091,7 +2091,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         }
 
         if (cbGenero.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione el genero del animal a crear.");
+            JOptionPane.showMessageDialog(this, "Seleccione el sexo del animal a crear.");
             cbGenero.requestFocusInWindow();
             return;
         }
@@ -2165,7 +2165,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
         
-        String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : getIdPesaje();
+        String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
+                + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
+                + ")";
         
         modelo.setDescornada(chkDescornada.isSelected() ? "1" : "0");
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
