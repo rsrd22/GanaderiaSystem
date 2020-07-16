@@ -513,24 +513,36 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         radioCriaH.setBackground(new java.awt.Color(255, 255, 255));
-        bgTipoGrupos.add(radioCriaH);
         radioCriaH.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radioCriaH.setForeground(new java.awt.Color(59, 123, 50));
         radioCriaH.setText("Cria Hembra");
+        radioCriaH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                radioCriaHMousePressed(evt);
+            }
+        });
         jPanel2.add(radioCriaH);
 
         radioCriaM.setBackground(new java.awt.Color(255, 255, 255));
-        bgTipoGrupos.add(radioCriaM);
         radioCriaM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radioCriaM.setForeground(new java.awt.Color(59, 123, 50));
         radioCriaM.setText("Cria Macho");
+        radioCriaM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                radioCriaMMousePressed(evt);
+            }
+        });
         jPanel2.add(radioCriaM);
 
         radioDescarte.setBackground(new java.awt.Color(255, 255, 255));
-        bgTipoGrupos.add(radioDescarte);
         radioDescarte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radioDescarte.setForeground(new java.awt.Color(59, 123, 50));
         radioDescarte.setText("Descarte");
+        radioDescarte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                radioDescarteMousePressed(evt);
+            }
+        });
         jPanel2.add(radioDescarte);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -602,6 +614,45 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         Duplicar();
     }//GEN-LAST:event_btnDuplicarActionPerformed
 
+    private void radioCriaHMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCriaHMousePressed
+        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
+        if(radioCriaH.isSelected()){
+//            bgTipoGrupos.setSelected(radioCriaH, false);
+            //bgTipoGrupos.clearSelection();
+            radioCriaH.setSelected(false);
+//            for (JRadioButton rad : radios) {
+//                
+//                rad.setSelected(false);
+//            }
+        }
+    }//GEN-LAST:event_radioCriaHMousePressed
+
+    private void radioCriaMMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCriaMMousePressed
+        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
+        if(radioCriaM.isSelected()){
+//            bgTipoGrupos.setSelected(radioCriaH, false);
+            //bgTipoGrupos.clearSelection();
+            radioCriaM.setSelected(false);
+//            for (JRadioButton rad : radios) {
+//                
+//                rad.setSelected(false);
+//            }
+        }
+    }//GEN-LAST:event_radioCriaMMousePressed
+
+    private void radioDescarteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioDescarteMousePressed
+        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
+        if(radioDescarte.isSelected()){
+//            bgTipoGrupos.setSelected(radioCriaH, false);
+            //bgTipoGrupos.clearSelection();
+            radioDescarte.setSelected(false);
+//            for (JRadioButton rad : radios) {
+//                
+//                rad.setSelected(false);
+//            }
+        }
+    }//GEN-LAST:event_radioDescarteMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgTipoGrupos;
@@ -665,7 +716,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         String macroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : cbMacroGrupo.getSelectedItem().toString();
         String codigoMacroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : txtCodigoMacroGrupo.getText().trim();
         String codigoGrupo = (editar == Estado.ACTUALIZAR) ? txtCodigoGrupo.getText() : "0";
-        String tipo = "";
+        String tipo = "default";
         for (int i = 0; i < radios.length; i++) {
             if (radios[i].isSelected()) {
                 tipo = "'" + radios[i].getText().toLowerCase() + "'";
