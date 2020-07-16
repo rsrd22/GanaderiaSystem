@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Control.*;
@@ -11,6 +10,7 @@ import Control.ControlAnimales;
 import Control.ControlGeneral;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
+import Tareas.TareaActuralizaListaAnimales;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import java.awt.Color;
@@ -32,6 +32,7 @@ import javax.swing.table.JTableHeader;
  * @author MERRY
  */
 public class VistaVerAnimales extends javax.swing.JPanel {
+
     public DefaultTableModel modeloTblAnimales;
     public String[] EncabezadoTblAnimales;
     public List<Map<String, String>> listaFincas;
@@ -39,21 +40,23 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String idTipoAnimal;
-    
-    private List<Map<String, String>>  ListaAnimales;
-    private List<Map<String, String>>  ListaAnimalesMostrar;
+
+    private List<Map<String, String>> ListaAnimales;
+    private List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
-    
+    private TareaActuralizaListaAnimales actListaAnimales;
+
     /**
      * Creates new form VistaVerAnimales
      */
     public VistaVerAnimales() {
         initComponents();
+        actListaAnimales = new TareaActuralizaListaAnimales(this);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();
@@ -70,18 +73,18 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         NameColumnasFiltro.add("LOTE");
         EncabezadoTblAnimales = new String[]{
             "No",
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>", 
-             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",  
-             "Genero",
-             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Nacimiento</p></html>",
-             "Peso", 
-             "Hierro", 
-             "Capado", 
-             //"Muerte", 
-             //"Venta",
-             "Grupo", 
-             "Lote", 
-             "Ver Más"
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
+            "Genero",
+            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Nacimiento</p></html>",
+            "Peso",
+            "Hierro",
+            "Capado",
+            //"Muerte", 
+            //"Venta",
+            "Grupo",
+            "Lote",
+            "Ver Más"
         };
         ListaAnimales = new ArrayList<>();
         listaFincas = new ArrayList<>();
@@ -89,14 +92,14 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         InicializarTblAnimales();
         CargarListaFincas();
     }
-    
+
     public void InicializarTblAnimales() {
         tbl_Animales.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblAnimales = new DefaultTableModel(EncabezadoTblAnimales, 0) {
             Class[] types = new Class[]{
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,  java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,  java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class //, java.lang.Object.class, java.lang.Object.class
             };
 
@@ -124,7 +127,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
         tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
         tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
-        
+
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblAnimales.getColumnCount(); i++) {
@@ -135,22 +138,21 @@ public class VistaVerAnimales extends javax.swing.JPanel {
 //                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //
 //                }else{
-                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 //                }
-                tcr.setForeground(new Color(26, 82, 118));
-                tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
-            
+            tcr.setForeground(new Color(26, 82, 118));
+            tbl_Animales.getColumnModel().getColumn(i).setCellRenderer(tcr);
+
         }
         JTableHeader header = tbl_Animales.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -328,13 +330,13 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-        if(cbFinca.getItemCount() > 0){
+        if (cbFinca.getItemCount() > 0) {
             //EventoComboFincas();
-            System.out.println("cbFinca.getSelectedIndex()--"+cbFinca.getSelectedIndex());
-            if(cbFinca.getSelectedIndex() >= 0){
+            System.out.println("cbFinca.getSelectedIndex()--" + cbFinca.getSelectedIndex());
+            if (cbFinca.getSelectedIndex() >= 0) {
                 idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
                 CargarListaTipoAnimales();
-            }else{
+            } else {
                 cbTipoAnimales.removeAllItems();
                 Utilidades.LimpiarTabla(tbl_Animales);
             }
@@ -342,12 +344,12 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
-        if(cbTipoAnimales.getItemCount() > 0){
+        if (cbTipoAnimales.getItemCount() > 0) {
             //EventoComboFincas();
-            if(cbTipoAnimales.getSelectedIndex() >= 0){
+            if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
-            }else{
+            } else {
                 Utilidades.LimpiarTabla(tbl_Animales);
             }
         }
@@ -372,16 +374,15 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     private void tbl_AnimalesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_AnimalesMouseReleased
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
-        String dato = ""+tbl_Animales.getValueAt(fila, cola);
-        if(cola == 10){//VER MAS
+        String dato = "" + tbl_Animales.getValueAt(fila, cola);
+        if (cola == 10) {//VER MAS
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             //JOptionPane.showMessageDialog(null, "ID ANIMAL-->"+idAnimal);
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal); 
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal);
             objetoVentana.setFila(fila);
             VistaGeneral vis = new VistaGeneral(objetoVentana);
             vis.setVisible(true);
-        
-           
+
         }
 
     }//GEN-LAST:event_tbl_AnimalesMouseReleased
@@ -398,48 +399,48 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     private javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
-    
+
     private void CargarListaFincas() {
-        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                "UNION\n" +
-                                                "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n" +
-                                                "FROM `fincas`\n"+
-                                                "/*UNION \n"+
-                                                "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
-         
+        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n"
+                + "FROM `fincas`\n"
+                + "/*UNION \n"
+                + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
+
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
         cbFinca.setSelectedIndex(1);
         CargarListaTipoAnimales();
         //EventoComboFincas();
     }
+
     private void CargarListaTipoAnimales() {
-        listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                    "UNION\n" +
-                                                    "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
-                                                    "FROM `tipo_animales`\n" +
-                                                    "WHERE id_finca = '"+idFinca+"' AND estado = 'Activo'\n" +
-                                                    "ORDER BY id ASC");
-         
+        listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM `tipo_animales`\n"
+                + "WHERE id_finca = '" + idFinca + "' AND estado = 'Activo'\n"
+                + "ORDER BY id ASC");
+
         Utilidades.LlenarComboBox(cbTipoAnimales, listaTipoAnimales, "DESCRIPCION");
         cbTipoAnimales.setSelectedIndex(0);
         EventoComboFincas();
     }
 
     private void EventoComboFincas() {
-        System.out.println("cbFincaActionPerformed---_>"+listaFincas.size());
-        System.out.println("cbFinca.--->"+cbFinca.getItemCount());
-        System.out.println("cbFinca.getSelectedIndex()..>"+cbFinca.getSelectedIndex());
-        
-        
-            //idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-        System.out.println("idFinca-->"+idFinca);
-        if(idFinca.equals("ALL")){   
-            allFincas = 1; 
-        }else{
+        System.out.println("cbFincaActionPerformed---_>" + listaFincas.size());
+        System.out.println("cbFinca.--->" + cbFinca.getItemCount());
+        System.out.println("cbFinca.getSelectedIndex()..>" + cbFinca.getSelectedIndex());
+
+        //idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
+        System.out.println("idFinca-->" + idFinca);
+        if (idFinca.equals("ALL")) {
+            allFincas = 1;
+        } else {
             allFincas = 0;
         }
-        if(Integer.parseInt(idFinca)>0){
-            ListaAnimales =(List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales(""+idFinca, idTipoAnimal);
+        if (Integer.parseInt(idFinca) > 0) {
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + idFinca, idTipoAnimal);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
@@ -469,33 +470,44 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     private void MostrarTabla() {
         System.out.println("****************MostrarTabla*****************");
         String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
-        System.out.println("filtro--"+filtro);
+        System.out.println("filtro--" + filtro);
         ListaAnimalesMostrar = getFiltroLista(filtro);
-        
+
         Utilidades.LimpiarTabla(tbl_Animales);
-        for(int i =0; i < ListaAnimalesMostrar.size(); i++){ 
+        for (int i = 0; i < ListaAnimalesMostrar.size(); i++) {
             Utilidades.agregarFilaTabla(
-                    modeloTblAnimales,  
+                    modeloTblAnimales,
                     new Object[]{
-                        (i+1),//tbl_Grupos.getRowCount()+1,
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaAnimalesMostrar.get(i).get("NUMERO_ANIMAL"),
                         ListaAnimalesMostrar.get(i).get("NUMERO_MAMA"),
-                        ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(), 
-                        ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"), 
-                        ListaAnimalesMostrar.get(i).get("PESO"), 
-                        ListaAnimalesMostrar.get(i).get("DESC_HIERRO"), 
-                        ListaAnimalesMostrar.get(i).get("CAPADO"), 
-//                        ListaAnimalesMostrar.get(i).get("MUERTE"), 
-//                        ListaAnimalesMostrar.get(i).get("VENTA"), 
+                        ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
+                        ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
+                        ListaAnimalesMostrar.get(i).get("PESO"),
+                        ListaAnimalesMostrar.get(i).get("DESC_HIERRO"),
+                        ListaAnimalesMostrar.get(i).get("CAPADO"),
+                        //                        ListaAnimalesMostrar.get(i).get("MUERTE"), 
+                        //                        ListaAnimalesMostrar.get(i).get("VENTA"), 
                         ListaAnimalesMostrar.get(i).get("GRUPO"),
-                        (allFincas == 1?ListaAnimalesMostrar.get(i).get("FINCA")+" / ":"") + 
-                        ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE"),
+                        (allFincas == 1 ? ListaAnimalesMostrar.get(i).get("FINCA") + " / " : "")
+                        + ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE"),
                         "Ver Más"
-                    } 
-                );
+                    }
+            );
         }
     }
-    
+
+    public void actualizarTablaAnimales() {
+        if (cbTipoAnimales.getItemCount() > 0) {
+            if (cbTipoAnimales.getSelectedIndex() >= 0) {
+                idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
+                EventoComboFincas();
+            } else {
+                Utilidades.LimpiarTabla(tbl_Animales);
+            }
+        }
+    }
+
     private List<Map<String, String>> getFiltroLista(String filtro) {
         List<Map<String, String>> retorno = new ArrayList<>();
         System.out.println("***************getFiltroLista*****************" + filtro);
@@ -523,9 +535,5 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
     }
-
-    
-    
-    
 
 }

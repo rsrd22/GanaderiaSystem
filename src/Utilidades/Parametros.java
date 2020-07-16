@@ -11,12 +11,7 @@ package Utilidades;
  * @author mary
  */
 public class Parametros {
-    public static String dirRaiz = "Z:/PRUEBAS/";
-    //public static String dirRecursos = "D:/RECURSOS/";
-    public static String dirFacturas = "Z:/FACTURAS/";
-//    public static String dirInformes = "D:/INFORMES/";//"Z:/INFORMES/";
-    public static String dirInformes = "Z:/INFORMES/";//"Z:/INFORMES/";
     public static String separadorDecimal = ",";
     public static String separadorIE = "|";
-    public static int cantDatosBasicos = 12;
+    public static boolean actualizarHistoricoAnimal = false;
 }

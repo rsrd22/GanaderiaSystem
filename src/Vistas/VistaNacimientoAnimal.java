@@ -13,6 +13,7 @@ import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
+import Utilidades.Parametros;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         initComponents();
     }
 
-    VistaNacimientoAnimal(ModeloVentanaGeneral modeloVista) {
+    public VistaNacimientoAnimal(ModeloVentanaGeneral modeloVista) {
         initComponents();
         setSize(644, 427);
         grupos = new ArrayList<>();
@@ -685,7 +686,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado.setEstado("Activo");
         modeloTraslado.setFechaTraslado("NOW()");
         modeloTraslado.setIdGrupo(grupos.get(indiceGrupo).get("id"));
-        modeloTraslado.setIdUsuario("5");
+        modeloTraslado.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modeloTraslado.setMotivo("NACIMIENTO");
         modeloTraslado.setIdAnimal(idAnimal);
         traslados.add(modeloTraslado);
@@ -696,7 +697,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado.setEstado("Activo");
         modeloTraslado.setFechaTraslado("NOW()");
         modeloTraslado.setIdGrupo(idGrupoVacias);
-        modeloTraslado.setIdUsuario("5");
+        modeloTraslado.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modeloTraslado.setMotivo("PARTO");
         modeloTraslado.setIdAnimal(idMadre);
         traslados.add(modeloTraslado);
@@ -720,7 +721,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setCapado("NO");
         modelo.setDescTipoAnimal(modeloDatos.getDescTipoAnimal());
         modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
-        modelo.setIdUsuario("5");
+        modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setNotas(txtNotas.getText().trim());
         modelo.setNumero(modeloDatos.getNumero());
         modelo.setNumeroMama(modeloDatos.getNumero());
@@ -753,6 +754,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         switch (retorno) {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
+                Parametros.actualizarHistoricoAnimal=true;
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:
