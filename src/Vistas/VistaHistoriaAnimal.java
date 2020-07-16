@@ -2394,13 +2394,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         if (ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA")) {
             Map<String, String> datosHembra = new HashMap<>();
+            Map<String, String> datosHembraPartos = new HashMap<>();
             datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
+            datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
             lbltitNovilla.setText("Novilla?");
             lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("0") ? "No" : "Si");
-            lblNumMeses.setText("" + datosHembra.get("NUM_MESES"));
-            lblNumCriaAdoptiva.setText("" + datosHembra.get("CRIA"));
-            lblNumPartos.setText("" + datosHembra.get("NUM_PARTOS"));
-            lblEstado.setText("" + datosHembra.get("ESTADO"));
+            lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
+            lblNumCriaAdoptiva.setText("" + datosHembraPartos.get("CRIA"));
+            lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
+            lblEstado.setText("" + datosHembraPartos.get("ESTADO"));
         } else {
             lblNovilla.setText(ListaDatos.get(0).getCapado());
             lbltitNovilla.setText("Capado?");

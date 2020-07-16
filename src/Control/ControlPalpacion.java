@@ -350,8 +350,7 @@ public class ControlPalpacion implements IControl {
     }
 
     public Map<String, String> getDatosPalpacion(String id) {
-        String consulta = "SELECT palp.`diagnostico` AS ESTADO, IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n" +
-                            "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES\n" +
+        String consulta = "SELECT palp.`diagnostico` AS ESTADO\n" +
                             "FROM `palpacion` palp \n" +
                             "INNER JOIN `animales` a ON a.`id` = palp.`id_animal`\n" +
                             "WHERE id_animal = '"+id+"'\n" +
@@ -364,19 +363,34 @@ public class ControlPalpacion implements IControl {
 //        
         if(datos.size()>0){
             retorno.put("ESTADO", datos.get(0).get("ESTADO"));
+            
+            return retorno;
+        } else {
+            retorno.put("ESTADO", "");
+            return retorno;
+        }
+    }
+
+    public Map<String, String> getDatosPartos(String id) {
+        String consulta = "SELECT IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n" +
+                            "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES\n" +
+                            "FROM `animales` a ON a.`id` = '"+id+"'\n" ;
+        
+        List<Map<String, String>> datos = new ArrayList<Map<String, String>>();
+        datos = mySQL.ListSQL(consulta);
+        Map<String, String> retorno = new HashMap<>();
+//        
+        if(datos.size()>0){
             retorno.put("NUM_PARTOS", datos.get(0).get("NUM_PARTOS"));
             retorno.put("CRIA", datos.get(0).get("CRIA"));
             retorno.put("NUM_MESES", datos.get(0).get("NUM_MESES"));
             
             return retorno;
         } else {
-            retorno.put("ESTADO", "");
             retorno.put("NUM_PARTOS", "");
             retorno.put("CRIA", "");
             retorno.put("NUM_MESES", "");
             return retorno;
         }
     }
-
-    
 }
