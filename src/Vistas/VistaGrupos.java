@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 /**
  *
@@ -45,7 +45,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private List<Map<String, String>> tipoAnimales;
     private List<Map<String, String>> macroGrupos;
     private ControlGeneral controlGral;
-    private JRadioButton[] radios;
+    private JCheckBox[] checks;
 
     /**
      * Creates new form VistaGrupos
@@ -66,10 +66,10 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             btnDuplicar
         };
         cargarComboFincas();
-        radios = new JRadioButton[]{
-            radioCriaH,
-            radioCriaM,
-            radioDescarte
+        checks = new JCheckBox[]{
+            cbCriaH,
+            cbCriaM,
+            cbDescarte
         };
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
@@ -121,15 +121,15 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
-        control = new Control(true, radioCriaH);
+        control = new Control(true, cbCriaH);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
-        control = new Control(true, radioCriaM);
+        control = new Control(true, cbCriaM);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
-        control = new Control(true, radioDescarte);
+        control = new Control(true, cbDescarte);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
@@ -184,9 +184,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         chkPesable = new javax.swing.JCheckBox();
         chkPalpable = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        radioCriaH = new javax.swing.JRadioButton();
-        radioCriaM = new javax.swing.JRadioButton();
-        radioDescarte = new javax.swing.JRadioButton();
+        cbCriaH = new javax.swing.JCheckBox();
+        cbCriaM = new javax.swing.JCheckBox();
+        cbDescarte = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -512,38 +512,38 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        radioCriaH.setBackground(new java.awt.Color(255, 255, 255));
-        radioCriaH.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        radioCriaH.setForeground(new java.awt.Color(59, 123, 50));
-        radioCriaH.setText("Cria Hembra");
-        radioCriaH.addMouseListener(new java.awt.event.MouseAdapter() {
+        cbCriaH.setBackground(new java.awt.Color(255, 255, 255));
+        cbCriaH.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbCriaH.setForeground(new java.awt.Color(59, 123, 50));
+        cbCriaH.setText("Cria Hembra");
+        cbCriaH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                radioCriaHMousePressed(evt);
+                cbCriaHMousePressed(evt);
             }
         });
-        jPanel2.add(radioCriaH);
+        jPanel2.add(cbCriaH);
 
-        radioCriaM.setBackground(new java.awt.Color(255, 255, 255));
-        radioCriaM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        radioCriaM.setForeground(new java.awt.Color(59, 123, 50));
-        radioCriaM.setText("Cria Macho");
-        radioCriaM.addMouseListener(new java.awt.event.MouseAdapter() {
+        cbCriaM.setBackground(new java.awt.Color(255, 255, 255));
+        cbCriaM.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbCriaM.setForeground(new java.awt.Color(59, 123, 50));
+        cbCriaM.setText("Cria Macho");
+        cbCriaM.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                radioCriaMMousePressed(evt);
+                cbCriaMMousePressed(evt);
             }
         });
-        jPanel2.add(radioCriaM);
+        jPanel2.add(cbCriaM);
 
-        radioDescarte.setBackground(new java.awt.Color(255, 255, 255));
-        radioDescarte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        radioDescarte.setForeground(new java.awt.Color(59, 123, 50));
-        radioDescarte.setText("Descarte");
-        radioDescarte.addMouseListener(new java.awt.event.MouseAdapter() {
+        cbDescarte.setBackground(new java.awt.Color(255, 255, 255));
+        cbDescarte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbDescarte.setForeground(new java.awt.Color(59, 123, 50));
+        cbDescarte.setText("Descarte");
+        cbDescarte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                radioDescarteMousePressed(evt);
+                cbDescarteMousePressed(evt);
             }
         });
-        jPanel2.add(radioDescarte);
+        jPanel2.add(cbDescarte);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -614,44 +614,17 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         Duplicar();
     }//GEN-LAST:event_btnDuplicarActionPerformed
 
-    private void radioCriaHMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCriaHMousePressed
-        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
-        if(radioCriaH.isSelected()){
-//            bgTipoGrupos.setSelected(radioCriaH, false);
-            //bgTipoGrupos.clearSelection();
-            radioCriaH.setSelected(false);
-//            for (JRadioButton rad : radios) {
-//                
-//                rad.setSelected(false);
-//            }
-        }
-    }//GEN-LAST:event_radioCriaHMousePressed
+    private void cbCriaHMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbCriaHMousePressed
+        establecerTipoGrupo(cbCriaH);
+    }//GEN-LAST:event_cbCriaHMousePressed
 
-    private void radioCriaMMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCriaMMousePressed
-        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
-        if(radioCriaM.isSelected()){
-//            bgTipoGrupos.setSelected(radioCriaH, false);
-            //bgTipoGrupos.clearSelection();
-            radioCriaM.setSelected(false);
-//            for (JRadioButton rad : radios) {
-//                
-//                rad.setSelected(false);
-//            }
-        }
-    }//GEN-LAST:event_radioCriaMMousePressed
+    private void cbCriaMMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbCriaMMousePressed
+        establecerTipoGrupo(cbCriaM);
+    }//GEN-LAST:event_cbCriaMMousePressed
 
-    private void radioDescarteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioDescarteMousePressed
-        System.out.println("radioCriaH.isSelected()--->"+radioCriaH.isSelected());
-        if(radioDescarte.isSelected()){
-//            bgTipoGrupos.setSelected(radioCriaH, false);
-            //bgTipoGrupos.clearSelection();
-            radioDescarte.setSelected(false);
-//            for (JRadioButton rad : radios) {
-//                
-//                rad.setSelected(false);
-//            }
-        }
-    }//GEN-LAST:event_radioDescarteMousePressed
+    private void cbDescarteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbDescarteMousePressed
+        establecerTipoGrupo(cbDescarte);
+    }//GEN-LAST:event_cbDescarteMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -662,6 +635,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JCheckBox cbCriaH;
+    private javax.swing.JCheckBox cbCriaM;
+    private javax.swing.JCheckBox cbDescarte;
     public javax.swing.JComboBox cbEstado;
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbMacroGrupo;
@@ -676,9 +652,6 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private javax.swing.JLabel lbltitle6;
     private javax.swing.JLabel lbltitle7;
     private javax.swing.JLabel lbltitle8;
-    private javax.swing.JRadioButton radioCriaH;
-    private javax.swing.JRadioButton radioCriaM;
-    private javax.swing.JRadioButton radioDescarte;
     public javax.swing.JLabel txtCodigoFinca;
     private javax.swing.JLabel txtCodigoGrupo;
     private javax.swing.JLabel txtCodigoMacroGrupo;
@@ -717,9 +690,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         String codigoMacroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : txtCodigoMacroGrupo.getText().trim();
         String codigoGrupo = (editar == Estado.ACTUALIZAR) ? txtCodigoGrupo.getText() : "0";
         String tipo = "default";
-        for (int i = 0; i < radios.length; i++) {
-            if (radios[i].isSelected()) {
-                tipo = "'" + radios[i].getText().toLowerCase() + "'";
+        for (int i = 0; i < checks.length; i++) {
+            if (checks[i].isSelected()) {
+                tipo = "'" + checks[i].getText().toLowerCase() + "'";
             }
         }
 
@@ -831,9 +804,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             bgTipoGrupos.clearSelection();
             String tipoGrupo = modelo.getTipo();
             if (!tipoGrupo.isEmpty()) {
-                for (int i = 0; i < radios.length; i++) {
-                    if (radios[i].getText().toLowerCase().equals(tipoGrupo)) {
-                        radios[i].setSelected(true);
+                for (int i = 0; i < checks.length; i++) {
+                    if (checks[i].getText().toLowerCase().equals(tipoGrupo)) {
+                        checks[i].setSelected(true);
                         break;
                     }
                 }
@@ -874,6 +847,16 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             macroGrupo = (ModeloMacroGrupo) modelo;
             cbMacroGrupo.setSelectedItem(macroGrupo.getDescripcion());
             txtCodigoMacroGrupo.setText(macroGrupo.getId());
+        }
+    }
+
+    private void establecerTipoGrupo(JCheckBox checkBox) {
+        if (!checkBox.isSelected()) {
+            for (JCheckBox check : checks) {
+                if (!check.equals(checkBox)) {
+                    check.setSelected(false);
+                }
+            }
         }
     }
 

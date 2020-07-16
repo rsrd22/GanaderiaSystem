@@ -512,7 +512,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JRadioButton" name="radioCriaH">
+        <Component class="javax.swing.JCheckBox" name="cbCriaH">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -526,10 +526,10 @@
             <Property name="text" type="java.lang.String" value="Cria Hembra"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioCriaHMousePressed"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbCriaHMousePressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="radioCriaM">
+        <Component class="javax.swing.JCheckBox" name="cbCriaM">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -543,10 +543,10 @@
             <Property name="text" type="java.lang.String" value="Cria Macho"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioCriaMMousePressed"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbCriaMMousePressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="radioDescarte">
+        <Component class="javax.swing.JCheckBox" name="cbDescarte">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -560,7 +560,7 @@
             <Property name="text" type="java.lang.String" value="Descarte"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioDescarteMousePressed"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbDescarteMousePressed"/>
           </Events>
         </Component>
       </SubComponents>
