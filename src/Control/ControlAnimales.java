@@ -373,6 +373,7 @@ public class ControlAnimales implements IControl {
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
         String grupoAnteriorMama = (String) obj;
+        String idMadre = "";
 
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
@@ -425,7 +426,7 @@ public class ControlAnimales implements IControl {
             System.out.println("i: " + i);
             System.out.println("traslados.get(i).getIdGrupo(): " + traslados.get(i).getIdGrupo());
             System.out.println("grupoAnteriorMama: " + grupoAnteriorMama);
-            System.out.println("condicion: "+(i > 0 && !grupoAnteriorMama.equals(traslados.get(i).getIdGrupo())));
+            System.out.println("condicion: " + (i > 0 && !grupoAnteriorMama.equals(traslados.get(i).getIdGrupo())));
             if (i > 0 && !grupoAnteriorMama.equals(traslados.get(i).getIdGrupo())) {
                 consultas.add("UPDATE `traslado_animalxgrupo`\n"
                         + "SET `estado` = 'Inactivo'\n"
@@ -451,7 +452,7 @@ public class ControlAnimales implements IControl {
                         + "" + traslados.get(i).getIdUsuario() + ");"
                 //</editor-fold>
                 );
-            } else if(i == 0) {
+            } else if (i == 0) {
                 consultas.add(
                         //<editor-fold defaultstate="collapsed" desc="INSERT">
                         "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
@@ -470,6 +471,7 @@ public class ControlAnimales implements IControl {
                 //</editor-fold>
                 );
             }
+            idMadre=traslados.get(i).getId();
         }
 //</editor-fold>
 
@@ -493,6 +495,25 @@ public class ControlAnimales implements IControl {
         );
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DE PALPACION">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `palpacion`\n"
+                + "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, razondescarte, `fecha`, `id_usuario`)\n"
+                + "VALUES (0,\n"
+                + "" + idMadre + ",\n"
+                + "NOW(),\n"
+                + "'vacia',\n"
+                + "'PARTO',\n"
+                + "0,\n"
+                + "NOW(),\n"
+                + "'0',\n"
+                + "'',\n"
+                + "NOW(),\n"
+                + "" + animal.getIdUsuario() + ");"
+        //</editor-fold>
+        );
+        //</editor-fold>
         try {
             if (mySQL.EnviarConsultas(consultas)) {
                 return Retorno.EXITO;

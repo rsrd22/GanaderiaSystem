@@ -62,7 +62,7 @@ public class NewClass {
 //            System.out.println("no guardado");
 //        }
 //        //</editor-fold>
-
+ActualizarPesajes();
     }
     
     private static void cargarPeriodos() {
@@ -106,7 +106,7 @@ public class NewClass {
                 } else {
                     consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") + " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
                 }
-                System.out.println("consulta: " + consulta);
+                System.out.println(consulta);
                 consultas.add(consulta);
                 cant = (cant == cantidad ? 0 : cant);
             }
