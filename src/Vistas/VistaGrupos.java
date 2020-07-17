@@ -69,7 +69,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         checks = new JCheckBox[]{
             cbCriaH,
             cbCriaM,
-            cbDescarte
+            cbDescarte,
+            cbMuerte
         };
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
@@ -118,6 +119,10 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         controles.addControl(control);
 
         control = new Control(true, cbMacroGrupo);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, cbMuerte);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
@@ -187,6 +192,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         cbCriaH = new javax.swing.JCheckBox();
         cbCriaM = new javax.swing.JCheckBox();
         cbDescarte = new javax.swing.JCheckBox();
+        cbMuerte = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -545,6 +551,17 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         });
         jPanel2.add(cbDescarte);
 
+        cbMuerte.setBackground(new java.awt.Color(255, 255, 255));
+        cbMuerte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cbMuerte.setForeground(new java.awt.Color(59, 123, 50));
+        cbMuerte.setText("Muerte");
+        cbMuerte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbMuerteMousePressed(evt);
+            }
+        });
+        jPanel2.add(cbMuerte);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -626,6 +643,10 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         establecerTipoGrupo(cbDescarte);
     }//GEN-LAST:event_cbDescarteMousePressed
 
+    private void cbMuerteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbMuerteMousePressed
+        establecerTipoGrupo(cbMuerte);
+    }//GEN-LAST:event_cbMuerteMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgTipoGrupos;
@@ -641,6 +662,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     public javax.swing.JComboBox cbEstado;
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbMacroGrupo;
+    private javax.swing.JCheckBox cbMuerte;
     public javax.swing.JComboBox cbTipoAnimal;
     private javax.swing.JCheckBox chkPalpable;
     private javax.swing.JCheckBox chkPesable;

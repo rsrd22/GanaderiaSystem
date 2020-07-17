@@ -24,6 +24,7 @@ public class ModeloPesaje {
     private String peso;
     private String peso_anterior;
     private String peso_destete;
+    private String estado;
     private ArrayList<ModeloMedicamentosPorPesaje> listaMedicamentos;
 
     public ModeloPesaje() {
@@ -34,7 +35,7 @@ public class ModeloPesaje {
             String fecha_pesado, String hierro, String id, String id_animal, 
             String id_usuario, String implante, String notas, String peso,
             String descripcionHierro,String idHierro,String fechaDestete,
-            String peso_anterior,String peso_destete) {
+            String peso_anterior,String peso_destete,String estado) {
         this.descornado = descornado;
         this.destete = destete;
         this.fecha = fecha;
@@ -51,7 +52,16 @@ public class ModeloPesaje {
         this.fechaDestete = fechaDestete;
         this.peso_anterior = peso_anterior;
         this.peso_destete = peso_destete;
+        this.estado = estado;
         listaMedicamentos = new ArrayList<>();
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getPeso_destete() {

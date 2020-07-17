@@ -642,7 +642,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         }
 
         if (cbGenero.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione el genero del animal a crear.");
+            JOptionPane.showMessageDialog(this, "Seleccione el sexo del animal a crear.");
             cbGenero.requestFocusInWindow();
             return;
         }
@@ -673,9 +673,28 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         String numeroMadre = modeloDatos.getNumero();
         String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre);
         String idAnimal = "(SELECT a.id FROM animales a WHERE a.numero='" + modeloDatos.getNumero() + "' "
-                + "AND a.numero_descendiente=" + nroDescendiente+" AND a.estado_descendiente=0"
+                + "AND a.numero_descendiente=" + nroDescendiente + " AND a.estado_descendiente=0"
                 + ")";
         String idMadre = modeloDatos.getId();
+
+        String idMuerte = "";
+        if (chkMuerte.isSelected()) {
+            for (int i = 0; i < grupos.size(); i++) {
+                if (grupos.get(i).get("tipo_grupo").equals("muerte")) {
+                    idMuerte = grupos.get(i).get("id");
+                    break;
+                }
+            }
+            if (idMuerte.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encuentra el grupo MUERTE, Debe crear el grupo.");
+                return;
+            }
+
+            Calendar fechaMuerte = jdFechaMuerte.getCalendar();
+            modelo.setFechaMuerte(sdf.format(fechaMuerte.getTime()));
+        } else {
+            modelo.setFechaMuerte(FECHA_POR_DEFECTO);
+        }
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO TRASLADO">
         String datosAdicionales = modeloDatos.getGrupo();
@@ -685,9 +704,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado.setFecha("NOW()");
         modeloTraslado.setEstado("Activo");
         modeloTraslado.setFechaTraslado("NOW()");
-        modeloTraslado.setIdGrupo(grupos.get(indiceGrupo).get("id"));
+        modeloTraslado.setIdGrupo(chkMuerte.isSelected() ? idMuerte : grupos.get(indiceGrupo).get("id"));
         modeloTraslado.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modeloTraslado.setMotivo("NACIMIENTO");
+        modeloTraslado.setMotivo(chkMuerte.isSelected() ? "MUERIO EN EL PARTO" : "NACIMIENTO");
         modeloTraslado.setIdAnimal(idAnimal);
         traslados.add(modeloTraslado);
         modeloTraslado = new ModeloTraslado();
@@ -740,21 +759,15 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setFechaDestete(FECHA_POR_DEFECTO);
         modelo.setPesoDestete("0");
 
-        if (chkMuerte.isSelected()) {
-            Calendar fechaMuerte = jdFechaMuerte.getCalendar();
-            modelo.setFechaMuerte(sdf.format(fechaMuerte.getTime()));
-        } else {
-            modelo.setFechaMuerte(FECHA_POR_DEFECTO);
-        }
         //</editor-fold>
         
-        int retorno = control.GuardarCria(modelo,datosAdicionales);
+        int retorno = control.GuardarCria(modelo, datosAdicionales);
 
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
-                Parametros.actualizarHistoricoAnimal=true;
+                Parametros.actualizarHistoricoAnimal = true;
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:

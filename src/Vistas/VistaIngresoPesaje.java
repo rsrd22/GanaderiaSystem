@@ -1134,9 +1134,23 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         }
 //</editor-fold>
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfes = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar fecha = jdFechaPesaje.getCalendar();
+        String estado = "";
+        String fechaEstadoActivo = "";
+        if (!datos.get("ESTADO").equals("Activo")) {
+            fechaEstadoActivo = control.getFechaPesajeActiva(idAnimal);
+        } else {
+            fechaEstadoActivo = datos.get("FECHAPESADO");
+        }
+        estado = getEstadoGuardar(sdfes.format(fecha.getTime()), fechaEstadoActivo);
+
+        modelo.setEstado(estado);
         modelo.setPeso_anterior(datos.get("PESO_ANTERIOR"));
         modelo.setId(editar == Estado.GUARDAR ? "0" : txtCodigo.getText());
         modelo.setId_animal(idAnimal);
+        modelo.setFecha_pesado(sdf.format(fecha.getTime()));
         modelo.setPeso(txtPesoKg.getText().replace(".", "").replace(",", "."));
         modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         modelo.setDescornado(chkDescornada.isSelected() ? "1" : "0");
@@ -1148,7 +1162,6 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setIdHierro(txtCodigoHierro.getText());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fechaPesaje = jdFechaPesaje.getCalendar();
         modelo.setFecha_pesado(sdf.format(fechaPesaje.getTime()));
 
@@ -1221,4 +1234,14 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             }
         }
     }
+
+    private String getEstadoGuardar(String fechaForm, String fechaEstadoActivo) {
+        String estado = "Activo";
+        if (!fechaEstadoActivo.equals("")) {
+            int dif = Utilidades.CompararFechas(fechaForm, fechaEstadoActivo);
+            estado = (dif > 0 ? "Activo" : "Inactivo");
+        }
+        return estado;
+    }
+
 }

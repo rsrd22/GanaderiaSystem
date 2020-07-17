@@ -134,7 +134,7 @@ public class ControlAnimales implements IControl {
                         grupo.get("id"),
                         grupo.get("id_tipo_animal"),
                         grupo.get("id_usuario"),
-                        grupo.get("notas"),   
+                        grupo.get("notas"),
                         grupo.get("numero"),
                         grupo.get("numero_mama"),
                         grupo.get("descTipoAnimal"),
@@ -422,16 +422,17 @@ public class ControlAnimales implements IControl {
 
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL PRIMER TRASLADO">
         traslados = (ArrayList<ModeloTraslado>) animal.getModeloTraslado();
+        idMadre = traslados.get(1).getIdAnimal();
         for (int i = 0; i < traslados.size(); i++) {
             System.out.println("i: " + i);
             System.out.println("traslados.get(i).getIdGrupo(): " + traslados.get(i).getIdGrupo());
             System.out.println("grupoAnteriorMama: " + grupoAnteriorMama);
             System.out.println("condicion: " + (i > 0 && !grupoAnteriorMama.equals(traslados.get(i).getIdGrupo())));
             if (i > 0 && !grupoAnteriorMama.equals(traslados.get(i).getIdGrupo())) {
-                consultas.add("UPDATE `traslado_animalxgrupo`\n"
-                        + "SET `estado` = 'Inactivo'\n"
-                        + "WHERE `id_animal` = " + traslados.get(i).getIdAnimal()
-                        + " AND `estado` = 'Activo' "
+                consultas.add("UPDATE traslado_animalxgrupo\n"
+                        + "SET estado = 'Inactivo'\n"
+                        + "WHERE id_animal = " + traslados.get(i).getIdAnimal()
+                        + " AND estado = 'Activo' "
                 );
 
                 consultas.add("update animales set grupo=" + traslados.get(i).getIdGrupo() + " where id=" + traslados.get(i).getIdAnimal());
@@ -471,7 +472,6 @@ public class ControlAnimales implements IControl {
                 //</editor-fold>
                 );
             }
-            idMadre=traslados.get(i).getId();
         }
 //</editor-fold>
 
@@ -495,25 +495,40 @@ public class ControlAnimales implements IControl {
         );
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="INACTIVAR LA ULTIMA PALPACION ACTIVA">
+        List<Map<String, String>> palpacion = new ArrayList<>();
+        String consulta = "SELECT id FROM palpacion WHERE id_animal=" + idMadre + " AND estado='Activo'";
+        palpacion = mySQL.ListSQL(consulta);
+        if (palpacion.size() > 0) {
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="INSERT">
+                    "UPDATE palpacion SET estado='Inactivo' WHERE id_animal=" + idMadre + " AND estado='Activo'"
+            //</editor-fold>
+            );
+        }
+//</editor-fold>
+
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DE PALPACION">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `palpacion`\n"
-                + "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, razondescarte, `fecha`, `id_usuario`)\n"
+                "INSERT INTO palpacion\n"
+                + "(id, id_animal, fecha_palpacion, diagnostico, notas, num_meses, "
+                + "fecha_ultimo_parto, descarte, razondescarte, fecha, id_usuario,estado)\n"
                 + "VALUES (0,\n"
                 + "" + idMadre + ",\n"
-                + "NOW(),\n"
+                + "'" + animal.getFechaNacimiento() + "',\n"
                 + "'vacia',\n"
                 + "'PARTO',\n"
                 + "0,\n"
-                + "NOW(),\n"
+                + "'" + animal.getFechaNacimiento() + "',\n"
                 + "'0',\n"
                 + "'',\n"
                 + "NOW(),\n"
-                + "" + animal.getIdUsuario() + ");"
+                + "" + animal.getIdUsuario() + ",'Activo');"
         //</editor-fold>
         );
         //</editor-fold>
+
         try {
             if (mySQL.EnviarConsultas(consultas)) {
                 return Retorno.EXITO;
@@ -883,6 +898,8 @@ public class ControlAnimales implements IControl {
                     + "IFNULL((SELECT '*' FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS EST,\n"
                     + "IFNULL((SELECT id FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS ID_PESAJE,\n"
                     + "IFNULL((SELECT notas FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS NOTAS,\n"
+                    + "IFNULL((SELECT estado FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS ESTADO,\n"
+                    + "IFNULL((SELECT fecha_pesado FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS FECHAPESADO,\n"
                     + "(SELECT peso_anterior FROM pesaje m WHERE m.id_animal=a.id ORDER BY m.fecha_pesado DESC LIMIT 1) AS PESO_ANTERIOR\n"
                     + "FROM\n"
                     + "animales a\n"
@@ -908,30 +925,30 @@ public class ControlAnimales implements IControl {
     public Object ObtenerDatosAnimalesPalpacion(String IDFINCA, String IDTIPOFINCA, String FECHA) {
         try {
 
-            String consulta = "SELECT anim.`id` AS IDANIMAL, anim.`numero` AS NUMERO_ANIMAL, anim.`numero_mama` AS NUMERO_MAMA,\n"
-                    + " IFNULL(DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n"
-                    + ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n"
+            String consulta = "SELECT anim.id AS IDANIMAL, anim.numero AS NUMERO_ANIMAL, anim.numero_mama AS NUMERO_MAMA,\n"
+                    + " IFNULL(DATE_FORMAT(anim.fecha_novilla, '%d/%m/%Y'), '') FECHA_NOVILLA, anim.peso as PESO\n"
+                    + ", NumeroHijos(anim.numero, 0) NUMERO_HIJOS, IFNULL(NumeroPartos(anim.numero), '0') NUMERO_PARTOS,\n"
                     + "IFNULL(CONCAT(UPPER(SUBSTRING(tbl.DIAG, 1, 1)), SUBSTRING(tbl.DIAG, 2)), '') ESTADO, IFNULL(tbl.FPALP, '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n"
-                    + "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n"
+                    + "IFNULL(DATE_FORMAT(NumeroHijos(anim.numero, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n"
                     + "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, tbl.ESTPALP,\n"
-                    + "finc.`id` as IDFINCA, tpo.`id` as IDTIPOA, \n"
+                    + "finc.id as IDFINCA, tpo.id as IDTIPOA, \n"
                     + "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n"
                     + "FROM animales anim\n"
                     + "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n"
                     + "LEFT JOIN grupos grup ON anim.grupo=grup.id\n"
-                    + "LEFT JOIN fincas finc ON tpo.id_finca=finc.`id`\n"
+                    + "LEFT JOIN fincas finc ON tpo.id_finca=finc.id\n"
                     + "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n"
                     + "LEFT JOIN (\n"
-                    + "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n"
+                    + "	SELECT MAX(palp.id) AS IDPALP, fecha_palpacion AS FPALP, diagnostico AS DIAG,\n"
                     + "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL, IFNULL(palp.notas, '') as NOTAS, palp.estado as ESTPALP\n"
-                    + "	FROM `palpacion` palp\n"
-                    + "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n"
-                    + "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n"
-                    + "	WHERE tpo.`id_finca` = '" + IDFINCA + "' AND tpo.`id` = '" + IDTIPOFINCA + "' \n"
+                    + "	FROM palpacion palp\n"
+                    + "	INNER JOIN animales anim ON anim.id = palp.id_animal\n"
+                    + "	INNER JOIN tipo_animales tpo ON tpo.id = anim.id_tipo_animal\n"
+                    + "	WHERE tpo.id_finca = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "' \n"
                     + "       AND fecha_palpacion BETWEEN DATE_SUB('" + FECHA + "',  INTERVAL 15 DAY) AND DATE_ADD('" + FECHA + "',  INTERVAL 15 DAY)\n"
-                    + "	GROUP BY palp.`id_animal` \n"
-                    + ") tbl ON tbl.IDANIMAL = anim.`id` \n"
-                    + "WHERE grup.`palpable` = '1' AND finc.`id` = '" + IDFINCA + "' AND tpo.`id` = '" + IDTIPOFINCA + "'\n"
+                    + "	GROUP BY palp.id_animal \n"
+                    + ") tbl ON tbl.IDANIMAL = anim.id \n"
+                    + "WHERE grup.palpable = '1' AND finc.id = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "'\n"
                     + "ORDER BY anim.id ASC";
 
             List<Map<String, String>> palpacion = new ArrayList<Map<String, String>>();

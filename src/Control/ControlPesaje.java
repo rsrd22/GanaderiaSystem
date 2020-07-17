@@ -55,7 +55,8 @@ public class ControlPesaje implements IControl {
                         pesaje.get("peso"),
                         "", "", "",
                         pesaje.get("peso_anterior"),
-                        "0"
+                        "0",
+                        pesaje.get("estado")
                 ));
             }
             return lista;
@@ -74,7 +75,7 @@ public class ControlPesaje implements IControl {
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,"
                 + "hierro,descornado,implante,destete,fecha,id_usuario,"
-                + "peso_anterior) VALUES(\n"
+                + "peso_anterior,estado) VALUES(\n"
                 + "" + modelo.getId() + ",\n"
                 + "" + modelo.getId_animal() + ",\n"
                 + "'" + modelo.getFecha_pesado() + "',\n"
@@ -86,7 +87,8 @@ public class ControlPesaje implements IControl {
                 + "'" + modelo.getDestete() + "',\n"
                 + "" + modelo.getFecha() + ",\n"
                 + "" + modelo.getId_usuario() + ",\n"
-                + "" + modelo.getPeso_anterior() + "\n"
+                + "" + modelo.getPeso_anterior() + ",\n"
+                + "'" + modelo.getEstado() + "'\n"
                 + ")" //</editor-fold>
         );
 //</editor-fold>
@@ -147,6 +149,7 @@ public class ControlPesaje implements IControl {
                 + "fecha_pesado='" + modelo.getFecha_pesado() + "',\n"
                 + "peso=" + modelo.getPeso() + ",\n"
                 + "notas='" + modelo.getNotas() + "',\n"
+                + "estado='" + modelo.getEstado()+ "',\n"
                 + "hierro='" + modelo.getHierro() + "',\n"
                 + "descornado='" + modelo.getDescornado() + "',\n"
                 + "implante='" + modelo.getImplante() + "',\n"
@@ -301,7 +304,8 @@ public class ControlPesaje implements IControl {
                         pesaje.get("IDHIERRO"),
                         pesaje.get("FECHA_DESTETE"),
                         pesaje.get("peso_anterior"),
-                        pesaje.get("PESO_DESTETE")
+                        pesaje.get("PESO_DESTETE"),
+                        pesaje.get("estado")
                 );
                 consulta = "SELECT \n"
                         + "a.id AS ID, \n"
@@ -343,7 +347,7 @@ public class ControlPesaje implements IControl {
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,notas,hierro,descornado,"
-                        + "implante,destete,fecha,id_usuario,peso_anterior) VALUES(\n"
+                + "implante,destete,fecha,id_usuario,peso_anterior) VALUES(\n"
                 + "0,\n"
                 + "" + modelo.getId_animal() + ",\n"
                 + "'" + modelo.getFecha_pesado() + "',\n"
@@ -397,4 +401,16 @@ public class ControlPesaje implements IControl {
         }
     }
 
+    public String getFechaPesajeActiva(String idAnimal) {
+        String consulta = "SELECT DATE_FORMAT(fecha_pesado, '%d/%m/%Y') AS FECHAPESADO FROM pesaje\n"
+                + " WHERE id_animal=" + idAnimal + " and estado = 'Activo'";
+        String ret = "";
+        List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloPesaje> lista = new ArrayList<>();
+        palpaciones = mySQL.ListSQL(consulta);
+        if (palpaciones.size() > 0) {
+            ret = palpaciones.get(0).get("FECHAPESADO");
+        }
+        return ret;
+    }
 }
