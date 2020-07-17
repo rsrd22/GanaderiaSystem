@@ -1,4 +1,4 @@
--/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -134,7 +134,7 @@ public class ControlAnimales implements IControl {
                         grupo.get("id"),
                         grupo.get("id_tipo_animal"),
                         grupo.get("id_usuario"),
-                        grupo.get("notas"),
+                        grupo.get("notas"),   
                         grupo.get("numero"),
                         grupo.get("numero_mama"),
                         grupo.get("descTipoAnimal"),
@@ -658,7 +658,7 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN lotes lot ON lot.id = rot.id_lote\n"
                     + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
-                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo'\n"
+                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
                     + "ORDER BY animal.id ASC";
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
@@ -913,7 +913,7 @@ public class ControlAnimales implements IControl {
                     + ", `NumeroHijos`(anim.`numero`, 0) NUMERO_HIJOS, IFNULL(`NumeroPartos`(anim.`numero`), '0') NUMERO_PARTOS,\n"
                     + "IFNULL(CONCAT(UPPER(SUBSTRING(tbl.DIAG, 1, 1)), SUBSTRING(tbl.DIAG, 2)), '') ESTADO, IFNULL(tbl.FPALP, '') FECHA_PALP, IFNULL(tbl.IDPALP, '') IDPALPACION,\n"
                     + "IFNULL(DATE_FORMAT(`NumeroHijos`(anim.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n"
-                    + "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, \n"
+                    + "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, tbl.ESTPALP,\n"
                     + "finc.`id` as IDFINCA, tpo.`id` as IDTIPOA, \n"
                     + "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n"
                     + "FROM animales anim\n"
@@ -923,7 +923,7 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN propietarioxhierro propxhi ON anim.hierro=propxhi.id \n"
                     + "LEFT JOIN (\n"
                     + "	SELECT MAX(palp.`id`) AS IDPALP, `fecha_palpacion` AS FPALP, diagnostico AS DIAG,\n"
-                    + "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL, IFNULL(palp.notas, '') as NOTAS\n"
+                    + "	num_meses AS NMESES, fecha_ultimo_parto AS FULTPARTO, anim.id AS IDANIMAL, IFNULL(palp.notas, '') as NOTAS, palp.estado as ESTPALP\n"
                     + "	FROM `palpacion` palp\n"
                     + "	INNER JOIN `animales` anim ON anim.`id` = palp.`id_animal`\n"
                     + "	INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n"

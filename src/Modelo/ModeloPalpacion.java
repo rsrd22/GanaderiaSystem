@@ -17,6 +17,7 @@ public class ModeloPalpacion {
     private String fecha_ultimo_parto;
     private String descarte;
     private String razondescarte;
+    private String estado;
     private String fecha;
     private String id_usuario;
     private ArrayList<ModeloMedicamentosPorPesaje> listaMedicamentos;
@@ -25,7 +26,7 @@ public class ModeloPalpacion {
         listaMedicamentos = new ArrayList<>();
     }
 
-    public ModeloPalpacion(String id, String id_animal, String fecha_palpacion, String diagnostico, String notas, String num_meses, String fecha_ultimo_parto, String descarte, String fecha, String id_usuario, String razondescarte) {
+    public ModeloPalpacion(String id, String id_animal, String fecha_palpacion, String diagnostico, String notas, String num_meses, String fecha_ultimo_parto, String descarte, String fecha, String id_usuario, String razondescarte, String estado) {
         this.id = id;
         this.id_animal = id_animal;
         this.fecha_palpacion = fecha_palpacion;
@@ -35,6 +36,7 @@ public class ModeloPalpacion {
         this.fecha_ultimo_parto = fecha_ultimo_parto;
         this.descarte = descarte;
         this.razondescarte = razondescarte;
+        this.estado = estado;
         this.fecha = fecha;
         this.id_usuario = id_usuario;
         listaMedicamentos = new ArrayList<>();
@@ -112,6 +114,16 @@ public class ModeloPalpacion {
         this.razondescarte = razondescarte;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    
+    
     public String getFecha() {
         return fecha;
     }

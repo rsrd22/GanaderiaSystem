@@ -1012,6 +1012,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 
     private void Guardar() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfes = new SimpleDateFormat("dd/MM/yyyy");
         Calendar fecha = jdFechaPalpacion.getCalendar();
         String idgrupoDescarte = "";
         
@@ -1045,6 +1046,14 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             return;
         }
         //</editor-fold>
+        String estado = "";
+        String fechaEstadoActivo = "";
+        if(!datos.get("ESTPALP").equals("Activo")){
+            fechaEstadoActivo = control.getFechaPalpActiva(idAnimal);
+        }else{
+            fechaEstadoActivo = datos.get("FECHA_PALP");
+        }
+        estado = getEstadoGuardar(sdfes.format(fecha.getTime()), fechaEstadoActivo);
         
         modelo.setId(txtCodigo.getText());
         modelo.setId_animal(idAnimal);
@@ -1055,6 +1064,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         modelo.setFecha_ultimo_parto("");
         modelo.setDescarte(chkDescarte.isSelected() ? "1" : "0");
         modelo.setRazondescarte(chkDescarte.isSelected() ? ""+txtRazon.getText() : "");
+        modelo.setEstado(estado);
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
 
@@ -1070,50 +1080,54 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         
         int retorno = -1;
             
-        if(guardar == 0)
-            retorno = control.Guardar(modelo);
-        else
-            retorno = control.Actualizar(modelo);
-        //<editor-fold defaultstate="collapsed" desc="DESCARTE">
-        if(chkDescarte.isSelected() && !idgrupoDescarte.equals("")){//REALIZAR TRASLADO
-                controlTraslado = new ControlTraslado();
-                ModeloTraslado modeloT = new ModeloTraslado();
-                modeloT.setIdAnimal(idAnimal);
-                modeloT.setIdFinca(datos.get("IDFINCA"));
-                modeloT.setIdGrupo(idgrupoDescarte);
-                modeloT.setEstado("Activo");
-                modeloT.setMotivo(""+txtRazon.getText());
-                modeloT.setLote(""+datos.get("IDTIPOA"));
-                modeloT.setFechaTraslado(sdf.format(fecha.getTime()));
-                modeloT.setFecha("NOW()");
-                modeloT.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-                
-                int ret = controlTraslado.ActulizarAnimal(modeloT, false);
-                ret = controlTraslado.InactivarTraslado(modeloT);
-                if (ret == 0) {
-                    ret = controlTraslado.Guardar(modeloT);
-                }
-            
-            if(!txtPesoKg.getText().equals("")){ // REALIZAR PESAJE
-                controlPesaje = new ControlPesaje();
-                ModeloPesaje modeloP = new ModeloPesaje();
-                modeloP.setDescornado("0");
-                modeloP.setDestete("0");
-                modeloP.setFecha("NOW()");
-                modeloP.setFecha_pesado(sdf.format(fecha.getTime()));
-                modeloP.setHierro("0");
-                modeloP.setId_animal(idAnimal);
-                modeloP.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-                modeloP.setImplante("0");
-                modeloP.setNotas(""+txtRazon.getText());
-                modeloP.setPeso(""+txtPesoKg.getText());
-                modeloP.setPeso_anterior(pesoAnterior);
-                
-                ret = controlPesaje.GuardarPesajeDescarte(modeloP);
-                
+        if(guardar == 0){
+            if(estado.equals("Activo")){ 
+                int r = control.InactivarEstadoAnterior(idAnimal);
             }
+            retorno = control.Guardar(modelo);
+        }else{
+            retorno = control.Actualizar(modelo);
         }
-//</editor-fold>
+//        //<editor-fold defaultstate="collapsed" desc="DESCARTE">
+//        if(chkDescarte.isSelected() && !idgrupoDescarte.equals("")){//REALIZAR TRASLADO
+//                controlTraslado = new ControlTraslado();
+//                ModeloTraslado modeloT = new ModeloTraslado();
+//                modeloT.setIdAnimal(idAnimal);
+//                modeloT.setIdFinca(datos.get("IDFINCA"));
+//                modeloT.setIdGrupo(idgrupoDescarte);
+//                modeloT.setEstado("Activo");
+//                modeloT.setMotivo(""+txtRazon.getText());
+//                modeloT.setLote(""+datos.get("IDTIPOA"));
+//                modeloT.setFechaTraslado(sdf.format(fecha.getTime()));
+//                modeloT.setFecha("NOW()");
+//                modeloT.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+//                
+//                int ret = controlTraslado.ActulizarAnimal(modeloT, false);
+//                ret = controlTraslado.InactivarTraslado(modeloT);
+//                if (ret == 0) {
+//                    ret = controlTraslado.Guardar(modeloT);
+//                }
+//            
+//            if(!txtPesoKg.getText().equals("")){ // REALIZAR PESAJE
+//                controlPesaje = new ControlPesaje();
+//                ModeloPesaje modeloP = new ModeloPesaje();
+//                modeloP.setDescornado("0");
+//                modeloP.setDestete("0");
+//                modeloP.setFecha("NOW()");
+//                modeloP.setFecha_pesado(sdf.format(fecha.getTime()));
+//                modeloP.setHierro("0");
+//                modeloP.setId_animal(idAnimal);
+//                modeloP.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+//                modeloP.setImplante("0");
+//                modeloP.setNotas(""+txtRazon.getText());
+//                modeloP.setPeso(""+txtPesoKg.getText());
+//                modeloP.setPeso_anterior(pesoAnterior);
+//                
+//                ret = controlPesaje.GuardarPesajeDescarte(modeloP);
+//                
+//            }
+//        }
+////</editor-fold>
         
         String mensaje = "";
         switch (retorno) {
@@ -1161,6 +1175,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 vp.ListaAnimales.get(i).put("NOTAS", ""+modelo.getNotas());
                 vp.fechaAnterior = modelo.getFecha_palpacion();
                 vp.EventoComboFincas();
+                vp.CargarListadoFechas();
                 return;
             }
         }
@@ -1244,6 +1259,20 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             
             listaMedicamentos.add(lista);
         }
+    }
+
+    private String getEstadoGuardar(String fechaForm, String fechaEstadoActivo) {
+        String estado = "Activo";
+        System.out.println("fechaForm--->"+fechaForm);
+        System.out.println("fechaEstadoActivo--->"+fechaEstadoActivo);
+        System.out.println("");
+        if(!fechaEstadoActivo.equals("")){
+            int dif = Utilidades.CompararFechas(fechaForm, fechaEstadoActivo);
+            System.out.println("dif-->"+dif);
+            estado = (dif>0?"Activo":"Inactivo");
+        }
+        System.out.println("estado--->"+estado);
+        return estado;
     }
     
 }

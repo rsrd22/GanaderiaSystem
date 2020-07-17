@@ -465,6 +465,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lbltitle29 = new javax.swing.JLabel();
         panelBtnParto = new javax.swing.JPanel();
         btnParto = new javax.swing.JButton();
+        lbltitFecUltParto = new javax.swing.JLabel();
+        lblFecUltParto = new javax.swing.JLabel();
         pnlMuerte = new javax.swing.JPanel();
         lblTid4 = new javax.swing.JLabel();
         txtFechaMuerte = new javax.swing.JTextField();
@@ -1195,6 +1197,31 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 15);
         pnlDatosBasicos.add(panelBtnParto, gridBagConstraints);
 
+        lbltitFecUltParto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitFecUltParto.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitFecUltParto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbltitFecUltParto.setText("Fecha Ultimo Parto");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lbltitFecUltParto, gridBagConstraints);
+
+        lblFecUltParto.setForeground(new java.awt.Color(59, 123, 50));
+        lblFecUltParto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFecUltParto.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 0);
+        pnlDatosBasicos.add(lblFecUltParto, gridBagConstraints);
+
         jTabbedPane1.addTab("Datos Basicos", pnlDatosBasicos);
 
         pnlMuerte.setBackground(new java.awt.Color(255, 255, 255));
@@ -1920,7 +1947,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 221, Short.MAX_VALUE)
+            .addGap(0, 224, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2268,6 +2295,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lblDescornado;
     private javax.swing.JLabel lblDestete;
     private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFecUltParto;
     private javax.swing.JLabel lblFechaDestete;
     private javax.swing.JLabel lblFinca;
     private javax.swing.JLabel lblGenero;
@@ -2300,6 +2328,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lblTipoAnimal;
     private javax.swing.JLabel lblTitNumMeses;
     private javax.swing.JLabel lbltitEstado;
+    private javax.swing.JLabel lbltitFecUltParto;
     private javax.swing.JLabel lbltitNovilla;
     private javax.swing.JLabel lbltitNumCriaAdoptiva;
     private javax.swing.JLabel lbltitNumPartos;
@@ -2357,9 +2386,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void LlenarDatos() {
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
-        lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("") ? "No" : "Si");
-        lblFechaDestete.setText("" + ListaDatos.get(0).getFechaDestete());
-        lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("") ? "No" : "Si");
+        lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
+        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : ""+ListaDatos.get(0).getFechaDestete());
+        lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
         lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
@@ -2383,6 +2412,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }else{
             panelBtnParto.setBackground(new Color(101, 101, 101));
         }
+        lbltitFecUltParto.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lblFecUltParto.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         lblNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
@@ -2398,11 +2429,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
             datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
             lbltitNovilla.setText("Novilla?");
-            lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("0") ? "No" : "Si");
+            lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("1900-01-01") ? "No" : "Si");
             lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
             lblNumCriaAdoptiva.setText("" + datosHembraPartos.get("CRIA"));
             lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
-            lblEstado.setText("" + datosHembraPartos.get("ESTADO"));
+            lblFecUltParto.setText("" + datosHembraPartos.get("FECHA_ULT_PARTO"));
+            lblEstado.setText("" + datosHembra.get("ESTADO"));
         } else {
             lblNovilla.setText(ListaDatos.get(0).getCapado());
             lbltitNovilla.setText("Capado?");

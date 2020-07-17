@@ -46,7 +46,7 @@ public class ControlPalpacion implements IControl {
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO `palpacion`\n" +
-                    "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, razondescarte, `fecha`, `id_usuario`)\n" +
+                    "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, `notas`, `num_meses`, `fecha_ultimo_parto`, `descarte`, razondescarte, estado, `fecha`, `id_usuario`)\n" +
                     "VALUES (0,\n" +
                     "        " + modelo.getId_animal()+ ",\n" +
                     "        "+Utilidades.ValorNULL(modelo.getFecha_palpacion())+",\n" +
@@ -56,6 +56,7 @@ public class ControlPalpacion implements IControl {
                     "        "+Utilidades.ValorNULL(modelo.getFecha_ultimo_parto())+",\n" +
                     "        '" + modelo.getDescarte()+ "',\n" +
                     "        '" + modelo.getRazondescarte()+ "',\n" +
+                    "        '" + modelo.getEstado()+ "',\n" +
                     "        "+modelo.getFecha()+",\n" +
                     "        "+modelo.getId_usuario()+");"
         );
@@ -302,12 +303,12 @@ public class ControlPalpacion implements IControl {
                     "palp.`diagnostico` AS DIAGNOSTICO, palp.`notas` AS NOTAS, palp.`num_meses` AS NUM_MESES,\n" +
                     "palp.`fecha_ultimo_parto` AS FECHAULTPARTO, palp.`descarte` AS DESCARTE, palp.`razondescarte` AS RAZON_DESCARTE,\n" +
                     "palpm.`id` AS IDPALPMEDICAMENTOS, palpm.`id_medicamento` AS IDMEDICAMENTO, palpm.`id_palpacion` AS IDPALPM,\n" +
-                    "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA\n" +
+                    "med.`descripcion` AS MEDICAMENTO, palpm.`dosis` AS DOSIS, med.`unidad_medida` AS UNIDAD_MEDIDA, palp.estado AS ESTPALP\n" +
                     "FROM palpacion palp\n" +
                     "LEFT JOIN palpacionxtratamiento palpm ON palpm.`id_palpacion` = palp.id\n" +
                     "LEFT JOIN medicamentos med ON med.`id` = palpm.`id_medicamento`\n" +
                     "WHERE palp.id_animal = '" + o.toString() + "'\n" +
-                    "ORDER BY palp.`id` DESC";
+                    "ORDER BY palp.`fecha_palpacion` DESC";
         
         List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPalpacion> lista = new ArrayList<>();
@@ -327,6 +328,7 @@ public class ControlPalpacion implements IControl {
                 mod.setFecha_ultimo_parto(palpacion.get("FECHAULTPARTO"));
                 mod.setDescarte(palpacion.get("DESCARTE"));
                 mod.setRazondescarte(palpacion.get("RAZON_DESCARTE"));
+                mod.setEstado(palpacion.get("ESTPALP"));
                 ArrayList<ModeloMedicamentosPorPesaje> lisMed = new ArrayList<>();
                 System.out.println("listaDatosPalpaciones-->"+listaDatosPalpaciones.size());
                 if(listaDatosPalpaciones.size()>0){
@@ -350,7 +352,7 @@ public class ControlPalpacion implements IControl {
     }
 
     public Map<String, String> getDatosPalpacion(String id) {
-        String consulta = "SELECT palp.`diagnostico` AS ESTADO\n" +
+        String consulta = "SELECT IFNULL(palp.`diagnostico`, '') AS ESTADO\n" +
                             "FROM `palpacion` palp \n" +
                             "INNER JOIN `animales` a ON a.`id` = palp.`id_animal`\n" +
                             "WHERE id_animal = '"+id+"'\n" +
@@ -375,6 +377,14 @@ public class ControlPalpacion implements IControl {
         String consulta = "SELECT IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n" +
                             "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES\n" +
                             "FROM `animales` a ON a.`id` = '"+id+"'\n" ;
+                            
+        consulta = "SELECT IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n" +
+                    "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES, IFNULL(DATE_FORMAT(`NumeroHijos`(a.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO\n" +
+                    "FROM `animales` a \n" +
+                    "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` and estado = 'Activo'\n" +
+                    "WHERE a.`id` = '"+id+"'";
+                            
+    
         
         List<Map<String, String>> datos = new ArrayList<Map<String, String>>();
         datos = mySQL.ListSQL(consulta);
@@ -384,13 +394,50 @@ public class ControlPalpacion implements IControl {
             retorno.put("NUM_PARTOS", datos.get(0).get("NUM_PARTOS"));
             retorno.put("CRIA", datos.get(0).get("CRIA"));
             retorno.put("NUM_MESES", datos.get(0).get("NUM_MESES"));
+            retorno.put("FECHA_ULT_PARTO", datos.get(0).get("FECHA_ULT_PARTO"));
             
             return retorno;
         } else {
             retorno.put("NUM_PARTOS", "");
             retorno.put("CRIA", "");
             retorno.put("NUM_MESES", "");
+            retorno.put("FECHA_ULT_PARTO", "");
             return retorno;
+        }
+    }
+
+    public String getFechaPalpActiva(String idAnimal) {
+        String consulta = "SELECT DATE_FORMAT(`fecha_palpacion`, '%d/%m/%Y') AS FECHAPALP FROM palpacion\n"
+                + " WHERE id_animal=" +idAnimal + " and estado = 'Activo'";
+        String ret = "";
+        List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloPalpacion> lista = new ArrayList<>();
+        palpaciones = mySQL.ListSQL(consulta);
+        if (palpaciones.size() > 0) {
+          ret = palpaciones.get(0).get("FECHAPALP");
+        } 
+        return ret;
+    }
+
+    public int InactivarEstadoAnterior(String idAnimal) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        consultas.add("UPDATE `palpacion`\n" +
+                        "SET `estado` = 'Inactivo'\n" +
+                        "WHERE `id_animal` = '"+idAnimal+"' AND estado = 'Activo';");
+        
+        try {
+            if(mySQL.EnviarConsultas(consultas)){
+                return Retorno.EXITO;
+            }else{
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
         }
     }
 }
