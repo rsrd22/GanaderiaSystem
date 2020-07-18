@@ -7,6 +7,8 @@ package Tareas;
 
 import Utilidades.Parametros;
 import Vistas.VistaVerAnimales;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +28,7 @@ public class TareaActuralizaListaAnimales implements Runnable {
 
     public void run() {
         while (enEjecucion) {
-//            System.out.println("HILO ACTUALIZA LISTA ANIMALES: "+Parametros.actualizarHistoricoAnimal);
+            System.out.println("HILO ACTUALIZA LISTA ANIMALES: "+Parametros.actualizarHistoricoAnimal);
             if (Parametros.actualizarHistoricoAnimal) {
                 vva.actualizarTablaAnimales();
                 Parametros.actualizarHistoricoAnimal=false;

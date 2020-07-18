@@ -13,5 +13,5 @@ package Utilidades;
 public class Parametros {
     public static String separadorDecimal = ",";
     public static String separadorIE = "|";
-    public static boolean actualizarHistoricoAnimal = false;
+    public static volatile boolean actualizarHistoricoAnimal = false;
 }

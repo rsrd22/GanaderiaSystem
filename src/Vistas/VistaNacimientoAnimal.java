@@ -38,7 +38,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     private ModeloTraslado modeloTraslado;
     private ControlAnimales control;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
-    private final String GRUPO_VACIAS = "VACIAS";
+    private final String GRUPO_VACIAS = "PARIDAS";
 
     public VistaNacimientoAnimal() {
         initComponents();
@@ -663,7 +663,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             }
         }
         if (idGrupoVacias.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encuentra el grupo VACIAS, Debe crear el grupo.");
+            JOptionPane.showMessageDialog(this, "No se encuentra el grupo PARIDAS, Debe crear el grupo.");
             return;
         }
 //</editor-fold>
@@ -733,7 +733,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setFecha("NOW()");
         modelo.setDescHierro(modeloDatos.getDescHierro());
         modelo.setHierro(modeloDatos.getHierro());
-        modelo.setGrupo(grupos.get(indiceGrupo).get("id"));
+        modelo.setGrupo(chkMuerte.isSelected() ? idMuerte : grupos.get(indiceGrupo).get("id"));
         modelo.setDescGrupo(cbGrupos.getSelectedItem().toString());
         modelo.setIdTipoAnimal(modeloDatos.getIdTipoAnimal());
         modelo.setCalificacion("" + slCalificacion.getValue());
@@ -760,7 +760,6 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setPesoDestete("0");
 
         //</editor-fold>
-        
         int retorno = control.GuardarCria(modelo, datosAdicionales);
 
         String mensaje = "";
@@ -768,6 +767,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
                 Parametros.actualizarHistoricoAnimal = true;
+                JOptionPane.showMessageDialog(this, mensaje);
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:
@@ -781,7 +781,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
                 break;
         }
 
-        JOptionPane.showMessageDialog(this, mensaje);
+        if (retorno != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, mensaje);
+        }
     }
 
 }

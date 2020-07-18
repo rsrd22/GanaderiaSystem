@@ -56,7 +56,6 @@ public class VistaVerAnimales extends javax.swing.JPanel {
      */
     public VistaVerAnimales() {
         initComponents();
-        actListaAnimales = new TareaActuralizaListaAnimales(this);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();
@@ -91,6 +90,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         listaTipoAnimales = new ArrayList<>();
         InicializarTblAnimales();
         CargarListaFincas();
+        actListaAnimales = new TareaActuralizaListaAnimales(this);
     }
 
     public void InicializarTblAnimales() {
@@ -495,9 +495,10 @@ public class VistaVerAnimales extends javax.swing.JPanel {
                     }
             );
         }
+        System.out.println("############### despues de MostrarTabla() #################");
     }
 
-    public void actualizarTablaAnimales() {
+    public synchronized void actualizarTablaAnimales() {
         if (cbTipoAnimales.getItemCount() > 0) {
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
