@@ -899,7 +899,7 @@ public class ControlAnimales implements IControl {
                     + "IFNULL((SELECT id FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS ID_PESAJE,\n"
                     + "IFNULL((SELECT notas FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS NOTAS,\n"
                     + "IFNULL((SELECT estado FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS ESTADO,\n"
-                    + "IFNULL((SELECT fecha_pesado FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS FECHAPESADO,\n"
+                    + "IFNULL((SELECT DATE_FORMAT(fecha_pesado,'%d/%m/%Y') FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "'),'') AS FECHAPESADO,\n"
                     + "(SELECT peso_anterior FROM pesaje m WHERE m.id_animal=a.id ORDER BY m.fecha_pesado DESC LIMIT 1) AS PESO_ANTERIOR\n"
                     + "FROM\n"
                     + "animales a\n"

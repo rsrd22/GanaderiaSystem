@@ -70,6 +70,18 @@ public class ControlPesaje implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloPesaje modelo = (ModeloPesaje) o;
 
+        if (modelo.getEstado().equals("Activo")) {
+            consultas.add(
+                    "UPDATE pesaje SET estado='Inactivo' WHERE id_animal=" + modelo.getId_animal() + " and estado='Activo'"
+            );
+
+            //<editor-fold defaultstate="collapsed" desc="ACTUALIZO EL PESO EN LA TABLA ANIMALES">
+            consultas.add("update animales\n"
+                    + "set \n"
+                    + "peso = " + modelo.getPeso() + "\n"
+                    + "where id = " + modelo.getId_animal() + "");
+//</editor-fold>
+        }
         //<editor-fold defaultstate="collapsed" desc="INSERTO EN LA TABLA PESAJE">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
@@ -111,7 +123,6 @@ public class ControlPesaje implements IControl {
         //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
         consultas.add("update animales\n"
                 + "set \n"
-                + "peso = " + modelo.getPeso() + ",\n"
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
@@ -120,7 +131,6 @@ public class ControlPesaje implements IControl {
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
-
         try {
             if (mySQL.EnviarConsultas(consultas)) {
                 return Retorno.EXITO;
@@ -141,6 +151,18 @@ public class ControlPesaje implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloPesaje modelo = (ModeloPesaje) o;
 
+        if (modelo.getEstado().equals("Activo")) {
+            consultas.add(
+                    "UPDATE pesaje SET estado='Inactivo' WHERE id_animal=" + modelo.getId_animal() + " and estado='Activo'"
+            );
+
+            //<editor-fold defaultstate="collapsed" desc="ACTUALIZO EL PESO EN LA TABLA ANIMALES">
+            consultas.add("update animales\n"
+                    + "set \n"
+                    + "peso = " + modelo.getPeso() + "\n"
+                    + "where id = " + modelo.getId_animal() + "");
+//</editor-fold>
+        }
         //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA PESAJE">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
@@ -149,7 +171,7 @@ public class ControlPesaje implements IControl {
                 + "fecha_pesado='" + modelo.getFecha_pesado() + "',\n"
                 + "peso=" + modelo.getPeso() + ",\n"
                 + "notas='" + modelo.getNotas() + "',\n"
-                + "estado='" + modelo.getEstado()+ "',\n"
+                + "estado='" + modelo.getEstado() + "',\n"
                 + "hierro='" + modelo.getHierro() + "',\n"
                 + "descornado='" + modelo.getDescornado() + "',\n"
                 + "implante='" + modelo.getImplante() + "',\n"
@@ -187,7 +209,6 @@ public class ControlPesaje implements IControl {
         //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
         consultas.add("update animales\n"
                 + "set \n"
-                + "peso = " + modelo.getPeso() + ",\n"
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
@@ -280,7 +301,7 @@ public class ControlPesaje implements IControl {
                 + "FROM pesaje a\n"
                 + "LEFT JOIN animales b ON a.id_animal=b.id\n"
                 + "LEFT JOIN propietarioxhierro c ON b.hierro=c.id\n"
-                + "WHERE id_animal=" + o.toString() + " ORDER BY id DESC";
+                + "WHERE id_animal=" + o.toString() + " ORDER BY fecha_pesado DESC";
         List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
         pesajes = mySQL.ListSQL(consulta);
@@ -405,12 +426,30 @@ public class ControlPesaje implements IControl {
         String consulta = "SELECT DATE_FORMAT(fecha_pesado, '%d/%m/%Y') AS FECHAPESADO FROM pesaje\n"
                 + " WHERE id_animal=" + idAnimal + " and estado = 'Activo'";
         String ret = "";
-        List<Map<String, String>> palpaciones = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> pesaje = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
-        palpaciones = mySQL.ListSQL(consulta);
-        if (palpaciones.size() > 0) {
-            ret = palpaciones.get(0).get("FECHAPESADO");
+        pesaje = mySQL.ListSQL(consulta);
+        if (pesaje.size() > 0) {
+            ret = pesaje.get(0).get("FECHAPESADO");
         }
         return ret;
+    }
+
+    public int ActualizarPesos(String procedimientoAlmacenado) {
+        try {
+            ArrayList<String> consultas = new ArrayList<>();
+            consultas.add(procedimientoAlmacenado);
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 }

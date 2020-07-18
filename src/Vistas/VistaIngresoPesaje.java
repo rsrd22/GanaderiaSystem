@@ -1145,7 +1145,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             fechaEstadoActivo = datos.get("FECHAPESADO");
         }
         estado = getEstadoGuardar(sdfes.format(fecha.getTime()), fechaEstadoActivo);
-
+        System.out.println("estado: " + estado);
         modelo.setEstado(estado);
         modelo.setPeso_anterior(datos.get("PESO_ANTERIOR"));
         modelo.setId(editar == Estado.GUARDAR ? "0" : txtCodigo.getText());
@@ -1208,6 +1208,12 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
         JOptionPane.showMessageDialog(this, mensaje);
         if (retorno == Retorno.EXITO) {
+            int ret = control.ActualizarPesos("CALL actualizarPesos(" + idAnimal + ", " + datosUsuario.datos.get(0).get("ID_USUARIO") + ");");
+            if (ret == Retorno.EXITO) {
+                System.out.println("---------------------actualizarPesos OK");
+            } else {
+                System.out.println("---------------------actualizarPesos ERROR");
+            }
             establecerRegistroPesado(idAnimal);
             vp.band = 0;
             ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();

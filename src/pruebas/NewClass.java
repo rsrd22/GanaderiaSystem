@@ -39,14 +39,14 @@ import javax.swing.JPanel;
  * @author DOLFHANDLER
  */
 public class NewClass {
-    
+
     private static ArrayList<ModeloAnimales> l;
     private static ControlAnimales controlAnimales = new ControlAnimales();
     private static ModeloAnimales ma = new ModeloAnimales();
     private static String POR_ESTABLECER = "por establecer";
     private static String PREGUNTAR = "preguntar";
     private static final String FECHA_POR_DEFECTO = "1900-01-01";
-    
+
     public static void main(String[] args) {
 //        //<editor-fold defaultstate="collapsed" desc="Prueba crud">
         Configuracion.ConfiguracionPropiedades.cargarConfiguracion();
@@ -62,9 +62,9 @@ public class NewClass {
 //            System.out.println("no guardado");
 //        }
 //        //</editor-fold>
-ActualizarPesajes();
+        ActualizarPesajes();
     }
-    
+
     private static void cargarPeriodos() {
         ArrayList<Periodo> periodos = new ArrayList<Periodo>();
         Calendar cal = Calendar.getInstance();
@@ -72,23 +72,23 @@ ActualizarPesajes();
         SimpleDateFormat sdfDescripcionMes = new SimpleDateFormat("MMMM");
         SimpleDateFormat sdfMes = new SimpleDateFormat("M");
         int anioActual = Integer.parseInt(sdfAnio.format(cal.getTime()));
-        
+
         cal.set(anioActual, 0, 1);
-        
+
         for (int i = 0; i < 12; i++) {
             System.out.println("" + sdfDescripcionMes.format(cal.getTime()));
             System.out.println("" + sdfMes.format(cal.getTime()));
             cal.add(Calendar.MONTH, 1);
         }
-        
+
     }
-    
+
     public static boolean ActualizarPesajes() {
         List<Map<String, String>> pesajes = new ArrayList<>();
         ArrayList<String> consultas = new ArrayList<>();
         gestorMySQL g = new gestorMySQL();
         pesajes = g.ListSQL("SELECT a.*,(SELECT COUNT(id_animal) FROM pesaje WHERE id_animal=a.id_animal) cantidad FROM pesaje a ORDER BY a.id_animal,a.fecha_pesado DESC");
-        
+
         int cant = 0;
         String consulta = "";
         for (int i = 0; i < pesajes.size(); i++) {
@@ -97,21 +97,22 @@ ActualizarPesajes();
             if (i < pesajes.size() - 1) {
                 pesajeSig = pesajes.get(i + 1);
             }
-            
+
             int cantidad = Integer.parseInt(pesajeAct.get("cantidad"));
             if (cantidad > 1) {
+                String add = " ,estado=" + (cant == 0 ? "'Activo' " : "'Inactivo' ");
                 cant++;
                 if (cant == cantidad) {
-                    consulta = "update pesaje set peso_anterior=0 where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                    consulta = "update pesaje set peso_anterior=0 "+add+" where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
                 } else {
-                    consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") + " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                    consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") +add+ " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
                 }
                 System.out.println(consulta);
                 consultas.add(consulta);
                 cant = (cant == cantidad ? 0 : cant);
             }
         }
-        
+
         try {
             if (g.EnviarConsultas(consultas)) {
                 System.out.println("PESAJES ACTUALIZADOS...");
@@ -128,11 +129,11 @@ ActualizarPesajes();
             return false;
         }
     }
-    
+
     public static void NacimientoAnimal(String numeroAnimal) {
         l = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(numeroAnimal);
         ModeloAnimales mm = l.get(0);
-        
+
         ma.setNumeroMama(numeroAnimal);
         ma.setNumero(numeroAnimal);
         ma.setIdFinca(mm.getIdFinca());
@@ -162,8 +163,8 @@ ActualizarPesajes();
         ma.setTipoVenta("");
         ma.setPrecioVenta("");
     }
-    
+
     private static void GetDatosAnimal(String id_Animal) {
-        
+
     }
 }
