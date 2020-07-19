@@ -5,8 +5,11 @@
  */
 package Tareas;
 
+import Control.ControlAnimales;
 import Utilidades.Parametros;
 import Vistas.VistaVerAnimales;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -30,6 +33,8 @@ public class TareaActuralizaListaAnimales implements Runnable {
         while (enEjecucion) {
             System.out.println("HILO ACTUALIZA LISTA ANIMALES: "+Parametros.actualizarHistoricoAnimal);
             if (Parametros.actualizarHistoricoAnimal) {
+                ControlAnimales controlAnimales = new ControlAnimales();
+                vva.setListaAnimales((List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + vva.idFinca, vva.idTipoAnimal));
                 vva.actualizarTablaAnimales();
                 Parametros.actualizarHistoricoAnimal=false;
             }

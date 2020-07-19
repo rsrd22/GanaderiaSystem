@@ -41,7 +41,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public String idFinca;
     public String idTipoAnimal;
 
-    private List<Map<String, String>> ListaAnimales;
+    private volatile List<Map<String, String>> ListaAnimales;
     private List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
@@ -153,6 +153,13 @@ public class VistaVerAnimales extends javax.swing.JPanel {
 
     }
 
+    public List<Map<String, String>> getListaAnimales() {
+        return ListaAnimales;
+    }
+
+    public void setListaAnimales(List<Map<String, String>> ListaAnimales) {
+        this.ListaAnimales = ListaAnimales;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -499,14 +506,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     }
 
     public synchronized void actualizarTablaAnimales() {
-        if (cbTipoAnimales.getItemCount() > 0) {
-            if (cbTipoAnimales.getSelectedIndex() >= 0) {
-                idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
-                EventoComboFincas();
-            } else {
-                Utilidades.LimpiarTabla(tbl_Animales);
-            }
-        }
+        MostrarTabla();
     }
 
     private List<Map<String, String>> getFiltroLista(String filtro) {

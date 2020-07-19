@@ -39,6 +39,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     private ControlAnimales control;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
     private final String GRUPO_VACIAS = "PARIDAS";
+    private VistaHistoriaAnimal vha;
 
     public VistaNacimientoAnimal() {
         initComponents();
@@ -54,6 +55,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado = new ModeloTraslado();
         modelo = new ModeloAnimales();
         modeloDatos = (ModeloAnimales) modeloVista.getModeloDatos();
+        vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
         cargarComboGrupos(modeloDatos.getIdFinca(), modeloDatos.getIdTipoAnimal());
         modeloVistaGeneral = modeloVista;
         cbGrupos.setEnabled(false);
@@ -767,6 +769,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
                 Parametros.actualizarHistoricoAnimal = true;
+                vha.getDatosHembra();
                 JOptionPane.showMessageDialog(this, mensaje);
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;

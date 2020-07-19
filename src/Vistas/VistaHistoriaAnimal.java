@@ -2387,7 +2387,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
         lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
-        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : ""+ListaDatos.get(0).getFechaDestete());
+        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : "" + ListaDatos.get(0).getFechaDestete());
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
         lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
@@ -2407,9 +2407,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //        lblNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
 //        lbltitNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
         btnParto.setEnabled(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        if(btnParto.isEnabled()){
+        if (btnParto.isEnabled()) {
             panelBtnParto.setBackground(new Color(59, 123, 50));
-        }else{
+        } else {
             panelBtnParto.setBackground(new Color(101, 101, 101));
         }
         lbltitFecUltParto.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
@@ -2424,17 +2424,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lbltitEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
 
         if (ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA")) {
-            Map<String, String> datosHembra = new HashMap<>();
-            Map<String, String> datosHembraPartos = new HashMap<>();
-            datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
-            datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
-            lbltitNovilla.setText("Novilla?");
-            lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("1900-01-01") ? "No" : "Si");
-            lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
-            lblNumCriaAdoptiva.setText("" + datosHembraPartos.get("CRIA"));
-            lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
-            lblFecUltParto.setText("" + datosHembraPartos.get("FECHA_ULT_PARTO"));
-            lblEstado.setText("" + datosHembra.get("ESTADO"));
+            getDatosHembra();
         } else {
             lblNovilla.setText(ListaDatos.get(0).getCapado());
             lbltitNovilla.setText("Capado?");
@@ -2723,4 +2713,17 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }
 
 //</editor-fold>
+    public void getDatosHembra() {
+        Map<String, String> datosHembra = new HashMap<>();
+        Map<String, String> datosHembraPartos = new HashMap<>();
+        datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
+        datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
+        lbltitNovilla.setText("Novilla?");
+        lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("1900-01-01") ? "No" : "Si");
+        lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
+        lblNumCriaAdoptiva.setText("" + datosHembraPartos.get("CRIA"));
+        lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
+        lblFecUltParto.setText("" + datosHembraPartos.get("FECHA_ULT_PARTO"));
+        lblEstado.setText("" + datosHembra.get("ESTADO"));
+    }
 }
