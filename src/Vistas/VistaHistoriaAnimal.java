@@ -9,8 +9,10 @@ import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import Utilidades.Utilidades;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -537,6 +539,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         pnlDatosBasicos.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDatosBasicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                pnlDatosBasicosMouseReleased(evt);
+            }
+        });
         pnlDatosBasicos.setLayout(new java.awt.GridBagLayout());
 
         lblNotas.setForeground(new java.awt.Color(59, 123, 50));
@@ -2266,6 +2273,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         new VistaGeneral(objetoVentana).setVisible(true);
     }//GEN-LAST:event_btnPartoActionPerformed
 
+    private void pnlDatosBasicosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDatosBasicosMouseReleased
+        try {
+            Point p = evt.getPoint();
+            JLabel etiqueta = (JLabel) pnlDatosBasicos.findComponentAt(p);
+            System.out.println("etiqueta: " + etiqueta.getText());
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_pnlDatosBasicosMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarRotaciones;
