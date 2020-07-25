@@ -2222,7 +2222,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             modelo.setPrecioVenta(txtPrecioVenta.getText().replace(".", "").replace(",", "."));
             String pesoCanal = txtPesoCanal.getText();
             pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal;
-            modelo.setPesoCanal(txtPesoCanal.getText().replace(".", "").replace(",", "."));
+            modelo.setPesoCanal(pesoCanal.replace(".", "").replace(",", "."));
             modelo.setTipoVenta("'" + cbTipoVenta.getSelectedItem().toString().toLowerCase() + "'");
         } else {
             modelo.setPrecioVenta("NULL");
