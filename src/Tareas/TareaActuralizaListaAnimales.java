@@ -31,7 +31,7 @@ public class TareaActuralizaListaAnimales implements Runnable {
 
     public void run() {
         while (enEjecucion) {
-            System.out.println("HILO ACTUALIZA LISTA ANIMALES: "+Parametros.actualizarHistoricoAnimal);
+            // System.out.println("HILO ACTUALIZA LISTA ANIMALES: "+Parametros.actualizarHistoricoAnimal);
             if (Parametros.actualizarHistoricoAnimal) {
                 ControlAnimales controlAnimales = new ControlAnimales();
                 vva.setListaAnimales((List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + vva.idFinca, vva.idTipoAnimal));

@@ -390,6 +390,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 15);
         add(lblFechaMuerte, gridBagConstraints);
+
+        jdFechaMuerte.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdFechaMuertePropertyChange(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
@@ -550,18 +556,28 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         );
     }//GEN-LAST:event_cbGeneroActionPerformed
 
+    private void jdFechaMuertePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaMuertePropertyChange
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar fechaM = jdFechaMuerte.getCalendar();
+        Calendar fechaN = jdFechaNacimiento.getCalendar();
+        String fecM = sdf.format(fechaM.getTime());
+        String fecN = sdf.format(fechaN.getTime());
+        int com = Utilidades.CompararFechas(fecM, fecN);
+        System.out.println("comp-->"+com);
+        if(com<0){
+            jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());   
+            JOptionPane.showMessageDialog(null, "La fecha de Muerte no uede ser menor a la fecha de nacimiento. Por favor verifique los datos para seguir con la operación.");
+        }
+    }//GEN-LAST:event_jdFechaMuertePropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnGuardar1;
-    private javax.swing.JButton btnGuardar2;
     private javax.swing.JButton btnGuardar3;
     public javax.swing.JComboBox cbGenero;
     public javax.swing.JComboBox cbGrupos;
     private javax.swing.JCheckBox chkMuerte;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator11;
