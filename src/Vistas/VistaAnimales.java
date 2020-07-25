@@ -164,8 +164,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void cargarComboPropietarios() {
-        String consulta = consultas.get("CARGAR_COMBO_PROPIETARIOS").replace("PARAMETRO1",
-                txtCodigoFinca.getText());
+        String consulta = consultas.get("CARGAR_COMBO_PROPIETARIOS");
         propietarios = controlGral.GetComboBox(consulta);
 
         Utilidades.LlenarComboBox(cbPropietario, propietarios, "descripcion");
