@@ -225,23 +225,11 @@ public class Consultas {
                 + "'-1' id,\n"
                 + "'Seleccionar' descripcion\n"
                 + "UNION\n"
-                + "SELECT\n"
-                + "a.id id,\n"
-                + "CONCAT(\n"
-                + "	a.identificacion,' - ',\n"
-                + "	CONCAT(\n"
-                + "		TRIM(\n"
-                + "			CONCAT(a.primer_nombre,' ',a.segundo_nombre)\n"
-                + "		),\n"
-                + "		' ',\n"
-                + "		TRIM(\n"
-                + "			CONCAT(a.primer_apellido,' ',a.segundo_apellido)\n"
-                + "		)\n"
-                + "	)\n"
-                + ") descripcion\n"
-                + "FROM propietarios a\n"
-                + "INNER JOIN fincas b ON a.id=b.id_propietario\n"
-                + "WHERE b.id=PARAMETRO1");
+                + "SELECT prop.id id, \n" +
+                "CONCAT_WS(' ', prop.primer_nombre, IFNULL(prop.segundo_nombre, ''), prop.primer_apellido, IFNULL(prop.segundo_apellido, '')) descripcion\n" +
+                "FROM `propietarios` prop\n" +
+                "INNER JOIN `propietarioxhierro` proph ON proph.`id_propietario` = prop.`id`\n" +
+                "");
 
         consultas.put("OBTENER_ULTIMO_DESCENDIENTE", "select \n"
                 + "case when numero_descendiente is null then 1 else max(numero_descendiente)+1 end numeroDescendiente \n"

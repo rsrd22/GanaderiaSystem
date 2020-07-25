@@ -56,10 +56,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo = new ModeloAnimales();
         modeloDatos = (ModeloAnimales) modeloVista.getModeloDatos();
         vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
+        IniciarFecha();
         cargarComboGrupos(modeloDatos.getIdFinca(), modeloDatos.getIdTipoAnimal());
         modeloVistaGeneral = modeloVista;
         cbGrupos.setEnabled(false);
         chkMuerte.setSelected(false);
+        
         mostrarDatosMuerte();
     }
 
@@ -623,6 +625,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
 
     private void mostrarDatosMuerte() {
         boolean chequeado = chkMuerte.isSelected();
+        jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());    
         lblFechaMuerte.setVisible(chequeado);
         jdFechaMuerte.setVisible(chequeado);
         lblCausaMuerte.setVisible(chequeado);
@@ -789,4 +792,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         }
     }
 
+    public void IniciarFecha(){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        jdFechaNacimiento.setCalendar(Calendar.getInstance());    
+    }
+    
 }
