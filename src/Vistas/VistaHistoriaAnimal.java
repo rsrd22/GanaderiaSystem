@@ -2404,26 +2404,26 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
 
-//        lblNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-//        lbltitNovilla.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        btnParto.setEnabled(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        boolean esHembra = ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA");
+        boolean estaDestetada = lblDestete.getText().equalsIgnoreCase("si");
+        btnParto.setEnabled(esHembra && estaDestetada);
         if (btnParto.isEnabled()) {
             panelBtnParto.setBackground(new Color(59, 123, 50));
         } else {
             panelBtnParto.setBackground(new Color(101, 101, 101));
         }
-        lbltitFecUltParto.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblFecUltParto.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lblTitNumMeses.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lbltitNumCriaAdoptiva.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lbltitNumPartos.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
-        lbltitEstado.setVisible(ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA"));
+        lbltitFecUltParto.setVisible(esHembra);
+        lblFecUltParto.setVisible(esHembra);
+        lblNumMeses.setVisible(esHembra);
+        lblNumCriaAdoptiva.setVisible(esHembra);
+        lblNumPartos.setVisible(esHembra);
+        lblEstado.setVisible(esHembra);
+        lblTitNumMeses.setVisible(esHembra);
+        lbltitNumCriaAdoptiva.setVisible(esHembra);
+        lbltitNumPartos.setVisible(esHembra);
+        lbltitEstado.setVisible(esHembra);
 
-        if (ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA")) {
+        if (esHembra) {
             getDatosHembra();
         } else {
             lblNovilla.setText(ListaDatos.get(0).getCapado());
@@ -2433,20 +2433,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         if (ListaDatos.get(0).getVenta().equals("1")) {
             GetDatosVentaAnimal();
             jTabbedPane1.setEnabledAt(2, true);
-//            jTabbedPane1.setSelectedIndex(2);
         } else {
             jTabbedPane1.setEnabledAt(2, false);
         }
         if (ListaDatos.get(0).getMuerte().equals("1")) {
             GetDatosMuerteAnimal();
             jTabbedPane1.setEnabledAt(1, true);
-//            jTabbedPane1.setSelectedIndex(1);
         } else {
             jTabbedPane1.setEnabledAt(1, false);
         }
-//        if (ListaDatos.get(0).getMuerte().equals("0") && ListaDatos.get(0).getVenta().equals("0")) {
-//            jTabbedPane1.setSelectedIndex(2);
-//        }
 
         jTabbedPane1.setEnabledAt(6, ListaDatos.get(0).getGenero().equals("hembra"));
         jTabbedPane1.setSelectedIndex(0);
