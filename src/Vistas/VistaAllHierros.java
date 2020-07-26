@@ -279,7 +279,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
         }
         btnAgregarHierro.setEnabled(false);
         modeloHierro = new ModeloHierros();
-        modeloHierro.setId_propietario("" + lblIdPropietario.getText());
+        modeloHierro.setId_propietario(lblIdPropietario.getText());
         modeloHierro.setId("0");
 
         objetoVentana = new ModeloVentanaGeneral(this, new VistaHierros(), 1, modeloHierro);
@@ -320,7 +320,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
         } else if (objeto.getOpcion() == 1) {// PROPIETARIOS
             banBQDPropietarios = 0;
             lblIdPropietario.setText("" + retorno.get("ID"));
-            txtPropietarios.setText("" + retorno.get("PROPIETARIO"));
+            txtPropietarios.setText(Utilidades.decodificarElemento(retorno.get("PROPIETARIO")));
             LlenarDatosTabla();
         }
     }
@@ -335,8 +335,8 @@ public class VistaAllHierros extends javax.swing.JPanel {
                 agregarFilaTabla(modeloTblHierro,
                         new Object[]{
                             tbl_Hierro.getRowCount() + 1,
-                            ListamodeloHierros.get(i).getDescripcion(),
-                            ListamodeloHierros.get(i).getNombre_imagen(),
+                            Utilidades.decodificarElemento(ListamodeloHierros.get(i).getDescripcion()),
+                            Utilidades.decodificarElemento(ListamodeloHierros.get(i).getNombre_imagen()),
                             ListamodeloHierros.get(i).getEstado(),
                             "Ver",
                             "Modificar",
@@ -354,8 +354,8 @@ public class VistaAllHierros extends javax.swing.JPanel {
             //"No","Descripción", "Imagen", "Estado", "Ver", "Modificar", "Eliminar"
             if (objeto.getFila() > -1) {//ESTA EN TABLA ACTUALIZAR
                 ListamodeloHierros.set(objeto.getFila(), modeloHierro);
-                tbl_Hierro.setValueAt(modeloHierro.getDescripcion(), objeto.getFila(), 1);
-                tbl_Hierro.setValueAt(modeloHierro.getNombre_imagen(), objeto.getFila(), 2);
+                tbl_Hierro.setValueAt(Utilidades.decodificarElemento(modeloHierro.getDescripcion()), objeto.getFila(), 1);
+                tbl_Hierro.setValueAt(Utilidades.decodificarElemento(modeloHierro.getNombre_imagen()), objeto.getFila(), 2);
                 tbl_Hierro.setValueAt(modeloHierro.getEstado(), objeto.getFila(), 3);
 
             } else {

@@ -773,15 +773,15 @@ public class VistaPropietarios extends javax.swing.JPanel {
         modelo.setIdentificacion(txtId.getText().trim());
 
         names = Utilidades.SplitNames(txtNombres.getText().trim());
-        modelo.setPrimer_nombre(names.get("PRIMERO"));
-        modelo.setSegundo_nombre(names.get("SEGUNDO"));
+        modelo.setPrimer_nombre(Utilidades.CodificarElemento(names.get("PRIMERO")));
+        modelo.setSegundo_nombre(Utilidades.CodificarElemento(names.get("SEGUNDO")));
 
         names = Utilidades.SplitNames(txtApellidos.getText().trim());
-        modelo.setPrimer_apellido(names.get("PRIMERO"));
-        modelo.setSegundo_apellido(names.get("SEGUNDO"));
+        modelo.setPrimer_apellido(Utilidades.CodificarElemento(names.get("PRIMERO")));
+        modelo.setSegundo_apellido(Utilidades.CodificarElemento(names.get("SEGUNDO")));
 
-        modelo.setDireccion(txtDireccion.getText().trim());
-        modelo.setCorreo(txtCorreo.getText().trim());
+        modelo.setDireccion(Utilidades.CodificarElemento(txtDireccion.getText().trim()));
+        modelo.setCorreo(Utilidades.CodificarElemento(txtCorreo.getText().trim()));
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setEstado("Activo");
@@ -835,40 +835,20 @@ public class VistaPropietarios extends javax.swing.JPanel {
     public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
 
         if (objeto.getOpcion() == 0) {// DEFAULT VISTA__VENTANA__
-            if (retorno.containsKey("ID")) {
-                System.out.println("////" + retorno.get("ID"));
-            }
             id_Propietario = Integer.parseInt(retorno.get("ID"));
-            System.out.println("asdfasdfasdfadsa--->" + id_Propietario);
 
             ArrayList<ModeloPropietarios> lista = (ArrayList<ModeloPropietarios>) controlPropietario.ObtenerDatosKey("" + id_Propietario);
-            System.out.println("lista--->" + lista.size());
             modelo = lista.get(0);
 
             tipoId = "" + modelo.getTipo_identificacion();
             EstadoTIdentificacion();
             //cbTid.setSelectedItem(""+modelo.getTipo_identificacion());
             txtId.setText("" + modelo.getIdentificacion());
-            txtNombres.setText("" + modelo.getPrimer_nombre() + " " + modelo.getSegundo_nombre());
-            txtApellidos.setText("" + modelo.getPrimer_apellido() + " " + modelo.getSegundo_apellido());
-            txtDireccion.setText("" + modelo.getDireccion());
-            txtCorreo.setText("" + modelo.getCorreo());
+            txtNombres.setText(Utilidades.decodificarElemento(modelo.getPrimer_nombre() + " " + modelo.getSegundo_nombre()));
+            txtApellidos.setText(Utilidades.decodificarElemento(modelo.getPrimer_apellido() + " " + modelo.getSegundo_apellido()));
+            txtDireccion.setText(Utilidades.decodificarElemento(modelo.getDireccion()));
+            txtCorreo.setText(Utilidades.decodificarElemento(modelo.getCorreo()));
             PropietariosEstadoFomulario(3);
-//
-//            ListamodeloHierros = (ArrayList<ModeloHierros>) controlPropietario.ObtenerHierrosxPropietario("" + id_Propietario);
-//
-//            for (int i = 0; i < ListamodeloHierros.size(); i++) {
-//                agregarFilaTabla(modeloTblHierro,
-//                        new Object[]{
-//                            tbl_Hierro.getRowCount() + 1,
-//                            ListamodeloHierros.get(i).getDescripcion(),
-//                            ListamodeloHierros.get(i).getNombre_imagen(),
-//                            ListamodeloHierros.get(i).getEstado(),
-//                            "Ver",
-//                            "Modificar",
-//                            "Eliminar"
-//                        });
-//            }
         }
     }
 
@@ -881,12 +861,11 @@ public class VistaPropietarios extends javax.swing.JPanel {
             id_Propietario = Integer.parseInt(modelo.getId());
             tipoId = "" + modelo.getTipo_identificacion();
             EstadoTIdentificacion();
-            //cbTid.setSelectedItem(""+modelo.getTipo_identificacion());
             txtId.setText("" + modelo.getIdentificacion());
-            txtNombres.setText("" + modelo.getPrimer_nombre() + " " + modelo.getSegundo_nombre());
-            txtApellidos.setText("" + modelo.getPrimer_apellido() + " " + modelo.getSegundo_apellido());
-            txtDireccion.setText("" + modelo.getDireccion());
-            txtCorreo.setText("" + modelo.getCorreo());
+            txtNombres.setText(Utilidades.decodificarElemento(modelo.getPrimer_nombre() + " " + modelo.getSegundo_nombre()));
+            txtApellidos.setText(Utilidades.decodificarElemento(modelo.getPrimer_apellido() + " " + modelo.getSegundo_apellido()));
+            txtDireccion.setText(Utilidades.decodificarElemento(modelo.getDireccion()));
+            txtCorreo.setText(Utilidades.decodificarElemento(modelo.getCorreo()));
 
             ListamodeloHierros = (ArrayList<ModeloHierros>) controlPropietario.ObtenerHierrosxPropietario("" + id_Propietario);
 
@@ -915,7 +894,7 @@ public class VistaPropietarios extends javax.swing.JPanel {
             //"No","Descripción", "Imagen", "Estado", "Ver", "Modificar", "Eliminar"
             if (objeto.getFila() > -1) {//ESTA EN TABLA ACTUALIZAR
                 ListamodeloHierros.set(objeto.getFila(), modeloHierro);
-                tbl_Hierro.setValueAt(modeloHierro.getDescripcion(), objeto.getFila(), 1);
+                tbl_Hierro.setValueAt(Utilidades.decodificarElemento(modeloHierro.getDescripcion()), objeto.getFila(), 1);
                 tbl_Hierro.setValueAt(modeloHierro.getNombre_imagen(), objeto.getFila(), 2);
                 tbl_Hierro.setValueAt(modeloHierro.getEstado(), objeto.getFila(), 3);
 
