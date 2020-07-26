@@ -10,6 +10,7 @@ import Control.*;
 import Modelo.*;
 import Utilidades.Expresiones;
 import Utilidades.TipoCodificacion;
+import Utilidades.Utilidades;
 import Utilidades.UtilidadesImagenes;
 import Utilidades.datosUsuario;
 import java.awt.Color;
@@ -371,8 +372,8 @@ public class VistaHierros extends javax.swing.JPanel {
         String imagen = UtilidadesImagenes.getBase64(UtilidadesImagenes.getBytes(url, TipoCodificacion.IMAGEN_URL_ABSOLUTA));
         
         
-        modelo.setDescripcion(""+txtDescripcion.getText());
-        modelo.setNombre_imagen(""+nombreIMG);
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText()));
+        modelo.setNombre_imagen(Utilidades.CodificarElemento(nombreIMG));
         modelo.setImagen(imagen);
         modelo.setEstado(""+cbEstado.getSelectedItem());
         modelo.setFecha("NOW()");
