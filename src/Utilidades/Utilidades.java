@@ -38,6 +38,19 @@ public class Utilidades {
     public static String SOLO_NUMEROS = "^[0-9]+$";
     public static String PACIENTES_AUXILIARES_OCASIONALES = "^[A|O]$";
     public static Double FACTOR_CONVERSION = 2.20462;
+    public static String DATOS_HISTORICO = "Implante|Descornado|Destetado|Hierro fisico";
+
+//    public static void main(String[] args) {
+//        Pattern p = Pattern.compile(DATOS_HISTORICO);
+//        Matcher m = p.matcher("Hierro fisco");
+//        System.out.println("" + m.find());
+//    }
+
+    public static boolean validarSINO(String texto) {
+        Pattern p = Pattern.compile(DATOS_HISTORICO);
+        Matcher m = p.matcher(texto);
+        return m.find();
+    }
 
     public static void EstablecerIcono(JFrame vent) {
         vent.setIconImage(Toolkit.getDefaultToolkit().getImage(vent.getClass().getResource("/img/ganaderia32.png")));
@@ -355,7 +368,9 @@ public class Utilidades {
      * al formatearlo qeedaria asi: 1.234<br>
      * Si el numero escrito fuese 12345,6789<br>
      * al formatearlo qeedaria asi: 12.345,6789<br>
-     * @param campoTexto Corresponde al compo de texto sobre el que se dara formato al texto.
+     *
+     * @param campoTexto Corresponde al compo de texto sobre el que se dara
+     * formato al texto.
      */
     public static void formatearNumeros(JTextField campoTexto) {
         String texto = campoTexto.getText();
