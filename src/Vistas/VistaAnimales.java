@@ -2186,7 +2186,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modelo.setDescTipoAnimal(cbTiposDeAnimales.getSelectedItem().toString());
         modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setNotas(txtNotas.getText().trim());
+        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         modelo.setNumero(txtNumero.getText().trim());
         modelo.setNumeroMama(txtNumeroMama.getText().trim());
         modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
@@ -2206,7 +2206,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         modelo.setNumeroDescendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
         modelo.setEstadoDescendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
-        modelo.setDescripcionMuerte(txtObservacionMuerte.getText());
+        modelo.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
 
         if (chkMuerte.isSelected()) {
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();

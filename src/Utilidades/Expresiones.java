@@ -194,7 +194,52 @@ public class Expresiones {
         }
         return ret;
     }
+ 
+    public static String seleccionarArchivoExcel(boolean seleccionMultiple, String urlinicial) {
+        String ret = "";
+        JFileChooser selectorDeArchivos = new JFileChooser();
+        selectorDeArchivos.setDialogTitle("Seleccionar Archivo");
+        selectorDeArchivos.setCurrentDirectory(new File(urlinicial));
+        javax.swing.filechooser.FileFilter filtro = new FileNameExtensionFilter("Excel", "msexcel", "x-msexcel", "x-ms-excel", "x-excel", "x-dos_ms_excel", "xls", "xlsx", "xls", "x-xls");
+        selectorDeArchivos.setAcceptAllFileFilterUsed(false);
+        selectorDeArchivos.addChoosableFileFilter(filtro);
+        selectorDeArchivos.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
+        //para que se puedan seleccionar multiples imagenes
+        selectorDeArchivos.setMultiSelectionEnabled(seleccionMultiple);
+
+        int result = selectorDeArchivos.showOpenDialog(null);
+        switch (result) {
+            case JFileChooser.APPROVE_OPTION:
+                if (!seleccionMultiple) {
+                    File archivo = selectorDeArchivos.getSelectedFile();
+                    ret = String.valueOf(archivo);
+                } else {
+                    File[] archivos = selectorDeArchivos.getSelectedFiles();
+                    String url = (String.valueOf(archivos[0]));
+                    url = url.substring(0, url.lastIndexOf("\\") + 1);
+                    for (int i = 0; i < archivos.length; i++) {
+                        if (i != (archivos.length - 1)) {
+                            ret += url + archivos[i].getName() + "#-#";//separador de los archivos
+                        } else {
+                            ret += url + archivos[i].getName();
+                        }
+                    }
+                }
+                break;
+            case JFileChooser.CANCEL_OPTION:
+                ret = "";
+                break;
+            case JFileChooser.ABORT:
+                ret = "";
+                break;
+            default:
+                JOptionPane.showMessageDialog(selectorDeArchivos, "Ocurrio un error al tratar de seleccionar la ubicación, vuelve a intentarlo.");
+                break;
+        }
+        return ret;
+    }
+    
     public static String seleccionarArchivo(boolean seleccionMultiple, String urlinicial, String nombreGral, String extensiones) {
         String ret = "";
         JFileChooser selectorDeArchivos = new JFileChooser();
