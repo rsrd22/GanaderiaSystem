@@ -2418,32 +2418,31 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
         modeloMadre = ListaDatos.get(0);
         LlenarDatos();
-
     }
 
     private void LlenarDatos() {
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Implante", "animales", "implante"}, lblImplante);
+        listaHistorico.put(new String[]{"Implante", "animales", "implante",ListaDatos.get(0).getId()}, lblImplante);
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Descornado", "animales", "descornado"}, lblDescornado);
+        listaHistorico.put(new String[]{"Descornado", "animales", "descornado",ListaDatos.get(0).getId()}, lblDescornado);
         lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Destetado", "animales", "destete"}, lblDestete);
+//        listaHistorico.put(new String[]{"Destetado", "animales", "destete",ListaDatos.get(0).getId()}, lblDestete);
         lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : "" + ListaDatos.get(0).getFechaDestete());
-        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete"}, lblFechaDestete);
+        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete",ListaDatos.get(0).getId()}, lblFechaDestete);
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico"}, lblHierroColocado);
+        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico",ListaDatos.get(0).getId()}, lblHierroColocado);
         lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
-        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete"}, lblPesoDestete);
+        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete",ListaDatos.get(0).getId()}, lblPesoDestete);
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
-        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion"}, lblCalificacion);
+        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion",ListaDatos.get(0).getId()}, lblCalificacion);
         lblFinca.setText(ListaDatos.get(0).getDescFinca());
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblGrupo.setText(ListaDatos.get(0).getDescGrupo());
         lblHierro.setText(ListaDatos.get(0).getDescHierro());
         lblNotas.setText(ListaDatos.get(0).getNotas());
-        listaHistorico.put(new String[]{"Notas", "animales", "notas"}, lblNotas);
+        listaHistorico.put(new String[]{"Notas", "animales", "notas",ListaDatos.get(0).getId()}, lblNotas);
         lblNumMama.setText(ListaDatos.get(0).getNumeroMama());
         lblNumero.setText(ListaDatos.get(0).getNumero());
         lblPeso.setText(ListaDatos.get(0).getPeso());
@@ -2499,6 +2498,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }
 
+    public void ActualizarDatosAnimal(){
+        GetDatosAnimal();
+    }
+    
     private void LimpiarFormulario() {
         lblCalificacion.setText("");
         lblFinca.setText("");
@@ -2681,6 +2684,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
         if (listaPesajes.size() > 0) {
             ///////////////////////////   X        Y
+            datosPeso= new ArrayList<>();
             datosPeso.add(new Object[]{"Fecha", "Peso"});
             for (int i = listaPesajes.size() - 1; i >= 0; i--) {
                 datosPeso.add(new Object[]{

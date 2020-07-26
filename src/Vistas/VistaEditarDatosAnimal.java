@@ -5,10 +5,19 @@
  */
 package Vistas;
 
+import Control.ControlAnimales;
+import Control.Retorno;
 import Modelo.ModeloVentanaGeneral;
+import Utilidades.Expresiones;
 import Utilidades.Utilidades;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +26,9 @@ import javax.swing.JLabel;
 public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
     private Map.Entry<String[], JLabel> map;
+    private ControlAnimales control;
+    private VistaHistoriaAnimal vha;
+    private ModeloVentanaGeneral vistaGeneral;
 
     public VistaEditarDatosAnimal() {
         initComponents();
@@ -24,8 +36,11 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
     VistaEditarDatosAnimal(ModeloVentanaGeneral modeloVista) {
         initComponents();
-        setSize(261, 147);
+        setSize(261, 200);
+        control = new ControlAnimales();
         map = (Map.Entry<String[], JLabel>) modeloVista.getModeloDatos();
+        vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
+        vistaGeneral = modeloVista;
         cargarDatosIniciales();
     }
 
@@ -42,10 +57,13 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         lblEtiqueta = new javax.swing.JLabel();
         cbCombo = new javax.swing.JComboBox();
         panelBtnGuardar = new javax.swing.JPanel();
-        btnParto = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jdFechaDestete = new com.toedter.calendar.JDateChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtNotas = new javax.swing.JTextArea();
+        txtPesoDestete = new javax.swing.JTextField();
+        sepPesoDestete = new javax.swing.JSeparator();
+        slCalificacion = new javax.swing.JSlider();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -70,6 +88,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 26;
         gridBagConstraints.ipady = 9;
@@ -81,24 +100,24 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         panelBtnGuardar.setBackground(new java.awt.Color(59, 123, 50));
         panelBtnGuardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
-        btnParto.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        btnParto.setForeground(new java.awt.Color(255, 255, 255));
-        btnParto.setText("Guardar");
-        btnParto.setBorderPainted(false);
-        btnParto.setContentAreaFilled(false);
-        btnParto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnParto.setFocusPainted(false);
-        btnParto.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.setFocusPainted(false);
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnPartoMouseEntered(evt);
+                btnGuardarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnPartoMouseExited(evt);
+                btnGuardarMouseExited(evt);
             }
         });
-        btnParto.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPartoActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -106,25 +125,28 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         panelBtnGuardar.setLayout(panelBtnGuardarLayout);
         panelBtnGuardarLayout.setHorizontalGroup(
             panelBtnGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnParto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelBtnGuardarLayout.setVerticalGroup(
             panelBtnGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnParto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 15, 15);
         add(panelBtnGuardar, gridBagConstraints);
 
+        jdFechaDestete.setForeground(new java.awt.Color(59, 123, 50));
         jdFechaDestete.setDateFormatString("dd/MM/yyyy");
+        jdFechaDestete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 10;
@@ -143,38 +165,130 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BELOW_BASELINE_TRAILING;
-        gridBagConstraints.weightx = 0.33333333;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(jScrollPane2, gridBagConstraints);
+
+        txtPesoDestete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
+        txtPesoDestete.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtPesoDestete.setBorder(null);
+        txtPesoDestete.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtPesoDestete.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPesoDestete.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesoDesteteKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(txtPesoDestete, gridBagConstraints);
+
+        sepPesoDestete.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(sepPesoDestete, gridBagConstraints);
+
+        slCalificacion.setBackground(new java.awt.Color(255, 255, 255));
+        slCalificacion.setForeground(new java.awt.Color(59, 123, 50));
+        slCalificacion.setMajorTickSpacing(1);
+        slCalificacion.setMaximum(5);
+        slCalificacion.setMinimum(1);
+        slCalificacion.setPaintLabels(true);
+        slCalificacion.setPaintTicks(true);
+        slCalificacion.setValue(3);
+        slCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(slCalificacion, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPartoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPartoMouseEntered
-        if (btnParto.isEnabled()) {
+    private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
+        if (btnGuardar.isEnabled()) {
             Utilidades.establecerColorDeFondo(panelBtnGuardar, true);
         }
-    }//GEN-LAST:event_btnPartoMouseEntered
+    }//GEN-LAST:event_btnGuardarMouseEntered
 
-    private void btnPartoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPartoMouseExited
-        if (btnParto.isEnabled()) {
+    private void btnGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseExited
+        if (btnGuardar.isEnabled()) {
             Utilidades.establecerColorDeFondo(panelBtnGuardar, false);
         }
-    }//GEN-LAST:event_btnPartoMouseExited
+    }//GEN-LAST:event_btnGuardarMouseExited
 
-    private void btnPartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartoActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
+        String[] key = map.getKey();
+        JLabel value = map.getValue();
 
-    }//GEN-LAST:event_btnPartoActionPerformed
+        if (Utilidades.validarSINO(key[0])) {
+            if (cbCombo.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar una opción.");
+                return;
+            }
+        } else if (key[0].equalsIgnoreCase("notas")) {
+            if (txtNotas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe especificar algo en las notas.");
+                return;
+            }
+        } else if (key[0].equalsIgnoreCase("Peso de destete")) {
+            if (txtPesoDestete.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe especificar un peso.");
+                return;
+            }
+        } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
+            if (jdFechaDestete.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Debe especificar la fecha de destete.");
+                return;
+            }
+        }
+//</editor-fold>
+
+        Guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtPesoDesteteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoDesteteKeyReleased
+        String peso = txtPesoDestete.getText();
+        String pesoSinPuntos = peso.indexOf(".") > -1 ? peso.replace(".", "") : peso;
+        String pesoFormateado = Expresiones.procesarSoloNumP(pesoSinPuntos);
+        pesoFormateado = Utilidades.MascaraMonedaConDecimales(pesoFormateado);
+        txtPesoDestete.setText(pesoFormateado);
+    }//GEN-LAST:event_txtPesoDesteteKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnParto;
+    private javax.swing.JButton btnGuardar;
     public javax.swing.JComboBox cbCombo;
     private javax.swing.JScrollPane jScrollPane2;
     private com.toedter.calendar.JDateChooser jdFechaDestete;
     private javax.swing.JLabel lblEtiqueta;
     private javax.swing.JPanel panelBtnGuardar;
+    private javax.swing.JSeparator sepPesoDestete;
+    private javax.swing.JSlider slCalificacion;
     private javax.swing.JTextArea txtNotas;
+    public javax.swing.JTextField txtPesoDestete;
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatosIniciales() {
@@ -182,19 +296,105 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         JLabel value = map.getValue();
 
         lblEtiqueta.setText(key[0]);
+        cbCombo.setVisible(Utilidades.validarSINO(key[0]));
+        txtNotas.setVisible(key[0].equalsIgnoreCase("notas"));
+        jScrollPane2.setVisible(key[0].equalsIgnoreCase("notas"));
+        txtPesoDestete.setVisible(key[0].equalsIgnoreCase("Peso de destete"));
+        sepPesoDestete.setVisible(key[0].equalsIgnoreCase("Peso de destete"));
+        jdFechaDestete.setVisible(key[0].equalsIgnoreCase("Fecha de destete"));
+        slCalificacion.setVisible(key[0].equalsIgnoreCase("Calificación"));
 
         if (Utilidades.validarSINO(key[0])) {
-            cbCombo.setVisible(true);
             cbCombo.setSelectedItem(value.getText());
         } else if (key[0].equalsIgnoreCase("notas")) {
-            txtNotas.setVisible(true);
             txtNotas.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {
-            txtNotas.setVisible(true);
-            txtNotas.setText(value.getText());
+            txtPesoDestete.setText(value.getText());
+        } else if (key[0].equalsIgnoreCase("Calificación")) {
+            slCalificacion.setValue(Integer.parseInt(value.getText()));
         } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
-            jdFechaDestete.setVisible(true);
+            try {
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha = formato.parse(value.getText());
+                jdFechaDestete.setDate(fecha);
+            } catch (ParseException pe) {
+                JOptionPane.showMessageDialog(this, "Ocurrio un error tratando de obtener la fecha\nDetalle:\n." + pe.getMessage());
+            }
+        }
+    }
 
+    private void Guardar() {
+        String[] key = map.getKey();
+        JLabel value = map.getValue();
+        ArrayList<String> consultas = new ArrayList<>();
+
+        if (Utilidades.validarSINO(key[0])) {
+            String valorSeleccionado = cbCombo.getSelectedItem().toString();
+            if (key[0].equalsIgnoreCase("Destetado")) {
+                if (valorSeleccionado.equalsIgnoreCase("no")) {
+                    consultas.add(
+                            "update " + key[1] + " "
+                            + "set fecha_destete='1900-01-01' "
+                            + "where id=" + key[3]
+                    );
+                }
+            } else {
+                consultas.add(
+                        "update " + key[1] + " "
+                        + "set " + key[2] + "='" + (valorSeleccionado.equalsIgnoreCase("no") ? "0" : "1") + "' "
+                        + "where id=" + key[3]
+                );
+            }
+        } else if (key[0].equalsIgnoreCase("notas")) {
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "='" + txtNotas.getText().trim() + "' "
+                    + "where id=" + key[3]
+            );
+        } else if (key[0].equalsIgnoreCase("Peso de destete")) {
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "=" + txtPesoDestete.getText().replace(".", "").replace(",", ".") + " "
+                    + "where id=" + key[3]
+            );
+        } else if (key[0].equalsIgnoreCase("Calificación")) {
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "=" + slCalificacion.getValue() + " "
+                    + "where id=" + key[3]
+            );
+        } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar fecha = jdFechaDestete.getCalendar();
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "='" + formato.format(fecha.getTime()) + "' "
+                    + "where id=" + key[3]
+            );
+        }
+
+        if (consultas.size() > 0) {
+            int retorno = control.EnviarConsultas(consultas);
+
+            String mensaje = "";
+            switch (retorno) {
+                case Retorno.EXITO:
+                    mensaje = "Registro actualizado satisfactoriamente.";
+                    vha.ActualizarDatosAnimal();
+                    ((VistaGeneral) vistaGeneral.getFrameVentana()).dispose();
+                    break;
+                case Retorno.ERROR:
+                    mensaje = "El registro no pudo ser actualizado.";
+                    break;
+                case Retorno.EXCEPCION_SQL:
+                    mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                    break;
+                case Retorno.CLASE_NO_ENCONTRADA:
+                    mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                    break;
+            }
+
+            JOptionPane.showMessageDialog(this, mensaje);
         }
     }
 }

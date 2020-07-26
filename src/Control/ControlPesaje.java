@@ -293,7 +293,11 @@ public class ControlPesaje implements IControl {
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
-        String consulta = "SELECT a.*,\n"
+        String consulta = "SELECT a.id,a.id_animal,a.fecha_pesado,a.peso,\n"
+                + "a.peso_anterior,a.notas,b.hierro_fisico AS hierro,b.descornado,\n"
+                + "b.implante,\n"
+                + "CASE WHEN b.fecha_destete='1900-01-10' THEN 0 ELSE 1 END destete,\n"
+                + "a.estado,a.fecha,a.id_usuario,\n"
                 + "b.hierro AS IDHIERRO,\n"
                 + "c.descripcion AS DESCRIPCION_HIERRO,\n"
                 + "b.fecha_destete AS FECHA_DESTETE,\n"

@@ -612,6 +612,25 @@ public class ControlAnimales implements IControl {
         }
     }
 
+    public int EnviarConsultas(Object cons){
+        ArrayList<String> consultas = new ArrayList<>();
+        consultas = (ArrayList<String>)cons;
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
     public String ObtenerUltimoDescendiente(String numeroMadre) {
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();
