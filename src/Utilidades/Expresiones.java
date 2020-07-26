@@ -200,7 +200,7 @@ public class Expresiones {
         JFileChooser selectorDeArchivos = new JFileChooser();
         selectorDeArchivos.setDialogTitle("Seleccionar Archivo");
         selectorDeArchivos.setCurrentDirectory(new File(urlinicial));
-        javax.swing.filechooser.FileFilter filtro = new FileNameExtensionFilter("Excel", "msexcel", "x-msexcel", "x-ms-excel", "x-excel", "x-dos_ms_excel", "xls", "xlsx", "xls", "x-xls");
+        javax.swing.filechooser.FileFilter filtro = new FileNameExtensionFilter("Excel", "msexcel", "x-msexcel", "x-ms-excel", "x-excel", "x-dos_ms_excel", "xls", "xlsx", "x-xls");
         selectorDeArchivos.setAcceptAllFileFilterUsed(false);
         selectorDeArchivos.addChoosableFileFilter(filtro);
         selectorDeArchivos.setFileSelectionMode(JFileChooser.FILES_ONLY);

@@ -40,7 +40,7 @@ public class ControlArchivo {
 
     }
 
-    public List<Map<String, String>> LeerExceAct(String ruta) {
+    public List<Map<String, String>> LeerExcelAct(String ruta) {
         try {
             List<Map<String, String>> campos = new ArrayList<Map<String, String>>();
             List<String> keys = new ArrayList<>();

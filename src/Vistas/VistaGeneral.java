@@ -137,6 +137,7 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Modificar");
+        
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
@@ -531,6 +532,7 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaEditarDatosAnimal vista = new VistaEditarDatosAnimal(modeloVista);
             MostrarPanel(vista);
+        
         }
 
     }

@@ -11,6 +11,7 @@ import Utilidades.Expresiones;
 import com.lowagie.text.DocumentException;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -61,6 +62,11 @@ public class LEcturaExcel extends javax.swing.JFrame {
         txtURL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         txtURL.setCaretColor(new java.awt.Color(26, 82, 118));
         txtURL.setSelectionColor(new java.awt.Color(26, 82, 118));
+        txtURL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtURLActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtURL, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 350, 30));
 
         jSeparator1.setBackground(new java.awt.Color(59, 123, 50));
@@ -182,6 +188,10 @@ public class LEcturaExcel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelectArchivo1ActionPerformed
 
+    private void txtURLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtURLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtURLActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,7 +245,14 @@ public class LEcturaExcel extends javax.swing.JFrame {
         System.out.println("ruta-->"+ruta);
         ControlArchivo con = new ControlArchivo();
         
-        List<Map<String, String>> lista =  con.LeerExcelAct(ruta);
+        String ext = ruta.substring(ruta.lastIndexOf(".")+1);
+        List<Map<String, String>> lista =  new ArrayList<>();
+        if(ext.equals("xlsx")){
+            lista = con.LeerExcelAct(ruta); 
+        }else{
+            lista = con.LeerExcel(ruta); 
+        }
+        
         
         System.out.println("list--->"+lista);
         for (Map<String, String> map : lista) {
