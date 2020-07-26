@@ -49,6 +49,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private ArrayList<ModeloAnimales> ListaDatos;
     private Map<String, String> DatosVenta;
     private Map<String, String> DatosMuerte;
+    private Map<String[], JLabel> listaHistorico;
     private List<Map<String, String>> ListaDatosTraslado;
     private List<Map<String, String>> ListaDatosTrasladoEliminar;
     public DefaultTableModel modeloTblTraslado;
@@ -86,6 +87,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         setSize(781, 722);
         DatosVenta = new HashMap<String, String>();
         DatosMuerte = new HashMap<String, String>();
+        listaHistorico = new HashMap<String[], JLabel>();
         id_Animal = "" + modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         listaPesajes = new ArrayList<>();
@@ -2276,8 +2278,28 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void pnlDatosBasicosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDatosBasicosMouseReleased
         try {
             Point p = evt.getPoint();
-            JLabel etiqueta = (JLabel) pnlDatosBasicos.findComponentAt(p);
-            System.out.println("etiqueta: " + etiqueta.getText());
+            JLabel label = (JLabel) pnlDatosBasicos.findComponentAt(p);
+            String etiqueta = label.getText();
+
+            for (Map.Entry<String[], JLabel> entry : listaHistorico.entrySet()) {
+                String[] key = entry.getKey();
+                JLabel value = entry.getValue();
+                if (label.equals(value)) {
+                    System.out.println("-------------------------------");
+                    System.out.println("key: " + key[1] + ":" + key[2]);
+                    System.out.println("value: " + value.getText());
+
+                    objetoVentana = new ModeloVentanaGeneral(
+                            this, //panelPadre
+                            new VistaEditarDatosAnimal(), //panelHijo
+                            1, //opcion
+                            entry //modeloDeDatos
+                    );
+                    new VistaGeneral(objetoVentana).setVisible(true);
+
+                    break;
+                }
+            }
         } catch (Exception e) {
 
         }
@@ -2401,19 +2423,27 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void LlenarDatos() {
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
+        listaHistorico.put(new String[]{"Implante", "animales", "implante"}, lblImplante);
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
+        listaHistorico.put(new String[]{"Descornado", "animales", "descornado"}, lblDescornado);
         lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
+        listaHistorico.put(new String[]{"Destetado", "animales", "destete"}, lblDestete);
         lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : "" + ListaDatos.get(0).getFechaDestete());
+        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete"}, lblFechaDestete);
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
+        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico"}, lblHierroColocado);
         lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
+        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete"}, lblPesoDestete);
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
+        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion"}, lblCalificacion);
         lblFinca.setText(ListaDatos.get(0).getDescFinca());
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblGrupo.setText(ListaDatos.get(0).getDescGrupo());
         lblHierro.setText(ListaDatos.get(0).getDescHierro());
         lblNotas.setText(ListaDatos.get(0).getNotas());
+        listaHistorico.put(new String[]{"Notas", "animales", "notas"}, lblNotas);
         lblNumMama.setText(ListaDatos.get(0).getNumeroMama());
         lblNumero.setText(ListaDatos.get(0).getNumero());
         lblPeso.setText(ListaDatos.get(0).getPeso());
