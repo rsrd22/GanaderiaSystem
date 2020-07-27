@@ -440,7 +440,7 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
 
         String codigoTipoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoTipoAnimal.getText() : "0";
         modelo.setId(codigoTipoAnimal);
-        modelo.setDescripcion(txtDescripcion.getText().trim());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
         modelo.setFecha("NOW()");
         modelo.setIdFinca(txtCodigoFinca.getText().trim());
@@ -554,13 +554,13 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
             txtCodigoTipoAnimal.setText(modelo.getId());
             cbFinca.setSelectedItem(modelo.getDescFinca());
             txtCodigoFinca.setText(modelo.getIdFinca());
-            txtDescripcion.setText(modelo.getDescripcion());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
             cbEstado.setSelectedItem(modelo.getEstado());
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
             Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_BUSCAR, botones);
         } else if (objeto.getOpcion() == 1) {//VISTA GRUPOS
-            cbFinca.setSelectedItem(retorno.get("DESCRIPCION"));
+            cbFinca.setSelectedItem(Utilidades.decodificarElemento(retorno.get("DESCRIPCION")));
             txtCodigoFinca.setText(retorno.get("ID"));
 
         }

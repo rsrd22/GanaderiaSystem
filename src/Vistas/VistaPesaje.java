@@ -599,12 +599,13 @@ public class VistaPesaje extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
                         ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
                         ListaAnimalesMostrar.get(i).get("PESO"),
-                        ListaAnimalesMostrar.get(i).get("DESC_HIERRO"),
+                        Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("DESC_HIERRO")),
                         ListaAnimalesMostrar.get(i).get("CAPADO"),
-                        ListaAnimalesMostrar.get(i).get("GRUPO"),
-                        ListaAnimalesMostrar.get(i).get("FINCA"),
+                        Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("GRUPO")),
+                        Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("FINCA")),
                         "PESAJE",
-                        ListaAnimalesMostrar.get(i).get("EST"),}
+                        ListaAnimalesMostrar.get(i).get("EST")
+                    }
             );
         }
     }

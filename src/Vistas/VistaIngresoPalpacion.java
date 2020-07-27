@@ -1057,13 +1057,13 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         
         modelo.setId(txtCodigo.getText());
         modelo.setId_animal(idAnimal);
-        modelo.setNotas(txtNotas.getText().trim());
+        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         modelo.setDiagnostico(""+lstDiagnostico.getSelectedValue().toString());
         modelo.setFecha_palpacion(sdf.format(fecha.getTime()));
         modelo.setNum_meses((txtNumMeses.getText().equals("")?"0":txtNumMeses.getText()));    
         modelo.setFecha_ultimo_parto("");
         modelo.setDescarte(chkDescarte.isSelected() ? "1" : "0");
-        modelo.setRazondescarte(chkDescarte.isSelected() ? ""+txtRazon.getText() : "");
+        modelo.setRazondescarte(chkDescarte.isSelected() ? Utilidades.CodificarElemento(txtRazon.getText()) : "");
         modelo.setEstado(estado);
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
@@ -1233,7 +1233,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         }
         txtCodigo.setText(""+datos.get("IDPALPACION"));
         fechaA = datos.get("FECHA_PALP");
-        txtNotas.setText(""+datos.get("NOTAS"));
+        txtNotas.setText(Utilidades.decodificarElemento(datos.get("NOTAS")));
         getMedicamentos(datos.get("IDPALPACION"));
         
     }

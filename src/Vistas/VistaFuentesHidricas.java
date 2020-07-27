@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Busqueda.VistaBusqueda;
 import Control.*;
 import Modelo.*;
 import Utilidades.Estado;
+import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,16 +20,16 @@ import javax.swing.JOptionPane;
  * @author MERRY
  */
 public class VistaFuentesHidricas extends javax.swing.JPanel {
-    private ModeloFuentesHidricas  modelo;
-    private ModeloVentanaGeneral  modeloVentanaGeneral;
+
+    private ModeloFuentesHidricas modelo;
+    private ModeloVentanaGeneral modeloVentanaGeneral;
     private ControlFuentesHidricas controlFuentesHidricas;
     private int banBQD;
     ModeloGestorBusqueda objetoBusqueda;
-    
+
     /**
      * Creates new form VistaFuentesHidricas
      */
-    
     public VistaFuentesHidricas() {
         initComponents();
         modelo = new ModeloFuentesHidricas();
@@ -37,7 +37,7 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
         banBQD = 0;
         FuenteHidricaEstadoFomulario(0);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +60,7 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
         btnModificar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -310,14 +311,14 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
     public javax.swing.JTextField txtDescripcion;
     // End of variables declaration//GEN-END:variables
 
-    public void FuenteHidricaEstadoFomulario(int opc){
+    public void FuenteHidricaEstadoFomulario(int opc) {
         FuenteHidricaEstadoBotones(opc);
         switch (opc) {
             case 0: {//DESCARTAR
                 txtDescripcion.setText("");
                 cbEstado.setSelectedIndex(0);
                 txtDescripcion.requestFocusInWindow();
-                
+
                 txtDescripcion.setEnabled(true);
                 cbEstado.setEnabled(true);
                 modelo = new ModeloFuentesHidricas();
@@ -325,13 +326,13 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
                 break;
             }
             case 1: {//NUEVO
-                
+
                 break;
             }
             case 2: {//MODIFICAR
                 txtDescripcion.setEnabled(true);
                 cbEstado.setEnabled(true);
-                
+
                 break;
             }
             case 3: {//CONSULTADO
@@ -339,11 +340,10 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
                 cbEstado.setEnabled(false);
                 break;
             }
-        } 
+        }
     }
-    
 
-    public void FuenteHidricaEstadoBotones(int opc) { 
+    public void FuenteHidricaEstadoBotones(int opc) {
         switch (opc) {
             case 0: {//DESCARTAR         
                 btnGuardar.setEnabled(true);
@@ -380,31 +380,29 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
         }
     }
 
-    
-
     private void LimpiarFomulario() {
         FuenteHidricaEstadoFomulario(0);
     }
 
     private void Guardar() {
-        if(txtDescripcion.getText().trim().equals("")){
+        if (txtDescripcion.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Por Favor Ingrese la Descripción.");
             return;
         }
-        
-        modelo.setDescripcion(txtDescripcion.getText().trim());
-        modelo.setEstado(""+cbEstado.getSelectedItem());
+
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
+        modelo.setEstado("" + cbEstado.getSelectedItem());
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        
+
         int ret = -1;
-        if(modelo.getId().equals("0")){//INSERT
+        if (modelo.getId().equals("0")) {//INSERT
             ret = controlFuentesHidricas.Guardar(modelo);
-        }else{
+        } else {
             ret = controlFuentesHidricas.Actualizar(modelo);
         }
-        
-        if(ret == 0){
+
+        if (ret == 0) {
             String mensaje = "Registro " + (ret == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
             JOptionPane.showMessageDialog(this, mensaje);
 //            if(modeloVentanaGeneral.getPanelPadre() instanceof VistaLotes){
@@ -417,41 +415,42 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
 //            }
 //            ((VistaGeneral)modeloVentanaGeneral.getFrameVentana()).dispose();
             FuenteHidricaEstadoFomulario(0);
-        }   
+        }
     }
 
-    private void Eliminar(){
-        
+    private void Eliminar() {
+
     }
-    private void Consultar(){
-        if(banBQD == 0){
+
+    private void Consultar() {
+        if (banBQD == 0) {
             banBQD = 1;
             //new ventanaBusquedaPaciente(1, "IDENTIFICACION:-:NOMBRE", estadoch, this);
             objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_FNT_HDRC", 0);
             new VistaBusqueda(objetoBusqueda);
         }
     }
-    private void Modificar(){
+
+    private void Modificar() {
         FuenteHidricaEstadoFomulario(2);
     }
-    
+
     public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
-       
-  
-        if(objeto.getOpcion() == 0){// DEFAULT VISTA__VENTANA__
-            if(retorno.containsKey("ID")){
-                System.out.println("////"+retorno.get("ID"));
+
+        if (objeto.getOpcion() == 0) {// DEFAULT VISTA__VENTANA__
+            if (retorno.containsKey("ID")) {
+                System.out.println("////" + retorno.get("ID"));
             }
+            banBQD=0;
             modelo = new ModeloFuentesHidricas();
-            modelo.setId(""+retorno.get("ID"));
-            modelo.setDescripcion(""+retorno.get("DESCRIPCION"));
-            modelo.setEstado(""+retorno.get("ESTADO"));
-            
-            
+            modelo.setId("" + retorno.get("ID"));
+            modelo.setDescripcion(Utilidades.decodificarElemento(retorno.get("DESCRIPCION")));
+            modelo.setEstado("" + retorno.get("ESTADO"));
+
             //cbTid.setSelectedItem(""+modelo.getTipo_identificacion());
-            txtDescripcion.setText(""+modelo.getDescripcion());
-            cbEstado.setSelectedItem(""+modelo.getEstado());
+            txtDescripcion.setText(modelo.getDescripcion());
+            cbEstado.setSelectedItem(modelo.getEstado());
         }
     }
-    
+
 }

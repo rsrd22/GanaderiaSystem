@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Busqueda.VistaBusqueda;
@@ -40,28 +39,29 @@ import javax.swing.table.JTableHeader;
  * @author MERRY
  */
 public class VistaFincas extends javax.swing.JPanel {
+
     public int banBQDPropietarios;
     public int banBQD;
     ModeloGestorBusqueda objetoBusqueda;
     ModeloVentanaGeneral objetoVentana;
     public int id_Finca;
-    public String estadog="";
-    private ModeloFincas  modelo;
-    private ModeloPropietarios  modeloPropietarios;
+    public String estadog = "";
+    private ModeloFincas modelo;
+    private ModeloPropietarios modeloPropietarios;
     private ControlFincas controlFinca;
     private ControlBloques controlBloque;
     private ControLotes controlLote;
-    private ModeloBloques  modeloBloques;
-    private ModeloLotes  modeloLotes;
-    private ArrayList<ModeloBloques>  ListamodeloBloques;
-    private ArrayList<ModeloLotes>  ListamodeloLotes;
+    private ModeloBloques modeloBloques;
+    private ModeloLotes modeloLotes;
+    private ArrayList<ModeloBloques> ListamodeloBloques;
+    private ArrayList<ModeloLotes> ListamodeloLotes;
     public DefaultTableModel modeloTblBloques;
     public DefaultTableModel modeloTblLotes;
-    public String[] EncabezadoTblBloques; 
-    public String[] EncabezadoTblLotes; 
+    public String[] EncabezadoTblBloques;
+    public String[] EncabezadoTblLotes;
     private ControlGeneral controlGral;
     private List<Map<String, String>> Tipo_moneda;
-    
+
     /**
      * Creates new form VistaFincas
      */
@@ -80,7 +80,7 @@ public class VistaFincas extends javax.swing.JPanel {
             "No", "Número", "Área Total", "Modificar", "Eliminar"
         };
         EncabezadoTblLotes = new String[]{
-            "No","Bloque", "Número", "Área Total", "Modificar", "Eliminar"
+            "No", "Bloque", "Número", "Área Total", "Modificar", "Eliminar"
         };
         Tipo_moneda = new ArrayList<>();
         controlGral = new ControlGeneral();
@@ -95,11 +95,11 @@ public class VistaFincas extends javax.swing.JPanel {
 
     public void InicializarTblBloques() {
         tbl_Bloques.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblBloques = new DefaultTableModel(EncabezadoTblBloques, 0) {
             Class[] types = new Class[]{
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -118,40 +118,40 @@ public class VistaFincas extends javax.swing.JPanel {
         tbl_Bloques.getColumnModel().getColumn(2).setPreferredWidth(100);
         tbl_Bloques.getColumnModel().getColumn(3).setPreferredWidth(80);
         tbl_Bloques.getColumnModel().getColumn(4).setPreferredWidth(80);
-        
+
         tbl_Bloques.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblBloques.getColumnCount(); i++) {
             tbl_Bloques.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
-            if(i == 2 ){
+
+            if (i == 2) {
                 tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-               
-            }else{
+
+            } else {
                 tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                
+
             }
             tcr.setForeground(new Color(26, 82, 118));
             tbl_Bloques.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
+
         }
         JTableHeader header = tbl_Bloques.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
     }
-    
+
     public void InicializarTblLotes() {
         tbl_Lotes.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblLotes = new DefaultTableModel(EncabezadoTblLotes, 0) {
             Class[] types = new Class[]{
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -171,32 +171,33 @@ public class VistaFincas extends javax.swing.JPanel {
         tbl_Lotes.getColumnModel().getColumn(3).setPreferredWidth(100);
         tbl_Lotes.getColumnModel().getColumn(4).setPreferredWidth(80);
         tbl_Lotes.getColumnModel().getColumn(5).setPreferredWidth(80);
-        
+
         tbl_Lotes.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblLotes.getColumnCount(); i++) {
             tbl_Lotes.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
-            if(i == 3 ){
+
+            if (i == 3) {
                 tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-               
-            }else{
+
+            } else {
                 tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                
+
             }
             tcr.setForeground(new Color(26, 82, 118));
             tbl_Lotes.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
+
         }
         JTableHeader header = tbl_Lotes.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,6 +244,8 @@ public class VistaFincas extends javax.swing.JPanel {
         btnAgregarLote = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setLayout(new java.awt.GridBagLayout());
 
         jTabbedPane1.setForeground(new java.awt.Color(59, 123, 50));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -762,28 +765,27 @@ public class VistaFincas extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Lotes", jPanel3);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(jTabbedPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescripcionFocusLost
-        
+
     }//GEN-LAST:event_txtDescripcionFocusLost
 
     private void txtDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyPressed
-        
+
     }//GEN-LAST:event_txtDescripcionKeyPressed
 
     private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
-        
+
     }//GEN-LAST:event_txtDescripcionKeyReleased
 
     private void txtDireccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDireccionFocusLost
@@ -815,10 +817,10 @@ public class VistaFincas extends javax.swing.JPanel {
     }//GEN-LAST:event_txtAreaTKeyReleased
 
     private void lblBsqPropietariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBsqPropietariosMouseClicked
-        if(banBQDPropietarios == 0){
+        if (banBQDPropietarios == 0) {
             banBQDPropietarios = 1;
             //new ventanaBusquedaPaciente(1, "IDENTIFICACION:-:NOMBRE", estadoch, this);
-            if(lblBsqPropietarios.isEnabled()){
+            if (lblBsqPropietarios.isEnabled()) {
                 objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_PROP", 1);
                 LimpiarPropietarios();
                 new VistaBusqueda(objetoBusqueda);
@@ -830,7 +832,7 @@ public class VistaFincas extends javax.swing.JPanel {
         //new VistaContratos(this).setVisible(true);
         btnAgregarPropietario.setEnabled(false);
         objetoVentana = new ModeloVentanaGeneral(this, new VistaPropietarios(), 2);
-        
+
         LimpiarPropietarios();
         new VistaGeneral(objetoVentana).setVisible(true);
     }//GEN-LAST:event_btnAgregarPropietarioActionPerformed
@@ -857,54 +859,54 @@ public class VistaFincas extends javax.swing.JPanel {
 
     private void btnAgregarBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBloqueActionPerformed
         btnAgregarBloque.setEnabled(false);
-        
+
         modeloBloques = new ModeloBloques();
-        modeloBloques.setId_finca(""+id_Finca);
+        modeloBloques.setId_finca("" + id_Finca);
         modeloBloques.setId("0");
-        
-        objetoVentana = new ModeloVentanaGeneral(this, new VistaBloques(), 1,modeloBloques);
+
+        objetoVentana = new ModeloVentanaGeneral(this, new VistaBloques(), 1, modeloBloques);
         objetoVentana.setFila(-1);
-        
+
         new VistaGeneral(objetoVentana).setVisible(true);
     }//GEN-LAST:event_btnAgregarBloqueActionPerformed
 
     private void tbl_BloquesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BloquesMouseReleased
         int fila = tbl_Bloques.getSelectedRow();
         int cola = tbl_Bloques.getSelectedColumn();
-        if(cola == 3){// ACTUALIZAR
-            
+        if (cola == 3) {// ACTUALIZAR
+
             modeloBloques = ListamodeloBloques.get(fila);
-            
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaBloques(), 1,modeloBloques);
+
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaBloques(), 1, modeloBloques);
             objetoVentana.setFila(fila);
 
             new VistaGeneral(objetoVentana).setVisible(true);
-            
-        }else if(cola == 4){ //ELIMINAR
+
+        } else if (cola == 4) { //ELIMINAR
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
-            if(resp == JOptionPane.YES_OPTION){
+            if (resp == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
             }
         }
-        
+
     }//GEN-LAST:event_tbl_BloquesMouseReleased
 
     private void tbl_LotesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LotesMouseReleased
         int fila = tbl_Lotes.getSelectedRow();
         int cola = tbl_Lotes.getSelectedColumn();
-        if(cola == 4){// ACTUALIZAR
-            
+        if (cola == 4) {// ACTUALIZAR
+
             modeloLotes = ListamodeloLotes.get(fila);
-            modeloLotes.setId_finca(""+id_Finca);
-            
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaLotes(), 3,modeloLotes);
+            modeloLotes.setId_finca("" + id_Finca);
+
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaLotes(), 3, modeloLotes);
             objetoVentana.setFila(fila);
 
             new VistaGeneral(objetoVentana).setVisible(true);
-            
-        }else if(cola == 5){ //ELIMINAR
+
+        } else if (cola == 5) { //ELIMINAR
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
-            if(resp == JOptionPane.YES_OPTION){
+            if (resp == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, "HAz EL MEtodo ");
             }
         }
@@ -912,16 +914,16 @@ public class VistaFincas extends javax.swing.JPanel {
 
     private void btnAgregarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLoteActionPerformed
         btnAgregarLote.setEnabled(false);
-        
+
         modeloLotes = new ModeloLotes();
-        System.out.println("id_Finca-->"+id_Finca);
-        System.out.println("modelo.getId()-->"+modelo.getId());
-        modeloLotes.setId_finca(""+id_Finca);
+        System.out.println("id_Finca-->" + id_Finca);
+        System.out.println("modelo.getId()-->" + modelo.getId());
+        modeloLotes.setId_finca("" + id_Finca);
         modeloLotes.setId("0");
-        
-        objetoVentana = new ModeloVentanaGeneral(this, new VistaLotes(), 3,modeloLotes);
+
+        objetoVentana = new ModeloVentanaGeneral(this, new VistaLotes(), 3, modeloLotes);
         objetoVentana.setFila(-1);
-        
+
         new VistaGeneral(objetoVentana).setVisible(true);
     }//GEN-LAST:event_btnAgregarLoteActionPerformed
 
@@ -967,48 +969,47 @@ public class VistaFincas extends javax.swing.JPanel {
     public javax.swing.JTextField txtPropietarios;
     // End of variables declaration//GEN-END:variables
 
-    
     //<editor-fold defaultstate="collapsed" desc="Metodos CRUD">
-    public void Guardar(){
-        
+    public void Guardar() {
+
         //<editor-fold defaultstate="collapsed" desc="validaciones">
-        if(txtDescripcion.getText().trim().equals("")){
+        if (txtDescripcion.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Por Favor Ingrese la Descripción.");
             return;
         }
-        if(txtDireccion.getText().trim().equals("")){
+        if (txtDireccion.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Por Favor Ingrese la Dirección.");
             return;
         }
-        if(txtAreaT.getText().trim().equals("")){
+        if (txtAreaT.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Por Favor Ingrese el Área Total de la Finca.");
             return;
         }
-        if(lblIdPropietario.getText().trim().equals("")){
+        if (lblIdPropietario.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Por Favor relacione un propietario a la Finca, para realizar la operación.");
             return;
         }
-        if(cbTipoMoneda.getSelectedIndex() <= 0){
+        if (cbTipoMoneda.getSelectedIndex() <= 0) {
             JOptionPane.showMessageDialog(this, "Por Favor seleccione un tipo de moneda, para realizar la operación.");
             return;
         }
 //</editor-fold>
-        
-        modelo.setId(""+id_Finca);
-        modelo.setDescripcion(txtDescripcion.getText().trim());
-        modelo.setDireccion(txtDireccion.getText().trim());
+
+        modelo.setId("" + id_Finca);
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
+        modelo.setDireccion(Utilidades.CodificarElemento(txtDireccion.getText().trim()));
         modelo.setAreat(txtAreaT.getText().trim().replace(".", "").replace(",", "."));
         modelo.setId_propietario(lblIdPropietario.getText());
         modelo.setFecha("NOW()");
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setIdTipoMoneda(Tipo_moneda.get(cbTipoMoneda.getSelectedIndex()).get("ID"));
         int ret = -1;
-        if(id_Finca==0){//INSERT
+        if (id_Finca == 0) {//INSERT
             ret = controlFinca.Guardar(modelo);
-        }else{
+        } else {
             ret = controlFinca.Actualizar(modelo);
         }
-        
+
         String mensaje = "";
         switch (ret) {
             case Retorno.EXITO:
@@ -1027,122 +1028,98 @@ public class VistaFincas extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, mensaje);
         FincasEstadoFomulario(0);
     }
-    public void Modificar(){
+
+    public void Modificar() {
         FincasEstadoFomulario(2);
     }
-    public void Consultar(){
-        if(banBQD == 0){
+
+    public void Consultar() {
+        if (banBQD == 0) {
             banBQD = 1;
             //new ventanaBusquedaPaciente(1, "IDENTIFICACION:-:NOMBRE", estadoch, this);
             objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_FNCS", 0);
             new VistaBusqueda(objetoBusqueda);
         }
     }
-    public void Eliminar(){
+
+    public void Eliminar() {
         int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
-        if(resp == JOptionPane.YES_OPTION){
+        if (resp == JOptionPane.YES_OPTION) {
             int ret = -1;
             ret = controlFinca.Eliminar(modelo);
         }
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Metodo Busqueda Retorno">
     public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
-        
-        if(objeto.getOpcion() == 0){// DEFAULT VISTA__VENTANA__
+
+        if (objeto.getOpcion() == 0) {// DEFAULT VISTA__VENTANA__
             id_Finca = Integer.parseInt(retorno.get("ID"));
-            System.out.println("modelo---"+modelo.getId());
-            
-            modelo = (ModeloFincas)((ArrayList<ModeloFincas>) controlFinca.ObtenerDatosKey(""+id_Finca)).get(0);
-            
-            txtDescripcion.setText(""+modelo.getDescripcion());
-            txtDireccion.setText(""+modelo.getDireccion());
-            txtAreaT.setText(""+modelo.getAreat());
-            lblIdPropietario.setText(""+modelo.getId_propietario());
-            txtPropietarios.setText(""+modelo.getPropietario()); 
-            cbTipoMoneda.setSelectedIndex(Integer.parseInt(modelo.getIdTipoMoneda()));
-            
-//            ListamodeloBloques = (ArrayList<ModeloBloques>) controlFinca.ObtenerBloquesxFinca(""+id_Finca);
-//            ListamodeloLotes = (ArrayList<ModeloLotes>) controlFinca.ObtenerLotesxFinca(""+id_Finca);
-//            
-//            for(int i =0; i < ListamodeloBloques.size(); i++){
-//                agregarFilaTabla(modeloTblBloques, 
-//                        new Object[]{
-//                            tbl_Bloques.getRowCount()+1,
-//                            ListamodeloBloques.get(i).getNumero(),
-//                            Utilidades.MascaraMonedaConDecimales(ListamodeloBloques.get(i).getArea()),
-//                            "Modificar",
-//                            "Eliminar"
-//                        });
-//            }
-//            for(int i =0; i < ListamodeloLotes.size(); i++){
-//                agregarFilaTabla(modeloTblLotes, 
-//                        new Object[]{
-//                            tbl_Lotes.getRowCount()+1,
-//                            "Bloque "+ListamodeloLotes.get(i).getId_bloque(),
-//                            ListamodeloLotes.get(i).getNumero(),
-//                            Utilidades.MascaraMonedaConDecimales(ListamodeloLotes.get(i).getArea()),
-//                            "Modificar",
-//                            "Eliminar"
-//                        });
-//            }
-            
-        }else if(objeto.getOpcion() == 1){// PROPIETARIOS
-            lblIdPropietario.setText(""+retorno.get("ID"));
-            txtPropietarios.setText(""+retorno.get("PROPIETARIO"));
+            modelo = (ModeloFincas) ((ArrayList<ModeloFincas>) controlFinca.ObtenerDatosKey("" + id_Finca)).get(0);
+
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
+            txtDireccion.setText(Utilidades.decodificarElemento(modelo.getDireccion()));
+            txtAreaT.setText("" + modelo.getAreat());
+            lblIdPropietario.setText("" + modelo.getId_propietario());
+            txtPropietarios.setText(Utilidades.decodificarElemento(modelo.getPropietario()));
+
+            for (int i = 0; i < Tipo_moneda.size(); i++) {
+                if (Tipo_moneda.get(i).get("ID").equals(modelo.getIdTipoMoneda())) {
+                    cbTipoMoneda.setSelectedItem(Tipo_moneda.get(i).get("DESCRIPCION"));
+                    break;
+                }
+            }
+        } else if (objeto.getOpcion() == 1) {// PROPIETARIOS
+            lblIdPropietario.setText("" + retorno.get("ID"));
+            txtPropietarios.setText(Utilidades.decodificarElemento(retorno.get("PROPIETARIO")));
         }
     }
     //</editor-fold>
-    
+
     public void RetornoVistaGeneral(ModeloVentanaGeneral objeto, Object retorno) {
-        
-        if(objeto.getOpcion() == 1){// VISTA BLOQUES
+
+        if (objeto.getOpcion() == 1) {// VISTA BLOQUES
             modeloBloques = (ModeloBloques) retorno;
-            if(objeto.getFila() > -1){//ESTA EN TABLA ACTUALIZAR
+            if (objeto.getFila() > -1) {//ESTA EN TABLA ACTUALIZAR
                 ListamodeloBloques.set(objeto.getFila(), modeloBloques);
                 tbl_Bloques.setValueAt(modeloBloques.getNumero(), objeto.getFila(), 1);
                 tbl_Bloques.setValueAt(modeloBloques.getArea(), objeto.getFila(), 2);
-//                Lista_Seleccionados.get(listadoOficinas.get(fila)[0])[3] = area;
-                
-                
-            }else{  
+            } else {
                 ListamodeloBloques.add(modeloBloques);
                 agregarFilaTabla(modeloTblBloques,
                         new Object[]{
-                            tbl_Bloques.getRowCount()+1,
+                            tbl_Bloques.getRowCount() + 1,
                             modeloBloques.getNumero(),
                             Utilidades.MascaraMonedaConDecimales(modeloBloques.getArea()),
                             "Modificar",
                             "Eliminar"
                         });
             }
-            
-        }else if(objeto.getOpcion() == 2){// VISTA PROPIETARIOS
+
+        } else if (objeto.getOpcion() == 2) {// VISTA PROPIETARIOS
             modeloPropietarios = (ModeloPropietarios) retorno;
-            
-            lblIdPropietario.setText(""+modeloPropietarios.getId());
-            txtPropietarios.setText(""+modeloPropietarios.getPrimer_nombre()+
-                                    (modeloPropietarios.getSegundo_nombre().equals("")?"":" "+modeloPropietarios.getSegundo_nombre())+
-                                    " "+modeloPropietarios.getPrimer_apellido()+
-                                    (modeloPropietarios.getSegundo_apellido().equals("")?"":" "+modeloPropietarios.getSegundo_apellido()));
-            
-        }else if(objeto.getOpcion() == 3){// VISTA LOTES
+
+            lblIdPropietario.setText(modeloPropietarios.getId());
+            txtPropietarios.setText(Utilidades.decodificarElemento(modeloPropietarios.getPrimer_nombre()
+                    + (modeloPropietarios.getSegundo_nombre().equals("") ? "" : " " + modeloPropietarios.getSegundo_nombre())
+                    + " " + modeloPropietarios.getPrimer_apellido()
+                    + (modeloPropietarios.getSegundo_apellido().equals("") ? "" : " " + modeloPropietarios.getSegundo_apellido())));
+
+        } else if (objeto.getOpcion() == 3) {// VISTA LOTES
             modeloLotes = (ModeloLotes) retorno;
             //No, BLOQUE, NUMERO, AREA, MOD, ELI
-            if(objeto.getFila() > -1){//ESTA EN TABLA ACTUALIZAR
+            if (objeto.getFila() > -1) {//ESTA EN TABLA ACTUALIZAR
                 ListamodeloLotes.set(objeto.getFila(), modeloLotes);
-                tbl_Lotes.setValueAt("Bloque "+modeloLotes.getId_bloque(), objeto.getFila(), 1);
+                tbl_Lotes.setValueAt("Bloque " + modeloLotes.getId_bloque(), objeto.getFila(), 1);
                 tbl_Lotes.setValueAt(modeloLotes.getNumero(), objeto.getFila(), 2);
                 tbl_Lotes.setValueAt(modeloLotes.getArea(), objeto.getFila(), 3);
-                
-                
-            }else{  
+            } else {
                 ListamodeloLotes.add(modeloLotes);
                 agregarFilaTabla(modeloTblLotes,
                         new Object[]{
-                            tbl_Lotes.getRowCount()+1,
-                            "Bloque "+modeloLotes.getId_bloque(),
+                            tbl_Lotes.getRowCount() + 1,
+                            "Bloque " + modeloLotes.getId_bloque(),
                             modeloLotes.getNumero(),
                             Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea()),
                             "Modificar",
@@ -1151,13 +1128,13 @@ public class VistaFincas extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void LimpiarPropietarios() {
         lblIdPropietario.setText("");
         txtPropietarios.setText("");
     }
-    
-    public void FincasEstadoFomulario(int opc){
+
+    public void FincasEstadoFomulario(int opc) {
         FincasEstadoBotones(opc);
         switch (opc) {
             case 0: {//DESCARTAR
@@ -1176,11 +1153,11 @@ public class VistaFincas extends javax.swing.JPanel {
                 txtDescripcion.setEnabled(true);
                 txtDireccion.setEnabled(true);
                 txtAreaT.setEnabled(true);
-                
+
                 break;
             }
             case 1: {//NUEVO
-                
+
                 break;
             }
             case 2: {//MODIFICAR
@@ -1189,7 +1166,7 @@ public class VistaFincas extends javax.swing.JPanel {
                 txtAreaT.setEnabled(true);
                 lblBsqPropietarios.setEnabled(true);
                 btnAgregarPropietario.setEnabled(true);
-                
+
                 break;
             }
             case 3: {//CONSULTADO
@@ -1200,23 +1177,23 @@ public class VistaFincas extends javax.swing.JPanel {
                 btnAgregarPropietario.setEnabled(false);
                 break;
             }
-        } 
+        }
     }
-    
+
     private void cargarComboMoneda() {
         System.out.println("********cargarComboMoneda*******");
-        Tipo_moneda = controlGral.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"+
-                                                "UNION\n" +
-                                                "SELECT id AS ID, CONCAT(descripcion, ' (', iniciales,')') AS DESCRIPCION\n" +
-                                                "FROM `tipo_moneda`\n" +
-                                                "WHERE estado = 'Activo'\n" +
-                                                "ORDER BY id ASC");
-        System.out.println("tipo moneda-->"+Tipo_moneda.size());
+        Tipo_moneda = controlGral.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT id AS ID, CONCAT(descripcion, ' (', iniciales,')') AS DESCRIPCION\n"
+                + "FROM `tipo_moneda`\n"
+                + "WHERE estado = 'Activo'\n"
+                + "ORDER BY id ASC");
+        System.out.println("tipo moneda-->" + Tipo_moneda.size());
         Utilidades.LlenarComboBox(cbTipoMoneda, Tipo_moneda, "DESCRIPCION");
         cbTipoMoneda.setSelectedIndex(1);
     }
 
-    public void FincasEstadoBotones(int opc) { 
+    public void FincasEstadoBotones(int opc) {
         switch (opc) {
             case 0: {//DESCARTAR         
                 btnGuardar.setEnabled(true);

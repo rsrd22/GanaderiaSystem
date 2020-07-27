@@ -194,6 +194,8 @@ public class VistaRotacion extends javax.swing.JPanel {
         tbl_GruposHistorico = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setLayout(new java.awt.GridBagLayout());
 
         jTabbedPane1.setForeground(new java.awt.Color(59, 123, 50));
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -222,14 +224,11 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 587;
-        gridBagConstraints.ipady = 323;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         jPanel1.add(jScrollPane1, gridBagConstraints);
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -239,9 +238,10 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 120;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         jPanel1.add(lblTid, gridBagConstraints);
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -255,12 +255,12 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 11;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
         jPanel1.add(cbFinca, gridBagConstraints);
 
         jTabbedPane1.addTab("Grupos", jPanel1);
@@ -285,26 +285,23 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 587;
-        gridBagConstraints.ipady = 400;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         jPanel2.add(jScrollPane2, gridBagConstraints);
 
         jTabbedPane1.addTab("Historico", jPanel2);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(jTabbedPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -329,7 +326,7 @@ public class VistaRotacion extends javax.swing.JPanel {
             }
         } else if(cola == 4){// CANCELAR
             
-            int ret = JOptionPane.showConfirmDialog(this, "¿Esta Seguro en Cancelar este registro "+tbl_Grupos.getValueAt(fila, 1)+"?");
+            int ret = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Cancelar este registro "+tbl_Grupos.getValueAt(fila, 1)+"?");
             if(ret == JOptionPane.YES_OPTION){
                 int resp = controlRot.CancelarRegistroRotacion(ListaRotaciones.get(fila));
                 if(resp == Retorno.EXITO){
@@ -410,9 +407,9 @@ public class VistaRotacion extends javax.swing.JPanel {
                             modeloTblGrupos, 
                             new Object[]{
                                 false,//tbl_Grupos.getRowCount()+1,
-                                ListaRotaciones.get(i).get("GRUPO"),
-                                (allFincas == 1?ListaRotaciones.get(i).get("FINCA")+" / ":"") + 
-                                ListaRotaciones.get(i).get("BLOQUE") + " / " + ListaRotaciones.get(i).get("LOTE"),
+                                Utilidades.decodificarElemento(ListaRotaciones.get(i).get("GRUPO")),
+                                Utilidades.decodificarElemento((allFincas == 1?ListaRotaciones.get(i).get("FINCA")+" / ":"") + 
+                                ListaRotaciones.get(i).get("BLOQUE") + " / " + ListaRotaciones.get(i).get("LOTE")),
                                 ListaRotaciones.get(i).get("FECHA_IN"), 
                                 ListaRotaciones.get(i).get("ESTADO"), 
                                 "Rotar" 
@@ -524,8 +521,4 @@ public class VistaRotacion extends javax.swing.JPanel {
         System.out.println("ListaGruposSeleccionados.size()--->"+ListaGruposSeleccionados.size());
         System.out.println("****************END getGruposAsociados****************");
     }
-
-    
-    
-    
 }

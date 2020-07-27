@@ -127,6 +127,7 @@ public class VistaPluviometro extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        lblId_Bloque = new javax.swing.JLabel();
         lblTid = new javax.swing.JLabel();
         cbFinca = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
@@ -137,12 +138,12 @@ public class VistaPluviometro extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
-        lblId_Bloque = new javax.swing.JLabel();
         jdFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Pluviometro = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -186,11 +187,11 @@ public class VistaPluviometro extends javax.swing.JPanel {
         lbltitle1.setText("Fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 66;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.49;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         jPanel1.add(lbltitle1, gridBagConstraints);
 
         lbltitle3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -198,12 +199,12 @@ public class VistaPluviometro extends javax.swing.JPanel {
         lbltitle3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle3.setText("Cantidad");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 45;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.48;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         jPanel1.add(lbltitle3, gridBagConstraints);
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -226,27 +227,24 @@ public class VistaPluviometro extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 160;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.48;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         jPanel1.add(txtCantidad, gridBagConstraints);
 
         jSeparator8.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 159;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 10, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.48;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 0);
         jPanel1.add(jSeparator8, gridBagConstraints);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -254,72 +252,64 @@ public class VistaPluviometro extends javax.swing.JPanel {
         jLabel13.setText("mm");
         jLabel13.setToolTipText("Hectárea");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.02;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.01;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         jPanel1.add(jLabel13, gridBagConstraints);
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_2.png"))); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
         btnGuardar.setBorderPainted(false);
         btnGuardar.setContentAreaFilled(false);
         btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
         btnGuardar.setName("btnGuardar"); // NOI18N
-        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
-        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = -23;
-        gridBagConstraints.ipady = -9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.04;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.01;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         jPanel1.add(btnGuardar, gridBagConstraints);
 
-        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
+        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
         btnDescartar.setBorderPainted(false);
         btnDescartar.setContentAreaFilled(false);
         btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
-        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
-        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30_over.png"))); // NOI18N
+        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30_over.png"))); // NOI18N
         btnDescartar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDescartarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = -57;
-        gridBagConstraints.ipady = -43;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.04;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.01;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         jPanel1.add(btnDescartar, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel1.add(lblId_Bloque, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 143;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.45;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.49;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         jPanel1.add(jdFecha, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -499,16 +489,27 @@ public class VistaPluviometro extends javax.swing.JPanel {
     }
 
     private void Guardar() {
+        if(cbFinca.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(this, "Por favor seleccione una finca para realizar la operación.");
+            return;
+        }
+        if(txtCantidad.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor especifique una cantidad.");
+            return;
+        }
+        if (jdFecha.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Debe especificar una fecha para realizar la operación.");
+            jdFecha.requestFocusInWindow();
+            return;
+        }
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = jdFecha.getCalendar();
         modeloPluviometro.setFecha_registro(sdf.format(fecha.getTime()));
         modeloPluviometro.setCantidad(txtCantidad.getText().trim().replace(".", "").replace(",", "."));
         modeloPluviometro.setFecha("NOW()");
         modeloPluviometro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        if(modeloPluviometro.getId_finca().equals("-1")){
-            JOptionPane.showMessageDialog(this, "Por favor seleccione una finca para realizar la operación.");
-            return;
-        }
+        
         int ret = -1;
         if(modeloPluviometro.getId().equals("0")){//INSERT
             ret = controlPluviometro.Guardar(modeloPluviometro);

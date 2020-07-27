@@ -288,7 +288,7 @@ public class Utilidades {
             if (!lista.containsKey(KeyMostrar)) {
                 //return null;
             }
-            combo.addItem(lista.get(KeyMostrar));
+            combo.addItem(Utilidades.decodificarElemento(lista.get(KeyMostrar)));
         }
 
         //return combo;

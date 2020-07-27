@@ -352,7 +352,6 @@ public class VistaVerAnimales extends javax.swing.JPanel {
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         if (cbTipoAnimales.getItemCount() > 0) {
-            //EventoComboFincas();
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
@@ -439,7 +438,6 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         System.out.println("cbFinca.--->" + cbFinca.getItemCount());
         System.out.println("cbFinca.getSelectedIndex()..>" + cbFinca.getSelectedIndex());
 
-        //idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
         System.out.println("idFinca-->" + idFinca);
         if (idFinca.equals("ALL")) {
             allFincas = 1;
@@ -491,13 +489,13 @@ public class VistaVerAnimales extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
                         ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
                         ListaAnimalesMostrar.get(i).get("PESO"),
-                        ListaAnimalesMostrar.get(i).get("DESC_HIERRO"),
+                        Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("DESC_HIERRO")),
                         ListaAnimalesMostrar.get(i).get("CAPADO"),
                         //                        ListaAnimalesMostrar.get(i).get("MUERTE"), 
                         //                        ListaAnimalesMostrar.get(i).get("VENTA"), 
-                        ListaAnimalesMostrar.get(i).get("GRUPO"),
-                        (allFincas == 1 ? ListaAnimalesMostrar.get(i).get("FINCA") + " / " : "")
-                        + ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE"),
+                        Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("GRUPO")),
+                        Utilidades.decodificarElemento((allFincas == 1 ? ListaAnimalesMostrar.get(i).get("FINCA") + " / " : "")
+                        + ListaAnimalesMostrar.get(i).get("BLOQUE") + " / " + ListaAnimalesMostrar.get(i).get("LOTE")),
                         "Ver Más"
                     }
             );
