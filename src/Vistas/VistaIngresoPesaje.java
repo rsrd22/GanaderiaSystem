@@ -197,7 +197,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         for (Map<String, String> lista : select) {
             Object[] fila = new Object[]{
                 ++consecutivo,//idMedicamento
-                lista.get("DESCRIPCION"),//descripcionMedicamento
+                Utilidades.decodificarElemento(lista.get("DESCRIPCION")),//descripcionMedicamento
                 lista.get("CANTIDAD").replace(".", ","),//CantidadMedicamento
                 lista.get("UNIDAD_MEDIDA"),//UnidadDeMedida
                 "Modificar",
@@ -1157,7 +1157,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
         modelo.setHierro(chkHierro.isSelected() ? "1" : "0");
         modelo.setDestete(chkDestete.isSelected() ? "1" : "0");
-        modelo.setDescripcionHierro(cbHierros.getSelectedItem().toString());
+        modelo.setDescripcionHierro(Utilidades.decodificarElemento(cbHierros.getSelectedItem().toString()));
         modelo.setFecha("NOW()");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setIdHierro(txtCodigoHierro.getText());
@@ -1226,7 +1226,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             if (id.equals(idAnimal)) {
                 vp.ListaAnimales.get(i).put("EST", "*");
                 vp.ListaAnimales.get(i).put("PESO", modelo.getPeso());
-                vp.ListaAnimales.get(i).put("DESC_HIERRO", modelo.getDescripcionHierro());
+                vp.ListaAnimales.get(i).put("DESC_HIERRO", Utilidades.decodificarElemento(modelo.getDescripcionHierro()));
                 vp.fechaAnterior = modelo.getFecha_pesado();
                 try {
                     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");

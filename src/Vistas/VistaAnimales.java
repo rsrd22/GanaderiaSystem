@@ -1959,7 +1959,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             txtPesoOculto.setText(modelo.getPeso());
             slCalificacion.setValue(Integer.parseInt(modelo.getCalificacion()));
             chkCapado.setSelected(capado);
-            txtNotas.setText(modelo.getNotas());
+            txtNotas.setText(Utilidades.decodificarElemento(modelo.getNotas()));
             chkAdoptivo.setSelected(adoptado);
 
             chkNovilla.setSelected(esNovilla);
@@ -1969,7 +1969,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             chkVenta.setSelected(venta);
             chkMuerte.setSelected(muerte);
             txtObservacionMuerte.setVisible(chkMuerte.isSelected());
-            txtObservacionMuerte.setText(modelo.getDescripcionMuerte());
+            txtObservacionMuerte.setText(Utilidades.decodificarElemento(modelo.getDescripcionMuerte()));
             cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
             txtPrecioVenta.setText(modelo.getPrecioVenta());
             txtPesoCanal.setText(modelo.getPesoCanal());
@@ -2048,7 +2048,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             calcularPesoEnLibras();
 //</editor-fold>
         } else if (objeto.getOpcion() == 3) {// SE LLAMA LA VISTA TIPOS DE ANIMALES DESDE LA VISTA ANIMALES 
-            cbFinca.setSelectedItem(retorno.get("DESCRIPCION"));
+            cbFinca.setSelectedItem(Utilidades.decodificarElemento(retorno.get("DESCRIPCION")));
             txtCodigoFinca.setText(retorno.get("ID"));
             cargarComboTipoAnimales();
             cargarComboPropietarios();

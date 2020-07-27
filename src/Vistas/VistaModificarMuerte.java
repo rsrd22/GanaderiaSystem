@@ -10,6 +10,7 @@ import Control.ControlAnimales;
 import Control.Retorno;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloVentanaGeneral;
+import Utilidades.Utilidades;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,6 +70,7 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -301,7 +303,7 @@ public class VistaModificarMuerte extends javax.swing.JPanel {
         
         modeloAnimal = new ModeloAnimales();
         modeloAnimal.setId(id_animal);
-        modeloAnimal.setDescripcionMuerte(txtObservacionMuerte.getText().trim());
+        modeloAnimal.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText().trim()));
         Calendar fechaVenta = jdFechaMuerte.getCalendar();
         modeloAnimal.setFechaMuerte(sdf.format(fechaVenta.getTime()));
         

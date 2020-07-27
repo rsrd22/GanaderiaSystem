@@ -157,6 +157,7 @@ public class VistaTraslado extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         tbl_Traslado.setModel(new javax.swing.table.DefaultTableModel(
@@ -482,8 +483,8 @@ public class VistaTraslado extends javax.swing.JPanel {
                             false,//tbl_Grupos.getRowCount()+1,
                             ListaTrasladoMostrar.get(i).get("NUMERO_MAMA"),
                             ListaTrasladoMostrar.get(i).get("NUMERO_ANIMAL"),
-                            ListaTrasladoMostrar.get(i).get("GRUPO"),
-                            (allFincas == 1?ListaTrasladoMostrar.get(i).get("FINCA")+" / ":"") + 
+                            Utilidades.decodificarElemento(ListaTrasladoMostrar.get(i).get("GRUPO")),
+                            (allFincas == 1?Utilidades.decodificarElemento(ListaTrasladoMostrar.get(i).get("FINCA"))+" / ":"") + 
                             ListaTrasladoMostrar.get(i).get("BLOQUE") + " / " + ListaTraslado.get(i).get("LOTE"),
                             ListaTrasladoMostrar.get(i).get("FECHA_NACIMIENTO"), 
                             ListaTrasladoMostrar.get(i).get("GENERO").toUpperCase(), 

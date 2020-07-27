@@ -11,6 +11,7 @@ import Control.ControlGeneral;
 import Control.Retorno;
 import Modelo.ModeloCronograma;
 import static Utilidades.Consultas.consultas;
+import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import Vistas.VistaPrincipal;
 import java.awt.Color;
@@ -256,7 +257,7 @@ public class PanelActividades extends JPanel {
             for (Map<String, String> actividad : listaActividades) {
                 actividades.add(new Actividad(
                         actividad.get("id"),
-                        actividad.get("descripcion"),
+                        Utilidades.decodificarElemento(actividad.get("descripcion")),
                         10, yini + i * alto, ancho, alto, Colores.SUCCESS, Colores.TEXT_SUCCESS));
                 i++;
             }
@@ -332,7 +333,7 @@ public class PanelActividades extends JPanel {
                 int ncolor = Integer.parseInt(estados.get("color"));
                 Color color = new Color(ncolor);
                 opciones.add(new Opciones(
-                        estados.get("descripcion"),
+                        Utilidades.decodificarElemento(estados.get("descripcion")),
                         estados.get("id"),
                         0, 0, 150, alto, Colores.FADED, Colores.DARK_SUCCESS, color)
                 );

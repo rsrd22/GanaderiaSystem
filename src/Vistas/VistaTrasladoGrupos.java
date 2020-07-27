@@ -162,6 +162,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -607,7 +608,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     }
 
     public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral, String motivo) {
-        this.motivo = motivo;
+        this.motivo = Utilidades.CodificarElemento(motivo);
         Guardar();
     }
     

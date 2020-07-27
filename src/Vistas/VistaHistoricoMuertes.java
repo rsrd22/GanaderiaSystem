@@ -137,7 +137,6 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     public void cargarHistoricoMuertes() {
         String consulta = consultas.get("OBTENER_HISTORICO_MUERTES").replace("PARAMETRO1", txtCodigoTipoAnimal.getText());
         System.out.println("consulta-->"+consulta);
-        Utilidades.LimpiarTabla(tabla);
         muertes = controlGral.GetConsulta(consulta);
 
         if (muertes.size() == 0) {
@@ -148,7 +147,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     }
 
     private void MostrarTabla() {
-        //Utilidades.LimpiarTabla(tabla);
+        Utilidades.LimpiarTabla(tabla);
         for (int i = 0; i < muertes.size(); i++) {
             
             Utilidades.agregarFilaTabla(
@@ -158,7 +157,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
                     muertes.get(i).get("numero_mama"),
                     (""+muertes.get(i).get("genero").charAt(0)).toUpperCase(),
                     muertes.get(i).get("fecha_muerte"),
-                    muertes.get(i).get("descripcion_muerte"),
+                    Utilidades.decodificarElemento(muertes.get(i).get("descripcion_muerte")),
                     "Modificar"
                 }
             );

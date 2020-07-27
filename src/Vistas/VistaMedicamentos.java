@@ -368,8 +368,8 @@ public class VistaMedicamentos extends javax.swing.JPanel {
             modelo = ((ArrayList<ModeloMedicamentos>) control.ObtenerDatosKey(id)).get(0);
 
             txtCodigo.setText(modelo.getId());
-            txtDescripcion.setText(modelo.getDescripcion());
-            txtUnidadDeMedida.setText(modelo.getUnidadMedida());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
+            txtUnidadDeMedida.setText(Utilidades.decodificarElemento(modelo.getUnidadMedida()));
             cbEstado.setSelectedItem(modelo.getEstado());
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
@@ -403,9 +403,9 @@ public class VistaMedicamentos extends javax.swing.JPanel {
         modelo.setId(codigoGrupo);
         modelo.setFecha("NOW()");
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setDescripcion(txtDescripcion.getText().trim());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
-        modelo.setUnidadMedida(txtUnidadDeMedida.getText().trim());
+        modelo.setUnidadMedida(Utilidades.CodificarElemento(txtUnidadDeMedida.getText().trim()));
 
         int retorno = Retorno.DEFECTO;
 

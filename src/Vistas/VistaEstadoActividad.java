@@ -431,7 +431,7 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
             txtColor.setText(modelo.getColor());
             panelColor.setBackground(new Color(color));
             txtCodigoEstadoActividad.setText(modelo.getId());
-            txtDescripcion.setText(modelo.getDescripcion());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
             cbEstado.setSelectedItem(modelo.getEstado());
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
@@ -454,7 +454,7 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
         
         String codigoEstadoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoEstadoActividad.getText() : "0";
         modelo.setId(codigoEstadoAnimal);
-        modelo.setDescripcion(txtDescripcion.getText().trim().toUpperCase());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim().toUpperCase()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
         modelo.setFechaRegistro("NOW()");
         modelo.setUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));

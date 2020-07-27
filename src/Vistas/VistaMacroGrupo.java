@@ -414,9 +414,9 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
             cargarComboFincas();
 
             txtCodigoMacroGrupo.setText(modelo.getId());
-            txtDescripcion.setText(modelo.getDescripcion());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
             cbEstado.setSelectedItem(modelo.getEstado());
-            cbFinca.setSelectedItem(modelo.getDescripcionFinca());
+            cbFinca.setSelectedItem(Utilidades.decodificarElemento(modelo.getDescripcionFinca()));
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
             Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_BUSCAR, botones);
@@ -453,10 +453,10 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
         modelo.setId(codigoMacrogrupo);
         modelo.setFecha("NOW()");
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setDescripcion(txtDescripcion.getText().trim());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
         modelo.setIdFinca(codigoFinca);
-        modelo.setDescripcionFinca(cbFinca.getSelectedItem().toString());
+        modelo.setDescripcionFinca(Utilidades.CodificarElemento(cbFinca.getSelectedItem().toString()));
 
         int retorno = Retorno.DEFECTO;
 

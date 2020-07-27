@@ -2422,27 +2422,26 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void LlenarDatos() {
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Implante", "animales", "implante",ListaDatos.get(0).getId()}, lblImplante);
+        listaHistorico.put(new String[]{"Implante", "animales", "implante", ListaDatos.get(0).getId()}, lblImplante);
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Descornado", "animales", "descornado",ListaDatos.get(0).getId()}, lblDescornado);
+        listaHistorico.put(new String[]{"Descornado", "animales", "descornado", ListaDatos.get(0).getId()}, lblDescornado);
         lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
-//        listaHistorico.put(new String[]{"Destetado", "animales", "destete",ListaDatos.get(0).getId()}, lblDestete);
         lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : "" + ListaDatos.get(0).getFechaDestete());
-        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete",ListaDatos.get(0).getId()}, lblFechaDestete);
+        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
-        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico",ListaDatos.get(0).getId()}, lblHierroColocado);
+        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico", ListaDatos.get(0).getId()}, lblHierroColocado);
         lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
-        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete",ListaDatos.get(0).getId()}, lblPesoDestete);
+        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete", ListaDatos.get(0).getId()}, lblPesoDestete);
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
-        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion",ListaDatos.get(0).getId()}, lblCalificacion);
-        lblFinca.setText(ListaDatos.get(0).getDescFinca());
+        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
+        lblFinca.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescFinca()));
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
-        lblGrupo.setText(ListaDatos.get(0).getDescGrupo());
-        lblHierro.setText(ListaDatos.get(0).getDescHierro());
-        lblNotas.setText(ListaDatos.get(0).getNotas());
-        listaHistorico.put(new String[]{"Notas", "animales", "notas",ListaDatos.get(0).getId()}, lblNotas);
+        lblGrupo.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescGrupo()));
+        lblHierro.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescHierro()));
+        lblNotas.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
+        listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         lblNumMama.setText(ListaDatos.get(0).getNumeroMama());
         lblNumero.setText(ListaDatos.get(0).getNumero());
         lblPeso.setText(ListaDatos.get(0).getPeso());
@@ -2498,10 +2497,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }
 
-    public void ActualizarDatosAnimal(){
+    public void ActualizarDatosAnimal() {
         GetDatosAnimal();
     }
-    
+
     private void LimpiarFormulario() {
         lblCalificacion.setText("");
         lblFinca.setText("");
@@ -2564,8 +2563,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void GetDatosMuerteAnimal() {
         DatosMuerte = controlAnimales.GetDatosMuerte(id_Animal);
         LimpiarFormularioMuerte();
-        txtFechaMuerte.setText("" + DatosMuerte.get("FECHA_MUERTE"));
-        txtMotivoMuerte.setText("" + DatosMuerte.get("MOTIVO"));
+        txtFechaMuerte.setText(Utilidades.decodificarElemento(DatosMuerte.get("FECHA_MUERTE")));
+        txtMotivoMuerte.setText(DatosMuerte.get("MOTIVO"));
     }
 
     private void LimpiarFormularioMuerte() {
@@ -2684,7 +2683,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
         if (listaPesajes.size() > 0) {
             ///////////////////////////   X        Y
-            datosPeso= new ArrayList<>();
+            datosPeso = new ArrayList<>();
             datosPeso.add(new Object[]{"Fecha", "Peso"});
             for (int i = listaPesajes.size() - 1; i >= 0; i--) {
                 datosPeso.add(new Object[]{
@@ -2731,8 +2730,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltroNew(id_Animal);
 
         if (ListaDatosPalpacion.size() > 0) {
-
-            //numero_Animal = ListaDatosPalpacion.get(0).get("NUMERO_ANIMAL");
             LlenarTablaPalpacion();
         }
     }

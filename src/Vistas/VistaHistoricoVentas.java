@@ -160,20 +160,6 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     }
 
     private void MostrarTabla() {
-//        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
-//        "Nro. Animal",    //0
-//            "Nro. Madre",     //1
-//            "Genero",         //2
-//            "<html><p style=\"text-align:center;\">Vendido</p><p style=\"text-align:center;\">a</p></html>",      //3
-//            "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Venta</p></html>", //4
-//            "Peso (Kg)",      //5
-//            "<html><p style=\"text-align:center;\">Peso</p><p style=\"text-align:center;\">Canal (Kg)</p></html>",  //6
-//            "<html><p style=\"text-align:center;\">Porcentaje</p><p style=\"text-align:center;\">Canal (%)</p></html>",     //7
-//            "<html><p style=\"text-align:center;\">Precio</p><p style=\"text-align:center;\">Venta (Kg)</p></html>",//8 
-//            "<html><p style=\"text-align:center;\">Valor</p><p style=\"text-align:center;\">Venta</p></html>", //9
-//            ""                //10  
-        
-//        ventas = getFiltroLista(filtro);
         Utilidades.LimpiarTabla(tabla);
         DecimalFormat df = new DecimalFormat("#.0");
         for (int i = 0; i < ventas.size(); i++) {

@@ -309,7 +309,7 @@ public class VistaActividades extends javax.swing.JPanel implements IControlesUs
             modelo = ((ArrayList<ModeloActividades>) control.ObtenerDatosKey(id)).get(0);
 
             txtCodigoActividad.setText(modelo.getId());
-            txtDescripcion.setText(modelo.getDescripcion());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
             cbEstado.setSelectedItem(modelo.getEstado());
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
@@ -328,7 +328,7 @@ public class VistaActividades extends javax.swing.JPanel implements IControlesUs
 
         String codigoEstadoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoActividad.getText() : "0";
         modelo.setId(codigoEstadoAnimal);
-        modelo.setDescripcion(txtDescripcion.getText().trim().toUpperCase());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim().toUpperCase()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
         modelo.setFechaRegistro("NOW()");
         modelo.setUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));

@@ -348,7 +348,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         } else if (key[0].equalsIgnoreCase("notas")) {
             consultas.add(
                     "update " + key[1] + " "
-                    + "set " + key[2] + "='" + txtNotas.getText().trim() + "' "
+                    + "set " + key[2] + "='" + Utilidades.CodificarElemento(txtNotas.getText().trim()) + "' "
                     + "where id=" + key[3]
             );
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {

@@ -80,8 +80,6 @@ public class VistaTrasladar extends javax.swing.JPanel {
         
         txtMotivo.setText("");
         
-        
-        
         if (ListaAnimalesSeleccionados.size() > 0) {
             LlenarPnlAnimales();
         }
@@ -516,7 +514,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = jdFechaTraslado.getCalendar();
         String fechaT = sdf.format(fecha.getTime());
-        String motivo = txtMotivo.getText().trim();
+        String motivo = Utilidades.decodificarElemento(txtMotivo.getText().trim());
         boolean novilla = chNovilla.isSelected();
 
 //        if (motivo.equals("")) {
@@ -568,53 +566,6 @@ public class VistaTrasladar extends javax.swing.JPanel {
             }
             ((VistaGeneral) modeloVentanaGeneral.getFrameVentana()).dispose();
         }
-
-//        
-//        modeloRotacionLotes.setId("0");
-//        modeloRotacionLotes.setId_lote(idLote);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Calendar fecha = jdFechaEntrada.getCalendar();
-//        modeloRotacionLotes.setFecha_entrada(sdf.format(fecha.getTime()));
-//        modeloRotacionLotes.setFecha("NOW()");
-//        modeloRotacionLotes.setEstado("Activo");
-//        modeloRotacionLotes.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-//        
-//        Map<String, String> datos = new HashMap<>();
-//        datos.put("IDLOTE", ListaGruposSeleccionados.get(0).get("IDLOTE"));
-//        datos.put("FECHA_SALIDA", sdf.format(fecha.getTime()));
-//        System.out.println("ListaGruposSeleccionados.get(0).get(\"IDLOTE\")--->"+ListaGruposSeleccionados.get(0).get("IDLOTE"));
-//        if(!ListaGruposSeleccionados.get(0).get("IDLOTE").equals(""))
-//            controlRotar.ActualizarRotacionLote(datos);
-//        
-//        int ret = -1, ret2 = -1 ;
-//        if(modeloRotacionLotes.getId().equals("0")){//INSERT
-//            ret = controlRotar.Guardar(modeloRotacionLotes);
-////        }else{
-////            ret = controlBloque.Actualizar(modelo);
-//        }
-//        String idRotacionLotes = controlRotar.getId(idLote);
-//        
-//        for(int i = 0; i < Lista_Grupos_Seleccionados.size(); i++){
-//            ListamodeloRotacionGrupos.add(
-//                new ModeloRotacionGrupos(
-//                        "0", 
-//                        idRotacionLotes, 
-//                        ""+Lista_Grupos_Seleccionados.get(i).getId(), 
-//                        ""+Lista_Grupos_Seleccionados.get(i).getDatosMostrar(), 
-//                        "Activo", 
-//                        "NOW()", 
-//                        datosUsuario.datos.get(0).get("ID_USUARIO")));
-//        }
-//        for(int i = 0; i < ListamodeloRotacionGrupos.size(); i++){
-//            ret2 = controlRotar.GuardarRotacionGrupos(ListamodeloRotacionGrupos.get(i));
-//        }
-//        
-//        if(ret == 0){
-//            if(modeloVentanaGeneral.getPanelPadre() instanceof VistaRotacion){
-//                ((VistaRotacion)modeloVentanaGeneral.getPanelPadre()).RetornoVistaGeneral(modeloVentanaGeneral, modeloRotacionLotes); 
-//            }
-//            ((VistaGeneral)modeloVentanaGeneral.getFrameVentana()).dispose();
-//        }  
     }
 
     private void LimpiarFomulario() {
@@ -639,7 +590,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
                     new ModeloDatosMultiple(
                             Integer.parseInt(ListaAnimalesSeleccionados.get(i).get("ID_ANIMAL")), // ID
                             ListaAnimalesSeleccionados.get(i).get("NUMERO_ANIMAL") + " / "
-                            + ListaAnimalesSeleccionados.get(i).get("GRUPO") + " / "
+                            + Utilidades.decodificarElemento(ListaAnimalesSeleccionados.get(i).get("GRUPO")) + " / "
                             + ListaAnimalesSeleccionados.get(i).get("GENERO").toUpperCase().charAt(0) + " / "
                             + ListaAnimalesSeleccionados.get(i).get("PESO") + "Kg", // DATO
                             getOriX(i), // X
@@ -724,9 +675,6 @@ public class VistaTrasladar extends javax.swing.JPanel {
                 public void mousePressed(java.awt.event.MouseEvent evt) {
                     int indr = Integer.parseInt(evt.getComponent().getName());
                     ActualizarGruposSeleccionados(indr);
-//                    Lista_Animales_Seleccionados.remove(indr);
-//                    RecargarListaSeleccionados();
-//                    MostrarAnimalesSeleccionados(); 
                 }
             });
             pnlDato.setToolTipText(obj.getDatosMostrar());

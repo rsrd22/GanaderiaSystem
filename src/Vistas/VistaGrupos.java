@@ -724,7 +724,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         modelo.setId(codigoGrupo);
         modelo.setFecha("NOW()");
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setDescripcion(txtDescripcion.getText().trim());
+        modelo.setDescripcion(Utilidades.CodificarElemento(txtDescripcion.getText().trim()));
         modelo.setEstado(cbEstado.getSelectedItem().toString());
         modelo.setDescMacrogrupo(macroGrupo);
         modelo.setIdMacrogrupo(codigoMacroGrupo);
@@ -844,7 +844,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             txtCodigoMacroGrupo.setText(modelo.getIdMacrogrupo());
             cbTipoAnimal.setSelectedItem(modelo.getDescTipoAnimal());
             txtCodigoTipoAnimal.setText(modelo.getIdTipoAnimal());
-            txtDescripcion.setText(modelo.getDescripcion());
+            txtDescripcion.setText(Utilidades.decodificarElemento(modelo.getDescripcion()));
             cbEstado.setSelectedItem(modelo.getEstado());
 
             Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);

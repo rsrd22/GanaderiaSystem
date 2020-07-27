@@ -294,7 +294,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(lblTid1, gridBagConstraints);
 
         tbl_Animales.setForeground(new java.awt.Color(59, 123, 50));

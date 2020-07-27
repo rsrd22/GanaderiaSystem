@@ -211,6 +211,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jList1);
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -268,25 +269,26 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 180;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(txtNumero, gridBagConstraints);
 
         jSeparator6.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.ipadx = 179;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(jSeparator6, gridBagConstraints);
 
         lbltitle1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -294,13 +296,13 @@ public class VistaAllLotes extends javax.swing.JPanel {
         lbltitle1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle1.setText("Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = 53;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 35, 0, 0);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         pnlAgregarLote.add(lbltitle1, gridBagConstraints);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -308,55 +310,53 @@ public class VistaAllLotes extends javax.swing.JPanel {
         jLabel13.setText("HA");
         jLabel13.setToolTipText("Hectárea");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.053333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(jLabel13, gridBagConstraints);
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_2.png"))); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
         btnGuardar.setBorderPainted(false);
         btnGuardar.setContentAreaFilled(false);
         btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
         btnGuardar.setName("btnGuardar"); // NOI18N
-        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
-        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipadx = -25;
-        gridBagConstraints.ipady = -9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.053333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(btnGuardar, gridBagConstraints);
 
-        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
+        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
         btnDescartar.setBorderPainted(false);
         btnDescartar.setContentAreaFilled(false);
         btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
-        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
-        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30_over.png"))); // NOI18N
+        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar30_over.png"))); // NOI18N
         btnDescartar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDescartarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipadx = -59;
-        gridBagConstraints.ipady = -43;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 12, 0, 0);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.053333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         pnlAgregarLote.add(btnDescartar, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -372,14 +372,13 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 175;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 25, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(cbBloque, gridBagConstraints);
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -387,12 +386,12 @@ public class VistaAllLotes extends javax.swing.JPanel {
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Bloque");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 108;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 25, 0, 0);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         pnlAgregarLote.add(lblTid1, gridBagConstraints);
 
         lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -400,11 +399,12 @@ public class VistaAllLotes extends javax.swing.JPanel {
         lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid2.setText("Fuente Hidrica");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 43;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 30, 0, 20);
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.weighty = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         pnlAgregarLote.add(lblTid2, gridBagConstraints);
 
         lbltitle3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -412,12 +412,12 @@ public class VistaAllLotes extends javax.swing.JPanel {
         lbltitle3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle3.setText("Area Total");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 37;
-        gridBagConstraints.ipady = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(lbltitle3, gridBagConstraints);
 
         txtAreaT.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -440,24 +440,24 @@ public class VistaAllLotes extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = 215;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         pnlAgregarLote.add(txtAreaT, gridBagConstraints);
 
         jSeparator8.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = 214;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 0);
         pnlAgregarLote.add(jSeparator8, gridBagConstraints);
 
         lstFuentesHidricas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -475,16 +475,14 @@ public class VistaAllLotes extends javax.swing.JPanel {
         jScrollPane3.setViewportView(lstFuentesHidricas);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 107;
-        gridBagConstraints.ipady = 70;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 10);
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.33333333333333;
+        gridBagConstraints.weighty = 0.75;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         pnlAgregarLote.add(jScrollPane3, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -715,6 +713,14 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }
 
     private void Guardar() {
+        if(cbBloque.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un bloque para realizar la operación.");
+            return;
+        }
+        if(txtAreaT.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe especificar el área total para realizar la operación.");
+            return;
+        }
         String id_Bloque = ""+listaBloques.get(cbBloque.getSelectedIndex()).get("ID");
         
         String AreaT = txtAreaT.getText().trim().replace(".", "").replace(",", ".");
