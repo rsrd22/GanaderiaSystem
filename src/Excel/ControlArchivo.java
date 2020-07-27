@@ -59,7 +59,7 @@ public class ControlArchivo {
                 String conten = "";
                 Iterator rows  = sheet.rowIterator();
                 while (rows.hasNext()) {
-                    System.out.println("*****************************************");
+//                    System.out.println("*****************************************");
                     col=0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
@@ -81,7 +81,7 @@ public class ControlArchivo {
                                 }
                             }else{
                                 conten = xssfCell.getStringCellValue();
-                                if(conten.isEmpty()){
+                                if(conten.isEmpty() || conten.equals("null")){
                                     conten = "_";
                                 }
                                 obj.put(keys.get(col), ""+Utilidades.CodificarElemento(conten));
@@ -89,9 +89,12 @@ public class ControlArchivo {
                         }
                         col++;
                     }
-                    campos.add(obj);
+                    
                     if(k == 0){
                         k =1;
+                    }else{
+                        if(!obj.isEmpty())
+                            campos.add(obj);
                     }
                     
                 }
