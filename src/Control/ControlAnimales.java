@@ -644,7 +644,7 @@ public class ControlAnimales implements IControl {
         try {
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
-                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL, animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
                     + "grup.descripcion AS GRUPO, \n"
                     + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
@@ -674,7 +674,7 @@ public class ControlAnimales implements IControl {
 
             consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
-                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL, animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
                     + "grup.descripcion AS GRUPO, \n"
                     + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
@@ -708,7 +708,7 @@ public class ControlAnimales implements IControl {
 
     public Map<String, String> GetDatosVenta(String id_Animal) {
         try {
-            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL,numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
+            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
                     + "DATE_FORMAT(fecha_venta, '%d/%m/%Y') AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n"
                     + "MascaraMonedaDecimal(REPLACE(precio_venta, '.', ',')) AS PRECIO_VENTA, peso AS PESO, peso_canal AS PESO_CANAL, \n"
                     + "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(peso_canal IS NULL, peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n"
@@ -788,7 +788,7 @@ public class ControlAnimales implements IControl {
 
     public Map<String, String> GetDatosMuerte(String id_Animal) {
         try {
-            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL,numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
+            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
                     + "DATE_FORMAT(fecha_muerte, '%d/%m/%Y') AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n"
                     + "FROM animales \n"
                     + "WHERE id = '" + id_Animal + "'";
@@ -895,7 +895,7 @@ public class ControlAnimales implements IControl {
             String consulta = "SELECT\n"
                     + "a.id AS ID_ANIMAL,\n"
                     + "a.numero AS NUMERO_ANIMAL,\n"
-                    + "IF(a.numero_mama_adoptiva IS NULL, a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "IF(a.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "a.peso AS PESO,\n"
                     + "DATE_FORMAT(a.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO,\n"
                     + "a.genero AS GENERO,\n"
