@@ -137,7 +137,7 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Modificar");
-        
+
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
 
@@ -309,7 +309,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelPadre() instanceof VistaPesaje) {
             if (((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPesaje vp = ((VistaPesaje) modeloVista.getPanelPadre());
-                if (modeloVista.getOpcion()==1) {
+                if (modeloVista.getOpcion() == 1) {
                     vp.tbl_Animales.setValueAt("", vp.filaSeleccionada, 11);
                 }
                 vp.band = 0;
@@ -320,8 +320,12 @@ public class VistaGeneral extends javax.swing.JFrame {
             if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPalpacion vp = ((VistaPalpacion) modeloVista.getPanelPadre());
                 vp.MostrarTabla();
-                vp.band=0;
+                vp.band = 0;
             }
+        } else if (modeloVista.getPanelPadre() instanceof VistaHistoriaAnimal) {
+
+            VistaHistoriaAnimal vp = ((VistaHistoriaAnimal) modeloVista.getPanelPadre());
+            vp.band = 0;
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -532,7 +536,7 @@ public class VistaGeneral extends javax.swing.JFrame {
 
             VistaEditarDatosAnimal vista = new VistaEditarDatosAnimal(modeloVista);
             MostrarPanel(vista);
-        
+
         }
 
     }

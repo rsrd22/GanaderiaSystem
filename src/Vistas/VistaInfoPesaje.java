@@ -15,6 +15,7 @@ import Modelo.ModeloVentanaGeneral;
 public class VistaInfoPesaje extends javax.swing.JPanel {
 
     private ModeloPesaje modelo;
+    private final String FECHA_POR_DEFECTO = "1900-01-01";
 
     public VistaInfoPesaje() {
         initComponents();
@@ -90,7 +91,7 @@ public class VistaInfoPesaje extends javax.swing.JPanel {
                 + "        </tr>\n"
                 + "        <tr>\n"
                 + "            <td style=\"text-align: right; font-weight: bold;\">Fecha de destete:</td>\n"
-                + "            <td>" + (modelo.getDestete().equals("1") ? modelo.getFechaDestete() : "") + "</td>\n"
+                + "            <td>" + (modelo.getDestete().equals("1") ? modelo.getFechaDestete().equals(FECHA_POR_DEFECTO) ? "" : modelo.getFechaDestete() : "") + "</td>\n"
                 + "            <td style=\"text-align: right; font-weight: bold;\">Descripción:</td>\n"
                 + "            <td>" + (modelo.getHierro().equals("1") ? modelo.getDescripcionHierro() : "") + "</td>\n"
                 + "        </tr>\n"

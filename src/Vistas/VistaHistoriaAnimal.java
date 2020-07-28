@@ -73,6 +73,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public ModeloVentanaGeneral objetoVentana;
     private int ancho;
     private int alto;
+    public int band;
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -88,6 +89,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         DatosVenta = new HashMap<String, String>();
         DatosMuerte = new HashMap<String, String>();
         listaHistorico = new HashMap<String[], JLabel>();
+        band = 0;
         id_Animal = "" + modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         listaPesajes = new ArrayList<>();
@@ -2289,14 +2291,16 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                     System.out.println("key: " + key[1] + ":" + key[2]);
                     System.out.println("value: " + value.getText());
 
-                    objetoVentana = new ModeloVentanaGeneral(
-                            this, //panelPadre
-                            new VistaEditarDatosAnimal(), //panelHijo
-                            1, //opcion
-                            entry //modeloDeDatos
-                    );
-                    new VistaGeneral(objetoVentana).setVisible(true);
-
+                    if (band == 0) {
+                        band=1;
+                        objetoVentana = new ModeloVentanaGeneral(
+                                this, //panelPadre
+                                new VistaEditarDatosAnimal(), //panelHijo
+                                1, //opcion
+                                entry //modeloDeDatos
+                        );
+                        new VistaGeneral(objetoVentana).setVisible(true);
+                    }
                     break;
                 }
             }
@@ -2498,6 +2502,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }
 
     public void ActualizarDatosAnimal() {
+        band = 0;
         GetDatosAnimal();
     }
 
