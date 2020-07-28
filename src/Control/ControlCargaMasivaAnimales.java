@@ -82,7 +82,7 @@ public class ControlCargaMasivaAnimales {
                 + "0,\n"
                 + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"'),\n"
                 + "" + datos.get("IDFINCA")+ ",\n"
-                + "" + datos.get("IDFINCA") + ",\n"
+                + "" + datos.get("IDGRUPO") + ",\n"
                 + "     NOW(),\n"
                 + "'"+Utilidades.CodificarElemento("CREACIÓN DEL ANIMAL")+"',\n"
                 + "'Activo',\n"
