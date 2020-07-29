@@ -788,7 +788,7 @@ public class ControlAnimales implements IControl {
 
     public Map<String, String> GetDatosMuerte(String id_Animal) {
         try {
-            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
+            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
                     + "DATE_FORMAT(fecha_muerte, '%d/%m/%Y') AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n"
                     + "FROM animales \n"
                     + "WHERE id = '" + id_Animal + "'";
@@ -895,7 +895,7 @@ public class ControlAnimales implements IControl {
             String consulta = "SELECT\n"
                     + "a.id AS ID_ANIMAL,\n"
                     + "a.numero AS NUMERO_ANIMAL,\n"
-                    + "IF(a.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "IF(a.numero_mama_adoptiva IS NULL OR a.numero_mama_adoptiva = '', a.numero_mama, a.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "a.peso AS PESO,\n"
                     + "DATE_FORMAT(a.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO,\n"
                     + "a.genero AS GENERO,\n"

@@ -67,6 +67,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         btnCargar = new javax.swing.JButton();
         scroll = new javax.swing.JScrollPane();
         txtRespuesta = new javax.swing.JEditorPane();
+        cbGenero = new javax.swing.JComboBox();
+        lbltitle10 = new javax.swing.JLabel();
+        progreso = new javax.swing.JProgressBar();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
@@ -136,9 +139,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Archivo");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.5;
@@ -156,21 +158,19 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtURL, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -203,12 +203,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 151, Short.MAX_VALUE)
+            .addGap(0, 166, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 1, Short.MAX_VALUE)
+                    .addGap(0, 7, Short.MAX_VALUE)
                     .addComponent(btnSelectArchivo)
-                    .addGap(0, 2, Short.MAX_VALUE)))
+                    .addGap(0, 8, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +252,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -260,6 +260,48 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(scroll, gridBagConstraints);
+
+        cbGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbGenero.setForeground(new java.awt.Color(59, 123, 50));
+        cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Hembra", "Macho" }));
+        cbGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbGeneroActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(cbGenero, gridBagConstraints);
+
+        lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle10.setText("Sexo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        add(lbltitle10, gridBagConstraints);
+
+        progreso.setBackground(new java.awt.Color(255, 255, 255));
+        progreso.setForeground(new java.awt.Color(36, 151, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(progreso, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -300,17 +342,24 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         CargarAnimales();
     }//GEN-LAST:event_btnCargarActionPerformed
 
+    private void cbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGeneroActionPerformed
+
+    }//GEN-LAST:event_cbGeneroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     public javax.swing.JButton btnSelectArchivo;
     public javax.swing.JComboBox cbFinca;
+    public javax.swing.JComboBox cbGenero;
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid3;
+    private javax.swing.JLabel lbltitle10;
+    public javax.swing.JProgressBar progreso;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JEditorPane txtRespuesta;
     public javax.swing.JTextField txtURL;
@@ -348,14 +397,14 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             System.out.println("ruta-->" + ruta);
             ControlArchivo con = new ControlArchivo();
-            if(idTipoAnimal.equals("-1")){
+            if (idTipoAnimal.equals("-1")) {
                 return;
             }
-            if(idFinca.equals("-1")){
+            if (idFinca.equals("-1")) {
                 return;
             }
-            if(ruta.equals("")){
-               return; 
+            if (ruta.equals("")) {
+                return;
             }
 
             String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
@@ -364,6 +413,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             } else {
                 listaInfoLeida = con.LeerExcel(ruta);
             }
+
+            int valor = 0;
+            progreso.setMaximum(listaInfoLeida.size());
 //            for (Map<String, String> map : listaInfoLeida) {
 //                System.out.println("************************************************************************************************");
 //                for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -377,27 +429,27 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             String inGrupos = "", inHierros = "";
             int fila = 0;
             if (listaInfoLeida.size() > 0) {
-                System.out.println("listaInfoLeida.size()"+listaInfoLeida.size());
+                System.out.println("listaInfoLeida.size()" + listaInfoLeida.size());
                 //<editor-fold defaultstate="collapsed" desc="Listar GRUPOS Y HIERRO">
                 List<Map<String, String>> listaGrupos = Utilidades.data_list(1, listaInfoLeida, new String[]{"GRUPO"});
                 List<Map<String, String>> listaHierros = Utilidades.data_list(1, listaInfoLeida, new String[]{"HIERRO"});
-                System.out.println("listaGrupos-->"+listaGrupos.size());
-                System.out.println("listaHierros-->"+listaHierros.size());
+                System.out.println("listaGrupos-->" + listaGrupos.size());
+                System.out.println("listaHierros-->" + listaHierros.size());
                 inGrupos = getIN(listaGrupos, "GRUPO");
                 inHierros = getIN(listaHierros, "HIERRO");
-                if(inGrupos.equals("") || inHierros.equals("")){
+                if (inGrupos.equals("") || inHierros.equals("")) {
                     //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
-                    String motivo ="";
-                    if(inGrupos.equals("")){
+                    String motivo = "";
+                    if (inGrupos.equals("")) {
                         motivo = "No se encontro ningún GRUPO que coincida con los que se encuentran en el sistema.";
-                    }else{
+                    } else {
                         motivo = "No se encontro ningún HIERRO que coincida con los que se encuentran en el sistema.";
                     }
                     txtRespuesta.setText("<html>\n"
                             + "<body>\n"
                             + "    <table>\n"
                             + "        <tr>\n"
-                            + "            <td style=\"font-weight: bold; color: #990000;\">"+motivo+" </td>"
+                            + "            <td style=\"font-weight: bold; color: #990000;\">" + motivo + " </td>"
                             + "        </tr>\n"
                             + "    </table>\n"
                             + "</body>\n"
@@ -414,7 +466,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         + "FROM `propietarioxhierro`\n"
                         + "WHERE UPPER(TRIM(descripcion)) IN (" + inHierros + ")");
 //</editor-fold>
-                
+
                 for (Map<String, String> info : listaInfoLeida) {
                     fila++;
                     Map<String, String> infoGrupo = getInfo(listaInfoGrupos, info.get("GRUPO"), "DESCRIPCION");
@@ -422,13 +474,13 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     info.put("IDFINCA", "" + idFinca);
                     info.put("IDTIPOANIMAL", "" + idTipoAnimal);
                     Calendar c = Calendar.getInstance();
-                    
-                    
+
                     //<editor-fold defaultstate="collapsed" desc="Sexo">
                     String s = info.get("SEXO");
-                    System.out.println("s-->"+s);
-                    if(s.length()>1)
+                    System.out.println("s-->" + s);
+                    if (s.length() > 1) {
                         s = s.substring(0, 1);
+                    }
                     System.out.println("s--" + s);
                     if (s.toUpperCase().equals("M")) {
                         info.put("SEXO", "macho");
@@ -452,7 +504,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         } else {
                             motivo = "No se entontro el Hierro " + info.get("HIERRO") + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
                         }
-                        if(info.get("FEC_NACIMIENTO").equals("_")){
+                        if (info.get("FEC_NACIMIENTO").equals("_")) {
                             motivo = "La fecha de Nacimiento no puede estar vacia. por favor verifique e intentelo nuevamente.";
                         }
 //</editor-fold>
@@ -496,27 +548,26 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     } else {
                         info.put("DESTETE", "1");
                     }
-                    
-                    if(!info.get("FEC_NACIMIENTO").equals("_")){
+
+                    if (!info.get("FEC_NACIMIENTO").equals("_")) {
                         String[] dat = info.get("FEC_NACIMIENTO").split("/");
-                        info.put("FEC_NACIMIENTO", dat[2]+"-"+dat[1]+"-"+dat[0]);
+                        info.put("FEC_NACIMIENTO", dat[2] + "-" + dat[1] + "-" + dat[0]);
                     }
-                    if(!info.get("FEC_DESTETE").equals("_")){
+                    if (!info.get("FEC_DESTETE").equals("_")) {
                         String[] dat = info.get("FEC_DESTETE").split("/");
-                        info.put("FEC_DESTETE", dat[2]+"-"+dat[1]+"-"+dat[0]);
-                    }else{
+                        info.put("FEC_DESTETE", dat[2] + "-" + dat[1] + "-" + dat[0]);
+                    } else {
                         info.put("FEC_DESTETE", "1900-01-01");
                     }
-                    
-                    if(info.get("PESO_DESTETE").equals("_")){
+
+                    if (info.get("PESO_DESTETE").equals("_")) {
                         info.put("PESO_DESTETE", "0");
                     }
-                    if(info.get("PESO").equals("_")){
+                    if (info.get("PESO").equals("_")) {
                         info.put("PESO", "0");
                     }
-                    
-                    //</editor-fold>
 
+                    //</editor-fold>
                     List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE `numero` = '" + info.get("NUM_ANIMAL") + "' ");
                     int resp = -10;
                     if (InfoAnimal.size() > 0) {
@@ -542,7 +593,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         info.put("MOTIVO", "" + motivo);
                         listaNoIngresados.add(info);
                     }
-
+                    progreso.setValue(valor++);
                 }
                 //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
 
@@ -600,7 +651,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             String in = "";
 
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("**************"+i+"*****************");
+                System.out.println("**************" + i + "*****************");
                 for (Map.Entry<String, String> entry : lista.get(i).entrySet()) {
                     String k = entry.getKey();
                     String v = entry.getValue();
