@@ -190,9 +190,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnMinimizar, gridBagConstraints);
 
         btnCerrar.setBackground(new java.awt.Color(153, 255, 0));
@@ -208,9 +207,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 5, 11, 12);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnCerrar, gridBagConstraints);
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -220,9 +218,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 311;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 13, 0, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(lblTitulo, gridBagConstraints);
 
         importarExportar.setBackground(new java.awt.Color(255, 255, 255));
@@ -238,9 +235,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 7, 11, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(importarExportar, gridBagConstraints);
 
         btnInicio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -259,9 +255,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnInicio, gridBagConstraints);
 
         btnMenuVertical.setBackground(new java.awt.Color(255, 255, 255));
@@ -277,9 +272,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnMenuVertical, gridBagConstraints);
 
         btnMaximizar.setBackground(new java.awt.Color(255, 255, 255));
@@ -295,9 +289,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 7, 11, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnMaximizar, gridBagConstraints);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/importar.png"))); // NOI18N
@@ -305,9 +298,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 7, 11, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(jLabel1, gridBagConstraints);
 
         btnInicio1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -326,9 +318,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnInicio1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
