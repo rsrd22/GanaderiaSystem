@@ -110,10 +110,10 @@ public class ControlAnimales implements IControl {
                 + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete,IFNULL(a.precio_venta,0) precioventa\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
-                + "LEFT JOIN grupos c ON a.grupo=c.id\n"
-                + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
-                + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
+                + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
+                + "LEFT JOIN propietarios f ON f.`id`=d.`id_propietario`\n"
+                + "LEFT JOIN grupos c ON c.id=a.grupo\n"
                 + "WHERE a.id=" + id;
         List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
@@ -612,9 +612,9 @@ public class ControlAnimales implements IControl {
         }
     }
 
-    public int EnviarConsultas(Object cons){
+    public int EnviarConsultas(Object cons) {
         ArrayList<String> consultas = new ArrayList<>();
-        consultas = (ArrayList<String>)cons;
+        consultas = (ArrayList<String>) cons;
 
         try {
             if (mySQL.EnviarConsultas(consultas)) {
@@ -630,7 +630,7 @@ public class ControlAnimales implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
-    
+
     public String ObtenerUltimoDescendiente(String numeroMadre) {
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();

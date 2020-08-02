@@ -133,9 +133,9 @@ public class Consultas {
                 + "animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN fincas c ON b.id_finca=c.id\n"
-                + "LEFT JOIN propietarios d ON c.id_propietario=d.id\n"
+                + "LEFT JOIN propietarioxhierro f ON a.hierro=f.id\n"
+                + "LEFT JOIN propietarios d ON d.`id`=f.`id_propietario`\n"
                 + "LEFT JOIN grupos e ON e.id=a.grupo\n"
-                + "LEFT JOIN propietarioxhierro f ON f.id_propietario=d.id AND a.hierro=f.id\n"
                 + "ORDER BY\n"
                 + "a.numero ASC");
 
@@ -225,11 +225,17 @@ public class Consultas {
                 + "'-1' id,\n"
                 + "'Seleccionar' descripcion\n"
                 + "UNION\n"
-                + "SELECT prop.id id, \n" +
-                "CONCAT_WS(' ', prop.primer_nombre, IFNULL(prop.segundo_nombre, ''), prop.primer_apellido, IFNULL(prop.segundo_apellido, '')) descripcion\n" +
-                "FROM `propietarios` prop\n" +
-                "INNER JOIN `propietarioxhierro` proph ON proph.`id_propietario` = prop.`id`\n" +
-                "");
+                + "SELECT prop.id id, \n"
+                + "CONCAT(\n"
+                + "prop.identificacion,' - ',\n"
+                + "TRIM(\n"
+                + "CONCAT(\n"
+                + "TRIM(CONCAT_WS(' ', prop.primer_nombre, IFNULL(prop.segundo_nombre, ''))),' ',\n"
+                + "TRIM(CONCAT_WS(' ',prop.primer_apellido, IFNULL(prop.segundo_apellido, '')))\n"
+                + "))\n"
+                + ") descripcion\n"
+                + "FROM `propietarios` prop\n"
+                + "INNER JOIN `propietarioxhierro` proph ON proph.`id_propietario` = prop.`id`");
 
         consultas.put("OBTENER_ULTIMO_DESCENDIENTE", "select \n"
                 + "case when numero_descendiente is null then 1 else max(numero_descendiente)+1 end numeroDescendiente \n"
@@ -315,13 +321,13 @@ public class Consultas {
                 + "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n"
                 + "WHERE id_pesaje="
         );
-        
+
         consultas.put(
                 "GET_MEDICAMENTOS_POR_PALPACION",
-                "SELECT a.id_medicamento AS ID, CONCAT(b.descripcion, ' (', b.unidad_medida,')') AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO, '0' AS 'UPDATE'\n" +
-                "FROM `palpacionxtratamiento` a\n" +
-                "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n" +
-                "WHERE a.`id_palpacion`="
+                "SELECT a.id_medicamento AS ID, CONCAT(b.descripcion, ' (', b.unidad_medida,')') AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO, '0' AS 'UPDATE'\n"
+                + "FROM `palpacionxtratamiento` a\n"
+                + "LEFT JOIN medicamentos b ON a.id_medicamento=b.id\n"
+                + "WHERE a.`id_palpacion`="
         );
 
         consultas.put(
