@@ -41,7 +41,7 @@ public class ImportExport extends Thread implements Runnable {
 
     @Override
     public void run() {
-        if (estado == EstadoIE.EXPORTAR) {
+        if (estado == Estados.EXPORTAR) {
             exportar();
         } else {
             importar();

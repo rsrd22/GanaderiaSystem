@@ -23,11 +23,13 @@ public class ConfiguracionPropiedades {
     private static String CLAVE;
     private static String BASE_DE_DATOS;
     private static String ANIO_FISCAL;
+    private static String EST_CARGA_MASIVA_ANIMALES;
     private static final String KEY_SERVIDOR = "servidor";
     private static final String KEY_USUARIO = "usuario";
     private static final String KEY_CLAVE = "clave";
     private static final String KEY_BASE_DE_DATOS = "baseDeDatos";
     private static final String KEY_ANIO_FISCAL = "anioFiscal";
+    private static final String KEY_EST_CARGA_MASIVA_ANIMALES = "EncabezadosCargaMasivaAnimal";
 
     public static void cargarConfiguracion() {
         propiedades = new Properties();
@@ -43,10 +45,19 @@ public class ConfiguracionPropiedades {
             USUARIO = propiedades.getProperty(KEY_USUARIO);
             CLAVE = propiedades.getProperty(KEY_CLAVE);
             ANIO_FISCAL = propiedades.getProperty(KEY_ANIO_FISCAL);
+            EST_CARGA_MASIVA_ANIMALES = propiedades.getProperty(KEY_EST_CARGA_MASIVA_ANIMALES);
             cargarPropiedades();
         } catch (IOException ioe) {
             JOptionPane.showMessageDialog(null, "El archivo de configuracion no se encuentra en la ruta esperada.\nDetalles:\n" + ioe.getMessage());
         }
+    }
+
+    public static String[] getEST_CARGA_MASIVA_ANIMALES() {
+        return EST_CARGA_MASIVA_ANIMALES.split(",");
+    }
+
+    public static void setEST_CARGA_MASIVA_ANIMALES(String EST_CARGA_MASIVA_ANIMALES) {
+        ConfiguracionPropiedades.EST_CARGA_MASIVA_ANIMALES = EST_CARGA_MASIVA_ANIMALES;
     }
 
     public static String getANIO_FISCAL() {

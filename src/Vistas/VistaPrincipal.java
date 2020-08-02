@@ -10,7 +10,7 @@ import AjustarControles.Ajustar;
 import AjustarControles.AjustarControles;
 import AjustarControles.ControlDeUsuario;
 import AjustarControles.tiposDeAjuste;
-import ImportExport.EstadoIE;
+import ImportExport.Estados;
 import ImportExport.ImportExport;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Consultas;
@@ -1205,7 +1205,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void importarExportarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_importarExportarMouseClicked
         if (evt.getClickCount() == 1) {
-            ie.estado = EstadoIE.EXPORTAR;
+            ie.estado = Estados.EXPORTAR;
             ie.iniciar();
         }
     }//GEN-LAST:event_importarExportarMouseClicked

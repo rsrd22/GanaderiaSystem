@@ -5,6 +5,7 @@
  */
 package Excel;
 
+import Configuracion.ConfiguracionPropiedades;
 import Utilidades.Utilidades;
 import java.awt.Desktop;
 import java.io.File;
@@ -56,7 +57,7 @@ public class ControlArchivo {
             String dat = "";
             String[] datos = null;
             String data = "";
-            
+
             int col = 0;
             int k = 0;
             Map<String, String> obj = new HashMap<String, String>();
@@ -64,50 +65,49 @@ public class ControlArchivo {
             for (int sheetNo = 0; sheetNo < 1; sheetNo++) {
                 XSSFSheet sheet = book.getSheetAt(sheetNo);
                 String conten = "";
-                Iterator rows  = sheet.rowIterator();
+                Iterator rows = sheet.rowIterator();
                 while (rows.hasNext()) {
 //                    System.out.println("*****************************************");
-                    col=0;
+                    col = 0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
                     obj = new HashMap<String, String>();
                     while (iterator.hasNext()) {
                         XSSFCell xssfCell = (XSSFCell) iterator.next();
-                        if(col >= keys.size() && k == 1){
+                        if (col >= keys.size() && k == 1) {
                             break;
-                        }  
-                        if(k == 0){
-                            keys.add(""+xssfCell.toString());
-                        }else{
-                            if(XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType() ){
-                                if(DateUtil.isCellDateFormatted(xssfCell)){
+                        }
+                        if (k == 0) {
+                            keys.add("" + xssfCell.toString());
+                        } else {
+                            if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
+                                if (DateUtil.isCellDateFormatted(xssfCell)) {
                                     String value = destFormat.format(xssfCell.getDateCellValue());
-                                    obj.put(keys.get(col), ""+value);
-                                }else{
-                                    obj.put(keys.get(col), ""+((long) xssfCell.getNumericCellValue()));
+                                    obj.put(keys.get(col), "" + value);
+                                } else {
+                                    obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
                                 }
-                            }else{
+                            } else {
                                 conten = xssfCell.getStringCellValue();
-                                if(conten.isEmpty() || conten.equals("null")){
+                                if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
-                                obj.put(keys.get(col), ""+Utilidades.CodificarElemento(conten));
+                                obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
                         }
                         col++;
                     }
-                    
-                    if(k == 0){
-                        k =1;
-                    }else{
-                        if(!obj.isEmpty())
+
+                    if (k == 0) {
+                        k = 1;
+                    } else {
+                        if (!obj.isEmpty()) {
                             campos.add(obj);
+                        }
                     }
-                    
+
                 }
             }
-            
-
             return campos;
         } catch (Exception ioe) {
             ioe.printStackTrace();
@@ -183,6 +183,90 @@ public class ControlArchivo {
         }
     }
 
+    public List<Map<String, String>> LeerExcelAct(String ruta, String[] keysConf) {
+        try {
+            List<Map<String, String>> campos = new ArrayList<Map<String, String>>();
+            List<String> keys = new ArrayList<>();
+            FileInputStream fileInput = new FileInputStream(new File(ruta));
+            XSSFWorkbook book = new XSSFWorkbook(fileInput);
+            String dat = "";
+            String[] datos = null;
+            String data = "";
+
+            int col = 0;
+            int k = 0;
+            Map<String, String> obj = new HashMap<String, String>();
+            DateFormat destFormat = new SimpleDateFormat("dd/MM/yyyy");
+            for (int sheetNo = 0; sheetNo < 1; sheetNo++) {
+                XSSFSheet sheet = book.getSheetAt(sheetNo);
+                String conten = "";
+                Iterator rows = sheet.rowIterator();
+                while (rows.hasNext()) {
+                    col = 0;
+                    XSSFRow row = (XSSFRow) rows.next();
+                    Iterator iterator = row.cellIterator();
+                    obj = new HashMap<String, String>();
+                    while (iterator.hasNext()) {
+                        XSSFCell xssfCell = (XSSFCell) iterator.next();
+                        if (col >= keys.size() && k == 1) {
+                            break;
+                        }
+                        if (k == 0) {
+                            keys.add("" + xssfCell.toString());
+                        } else {
+                            if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
+                                if (DateUtil.isCellDateFormatted(xssfCell)) {
+                                    String value = destFormat.format(xssfCell.getDateCellValue());
+                                    obj.put(keys.get(col), "" + value);
+                                } else {
+                                    obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
+                                }
+                            } else {
+                                conten = xssfCell.getStringCellValue();
+                                if (conten.isEmpty() || conten.equals("null")) {
+                                    conten = "_";
+                                }
+                                obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
+                            }
+                        }
+                        col++;
+                    }
+
+                    if (k == 0) {
+                        k = 1;
+                    } else {
+                        if (!obj.isEmpty()) {
+                            campos.add(obj);
+                        }
+                    }
+                }
+            }
+
+            boolean encontrado = false;
+            if (keysConf.length > 0 && keys.size() > 0) {
+                for (String key : keys) {
+                    for (int i = 0; i < keysConf.length; i++) {
+                        if (key.equals(keysConf[i])) {
+                            encontrado = true;
+                            break;
+                        } else {
+                            encontrado = false;
+                        }
+                    }
+                    if (!encontrado) {
+                        JOptionPane.showMessageDialog(null, "El archivo no es el esperado por el sistema.");
+                        return null;
+                    }
+                }
+            }
+
+            return campos;
+        } catch (Exception ioe) {
+            ioe.printStackTrace();
+            return null;
+        }
+    }
+
     
     /***
      * @param ruta
@@ -207,9 +291,9 @@ public class ControlArchivo {
         XSSFRow row = hoja1.createRow(0);//se crea las filas
         //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
         for(int i = 0; i < Encabezado.size(); i++){
-            XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posiciÃ³n
-            cell.setCellStyle(style); // se aÃ±ade el style crea anteriormente 
-            cell.setCellValue(Encabezado.get(i));//se aÃ±ade el contenido
+            XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posición
+            cell.setCellStyle(style); // se añade el style crea anteriormente 
+            cell.setCellValue(Encabezado.get(i));//se añade el contenido
         }
 //</editor-fold>
         
@@ -217,8 +301,8 @@ public class ControlArchivo {
         for(int fila =0 ; fila < ListaDatos.size(); fila++){//FILAS
             row = hoja1.createRow(fila+1);//se crea las filas
             for(int col = 0; col < ListaDatos.get(fila).size(); col++){//COLUMNAS
-                XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posiciÃ³n
-                cell.setCellValue(ListaDatos.get(fila).get(col)); //se aÃ±ade el contenido
+                XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posición
+                cell.setCellValue(ListaDatos.get(fila).get(col)); //se añade el contenido
             }
         }
         
@@ -236,7 +320,7 @@ public class ControlArchivo {
             fileOuS.flush();
             fileOuS.close();
             
-            int opcion = JOptionPane.showConfirmDialog(null, "Â¿Desea ver el documento " + nombreArchivo + "?\n");
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea ver el documento " + nombreArchivo + "?\n");
             if (opcion == JOptionPane.YES_NO_OPTION) {
                 Desktop.getDesktop().open(file);
             }
