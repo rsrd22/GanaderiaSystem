@@ -5,6 +5,7 @@
  */
 package Excel;
 
+import Configuracion.ConfiguracionPropiedades;
 import Utilidades.Utilidades;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
@@ -49,7 +51,7 @@ public class ControlArchivo {
             String dat = "";
             String[] datos = null;
             String data = "";
-            
+
             int col = 0;
             int k = 0;
             Map<String, String> obj = new HashMap<String, String>();
@@ -57,50 +59,49 @@ public class ControlArchivo {
             for (int sheetNo = 0; sheetNo < 1; sheetNo++) {
                 XSSFSheet sheet = book.getSheetAt(sheetNo);
                 String conten = "";
-                Iterator rows  = sheet.rowIterator();
+                Iterator rows = sheet.rowIterator();
                 while (rows.hasNext()) {
 //                    System.out.println("*****************************************");
-                    col=0;
+                    col = 0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
                     obj = new HashMap<String, String>();
                     while (iterator.hasNext()) {
                         XSSFCell xssfCell = (XSSFCell) iterator.next();
-                        if(col >= keys.size() && k == 1){
+                        if (col >= keys.size() && k == 1) {
                             break;
-                        }  
-                        if(k == 0){
-                            keys.add(""+xssfCell.toString());
-                        }else{
-                            if(XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType() ){
-                                if(DateUtil.isCellDateFormatted(xssfCell)){
+                        }
+                        if (k == 0) {
+                            keys.add("" + xssfCell.toString());
+                        } else {
+                            if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
+                                if (DateUtil.isCellDateFormatted(xssfCell)) {
                                     String value = destFormat.format(xssfCell.getDateCellValue());
-                                    obj.put(keys.get(col), ""+value);
-                                }else{
-                                    obj.put(keys.get(col), ""+((long) xssfCell.getNumericCellValue()));
+                                    obj.put(keys.get(col), "" + value);
+                                } else {
+                                    obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
                                 }
-                            }else{
+                            } else {
                                 conten = xssfCell.getStringCellValue();
-                                if(conten.isEmpty() || conten.equals("null")){
+                                if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
-                                obj.put(keys.get(col), ""+Utilidades.CodificarElemento(conten));
+                                obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
                         }
                         col++;
                     }
-                    
-                    if(k == 0){
-                        k =1;
-                    }else{
-                        if(!obj.isEmpty())
+
+                    if (k == 0) {
+                        k = 1;
+                    } else {
+                        if (!obj.isEmpty()) {
                             campos.add(obj);
+                        }
                     }
-                    
+
                 }
             }
-            
-
             return campos;
         } catch (Exception ioe) {
             ioe.printStackTrace();
@@ -169,6 +170,90 @@ public class ControlArchivo {
                     campos.add(obj);
                 }
             }
+            return campos;
+        } catch (Exception ioe) {
+            ioe.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Map<String, String>> LeerExcelAct(String ruta, String[] keysConf) {
+        try {
+            List<Map<String, String>> campos = new ArrayList<Map<String, String>>();
+            List<String> keys = new ArrayList<>();
+            FileInputStream fileInput = new FileInputStream(new File(ruta));
+            XSSFWorkbook book = new XSSFWorkbook(fileInput);
+            String dat = "";
+            String[] datos = null;
+            String data = "";
+
+            int col = 0;
+            int k = 0;
+            Map<String, String> obj = new HashMap<String, String>();
+            DateFormat destFormat = new SimpleDateFormat("dd/MM/yyyy");
+            for (int sheetNo = 0; sheetNo < 1; sheetNo++) {
+                XSSFSheet sheet = book.getSheetAt(sheetNo);
+                String conten = "";
+                Iterator rows = sheet.rowIterator();
+                while (rows.hasNext()) {
+                    col = 0;
+                    XSSFRow row = (XSSFRow) rows.next();
+                    Iterator iterator = row.cellIterator();
+                    obj = new HashMap<String, String>();
+                    while (iterator.hasNext()) {
+                        XSSFCell xssfCell = (XSSFCell) iterator.next();
+                        if (col >= keys.size() && k == 1) {
+                            break;
+                        }
+                        if (k == 0) {
+                            keys.add("" + xssfCell.toString());
+                        } else {
+                            if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
+                                if (DateUtil.isCellDateFormatted(xssfCell)) {
+                                    String value = destFormat.format(xssfCell.getDateCellValue());
+                                    obj.put(keys.get(col), "" + value);
+                                } else {
+                                    obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
+                                }
+                            } else {
+                                conten = xssfCell.getStringCellValue();
+                                if (conten.isEmpty() || conten.equals("null")) {
+                                    conten = "_";
+                                }
+                                obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
+                            }
+                        }
+                        col++;
+                    }
+
+                    if (k == 0) {
+                        k = 1;
+                    } else {
+                        if (!obj.isEmpty()) {
+                            campos.add(obj);
+                        }
+                    }
+                }
+            }
+
+            boolean encontrado = false;
+            if (keysConf.length > 0 && keys.size() > 0) {
+                for (String key : keys) {
+                    for (int i = 0; i < keysConf.length; i++) {
+                        if (key.equals(keysConf[i])) {
+                            encontrado = true;
+                            break;
+                        } else {
+                            encontrado = false;
+                        }
+                    }
+                    if (!encontrado) {
+                        JOptionPane.showMessageDialog(null, "El archivo no es el esperado por el sistema.");
+                        return null;
+                    }
+                }
+            }
+
             return campos;
         } catch (Exception ioe) {
             ioe.printStackTrace();

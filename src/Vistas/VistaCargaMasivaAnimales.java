@@ -5,11 +5,13 @@
  */
 package Vistas;
 
+import Configuracion.ConfiguracionPropiedades;
 import Control.*;
 import Excel.ControlArchivo;
+import ImportExport.CargaMasiva;
+import ImportExport.Estados;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
-import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +35,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     public List<Map<String, String>> listaIngresados = new ArrayList<>();
     public List<Map<String, String>> listaNoIngresados = new ArrayList<>();
     public ControlCargaMasivaAnimales controlCarga;
+    private CargaMasiva thProceso;
 
     /**
      * Creates new form VistaCargaMasivaAnimales
@@ -43,6 +46,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         List<Map<String, String>> lista = new ArrayList<>();
         controlCarga = new ControlCargaMasivaAnimales();
         CargarListaFincas();
+        thProceso = new CargaMasiva(this, Estados.CARGA_MASIVA_ANIMALES);
     }
 
     /**
@@ -301,8 +305,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(progreso, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -341,7 +346,11 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSelectArchivoActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        CargarAnimales();
+        listaIngresados = new ArrayList<>();
+        listaNoIngresados = new ArrayList<>();
+        txtRespuesta.setText("");
+        thProceso = new CargaMasiva(this, Estados.CARGA_MASIVA_ANIMALES);
+        thProceso.iniciar();
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void cbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGeneroActionPerformed
@@ -393,11 +402,10 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         cbTipoAnimales.setSelectedIndex(0);
     }
 
-    private void CargarAnimales() {
+    public void CargarAnimales() {
         try {
             String ruta = txtURL.getText().trim();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            System.out.println("ruta-->" + ruta);
             ControlArchivo con = new ControlArchivo();
             if (idTipoAnimal.equals("-1")) {
                 return;
@@ -411,23 +419,18 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
             String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
             if (ext.equals("xlsx")) {
-                listaInfoLeida = con.LeerExcelAct(ruta);
+                listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_ANIMALES());
             } else {
                 listaInfoLeida = con.LeerExcel(ruta);
             }
 
-            int valor = 0;
-            progreso.setMaximum(listaInfoLeida.size());
-//            for (Map<String, String> map : listaInfoLeida) {
-//                System.out.println("************************************************************************************************");
-//                for (Map.Entry<String, String> entry : map.entrySet()) {
-//                    Object key = entry.getKey();
-//                    Object val = entry.getValue();
-//                    System.out.println("key-->"+key+"-------+value-->"+val);
-//
-//                }
-//            }
+            if (listaInfoLeida == null) {
+                thProceso.terminar();
+                return;
+            }
 
+            int valor = 1;
+            progreso.setMaximum(listaInfoLeida.size());
             String inGrupos = "", inHierros = "";
             int fila = 0;
             if (listaInfoLeida.size() > 0) {
@@ -470,6 +473,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 //</editor-fold>
 
                 for (Map<String, String> info : listaInfoLeida) {
+                    progreso.setValue(valor++);
                     fila++;
                     Map<String, String> infoGrupo = getInfo(listaInfoGrupos, info.get("GRUPO"), "DESCRIPCION");
                     Map<String, String> infoHierro = getInfo(listaInfoHierros, info.get("HIERRO"), "DESCRIPCION");
@@ -494,8 +498,6 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 //</editor-fold>
 
                     if (infoGrupo.isEmpty() || infoHierro.isEmpty() || info.get("SEXO").equals("") || info.get("FEC_NACIMIENTO").equals("_")) {
-//                        Map<String, String> noIngresado = new HashMap<>();
-//                        noIngresado = info;
                         String motivo = "";
                         //<editor-fold defaultstate="collapsed" desc="Motivo">
                         if (info.get("SEXO").equals("")) {
@@ -595,7 +597,6 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         info.put("MOTIVO", "" + motivo);
                         listaNoIngresados.add(info);
                     }
-                    progreso.setValue(valor++);
                 }
                 //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
 
