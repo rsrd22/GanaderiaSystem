@@ -6,8 +6,12 @@
 package Excel;
 
 import Utilidades.Utilidades;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
@@ -24,7 +29,9 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.biff.CountryCode;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -176,4 +183,71 @@ public class ControlArchivo {
         }
     }
 
+    
+    /***
+     * @param ruta
+     * @param nombreArchivo
+     * @param Encabezado
+     * @param ListaDatos 
+     */
+    public void EscribirExcelAct(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos){
+        
+	//String nombreArchivo = "Inventario.xlsx";
+        String rutaArchivo = "C:\\" + nombreArchivo;
+        String hoja = "Hoja1";
+
+        XSSFWorkbook libro = new XSSFWorkbook();
+        XSSFSheet hoja1 = libro.createSheet(hoja);
+       
+        //poner negrita a la cabecera
+        CellStyle style = libro.createCellStyle();
+        Font font = libro.createFont();
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        style.setFont(font);
+        XSSFRow row = hoja1.createRow(0);//se crea las filas
+        //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
+        for(int i = 0; i < Encabezado.size(); i++){
+            XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posición
+            cell.setCellStyle(style); // se añade el style crea anteriormente 
+            cell.setCellValue(Encabezado.get(i));//se añade el contenido
+        }
+//</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="CONTENIDO">
+        for(int fila =0 ; fila < ListaDatos.size(); fila++){//FILAS
+            row = hoja1.createRow(fila+1);//se crea las filas
+            for(int col = 0; col < ListaDatos.get(fila).size(); col++){//COLUMNAS
+                XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posición
+                cell.setCellValue(ListaDatos.get(fila).get(col)); //se añade el contenido
+            }
+        }
+        
+//</editor-fold>
+
+
+        File file;
+        file = new File(rutaArchivo);
+        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
+            if (file.exists()) {// si el archivo existe se elimina
+                file.delete();
+                System.out.println("Archivo eliminado");
+            }
+            libro.write(fileOuS);
+            fileOuS.flush();
+            fileOuS.close();
+            
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea ver el documento " + nombreArchivo + "?\n");
+            if (opcion == JOptionPane.YES_NO_OPTION) {
+                Desktop.getDesktop().open(file);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
 }

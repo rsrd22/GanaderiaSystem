@@ -106,7 +106,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnAnimalxHierro1 = new javax.swing.JLabel();
         btnVentasAnimal = new javax.swing.JLabel();
         btnVerAnimales = new javax.swing.JLabel();
-        btnMasivoAnimal = new javax.swing.JLabel();
         btnMostrarActividades = new javax.swing.JLabel();
         pnlContenedorActividades = new javax.swing.JPanel();
         btnRegistroActividades = new javax.swing.JLabel();
@@ -121,6 +120,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTrasladoGrupo = new javax.swing.JLabel();
         btnRotacion = new javax.swing.JLabel();
         btnUsuarios = new javax.swing.JLabel();
+        btnInformes = new javax.swing.JLabel();
 
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
@@ -593,7 +593,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorAnimales.setBackground(new java.awt.Color(59, 145, 70));
-        pnlContenedorAnimales.setPreferredSize(new java.awt.Dimension(212, 180));
+        pnlContenedorAnimales.setPreferredSize(new java.awt.Dimension(212, 150));
 
         btnAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAnimales.setForeground(new java.awt.Color(255, 255, 255));
@@ -650,27 +650,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnMasivoAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMasivoAnimal.setForeground(new java.awt.Color(255, 255, 255));
-        btnMasivoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnMasivoAnimal.setText("Carga Masiva");
-        btnMasivoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMasivoAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMasivoAnimalMousePressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlContenedorAnimalesLayout = new javax.swing.GroupLayout(pnlContenedorAnimales);
         pnlContenedorAnimales.setLayout(pnlContenedorAnimalesLayout);
         pnlContenedorAnimalesLayout.setHorizontalGroup(
             pnlContenedorAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnVerAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnAnimalxHierro1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnVentasAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMuerteAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMasivoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pnlContenedorAnimalesLayout.createSequentialGroup()
+                .addGroup(pnlContenedorAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnimalxHierro1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVentasAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMuerteAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
         pnlContenedorAnimalesLayout.setVerticalGroup(
             pnlContenedorAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,8 +675,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnVentasAnimal)
                 .addGap(0, 0, 0)
                 .addComponent(btnMuerteAnimal)
-                .addGap(0, 0, 0)
-                .addComponent(btnMasivoAnimal))
+                .addGap(30, 30, 30))
         );
 
         btnMostrarActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -865,6 +855,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        btnInformes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInformes.setForeground(new java.awt.Color(255, 255, 255));
+        btnInformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnInformes.setText("Analisis de Datos");
+        btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInformesMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -883,6 +884,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -913,7 +915,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnRotacion)
                 .addGap(0, 0, 0)
-                .addComponent(btnUsuarios))
+                .addComponent(btnUsuarios)
+                .addGap(0, 0, 0)
+                .addComponent(btnInformes))
         );
 
         jScrollPane1.setViewportView(pnlMenu);
@@ -1412,14 +1416,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMedicamentosMousePressed
 
-    private void btnMasivoAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMasivoAnimalMousePressed
-        if (evt.getClickCount() == 1) {
-            EstablecerTituloVentana("Carga Masiva Animales");
-            VistaCargaMasivaAnimales vista = new VistaCargaMasivaAnimales();
-            MostrarPanel(vista);
-        }
-    }//GEN-LAST:event_btnMasivoAnimalMousePressed
-
     private void btnInicio1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInicio1MouseClicked
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Carga Masiva Animales");
@@ -1427,6 +1423,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnInicio1MouseClicked
+
+    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Analisis de Datos");
+            VistaInformes vista = new VistaInformes();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnInformesMouseClicked
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
@@ -1496,11 +1500,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnFuenteHidrica;
     private javax.swing.JLabel btnGrupos;
     private javax.swing.JLabel btnHierros;
+    private javax.swing.JLabel btnInformes;
     private javax.swing.JLabel btnInicio;
     private javax.swing.JLabel btnInicio1;
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
-    private javax.swing.JLabel btnMasivoAnimal;
     private javax.swing.JLabel btnMaximizar;
     private javax.swing.JLabel btnMedicamentos;
     private javax.swing.JLabel btnMenuVertical;
