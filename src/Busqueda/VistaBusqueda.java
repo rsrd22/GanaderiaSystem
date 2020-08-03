@@ -11,7 +11,9 @@ import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.*;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private gestorMySQL gsql;
     public DefaultTableModel modelo;
     public int opc;
-    public int band=0;
+    public int band = 0;
 
     public String SQL = "";
     public ResultSet rs = null;
@@ -50,6 +52,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
     public String[] NameColumnas;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     ModeloGestorBusqueda objeto;
+    private Dimension dimensionAnterior;
+    private int ALTO_BARRA_INICIO=40;
 
     /**
      * Creates new form ventanaBusqueda
@@ -313,7 +317,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -670,41 +674,49 @@ public class VistaBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarMouseExited
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         if (evt.getClickCount() == 1) {
             JLabel lblIcono = (JLabel) (evt.getComponent());
             String icono = "";
-            if (band == 0) {
-                band = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                this.setExtendedState(JFrame.NORMAL);
+            if (band==0) {
+                band=1;
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
                 icono = "maximizar";
+            } else {
+                band=0;
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
             lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            lblIcono.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+            lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         if (evt.getClickCount() == 2) {
             String icono = "";
-            if (band == 0) {
-                band = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                this.setExtendedState(JFrame.NORMAL);
+            if (band==0) {
+                band=1;
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
                 icono = "maximizar";
+            } else {
+                band=0;
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
             jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            jLabel8.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+            jLabel8.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_jPanel2MouseClicked
 
