@@ -12,6 +12,8 @@ import Modelo.ModeloAnimales;
 import Modelo.ModeloGrupos;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -120,9 +122,9 @@ public class NewClass {
                 String add = " ,estado=" + (cant == 0 ? "'Activo' " : "'Inactivo' ");
                 cant++;
                 if (cant == cantidad) {
-                    consulta = "update pesaje set peso_anterior=0 "+add+" where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                    consulta = "update pesaje set peso_anterior=0 " + add + " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
                 } else {
-                    consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") +add+ " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
+                    consulta = "update pesaje set peso_anterior=" + pesajeSig.get("peso") + add + " where id_animal=" + pesajeAct.get("id_animal") + " and fecha_pesado='" + pesajeAct.get("fecha_pesado") + "' and peso=" + pesajeAct.get("peso");
                 }
                 System.out.println(consulta);
                 consultas.add(consulta);

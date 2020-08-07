@@ -9,6 +9,7 @@ import AjustarControles.AjustarControles;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,8 @@ public class VistaGeneral extends javax.swing.JFrame {
     private JPanel panel;
     private int band;
     private Dimension dpanel = new Dimension();
+    private Dimension dimensionAnterior;
+    private int ALTO_BARRA_INICIO=40;
 
     /**
      * Creates new form VistaGeneral
@@ -342,14 +345,18 @@ public class VistaGeneral extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             JLabel lblIcono = (JLabel) (evt.getComponent());
             String icono = "";
-            if (band == 0) {
-                band = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                this.setExtendedState(JFrame.NORMAL);
+            if (band==0) {
+                band=1;
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
                 icono = "maximizar";
+            } else {
+                band=0;
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
             lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
@@ -359,14 +366,18 @@ public class VistaGeneral extends javax.swing.JFrame {
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         if (evt.getClickCount() == 2) {
             String icono = "";
-            if (band == 0) {
-                band = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                this.setExtendedState(JFrame.NORMAL);
+            if (band==0) {
+                band=1;
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
                 icono = "maximizar";
+            } else {
+                band=0;
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             jLabel1.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));

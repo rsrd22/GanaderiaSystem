@@ -15,7 +15,9 @@ import ImportExport.ImportExport;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Consultas;
 import Utilidades.Utilidades;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +36,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private JPanel panel;
     public int max = 0;
     private Dimension dpanel = new Dimension();
-    private int x, y, band = 0;
+    private int x, y, band = 0, bandCE = 0;
     public int desplazamiento = 200;
-    public String idFinca="";
+    public String idFinca = "";
+    private Dimension dimensionAnterior;
+    private int ALTO_BARRA_INICIO = 40;
+    private int anchoMenuLateral;
 
     /**
      * Creates new form VistaPrincipal
@@ -51,8 +56,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         max = 0;
         OcultarContenidoMenu();
         dpanel = new Dimension(pnlContenedor.getSize());
+        anchoMenuLateral = pnlMenuVertical.getWidth();
         //OcultarMenu();
-        
+
     }
 
     /**
@@ -154,7 +160,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 0, 102));
@@ -326,12 +331,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
         gridBagConstraints.weightx = 1.0;
         jPanel2.add(pnlTitulo, gridBagConstraints);
 
         pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(36, 151, 20)));
+        pnlContenedor.setMinimumSize(new java.awt.Dimension(700, 561));
+        pnlContenedor.setPreferredSize(new java.awt.Dimension(700, 561));
         pnlContenedor.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 pnlContenedorComponentResized(evt);
@@ -342,18 +349,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedor.setLayout(pnlContenedorLayout);
         pnlContenedorLayout.setHorizontalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 755, Short.MAX_VALUE)
+            .addGap(0, 698, Short.MAX_VALUE)
         );
         pnlContenedorLayout.setVerticalGroup(
             pnlContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 559, Short.MAX_VALUE)
+            .addGap(0, 570, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         jPanel2.add(pnlContenedor, gridBagConstraints);
@@ -363,8 +370,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlMenuVertical.setRequestFocusEnabled(false);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(220, 612));
         jScrollPane1.setOpaque(false);
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(212, 782));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(220, 612));
 
         pnlMenu.setBackground(new java.awt.Color(59, 123, 50));
         pnlMenu.setName(""); // NOI18N
@@ -926,11 +934,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlMenuVertical.setLayout(pnlMenuVerticalLayout);
         pnlMenuVerticalLayout.setHorizontalGroup(
             pnlMenuVerticalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlMenuVerticalLayout.setVerticalGroup(
             pnlMenuVerticalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.getAccessibleContext().setAccessibleDescription("");
@@ -940,8 +948,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipady = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weighty = 1.0;
         jPanel2.add(pnlMenuVertical, gridBagConstraints);
 
@@ -949,7 +956,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jPanel2, gridBagConstraints);
@@ -978,6 +985,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         pnlContenedor.add(this.panel, gridBagConstraints);
+        pnlContenedor.add(this.panel);
 
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
@@ -1053,17 +1061,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFincas1MousePressed
 
     private void btnMostrarPropietariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseClicked
-        if(!pnlContenedorPropietarios.isVisible())
+        if (!pnlContenedorPropietarios.isVisible()) {
             OcultarContenidoMenu();
-        
+        }
+
         btnPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
         btnHierros.setVisible(!pnlContenedorPropietarios.isVisible());
         pnlContenedorPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
     }//GEN-LAST:event_btnMostrarPropietariosMouseClicked
 
     private void btnMostrarFincasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarFincasMouseClicked
-        if(!pnlContenedorFincas.isVisible())
+        if (!pnlContenedorFincas.isVisible()) {
             OcultarContenidoMenu();
+        }
         btnFincas.setVisible(!pnlContenedorFincas.isVisible());
         btnBloques.setVisible(!pnlContenedorFincas.isVisible());
         btnFuenteHidrica.setVisible(!pnlContenedorFincas.isVisible());
@@ -1072,9 +1082,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarFincasMouseClicked
 
     private void btnMostrarGruposAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarGruposAnimalesMouseClicked
-        if(!pnlContenedorGruposAnimales.isVisible())
+        if (!pnlContenedorGruposAnimales.isVisible()) {
             OcultarContenidoMenu();
-        
+        }
+
         btnMacrogrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
         btnGrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
         btnTipoAnimal.setVisible(!pnlContenedorGruposAnimales.isVisible());
@@ -1154,9 +1165,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLotesMouseClicked
 
     private void btnMostrarTrasladosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarTrasladosMouseClicked
-        if(!pnlContenedorTraslados.isVisible())
+        if (!pnlContenedorTraslados.isVisible()) {
             OcultarContenidoMenu();
-        
+        }
+
         btnTrasladoGrupo.setVisible(!pnlContenedorTraslados.isVisible());
         btnTrasladoAnimal.setVisible(!pnlContenedorTraslados.isVisible());
         pnlContenedorTraslados.setVisible(!pnlContenedorTraslados.isVisible());
@@ -1187,8 +1199,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMuerteAnimalMousePressed
 
     private void btnMostrarActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarActividadesMouseClicked
-        if(!pnlContenedorActividades.isVisible())
+        if (!pnlContenedorActividades.isVisible()) {
             OcultarContenidoMenu();
+        }
         btnRegistroActividades.setVisible(!pnlContenedorActividades.isVisible());
         btnEstadoActividades.setVisible(!pnlContenedorActividades.isVisible());
         btnCronograma.setVisible(!pnlContenedorActividades.isVisible());
@@ -1239,8 +1252,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioMouseClicked
 
     private void btnMostrarAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarAnimalesMouseClicked
-        if(!pnlContenedorAnimales.isVisible())
+        if (!pnlContenedorAnimales.isVisible()) {
             OcultarContenidoMenu();
+        }
         btnAnimales.setVisible(!pnlContenedorAnimales.isVisible());
         btnMuerteAnimal.setVisible(!pnlContenedorAnimales.isVisible());
         pnlContenedorAnimales.setVisible(!pnlContenedorAnimales.isVisible());
@@ -1274,75 +1288,59 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnMenuVerticalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuVerticalMouseClicked
 
-        int tamanio = 30;
+        int tamanio = 50;
         int x = 0;
-        int ancho = 0;
-        if (band == 0) {
-            desplazamiento = pnlMenuVertical.getWidth() - tamanio;
-            x = pnlTitulo.getX() - desplazamiento;
-            ancho = pnlTitulo.getWidth() + desplazamiento;
-
+        if (bandCE == 0) {
             pnlMenuVertical.setBounds(
                     pnlMenuVertical.getX(),
                     pnlMenuVertical.getY(),
-                    pnlMenuVertical.getWidth() - desplazamiento,
+                    tamanio,
                     pnlMenuVertical.getHeight()
             );
             jScrollPane1.setBounds(
                     jScrollPane1.getX(),
                     jScrollPane1.getY(),
-                    jScrollPane1.getWidth() - desplazamiento,
+                    tamanio,
                     jScrollPane1.getHeight()
             );
-            band = 1;
+            bandCE = 1;
         } else {
-            x = pnlTitulo.getX() + desplazamiento;
-            ancho = pnlTitulo.getWidth() - desplazamiento;
-
             pnlMenuVertical.setBounds(
                     pnlMenuVertical.getX(),
                     pnlMenuVertical.getY(),
-                    desplazamiento + tamanio,
+                    anchoMenuLateral,
                     pnlMenuVertical.getHeight()
             );
             jScrollPane1.setBounds(
                     jScrollPane1.getX(),
                     jScrollPane1.getY(),
-                    desplazamiento + tamanio,
+                    anchoMenuLateral,
                     jScrollPane1.getHeight()
             );
-            band = 0;
+            bandCE = 0;
         }
-
-        pnlTitulo.setBounds(
-                x,
-                pnlTitulo.getY(),
-                ancho,
-                pnlTitulo.getHeight()
-        );
-        pnlContenedor.setBounds(
-                x,
-                pnlContenedor.getY(),
-                ancho,
-                pnlContenedor.getHeight()
-        );
+//        jPanel2.revalidate();
+        jPanel2.repaint();
     }//GEN-LAST:event_btnMenuVerticalMouseClicked
 
     private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
         if (evt.getClickCount() == 1) {
-            
-            if (max == 0) {//MAXIMIZAR
-                btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/restaurar.png")));
-                btnMaximizar.setToolTipText("Restaurar");
-                max = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            } else {//RESTAURAR
-                btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png")));
-                btnMaximizar.setToolTipText("Maximizar");
-                max = 0;
-                this.setExtendedState(JFrame.NORMAL);
+            String icono = "";
+            if (band == 0) {
+                band = 1;
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
+                icono = "maximizar";
+            } else {
+                band = 0;
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
-
+            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+            btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_btnMaximizarMouseClicked
 
@@ -1380,15 +1378,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
             String icono = "";
             if (band == 0) {
                 band = 1;
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                icono = "restaurar";
+                dimensionAnterior = this.getSize();
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+                setLocationRelativeTo(null);
+                icono = "maximizar";
             } else {
                 band = 0;
-                this.setExtendedState(JFrame.NORMAL);
-                icono = "maximizar";
+                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                setLocationRelativeTo(null);
+                icono = "restaurar";
             }
             btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            btnMaximizar.setToolTipText((""+icono.charAt(0)).toUpperCase()+icono.substring(1));
+            btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
         }
     }//GEN-LAST:event_pnlTituloMouseClicked
 
@@ -1434,21 +1436,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
-            if (max == 0) {
-                pnlContenedor.getComponent(0).setSize(dpanel);
-            } else {
-                pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
-            }
-            java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-            gridBagConstraints.gridx = 0;
-            gridBagConstraints.gridy = 0;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.weightx = 1.0;
-            gridBagConstraints.weighty = 1.0;
-            pnlContenedor.add(pnlContenedor.getComponent(0), gridBagConstraints);
+            Component panel = pnlContenedor.getComponent(0);
+            panel.setBounds(0, 0, pnlContenedor.getWidth(), pnlContenedor.getHeight());
+            pnlContenedor.removeAll();
 
-            //        pnlContenedor.add(panel);
+            pnlContenedor.add(panel);
             pnlContenedor.revalidate();
             pnlContenedor.repaint();
         }
@@ -1574,6 +1566,5 @@ public class VistaPrincipal extends javax.swing.JFrame {
         VistaInicio vista = new VistaInicio(this);
         MostrarPanel(vista);
     }
-
 
 }
