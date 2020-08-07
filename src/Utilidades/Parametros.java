@@ -13,5 +13,6 @@ package Utilidades;
 public class Parametros {
     public static String separadorDecimal = ",";
     public static String separadorIE = "|";
+    public static String RutaWindows = "C:\\";
     public static volatile boolean actualizarHistoricoAnimal = false;
 }

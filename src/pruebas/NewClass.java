@@ -49,7 +49,7 @@ public class NewClass {
 
     public static void main(String[] args) {
 //        //<editor-fold defaultstate="collapsed" desc="Prueba crud">
-        Configuracion.ConfiguracionPropiedades.cargarConfiguracion();
+        // Configuracion.ConfiguracionPropiedades.cargarConfiguracion();
 //
 //        ModeloGrupos mg = new ModeloGrupos("2", "1", "qwertyuiop", "Inactivo", "", "now()", "1","","","","");
 //        ControlGrupos cg = new ControlGrupos();
@@ -62,7 +62,24 @@ public class NewClass {
 //            System.out.println("no guardado");
 //        }
 //        //</editor-fold>
-        ActualizarPesajes();
+        // ActualizarPesajes();
+        
+        Map<String, String> datosp = new HashMap<>();
+        datosp.put("F.U.P", "DOLOLOLOAL");
+        datosp.put("PRU", "JGNASKDA");
+        datosp.put("ID", "973912u");
+        
+        System.out.println("daots--->"+datosp.get("F.U.P"));
+        
+        for (Map.Entry<String, String> d : datosp.entrySet()) {
+                String key = d.getKey();
+                String value = d.getValue();
+                System.out.println("key-->"+key);
+                System.out.println("value-->"+value);
+                
+            }
+        
+        
     }
 
     private static void cargarPeriodos() {
