@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -291,45 +292,56 @@ public class ControlArchivo {
         XSSFRow row = hoja1.createRow(0);//se crea las filas
         //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
         for(int i = 0; i < Encabezado.size(); i++){
-            XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posición
-            cell.setCellStyle(style); // se añade el style crea anteriormente 
-            cell.setCellValue(Encabezado.get(i));//se añade el contenido
+            XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posiciï¿½n
+            cell.setCellStyle(style); // se aï¿½ade el style crea anteriormente 
+            cell.setCellValue(Encabezado.get(i));//se aï¿½ade el contenido
         }
 //</editor-fold>
-        
+        System.out.println("***********END ENCABEZADO**********");
         //<editor-fold defaultstate="collapsed" desc="CONTENIDO">
         for(int fila =0 ; fila < ListaDatos.size(); fila++){//FILAS
+            System.out.println("FILA::.---"+fila);
             row = hoja1.createRow(fila+1);//se crea las filas
             for(int col = 0; col < ListaDatos.get(fila).size(); col++){//COLUMNAS
-                XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posición
-                cell.setCellValue(ListaDatos.get(fila).get(col)); //se añade el contenido
+                XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posiciï¿½n
+                if(col == 9)
+                    cell.setCellFormula(ListaDatos.get(fila).get(col));
+                else
+                    cell.setCellValue(ListaDatos.get(fila).get(col)); //se aï¿½ade el contenido
             }
         }
-        
+        System.out.println("***********END CONTENIDO**********");
 //</editor-fold>
 
-
+        System.out.println("rutaArchivo:.::"+rutaArchivo);
         File file;
         file = new File(rutaArchivo);
-        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
-            if (file.exists()) {// si el archivo existe se elimina
-                file.delete();
-                System.out.println("Archivo eliminado");
-            }
-            libro.write(fileOuS);
-            fileOuS.flush();
-            fileOuS.close();
-            
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea ver el documento " + nombreArchivo + "?\n");
-            if (opcion == JOptionPane.YES_NO_OPTION) {
-                Desktop.getDesktop().open(file);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        try(OutputStream fileOut = new FileOutputStream(nombreArchivo) ){
+            libro.write(fileOut);
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
+//        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
+//            System.out.println("Dentro del Try");
+//            if (file.exists()) {// si el archivo existe se elimina
+//                file.delete();
+//                System.out.println("Archivo eliminado");
+//            }
+//            libro.write(fileOuS);
+//            fileOuS.flush();
+//            fileOuS.close();
+//            
+//            int opcion = JOptionPane.showConfirmDialog(null, "ï¿½Desea ver el documento " + nombreArchivo + "?\n");
+//            if (opcion == JOptionPane.YES_NO_OPTION) {
+//                Desktop.getDesktop().open(file);
+//            }
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
     
     

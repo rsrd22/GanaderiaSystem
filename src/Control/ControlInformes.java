@@ -67,10 +67,12 @@ public class ControlInformes {
             
             String consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
                                     "FROM `medicamentos`\n" +
-                                    "WHERE descripcion IN ("+datos.get("MEDICAMENTOS")+")";
+                                    "WHERE id IN ("+datos.get("MEDICAMENTOS")+")";
             
             List<Map<String, String>> listaPesajes = mySQL.ListSQL(consultaPesaje);
             List<Map<String, String>> listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);
+            System.out.println("listaPesajes-->"+listaPesajes.size());
+            System.out.println("listaMedicamentos-->"+listaMedicamentos.size());
             if(listaPesajes.size()>0){
                 //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
                 Encabezado.add("NUM");
@@ -81,6 +83,7 @@ public class ControlInformes {
                 Encabezado.add("FEC_DESTETE");
                 Encabezado.add("PESO_ANT");
                 Encabezado.add("TIPO_PESAJE");
+                Encabezado.add("PESO");
                 Encabezado.add("DIF");
                 if(listaMedicamentos.size() > 0){
                     for (Map<String, String> med : listaMedicamentos) {
@@ -101,11 +104,12 @@ public class ControlInformes {
                     listAux.add(""+pes.get("FEC_DESTETE"));  
                     listAux.add(""+pes.get("PESO"));  
                     listAux.add("");  
-                    listAux.add("");  
+                    listAux.add("");   
+                    listAux.add("SI(IGUAL(MAYUSC(EXTRAE(H"+(fila+1)+";1;1));\"K\");I"+(fila+1)+"-G"+(fila+1)+";REDONDEAR((I"+(fila+1)+"/2.20462);0)-G"+(fila+1)+")");  
                     
                     ListaDatos.add(listAux);
                 }
-                
+                System.out.println("COMIENZO DE ARCHIVO");
                 controlArchivo.EscribirExcelAct(Parametros.RutaWindows, "ArchivoPesaje.xlsx", Encabezado, ListaDatos);
                 
             }
