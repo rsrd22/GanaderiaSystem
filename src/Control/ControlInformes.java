@@ -105,12 +105,13 @@ public class ControlInformes {
                     listAux.add(""+pes.get("PESO"));  
                     listAux.add("");  
                     listAux.add("");   
-                    listAux.add("SI(IGUAL(MAYUSC(EXTRAE(H"+(fila+1)+";1;1));\"K\");I"+(fila+1)+"-G"+(fila+1)+";REDONDEAR((I"+(fila+1)+"/2.20462);0)-G"+(fila+1)+")");  
+                    listAux.add("I"+(fila+1)+"-G"+(fila+1)+";");  
+                    //listAux.add("SI(IGUAL(MAYUSC(EXTRAE(H"+(fila+1)+";1;1));\"K\");I"+(fila+1)+"-G"+(fila+1)+";REDONDEAR((I"+(fila+1)+"/2.20462);0)-G"+(fila+1)+")");  
                     
                     ListaDatos.add(listAux);
                 }
                 System.out.println("COMIENZO DE ARCHIVO");
-                controlArchivo.EscribirExcelAct(Parametros.RutaWindows, "ArchivoPesaje.xlsx", Encabezado, ListaDatos);
+                controlArchivo.EscribirExcelActFormula(Parametros.RutaWindows, "ArchivoPesaje.xlsx", Encabezado, ListaDatos, 9);
                 
             }
             
@@ -139,12 +140,12 @@ public class ControlInformes {
                                         "WHERE anim.`id_tipo_animal` = '"+datos.get("IDTIPO")+"' AND tpo.`id_finca` = '"+datos.get("IDFINCA")+"'\n" +
                                         "AND anim.grupo IN ("+datos.get("GRUPOS")+")\n" + // 
                                         "GROUP BY anim.`id`\n" +
-                                        "ORDER BY ";
+                                        "ORDER BY anim.id ASC";
             
             
             String consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
                                     "FROM `medicamentos`\n" +
-                                    "WHERE descripcion IN ("+datos.get("MEDICAMENTOS")+")";
+                                    "WHERE id IN ("+datos.get("MEDICAMENTOS")+")";
             
             List<Map<String, String>> listaPalpacion = mySQL.ListSQL(consultaPalpacion);
             List<Map<String, String>> listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);

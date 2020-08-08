@@ -26,7 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author MERRY
  */
-public class PRUEBAINFORMES extends javax.swing.JFrame {
+public class PRUEBAINFORMESPalp extends javax.swing.JFrame {
     public ControlGeneral controlgen = new ControlGeneral(); 
     public String idFinca;
     public String idTipoAnimal;
@@ -41,7 +41,7 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
     /**
      * Creates new form PRUEBAINFORMES
      */
-    public PRUEBAINFORMES() {
+    public PRUEBAINFORMESPalp() {
         initComponents();
         lstMedicamentos.setSelectionModel(new DefaultListSelectionModel() {
             private int i0 = -1;
@@ -120,9 +120,6 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
         cbFinca = new javax.swing.JComboBox();
         lblTid = new javax.swing.JLabel();
         lblTid1 = new javax.swing.JLabel();
-        chHembra = new javax.swing.JCheckBox();
-        chMacho = new javax.swing.JCheckBox();
-        lblTid3 = new javax.swing.JLabel();
         lblTid4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstMedicamentos = new javax.swing.JList();
@@ -166,25 +163,13 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
         lblTid.setForeground(new java.awt.Color(59, 123, 50));
         lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid.setText("Medicamentos");
-        jPanel1.add(lblTid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        jPanel1.add(lblTid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Finca");
         jPanel1.add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
-
-        chHembra.setText("Hembra");
-        jPanel1.add(chHembra, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, -1, -1));
-
-        chMacho.setText("Macho");
-        jPanel1.add(chMacho, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-
-        lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid3.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid3.setText("Sexo");
-        jPanel1.add(lblTid3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
 
         lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid4.setForeground(new java.awt.Color(59, 123, 50));
@@ -199,7 +184,7 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstMedicamentos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 210, 130));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 210, 190));
 
         lstGrupos.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -276,13 +261,13 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PRUEBAINFORMES.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PRUEBAINFORMES.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PRUEBAINFORMES.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PRUEBAINFORMES.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -292,16 +277,16 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
                 try {
                     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(PRUEBAINFORMES.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InstantiationException ex) {
-                    Logger.getLogger(PRUEBAINFORMES.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IllegalAccessException ex) {
-                    Logger.getLogger(PRUEBAINFORMES.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (UnsupportedLookAndFeelException ex) {
-                    Logger.getLogger(PRUEBAINFORMES.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PRUEBAINFORMESPalp.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ConfiguracionPropiedades.cargarConfiguracion();
-                new PRUEBAINFORMES().setVisible(true);
+                new PRUEBAINFORMESPalp().setVisible(true);
             }
         });
     }
@@ -309,8 +294,6 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipoAnimales;
-    private javax.swing.JCheckBox chHembra;
-    private javax.swing.JCheckBox chMacho;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -319,7 +302,6 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JLabel lblTid3;
     private javax.swing.JLabel lblTid4;
     private javax.swing.JList lstGrupos;
     private javax.swing.JList lstMedicamentos;
@@ -353,7 +335,7 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
     private void CargarGrupos() {
         listaGrupos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n" +
                                                 "FROM grupos gr \n" +
-                                                "WHERE `id_tipo_animal` = '"+idTipoAnimal+"' AND estado = 'Activo' and pesable = '1'\n" +
+                                                "WHERE `id_tipo_animal` = '"+idTipoAnimal+"' AND estado = 'Activo' and palpable = '1'\n" +
                                                 "ORDER BY descripcion ASC");
         LlenarJList(listaGrupos, "DESCRIPCION", lstGrupos, modlistGrupos);
     }
@@ -383,19 +365,16 @@ public class PRUEBAINFORMES extends javax.swing.JFrame {
         String[] idsGrupos = getDatosLista(lstGrupos, listaGrupos, "ID");
         String inGrupos = getIN(idsGrupos);
         String inMedicamentos = getIN(idsMedicamentos);
-        String SexoH = chHembra.isSelected()?"1":"0";
-        String SexoM = chMacho.isSelected()?"1":"0";
         
         Map<String, String> infor = new HashMap<>();
         infor.put("IDTIPO", idTipoAnimal);
         infor.put("IDFINCA", idFinca);
         infor.put("GRUPOS", inGrupos);
         infor.put("MEDICAMENTOS", inMedicamentos);
-        infor.put("SEXO", (SexoH.equals("0") && SexoM.equals("0")?"":(SexoH.equals("1")?"hembra":"macho")));
         
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");
-        informes.setInforme("0");
+        informes.setInforme("1");
         informes.setInformacion(infor);
         
         ControlInformes contInformes = new ControlInformes();
