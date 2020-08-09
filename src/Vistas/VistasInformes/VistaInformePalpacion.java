@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -354,7 +355,9 @@ public class VistaInformePalpacion extends javax.swing.JPanel {
     }
 
     private void LlenarJList(List<Map<String, String>> datos, String keyB, JList Lista, DefaultListModel modlist) {
+        LimpiarJList(Lista, modlist);
         for (Map<String, String> dat : datos) {
+            
             modlist.addElement(dat.get(keyB));
         }
         Lista.setModel(modlist);
@@ -370,6 +373,16 @@ public class VistaInformePalpacion extends javax.swing.JPanel {
         String[] idsGrupos = getDatosLista(lstGrupos, listaGrupos, "ID");
         String inGrupos = getIN(idsGrupos);
         String inMedicamentos = getIN(idsMedicamentos);
+        
+        if(inGrupos.equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione al menos un grupo para realizar la operacion.");
+            return;
+        }
+
+        if(idTipoAnimal.equals("-1")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de animal para realizar la operacion.");
+            return;
+        }
         
         Map<String, String> infor = new HashMap<>();
         infor.put("IDTIPO", idTipoAnimal);
