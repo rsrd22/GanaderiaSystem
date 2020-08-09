@@ -11,6 +11,7 @@ import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -167,5 +168,93 @@ public class ControlCargaMasivaAnimales {
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public int GuardarPesaje(Map<String, String> datos) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        //<editor-fold defaultstate="collapsed" desc="INACTIVAR REGISTRO ANTERIOR">
+        if(mySQL.ExistenDatos("SELECT * FROM `pesaje` WHERE `id_animal` = " + datos.get("IDANIMAL")+ " AND estado = 'Activo'")){
+            consultas.add("UPDATE `pesaje`\n" +
+                            "SET `estado` = 'Inactivo'\n" +
+                            "WHERE `id_animal` = " + datos.get("IDANIMAL")+ " AND estado = 'Activo';");
+        }
+//</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR PESAJE">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `pesaje`\n" +
+                    "(`id`, `id_animal`, `fecha_pesado`, \n" +
+                    "`peso`, `peso_anterior`, `notas`, \n" +
+                    "`hierro`, `descornado`, `implante`, \n" +
+                    "`destete`, `estado`, `fecha`, `id_usuario`)\n" +
+                    "VALUES \n" +
+                    "(0, " + datos.get("IDANIMAL")+ ", '" + datos.get("FEC_PESAJE") + "', \n" +
+                    "" + datos.get("PESO") + ", " + datos.get("PESO_ANT") + ", 'PESO POR CARGA MASIVA', \n" +
+                    "'" + datos.get("HIERRO") + "', '" + datos.get("DESCORNADO") + "', '" + datos.get("IMPLANTE") + "', \n" +
+                    "'" + datos.get("DESTETE") + "', 'Activo', NOW(), "+datosUsuario.datos.get(0).get("ID_USUARIO")+");"
+        //</editor-fold>
+        );
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="Actualiza peso tbl Animal">
+        consultas.add(
+                "update `animales`\n" +
+                    "set `peso` = " + datos.get("PESO") + "\n" +
+                    "where `id` = " + datos.get("IDANIMAL")+ ";"
+        
+        );
+//</editor-fold>
+
+        
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int GuardarMedicamentoxPesaje(List<Map<String, String>> ListaMedicamentosxPesaje) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        for (Map<String, String> med : ListaMedicamentosxPesaje) {
+            //<editor-fold defaultstate="collapsed" desc="GUARDAR PESAJE">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `pesajexmedicamento`\n" +
+                    "(`id`,`id_pesaje`,`id_medicamento`,`dosis`)\n" +
+                    "VALUES \n" +
+                    "(0,(SELECT id FROM `pesaje` WHERE id_animal = "+med.get("IDANIMAL")+" AND estado ='Activo'),"+med.get("IDMEDICAMENTO")+","+med.get("DOSIS")+");"
+        //</editor-fold>
+        );
+//</editor-fold>
+        }
+        
+        
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
+    
+    
     
 }

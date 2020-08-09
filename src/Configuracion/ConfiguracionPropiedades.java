@@ -24,12 +24,16 @@ public class ConfiguracionPropiedades {
     private static String BASE_DE_DATOS;
     private static String ANIO_FISCAL;
     private static String EST_CARGA_MASIVA_ANIMALES;
+    private static String EST_CARGA_MASIVA_PESAJE;
+    private static String EST_CARGA_MASIVA_PALPACION;
     private static final String KEY_SERVIDOR = "servidor";
     private static final String KEY_USUARIO = "usuario";
     private static final String KEY_CLAVE = "clave";
     private static final String KEY_BASE_DE_DATOS = "baseDeDatos";
     private static final String KEY_ANIO_FISCAL = "anioFiscal";
     private static final String KEY_EST_CARGA_MASIVA_ANIMALES = "EncabezadosCargaMasivaAnimal";
+    private static final String KEY_EST_CARGA_MASIVA_PESAJE = "EncabezadosCargaMasivaPesaje";
+    private static final String KEY_EST_CARGA_MASIVA_PALPACION = "EncabezadosCargaMasivaPalpacion";
 
     public static void cargarConfiguracion() {
         propiedades = new Properties();
@@ -46,6 +50,8 @@ public class ConfiguracionPropiedades {
             CLAVE = propiedades.getProperty(KEY_CLAVE);
             ANIO_FISCAL = propiedades.getProperty(KEY_ANIO_FISCAL);
             EST_CARGA_MASIVA_ANIMALES = propiedades.getProperty(KEY_EST_CARGA_MASIVA_ANIMALES);
+            EST_CARGA_MASIVA_PESAJE = propiedades.getProperty(KEY_EST_CARGA_MASIVA_PESAJE);
+            EST_CARGA_MASIVA_PALPACION = propiedades.getProperty(KEY_EST_CARGA_MASIVA_PALPACION);
             cargarPropiedades();
         } catch (IOException ioe) {
             JOptionPane.showMessageDialog(null, "El archivo de configuracion no se encuentra en la ruta esperada.\nDetalles:\n" + ioe.getMessage());
@@ -59,6 +65,23 @@ public class ConfiguracionPropiedades {
     public static void setEST_CARGA_MASIVA_ANIMALES(String EST_CARGA_MASIVA_ANIMALES) {
         ConfiguracionPropiedades.EST_CARGA_MASIVA_ANIMALES = EST_CARGA_MASIVA_ANIMALES;
     }
+
+    public static String[] getEST_CARGA_MASIVA_PESAJE() {
+        return EST_CARGA_MASIVA_PESAJE.split(",");
+    }
+
+    public static void setEST_CARGA_MASIVA_PESAJE(String EST_CARGA_MASIVA_PESAJE) {
+        ConfiguracionPropiedades.EST_CARGA_MASIVA_PESAJE = EST_CARGA_MASIVA_PESAJE;
+    }
+
+    public static String[] getEST_CARGA_MASIVA_PALPACION() {
+        return EST_CARGA_MASIVA_PALPACION.split(",");
+    }
+
+    public static void setEST_CARGA_MASIVA_PALPACION(String EST_CARGA_MASIVA_PALPACION) {
+        ConfiguracionPropiedades.EST_CARGA_MASIVA_PALPACION = EST_CARGA_MASIVA_PALPACION;
+    }
+    
 
     public static String getANIO_FISCAL() {
         return propiedades.getProperty(KEY_ANIO_FISCAL);

@@ -31,11 +31,21 @@ public class CargaMasiva extends Thread implements Runnable {
     public void run() {
         if (estado == Estados.CARGA_MASIVA_ANIMALES) {
             cargaMasivaDeAnimales();
+        }else if (estado == Estados.CARGA_MASIVA_ANIMALES) {
+            cargaMasivaPesaje();
+        }else if (estado == Estados.CARGA_MASIVA_ANIMALES) {
+            cargaMasivaPalpacion();
         }
     }
 
     private void cargaMasivaDeAnimales() {
         vista.CargarAnimales();
+    }
+    private void cargaMasivaPesaje() {
+        vista.CargarPesaje();
+    }
+    private void cargaMasivaPalpacion() {
+        vista.CargarPalpacion();
     }
 
     public synchronized void iniciar() {

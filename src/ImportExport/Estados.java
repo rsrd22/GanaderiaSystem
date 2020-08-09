@@ -14,4 +14,6 @@ public class Estados {
     public static final int EXPORTAR = 0;
     public static final int IMPORTAR = 1;
     public static final int CARGA_MASIVA_ANIMALES = 2;
+    public static final int CARGA_MASIVA_PESAJE = 3;
+    public static final int CARGA_MASIVA_PALPACION = 4;
 }

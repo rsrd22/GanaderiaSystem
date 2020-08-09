@@ -12,6 +12,7 @@ import ImportExport.CargaMasiva;
 import ImportExport.Estados;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
+import static Utilidades.datosUsuario.datos;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,7 +72,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         btnCargar = new javax.swing.JButton();
         scroll = new javax.swing.JScrollPane();
         txtRespuesta = new javax.swing.JEditorPane();
-        cbGenero = new javax.swing.JComboBox();
+        cbCargar = new javax.swing.JComboBox();
         lbltitle10 = new javax.swing.JLabel();
         progreso = new javax.swing.JProgressBar();
 
@@ -266,12 +267,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         add(scroll, gridBagConstraints);
 
-        cbGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbGenero.setForeground(new java.awt.Color(59, 123, 50));
-        cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Hembra", "Macho" }));
-        cbGenero.addActionListener(new java.awt.event.ActionListener() {
+        cbCargar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbCargar.setForeground(new java.awt.Color(59, 123, 50));
+        cbCargar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Animal", "Pesaje", "Palpacion" }));
+        cbCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbGeneroActionPerformed(evt);
+                cbCargarActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -282,12 +283,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
-        add(cbGenero, gridBagConstraints);
+        add(cbCargar, gridBagConstraints);
 
         lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle10.setText("Sexo");
+        lbltitle10.setText("Cargar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -349,20 +350,33 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         listaIngresados = new ArrayList<>();
         listaNoIngresados = new ArrayList<>();
         txtRespuesta.setText("");
-        thProceso = new CargaMasiva(this, Estados.CARGA_MASIVA_ANIMALES);
+        int estado = -1;
+        
+        if(cbCargar.getSelectedItem().equals("Animal")){
+            estado = Estados.CARGA_MASIVA_ANIMALES;
+        }else if(cbCargar.getSelectedItem().equals("Pesaje")){
+            estado = Estados.CARGA_MASIVA_PESAJE;
+        }else if(cbCargar.getSelectedItem().equals("Palpacion")){
+            estado = Estados.CARGA_MASIVA_PALPACION;
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un tipo de cargar para realizar la operación.");
+            return;
+        }
+        
+        thProceso = new CargaMasiva(this, estado);
         thProceso.iniciar();
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    private void cbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGeneroActionPerformed
+    private void cbCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCargarActionPerformed
 
-    }//GEN-LAST:event_cbGeneroActionPerformed
+    }//GEN-LAST:event_cbCargarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
     public javax.swing.JButton btnSelectArchivo;
+    public javax.swing.JComboBox cbCargar;
     public javax.swing.JComboBox cbFinca;
-    public javax.swing.JComboBox cbGenero;
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
@@ -405,7 +419,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     public void CargarAnimales() {
         try {
             String ruta = txtURL.getText().trim();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             ControlArchivo con = new ControlArchivo();
             if (idTipoAnimal.equals("-1")) {
                 return;
@@ -440,8 +454,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 List<Map<String, String>> listaHierros = Utilidades.data_list(1, listaInfoLeida, new String[]{"HIERRO"});
                 System.out.println("listaGrupos-->" + listaGrupos.size());
                 System.out.println("listaHierros-->" + listaHierros.size());
-                inGrupos = getIN(listaGrupos, "GRUPO");
-                inHierros = getIN(listaHierros, "HIERRO");
+                inGrupos = getINMap(listaGrupos, "GRUPO");
+                inHierros = getINMap(listaHierros, "HIERRO");
                 if (inGrupos.equals("") || inHierros.equals("")) {
                     //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
                     String motivo = "";
@@ -648,8 +662,365 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
         }
     }
+    public void CargarPesaje() {
+        try{
+            String ruta = txtURL.getText().trim();
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            ControlArchivo con = new ControlArchivo();
+            String fecha = sdf.format(cal.getTime());
+            if (idTipoAnimal.equals("-1")) {
+                return;
+            }
+            if (idFinca.equals("-1")) {
+                return;
+            }
+            if (ruta.equals("")) {
+                return;
+            }
+            String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
+            if (ext.equals("xlsx")) {
+                listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PESAJE());
+            } else {
+                listaInfoLeida = con.LeerExcel(ruta);
+            }
 
-    private String getIN(List<Map<String, String>> lista, String Key) {
+            if (listaInfoLeida == null) {
+                thProceso.terminar();
+                return;
+            }
+
+            int valor = 1;
+            progreso.setMaximum(listaInfoLeida.size());
+            
+            String inMedicamentos = "", inNumAnimales = "";
+            int fila = 0;
+            if (listaInfoLeida.size() > 0) {
+                List<String> listaMedicamentos = new ArrayList<>();
+                System.out.println("listaInfoLeida.size()" + listaInfoLeida.size());
+                //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
+                for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
+                    String key = entry.getKey();
+                    if(key.indexOf("MED_")>0){
+                        listaMedicamentos.add(key.replace("MED_", ""));
+                    }
+                }
+                inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
+                inMedicamentos = getIN(listaMedicamentos);
+                List<Map<String, String>> listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                                                                                        + "FROM medicamentos \n"
+                                                                                        + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
+                                                                                    "FROM animales\n" +
+                                                                                    "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
+                //</editor-fold>
+                
+                
+                for (Map<String, String> info : listaInfoLeida) {
+                    progreso.setValue(valor++);
+                    fila++;
+                    info.put("IDFINCA", "" + idFinca);
+                    info.put("IDTIPOANIMAL", "" + idTipoAnimal);
+                    info.put("FEC_PESAJE", "" + fecha);
+                    
+                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->"+info.get("NUM_HIJO"), "numero_mama<->"+info.get("NUM_MAMA")});
+                    System.out.println("datoAnimal---->"+datoAnimal.size());
+                    info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
+                    info.put("HIERRO", "" + datoAnimal.get(0).get("hierro_fisico"));
+                    info.put("DESCORNADO", "" + datoAnimal.get(0).get("descornado"));
+                    info.put("IMPLANTE", "" + datoAnimal.get(0).get("implante"));
+                    info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01")?"0":"1");
+                    //<editor-fold defaultstate="collapsed" desc="Validaciones">
+                    
+                    
+                    if (info.get("PESO").equals("_")) {
+                        //VALI
+                        info.put("FILA", "" + fila);
+                        info.put("MOTIVO", "El peso se encuentra vacio.");
+                        listaNoIngresados.add(info);
+                        continue;
+                    }
+                    if(info.get("TIPO_PESAJE").substring(0, 1).toUpperCase().equals("L")){
+                        Double peso = Double.parseDouble(info.get("PESO").replace(",", "."));
+                        Double resultado = peso / Utilidades.FACTOR_CONVERSION;
+                        long resultadoRedondeado = Math.round(resultado);
+                        info.put("PESO", ""+resultadoRedondeado);
+                    }
+                    //</editor-fold>
+                    List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
+                    //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
+                    for(String med: listaMedicamentos){
+                        
+                        if(!info.get("MED_"+med).equals("_")){
+                            Map<String, String> mapMed = new HashMap<>();
+                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->"+med});
+                            mapMed.put("IDMEDICAMENTO", ""+datoMedicamento.get(0).get("ID"));
+                            mapMed.put("MEDICAMENTO", ""+datoMedicamento.get(0).get("DESCRIPCION"));
+                            mapMed.put("DOSIS", ""+info.get("MED_"+med));
+                            mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
+                            ListaMedicamentosxPesaje.add(mapMed);
+                        }
+                    }
+                    //</editor-fold>
+                    
+                    
+                    
+                       
+                    int resp = controlCarga.GuardarPesaje(info);
+                    int resp2 = -1;
+                    if(ListaMedicamentosxPesaje.size()>0){
+                        resp2 = controlCarga.GuardarMedicamentoxPesaje(ListaMedicamentosxPesaje);
+                    }
+                    
+
+                    if (resp == Retorno.EXITO) {
+                        listaIngresados.add(info);
+                    } else {
+                        String motivo = "";
+                        if (resp == Retorno.ERROR) {
+                            motivo = "Ocurrio un error al momento de guardar al animal. por favor verifique la información e intentelo nuevamente.";
+                        } else if (resp == Retorno.EXCEPCION_SQL) {
+                            motivo = "Ocurrio un error de conexión con la Base de Datos al momento de guardar al animal. por favor Comuniquese on el ADMIN del sistema.";
+                        } else {
+                            motivo = "Ocurrio un error inesperado al momento de guardar al animal. por favor Comuniquese on el ADMIN del sistema.";
+                        }
+                        info.put("FILA", "" + fila);
+                        info.put("MOTIVO", "" + motivo);
+                        listaNoIngresados.add(info);
+                    }
+                }
+                //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
+
+                txtRespuesta.setText("<html>\n"
+                        + "<body>\n"
+                        + "    <table>\n"
+                        + "        <tr>\n"
+                        + "            <td style=\"text-align: right; font-weight: bold;\">Animales Ingresados:</td>\n"
+                        + "            <td>" + listaIngresados.size() + "</td>\n"
+                        + (listaNoIngresados.size() > 0
+                        ? "            <td style=\"text-align: right; font-weight: bold;\">Animales No Ingresados:</td>\n"
+                        + "            <td>" + listaNoIngresados.size() + "</td>\n"
+                        : "")
+                        + "        </tr>\n"
+                        + "        <tr>\n"
+                        + "            <td colspan=\"" + (listaNoIngresados.size() > 0 ? "4" : "2") + "\" style=\"text-align: center;\">###</td>"
+                        + "        </tr>\n"
+                        + "    </table>\n"
+                        + "</body>\n"
+                        + "</html>");
+
+                if (listaNoIngresados.size() > 0) {
+                    String tblNoIngresados = "<table style=\"border-collapse: collapse;\">\n"
+                            + "                    <tr style=\"background-color: #3B7B32; color: white;\">\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">#</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Fila Excel</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Numero Animal</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Motivo</td>\n"
+                            + "                    </tr>";
+                    for (int i = 0; i < listaNoIngresados.size(); i++) {
+                        tblNoIngresados += "<tr style=\"background-color: " + (i % 2 == 0 ? "#ededed" : "#62885d") + "; "
+                                + "" + (i % 2 != 0 ? "color: #FFFFFF;" : "") + "\">\n"
+                                + "                        <td style='text-align: center;'>" + (i + 1) + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("FILA") + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_ANIMAL") + "</td>\n"
+                                + "                        <td>" + listaNoIngresados.get(i).get("MOTIVO") + "</td>\n"
+                                + "                    </tr>";
+                    }
+                    tblNoIngresados += "</table>";
+                    txtRespuesta.setText(txtRespuesta.getText().replace("###", tblNoIngresados));
+                } else {
+                    txtRespuesta.setText(txtRespuesta.getText().replace("###", ""));
+                }
+                //</editor-fold>
+            }
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
+        }
+    }
+
+    public void CargarPalpacion() {
+        try{
+            String ruta = txtURL.getText().trim();
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            ControlArchivo con = new ControlArchivo();
+            String fecha = sdf.format(cal.getTime());
+            if (idTipoAnimal.equals("-1")) {
+                return;
+            }
+            if (idFinca.equals("-1")) {
+                return;
+            }
+            if (ruta.equals("")) {
+                return;
+            }
+            String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
+            if (ext.equals("xlsx")) {
+                listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PESAJE());
+            } else {
+                listaInfoLeida = con.LeerExcel(ruta);
+            }
+
+            if (listaInfoLeida == null) {
+                thProceso.terminar();
+                return;
+            }
+
+            int valor = 1;
+            progreso.setMaximum(listaInfoLeida.size());
+            
+            String inMedicamentos = "", inNumAnimales = "";
+            int fila = 0;
+            if (listaInfoLeida.size() > 0) {
+                List<String> listaMedicamentos = new ArrayList<>();
+                System.out.println("listaInfoLeida.size()" + listaInfoLeida.size());
+                //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
+                for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
+                    String key = entry.getKey();
+                    if(key.indexOf("MED_")>0){
+                        listaMedicamentos.add(key.replace("MED_", ""));
+                    }
+                }
+                inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
+                inMedicamentos = getIN(listaMedicamentos);
+                List<Map<String, String>> listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                                                                                        + "FROM medicamentos \n"
+                                                                                        + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
+                                                                                    "FROM animales\n" +
+                                                                                    "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
+                //</editor-fold>
+                
+                
+                for (Map<String, String> info : listaInfoLeida) {
+                    progreso.setValue(valor++);
+                    fila++;
+                    info.put("IDFINCA", "" + idFinca);
+                    info.put("IDTIPOANIMAL", "" + idTipoAnimal);
+                    info.put("FEC_PESAJE", "" + fecha);
+                    
+                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->"+info.get("NUM_HIJO"), "numero_mama<->"+info.get("NUM_MAMA")});
+                    System.out.println("datoAnimal---->"+datoAnimal.size());
+                    info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
+                    info.put("HIERRO", "" + datoAnimal.get(0).get("hierro_fisico"));
+                    info.put("DESCORNADO", "" + datoAnimal.get(0).get("descornado"));
+                    info.put("IMPLANTE", "" + datoAnimal.get(0).get("implante"));
+                    info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01")?"0":"1");
+                    //<editor-fold defaultstate="collapsed" desc="Validaciones">
+                    
+                    
+                    if (info.get("PESO").equals("_")) {
+                        //VALI
+                        info.put("FILA", "" + fila);
+                        info.put("MOTIVO", "El peso se encuentra vacio.");
+                        listaNoIngresados.add(info);
+                        continue;
+                    }
+                    if(info.get("TIPO_PESAJE").substring(0, 1).toUpperCase().equals("L")){
+                        Double peso = Double.parseDouble(info.get("PESO").replace(",", "."));
+                        Double resultado = peso / Utilidades.FACTOR_CONVERSION;
+                        long resultadoRedondeado = Math.round(resultado);
+                        info.put("PESO", ""+resultadoRedondeado);
+                    }
+                    //</editor-fold>
+                    List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
+                    //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
+                    for(String med: listaMedicamentos){
+                        
+                        if(!info.get("MED_"+med).equals("_")){
+                            Map<String, String> mapMed = new HashMap<>();
+                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->"+med});
+                            mapMed.put("IDMEDICAMENTO", ""+datoMedicamento.get(0).get("ID"));
+                            mapMed.put("MEDICAMENTO", ""+datoMedicamento.get(0).get("DESCRIPCION"));
+                            mapMed.put("DOSIS", ""+info.get("MED_"+med));
+                            mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
+                            ListaMedicamentosxPesaje.add(mapMed);
+                        }
+                    }
+                    //</editor-fold>
+                    
+                    
+                    
+                       
+                    int resp = controlCarga.GuardarPesaje(info);
+                    int resp2 = -1;
+                    if(ListaMedicamentosxPesaje.size()>0){
+                        resp2 = controlCarga.GuardarMedicamentoxPesaje(ListaMedicamentosxPesaje);
+                    }
+                    
+
+                    if (resp == Retorno.EXITO) {
+                        listaIngresados.add(info);
+                    } else {
+                        String motivo = "";
+                        if (resp == Retorno.ERROR) {
+                            motivo = "Ocurrio un error al momento de guardar al animal. por favor verifique la información e intentelo nuevamente.";
+                        } else if (resp == Retorno.EXCEPCION_SQL) {
+                            motivo = "Ocurrio un error de conexión con la Base de Datos al momento de guardar al animal. por favor Comuniquese on el ADMIN del sistema.";
+                        } else {
+                            motivo = "Ocurrio un error inesperado al momento de guardar al animal. por favor Comuniquese on el ADMIN del sistema.";
+                        }
+                        info.put("FILA", "" + fila);
+                        info.put("MOTIVO", "" + motivo);
+                        listaNoIngresados.add(info);
+                    }
+                }
+                //<editor-fold defaultstate="collapsed" desc="RESPUESTA">
+
+                txtRespuesta.setText("<html>\n"
+                        + "<body>\n"
+                        + "    <table>\n"
+                        + "        <tr>\n"
+                        + "            <td style=\"text-align: right; font-weight: bold;\">Animales Ingresados:</td>\n"
+                        + "            <td>" + listaIngresados.size() + "</td>\n"
+                        + (listaNoIngresados.size() > 0
+                        ? "            <td style=\"text-align: right; font-weight: bold;\">Animales No Ingresados:</td>\n"
+                        + "            <td>" + listaNoIngresados.size() + "</td>\n"
+                        : "")
+                        + "        </tr>\n"
+                        + "        <tr>\n"
+                        + "            <td colspan=\"" + (listaNoIngresados.size() > 0 ? "4" : "2") + "\" style=\"text-align: center;\">###</td>"
+                        + "        </tr>\n"
+                        + "    </table>\n"
+                        + "</body>\n"
+                        + "</html>");
+
+                if (listaNoIngresados.size() > 0) {
+                    String tblNoIngresados = "<table style=\"border-collapse: collapse;\">\n"
+                            + "                    <tr style=\"background-color: #3B7B32; color: white;\">\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">#</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Fila Excel</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Numero Animal</td>\n"
+                            + "                        <td style=\"text-align: center; border: 1px solid #3B7B32;\">Motivo</td>\n"
+                            + "                    </tr>";
+                    for (int i = 0; i < listaNoIngresados.size(); i++) {
+                        tblNoIngresados += "<tr style=\"background-color: " + (i % 2 == 0 ? "#ededed" : "#62885d") + "; "
+                                + "" + (i % 2 != 0 ? "color: #FFFFFF;" : "") + "\">\n"
+                                + "                        <td style='text-align: center;'>" + (i + 1) + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("FILA") + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_ANIMAL") + "</td>\n"
+                                + "                        <td>" + listaNoIngresados.get(i).get("MOTIVO") + "</td>\n"
+                                + "                    </tr>";
+                    }
+                    tblNoIngresados += "</table>";
+                    txtRespuesta.setText(txtRespuesta.getText().replace("###", tblNoIngresados));
+                } else {
+                    txtRespuesta.setText(txtRespuesta.getText().replace("###", ""));
+                }
+                //</editor-fold>
+            }
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
+        }
+    }
+
+    private String getINMap(List<Map<String, String>> lista, String Key) {
         try {
             String in = "";
 
@@ -675,6 +1046,45 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             return null;
         }
     }
+    
+    private String getINMap(List<Map<String, String>> lista, String[] keys, String split) {
+        try {
+            String in = "";
+
+
+            for (Map<String, String> map : lista) {
+                String dato = "";
+                for(String k: keys){
+                    if (map.get(k).equals("_")) {
+                        dato = "";
+                        break;
+                    }
+                    dato+=(dato.equals("")?"":split)+map.get(k);
+                }
+                if(!dato.equals(""))
+                    in += (in.equals("") ? "" : ",") + "'" + dato + "'";
+            }
+
+            return in;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private String getIN(List<String> lista) {
+        try {
+            String in = "";
+
+            for (String map : lista) {
+                in += (in.equals("") ? "" : ",") + "'" + map + "'";
+            }
+
+            return in;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     private Map<String, String> getInfo(List<Map<String, String>> lista, String valorB, String Key) {
         Map<String, String> ret = new HashMap<String, String>();
@@ -687,5 +1097,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
         return ret;
     }
+
+    
 
 }
