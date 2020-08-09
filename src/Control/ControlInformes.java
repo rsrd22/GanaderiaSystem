@@ -10,7 +10,9 @@ import BaseDeDatos.gestorMySQL;
 import Modelo.*;
 import Excel.*;
 import Utilidades.Parametros;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,9 @@ public class ControlInformes {
     public ArrayList<String> Encabezado;
     public ArrayList<ArrayList<String>> ListaDatos;
     public ControlArchivo controlArchivo; 
+    private SimpleDateFormat sdf;
+    private Calendar cal;
+    private String complemento;
 
     /**
      *
@@ -31,6 +36,10 @@ public class ControlInformes {
         mySQL = new gestorMySQL();
         Encabezado = new ArrayList<>();
         ListaDatos = new ArrayList<>();
+        sdf = new SimpleDateFormat("ddMMyyyy");
+        cal=Calendar.getInstance();
+        double random = Math.random();
+        complemento=(""+random).substring(2,8)+"_"+(sdf.format(cal.getTime()));
     }
     
     public void GenerarInformes(Object _info){
@@ -60,8 +69,8 @@ public class ControlInformes {
                                     "INNER JOIN `propietarioxhierro` hie ON hie.`id` = anim.`hierro`\n" +
                                     "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
                                     "WHERE anim.`id_tipo_animal` = '"+datos.get("IDTIPO")+"' AND tpo.`id_finca` = '"+datos.get("IDFINCA")+"'\n" +
-                                    (datos.get("SEXO").equals("")?"": "AND anim.`genero` = '"+datos.get("SEXO")+"' ")+
-                                    " AND anim.grupo IN ("+datos.get("GRUPOS")+") \n"+
+                                    "AND anim.`genero` = 'hembra' \n"+
+                                    "AND anim.grupo IN ("+datos.get("GRUPOS")+") \n"+
                                     "ORDER BY anim.genero DESC";
             
             
@@ -105,13 +114,15 @@ public class ControlInformes {
                     listAux.add(""+pes.get("PESO"));  
                     listAux.add("");  
                     listAux.add("");   
-                    listAux.add("I"+(fila+1)+"-G"+(fila+1)+";");  
-                    //listAux.add("SI(IGUAL(MAYUSC(EXTRAE(H"+(fila+1)+";1;1));\"K\");I"+(fila+1)+"-G"+(fila+1)+";REDONDEAR((I"+(fila+1)+"/2.20462);0)-G"+(fila+1)+")");  
+//                    listAux.add("IFERROR(I"+(fila+1)+"-G"+(fila+1)+";\"\")");  
+                    listAux.add("IFERROR(IF((UPPER(MID(H"+(fila+1)+",1,1))=\"K\"),I"+(fila+1)+"-G"+(fila+1)+",ROUND((I"+(fila+1)+"/2.20462),0)-G"+(fila+1)+"),\"\")");  
+//                    listAux.add("MID(H"+(fila+1)+",1,1)");  
                     
                     ListaDatos.add(listAux);
                 }
                 System.out.println("COMIENZO DE ARCHIVO");
-                controlArchivo.EscribirExcelActFormula(Parametros.RutaWindows, "ArchivoPesaje.xlsx", Encabezado, ListaDatos, 9);
+                String nombreArchivo = "ArchivoPesaje_"+complemento+".xlsx";
+                controlArchivo.EscribirExcelActFormula(Parametros.RutaWindows, nombreArchivo, Encabezado, ListaDatos, 9);
                 
             }
             
@@ -193,7 +204,8 @@ public class ControlInformes {
                     listAux.add("");  
                     ListaDatos.add(listAux);
                 }
-                controlArchivo.EscribirExcelAct(Parametros.RutaWindows, "ArchivoPalpacion.xlsx", Encabezado, ListaDatos);
+                String nombreArchivo = "ArchivoPalpacion_"+complemento+".xlsx";
+                controlArchivo.EscribirExcelAct(Parametros.RutaWindows, nombreArchivo, Encabezado, ListaDatos);
             }
             
         }catch(Exception e){

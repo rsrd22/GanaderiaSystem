@@ -66,21 +66,25 @@ public class NewClass {
 //        //</editor-fold>
         // ActualizarPesajes();
         
-        Map<String, String> datosp = new HashMap<>();
-        datosp.put("F.U.P", "DOLOLOLOAL");
-        datosp.put("PRU", "JGNASKDA");
-        datosp.put("ID", "973912u");
+//        Map<String, String> datosp = new HashMap<>();
+//        datosp.put("F.U.P", "DOLOLOLOAL");
+//        datosp.put("PRU", "JGNASKDA");
+//        datosp.put("ID", "973912u");
+//        
+//        System.out.println("daots--->"+datosp.get("F.U.P"));
+//        
+//        for (Map.Entry<String, String> d : datosp.entrySet()) {
+//                String key = d.getKey();
+//                String value = d.getValue();
+//                System.out.println("key-->"+key);
+//                System.out.println("value-->"+value);
+//                
+//            }
+//        
         
-        System.out.println("daots--->"+datosp.get("F.U.P"));
-        
-        for (Map.Entry<String, String> d : datosp.entrySet()) {
-                String key = d.getKey();
-                String value = d.getValue();
-                System.out.println("key-->"+key);
-                System.out.println("value-->"+value);
-                
-            }
-        
+        double random = Math.random();
+        System.out.println((""+random));
+        System.out.println((""+random).substring(2,6));
         
     }
 
