@@ -39,6 +39,7 @@ public class Utilidades {
     public static String PACIENTES_AUXILIARES_OCASIONALES = "^[A|O]$";
     public static Double FACTOR_CONVERSION = 2.20462;
     public static String DATOS_HISTORICO = "Implante|Descornado|Destetado|Hierro fisico";
+    public static String DATOS_PALPACION = "vacia|preñada|repaso";
 
 //    public static void main(String[] args) {
 //        Pattern p = Pattern.compile(DATOS_HISTORICO);
@@ -378,6 +379,12 @@ public class Utilidades {
         String textoFormateado = Expresiones.procesarSoloNumP(textoSinPuntos);
         textoFormateado = MascaraMonedaConDecimales(textoFormateado);
         campoTexto.setText(textoFormateado);
+    }
+
+    public static boolean ValidarEstado(String estado) {
+        Pattern p = Pattern.compile(DATOS_PALPACION);
+        Matcher m = p.matcher(estado);
+        return m.find();
     }
 
     public String convertirNumeroEnLetras(int numero) {

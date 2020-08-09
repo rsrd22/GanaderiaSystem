@@ -900,30 +900,32 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     fila++;
                     info.put("IDFINCA", "" + idFinca);
                     info.put("IDTIPOANIMAL", "" + idTipoAnimal);
-                    info.put("FEC_PESAJE", "" + fecha);
+                    info.put("FEC_PALPACION", "" + fecha);
                     
                     List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->"+info.get("NUM_HIJO"), "numero_mama<->"+info.get("NUM_MAMA")});
                     System.out.println("datoAnimal---->"+datoAnimal.size());
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
-                    info.put("HIERRO", "" + datoAnimal.get(0).get("hierro_fisico"));
-                    info.put("DESCORNADO", "" + datoAnimal.get(0).get("descornado"));
-                    info.put("IMPLANTE", "" + datoAnimal.get(0).get("implante"));
-                    info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01")?"0":"1");
+                    info.put("DESCARTE", "0");
+                    info.put("RAZON_DESCARTE", "");
+                    
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
+                    info.put("ESTADO", ValidarName(info.get("ESTADO")));
                     
-                    
-                    if (info.get("PESO").equals("_")) {
+                    if (info.get("ESTADO").equals("_") || Utilidades.ValidarEstado(info.get("ESTADO"))) {
                         //VALI
                         info.put("FILA", "" + fila);
-                        info.put("MOTIVO", "El peso se encuentra vacio.");
+                        info.put("MOTIVO", "No se encontro ningún estado valido para la palpación (vacia, preñada, repaso). Por favor Verifique la información.");
                         listaNoIngresados.add(info);
                         continue;
                     }
-                    if(info.get("TIPO_PESAJE").substring(0, 1).toUpperCase().equals("L")){
-                        Double peso = Double.parseDouble(info.get("PESO").replace(",", "."));
-                        Double resultado = peso / Utilidades.FACTOR_CONVERSION;
-                        long resultadoRedondeado = Math.round(resultado);
-                        info.put("PESO", ""+resultadoRedondeado);
+                    if(info.get("ESTADO").substring(0, 1).toUpperCase().equals("P")){
+                        if (info.get("NUM_MESES").equals("_") || Utilidades.validarSoloNumeros(info.get("NUM_MESES"))) {
+
+                            info.put("FILA", "" + fila);
+                            info.put("MOTIVO", "El numero de meses ingresado no es valio para el estado de PREÑADA.");
+                            listaNoIngresados.add(info);
+                            continue;
+                        }
                     }
                     //</editor-fold>
                     List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
@@ -945,10 +947,10 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     
                     
                        
-                    int resp = controlCarga.GuardarPesaje(info);
-                    int resp2 = -1;
+                    int resp = controlCarga.GuardarPalpacion(info);
+                    int resp2 = -1; 
                     if(ListaMedicamentosxPesaje.size()>0){
-                        resp2 = controlCarga.GuardarMedicamentoxPesaje(ListaMedicamentosxPesaje);
+                        resp2 = controlCarga.GuardarMedicamentoxPalpacion(ListaMedicamentosxPesaje);
                     }
                     
 
@@ -1095,6 +1097,24 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
         }
 
+        return ret;
+    }
+
+    private String ValidarName(String estado) {
+        String ret ="";
+        switch (estado.substring(0, 1).toLowerCase()) {
+            case "v":
+                ret = "vacia";
+                break;
+            case "r":
+                ret = "repaso";
+                break;
+            case "p":
+                ret = "preñada";
+                break;
+            default:
+                ret = estado;
+        }
         return ret;
     }
 

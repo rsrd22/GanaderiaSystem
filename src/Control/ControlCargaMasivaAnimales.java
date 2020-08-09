@@ -253,6 +253,80 @@ public class ControlCargaMasivaAnimales {
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public int GuardarPalpacion(Map<String, String> datos) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        //<editor-fold defaultstate="collapsed" desc="INACTIVAR REGISTRO ANTERIOR">
+        if(mySQL.ExistenDatos("SELECT * FROM `palpacion` WHERE `id_animal` = " + datos.get("IDANIMAL")+ " AND estado = 'Activo'")){
+            consultas.add("UPDATE `palpacion`\n" +
+                            "SET `estado` = 'Inactivo'\n" +
+                            "WHERE `id_animal` = " + datos.get("IDANIMAL")+ " AND estado = 'Activo';");
+        }
+//</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="GUARDAR PALPACION">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `palpacion`\n" +
+                    "(`id`, `id_animal`, `fecha_palpacion`, `diagnostico`, \n" +
+                    "`notas`, `num_meses`, `estado`, `fecha_ultimo_parto`, \n" +
+                    "`descarte`, `razondescarte`, `fecha`, `id_usuario`)\n" +
+                    "VALUES \n" +
+                    "(0, " + datos.get("IDANIMAL")+ ", " + datos.get("FEC_PALAPACION")+ ", '" + datos.get("ESTADO")+ "', \n" +
+                    "'PALPACION POR CARGA MASIVA', " + datos.get("NUM_MESES")+ ", 'Activo', '" + datos.get("F.U.P")+ "', \n" +
+                    "'" + datos.get("DESCARTE")+ "', '" + datos.get("RAZON_DESCARTE")+ "', NOW(), "+datosUsuario.datos.get(0).get("ID_USUARIO")+");"
+        //</editor-fold>
+        );
+//</editor-fold>
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    
+    }
+
+    public int GuardarMedicamentoxPalpacion(List<Map<String, String>> ListaMedicamentosxPesaje) {
+        ArrayList<String> consultas = new ArrayList<>();
+        
+        for (Map<String, String> med : ListaMedicamentosxPesaje) {
+            //<editor-fold defaultstate="collapsed" desc="GUARDAR Med PALPACION">
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `palpacionxtratamiento`\n" +
+                    "(`id`,`id_palpacion`,`id_medicamento`,`dosis`)\n" +
+                    "VALUES \n" +
+                    "(0,(SELECT id FROM `palpacion` WHERE id_animal = "+med.get("IDANIMAL")+" AND estado ='Activo'),"+med.get("IDMEDICAMENTO")+","+med.get("DOSIS")+");"
+        //</editor-fold>
+        );
+//</editor-fold>
+        }
+        
+        
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
     
     
     
