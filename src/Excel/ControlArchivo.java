@@ -227,8 +227,12 @@ public class ControlArchivo {
                                     obj.put(keys.get(col), "" + value);
                                     System.out.println("value-->"+value);
                                 } else {
-                                    
-                                    obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
+                                    conten = xssfCell.getStringCellValue();
+                                    conten = conten.replace(",", ".");
+                                    if(conten.indexOf(".")>-1)
+                                        obj.put(keys.get(col), "" + Double.parseDouble(conten.replace(",", ".")));
+                                    else
+                                        obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
                                 }
                             } else {
                                 conten = xssfCell.getStringCellValue();
