@@ -400,6 +400,7 @@ public class VistaInformePesaje extends javax.swing.JPanel {
     }
 
     private void LlenarJList(List<Map<String, String>> datos, String keyB, JList Lista, DefaultListModel modlist) {
+        LimpiarJList(Lista, modlist);
         for (Map<String, String> dat : datos) {
             modlist.addElement(dat.get(keyB));
         }
@@ -424,7 +425,13 @@ public class VistaInformePesaje extends javax.swing.JPanel {
         infor.put("IDFINCA", idFinca);
         infor.put("GRUPOS", inGrupos);
         infor.put("MEDICAMENTOS", inMedicamentos);
-        infor.put("SEXO", (SexoH.equals("0") && SexoM.equals("0") ? "" : (SexoH.equals("1") ? "hembra" : "macho")));
+        
+        if((SexoH.equals("0") && SexoM.equals("0")) || (SexoH.equals("1") && SexoM.equals("1"))){
+            infor.put("SEXO", "");
+        }else{
+            infor.put("SEXO", (SexoH.equals("1") ? "hembra" : "macho"));
+        }
+        
 
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");

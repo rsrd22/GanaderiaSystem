@@ -210,7 +210,7 @@ public class ControlInformes {
                     
                     if(listaMedicamentos.size() > 0){
                         for (Map<String, String> med : listaMedicamentos) {
-                            listAux.add("");
+                            listAux.add(" ");
                         }
                     }
                     

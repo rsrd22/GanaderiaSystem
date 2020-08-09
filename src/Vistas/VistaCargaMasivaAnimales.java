@@ -701,15 +701,19 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
                 for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
                     String key = entry.getKey();
-                    if(key.indexOf("MED_")>0){
+                    if(key.indexOf("MED_")>=0){
                         listaMedicamentos.add(key.replace("MED_", ""));
                     }
                 }
                 inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
                 inMedicamentos = getIN(listaMedicamentos);
-                List<Map<String, String>> listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                
+                List<Map<String, String>> listaInfoMedicamentos = new ArrayList<>();
+                if(listaMedicamentos.size()>0){
+                    listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                                                                                         + "FROM medicamentos \n"
                                                                                         + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
                                                                                     "FROM animales\n" +
                                                                                     "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
@@ -731,7 +735,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     info.put("IMPLANTE", "" + datoAnimal.get(0).get("implante"));
                     info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01")?"0":"1");
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
-                    
+                    if (info.get("PESO_ANT").equals("_")) {
+                        info.put("PESO_ANT", "" + datoAnimal.get(0).get("peso"));
+                    }
                     
                     if (info.get("PESO").equals("_")) {
                         //VALI
@@ -886,9 +892,13 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
                 inMedicamentos = getIN(listaMedicamentos);
-                List<Map<String, String>> listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                
+                List<Map<String, String>> listaInfoMedicamentos = new ArrayList<>();
+                if(listaMedicamentos.size()>0){
+                    listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                                                                                         + "FROM medicamentos \n"
                                                                                         + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
                                                                                     "FROM animales\n" +
                                                                                     "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
