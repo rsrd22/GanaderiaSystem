@@ -118,6 +118,12 @@ public class ControlInformes {
                     listAux.add("IFERROR(IF((UPPER(MID(H"+(fila+1)+",1,1))=\"K\"),I"+(fila+1)+"-G"+(fila+1)+",ROUND((I"+(fila+1)+"/2.20462),0)-G"+(fila+1)+"),\"\")");  
 //                    listAux.add("MID(H"+(fila+1)+",1,1)");  
                     
+                    if(listaMedicamentos.size() > 0){
+                        for (Map<String, String> med : listaMedicamentos) {
+                            listAux.add(" ");
+                        }
+                    }
+                    
                     ListaDatos.add(listAux);
                 }
                 System.out.println("COMIENZO DE ARCHIVO");
@@ -201,6 +207,13 @@ public class ControlInformes {
                     listAux.add(""+palp.get("TRATAMIENTO"));  
                     listAux.add("");  
                     listAux.add("");  
+                    
+                    if(listaMedicamentos.size() > 0){
+                        for (Map<String, String> med : listaMedicamentos) {
+                            listAux.add("");
+                        }
+                    }
+                    
                     ListaDatos.add(listAux);
                 }
                 String nombreArchivo = "ArchivoPalpacion_"+complemento+".xlsx";

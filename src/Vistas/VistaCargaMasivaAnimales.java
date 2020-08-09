@@ -880,7 +880,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
                 for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
                     String key = entry.getKey();
-                    if(key.indexOf("MED_")>0){
+                    if(key.indexOf("MED_")>=0){
                         listaMedicamentos.add(key.replace("MED_", ""));
                     }
                 }
@@ -907,11 +907,13 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                     info.put("DESCARTE", "0");
                     info.put("RAZON_DESCARTE", "");
-                    
+                    if(info.get("NUM_MESES").equals("_")){
+                        info.put("NUM_MESES", "0");
+                    }
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
                     info.put("ESTADO", ValidarName(info.get("ESTADO")));
                     
-                    if (info.get("ESTADO").equals("_") || Utilidades.ValidarEstado(info.get("ESTADO"))) {
+                    if (info.get("ESTADO").equals("_") || !Utilidades.ValidarEstado(info.get("ESTADO"))) {
                         //VALI
                         info.put("FILA", "" + fila);
                         info.put("MOTIVO", "No se encontro ningún estado valido para la palpación (vacia, preñada, repaso). Por favor Verifique la información.");
@@ -919,7 +921,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         continue;
                     }
                     if(info.get("ESTADO").substring(0, 1).toUpperCase().equals("P")){
-                        if (info.get("NUM_MESES").equals("_") || Utilidades.validarSoloNumeros(info.get("NUM_MESES"))) {
+                        if (info.get("NUM_MESES").equals("_") || !Utilidades.validarSoloNumeros(info.get("NUM_MESES"))) {
 
                             info.put("FILA", "" + fila);
                             info.put("MOTIVO", "El numero de meses ingresado no es valio para el estado de PREÑADA.");
@@ -1003,7 +1005,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                                 + "" + (i % 2 != 0 ? "color: #FFFFFF;" : "") + "\">\n"
                                 + "                        <td style='text-align: center;'>" + (i + 1) + "</td>\n"
                                 + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("FILA") + "</td>\n"
-                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_ANIMAL") + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_HIJO") + "</td>\n"
                                 + "                        <td>" + listaNoIngresados.get(i).get("MOTIVO") + "</td>\n"
                                 + "                    </tr>";
                     }
@@ -1102,6 +1104,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
     private String ValidarName(String estado) {
         String ret ="";
+        System.out.println("estado---"+estado);
         switch (estado.substring(0, 1).toLowerCase()) {
             case "v":
                 ret = "vacia";
@@ -1115,6 +1118,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             default:
                 ret = estado;
         }
+        System.out.println("ret--->"+ret);
         return ret;
     }
 

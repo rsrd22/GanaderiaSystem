@@ -204,6 +204,7 @@ public class ControlArchivo {
                 String conten = "";
                 Iterator rows = sheet.rowIterator();
                 while (rows.hasNext()) {
+                    
                     col = 0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
@@ -218,12 +219,15 @@ public class ControlArchivo {
                         } else {
                             if (XSSFCell.CELL_TYPE_FORMULA == xssfCell.getCellType()) {
                                 String value = xssfCell.getRawValue();
+                                System.out.println("value-->"+value);
                                 obj.put(keys.get(col), "" + value);
                             } else if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
                                 if (DateUtil.isCellDateFormatted(xssfCell)) {
                                     String value = destFormat.format(xssfCell.getDateCellValue());
                                     obj.put(keys.get(col), "" + value);
+                                    System.out.println("value-->"+value);
                                 } else {
+                                    
                                     obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
                                 }
                             } else {
@@ -231,6 +235,7 @@ public class ControlArchivo {
                                 if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
+                                
                                 obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
                         }

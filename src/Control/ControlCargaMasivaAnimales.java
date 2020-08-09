@@ -273,8 +273,8 @@ public class ControlCargaMasivaAnimales {
                     "`notas`, `num_meses`, `estado`, `fecha_ultimo_parto`, \n" +
                     "`descarte`, `razondescarte`, `fecha`, `id_usuario`)\n" +
                     "VALUES \n" +
-                    "(0, " + datos.get("IDANIMAL")+ ", " + datos.get("FEC_PALAPACION")+ ", '" + datos.get("ESTADO")+ "', \n" +
-                    "'PALPACION POR CARGA MASIVA', " + datos.get("NUM_MESES")+ ", 'Activo', '" + datos.get("F.U.P")+ "', \n" +
+                    "(0, " + datos.get("IDANIMAL")+ ", '" + datos.get("FEC_PALPACION")+ "', '" + datos.get("ESTADO")+ "', \n" +
+                    "'PALPACION POR CARGA MASIVA', " + datos.get("NUM_MESES")+ ", 'Activo', " + Utilidades.ValorNULL(datos.get("F.U.P"))+ ", \n" +
                     "'" + datos.get("DESCARTE")+ "', '" + datos.get("RAZON_DESCARTE")+ "', NOW(), "+datosUsuario.datos.get(0).get("ID_USUARIO")+");"
         //</editor-fold>
         );

@@ -848,7 +848,7 @@ public class Utilidades {
     public static String ValorNULL(String valor) {
         if (valor == null) {
             valor = "NULL";
-        } else if (valor.trim().equals("")) {
+        } else if (valor.trim().equals("") || valor.trim().equals("_") ) {
             valor = "NULL";
         } else {
             if (!valor.equalsIgnoreCase("now()")) {
