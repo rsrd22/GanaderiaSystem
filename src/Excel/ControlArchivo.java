@@ -227,16 +227,16 @@ public class ControlArchivo {
                                     obj.put(keys.get(col), "" + value);
                                     System.out.println("value-->"+value);
                                 } else {
-                                    conten = xssfCell.getStringCellValue();
+                                    conten = ""+xssfCell.getNumericCellValue();
                                     conten = conten.replace(",", ".");
                                     if(conten.indexOf(".")>-1)
-                                        obj.put(keys.get(col), "" + Double.parseDouble(conten.replace(",", ".")));
+                                        obj.put(keys.get(col), "" + Double.parseDouble(conten));
                                     else
                                         obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
                                 }
                             } else {
                                 conten = xssfCell.getStringCellValue();
-                                if (conten.isEmpty() || conten.equals("null")) {
+                                if (conten.trim().isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
                                 
