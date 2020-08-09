@@ -3,23 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
+import Control.ControlInformes;
+import Modelo.ModeloInformes;
 import Utilidades.Utilidades;
+import Vistas.VistasInformes.VistaInformePalpacion;
+import Vistas.VistasInformes.VistaInformePesaje;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author MERRY
  */
 public class VistaInformes extends javax.swing.JPanel {
-    
+
     public ArrayList<String[]> listacategorias = new ArrayList<>();
     public ArrayList<String[]> listainformes = new ArrayList<>();
     public DefaultListModel modlistCategorias;
     public DefaultListModel modlistInformes;
+    private JPanel panel;
+    private VistaInformePalpacion vistaPalpacion;
+    private VistaInformePesaje vistaPesaje;
+
     /**
      * Creates new form VistaInformes
      */
@@ -41,24 +51,87 @@ public class VistaInformes extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        pnlCategoria = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listCategoria = new javax.swing.JList();
+        jSeparator1 = new javax.swing.JSeparator();
+        pnlOpciones = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         pnlInforme = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         listInformes = new javax.swing.JList();
-        jSeparator1 = new javax.swing.JSeparator();
+        pnlCategoria = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listCategoria = new javax.swing.JList();
         pnlGenerar = new javax.swing.JPanel();
         btnGenerar = new javax.swing.JButton();
-        pnlOpciones = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
+        jSeparator1.setForeground(new java.awt.Color(59, 123, 50));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 15, 0);
+        add(jSeparator1, gridBagConstraints);
+
+        pnlOpciones.setBackground(new java.awt.Color(255, 255, 255));
+        pnlOpciones.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 15, 15);
+        add(pnlOpciones, gridBagConstraints);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        pnlInforme.setBackground(new java.awt.Color(255, 255, 255));
+        pnlInforme.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        pnlInforme.setLayout(new java.awt.GridBagLayout());
+
+        listInformes.setForeground(new java.awt.Color(59, 123, 50));
+        listInformes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listInformes.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        listInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listInformesMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(listInformes);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlInforme.add(jScrollPane2, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(pnlInforme, gridBagConstraints);
+
+        pnlCategoria.setBackground(new java.awt.Color(255, 255, 255));
         pnlCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        pnlCategoria.setLayout(new java.awt.GridBagLayout());
 
         listCategoria.setForeground(new java.awt.Color(59, 123, 50));
         listCategoria.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -74,85 +147,25 @@ public class VistaInformes extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(listCategoria);
 
-        javax.swing.GroupLayout pnlCategoriaLayout = new javax.swing.GroupLayout(pnlCategoria);
-        pnlCategoria.setLayout(pnlCategoriaLayout);
-        pnlCategoriaLayout.setHorizontalGroup(
-            pnlCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCategoriaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlCategoriaLayout.setVerticalGroup(
-            pnlCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCategoriaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
-        );
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 120;
-        gridBagConstraints.ipady = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        add(pnlCategoria, gridBagConstraints);
-
-        pnlInforme.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-
-        listInformes.setForeground(new java.awt.Color(59, 123, 50));
-        listInformes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        listInformes.setSelectionBackground(new java.awt.Color(59, 123, 50));
-        listInformes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                listInformesMousePressed(evt);
-            }
-        });
-        jScrollPane2.setViewportView(listInformes);
-
-        javax.swing.GroupLayout pnlInformeLayout = new javax.swing.GroupLayout(pnlInforme);
-        pnlInforme.setLayout(pnlInformeLayout);
-        pnlInformeLayout.setHorizontalGroup(
-            pnlInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInformeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlInformeLayout.setVerticalGroup(
-            pnlInformeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInformeLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 118;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        add(pnlInforme, gridBagConstraints);
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.ipady = 379;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 8, 15, 0);
-        add(jSeparator1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        pnlCategoria.add(jScrollPane1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(pnlCategoria, gridBagConstraints);
 
         pnlGenerar.setBackground(new java.awt.Color(59, 123, 50));
 
@@ -179,73 +192,41 @@ public class VistaInformes extends javax.swing.JPanel {
         pnlGenerar.setLayout(pnlGenerarLayout);
         pnlGenerarLayout.setHorizontalGroup(
             pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
-            .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlGenerarLayout.createSequentialGroup()
-                    .addGap(0, 42, Short.MAX_VALUE)
-                    .addComponent(btnGenerar)
-                    .addGap(0, 41, Short.MAX_VALUE)))
-        );
-        pnlGenerarLayout.setVerticalGroup(
-            pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlGenerarLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGenerar)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        pnlGenerarLayout.setVerticalGroup(
+            pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pnlGenerarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlGenerarLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(btnGenerar)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 83;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 0);
-        add(pnlGenerar, gridBagConstraints);
-
-        pnlOpciones.setBackground(new java.awt.Color(255, 255, 255));
-        pnlOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setText("jLabel1");
-        pnlOpciones.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList1);
-
-        pnlOpciones.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(pnlGenerar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 4;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 470;
-        gridBagConstraints.ipady = 380;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 15, 14);
-        add(pnlOpciones, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 10);
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnGenerarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMouseEntered
-        Utilidades.establecerColorDeFondo(pnlGenerar, true);
-    }//GEN-LAST:event_btnGenerarMouseEntered
-
-    private void btnGenerarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMouseExited
-        Utilidades.establecerColorDeFondo(pnlGenerar, false);
-    }//GEN-LAST:event_btnGenerarMouseExited
-
-    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        //txtURL.setText(Expresiones.seleccionarArchivoExcel(false, "C:/"));
-        //System.out.println("txtURL-->"+txtURL.getText());
-    }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void listCategoriaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listCategoriaMousePressed
         SeleccionarCategoria();
@@ -259,14 +240,33 @@ public class VistaInformes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_listCategoriaMouseExited
 
+    private void btnGenerarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMouseEntered
+        Utilidades.establecerColorDeFondo(pnlGenerar, true);
+    }//GEN-LAST:event_btnGenerarMouseEntered
+
+    private void btnGenerarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarMouseExited
+        Utilidades.establecerColorDeFondo(pnlGenerar, false);
+    }//GEN-LAST:event_btnGenerarMouseExited
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        int indC = listCategoria.getSelectedIndex();
+        int indI = listInformes.getSelectedIndex();
+
+        if (indC == 0) {//Archivos Excel
+            if (indI == 0) {//Pesaje
+                vistaPesaje.CrearInforme();
+            } else if (indI == 1) {//Palpacion
+                vistaPalpacion.CrearInforme();
+            }
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnGenerar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList listCategoria;
     private javax.swing.JList listInformes;
@@ -286,7 +286,7 @@ public class VistaInformes extends javax.swing.JPanel {
         listainformes.add(new String[]{"0", "0", "Carga Masiva Pesajes"});
         listainformes.add(new String[]{"0", "1", "Carga Masiva Palpación"});
     }
-    
+
     private void llenarCategorias() {
         //cbCate.addItem("Seleccionar");
         for (int i = 0; i < listacategorias.size(); i++) {
@@ -306,30 +306,30 @@ public class VistaInformes extends javax.swing.JPanel {
         }
         listInformes.setModel(modlistInformes);
     }
-    
+
     private void SeleccionarCategoria() {
         int ind = listCategoria.getSelectedIndex();
         //System.out.println("ind----->"+ind);
         //ind = getCategoria(modlistCategorias.getElementAt());
         llenarInforme("" + ind);
     }
-    
-    private void MostrarOpciones() {
-        LimpiarPanelOpciones();
 
+    private void MostrarOpciones() {
         int indC = listCategoria.getSelectedIndex();
         int indI = listInformes.getSelectedIndex();
 
         if (indC == 0) {//Archivos Excel
             if (indI == 0) {//Pesaje
-                MostrarOpcArchivoPesaje();
-            }else if (indI == 1) {//Palpacion
-                MostrarOpcArchivoPalpacion();
+                vistaPesaje = new VistaInformePesaje();
+                MostrarPanel(vistaPesaje);
+            } else if (indI == 1) {//Palpacion
+                vistaPalpacion = new VistaInformePalpacion();
+                MostrarPanel(vistaPalpacion);
             }
         }
 
     }
-    
+
     private void LimpiarPanelOpciones() {
         pnlOpciones.removeAll();
         pnlOpciones.repaint();
@@ -359,16 +359,27 @@ public class VistaInformes extends javax.swing.JPanel {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Mostrar Opciones">
-    private void MostrarOpcArchivoPesaje() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void MostrarPanel(JPanel panel) {
+        this.panel = panel;
+        this.panel.setBounds(0, 0, pnlOpciones.getWidth(), pnlOpciones.getHeight());
+        pnlOpciones.removeAll();
+
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlOpciones.add(this.panel, gridBagConstraints);
+
+        pnlOpciones.revalidate();
+        pnlOpciones.repaint();
     }
 
     private void MostrarOpcArchivoPalpacion() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     //</editor-fold>
-    
-    
-    
 
 }

@@ -6,6 +6,7 @@
 package Excel;
 
 import Configuracion.ConfiguracionPropiedades;
+import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import java.awt.Desktop;
 import java.io.File;
@@ -277,9 +278,9 @@ public class ControlArchivo {
      * @param colFormula 
      */
     public void EscribirExcelActFormula(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos, int colFormula){
-        
+        ruta = Expresiones.guardarEn();
 	//String nombreArchivo = "Inventario.xlsx";
-        String rutaArchivo = "C:\\" + nombreArchivo;
+        String rutaArchivo = ruta+"\\" + nombreArchivo;
         String hoja = "Hoja1";
 
         XSSFWorkbook libro = new XSSFWorkbook();
@@ -315,10 +316,16 @@ public class ControlArchivo {
 //</editor-fold>
 
         System.out.println("rutaArchivo:.::"+rutaArchivo);
-        File file;
-        file = new File(rutaArchivo);
-        try(OutputStream fileOut = new FileOutputStream(nombreArchivo) ){
+        try(OutputStream fileOut = new FileOutputStream(rutaArchivo) ){
             libro.write(fileOut);
+            File archivo = new File(rutaArchivo);
+            int opcion = JOptionPane.showConfirmDialog(
+                    null, 
+                    "El archivo se genero exitosamente\n¿Desea ver el archivo " + nombreArchivo + "?\n"
+            );
+            if (opcion == JOptionPane.YES_NO_OPTION) {
+                Desktop.getDesktop().open(archivo);
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -351,9 +358,9 @@ public class ControlArchivo {
      * @param ListaDatos 
      */
     public void EscribirExcelAct(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos){
-        
+        ruta = Expresiones.guardarEn();
 	//String nombreArchivo = "Inventario.xlsx";
-        String rutaArchivo = "C:\\" + nombreArchivo;
+        String rutaArchivo = ruta+"\\" + nombreArchivo;
         String hoja = "Hoja1";
 
         XSSFWorkbook libro = new XSSFWorkbook();
@@ -386,10 +393,17 @@ public class ControlArchivo {
 //</editor-fold>
 
         System.out.println("rutaArchivo:.::"+rutaArchivo);
-        File file;
-        file = new File(rutaArchivo);
-        try(OutputStream fileOut = new FileOutputStream(nombreArchivo) ){
+        
+        try(OutputStream fileOut = new FileOutputStream(rutaArchivo) ){
             libro.write(fileOut);
+            File archivo = new File(rutaArchivo);
+            int opcion = JOptionPane.showConfirmDialog(
+                    null, 
+                    "El archivo se genero exitosamente\n¿Desea ver el archivo " + nombreArchivo + "?\n"
+            );
+            if (opcion == JOptionPane.YES_NO_OPTION) {
+                Desktop.getDesktop().open(archivo);
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
