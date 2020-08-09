@@ -170,6 +170,7 @@ public class ControlGeneral {
     
     public List<Map<String, String>> GetComboBox(String consulta) {
         try {
+            System.out.println("consulta: "+consulta);
             List<Map<String, String>> retorno = gsql.ListSQL(consulta);
             return retorno;
         } catch (Exception e) {

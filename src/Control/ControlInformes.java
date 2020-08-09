@@ -172,7 +172,7 @@ public class ControlInformes {
                 Encabezado.add("F.U.P");
                 Encabezado.add("ULT_PALPACION");
                 Encabezado.add("ESTADO_ANT");
-                Encabezado.add("NUM_MESES");
+                Encabezado.add("NUM_MESES_ANT");
                 Encabezado.add("TRATAMIENTO");
                 Encabezado.add("ESTADO");
                 Encabezado.add("NUM_MESES");
@@ -199,7 +199,6 @@ public class ControlInformes {
                     listAux.add(""+palp.get("ESTADO"));  
                     listAux.add(""+(palp.get("NUM_MESES").equals("0")?"":palp.get("NUM_MESES")));  
                     listAux.add(""+palp.get("TRATAMIENTO"));  
-                    listAux.add("");  
                     listAux.add("");  
                     listAux.add("");  
                     ListaDatos.add(listAux);

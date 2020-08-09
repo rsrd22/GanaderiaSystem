@@ -216,7 +216,10 @@ public class ControlArchivo {
                         if (k == 0) {
                             keys.add("" + xssfCell.toString());
                         } else {
-                            if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
+                            if (XSSFCell.CELL_TYPE_FORMULA == xssfCell.getCellType()) {
+                                String value = xssfCell.getRawValue();
+                                obj.put(keys.get(col), "" + value);
+                            } else if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
                                 if (DateUtil.isCellDateFormatted(xssfCell)) {
                                     String value = destFormat.format(xssfCell.getDateCellValue());
                                     obj.put(keys.get(col), "" + value);
@@ -246,8 +249,8 @@ public class ControlArchivo {
 
             boolean encontrado = false;
             if (keysConf.length > 0 && keys.size() > 0) {
-                for (String key : keys) {
-                    for (int i = 0; i < keysConf.length; i++) {
+                for (int i = 0; i < keysConf.length; i++) {
+                    for (String key : keys) {
                         if (key.equals(keysConf[i])) {
                             encontrado = true;
                             break;
@@ -269,23 +272,23 @@ public class ControlArchivo {
         }
     }
 
-    
-    /***
+    /**
+     * *
      * @param ruta
      * @param nombreArchivo
      * @param Encabezado
-     * @param ListaDatos 
-     * @param colFormula 
+     * @param ListaDatos
+     * @param colFormula
      */
-    public void EscribirExcelActFormula(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos, int colFormula){
+    public void EscribirExcelActFormula(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos, int colFormula) {
         ruta = Expresiones.guardarEn();
-	//String nombreArchivo = "Inventario.xlsx";
-        String rutaArchivo = ruta+"\\" + nombreArchivo;
+        //String nombreArchivo = "Inventario.xlsx";
+        String rutaArchivo = ruta + "\\" + nombreArchivo;
         String hoja = "Hoja1";
 
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja1 = libro.createSheet(hoja);
-       
+
         //poner negrita a la cabecera
         CellStyle style = libro.createCellStyle();
         Font font = libro.createFont();
@@ -293,7 +296,7 @@ public class ControlArchivo {
         style.setFont(font);
         XSSFRow row = hoja1.createRow(0);//se crea las filas
         //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
-        for(int i = 0; i < Encabezado.size(); i++){
+        for (int i = 0; i < Encabezado.size(); i++) {
             XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posici�n
             cell.setCellStyle(style); // se a�ade el style crea anteriormente 
             cell.setCellValue(Encabezado.get(i));//se a�ade el contenido
@@ -301,35 +304,36 @@ public class ControlArchivo {
 //</editor-fold>
         System.out.println("***********END ENCABEZADO**********");
         //<editor-fold defaultstate="collapsed" desc="CONTENIDO">
-        for(int fila =0 ; fila < ListaDatos.size(); fila++){//FILAS
-            System.out.println("FILA::.---"+fila);
-            row = hoja1.createRow(fila+1);//se crea las filas
-            for(int col = 0; col < ListaDatos.get(fila).size(); col++){//COLUMNAS
+        for (int fila = 0; fila < ListaDatos.size(); fila++) {//FILAS
+            System.out.println("FILA::.---" + fila);
+            row = hoja1.createRow(fila + 1);//se crea las filas
+            for (int col = 0; col < ListaDatos.get(fila).size(); col++) {//COLUMNAS
                 XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posici�n
-                if(col == colFormula)
+                if (col == colFormula) {
                     cell.setCellFormula(ListaDatos.get(fila).get(col));
-                else
+                } else {
                     cell.setCellValue(ListaDatos.get(fila).get(col)); //se a�ade el contenido
+                }
             }
         }
         System.out.println("***********END CONTENIDO**********");
 //</editor-fold>
 
-        System.out.println("rutaArchivo:.::"+rutaArchivo);
-        try(OutputStream fileOut = new FileOutputStream(rutaArchivo) ){
+        System.out.println("rutaArchivo:.::" + rutaArchivo);
+        try (OutputStream fileOut = new FileOutputStream(rutaArchivo)) {
             libro.write(fileOut);
             File archivo = new File(rutaArchivo);
             int opcion = JOptionPane.showConfirmDialog(
-                    null, 
+                    null,
                     "El archivo se genero exitosamente\n¿Desea ver el archivo " + nombreArchivo + "?\n"
             );
             if (opcion == JOptionPane.YES_NO_OPTION) {
                 Desktop.getDesktop().open(archivo);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
 //        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
 //            System.out.println("Dentro del Try");
 //            if (file.exists()) {// si el archivo existe se elimina
@@ -351,21 +355,23 @@ public class ControlArchivo {
 //            e.printStackTrace();
 //        }
     }
-    /***
+
+    /**
+     * *
      * @param ruta
      * @param nombreArchivo
      * @param Encabezado
-     * @param ListaDatos 
+     * @param ListaDatos
      */
-    public void EscribirExcelAct(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos){
+    public void EscribirExcelAct(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos) {
         ruta = Expresiones.guardarEn();
-	//String nombreArchivo = "Inventario.xlsx";
-        String rutaArchivo = ruta+"\\" + nombreArchivo;
+        //String nombreArchivo = "Inventario.xlsx";
+        String rutaArchivo = ruta + "\\" + nombreArchivo;
         String hoja = "Hoja1";
 
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja1 = libro.createSheet(hoja);
-       
+
         //poner negrita a la cabecera
         CellStyle style = libro.createCellStyle();
         Font font = libro.createFont();
@@ -373,7 +379,7 @@ public class ControlArchivo {
         style.setFont(font);
         XSSFRow row = hoja1.createRow(0);//se crea las filas
         //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
-        for(int i = 0; i < Encabezado.size(); i++){
+        for (int i = 0; i < Encabezado.size(); i++) {
             XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posici�n
             cell.setCellStyle(style); // se a�ade el style crea anteriormente 
             cell.setCellValue(Encabezado.get(i));//se a�ade el contenido
@@ -381,10 +387,10 @@ public class ControlArchivo {
 //</editor-fold>
         System.out.println("***********END ENCABEZADO**********");
         //<editor-fold defaultstate="collapsed" desc="CONTENIDO">
-        for(int fila =0 ; fila < ListaDatos.size(); fila++){//FILAS
-            System.out.println("FILA::.---"+fila);
-            row = hoja1.createRow(fila+1);//se crea las filas
-            for(int col = 0; col < ListaDatos.get(fila).size(); col++){//COLUMNAS
+        for (int fila = 0; fila < ListaDatos.size(); fila++) {//FILAS
+            System.out.println("FILA::.---" + fila);
+            row = hoja1.createRow(fila + 1);//se crea las filas
+            for (int col = 0; col < ListaDatos.get(fila).size(); col++) {//COLUMNAS
                 XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posici�n
                 cell.setCellValue(ListaDatos.get(fila).get(col)); //se a�ade el contenido
             }
@@ -392,22 +398,22 @@ public class ControlArchivo {
         System.out.println("***********END CONTENIDO**********");
 //</editor-fold>
 
-        System.out.println("rutaArchivo:.::"+rutaArchivo);
-        
-        try(OutputStream fileOut = new FileOutputStream(rutaArchivo) ){
+        System.out.println("rutaArchivo:.::" + rutaArchivo);
+
+        try (OutputStream fileOut = new FileOutputStream(rutaArchivo)) {
             libro.write(fileOut);
             File archivo = new File(rutaArchivo);
             int opcion = JOptionPane.showConfirmDialog(
-                    null, 
+                    null,
                     "El archivo se genero exitosamente\n¿Desea ver el archivo " + nombreArchivo + "?\n"
             );
             if (opcion == JOptionPane.YES_NO_OPTION) {
                 Desktop.getDesktop().open(archivo);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
 //        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
 //            System.out.println("Dentro del Try");
 //            if (file.exists()) {// si el archivo existe se elimina
@@ -429,6 +435,5 @@ public class ControlArchivo {
 //            e.printStackTrace();
 //        }
     }
-    
-    
+
 }

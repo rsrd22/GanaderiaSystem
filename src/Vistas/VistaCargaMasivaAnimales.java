@@ -859,7 +859,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
             String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
             if (ext.equals("xlsx")) {
-                listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PESAJE());
+                listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PALPACION());
             } else {
                 listaInfoLeida = con.LeerExcel(ruta);
             }

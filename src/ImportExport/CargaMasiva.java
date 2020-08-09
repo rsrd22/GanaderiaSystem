@@ -31,9 +31,9 @@ public class CargaMasiva extends Thread implements Runnable {
     public void run() {
         if (estado == Estados.CARGA_MASIVA_ANIMALES) {
             cargaMasivaDeAnimales();
-        }else if (estado == Estados.CARGA_MASIVA_ANIMALES) {
+        }else if (estado == Estados.CARGA_MASIVA_PESAJE) {
             cargaMasivaPesaje();
-        }else if (estado == Estados.CARGA_MASIVA_ANIMALES) {
+        }else if (estado == Estados.CARGA_MASIVA_PALPACION) {
             cargaMasivaPalpacion();
         }
     }
