@@ -37,6 +37,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     public List<Map<String, String>> listaNoIngresados = new ArrayList<>();
     public ControlCargaMasivaAnimales controlCarga;
     private CargaMasiva thProceso;
+    private Calendar cal;
+    private SimpleDateFormat sdf;
 
     /**
      * Creates new form VistaCargaMasivaAnimales
@@ -48,6 +50,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         controlCarga = new ControlCargaMasivaAnimales();
         CargarListaFincas();
         thProceso = new CargaMasiva(this, Estados.CARGA_MASIVA_ANIMALES);
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        cal=Calendar.getInstance();
+        mostrarFecha();
     }
 
     /**
@@ -75,6 +80,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         cbCargar = new javax.swing.JComboBox();
         lbltitle10 = new javax.swing.JLabel();
         progreso = new javax.swing.JProgressBar();
+        jdFecha = new com.toedter.calendar.JDateChooser();
+        lbltitle19 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -92,7 +99,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbFinca, gridBagConstraints);
@@ -105,7 +112,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(lblTid, gridBagConstraints);
@@ -117,8 +124,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(lblTid3, gridBagConstraints);
@@ -133,9 +141,10 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(cbTipoAnimales, gridBagConstraints);
@@ -145,11 +154,11 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Archivo");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         add(lblTid1, gridBagConstraints);
 
@@ -164,23 +173,23 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtURL, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(jSeparator1, gridBagConstraints);
 
@@ -227,7 +236,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
@@ -247,7 +256,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -259,7 +268,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -304,12 +313,38 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(progreso, gridBagConstraints);
+
+        jdFecha.setForeground(new java.awt.Color(59, 123, 50));
+        jdFecha.setDateFormatString("dd/MM/yyyy");
+        jdFecha.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(jdFecha, gridBagConstraints);
+
+        lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle19.setText("Fecha");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        add(lbltitle19, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -351,24 +386,24 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         listaNoIngresados = new ArrayList<>();
         txtRespuesta.setText("");
         int estado = -1;
-        
-        if(cbCargar.getSelectedItem().equals("Animal")){
+
+        if (cbCargar.getSelectedItem().equals("Animal")) {
             estado = Estados.CARGA_MASIVA_ANIMALES;
-        }else if(cbCargar.getSelectedItem().equals("Pesaje")){
+        } else if (cbCargar.getSelectedItem().equals("Pesaje")) {
             estado = Estados.CARGA_MASIVA_PESAJE;
-        }else if(cbCargar.getSelectedItem().equals("Palpacion")){
+        } else if (cbCargar.getSelectedItem().equals("Palpacion")) {
             estado = Estados.CARGA_MASIVA_PALPACION;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un tipo de cargar para realizar la operación.");
             return;
         }
-        
+
         thProceso = new CargaMasiva(this, estado);
         thProceso.iniciar();
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void cbCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCargarActionPerformed
-
+        mostrarFecha();
     }//GEN-LAST:event_cbCargarActionPerformed
 
 
@@ -380,10 +415,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
+    public com.toedter.calendar.JDateChooser jdFecha;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid3;
     private javax.swing.JLabel lbltitle10;
+    private javax.swing.JLabel lbltitle19;
     public javax.swing.JProgressBar progreso;
     private javax.swing.JScrollPane scroll;
     private javax.swing.JEditorPane txtRespuesta;
@@ -662,12 +699,13 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
         }
     }
+
     public void CargarPesaje() {
-        try{
+        try {
             String ruta = txtURL.getText().trim();
-            Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             ControlArchivo con = new ControlArchivo();
+            cal = jdFecha.getCalendar();
             String fecha = sdf.format(cal.getTime());
             if (idTipoAnimal.equals("-1")) {
                 return;
@@ -692,7 +730,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
             int valor = 1;
             progreso.setMaximum(listaInfoLeida.size());
-            
+
             String inMedicamentos = "", inNumAnimales = "";
             int fila = 0;
             if (listaInfoLeida.size() > 0) {
@@ -701,44 +739,43 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
                 for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
                     String key = entry.getKey();
-                    if(key.indexOf("MED_")>=0){
+                    if (key.indexOf("MED_") >= 0) {
                         listaMedicamentos.add(key.replace("MED_", ""));
                     }
                 }
                 inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
                 inMedicamentos = getIN(listaMedicamentos);
-                
+
                 List<Map<String, String>> listaInfoMedicamentos = new ArrayList<>();
-                if(listaMedicamentos.size()>0){
+                if (listaMedicamentos.size() > 0) {
                     listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
-                                                                                        + "FROM medicamentos \n"
-                                                                                        + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                            + "FROM medicamentos \n"
+                            + "WHERE `descripcion` IN (" + inMedicamentos + ")");
                 }
-                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
-                                                                                    "FROM animales\n" +
-                                                                                    "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
+                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
+                        + "FROM animales\n"
+                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ")");
                 //</editor-fold>
-                
-                
+
                 for (Map<String, String> info : listaInfoLeida) {
                     progreso.setValue(valor++);
                     fila++;
                     info.put("IDFINCA", "" + idFinca);
                     info.put("IDTIPOANIMAL", "" + idTipoAnimal);
                     info.put("FEC_PESAJE", "" + fecha);
-                    
-                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->"+info.get("NUM_HIJO"), "numero_mama<->"+info.get("NUM_MAMA")});
-                    System.out.println("datoAnimal---->"+datoAnimal.size());
+
+                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->" + info.get("NUM_HIJO"), "numero_mama<->" + info.get("NUM_MAMA")});
+                    System.out.println("datoAnimal---->" + datoAnimal.size());
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                     info.put("HIERRO", "" + datoAnimal.get(0).get("hierro_fisico"));
                     info.put("DESCORNADO", "" + datoAnimal.get(0).get("descornado"));
                     info.put("IMPLANTE", "" + datoAnimal.get(0).get("implante"));
-                    info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01")?"0":"1");
+                    info.put("DESTETE", datoAnimal.get(0).get("fecha_destete").equals("1900-01-01") ? "0" : "1");
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
                     if (info.get("PESO_ANT").equals("_")) {
                         info.put("PESO_ANT", "" + datoAnimal.get(0).get("peso"));
                     }
-                    
+
                     if (info.get("PESO").equals("_")) {
                         //VALI
                         info.put("FILA", "" + fila);
@@ -746,38 +783,34 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         listaNoIngresados.add(info);
                         continue;
                     }
-                    if(info.get("TIPO_PESAJE").substring(0, 1).toUpperCase().equals("L")){
+                    if (info.get("TIPO_PESAJE").substring(0, 1).toUpperCase().equals("L")) {
                         Double peso = Double.parseDouble(info.get("PESO").replace(",", "."));
                         Double resultado = peso / Utilidades.FACTOR_CONVERSION;
                         long resultadoRedondeado = Math.round(resultado);
-                        info.put("PESO", ""+resultadoRedondeado);
+                        info.put("PESO", "" + resultadoRedondeado);
                     }
                     //</editor-fold>
                     List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
                     //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
-                    for(String med: listaMedicamentos){
-                        
-                        if(!info.get("MED_"+med).equals("_")){
+                    for (String med : listaMedicamentos) {
+
+                        if (!info.get("MED_" + med).equals("_")) {
                             Map<String, String> mapMed = new HashMap<>();
-                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->"+med});
-                            mapMed.put("IDMEDICAMENTO", ""+datoMedicamento.get(0).get("ID"));
-                            mapMed.put("MEDICAMENTO", ""+datoMedicamento.get(0).get("DESCRIPCION"));
-                            mapMed.put("DOSIS", ""+info.get("MED_"+med));
+                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->" + med});
+                            mapMed.put("IDMEDICAMENTO", "" + datoMedicamento.get(0).get("ID"));
+                            mapMed.put("MEDICAMENTO", "" + datoMedicamento.get(0).get("DESCRIPCION"));
+                            mapMed.put("DOSIS", "" + info.get("MED_" + med));
                             mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                             ListaMedicamentosxPesaje.add(mapMed);
                         }
                     }
                     //</editor-fold>
-                    
-                    
-                    
-                       
+
                     int resp = controlCarga.GuardarPesaje(info);
                     int resp2 = -1;
-                    if(ListaMedicamentosxPesaje.size()>0){
+                    if (ListaMedicamentosxPesaje.size() > 0) {
                         resp2 = controlCarga.GuardarMedicamentoxPesaje(ListaMedicamentosxPesaje);
                     }
-                    
 
                     if (resp == Retorno.EXITO) {
                         listaIngresados.add(info);
@@ -839,8 +872,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 //</editor-fold>
             }
-            
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
@@ -848,11 +880,11 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     }
 
     public void CargarPalpacion() {
-        try{
+        try {
             String ruta = txtURL.getText().trim();
-            Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             ControlArchivo con = new ControlArchivo();
+            cal = jdFecha.getCalendar();
             String fecha = sdf.format(cal.getTime());
             if (idTipoAnimal.equals("-1")) {
                 return;
@@ -877,7 +909,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
             int valor = 1;
             progreso.setMaximum(listaInfoLeida.size());
-            
+
             String inMedicamentos = "", inNumAnimales = "";
             int fila = 0;
             if (listaInfoLeida.size() > 0) {
@@ -886,43 +918,42 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 //<editor-fold defaultstate="collapsed" desc="MEDICAMENTOS">
                 for (Map.Entry<String, String> entry : listaInfoLeida.get(0).entrySet()) {
                     String key = entry.getKey();
-                    if(key.indexOf("MED_")>=0){
+                    if (key.indexOf("MED_") >= 0) {
                         listaMedicamentos.add(key.replace("MED_", ""));
                     }
                 }
                 inNumAnimales = getINMap(listaInfoLeida, new String[]{"NUM_HIJO", "NUM_MAMA"}, "<:-:>");
                 inMedicamentos = getIN(listaMedicamentos);
-                
+
                 List<Map<String, String>> listaInfoMedicamentos = new ArrayList<>();
-                if(listaMedicamentos.size()>0){
+                if (listaMedicamentos.size() > 0) {
                     listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
-                                                                                        + "FROM medicamentos \n"
-                                                                                        + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                            + "FROM medicamentos \n"
+                            + "WHERE `descripcion` IN (" + inMedicamentos + ")");
                 }
-                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n" +
-                                                                                    "FROM animales\n" +
-                                                                                    "WHERE CONCAT(numero,'<:-:>', numero_mama) IN ("+inNumAnimales+")");
+                List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
+                        + "FROM animales\n"
+                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ")");
                 //</editor-fold>
-                
-                
+
                 for (Map<String, String> info : listaInfoLeida) {
                     progreso.setValue(valor++);
                     fila++;
                     info.put("IDFINCA", "" + idFinca);
                     info.put("IDTIPOANIMAL", "" + idTipoAnimal);
                     info.put("FEC_PALPACION", "" + fecha);
-                    
-                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->"+info.get("NUM_HIJO"), "numero_mama<->"+info.get("NUM_MAMA")});
-                    System.out.println("datoAnimal---->"+datoAnimal.size());
+
+                    List<Map<String, String>> datoAnimal = Utilidades.data_list(10, listaInfoAnimal, new String[]{"id"}, new String[]{"numero<->" + info.get("NUM_HIJO"), "numero_mama<->" + info.get("NUM_MAMA")});
+                    System.out.println("datoAnimal---->" + datoAnimal.size());
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                     info.put("DESCARTE", "0");
                     info.put("RAZON_DESCARTE", "");
-                    if(info.get("NUM_MESES").equals("_")){
+                    if (info.get("NUM_MESES").equals("_")) {
                         info.put("NUM_MESES", "0");
                     }
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
                     info.put("ESTADO", ValidarName(info.get("ESTADO")));
-                    
+
                     if (info.get("ESTADO").equals("_") || !Utilidades.ValidarEstado(info.get("ESTADO"))) {
                         //VALI
                         info.put("FILA", "" + fila);
@@ -930,7 +961,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         listaNoIngresados.add(info);
                         continue;
                     }
-                    if(info.get("ESTADO").substring(0, 1).toUpperCase().equals("P")){
+                    if (info.get("ESTADO").substring(0, 1).toUpperCase().equals("P")) {
                         if (info.get("NUM_MESES").equals("_") || !Utilidades.validarSoloNumeros(info.get("NUM_MESES"))) {
 
                             info.put("FILA", "" + fila);
@@ -942,29 +973,25 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     //</editor-fold>
                     List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
                     //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
-                    for(String med: listaMedicamentos){
-                        
-                        if(!info.get("MED_"+med).equals("_")){
+                    for (String med : listaMedicamentos) {
+
+                        if (!info.get("MED_" + med).equals("_")) {
                             Map<String, String> mapMed = new HashMap<>();
-                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->"+med});
-                            mapMed.put("IDMEDICAMENTO", ""+datoMedicamento.get(0).get("ID"));
-                            mapMed.put("MEDICAMENTO", ""+datoMedicamento.get(0).get("DESCRIPCION"));
-                            mapMed.put("DOSIS", ""+info.get("MED_"+med));
+                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->" + med});
+                            mapMed.put("IDMEDICAMENTO", "" + datoMedicamento.get(0).get("ID"));
+                            mapMed.put("MEDICAMENTO", "" + datoMedicamento.get(0).get("DESCRIPCION"));
+                            mapMed.put("DOSIS", "" + info.get("MED_" + med));
                             mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                             ListaMedicamentosxPesaje.add(mapMed);
                         }
                     }
                     //</editor-fold>
-                    
-                    
-                    
-                       
+
                     int resp = controlCarga.GuardarPalpacion(info);
-                    int resp2 = -1; 
-                    if(ListaMedicamentosxPesaje.size()>0){
+                    int resp2 = -1;
+                    if (ListaMedicamentosxPesaje.size() > 0) {
                         resp2 = controlCarga.GuardarMedicamentoxPalpacion(ListaMedicamentosxPesaje);
                     }
-                    
 
                     if (resp == Retorno.EXITO) {
                         listaIngresados.add(info);
@@ -1026,8 +1053,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 //</editor-fold>
             }
-            
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
@@ -1060,23 +1086,23 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             return null;
         }
     }
-    
+
     private String getINMap(List<Map<String, String>> lista, String[] keys, String split) {
         try {
             String in = "";
 
-
             for (Map<String, String> map : lista) {
                 String dato = "";
-                for(String k: keys){
+                for (String k : keys) {
                     if (map.get(k).equals("_")) {
                         dato = "";
                         break;
                     }
-                    dato+=(dato.equals("")?"":split)+map.get(k);
+                    dato += (dato.equals("") ? "" : split) + map.get(k);
                 }
-                if(!dato.equals(""))
+                if (!dato.equals("")) {
                     in += (in.equals("") ? "" : ",") + "'" + dato + "'";
+                }
             }
 
             return in;
@@ -1085,6 +1111,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             return null;
         }
     }
+
     private String getIN(List<String> lista) {
         try {
             String in = "";
@@ -1113,8 +1140,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     }
 
     private String ValidarName(String estado) {
-        String ret ="";
-        System.out.println("estado---"+estado);
+        String ret = "";
+        System.out.println("estado---" + estado);
         switch (estado.substring(0, 1).toLowerCase()) {
             case "v":
                 ret = "vacia";
@@ -1128,10 +1155,24 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             default:
                 ret = estado;
         }
-        System.out.println("ret--->"+ret);
+        System.out.println("ret--->" + ret);
         return ret;
     }
 
-    
+    private void mostrarFecha() {
+        boolean mostrar = false;
+        if (cbCargar.getSelectedItem().equals("Animal")) {
+            mostrar = false;
+        } else if (cbCargar.getSelectedItem().equals("Pesaje")) {
+            mostrar = true;
+        } else if (cbCargar.getSelectedItem().equals("Palpacion")) {
+            mostrar = true;
+        } else {
+            mostrar = false;
+        }
+        lbltitle19.setVisible(mostrar);
+        jdFecha.setVisible(mostrar);
+        jdFecha.setCalendar(cal);
+    }
 
 }
