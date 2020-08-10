@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -419,7 +420,16 @@ public class VistaInformePesaje extends javax.swing.JPanel {
         String inMedicamentos = getIN(idsMedicamentos);
         String SexoH = chHembra.isSelected() ? "1" : "0";
         String SexoM = chMacho.isSelected() ? "1" : "0";
+        
+        if(inGrupos.equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione al menos un grupo para realizar la operacion.");
+            return;
+        }
 
+        if(idTipoAnimal.equals("-1")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de animal para realizar la operacion.");
+            return;
+        }
         Map<String, String> infor = new HashMap<>();
         infor.put("IDTIPO", idTipoAnimal);
         infor.put("IDFINCA", idFinca);
