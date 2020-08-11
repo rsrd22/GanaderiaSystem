@@ -435,8 +435,13 @@ public class VistaInformePesaje extends javax.swing.JPanel {
         infor.put("IDFINCA", idFinca);
         infor.put("GRUPOS", inGrupos);
         infor.put("MEDICAMENTOS", inMedicamentos);
-        
+        System.out.println("SexoH-->"+SexoH);
+        System.out.println("SexoM-->"+SexoM);
+        System.out.println("cond1-->"+(SexoH.equals("0") && SexoM.equals("0")));
+        System.out.println("cond2-->"+(SexoH.equals("1") && SexoM.equals("1")));
+        System.out.println("cond3-->"+((SexoH.equals("0") && SexoM.equals("0")) || (SexoH.equals("1") && SexoM.equals("1"))));
         if((SexoH.equals("0") && SexoM.equals("0")) || (SexoH.equals("1") && SexoM.equals("1"))){
+            System.out.println("");
             infor.put("SEXO", "");
         }else{
             infor.put("SEXO", (SexoH.equals("1") ? "hembra" : "macho"));
