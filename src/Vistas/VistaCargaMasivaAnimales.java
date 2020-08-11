@@ -716,6 +716,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             if (ruta.equals("")) {
                 return;
             }
+            
             String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
             if (ext.equals("xlsx")) {
                 listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PESAJE());
@@ -861,7 +862,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                                 + "" + (i % 2 != 0 ? "color: #FFFFFF;" : "") + "\">\n"
                                 + "                        <td style='text-align: center;'>" + (i + 1) + "</td>\n"
                                 + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("FILA") + "</td>\n"
-                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_ANIMAL") + "</td>\n"
+                                + "                        <td style='text-align: center;'>" + listaNoIngresados.get(i).get("NUM_HIJO") + "</td>\n"
                                 + "                        <td>" + listaNoIngresados.get(i).get("MOTIVO") + "</td>\n"
                                 + "                    </tr>";
                     }
@@ -875,7 +876,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación. Error: " + e.toString());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
