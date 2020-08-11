@@ -69,17 +69,22 @@ public class ControlInformes {
                                     "INNER JOIN `propietarioxhierro` hie ON hie.`id` = anim.`hierro`\n" +
                                     "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n" +
                                     "WHERE anim.`id_tipo_animal` = '"+datos.get("IDTIPO")+"' AND tpo.`id_finca` = '"+datos.get("IDFINCA")+"'\n" +
-                                    "AND anim.`genero` = 'hembra' \n"+
+                                    ""+(datos.get("SEXO").equals("")?"":"AND anim.`genero` = '"+datos.get("SEXO")+"' \n")+
                                     "AND anim.grupo IN ("+datos.get("GRUPOS")+") \n"+
                                     "ORDER BY anim.genero DESC";
             
             
-            String consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
+            String consultaMedicamentos = "";
+            List<Map<String, String>> listaMedicamentos = new ArrayList<>();
+            if(!datos.get("MEDICAMENTOS").equals("")){
+                consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
                                     "FROM `medicamentos`\n" +
                                     "WHERE id IN ("+datos.get("MEDICAMENTOS")+")";
+                listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);
+            }
             
             List<Map<String, String>> listaPesajes = mySQL.ListSQL(consultaPesaje);
-            List<Map<String, String>> listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);
+            
             System.out.println("listaPesajes-->"+listaPesajes.size());
             System.out.println("listaMedicamentos-->"+listaMedicamentos.size());
             if(listaPesajes.size()>0){
@@ -160,12 +165,19 @@ public class ControlInformes {
                                         "ORDER BY anim.id ASC";
             
             
-            String consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
-                                    "FROM `medicamentos`\n" +
-                                    "WHERE id IN ("+datos.get("MEDICAMENTOS")+")";
+            String consultaMedicamentos = "";
+            List<Map<String, String>> listaMedicamentos = new ArrayList<>();
+             
+            if(!datos.get("MEDICAMENTOS").equals("")){
+                consultaMedicamentos = "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
+                                        "FROM `medicamentos`\n" +
+                                        "WHERE id IN ("+datos.get("MEDICAMENTOS")+")";
+                
+                listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);
+            }
             
             List<Map<String, String>> listaPalpacion = mySQL.ListSQL(consultaPalpacion);
-            List<Map<String, String>> listaMedicamentos = mySQL.ListSQL(consultaMedicamentos);
+            
             if(listaPalpacion.size()>0){
                 //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
                 Encabezado.add("CHECK");

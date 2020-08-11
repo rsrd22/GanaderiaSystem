@@ -323,6 +323,7 @@ public class ControlArchivo {
                 } else {
                     cell.setCellValue(ListaDatos.get(fila).get(col)); //se a�ade el contenido
                 }
+                hoja1.autoSizeColumn(col);
             }
         }
         System.out.println("***********END CONTENIDO**********");
@@ -380,7 +381,7 @@ public class ControlArchivo {
 
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja1 = libro.createSheet(hoja);
-
+        
         //poner negrita a la cabecera
         CellStyle style = libro.createCellStyle();
         Font font = libro.createFont();
@@ -402,11 +403,13 @@ public class ControlArchivo {
             for (int col = 0; col < ListaDatos.get(fila).size(); col++) {//COLUMNAS
                 XSSFCell cell = row.createCell(col);//se crea las celdas para la contenido, junto con la posici�n
                 cell.setCellValue(ListaDatos.get(fila).get(col)); //se a�ade el contenido
+                hoja1.autoSizeColumn(col);
             }
         }
         System.out.println("***********END CONTENIDO**********");
 //</editor-fold>
 
+        
         System.out.println("rutaArchivo:.::" + rutaArchivo);
 
         try (OutputStream fileOut = new FileOutputStream(rutaArchivo)) {
