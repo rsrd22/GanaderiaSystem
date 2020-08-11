@@ -333,6 +333,9 @@ public class VistaInformePesaje extends javax.swing.JPanel {
         if (cbFinca.getItemCount() > 0) {
             System.out.println("cbFinca.getSelectedIndex()--" + cbFinca.getSelectedIndex());
             if (cbFinca.getSelectedIndex() >= 0) {
+                if(!idFinca.equals(listaFincas.get(cbFinca.getSelectedIndex()).get("ID"))){
+                    LimpiarJList(lstGrupos, modlistGrupos);
+                }
                 idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
                 CargarListaTipoAnimales();
             } else {
@@ -409,7 +412,7 @@ public class VistaInformePesaje extends javax.swing.JPanel {
     }
 
     private void LimpiarJList(JList Lista, DefaultListModel modlist) {
-        modlist = new DefaultListModel();
+        modlist.removeAllElements();
         Lista.setModel(modlist);
     }
 
