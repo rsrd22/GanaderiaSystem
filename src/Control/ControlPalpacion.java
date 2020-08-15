@@ -379,7 +379,9 @@ public class ControlPalpacion implements IControl {
                 + "FROM `animales` a ON a.`id` = '" + id + "'\n";
 
         consulta = "SELECT CASE WHEN a.numero=a.numero_mama THEN\n"
-                + "0 ELSE IFNULL(`NumeroPartos`(a.numero),0) END NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n"
+                + "0 ELSE IFNULL(`NumeroPartos`(a.numero),0) END NUM_PARTOS, "
+                + "IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n"
+                + "IFNULL(`NumeroHijos`(a.`numero`,3), '') CRIA_ADOPTIVA,\n"
                 + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES, IFNULL(DATE_FORMAT(`NumeroHijos`(a.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO\n"
                 + "FROM `animales` a \n"
                 + "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` and palp.estado = 'Activo'\n"
@@ -392,6 +394,7 @@ public class ControlPalpacion implements IControl {
         if (datos.size() > 0) {
             retorno.put("NUM_PARTOS", datos.get(0).get("NUM_PARTOS"));
             retorno.put("CRIA", datos.get(0).get("CRIA"));
+            retorno.put("CRIA_ADOPTIVA", datos.get(0).get("CRIA_ADOPTIVA"));
             retorno.put("NUM_MESES", datos.get(0).get("NUM_MESES"));
             retorno.put("FECHA_ULT_PARTO", datos.get(0).get("FECHA_ULT_PARTO"));
 
