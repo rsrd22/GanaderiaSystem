@@ -126,7 +126,9 @@ public class ControlPesaje implements IControl {
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
+                + "destete = '" + modelo.getDestete()+ "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
                 + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
@@ -212,7 +214,9 @@ public class ControlPesaje implements IControl {
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
+                + "destete = '" + modelo.getDestete()+ "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
                 + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
@@ -268,7 +272,9 @@ public class ControlPesaje implements IControl {
                     + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                     + "implante = '" + modelo.getImplante() + "',\n"
                     + "descornado = '" + modelo.getDescornado() + "',\n"
+                    + "destete = '" + modelo.getDestete()+ "',\n"
                     + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
+                    + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
                     + "hierro = " + modelo.getIdHierro() + "\n"
                     + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
@@ -296,7 +302,7 @@ public class ControlPesaje implements IControl {
         String consulta = "SELECT a.id,a.id_animal,a.fecha_pesado,a.peso,\n"
                 + "a.peso_anterior,a.notas,b.hierro_fisico AS hierro,b.descornado,\n"
                 + "b.implante,\n"
-                + "CASE WHEN b.fecha_destete='1900-01-10' THEN 0 ELSE 1 END destete,\n"
+                + "b.destete as destete,\n"
                 + "a.estado,a.fecha,a.id_usuario,\n"
                 + "b.hierro AS IDHIERRO,\n"
                 + "c.descripcion AS DESCRIPCION_HIERRO,\n"

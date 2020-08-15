@@ -307,16 +307,21 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         if (Utilidades.validarSINO(key[0])) {
             cbCombo.setSelectedItem(value.getText());
         } else if (key[0].equalsIgnoreCase("notas")) {
-            txtNotas.setText(value.getText());
+            txtNotas.setText(value.getText().trim());
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {
             txtPesoDestete.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Calificación")) {
             slCalificacion.setValue(Integer.parseInt(value.getText()));
         } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
             try {
-                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                Date fecha = formato.parse(value.getText());
-                jdFechaDestete.setDate(fecha);
+
+                if (value.getText().trim().isEmpty()) {
+                    jdFechaDestete.setDate(Calendar.getInstance().getTime());
+                } else {
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fecha = formato.parse(value.getText());
+                    jdFechaDestete.setDate(fecha);
+                }
             } catch (ParseException pe) {
                 JOptionPane.showMessageDialog(this, "Ocurrio un error tratando de obtener la fecha\nDetalle:\n." + pe.getMessage());
             }
@@ -330,21 +335,11 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
         if (Utilidades.validarSINO(key[0])) {
             String valorSeleccionado = cbCombo.getSelectedItem().toString();
-            if (key[0].equalsIgnoreCase("Destetado")) {
-                if (valorSeleccionado.equalsIgnoreCase("no")) {
-                    consultas.add(
-                            "update " + key[1] + " "
-                            + "set fecha_destete='1900-01-01' "
-                            + "where id=" + key[3]
-                    );
-                }
-            } else {
-                consultas.add(
-                        "update " + key[1] + " "
-                        + "set " + key[2] + "='" + (valorSeleccionado.equalsIgnoreCase("no") ? "0" : "1") + "' "
-                        + "where id=" + key[3]
-                );
-            }
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "='" + (valorSeleccionado.equalsIgnoreCase("no") ? "0" : "1") + "' "
+                    + "where id=" + key[3]
+            );
         } else if (key[0].equalsIgnoreCase("notas")) {
             consultas.add(
                     "update " + key[1] + " "

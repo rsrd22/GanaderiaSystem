@@ -823,13 +823,13 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
             cbFinca.setSelectedItem(modelo.getDescFinca());
             boolean pesable = modelo.getPesable().equalsIgnoreCase("1");
             boolean palpable = modelo.getPalpable().equalsIgnoreCase("1");
-            bgTipoGrupos.clearSelection();
             String tipoGrupo = modelo.getTipo();
             if (!tipoGrupo.isEmpty()) {
                 for (int i = 0; i < checks.length; i++) {
                     if (checks[i].getText().toLowerCase().equals(tipoGrupo)) {
                         checks[i].setSelected(true);
-                        break;
+                    }else{
+                        checks[i].setSelected(false);
                     }
                 }
             }

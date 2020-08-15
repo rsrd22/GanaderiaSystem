@@ -1921,6 +1921,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             boolean implante = modelo.getImplante().equalsIgnoreCase("1");
             boolean hierroFisico = modelo.getHierroFisico().equalsIgnoreCase("1");
             boolean descornado = modelo.getDescornada().equalsIgnoreCase("1");
+            boolean destetado = modelo.getDestete().equalsIgnoreCase("1");
             boolean esNovilla = !(modelo.getFechaNovilla().equals(FECHA_POR_DEFECTO) || modelo.getFechaNovilla().equalsIgnoreCase(NULL));
 
             String numeroMamaAdoptiva = modelo.getNumeroMamaAdoptiva();
@@ -1966,6 +1967,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             chkHierro.setSelected(hierroFisico);
             chkImplante.setSelected(implante);
             chkDescornada.setSelected(descornado);
+            chkDestete.setSelected(destetado);
             chkVenta.setSelected(venta);
             chkMuerte.setSelected(muerte);
             txtObservacionMuerte.setVisible(chkMuerte.isSelected());
@@ -1998,12 +2000,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 }
 
                 if (modelo.getFechaDestete().equals(FECHA_POR_DEFECTO)) {
-                    chkDestete.setSelected(false);
                     lblFechaDestete.setVisible(false);
                     jdFechaDestete.setVisible(false);
                     txtPesoDestete.setVisible(false);
                 } else {
-                    chkDestete.setSelected(true);
                     lblFechaDestete.setVisible(true);
                     jdFechaDestete.setVisible(true);
                     txtPesoDestete.setVisible(true);
@@ -2163,12 +2163,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 + ")");
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
-        
         String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
                 + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
                 + ")";
-        
+
         modelo.setDescornada(chkDescornada.isSelected() ? "1" : "0");
+        modelo.setDestete(chkDestete.isSelected() ? "1" : "0");
         modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
         modelo.setHierroFisico(chkHierro.isSelected() ? "1" : "0");
         modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");

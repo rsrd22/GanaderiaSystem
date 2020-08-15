@@ -50,6 +50,7 @@ public class ModeloAnimales {
     private String implante;
     private String descornada;
     private String fechaNovilla;
+    private String destete;
 
     public ModeloAnimales() {
     }
@@ -64,7 +65,8 @@ public class ModeloAnimales {
             String idPropietario, String descPropietario, String muerte, String venta,
             String precioVenta, String tipoVenta, String pesoCanal, String descripcionMuerte,
             String fechaNovilla, String pesoDestete, String hierroFisico, String implante,
-            String descornada) {
+            String descornada,String destete) {
+        this.destete = destete;
         this.descripcionMuerte = descripcionMuerte;
         this.precioVenta = precioVenta;
         this.tipoVenta = tipoVenta;
@@ -104,6 +106,14 @@ public class ModeloAnimales {
         this.implante = implante;
         this.descornada = descornada;
         this.fechaNovilla = fechaNovilla;
+    }
+
+    public String getDestete() {
+        return destete;
+    }
+
+    public void setDestete(String destete) {
+        this.destete = destete;
     }
 
     public String getPesoDestete() {

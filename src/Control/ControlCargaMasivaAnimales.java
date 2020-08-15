@@ -35,7 +35,7 @@ public class ControlCargaMasivaAnimales {
                 + "calificacion,notas,fecha_destete,capado,fecha_nacimiento,fecha_venta,"
                 + "fecha_muerte,fecha,id_usuario,peso,grupo,hierro,numero_descendiente,estado_descendiente,"
                 + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
-                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado)\n"
+                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado,destete)\n"
                 + "VALUES (\n"
                 + "0,\n"
                 + "" + datos.get("IDTIPOANIMAL")+ ",\n"
@@ -67,7 +67,8 @@ public class ControlCargaMasivaAnimales {
                 + "" + datos.get("PESO_DESTETE") + ",\n"
                 + "'" + datos.get("HIERRO_C") + "',\n"
                 + "'" + datos.get("IMPLANTE") + "',\n"
-                + "'" + datos.get("DESCORNADO") + "'\n"
+                + "'" + datos.get("DESCORNADO") + "',\n"
+                + "'" + datos.get("DESTETE") + "'\n"//AGREGADA
                 + ")"
         //</editor-fold>
         );
@@ -107,7 +108,7 @@ public class ControlCargaMasivaAnimales {
                 + "'0',\n"
                 + "'0',\n"
                 + "'0',\n"
-                + "'0',\n"
+                + "'" + datos.get("DESTETE") + "',\n"//AGREGADA
                 + "NOW(),\n"
                 + "" + datosUsuario.datos.get(0).get("ID_USUARIO") + "\n"
                 + ")" //</editor-fold>
@@ -149,6 +150,7 @@ public class ControlCargaMasivaAnimales {
                 + "peso_destete = " + datos.get("PESO_DESTETE") + ",\n"
                 + "implante = '" + datos.get("IMPLANTE") + "',\n"
                 + "hierro_fisico = '" + datos.get("HIERRO_C") + "',\n"
+                + "destete = '" + datos.get("DESTETE") + "',\n"//AGREGADA
                 + "descornado = '" + datos.get("DESCORNADO") + "'\n"
                 + "WHERE id = " + datos.get("IDANIMAL")
         //</editor-fold>

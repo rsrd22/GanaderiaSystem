@@ -778,6 +778,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setFechaVenta(FECHA_POR_DEFECTO);
         modelo.setNumeroMamaAdoptiva("NULL");
         modelo.setFechaDestete(FECHA_POR_DEFECTO);
+        modelo.setDestete("0");
         modelo.setPesoDestete("0");
 
         //</editor-fold>

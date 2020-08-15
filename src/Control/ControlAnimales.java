@@ -38,7 +38,7 @@ public class ControlAnimales implements IControl {
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,\n"
-                + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete\n"
+                + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete, a.destete\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN grupos c ON a.grupo=c.id\n"
@@ -46,53 +46,54 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
                 + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
                 + "ORDER BY a.numero ASC";
-        List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> animales = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
-        grupos = mySQL.ListSQL(consulta);
+        animales = mySQL.ListSQL(consulta);
 
-        if (grupos.size() > 0) {
+        if (animales.size() > 0) {
 
-            for (Map<String, String> grupo : grupos) {
+            for (Map<String, String> animal : animales) {
                 lista.add(new ModeloAnimales(
-                        grupo.get("calificacion"),
-                        grupo.get("capado"),
-                        grupo.get("fecha"),
-                        grupo.get("fecha_destete"),
-                        grupo.get("fecha_muerte"),
-                        grupo.get("fecha_nacimiento"),
-                        grupo.get("fecha_venta"),
-                        grupo.get("genero"),
-                        grupo.get("id"),
-                        grupo.get("id_tipo_animal"),
-                        grupo.get("id_usuario"),
-                        grupo.get("notas"),
-                        grupo.get("numero"),
-                        grupo.get("numero_mama"),
-                        grupo.get("descTipoAnimal"),
-                        grupo.get("peso"),
-                        grupo.get("numero_mama_adoptiva"),
-                        grupo.get("grupo"),
-                        grupo.get("descGrupo"),
-                        grupo.get("hierro"),
-                        grupo.get("descHierro"),
-                        grupo.get("idFinca"),
-                        grupo.get("descFinca"),
-                        grupo.get("numero_descendiente"),
-                        grupo.get("estado_descendiente"),
+                        animal.get("calificacion"),
+                        animal.get("capado"),
+                        animal.get("fecha"),
+                        animal.get("fecha_destete"),
+                        animal.get("fecha_muerte"),
+                        animal.get("fecha_nacimiento"),
+                        animal.get("fecha_venta"),
+                        animal.get("genero"),
+                        animal.get("id"),
+                        animal.get("id_tipo_animal"),
+                        animal.get("id_usuario"),
+                        animal.get("notas"),
+                        animal.get("numero"),
+                        animal.get("numero_mama"),
+                        animal.get("descTipoAnimal"),
+                        animal.get("peso"),
+                        animal.get("numero_mama_adoptiva"),
+                        animal.get("grupo"),
+                        animal.get("descGrupo"),
+                        animal.get("hierro"),
+                        animal.get("descHierro"),
+                        animal.get("idFinca"),
+                        animal.get("descFinca"),
+                        animal.get("numero_descendiente"),
+                        animal.get("estado_descendiente"),
                         null,
-                        grupo.get("idPropietario"),
-                        grupo.get("descPropietario"),
-                        grupo.get("muerte"),
-                        grupo.get("venta"),
-                        grupo.get("precio_venta"),
-                        grupo.get("tipo_venta"),
-                        grupo.get("pesocanal"),
-                        grupo.get("descripcion_muerte"),
-                        grupo.get("fecha_novilla"),
-                        grupo.get("pesodestete"),
-                        grupo.get("hierro_fisico"),
-                        grupo.get("implante"),
-                        grupo.get("descornado")
+                        animal.get("idPropietario"),
+                        animal.get("descPropietario"),
+                        animal.get("muerte"),
+                        animal.get("venta"),
+                        animal.get("precio_venta"),
+                        animal.get("tipo_venta"),
+                        animal.get("pesocanal"),
+                        animal.get("descripcion_muerte"),
+                        animal.get("fecha_novilla"),
+                        animal.get("pesodestete"),
+                        animal.get("hierro_fisico"),
+                        animal.get("implante"),
+                        animal.get("descornado"),
+                        animal.get("destete")
                 ));
             }
             return lista;
@@ -107,7 +108,7 @@ public class ControlAnimales implements IControl {
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,\n"
-                + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete,IFNULL(a.precio_venta,0) precioventa\n"
+                + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete,IFNULL(a.precio_venta,0) precioventa, a.destete\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
@@ -115,53 +116,54 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN propietarios f ON f.`id`=d.`id_propietario`\n"
                 + "LEFT JOIN grupos c ON c.id=a.grupo\n"
                 + "WHERE a.id=" + id;
-        List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> animales = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
-        grupos = mySQL.ListSQL(consulta);
+        animales = mySQL.ListSQL(consulta);
 
-        if (grupos.size() > 0) {
+        if (animales.size() > 0) {
 
-            for (Map<String, String> grupo : grupos) {
+            for (Map<String, String> animal : animales) {
                 lista.add(new ModeloAnimales(
-                        grupo.get("calificacion"),
-                        grupo.get("capado"),
-                        grupo.get("fecha"),
-                        grupo.get("fecha_destete"),
-                        grupo.get("fecha_muerte"),
-                        grupo.get("fecha_nacimiento"),
-                        grupo.get("fecha_venta"),
-                        grupo.get("genero"),
-                        grupo.get("id"),
-                        grupo.get("id_tipo_animal"),
-                        grupo.get("id_usuario"),
-                        grupo.get("notas"),
-                        grupo.get("numero"),
-                        grupo.get("numero_mama"),
-                        grupo.get("descTipoAnimal"),
-                        grupo.get("peso"),
-                        grupo.get("numero_mama_adoptiva"),
-                        grupo.get("grupo"),
-                        grupo.get("descGrupo"),
-                        grupo.get("hierro"),
-                        grupo.get("descHierro"),
-                        grupo.get("idFinca"),
-                        grupo.get("descFinca"),
-                        grupo.get("numero_descendiente"),
-                        grupo.get("estado_descendiente"),
+                        animal.get("calificacion"),
+                        animal.get("capado"),
+                        animal.get("fecha"),
+                        animal.get("fecha_destete"),
+                        animal.get("fecha_muerte"),
+                        animal.get("fecha_nacimiento"),
+                        animal.get("fecha_venta"),
+                        animal.get("genero"),
+                        animal.get("id"),
+                        animal.get("id_tipo_animal"),
+                        animal.get("id_usuario"),
+                        animal.get("notas"),
+                        animal.get("numero"),
+                        animal.get("numero_mama"),
+                        animal.get("descTipoAnimal"),
+                        animal.get("peso"),
+                        animal.get("numero_mama_adoptiva"),
+                        animal.get("grupo"),
+                        animal.get("descGrupo"),
+                        animal.get("hierro"),
+                        animal.get("descHierro"),
+                        animal.get("idFinca"),
+                        animal.get("descFinca"),
+                        animal.get("numero_descendiente"),
+                        animal.get("estado_descendiente"),
                         null,
-                        grupo.get("idPropietario"),
-                        grupo.get("descPropietario"),
-                        grupo.get("muerte"),
-                        grupo.get("venta"),
-                        grupo.get("precioventa"),
-                        grupo.get("tipo_venta"),
-                        grupo.get("pesocanal"),
-                        grupo.get("descripcion_muerte"),
-                        grupo.get("fecha_novilla"),
-                        grupo.get("pesodestete"),
-                        grupo.get("hierro_fisico"),
-                        grupo.get("implante"),
-                        grupo.get("descornado")
+                        animal.get("idPropietario"),
+                        animal.get("descPropietario"),
+                        animal.get("muerte"),
+                        animal.get("venta"),
+                        animal.get("precioventa"),
+                        animal.get("tipo_venta"),
+                        animal.get("pesocanal"),
+                        animal.get("descripcion_muerte"),
+                        animal.get("fecha_novilla"),
+                        animal.get("pesodestete"),
+                        animal.get("hierro_fisico"),
+                        animal.get("implante"),
+                        animal.get("descornado"),
+                        animal.get("destete")
                 ));
             }
             return lista;
@@ -182,7 +184,7 @@ public class ControlAnimales implements IControl {
                 + "calificacion,notas,fecha_destete,capado,fecha_nacimiento,fecha_venta,"
                 + "fecha_muerte,fecha,id_usuario,peso,grupo,hierro,numero_descendiente,estado_descendiente,"
                 + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
-                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado)\n"
+                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado,destete)\n"
                 + "VALUES (\n"
                 + "0,\n"
                 + "" + animal.getIdTipoAnimal() + ",\n"
@@ -214,7 +216,8 @@ public class ControlAnimales implements IControl {
                 + "" + animal.getPesoDestete() + ",\n"
                 + "'" + animal.getHierroFisico() + "',\n"
                 + "'" + animal.getImplante() + "',\n"
-                + "'" + animal.getDescornada() + "'\n"
+                + "'" + animal.getDescornada() + "',\n"
+                + "'" + animal.getDestete()+ "'\n"
                 + ")"
         //</editor-fold>
         );
@@ -297,6 +300,7 @@ public class ControlAnimales implements IControl {
                 + "hierro = " + animal.getHierro() + ",\n"
                 + "genero = '" + animal.getGenero() + "',\n"
                 + "calificacion = '" + animal.getCalificacion() + "',\n"
+                + "calificacion = '" + animal.getDestete()+ "',\n"
                 + "notas = '" + animal.getNotas() + "',\n"
                 + "fecha_destete = '" + animal.getFechaDestete() + "',\n"
                 + "fecha_venta = '" + animal.getFechaVenta() + "',\n"
@@ -382,7 +386,7 @@ public class ControlAnimales implements IControl {
                 + "calificacion,notas,fecha_destete,capado,fecha_nacimiento,fecha_venta,"
                 + "fecha_muerte,fecha,id_usuario,peso,grupo,hierro,numero_descendiente,estado_descendiente,"
                 + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
-                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado)\n"
+                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado,destete)\n"
                 + "VALUES (\n"
                 + "0,\n"
                 + "" + animal.getIdTipoAnimal() + ",\n"
@@ -414,7 +418,8 @@ public class ControlAnimales implements IControl {
                 + "" + animal.getPesoDestete() + ",\n"
                 + "'" + animal.getHierroFisico() + "',\n"
                 + "'" + animal.getImplante() + "',\n"
-                + "'" + animal.getDescornada() + "'\n"
+                + "'" + animal.getDescornada() + "',\n"
+                + "'" + animal.getDestete() + "'\n"
                 + ");"
         //</editor-fold>
         );
@@ -549,7 +554,7 @@ public class ControlAnimales implements IControl {
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
-                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
+                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,a.destete\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN grupos c ON a.grupo=c.id\n"
@@ -603,7 +608,8 @@ public class ControlAnimales implements IControl {
                         grupo.get("peso_destete"),
                         grupo.get("hierro_fisico"),
                         grupo.get("implante"),
-                        grupo.get("descornado")
+                        grupo.get("descornado"),
+                        grupo.get("destete")
                 ));
             }
             return lista;
@@ -652,7 +658,8 @@ public class ControlAnimales implements IControl {
                     + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE\n"
                     + ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n"
                     + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
-                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO \n"
+                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO, \n"
+                    + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE\n"
                     + "FROM animales animal\n"
                     + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
                     + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
@@ -682,7 +689,8 @@ public class ControlAnimales implements IControl {
                     + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE\n"
                     + ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n"
                     + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
-                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO \n"
+                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO,\n"
+                    + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE\n"
                     + "FROM animales animal\n"
                     + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
                     + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
@@ -907,11 +915,12 @@ public class ControlAnimales implements IControl {
                     + "IFNULL(a.capado, 'No') AS CAPADO,\n"
                     + "IF(a.muerte = '0', 'No', 'Si') AS MUERTE,\n"
                     + "IF(a.venta = '0', 'No', 'Si') AS VENTA,\n"
+                    + "IF(a.destete = '0', 'No', 'Si') AS DESTETE,\n"
                     + "DATE_FORMAT(a.fecha_destete, '%d/%m/%Y') AS FECHA_DESTETE,\n"
+                    + "IFNULL(a.peso_destete,0) AS PESO_DESTETE,\n"
                     + "a.implante AS IMPLANTE,\n"
                     + "a.descornado AS DESCORNADO,\n"
                     + "a.hierro_fisico AS HIERRO_FISICO,\n"
-                    + "IFNULL(a.peso_destete,0) AS PESO_DESTETE,\n"
                     + "a.hierro AS IDHIERRO,\n"
                     + "e.descripcion AS DESC_HIERRO,\n"
                     + "IFNULL((SELECT '*' FROM pesaje m WHERE m.id_animal=a.id AND DATE_FORMAT(m.fecha_pesado,'%Y-%m-%d')='" + FECHA + "' ORDER BY m.id DESC LIMIT 1),'') AS EST,\n"

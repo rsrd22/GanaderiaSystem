@@ -74,6 +74,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private int ancho;
     private int alto;
     public int band;
+    private String STRING_VACIO="      ";
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -553,6 +554,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNotas.setForeground(new java.awt.Color(59, 123, 50));
         lblNotas.setText("Finca");
         lblNotas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
@@ -770,6 +772,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
         lblPesoDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPesoDestete.setText("Finca");
+        lblPesoDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 6;
@@ -830,6 +833,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblCalificacion.setForeground(new java.awt.Color(59, 123, 50));
         lblCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCalificacion.setText("Finca");
+        lblCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 4;
@@ -905,6 +909,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFechaDestete.setForeground(new java.awt.Color(59, 123, 50));
         lblFechaDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblFechaDestete.setText("Finca");
+        lblFechaDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 6;
@@ -980,6 +985,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblDestete.setForeground(new java.awt.Color(59, 123, 50));
         lblDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblDestete.setText("Finca");
+        lblDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -992,6 +998,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblDescornado.setForeground(new java.awt.Color(59, 123, 50));
         lblDescornado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblDescornado.setText("Finca");
+        lblDescornado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -1067,6 +1074,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblImplante.setForeground(new java.awt.Color(59, 123, 50));
         lblImplante.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblImplante.setText("Finca");
+        lblImplante.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 7;
@@ -2283,6 +2291,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             JLabel label = (JLabel) pnlDatosBasicos.findComponentAt(p);
             String etiqueta = label.getText();
 
+            /**
+             * listaHistorico es un Map<String[], JLabel>
+             * el array de string contiene lo siguiente:
+             * (key[0])-pos 0: identificador
+             * (key[1])-pos 1: nombre de la tabla de la base de datos
+             * (key[2])-pos 2: nombre del campo de la tabla anterior
+             */
             for (Map.Entry<String[], JLabel> entry : listaHistorico.entrySet()) {
                 String[] key = entry.getKey();
                 JLabel value = entry.getValue();
@@ -2429,8 +2444,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Implante", "animales", "implante", ListaDatos.get(0).getId()}, lblImplante);
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
         listaHistorico.put(new String[]{"Descornado", "animales", "descornado", ListaDatos.get(0).getId()}, lblDescornado);
-        lblDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "No" : "Si");
-        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? "" : "" + ListaDatos.get(0).getFechaDestete());
+        lblDestete.setText(ListaDatos.get(0).getDestete().equals("0") ? "No" : "Si");
+        listaHistorico.put(new String[]{"Destete", "animales", "destete", ListaDatos.get(0).getId()}, lblDestete);
+        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
         listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
         listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico", ListaDatos.get(0).getId()}, lblHierroColocado);
@@ -2444,7 +2460,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblGrupo.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescGrupo()));
         lblHierro.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescHierro()));
-        lblNotas.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
+        lblNotas.setText(ListaDatos.get(0).getNotas().isEmpty()? STRING_VACIO:Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         lblNumMama.setText(ListaDatos.get(0).getNumeroMama());
         lblNumero.setText(ListaDatos.get(0).getNumero());
