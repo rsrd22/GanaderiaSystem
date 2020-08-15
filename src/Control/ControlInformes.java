@@ -123,10 +123,13 @@ public class ControlInformes {
                     listAux.add("IFERROR(IF((UPPER(MID(H"+(fila+1)+",1,1))=\"K\"),I"+(fila+1)+"-G"+(fila+1)+",ROUND((I"+(fila+1)+"/2.20462),0)-G"+(fila+1)+"),\"\")");  
 //                    listAux.add("MID(H"+(fila+1)+",1,1)");  
                     
-                    if(listaMedicamentos.size() > 0){
-                        for (Map<String, String> med : listaMedicamentos) {
-                            listAux.add(" ");
-                        }
+//                    if(listaMedicamentos.size() > 0){
+//                        for (Map<String, String> med : listaMedicamentos) {
+//                            listAux.add(" ");
+//                        }
+//                    }
+                    for (int i = 0; i < 20; i++) {
+                        listAux.add(" ");
                     }
                     
                     ListaDatos.add(listAux);
@@ -220,11 +223,11 @@ public class ControlInformes {
                     listAux.add("");  
                     listAux.add("");  
                     
-                    if(listaMedicamentos.size() > 0){
-                        for (Map<String, String> med : listaMedicamentos) {
-                            listAux.add(" ");
-                        }
+//                    if(listaMedicamentos.size() > 0){
+                    for (int i = 0; i < 20; i++) {
+                        listAux.add(" ");
                     }
+//                    }
                     
                     ListaDatos.add(listAux);
                 }

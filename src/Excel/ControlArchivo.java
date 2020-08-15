@@ -236,10 +236,14 @@ public class ControlArchivo {
                                 }
                             } else {
                                 conten = xssfCell.getStringCellValue();
-                                if (conten.trim().isEmpty() || conten.equals("null")) {
+                                conten = conten.trim();
+                                
+                                System.out.println("keys.get("+col+")---"+keys.get(col));
+                                
+                                if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
-                                
+                                System.out.println("conten---"+conten);
                                 obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
                         }

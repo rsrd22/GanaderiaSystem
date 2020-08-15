@@ -949,9 +949,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                     info.put("DESCARTE", "0");
                     info.put("RAZON_DESCARTE", "");
-                    if (info.get("NUM_MESES").equals("_")) {
-                        info.put("NUM_MESES", "0");
-                    }
+                    
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
                     info.put("ESTADO", ValidarName(info.get("ESTADO")));
 
@@ -963,27 +961,35 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         continue;
                     }
                     if (info.get("ESTADO").substring(0, 1).toUpperCase().equals("P")) {
-                        if (info.get("NUM_MESES").equals("_") || !Utilidades.validarSoloNumeros(info.get("NUM_MESES"))) {
-
+                        //JOptionPane.showMessageDialog(null, "info.get(NUM_MESES)"+info.get("NUM_MESES")+" ----- CONDICION--->"+Expresiones.validarSoloNumerosP(info.get("NUM_MESES").replace(".", ",")));
+                        if (info.get("NUM_MESES").equals("_") || !Expresiones.validarSoloNumerosP(info.get("NUM_MESES").replace(".", ","))) {
                             info.put("FILA", "" + fila);
                             info.put("MOTIVO", "El numero de meses ingresado no es valio para el estado de PREÑADA.");
                             listaNoIngresados.add(info);
                             continue;
                         }
+                    }else{
+                        info.put("NUM_MESES", "0");
+                    }
+                    if (info.get("NUM_MESES").equals("_")) {
+                        info.put("NUM_MESES", "0");
                     }
                     //</editor-fold>
                     List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
                     //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
+                    
                     for (String med : listaMedicamentos) {
-
-                        if (!info.get("MED_" + med).equals("_")) {
-                            Map<String, String> mapMed = new HashMap<>();
-                            List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->" + med});
-                            mapMed.put("IDMEDICAMENTO", "" + datoMedicamento.get(0).get("ID"));
-                            mapMed.put("MEDICAMENTO", "" + datoMedicamento.get(0).get("DESCRIPCION"));
-                            mapMed.put("DOSIS", "" + info.get("MED_" + med));
-                            mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
-                            ListaMedicamentosxPesaje.add(mapMed);
+                        System.out.println("info.get(MED_" + med+")---->"+info.get("MED_" + med));
+                        if(info.containsKey("MED_" + med)){
+                            if (!info.get("MED_" + med).equals("_")) {
+                                Map<String, String> mapMed = new HashMap<>();
+                                List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->" + med});
+                                mapMed.put("IDMEDICAMENTO", "" + datoMedicamento.get(0).get("ID"));
+                                mapMed.put("MEDICAMENTO", "" + datoMedicamento.get(0).get("DESCRIPCION"));
+                                mapMed.put("DOSIS", "" + info.get("MED_" + med));
+                                mapMed.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
+                                ListaMedicamentosxPesaje.add(mapMed);
+                            }
                         }
                     }
                     //</editor-fold>
