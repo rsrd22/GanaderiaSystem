@@ -228,11 +228,12 @@ public class ControlArchivo {
                                     System.out.println("value-->"+value);
                                 } else {
                                     conten = ""+xssfCell.getNumericCellValue();
+                                    conten = ""+xssfCell.getRawValue();
                                     conten = conten.replace(",", ".");
                                     if(conten.indexOf(".")>-1)
                                         obj.put(keys.get(col), "" + Double.parseDouble(conten));
                                     else
-                                        obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
+                                        obj.put(keys.get(col), "" + Integer.parseInt(conten));
                                 }
                             } else {
                                 conten = xssfCell.getStringCellValue();
