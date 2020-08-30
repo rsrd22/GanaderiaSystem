@@ -7,6 +7,7 @@ package Vistas;
 
 import Control.ControlInformes;
 import Modelo.ModeloInformes;
+import Utilidades.TipoInforme;
 import Utilidades.Utilidades;
 import Vistas.VistasInformes.VistaInformePalpacion;
 import Vistas.VistasInformes.VistaInformePesaje;
@@ -249,14 +250,22 @@ public class VistaInformes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGenerarMouseExited
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        int indC = listCategoria.getSelectedIndex();
-        int indI = listInformes.getSelectedIndex();
+        int indexCategoria = listCategoria.getSelectedIndex();
+        int indexInforme = listInformes.getSelectedIndex();
 
-        if (indC == 0) {//Archivos Excel
-            if (indI == 0) {//Pesaje
-                vistaPesaje.CrearInforme();
-            } else if (indI == 1) {//Palpacion
-                vistaPalpacion.CrearInforme();
+        if (indexCategoria == 0) {//Archivos Excel
+            switch (indexInforme) {
+                case TipoInforme.CARGA_MASIVA_PESAJE:
+                    vistaPesaje.CrearInforme();
+                    break;
+                case TipoInforme.CARGA_MASIVA_PALPACION:
+                    vistaPalpacion.CrearInforme();
+                    break;
+                case TipoInforme.CARGA_MASIVA_ANIMALES:
+                    CrearInformeCargaAnimales();
+                    break;
+                default:
+                    return;
             }
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
@@ -285,6 +294,7 @@ public class VistaInformes extends javax.swing.JPanel {
         /////////////7////////////CAT, ID, NOm    
         listainformes.add(new String[]{"0", "0", "Carga Masiva Pesajes"});
         listainformes.add(new String[]{"0", "1", "Carga Masiva Palpación"});
+        listainformes.add(new String[]{"0", "2", "Carga Masiva Animales"});
     }
 
     private void llenarCategorias() {
@@ -315,47 +325,30 @@ public class VistaInformes extends javax.swing.JPanel {
     }
 
     private void MostrarOpciones() {
-        int indC = listCategoria.getSelectedIndex();
-        int indI = listInformes.getSelectedIndex();
+        int indexCategoria = listCategoria.getSelectedIndex();
+        int indexInforme = listInformes.getSelectedIndex();
 
-        if (indC == 0) {//Archivos Excel
-            if (indI == 0) {//Pesaje
-                vistaPesaje = new VistaInformePesaje();
-                MostrarPanel(vistaPesaje);
-            } else if (indI == 1) {//Palpacion
-                vistaPalpacion = new VistaInformePalpacion();
-                MostrarPanel(vistaPalpacion);
+        if (indexCategoria == 0) {//Archivos Excel
+            switch (indexInforme) {
+                case TipoInforme.CARGA_MASIVA_PESAJE:
+                    vistaPesaje = new VistaInformePesaje();
+                    MostrarPanel(vistaPesaje);
+                    break;
+                case TipoInforme.CARGA_MASIVA_PALPACION:
+                    vistaPalpacion = new VistaInformePalpacion();
+                    MostrarPanel(vistaPalpacion);
+                    break;
+                case TipoInforme.CARGA_MASIVA_ANIMALES:
+                    break;
+                default:
+                    return;
             }
         }
-
     }
 
     private void LimpiarPanelOpciones() {
         pnlOpciones.removeAll();
         pnlOpciones.repaint();
-//
-//        lblPaciente = new javax.swing.JLabel();
-//        txtPaciente = new javax.swing.JTextField();
-//        btnBuscarP = new javax.swing.JButton();
-//        lblIdPaciente = new javax.swing.JLabel();
-//        cbBandera = new javax.swing.JComboBox();
-//        lblBandera = new javax.swing.JLabel();
-//        rbInfohistorico = new javax.swing.JRadioButton();
-//        jdFechafinal = new com.toedter.calendar.JDateChooser();
-//        jdFechainicial = new com.toedter.calendar.JDateChooser();
-//        lblFechafinal = new javax.swing.JLabel();
-//        lblFechainicial = new javax.swing.JLabel();
-//
-//        chPanoramica = new javax.swing.JCheckBox();
-//        jLabel2 = new javax.swing.JLabel();
-//        chPanoramicaTodas = new javax.swing.JCheckBox();
-//        chRadiografia = new javax.swing.JCheckBox();
-//        chRadiografiaTodas = new javax.swing.JCheckBox();
-//        chOdontogramaTodas = new javax.swing.JCheckBox();
-//        chOdontograma = new javax.swing.JCheckBox();
-//        chFotografiaTodas = new javax.swing.JCheckBox();
-//        chFotografia = new javax.swing.JCheckBox();
-
     }
 
     //<editor-fold defaultstate="collapsed" desc="Mostrar Opciones">
@@ -381,5 +374,21 @@ public class VistaInformes extends javax.swing.JPanel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     //</editor-fold>
+
+    private void CrearInformeCargaAnimales() {
+        Map<String, String> infor = new HashMap<>();
+        infor.put("IDTIPO", "");
+        infor.put("IDFINCA", "");
+        infor.put("GRUPOS", "");
+        infor.put("MEDICAMENTOS", "");        
+
+        ModeloInformes informes = new ModeloInformes();
+        informes.setCategoria("0");
+        informes.setInforme("2");
+        informes.setInformacion(infor);
+
+        ControlInformes contInformes = new ControlInformes();
+        contInformes.GenerarInformes(informes);
+    }
 
 }
