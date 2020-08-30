@@ -204,7 +204,7 @@ public class ControlArchivo {
                 String conten = "";
                 Iterator rows = sheet.rowIterator();
                 while (rows.hasNext()) {
-                    
+
                     col = 0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
@@ -219,31 +219,33 @@ public class ControlArchivo {
                         } else {
                             if (XSSFCell.CELL_TYPE_FORMULA == xssfCell.getCellType()) {
                                 String value = xssfCell.getRawValue();
-                                System.out.println("value-->"+value);
+                                System.out.println("value-->" + value);
                                 obj.put(keys.get(col), "" + value);
                             } else if (XSSFCell.CELL_TYPE_NUMERIC == xssfCell.getCellType()) {
                                 if (DateUtil.isCellDateFormatted(xssfCell)) {
                                     String value = destFormat.format(xssfCell.getDateCellValue());
                                     obj.put(keys.get(col), "" + value);
-                                    System.out.println("value-->"+value);
+                                    System.out.println("value-->" + value);
                                 } else {
-                                    conten = ""+xssfCell.getNumericCellValue();
+                                    conten = "" + xssfCell.getNumericCellValue();
+                                    conten = "" + xssfCell.getRawValue();
                                     conten = conten.replace(",", ".");
-                                    if(conten.indexOf(".")>-1)
+                                    if (conten.indexOf(".") > -1) {
                                         obj.put(keys.get(col), "" + Double.parseDouble(conten));
-                                    else
-                                        obj.put(keys.get(col), "" + ((long) xssfCell.getNumericCellValue()));
+                                    } else {
+                                        obj.put(keys.get(col), "" + Integer.parseInt(conten));
+                                    }
                                 }
                             } else {
                                 conten = xssfCell.getStringCellValue();
                                 conten = conten.trim();
-                                
-                                System.out.println("keys.get("+col+")---"+keys.get(col));
-                                
+
+                                System.out.println("keys.get(" + col + ")---" + keys.get(col));
+
                                 if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
-                                System.out.println("conten---"+conten);
+                                System.out.println("conten---" + conten);
                                 obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
                         }
@@ -295,7 +297,6 @@ public class ControlArchivo {
      */
     public void EscribirExcelActFormula(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos, int colFormula) {
         ruta = Expresiones.guardarEn();
-        //String nombreArchivo = "Inventario.xlsx";
         String rutaArchivo = ruta + "\\" + nombreArchivo;
         String hoja = "Hoja1";
 
@@ -347,27 +348,6 @@ public class ControlArchivo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
-//            System.out.println("Dentro del Try");
-//            if (file.exists()) {// si el archivo existe se elimina
-//                file.delete();
-//                System.out.println("Archivo eliminado");
-//            }
-//            libro.write(fileOuS);
-//            fileOuS.flush();
-//            fileOuS.close();
-//            
-//            int opcion = JOptionPane.showConfirmDialog(null, "�Desea ver el documento " + nombreArchivo + "?\n");
-//            if (opcion == JOptionPane.YES_NO_OPTION) {
-//                Desktop.getDesktop().open(file);
-//            }
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
@@ -379,13 +359,12 @@ public class ControlArchivo {
      */
     public void EscribirExcelAct(String ruta, String nombreArchivo, ArrayList<String> Encabezado, ArrayList<ArrayList<String>> ListaDatos) {
         ruta = Expresiones.guardarEn();
-        //String nombreArchivo = "Inventario.xlsx";
         String rutaArchivo = ruta + "\\" + nombreArchivo;
         String hoja = "Hoja1";
 
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja1 = libro.createSheet(hoja);
-        
+
         //poner negrita a la cabecera
         CellStyle style = libro.createCellStyle();
         Font font = libro.createFont();
@@ -397,6 +376,7 @@ public class ControlArchivo {
             XSSFCell cell = row.createCell(i);//se crea las celdas para la cabecera, junto con la posici�n
             cell.setCellStyle(style); // se a�ade el style crea anteriormente 
             cell.setCellValue(Encabezado.get(i));//se a�ade el contenido
+            hoja1.autoSizeColumn(i);
         }
 //</editor-fold>
         System.out.println("***********END ENCABEZADO**********");
@@ -413,7 +393,6 @@ public class ControlArchivo {
         System.out.println("***********END CONTENIDO**********");
 //</editor-fold>
 
-        
         System.out.println("rutaArchivo:.::" + rutaArchivo);
 
         try (OutputStream fileOut = new FileOutputStream(rutaArchivo)) {
