@@ -285,6 +285,7 @@ public class VistaInformes extends javax.swing.JPanel {
         /////////////7////////////CAT, ID, NOm    
         listainformes.add(new String[]{"0", "0", "Carga Masiva Pesajes"});
         listainformes.add(new String[]{"0", "1", "Carga Masiva Palpación"});
+        listainformes.add(new String[]{"0", "2", "Carga Masiva Animales"});
     }
 
     private void llenarCategorias() {
