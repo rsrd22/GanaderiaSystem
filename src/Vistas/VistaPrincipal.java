@@ -15,6 +15,7 @@ import ImportExport.ImportExport;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Consultas;
 import Utilidades.Utilidades;
+import Vistas.Usuarios.*;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -127,6 +128,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnRotacion = new javax.swing.JLabel();
         btnUsuarios = new javax.swing.JLabel();
         btnInformes = new javax.swing.JLabel();
+        pnlContenedorUsuarios = new javax.swing.JPanel();
+        btnPerfiles = new javax.swing.JLabel();
+        btnPermisos = new javax.swing.JLabel();
+        btnAgregarUsuario = new javax.swing.JLabel();
 
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
@@ -862,6 +867,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUsuariosMouseClicked(evt);
+            }
+        });
 
         btnInformes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInformes.setForeground(new java.awt.Color(255, 255, 255));
@@ -873,6 +883,60 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 btnInformesMouseClicked(evt);
             }
         });
+
+        pnlContenedorUsuarios.setBackground(new java.awt.Color(59, 145, 70));
+
+        btnPerfiles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnPerfiles.setForeground(new java.awt.Color(255, 255, 255));
+        btnPerfiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnPerfiles.setText("Perfiles");
+        btnPerfiles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPerfiles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPerfilesRealMousePressed(evt);
+            }
+        });
+
+        btnPermisos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnPermisos.setForeground(new java.awt.Color(255, 255, 255));
+        btnPermisos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnPermisos.setText("Permisos");
+        btnPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPermisos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPermisosMousePressed(evt);
+            }
+        });
+
+        btnAgregarUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAgregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnAgregarUsuario.setText("Agregar Usuario");
+        btnAgregarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAgregarUsuarioMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContenedorUsuariosLayout = new javax.swing.GroupLayout(pnlContenedorUsuarios);
+        pnlContenedorUsuarios.setLayout(pnlContenedorUsuariosLayout);
+        pnlContenedorUsuariosLayout.setHorizontalGroup(
+            pnlContenedorUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnPerfiles, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnPermisos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnAgregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        pnlContenedorUsuariosLayout.setVerticalGroup(
+            pnlContenedorUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContenedorUsuariosLayout.createSequentialGroup()
+                .addComponent(btnPerfiles)
+                .addGap(0, 0, 0)
+                .addComponent(btnPermisos)
+                .addGap(0, 0, 0)
+                .addComponent(btnAgregarUsuario)
+                .addGap(30, 30, 30))
+        );
 
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
@@ -891,8 +955,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(btnMostrarTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,9 +988,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnRotacion)
                 .addGap(0, 0, 0)
+                .addComponent(btnInformes)
+                .addGap(0, 0, 0)
                 .addComponent(btnUsuarios)
                 .addGap(0, 0, 0)
-                .addComponent(btnInformes))
+                .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jScrollPane1.setViewportView(pnlMenu);
@@ -1434,6 +1501,40 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnInformesMouseClicked
 
+    private void btnPerfilesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilesRealMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Agregar Perfil");
+            VistaPerfiles vista = new VistaPerfiles();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnPerfilesRealMousePressed
+
+    private void btnPermisosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPermisosMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Agregar Permisos");
+            VistaPermisos vista = new VistaPermisos();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnPermisosMousePressed
+
+    private void btnAgregarUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Agregar Usuario");
+            VistaUsuarios vista = new VistaUsuarios();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnAgregarUsuarioMousePressed
+
+    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+        if (!pnlContenedorUsuarios.isVisible()) {
+            OcultarContenidoMenu();
+        }
+        btnPerfiles.setVisible(!pnlContenedorUsuarios.isVisible());
+        btnPermisos.setVisible(!pnlContenedorUsuarios.isVisible());
+        btnAgregarUsuario.setVisible(!pnlContenedorUsuarios.isVisible());
+        pnlContenedorUsuarios.setVisible(!pnlContenedorUsuarios.isVisible());
+    }//GEN-LAST:event_btnUsuariosMouseClicked
+
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
             Component panel = pnlContenedor.getComponent(0);
@@ -1482,6 +1583,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAgregarUsuario;
     private javax.swing.JLabel btnAnimales;
     private javax.swing.JLabel btnAnimalxHierro1;
     private javax.swing.JLabel btnBloques;
@@ -1509,6 +1611,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnMostrarTraslados;
     private javax.swing.JLabel btnMuerteAnimal;
     private javax.swing.JLabel btnPalpacion;
+    private javax.swing.JLabel btnPerfiles;
+    private javax.swing.JLabel btnPermisos;
     private javax.swing.JLabel btnPesaje;
     private javax.swing.JLabel btnPluviometro;
     private javax.swing.JLabel btnPropietarios;
@@ -1534,6 +1638,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlContenedorGruposAnimales;
     private javax.swing.JPanel pnlContenedorPropietarios;
     private javax.swing.JPanel pnlContenedorTraslados;
+    private javax.swing.JPanel pnlContenedorUsuarios;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlMenuVertical;
     private javax.swing.JPanel pnlTitulo;
@@ -1549,6 +1654,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
         pnlContenedorTraslados.setVisible(false);
+        pnlContenedorUsuarios.setVisible(false);
     }
 
     private void EstablecerTituloVentana(String titulo) {
