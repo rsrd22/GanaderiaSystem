@@ -70,6 +70,16 @@ public class Consultas {
                 + "estado ESTADO__50__L\n"
                 + "FROM estado_actividad");
 
+        consultas.put("BUSQUEDA_MOD_USUARIOS", "SELECT \n"
+                + "a.id ID__10__L,\n"
+                + "a.usuario NOMBRE_USUARIO__80__L,\n"
+                + "CASE WHEN a.clave_dinamica=0 THEN 'No' ELSE 'Si' END CLAVE_DINAM__30__L,\n"
+                + "a.estado ESTADO__50__L,\n"
+                + "b.descripcion PERFIL__50__L\n"
+                + "FROM \n"
+                + "usuarios a\n"
+                + "LEFT JOIN perfiles b ON b.id=a.id_perfil");
+
         consultas.put("BUSQUEDA_ESTADO_ACTIVIDADES_SIN_ESPECIFICACIONES", "SELECT\n"
                 + "id id,\n"
                 + "descripcion descripcion,\n"
@@ -139,6 +149,14 @@ public class Consultas {
                 + "ORDER BY\n"
                 + "a.numero ASC");
 
+        consultas.put("BUSQUEDA_PERFILES", "SELECT\n"
+                + "a.id ID__10__L,\n"
+                + "a.descripcion FINCA__200__L\n"
+                + "FROM \n"
+                + "perfiles a\n"
+                + "ORDER BY\n"
+                + "a.descripcion ASC");
+
         consultas.put("CARGAR_COMBO_GRUPOS", "SELECT \n"
                 + "-1 id,\n"
                 + "'Seleccionar' descripcion,\n"
@@ -176,6 +194,16 @@ public class Consultas {
                 + "WHERE\n"
                 + "a.estado='Activo'\n"
                 + "AND a.id_finca=");
+
+        consultas.put("CARGAR_COMBO_PERFILES", "SELECT \n"
+                + "-1 id,\n"
+                + "'Seleccionar' descripcion\n"
+                + "UNION\n"
+                + "SELECT \n"
+                + "a.id id,\n"
+                + "a.descripcion descripcion\n"
+                + "FROM\n"
+                + "perfiles a");
 
         consultas.put("CARGAR_COMBO_HIERROS", "SELECT\n"
                 + "-1 id,\n"

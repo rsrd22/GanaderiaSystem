@@ -3,20 +3,107 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas.Usuarios;
+
+import Busqueda.VistaBusqueda;
+import Control.ControlGeneral;
+import Control.Retorno;
+import Control.Usuario.ControlUsuarios;
+import GestionControles.Control;
+import GestionControles.EstadoControles;
+import GestionControles.GestionEstadoControles;
+import Modelo.ModeloGestorBusqueda;
+import Modelo.Usuario.ModeloUsuarios;
+import static Utilidades.Consultas.consultas;
+import Utilidades.Estado;
+import Utilidades.Utilidades;
+import Vistas.IControlesUsuario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author MERRY
  */
-public class VistaUsuarios extends javax.swing.JPanel {
+public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuario {
 
-    /**
-     * Creates new form NewJPanel
-     */
+    private ModeloUsuarios modelo;
+    private ControlUsuarios control;
+    private GestionEstadoControles controles;
+    private int editar;
+    private JButton[] botones;
+    boolean estadoContrasenia = false;
+    boolean estadoConfirmarContrasenia = false;
+    private final char MASCARA_CONTRASENIA = '●';
+    private ControlGeneral controlGral;
+    private List<Map<String, String>> perfiles;
+
     public VistaUsuarios() {
         initComponents();
+        iniciarComponentes();
+        modelo = new ModeloUsuarios();
+        control = new ControlUsuarios();
+        controlGral = new ControlGeneral();
+        perfiles = new ArrayList<>();
+        cargarComboPerfiles();
+        editar = Estado.GUARDAR;
+
+        botones = new JButton[]{
+            btnConsultar,
+            btnDescartar,
+            btnEliminar,
+            btnGuardar,
+            btnModificar
+        };
+        controles.habilitarControles();
+        Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+    }
+
+    private void cargarComboPerfiles(){
+        String consulta = consultas.get("CARGAR_COMBO_PERFILES");
+        perfiles = controlGral.GetComboBox(consulta);
+
+        Utilidades.LlenarComboBox(cbPerfil, perfiles, "descripcion");
+    }
+    
+    @Override
+    public void iniciarComponentes() {
+        controles = new GestionEstadoControles();
+
+        Control control = new Control(true, txtNombreUsuario);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, cbPerfil);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtcontrasena);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, btnVerConfirmarContrasena);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, btnVerContrasena);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtConfirmarContrasena);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkClaveDinamica);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, cbEstado);
+        control.setLimpiarDespuesDeGuardar(false);
+        controles.addControl(control);
     }
 
     /**
@@ -27,20 +114,611 @@ public class VistaUsuarios extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        txtCodigo = new javax.swing.JLabel();
+        txtCodigoPerfil = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnDescartar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        lbltitle5 = new javax.swing.JLabel();
+        txtNombreUsuario = new javax.swing.JTextField();
+        jSeparator10 = new javax.swing.JSeparator();
+        chkClaveDinamica = new javax.swing.JCheckBox();
+        lbltitle8 = new javax.swing.JLabel();
+        cbPerfil = new javax.swing.JComboBox();
+        lbltitle6 = new javax.swing.JLabel();
+        cbEstado = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        txtcontrasena = new javax.swing.JPasswordField();
+        btnVerContrasena = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnVerConfirmarContrasena = new javax.swing.JButton();
+        txtConfirmarContrasena = new javax.swing.JPasswordField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        setLayout(new java.awt.GridBagLayout());
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnGuardar.setName("btnGuardar"); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnGuardar, gridBagConstraints);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
+        btnModificar.setToolTipText("Modificar");
+        btnModificar.setBorderPainted(false);
+        btnModificar.setContentAreaFilled(false);
+        btnModificar.setMargin(new java.awt.Insets(2, 14, 2, 5));
+        btnModificar.setName("btnModificar"); // NOI18N
+        btnModificar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar_over.png"))); // NOI18N
+        btnModificar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar_over.png"))); // NOI18N
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnModificar, gridBagConstraints);
+
+        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
+        btnDescartar.setToolTipText("Descartar");
+        btnDescartar.setBorderPainted(false);
+        btnDescartar.setContentAreaFilled(false);
+        btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescartarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnDescartar, gridBagConstraints);
+
+        btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
+        btnConsultar.setToolTipText("Consutar");
+        btnConsultar.setBorderPainted(false);
+        btnConsultar.setContentAreaFilled(false);
+        btnConsultar.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        btnConsultar.setName("btnConsultar"); // NOI18N
+        btnConsultar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar_over.png"))); // NOI18N
+        btnConsultar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar_over.png"))); // NOI18N
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnConsultar, gridBagConstraints);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
+        btnEliminar.setToolTipText("Eliminar");
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnEliminar.setName("btnEliminar"); // NOI18N
+        btnEliminar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar_over.png"))); // NOI18N
+        btnEliminar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar_over.png"))); // NOI18N
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnEliminar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(jPanel2, gridBagConstraints);
+
+        lbltitle5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle5.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle5.setText("Nombre de usuario");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 100, 0, 100);
+        add(lbltitle5, gridBagConstraints);
+
+        txtNombreUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreUsuario.setForeground(new java.awt.Color(59, 123, 50));
+        txtNombreUsuario.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNombreUsuario.setBorder(null);
+        txtNombreUsuario.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNombreUsuario.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(txtNombreUsuario, gridBagConstraints);
+
+        jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(jSeparator10, gridBagConstraints);
+
+        chkClaveDinamica.setBackground(new java.awt.Color(255, 255, 255));
+        chkClaveDinamica.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkClaveDinamica.setForeground(new java.awt.Color(59, 123, 50));
+        chkClaveDinamica.setText("Contraseña dinámica");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 100, 0, 100);
+        add(chkClaveDinamica, gridBagConstraints);
+
+        lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle8.setText("Perfil");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(lbltitle8, gridBagConstraints);
+
+        cbPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbPerfil.setForeground(new java.awt.Color(59, 123, 50));
+        cbPerfil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
+        cbPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPerfilActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(cbPerfil, gridBagConstraints);
+
+        lbltitle6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle6.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle6.setText("Estado");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.75;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(lbltitle6, gridBagConstraints);
+
+        cbEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbEstado.setForeground(new java.awt.Color(59, 123, 50));
+        cbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Activo", "Inactivo" }));
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.75;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 100);
+        add(cbEstado, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(59, 123, 50));
+        jLabel2.setText("Contraseña");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(15, 100, 0, 0);
+        add(jLabel2, gridBagConstraints);
+
+        txtcontrasena.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtcontrasena.setForeground(new java.awt.Color(59, 123, 50));
+        txtcontrasena.setBorder(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 0);
+        add(txtcontrasena, gridBagConstraints);
+
+        btnVerContrasena.setBackground(new java.awt.Color(255, 255, 255));
+        btnVerContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png"))); // NOI18N
+        btnVerContrasena.setToolTipText("Ver Contraseña");
+        btnVerContrasena.setBorder(null);
+        btnVerContrasena.setBorderPainted(false);
+        btnVerContrasena.setContentAreaFilled(false);
+        btnVerContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerContrasenaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        add(btnVerContrasena, gridBagConstraints);
+
+        jSeparator1.setForeground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 0, 0);
+        add(jSeparator1, gridBagConstraints);
+
+        btnVerConfirmarContrasena.setBackground(new java.awt.Color(255, 255, 255));
+        btnVerConfirmarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png"))); // NOI18N
+        btnVerConfirmarContrasena.setToolTipText("Ver Contraseña");
+        btnVerConfirmarContrasena.setBorder(null);
+        btnVerConfirmarContrasena.setBorderPainted(false);
+        btnVerConfirmarContrasena.setContentAreaFilled(false);
+        btnVerConfirmarContrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerConfirmarContrasenaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
+        add(btnVerConfirmarContrasena, gridBagConstraints);
+
+        txtConfirmarContrasena.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtConfirmarContrasena.setForeground(new java.awt.Color(59, 123, 50));
+        txtConfirmarContrasena.setBorder(null);
+        txtConfirmarContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtConfirmarContrasenaFocusLost(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(txtConfirmarContrasena, gridBagConstraints);
+
+        jSeparator2.setForeground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 100);
+        add(jSeparator2, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(59, 123, 50));
+        jLabel3.setText("Confirmar contraseña");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 100);
+        add(jLabel3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Modificar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
+        Descartar();
+    }//GEN-LAST:event_btnDescartarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        Consultar();
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        Eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cbPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPerfilActionPerformed
+        int indice = cbPerfil.getSelectedIndex();
+        if (indice > 0) {
+            String idPerfil = perfiles.get(indice).get("id");
+            txtCodigoPerfil.setText(idPerfil);
+        } else {
+            txtCodigoPerfil.setText("");
+        }
+    }//GEN-LAST:event_cbPerfilActionPerformed
+
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEstadoActionPerformed
+
+    private void btnVerContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContrasenaActionPerformed
+        if (!estadoContrasenia) { // Muestro los carateres
+            txtcontrasena.setEchoChar((char) 0);
+            estadoContrasenia = true;
+            btnVerContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verSlash.png")));
+        } else { // Oculto los  caracteres
+            txtcontrasena.setEchoChar(MASCARA_CONTRASENIA);
+            estadoContrasenia = false;
+            btnVerContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png")));
+        }
+    }//GEN-LAST:event_btnVerContrasenaActionPerformed
+
+    private void btnVerConfirmarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConfirmarContrasenaActionPerformed
+        if (!estadoConfirmarContrasenia) { // Muestro los carateres
+            txtConfirmarContrasena.setEchoChar((char) 0);
+            estadoConfirmarContrasenia = true;
+            btnVerConfirmarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verSlash.png")));
+        } else { // Oculto los  caracteres
+            txtConfirmarContrasena.setEchoChar(MASCARA_CONTRASENIA);
+            estadoConfirmarContrasenia = false;
+            btnVerConfirmarContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png")));
+        }
+    }//GEN-LAST:event_btnVerConfirmarContrasenaActionPerformed
+
+    private void txtConfirmarContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConfirmarContrasenaFocusLost
+        if (txtConfirmarContrasena.getPassword().toString().length() == 0) {
+            JOptionPane.showMessageDialog(this, "La confirmacion de la contraseña no puede estar vacia.");
+            txtcontrasena.requestFocusInWindow();
+            return;
+        }
+
+        if (!verificarContrasenas(txtcontrasena.getPassword(), txtConfirmarContrasena.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+            txtcontrasena.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_txtConfirmarContrasenaFocusLost
+
+    private boolean verificarContrasenas(char[] password, char[] ConfirmPassword) {
+        return String.valueOf(password).equals(String.valueOf(ConfirmPassword));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnDescartar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnVerConfirmarContrasena;
+    private javax.swing.JButton btnVerContrasena;
+    public javax.swing.JComboBox cbEstado;
+    public javax.swing.JComboBox cbPerfil;
+    private javax.swing.JCheckBox chkClaveDinamica;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lbltitle5;
+    private javax.swing.JLabel lbltitle6;
+    private javax.swing.JLabel lbltitle8;
+    private javax.swing.JLabel txtCodigo;
+    private javax.swing.JLabel txtCodigoPerfil;
+    private javax.swing.JPasswordField txtConfirmarContrasena;
+    public javax.swing.JTextField txtNombreUsuario;
+    private javax.swing.JPasswordField txtcontrasena;
     // End of variables declaration//GEN-END:variables
+
+    public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
+        if (objeto.getOpcion() == 0) {//SE LLAMA LA BUSQUEDA DESDE LA MISMA VISTA
+            String id = retorno.get("ID");
+            modelo = ((ArrayList<ModeloUsuarios>) control.ObtenerDatosKey(id)).get(0);
+            boolean claveDinamica = modelo.getClave_dinamica().equals("1");
+            
+            cargarComboPerfiles();
+            txtCodigoPerfil.setText(modelo.getId_perfil());
+            cbPerfil.setSelectedItem(modelo.getDescPerfil());
+            
+            txtCodigo.setText(modelo.getId());
+            txtNombreUsuario.setText(modelo.getUsuario());
+            cbEstado.setSelectedItem(modelo.getEstado());
+            chkClaveDinamica.setSelected(claveDinamica);
+            
+            Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_BUSCAR, controles);
+            Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_BUSCAR, botones);
+        }
+    }
+
+    private void Guardar() {
+        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
+        if(txtNombreUsuario.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Especifique el nombre de usuario.");
+            txtNombreUsuario.requestFocusInWindow();
+            return ;
+        }
+        if(cbPerfil.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(this, "Seleccione el perfil del usuario a crear.");
+            txtNombreUsuario.requestFocusInWindow();
+            return ;
+        }
+        if(String.valueOf(txtcontrasena.getPassword()).trim().length()==0){
+            JOptionPane.showMessageDialog(this, "La contraseña no puede ser vacia");
+            txtNombreUsuario.requestFocusInWindow();
+            return ;
+        }
+        if(!verificarContrasenas(txtcontrasena.getPassword(), txtConfirmarContrasena.getPassword())){
+            JOptionPane.showMessageDialog(this, "las contraseñas no coinciden.");
+            txtNombreUsuario.requestFocusInWindow();
+            return ;
+        }
+//</editor-fold>
+        
+        String id = editar == Estado.GUARDAR ? "0" : txtCodigo.getText();
+        String password = String.valueOf(txtcontrasena.getPassword());
+        String claveDinamica = chkClaveDinamica.isSelected() ? "1" : "0";
+
+        modelo.setId(id);
+        modelo.setClave(password);
+        modelo.setEstado(cbEstado.getSelectedItem().toString());
+        modelo.setClave_dinamica(claveDinamica);
+        modelo.setId_empleado("1");
+        modelo.setId_perfil(txtCodigoPerfil.getText());
+        modelo.setUsuario(txtNombreUsuario.getText().trim());
+
+        int retorno = Retorno.DEFECTO;
+
+        if (editar == Estado.GUARDAR) {
+            retorno = control.Guardar(modelo);
+        } else {
+            retorno = control.Actualizar(modelo);
+        }
+
+        String mensaje = "";
+        switch (retorno) {
+            case Retorno.EXITO:
+                mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
+                Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
+                Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
+                editar = Estado.GUARDAR;
+                break;
+            case Retorno.ERROR:
+                mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
+                break;
+            case Retorno.EXCEPCION_SQL:
+                mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                break;
+            case Retorno.CLASE_NO_ENCONTRADA:
+                mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                break;
+        }
+
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    private void Modificar() {
+        Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_MODIFICAR, controles);
+        Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_MODIFICAR, botones);
+        editar = Estado.ACTUALIZAR;
+    }
+
+    private void Descartar() {
+        Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_DESCARTAR, controles);
+        Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_DESCARTAR, botones);
+        editar = Estado.GUARDAR;
+    }
+
+    private void Consultar() {
+        ModeloGestorBusqueda objetoBusqueda = new ModeloGestorBusqueda(this, "BUSQUEDA_MOD_USUARIOS", 0);
+        VistaBusqueda vistaBusqueda = new VistaBusqueda(objetoBusqueda);
+        btnConsultar.setEnabled(false);
+    }
+
+    private void Eliminar() {
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar el Registro?");
+        if (respuesta == JOptionPane.YES_OPTION) {
+            int retorno = control.Eliminar(modelo);
+
+            String mensaje = "";
+            switch (retorno) {
+                case Retorno.EXITO:
+                    mensaje = "Registro eliminado satisfactoriamente.";
+                    Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_ELIMINAR, controles);
+                    Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_ELIMINAR, botones);
+                    break;
+                case Retorno.ERROR:
+                    mensaje = "El registro no pudo ser eliminado.";
+                    break;
+                case Retorno.EXCEPCION_SQL:
+                    mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                    break;
+                case Retorno.CLASE_NO_ENCONTRADA:
+                    mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                    break;
+            }
+
+            JOptionPane.showMessageDialog(this, mensaje);
+        }
+    }
+
 }
