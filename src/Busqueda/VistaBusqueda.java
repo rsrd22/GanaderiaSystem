@@ -11,6 +11,7 @@ import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.*;
+import Vistas.Usuarios.VistaPermisos;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -564,6 +565,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaTarea) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaMedicamentos) {
                     ((VistaMedicamentos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaPermisos) {
+                    ((VistaPermisos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 }
 
                 this.dispose();

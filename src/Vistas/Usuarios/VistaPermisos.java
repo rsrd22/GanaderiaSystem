@@ -6,17 +6,81 @@
 
 package Vistas.Usuarios;
 
+import Busqueda.VistaBusqueda;
+import Control.ControlGeneral;
+import Control.Retorno;
+import Control.Usuario.ControlPermisos;
+import GestionControles.EstadoControles;
+import Modelo.ModeloGestorBusqueda;
+import Modelo.Usuario.ModeloPermisos;
+import Modelo.Usuario.ModeloPermisoxModulos;
+import Tablas.TablaRender;
+import Utilidades.Estado;
+import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author MERRY
  */
 public class VistaPermisos extends javax.swing.JPanel {
 
+    public int banBQDUsuario = 0;
+    public ControlGeneral controlgen = new ControlGeneral();
+    public ControlPermisos controlPermiso = new ControlPermisos();
+    private ModeloPermisos  modeloPermisos;
+    public int banBQDPropietarios;
+    public int banBQD;
+    public ModeloGestorBusqueda objetoBusqueda;
+    private int editar;
+    public List<Map<String, String>> listaPerfiles;
+    public List<Map<String, String>> listaUsuarios;
+    public ArrayList<ModeloPermisoxModulos> ListaPermisoxModulos;
+    public Map<String, String[]> Lista_Seleccionados_Modulos;
+    public Map<String, String[]> Lista_Seleccionados_Propietarios;
+    public Map<String, String[]> Lista_NOSeleccionados_Modulos;
+    public Map<String, String[]> Lista_NOSeleccionados_Propietarios;
+    public List<Map<String, String>> listadoModulos;
+    public List<Map<String, String>> listadoPropietarios;
+    public int fila = -2, bang = 0;
+    public String estado="", IdUsuario = "";
+    public String IDPermisos= "", IDUsuario = "";
+    public String id, estadog;
+    public DefaultTableModel modeloModulos;
+    public String[] EncabezadoModulos; 
+    
+    
     /**
      * Creates new form VistaPermisos
      */
     public VistaPermisos() {
         initComponents();
+        modeloPermisos = new ModeloPermisos();
+        tPaneModulos.setEnabledAt(1, false);
+        EncabezadoModulos = new String[]{
+            "Modulo", "Descripción", "S", "I", "U", "D", "V", "T"
+        };
+        rbPerfil.setSelected(true);
+        InicializarTblModulos();
+        CargarListaPerfiles();
+        CargarListaUsuarios();
+        EstadoTipoPermiso();
+        PermisosEstadoFormulario(0);
     }
 
     /**
@@ -27,20 +91,940 @@ public class VistaPermisos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        Tipo = new javax.swing.ButtonGroup();
+        lblTid = new javax.swing.JLabel();
+        rbPerfil = new javax.swing.JRadioButton();
+        rbUsuario = new javax.swing.JRadioButton();
+        lblTipo = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblBsqUsuario = new javax.swing.JLabel();
+        separador = new javax.swing.JSeparator();
+        cbPerfil = new javax.swing.JComboBox();
+        tPaneModulos = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblModulos = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPropietarios = new javax.swing.JTable();
+        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnDescartar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new java.awt.GridBagLayout());
+
+        lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid.setText("Permisos por:");
+        lblTid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTidMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 67;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(30, 20, 0, 0);
+        add(lblTid, gridBagConstraints);
+
+        rbPerfil.setBackground(new java.awt.Color(255, 255, 255));
+        Tipo.add(rbPerfil);
+        rbPerfil.setForeground(new java.awt.Color(59, 123, 50));
+        rbPerfil.setText("Perfil");
+        rbPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbPerfilActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(rbPerfil, gridBagConstraints);
+
+        rbUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        Tipo.add(rbUsuario);
+        rbUsuario.setForeground(new java.awt.Color(59, 123, 50));
+        rbUsuario.setText("Usuario");
+        rbUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbUsuarioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 80, 0, 0);
+        add(rbUsuario, gridBagConstraints);
+
+        lblTipo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTipo.setForeground(new java.awt.Color(59, 123, 50));
+        lblTipo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTipo.setText("Perfil");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 119;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 20, 0, 0);
+        add(lblTipo, gridBagConstraints);
+
+        txtUsuario.setEditable(false);
+        txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(59, 123, 50));
+        txtUsuario.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtUsuario.setBorder(null);
+        txtUsuario.setCaretColor(new java.awt.Color(31, 97, 141));
+        txtUsuario.setSelectionColor(new java.awt.Color(36, 113, 163));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(txtUsuario, gridBagConstraints);
+
+        lblBsqUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/buscar30.png"))); // NOI18N
+        lblBsqUsuario.setToolTipText("Consultar Arrendatario");
+        lblBsqUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBsqUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBsqUsuarioMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        add(lblBsqUsuario, gridBagConstraints);
+
+        separador.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.ipadx = 299;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        add(separador, gridBagConstraints);
+
+        cbPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbPerfil.setForeground(new java.awt.Color(59, 123, 50));
+        cbPerfil.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPerfilItemStateChanged(evt);
+            }
+        });
+        cbPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPerfilActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 176;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        add(cbPerfil, gridBagConstraints);
+
+        tPaneModulos.setForeground(new java.awt.Color(59, 123, 50));
+        tPaneModulos.setFocusable(false);
+        tPaneModulos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
+        tblModulos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblModulos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblModulos.setDragEnabled(true);
+        tblModulos.setGridColor(new java.awt.Color(255, 255, 255));
+        tblModulos.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        tblModulos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblModulosMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblModulos);
+
+        tPaneModulos.addTab("Modulos", jScrollPane1);
+
+        tblPropietarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tblPropietarios.setColumnSelectionAllowed(true);
+        tblPropietarios.setDragEnabled(true);
+        tblPropietarios.setGridColor(new java.awt.Color(255, 255, 255));
+        tblPropietarios.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        tblPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblPropietariosMouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblPropietarios);
+
+        tPaneModulos.addTab("Propietarios", jScrollPane2);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 18;
+        gridBagConstraints.ipadx = 443;
+        gridBagConstraints.ipady = 226;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 22);
+        add(tPaneModulos, gridBagConstraints);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnGuardar.setName("btnGuardar"); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar_over.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = -30;
+        gridBagConstraints.ipady = -16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 28, 13, 0);
+        add(btnGuardar, gridBagConstraints);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
+        btnModificar.setToolTipText("Modificar");
+        btnModificar.setBorderPainted(false);
+        btnModificar.setContentAreaFilled(false);
+        btnModificar.setMargin(new java.awt.Insets(2, 14, 2, 5));
+        btnModificar.setName("btnModificar"); // NOI18N
+        btnModificar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar_over.png"))); // NOI18N
+        btnModificar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar_over.png"))); // NOI18N
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.ipadx = -30;
+        gridBagConstraints.ipady = -16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
+        add(btnModificar, gridBagConstraints);
+
+        btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
+        btnDescartar.setToolTipText("Descartar");
+        btnDescartar.setBorderPainted(false);
+        btnDescartar.setContentAreaFilled(false);
+        btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnDescartar.setName("btnDescartar"); // NOI18N
+        btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
+        btnDescartar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescartarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = -30;
+        gridBagConstraints.ipady = -16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
+        add(btnDescartar, gridBagConstraints);
+
+        btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
+        btnConsultar.setToolTipText("Consutar");
+        btnConsultar.setBorderPainted(false);
+        btnConsultar.setContentAreaFilled(false);
+        btnConsultar.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        btnConsultar.setName("btnConsultar"); // NOI18N
+        btnConsultar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar_over.png"))); // NOI18N
+        btnConsultar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar_over.png"))); // NOI18N
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = -30;
+        gridBagConstraints.ipady = -16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 13, 0);
+        add(btnConsultar, gridBagConstraints);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
+        btnEliminar.setToolTipText("Eliminar");
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnEliminar.setName("btnEliminar"); // NOI18N
+        btnEliminar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar_over.png"))); // NOI18N
+        btnEliminar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar_over.png"))); // NOI18N
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = -30;
+        gridBagConstraints.ipady = -16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
+        add(btnEliminar, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void InicializarTblModulos() {
+        tblModulos.setDefaultRenderer(Object.class, new TablaRender());
+        
+        modeloModulos = new DefaultTableModel(EncabezadoModulos, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.Object.class,
+                java.lang.Boolean.class, java.lang.Boolean.class,
+                java.lang.Boolean.class, java.lang.Boolean.class,
+                java.lang.Boolean.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                //System.out.println("row-->"+row+" -- col-->"+col+"::::: "+edit[col]);
+                return false;
+            }
+        };
+
+        tblModulos.setModel(modeloModulos);
+
+        tblModulos.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblModulos.getColumnModel().getColumn(1).setPreferredWidth(120);
+        tblModulos.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tblModulos.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tblModulos.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tblModulos.getColumnModel().getColumn(5).setPreferredWidth(20);
+        tblModulos.getColumnModel().getColumn(6).setPreferredWidth(20);
+        tblModulos.getColumnModel().getColumn(7).setPreferredWidth(20);
+        
+        tblModulos.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloModulos.getColumnCount(); i++) {
+            
+            tblModulos.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 1, 12));
+            if(i == 0){
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+                tcr.setForeground(new Color(26, 82, 118));
+                tblModulos.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            }else if(i== 1){
+                tcr.setHorizontalAlignment(SwingConstants.LEFT);
+                tcr.setForeground(new Color(26, 82, 118));
+                tblModulos.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            }else{
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+                tcr.setForeground(new Color(26, 82, 118));
+                
+            }
+            
+        }
+        JTableHeader header = tblModulos.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+
+        tblModulos.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoTablaModulos(e);
+            }
+        });
+    }
+    
+    private void lblTidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTidMouseClicked
+        System.out.println("***************PRUEBA*****************");
+        //LlenarTablas();
+    }//GEN-LAST:event_lblTidMouseClicked
+
+    private void rbPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPerfilActionPerformed
+        EstadoTipoPermiso();
+    }//GEN-LAST:event_rbPerfilActionPerformed
+
+    private void rbUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbUsuarioActionPerformed
+        EstadoTipoPermiso();
+    }//GEN-LAST:event_rbUsuarioActionPerformed
+
+    private void lblBsqUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBsqUsuarioMouseClicked
+        if(banBQDUsuario == 0){
+            banBQDUsuario = 1;
+            objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_USERS", 1);
+            new VistaBusqueda(objetoBusqueda);
+        }
+    }//GEN-LAST:event_lblBsqUsuarioMouseClicked
+
+    private void cbPerfilItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPerfilItemStateChanged
+
+    }//GEN-LAST:event_cbPerfilItemStateChanged
+
+    private void cbPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPerfilActionPerformed
+
+        if(!listaPerfiles.get(cbPerfil.getSelectedIndex()).get("ID").equals("-1")){
+            
+            LlenarTablas((rbPerfil.isSelected()?"perfil":"usuario"), listaPerfiles.get(cbPerfil.getSelectedIndex()).get("ID"));
+
+        }
+
+    }//GEN-LAST:event_cbPerfilActionPerformed
+
+    private void tblModulosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblModulosMouseReleased
+        boolean sel = (boolean) tblModulos.getValueAt(tblModulos.getSelectedRow(), tblModulos.getSelectedColumn());
+        System.out.println("sel---->"+sel);
+        EventoTblModulos();
+    }//GEN-LAST:event_tblModulosMouseReleased
+
+    private void tblPropietariosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPropietariosMouseReleased
+        //EventoTblPropietarios();
+    }//GEN-LAST:event_tblPropietariosMouseReleased
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Modificar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
+        PermisosEstadoFormulario(0);
+    }//GEN-LAST:event_btnDescartarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        Consultar();
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        Eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Tipo;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnDescartar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
+    public javax.swing.JComboBox cbPerfil;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblBsqUsuario;
+    private javax.swing.JLabel lblTid;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JRadioButton rbPerfil;
+    private javax.swing.JRadioButton rbUsuario;
+    private javax.swing.JSeparator separador;
+    private javax.swing.JTabbedPane tPaneModulos;
+    public javax.swing.JTable tblModulos;
+    public javax.swing.JTable tblPropietarios;
+    public javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    public void EventoTblModulos(){
+        int fila = tblModulos.getSelectedRow();
+        int cola = tblModulos.getSelectedColumn();
+        if(tblModulos.isEnabled()){
+            boolean sel = (boolean) tblModulos.getValueAt(fila, cola);
+            tblModulos.getModel().setValueAt(!sel, fila, cola);
+            if(cola == 7){//ALL
+                modeloPermisos.getListaPermisoModulos().get(fila).setS(!sel?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(fila).setI(!sel?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(fila).setU(!sel?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(fila).setD(!sel?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(fila).setV(!sel?"1":"0");
+                for(int j = 2; j < 8; j++){
+                    tblModulos.getModel().setValueAt(!sel, fila, j);
+                }
+            }else if(cola > 1 && cola < 7){
+                tblModulos.getModel().setValueAt(!sel, fila, cola);
+                switch(cola){
+                    case 2:
+                        modeloPermisos.getListaPermisoModulos().get(fila).setS(!sel?"1":"0");
+                        break;
+                    case 3:
+                        modeloPermisos.getListaPermisoModulos().get(fila).setI(!sel?"1":"0");
+                        break;
+                    case 4:
+                        modeloPermisos.getListaPermisoModulos().get(fila).setU(!sel?"1":"0");
+                        break;
+                    case 5:
+                        modeloPermisos.getListaPermisoModulos().get(fila).setD(!sel?"1":"0");
+                        break;
+                    case 6:
+                        modeloPermisos.getListaPermisoModulos().get(fila).setV(!sel?"1":"0");
+                        break;
+                }
+                tblModulos.getModel().setValueAt(getCheckTodos(modeloPermisos.getListaPermisoModulos().get(fila)), fila, 7);
+                
+            }
+        }
+    }
+    
+    public void EventoTablaModulos(MouseEvent e){
+        int c = tblModulos.columnAtPoint(e.getPoint());//se obtiene el indice del encabezado
+        boolean valor = (boolean) tblModulos.getModel().getValueAt(0,c);
+        if(c > 1  && c < 7){
+            for(int i = 0; i < tblModulos.getRowCount(); i++){
+                tblModulos.getModel().setValueAt(!valor, i, c);
+                switch(c){
+                    case 2:
+                        modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
+                        break;
+                    case 3:
+                        modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
+                        break;
+                    case 4:
+                        modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
+                        break;
+                    case 5:
+                        modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
+                        break;
+                    case 6:
+                        modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
+                        break;
+                }
+                tblModulos.getModel().setValueAt(getCheckTodos(modeloPermisos.getListaPermisoModulos().get(i)), i, 7);   
+            }
+        }else if(c == 7){
+            for(int i = 0; i < tblModulos.getRowCount(); i++){
+                tblModulos.getModel().setValueAt(!valor, i, c);
+                modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
+                modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
+                for(int j = 2; j < 8; j++){
+                    tblModulos.getModel().setValueAt(!valor, i, j);
+                }
+            }
+        }
+    }
+    
+    private void EstadoTipoPermiso() {
+        System.out.println("*********HOLA**********");
+        
+        if(rbPerfil.isSelected()){
+            lblTipo.setText("Perfil");  
+            cbPerfil.setVisible(true);
+            txtUsuario.setVisible(false);
+            separador.setVisible(false);
+            lblBsqUsuario.setVisible(false);
+            
+            cbPerfil.setLocation(30, 120);
+        }else{
+            lblTipo.setText("Usuario");
+            cbPerfil.setVisible(false);
+            txtUsuario.setVisible(true);
+            separador.setVisible(true);
+            lblBsqUsuario.setVisible(true);
+            
+            txtUsuario.setLocation(30, 120);
+            separador.setLocation(30, 150);
+            lblBsqUsuario.setLocation(340, 120);
+        }
+    }
+
+    private void CargarListaPerfiles() {
+        listaPerfiles = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
+                                                "UNION\n" +
+                                                "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n" +
+                                                "FROM `perfiles`");
+         
+        Utilidades.LlenarComboBox(cbPerfil, listaPerfiles, "DESCRIPCION");
+       
+    }
+    
+    private void CargarListaUsuarios() {
+        listaUsuarios = controlgen.GetComboBox("SELECT id AS ID, usuario AS DESCRIPCION FROM `usuarios` WHERE estado = 'Activo'");
+    }
+
+    public void LlenarTablas(String tipo, String valor) {
+        Utilidades.LimpiarTabla(tblModulos);
+        Utilidades.LimpiarTabla(tblPropietarios);
+        System.out.println("tipo-->"+tipo);
+        System.out.println("valor--->"+valor);
+        Map<String, String> datos = new HashMap<>();
+        datos.put("TIPO", tipo);
+        datos.put("VALOR", valor);
+        modeloPermisos = (ModeloPermisos) controlPermiso.ObtenerDatosFiltro(datos); 
+        //listadoPropietarios = permisos.getPropietarios(tipo, valor);
+        EstablecerTablas(tipo);
+    }
+    
+    public void EstablecerTablas(String tipo){
+        System.out.println("EstablecerTablas---->"+tipo);
+        //<editor-fold defaultstate="collapsed" desc="MODULOS">
+        ListaPermisoxModulos = modeloPermisos.getListaPermisoModulos();
+        System.out.println("ListaPermisoxModulos--->"+ListaPermisoxModulos.size());
+        //     0           1        2    3  4  5  6  7  8    9
+        //ID_PERMISO, ID_MODULO, MODULO, S, I, U, D, V, T, IDPXM
+        if (ListaPermisoxModulos.size() > 0) {
+            
+            for (ModeloPermisoxModulos lista : ListaPermisoxModulos) {
+                agregarFilaTblModulos(new Object[]{
+                    lista.getId_modulo(),
+                    lista.getModulo(),
+                    (lista.getS().equals("1")),
+                    (lista.getI().equals("1")),
+                    (lista.getU().equals("1")),
+                    (lista.getD().equals("1")),
+                    (lista.getV().equals("1")),
+                    getCheckTodos(lista) 
+                });
+            }
+            
+        }
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="PROPIETARIOS">
+//        if (listadoPropietarios.size() > 0) {
+//            boolean encontro = false;
+//            for (int i = 0; i < listadoPropietarios.size(); i++) {
+//                encontro = !listadoPropietarios.get(i)[4].equals("0");
+//                if(encontro){
+//                    Lista_Seleccionados_Propietarios.put(listadoPropietarios.get(i)[1], listadoPropietarios.get(i));
+//                }
+//                agregarFilaTblPropietarios(new Object[]{
+//                    (!listadoPropietarios.get(i)[4].equals("0")),
+//                    listadoPropietarios.get(i)[2],
+//                    listadoPropietarios.get(i)[3]
+//                });
+//            }
+//        }        //</editor-fold>
+  
+        if(modeloPermisos.getId().equals("0") && !tipo.equals("-1")){
+            System.out.println("***************************TIPO----"+tipo+"*****************************");
+            PermisosEstadoFormulario(1);
+        }
+        
+        if(!modeloPermisos.getId().equals("0")){
+            IDPermisos = modeloPermisos.getId();
+            PermisosEstadoFormulario(3);
+        }
+    }
+    
+    private boolean getCheckTodos(ModeloPermisoxModulos lista) {
+        try{
+            boolean ret = false;
+            
+            ret = (lista.getS().equals("1") && lista.getI().equals("1") && lista.getU().equals("1") 
+                    && lista.getD().equals("1") && lista.getV().equals("1"));
+            
+            return ret;
+        }catch(Exception e){
+            return false;
+        }
+    
+    }
+    
+    private void agregarFilaTblModulos(Object[] fila) {
+        modeloModulos.addRow(fila);
+    }
+    
+    public boolean ModuloCheckeados(int ind) {
+        Map<String, String> fila = listadoModulos.get(ind);
+        boolean ret =  (fila.get("T").equals("1") || fila.get("V").equals("1"));
+        
+        return ret;
+    }
+    
+    public void estadoBtnGuardar(){
+        if(bang == 1){
+            btnGuardar.setEnabled(true);
+            btnConsultar.setEnabled(false);
+        }else{
+            btnGuardar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+        }
+    }
+    
+    private void PermisosEstadoFormulario(int opc) {
+        System.out.println("opc--->"+opc);
+        PermisosEstadoBotones(opc);
+        switch (opc) {
+            case 0: {//DESCARTAR
+                txtUsuario.setText("");
+                IDUsuario = "";
+                cbPerfil.setSelectedIndex(0);
+                Utilidades.LimpiarTabla(tblModulos);
+                Utilidades.LimpiarTabla(tblPropietarios);
+                ListaPermisoxModulos = new ArrayList<>();
+                IDPermisos = "0";
+                modeloPermisos = new ModeloPermisos();
+                editar = Estado.GUARDAR;
+                bang = 1;
+                banBQDUsuario = 0;
+                banBQD = 0;
+//                IniciarComponentes();
+                LlenarTablas("-1", "");
+                
+                txtUsuario.setEnabled(true);
+                cbPerfil.setEnabled(true);
+                rbPerfil.setEnabled(true);
+                rbUsuario.setEnabled(true);
+                tblModulos.setEnabled(false);
+                tblPropietarios.setEnabled(false);
+                break;
+            }
+            case 1: {//NUEVO
+                txtUsuario.setEnabled(false);
+                cbPerfil.setEnabled(false);
+                rbPerfil.setEnabled(false);
+                rbUsuario.setEnabled(false);
+                tblModulos.setEnabled(true);
+                tblPropietarios.setEnabled(true);
+                break;
+            }
+            case 2: {//MODIFICAR
+                txtUsuario.setEnabled(false);
+                cbPerfil.setEnabled(false);
+                rbPerfil.setEnabled(true);
+                rbUsuario.setEnabled(true);
+                tblModulos.setEnabled(true);
+                tblPropietarios.setEnabled(true);
+                
+                break;
+            }
+            case 3: {//CONSULTADO
+                txtUsuario.setEnabled(false);
+                cbPerfil.setEnabled(false);
+                rbPerfil.setEnabled(false);
+                rbUsuario.setEnabled(false);
+                tblModulos.setEnabled(false);
+                tblPropietarios.setEnabled(false);
+                break;
+            }
+        }
+    }
+
+    public void PermisosEstadoBotones(int opc) {
+        switch (opc) {
+            case 0: {//INICIO         
+                btnGuardar.setEnabled(false);
+                btnModificar.setEnabled(false);
+                btnDescartar.setEnabled(true);
+                btnEliminar.setEnabled(false);
+                btnConsultar.setEnabled(true);
+                break;
+            }
+            case 1: {//NUEVO
+                btnGuardar.setEnabled(true);
+                btnModificar.setEnabled(false);
+                btnDescartar.setEnabled(true);
+                btnEliminar.setEnabled(false);
+                btnConsultar.setEnabled(false);
+                break;
+            }
+            case 2: {//MODIFICAR
+                btnGuardar.setEnabled(true);
+                btnModificar.setEnabled(false);
+                btnDescartar.setEnabled(true);
+                btnEliminar.setEnabled(false);
+                btnConsultar.setEnabled(false);
+                break;
+            }
+            case 3: {//CONSULTADO
+                btnGuardar.setEnabled(false);
+                btnModificar.setEnabled(true);
+                btnDescartar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+                btnConsultar.setEnabled(false);
+                break;
+            }
+        }
+    }
+    
+    //<editor-fold defaultstate="collapsed" desc="BOTONES CRUD">
+    
+    public void Guardar(){
+        String idPermiso = IDPermisos;
+        String tipo = rbPerfil.isSelected()?"perfil":"usuario";
+        String valor = rbPerfil.isSelected()?listaPerfiles.get(cbPerfil.getSelectedIndex()).get("ID"):IdUsuario.trim();
+        
+        
+        if(tipo.equals("")){
+            JOptionPane.showMessageDialog(this, "Por favor escoga a un tipo para realizar la operación.");
+            return;
+        }
+        if(valor.equals("")){
+            if(rbPerfil.isSelected()){
+                JOptionPane.showMessageDialog(this, "Por favor seleccione un Perfil para realizar la operación.");
+            }
+            if(rbUsuario.isSelected()){
+                JOptionPane.showMessageDialog(this, "Por favor seleccione a un Usuario para realizar la operación.");
+            }
+            return;
+        }
+        
+        modeloPermisos.setId(idPermiso);
+        modeloPermisos.setTipo(tipo);
+        modeloPermisos.setValor_tipo(valor);
+        modeloPermisos.setFecha("NOW()");
+        modeloPermisos.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        
+        
+
+        int ret =-2;
+        
+        if(modeloPermisos.getId().equals("0"))
+            ret = controlPermiso.Guardar(modeloPermisos);
+        else
+            ret = controlPermiso.Actualizar(modeloPermisos);
+        
+        String mensaje = "";
+        switch (ret) {
+            case Retorno.EXITO:
+                mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
+                PermisosEstadoFormulario(0);
+                editar = Estado.GUARDAR;
+                break;
+            case Retorno.ERROR:
+                mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
+                break;
+            case Retorno.EXCEPCION_SQL:
+                mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                break;
+            case Retorno.CLASE_NO_ENCONTRADA:
+                mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                break;
+        }
+
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+    
+    public void Modificar(){
+        PermisosEstadoFormulario(2);
+    }
+    
+    public void Consultar(){
+        if (banBQD == 0) {
+            banBQD = 1;
+            objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_PRMS", 0);
+            new VistaBusqueda(objetoBusqueda);
+        }
+    }
+    
+    public void Eliminar(){
+        int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro de eliminar los permisos?");
+
+        if(resp == JOptionPane.YES_OPTION){
+            //
+            //JOptionPane.showMessageDialog(this, "Realizar este metodo");
+        }
+    }
+    
+    
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Metodo Busqueda Retorno">
+    public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
+
+        if (objeto.getOpcion() == 0) {// DEFAULT VISTA__VENTANA__
+            IDPermisos = retorno.get("ID");
+            modeloPermisos = (ModeloPermisos) controlPermiso.ObtenerDatosKey(IDPermisos);
+            
+            if(modeloPermisos.getTipo().equals("perfil")){
+                rbPerfil.setSelected(true);
+                rbUsuario.setSelected(false);
+                
+                cbPerfil.setSelectedIndex(getIndexLista(modeloPermisos.getValor_tipo(), listaPerfiles));
+                txtUsuario.setText("");
+                IdUsuario="";
+            }else{
+                rbPerfil.setSelected(false);
+                rbUsuario.setSelected(true);
+                
+                txtUsuario.setText(""+listaUsuarios.get(getIndexLista(modeloPermisos.getValor_tipo(), listaUsuarios)).get("DESCRIPCION"));
+                IdUsuario = modeloPermisos.getValor_tipo();
+                cbPerfil.setSelectedIndex(0);
+            }
+            
+            EstadoTipoPermiso();
+            EstablecerTablas(modeloPermisos.getTipo());
+            
+
+        } else if (objeto.getOpcion() == 1) {// USUARIOS
+            IdUsuario = "" + retorno.get("ID");
+            txtUsuario.setText(Utilidades.decodificarElemento(retorno.get("USUARIO")));
+            LlenarTablas("usuario", IdUsuario);
+        }
+    }
+    //</editor-fold>
+
+    public int getIndexLista(String id, List<Map<String, String>> lista){
+        int ind = -1;
+        for(int i = 0; i < lista.size(); i++){
+            if(lista.get(i).get("ID").equals(""+id)){
+                ind = i;
+                break;
+            }
+        }
+        return ind;
+    }
+    
 }
