@@ -19,8 +19,10 @@ public class ModeloUsuarios {
     private String id_perfil;
     private String usuario;
     private String descPerfil;
+    private ModeloEmpleado modeloEmpleado;
 
     public ModeloUsuarios() {
+        modeloEmpleado = new ModeloEmpleado();
     }
 
     public ModeloUsuarios(String clave, String clave_dinamica, String estado, String id, String id_empleado, String id_perfil, String usuario, String descPerfil) {
@@ -32,6 +34,15 @@ public class ModeloUsuarios {
         this.id_perfil = id_perfil;
         this.usuario = usuario;
         this.descPerfil = descPerfil;
+        modeloEmpleado = new ModeloEmpleado();
+    }
+
+    public ModeloEmpleado getModeloEmpleado() {
+        return modeloEmpleado;
+    }
+
+    public void setModeloEmpleado(ModeloEmpleado modeloEmpleado) {
+        this.modeloEmpleado = modeloEmpleado;
     }
 
     public String getDescPerfil() {

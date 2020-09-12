@@ -44,7 +44,6 @@ public class ControlPermisos implements IControl{
             
             sql = "SELECT IFNULL(tbl.id, '0') AS ID_PERMISO, m.id AS ID_MODULO, m.`Descripcion` AS MODULO, \n" +
                     " tbl.tipo as TIPO, tbl.valor_tipo as VALOR, \n"+
-                    "per.`tipo`, per.`valor_tipo`, \n"+
                     "IFNULL(tbl.`s`, '0') AS S, IFNULL(tbl.`i`, '0') AS I, IFNULL(tbl.`u`, '0') AS U, IFNULL(tbl.`d`, '0') AS D, IFNULL(tbl.`v`, '0') AS V,  \n" +
                     "IF(tbl.`s` = '1' AND tbl.`i` = '1' AND tbl.`u` = '1' AND tbl.`d` = '1' AND tbl.`v` = '1', '1', '0') AS T, IFNULL(tbl.`idpxm`, '0') IDMOD\n" +
                     "FROM modulos m\n" +

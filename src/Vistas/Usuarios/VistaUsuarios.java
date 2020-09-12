@@ -13,6 +13,7 @@ import GestionControles.Control;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
 import Modelo.ModeloGestorBusqueda;
+import Modelo.Usuario.ModeloEmpleado;
 import Modelo.Usuario.ModeloUsuarios;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Estado;
@@ -31,6 +32,7 @@ import javax.swing.JOptionPane;
 public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuario {
 
     private ModeloUsuarios modelo;
+    private ModeloEmpleado modeloEmpleado;
     private ControlUsuarios control;
     private GestionEstadoControles controles;
     private int editar;
@@ -45,6 +47,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         initComponents();
         iniciarComponentes();
         modelo = new ModeloUsuarios();
+        modeloEmpleado = new ModeloEmpleado();
         control = new ControlUsuarios();
         controlGral = new ControlGeneral();
         perfiles = new ArrayList<>();
@@ -78,6 +81,18 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, cbPerfil);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtNombres);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtApellidos);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtCorreo);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
@@ -118,6 +133,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
 
         txtCodigo = new javax.swing.JLabel();
         txtCodigoPerfil = new javax.swing.JLabel();
+        txtCodigoEmpleado = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -140,6 +156,16 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         txtConfirmarContrasena = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
+        PanelInfoEmpleado = new javax.swing.JPanel();
+        lbltitle20 = new javax.swing.JLabel();
+        txtNombres = new javax.swing.JTextField();
+        jSeparator14 = new javax.swing.JSeparator();
+        txtApellidos = new javax.swing.JTextField();
+        lblPesoCanal = new javax.swing.JLabel();
+        sepPesoCanal = new javax.swing.JSeparator();
+        lbltitle21 = new javax.swing.JLabel();
+        txtCorreo = new javax.swing.JTextField();
+        jSeparator15 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -239,7 +265,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
@@ -295,7 +321,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         chkClaveDinamica.setText("Contraseña dinámica");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -309,7 +335,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         lbltitle8.setText("Perfil");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -327,7 +353,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -342,7 +368,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         lbltitle6.setText("Estado");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -360,7 +386,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -375,7 +401,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         jLabel2.setText("Contraseña");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -388,7 +414,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         txtcontrasena.setBorder(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -409,14 +435,14 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(btnVerContrasena, gridBagConstraints);
 
         jSeparator1.setForeground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -438,7 +464,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 100);
@@ -454,7 +480,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -465,7 +491,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         jSeparator2.setForeground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -479,13 +505,150 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         jLabel3.setText("Confirmar contraseña");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 100);
         add(jLabel3, gridBagConstraints);
+
+        PanelInfoEmpleado.setBackground(new java.awt.Color(255, 255, 255));
+        PanelInfoEmpleado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Datos del funcionario ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 0))); // NOI18N
+        PanelInfoEmpleado.setLayout(new java.awt.GridBagLayout());
+
+        lbltitle20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle20.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle20.setText("Nombres");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        PanelInfoEmpleado.add(lbltitle20, gridBagConstraints);
+
+        txtNombres.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombres.setForeground(new java.awt.Color(59, 123, 50));
+        txtNombres.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNombres.setBorder(null);
+        txtNombres.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNombres.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        PanelInfoEmpleado.add(txtNombres, gridBagConstraints);
+
+        jSeparator14.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        PanelInfoEmpleado.add(jSeparator14, gridBagConstraints);
+
+        txtApellidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtApellidos.setForeground(new java.awt.Color(59, 123, 50));
+        txtApellidos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtApellidos.setBorder(null);
+        txtApellidos.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtApellidos.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        PanelInfoEmpleado.add(txtApellidos, gridBagConstraints);
+
+        lblPesoCanal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPesoCanal.setForeground(new java.awt.Color(59, 123, 50));
+        lblPesoCanal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPesoCanal.setText("Apellidos");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
+        PanelInfoEmpleado.add(lblPesoCanal, gridBagConstraints);
+
+        sepPesoCanal.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        PanelInfoEmpleado.add(sepPesoCanal, gridBagConstraints);
+
+        lbltitle21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbltitle21.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbltitle21.setText("Correo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
+        PanelInfoEmpleado.add(lbltitle21, gridBagConstraints);
+
+        txtCorreo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCorreo.setForeground(new java.awt.Color(59, 123, 50));
+        txtCorreo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtCorreo.setBorder(null);
+        txtCorreo.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtCorreo.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        PanelInfoEmpleado.add(txtCorreo, gridBagConstraints);
+
+        jSeparator15.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        PanelInfoEmpleado.add(jSeparator15, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 100, 10, 100);
+        add(PanelInfoEmpleado, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -564,6 +727,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelInfoEmpleado;
     public javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnEliminar;
@@ -579,14 +743,24 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblPesoCanal;
+    private javax.swing.JLabel lbltitle20;
+    private javax.swing.JLabel lbltitle21;
     private javax.swing.JLabel lbltitle5;
     private javax.swing.JLabel lbltitle6;
     private javax.swing.JLabel lbltitle8;
+    private javax.swing.JSeparator sepPesoCanal;
+    public javax.swing.JTextField txtApellidos;
     private javax.swing.JLabel txtCodigo;
+    private javax.swing.JLabel txtCodigoEmpleado;
     private javax.swing.JLabel txtCodigoPerfil;
     private javax.swing.JPasswordField txtConfirmarContrasena;
+    public javax.swing.JTextField txtCorreo;
     public javax.swing.JTextField txtNombreUsuario;
+    public javax.swing.JTextField txtNombres;
     private javax.swing.JPasswordField txtcontrasena;
     // End of variables declaration//GEN-END:variables
 
@@ -601,6 +775,10 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
             cbPerfil.setSelectedItem(modelo.getDescPerfil());
             
             txtCodigo.setText(modelo.getId());
+            txtCodigoEmpleado.setText(modelo.getId_empleado());
+            txtNombres.setText(modelo.getModeloEmpleado().getPrimer_nombre());
+            txtApellidos.setText(modelo.getModeloEmpleado().getPrimer_apellido());
+            txtCorreo.setText(modelo.getModeloEmpleado().getCorreo());
             txtNombreUsuario.setText(modelo.getUsuario());
             cbEstado.setSelectedItem(modelo.getEstado());
             chkClaveDinamica.setSelected(claveDinamica);
@@ -615,6 +793,21 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         if(txtNombreUsuario.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Especifique el nombre de usuario.");
             txtNombreUsuario.requestFocusInWindow();
+            return ;
+        }
+        if(txtNombres.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Especifique el nombre del empleado.");
+            txtNombres.requestFocusInWindow();
+            return ;
+        }
+        if(txtApellidos.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Especifique el apellido del empleado.");
+            txtApellidos.requestFocusInWindow();
+            return ;
+        }
+        if(txtCorreo.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Especifique el correo del empleado.");
+            txtCorreo.requestFocusInWindow();
             return ;
         }
         if(cbPerfil.getSelectedIndex()==0){
@@ -634,6 +827,11 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         }
 //</editor-fold>
         
+        modeloEmpleado.setId(txtCodigoEmpleado.getText());
+        modeloEmpleado.setPrimer_nombre(txtNombres.getText().trim());
+        modeloEmpleado.setPrimer_apellido(txtApellidos.getText().trim());
+        modeloEmpleado.setCorreo(txtCorreo.getText().trim());
+        
         String id = editar == Estado.GUARDAR ? "0" : txtCodigo.getText();
         String password = String.valueOf(txtcontrasena.getPassword());
         String claveDinamica = chkClaveDinamica.isSelected() ? "1" : "0";
@@ -645,6 +843,7 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
         modelo.setId_empleado("1");
         modelo.setId_perfil(txtCodigoPerfil.getText());
         modelo.setUsuario(txtNombreUsuario.getText().trim());
+        modelo.setModeloEmpleado(modeloEmpleado);
 
         int retorno = Retorno.DEFECTO;
 
