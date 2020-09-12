@@ -12,6 +12,8 @@ import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.*;
 import Vistas.Usuarios.VistaPermisos;
+import Vistas.Usuarios.VistaPerfiles;
+import Vistas.Usuarios.VistaUsuarios;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -567,6 +569,10 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaMedicamentos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaPermisos) {
                     ((VistaPermisos) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaPerfiles) {
+                    ((VistaPerfiles) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaUsuarios) {
+                    ((VistaUsuarios) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 }
 
                 this.dispose();
@@ -665,6 +671,10 @@ public class VistaBusqueda extends javax.swing.JFrame {
             ((VistaMacroGrupo) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaMedicamentos) {
             ((VistaMedicamentos) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaPerfiles) {
+            ((VistaPerfiles) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaUsuarios) {
+            ((VistaUsuarios) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         }
     }//GEN-LAST:event_formWindowClosed
 
