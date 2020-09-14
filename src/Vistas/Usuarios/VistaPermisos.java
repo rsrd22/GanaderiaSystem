@@ -95,8 +95,6 @@ public class VistaPermisos extends javax.swing.JPanel {
 
         Tipo = new javax.swing.ButtonGroup();
         lblTid = new javax.swing.JLabel();
-        rbPerfil = new javax.swing.JRadioButton();
-        rbUsuario = new javax.swing.JRadioButton();
         lblTipo = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblBsqUsuario = new javax.swing.JLabel();
@@ -107,13 +105,18 @@ public class VistaPermisos extends javax.swing.JPanel {
         tblModulos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPropietarios = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        rbPerfil = new javax.swing.JRadioButton();
+        rbUsuario = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         setLayout(new java.awt.GridBagLayout());
 
         lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -128,44 +131,12 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 67;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 20, 0, 0);
-        add(lblTid, gridBagConstraints);
-
-        rbPerfil.setBackground(new java.awt.Color(255, 255, 255));
-        Tipo.add(rbPerfil);
-        rbPerfil.setForeground(new java.awt.Color(59, 123, 50));
-        rbPerfil.setText("Perfil");
-        rbPerfil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbPerfilActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        add(rbPerfil, gridBagConstraints);
-
-        rbUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        Tipo.add(rbUsuario);
-        rbUsuario.setForeground(new java.awt.Color(59, 123, 50));
-        rbUsuario.setText("Usuario");
-        rbUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbUsuarioActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 80, 0, 0);
-        add(rbUsuario, gridBagConstraints);
+        gridBagConstraints.weightx = 0.002;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        add(lblTid, gridBagConstraints);
 
         lblTipo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTipo.setForeground(new java.awt.Color(59, 123, 50));
@@ -174,10 +145,11 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 119;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 20, 0, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(8, 15, 0, 15);
         add(lblTipo, gridBagConstraints);
 
         txtUsuario.setEditable(false);
@@ -190,11 +162,12 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 14;
-        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtUsuario, gridBagConstraints);
 
         lblBsqUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/buscar30.png"))); // NOI18N
@@ -206,10 +179,10 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridx = 13;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
         add(lblBsqUsuario, gridBagConstraints);
 
         separador.setBackground(new java.awt.Color(59, 123, 50));
@@ -217,10 +190,11 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 14;
-        gridBagConstraints.ipadx = 299;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(separador, gridBagConstraints);
 
         cbPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -238,11 +212,12 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 176;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(cbPerfil, gridBagConstraints);
 
         tPaneModulos.setForeground(new java.awt.Color(59, 123, 50));
@@ -250,6 +225,7 @@ public class VistaPermisos extends javax.swing.JPanel {
         tPaneModulos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         tblModulos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblModulos.setForeground(new java.awt.Color(59, 123, 50));
         tblModulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -281,6 +257,8 @@ public class VistaPermisos extends javax.swing.JPanel {
 
         tPaneModulos.addTab("Modulos", jScrollPane1);
 
+        jScrollPane2.setForeground(new java.awt.Color(59, 123, 50));
+
         tblPropietarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -308,12 +286,16 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 18;
-        gridBagConstraints.ipadx = 443;
-        gridBagConstraints.ipady = 226;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 22);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(8, 15, 15, 15);
         add(tPaneModulos, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -329,14 +311,9 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = -30;
-        gridBagConstraints.ipady = -16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 28, 13, 0);
-        add(btnGuardar, gridBagConstraints);
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnGuardar, gridBagConstraints);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/modificar.png"))); // NOI18N
         btnModificar.setToolTipText("Modificar");
@@ -352,21 +329,15 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.ipadx = -30;
-        gridBagConstraints.ipady = -16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
-        add(btnModificar, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnModificar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
         btnDescartar.setBorderPainted(false);
         btnDescartar.setContentAreaFilled(false);
         btnDescartar.setMargin(new java.awt.Insets(2, 10, 2, 8));
-        btnDescartar.setName("btnDescartar"); // NOI18N
         btnDescartar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
         btnDescartar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar_over.png"))); // NOI18N
         btnDescartar.addActionListener(new java.awt.event.ActionListener() {
@@ -375,13 +346,9 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = -30;
-        gridBagConstraints.ipady = -16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
-        add(btnDescartar, gridBagConstraints);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnDescartar, gridBagConstraints);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/consultar.png"))); // NOI18N
         btnConsultar.setToolTipText("Consutar");
@@ -397,14 +364,9 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = -30;
-        gridBagConstraints.ipady = -16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 13, 0);
-        add(btnConsultar, gridBagConstraints);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnConsultar, gridBagConstraints);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar.png"))); // NOI18N
         btnEliminar.setToolTipText("Eliminar");
@@ -420,13 +382,64 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnEliminar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = -30;
-        gridBagConstraints.ipady = -16;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
+        add(jPanel2, gridBagConstraints);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        rbPerfil.setBackground(new java.awt.Color(255, 255, 255));
+        Tipo.add(rbPerfil);
+        rbPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rbPerfil.setForeground(new java.awt.Color(59, 123, 50));
+        rbPerfil.setText("Perfil");
+        rbPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbPerfilActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 6, 13, 0);
-        add(btnEliminar, gridBagConstraints);
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(8, 15, 0, 0);
+        jPanel1.add(rbPerfil, gridBagConstraints);
+
+        rbUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        Tipo.add(rbUsuario);
+        rbUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rbUsuario.setForeground(new java.awt.Color(59, 123, 50));
+        rbUsuario.setText("Usuario");
+        rbUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbUsuarioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(8, 15, 0, 0);
+        jPanel1.add(rbUsuario, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     public void InicializarTblModulos() {
@@ -550,10 +563,6 @@ public class VistaPermisos extends javax.swing.JPanel {
         Modificar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
-        PermisosEstadoFormulario(0);
-    }//GEN-LAST:event_btnDescartarActionPerformed
-
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         Consultar();
     }//GEN-LAST:event_btnConsultarActionPerformed
@@ -562,15 +571,21 @@ public class VistaPermisos extends javax.swing.JPanel {
         Eliminar();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
+
+    }//GEN-LAST:event_btnDescartarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Tipo;
-    private javax.swing.JButton btnConsultar;
+    public javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     public javax.swing.JComboBox cbPerfil;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBsqUsuario;
