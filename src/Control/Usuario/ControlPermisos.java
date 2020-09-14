@@ -44,7 +44,6 @@ public class ControlPermisos implements IControl{
             
             sql = "SELECT IFNULL(tbl.id, '0') AS ID_PERMISO, m.id AS ID_MODULO, m.`Descripcion` AS MODULO, \n" +
                     " tbl.tipo as TIPO, tbl.valor_tipo as VALOR, \n"+
-                    "per.`tipo`, per.`valor_tipo`, \n"+
                     "IFNULL(tbl.`s`, '0') AS S, IFNULL(tbl.`i`, '0') AS I, IFNULL(tbl.`u`, '0') AS U, IFNULL(tbl.`d`, '0') AS D, IFNULL(tbl.`v`, '0') AS V,  \n" +
                     "IF(tbl.`s` = '1' AND tbl.`i` = '1' AND tbl.`u` = '1' AND tbl.`d` = '1' AND tbl.`v` = '1', '1', '0') AS T, IFNULL(tbl.`idpxm`, '0') IDMOD\n" +
                     "FROM modulos m\n" +
@@ -275,6 +274,62 @@ public class ControlPermisos implements IControl{
             return Info;
         }catch(Exception e){
             return null;
+        }
+    }
+
+    public ArrayList<ModeloPermisoxModulos> getModulosxUsuario(Map<String, String> datos) {
+        try{
+            List<Map<String, String>> Info = new ArrayList<>();
+            
+            String sql = "", where = "";
+            //     0           1        2    3  4  5  6  7  8    9
+            //ID_PERMISO, ID_MODULO, MODULO, S, I, U, D, V, T, IDPXM
+            
+            if(mySQL.ExistenDatos("SELECT * FROM `permisos` WHERE tipo = 'usuario' AND valor_tipo = '"+datos.get("ID_USUARIO")+"'")){
+                where = "	WHERE per.tipo = 'usuario' AND per.valor_tipo = '"+datos.get("ID_USUARIO")+"'\n" ;
+            }else{
+                where = "	WHERE per.tipo = 'perfil' AND per.valor_tipo = '"+datos.get("ID_PERFIL")+"'\n" ;
+            }
+            sql = "SELECT IFNULL(tbl.id, '0') AS ID_PERMISO, m.id AS ID_MODULO, m.`Descripcion` AS MODULO, \n" +
+                        "tbl.tipo AS TIPO, tbl.valor_tipo AS VALOR, \n" +
+                        "IFNULL(tbl.`s`, '0') AS S, IFNULL(tbl.`i`, '0') AS I, IFNULL(tbl.`u`, '0') AS U, IFNULL(tbl.`d`, '0') AS D, IFNULL(tbl.`v`, '0') AS V,  \n" +
+                        "IF(tbl.`s` = '1' AND tbl.`i` = '1' AND tbl.`u` = '1' AND tbl.`d` = '1' AND tbl.`v` = '1', '1', '0') AS T, IFNULL(tbl.`idpxm`, '0') IDMOD\n" +
+                        "FROM modulos m\n" +
+                        "LEFT JOIN (\n" +
+                        "	SELECT per.`id`, per.`tipo`, per.`valor_tipo`, \n" +
+                        "	pxm.`id` AS idpxm, pxm.`id_modulo`, pxm.`s`, pxm.`i`, pxm.`u`, pxm.`d`, pxm.`v`\n" +
+                        "	FROM permisos per \n" +
+                        "	LEFT JOIN permisosxmodulos pxm ON per.`id` = pxm.`id_permiso` \n" +
+                        where +
+                        ") tbl ON tbl.`id_modulo` = m.`id` \n" +
+                        "ORDER BY m.`id`";
+            
+            Info = mySQL.ListSQL(sql);
+            ArrayList<ModeloPermisoxModulos> listaModeloPermisoModulos = new ArrayList<>();
+            
+            if(Info.size()>0){
+                for (Map<String, String> datTbl : Info) {
+                    listaModeloPermisoModulos.add(
+                            new ModeloPermisoxModulos( 
+                                    datTbl.get("IDMOD"), 
+                                    datTbl.get("ID_MODULO"), 
+                                    datTbl.get("MODULO"), 
+                                    datTbl.get("ID_PERMISO"), 
+                                    datTbl.get("S"), 
+                                    datTbl.get("I"), 
+                                    datTbl.get("U"), 
+                                    datTbl.get("D"), 
+                                    datTbl.get("V"), 
+                                    "NOW()", 
+                                    "")
+                    );
+                    
+                }
+            }
+            
+            return listaModeloPermisoModulos;
+        }catch(Exception e){
+            return new ArrayList<>();
         }
     }
     

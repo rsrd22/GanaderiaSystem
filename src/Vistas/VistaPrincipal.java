@@ -10,19 +10,27 @@ import AjustarControles.Ajustar;
 import AjustarControles.AjustarControles;
 import AjustarControles.ControlDeUsuario;
 import AjustarControles.tiposDeAjuste;
+import Control.Usuario.ControlPermisos;
 import ImportExport.Estados;
 import ImportExport.ImportExport;
 import Modelo.ModeloVentanaGeneral;
+import Modelo.Usuario.ModeloPermisos;
+import Modelo.Usuario.ModeloPermisoxModulos;
 import Utilidades.Consultas;
 import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
 import Vistas.Usuarios.*;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -126,8 +134,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTrasladoAnimal = new javax.swing.JLabel();
         btnTrasladoGrupo = new javax.swing.JLabel();
         btnRotacion = new javax.swing.JLabel();
-        btnUsuarios = new javax.swing.JLabel();
         btnInformes = new javax.swing.JLabel();
+        btnMostrarUsuarios = new javax.swing.JLabel();
         pnlContenedorUsuarios = new javax.swing.JPanel();
         btnPerfiles = new javax.swing.JLabel();
         btnPermisos = new javax.swing.JLabel();
@@ -538,6 +546,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorGruposAnimales.setBackground(new java.awt.Color(59, 145, 70));
+        pnlContenedorGruposAnimales.setPreferredSize(new java.awt.Dimension(200, 90));
 
         btnMacrogrupos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMacrogrupos.setForeground(new java.awt.Color(255, 255, 255));
@@ -812,6 +821,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorTraslados.setBackground(new java.awt.Color(59, 145, 70));
+        pnlContenedorTraslados.setPreferredSize(new java.awt.Dimension(200, 60));
 
         btnTrasladoAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnTrasladoAnimal.setForeground(new java.awt.Color(255, 255, 255));
@@ -862,17 +872,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
-        btnUsuarios.setText("Usuarios");
-        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnUsuariosMouseClicked(evt);
-            }
-        });
-
         btnInformes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInformes.setForeground(new java.awt.Color(255, 255, 255));
         btnInformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
@@ -884,7 +883,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnMostrarUsuarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMostrarUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnMostrarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
+        btnMostrarUsuarios.setText("Usuarios");
+        btnMostrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMostrarUsuariosMouseClicked(evt);
+            }
+        });
+
         pnlContenedorUsuarios.setBackground(new java.awt.Color(59, 145, 70));
+        pnlContenedorUsuarios.setPreferredSize(new java.awt.Dimension(200, 90));
 
         btnPerfiles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPerfiles.setForeground(new java.awt.Color(255, 255, 255));
@@ -956,7 +967,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlMenuLayout.setVerticalGroup(
@@ -964,7 +975,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addComponent(btnMostrarPropietarios)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarFincas)
                 .addGap(0, 0, 0)
@@ -972,7 +983,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarGruposAnimales)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorGruposAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarAnimales)
                 .addGap(0, 0, 0)
@@ -984,15 +995,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarTraslados)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnRotacion)
                 .addGap(0, 0, 0)
                 .addComponent(btnInformes)
                 .addGap(0, 0, 0)
-                .addComponent(btnUsuarios)
+                .addComponent(btnMostrarUsuarios)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jScrollPane1.setViewportView(pnlMenu);
@@ -1132,8 +1143,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             OcultarContenidoMenu();
         }
 
-        btnPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
-        btnHierros.setVisible(!pnlContenedorPropietarios.isVisible());
+//        btnPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
+//        btnHierros.setVisible(!pnlContenedorPropietarios.isVisible());
         pnlContenedorPropietarios.setVisible(!pnlContenedorPropietarios.isVisible());
     }//GEN-LAST:event_btnMostrarPropietariosMouseClicked
 
@@ -1141,10 +1152,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         if (!pnlContenedorFincas.isVisible()) {
             OcultarContenidoMenu();
         }
-        btnFincas.setVisible(!pnlContenedorFincas.isVisible());
-        btnBloques.setVisible(!pnlContenedorFincas.isVisible());
-        btnFuenteHidrica.setVisible(!pnlContenedorFincas.isVisible());
-        btnLotes.setVisible(!pnlContenedorFincas.isVisible());
+//        btnFincas.setVisible(!pnlContenedorFincas.isVisible());
+//        btnBloques.setVisible(!pnlContenedorFincas.isVisible());
+//        btnFuenteHidrica.setVisible(!pnlContenedorFincas.isVisible());
+//        btnLotes.setVisible(!pnlContenedorFincas.isVisible());
         pnlContenedorFincas.setVisible(!pnlContenedorFincas.isVisible());
     }//GEN-LAST:event_btnMostrarFincasMouseClicked
 
@@ -1153,9 +1164,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
             OcultarContenidoMenu();
         }
 
-        btnMacrogrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
-        btnGrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
-        btnTipoAnimal.setVisible(!pnlContenedorGruposAnimales.isVisible());
+//        btnMacrogrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
+//        btnGrupos.setVisible(!pnlContenedorGruposAnimales.isVisible());
+//        btnTipoAnimal.setVisible(!pnlContenedorGruposAnimales.isVisible());
         pnlContenedorGruposAnimales.setVisible(!pnlContenedorGruposAnimales.isVisible());
     }//GEN-LAST:event_btnMostrarGruposAnimalesMouseClicked
 
@@ -1236,8 +1247,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
             OcultarContenidoMenu();
         }
 
-        btnTrasladoGrupo.setVisible(!pnlContenedorTraslados.isVisible());
-        btnTrasladoAnimal.setVisible(!pnlContenedorTraslados.isVisible());
+//        btnTrasladoGrupo.setVisible(!pnlContenedorTraslados.isVisible());
+//        btnTrasladoAnimal.setVisible(!pnlContenedorTraslados.isVisible());
         pnlContenedorTraslados.setVisible(!pnlContenedorTraslados.isVisible());
     }//GEN-LAST:event_btnMostrarTrasladosMouseClicked
 
@@ -1269,9 +1280,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         if (!pnlContenedorActividades.isVisible()) {
             OcultarContenidoMenu();
         }
-        btnRegistroActividades.setVisible(!pnlContenedorActividades.isVisible());
-        btnEstadoActividades.setVisible(!pnlContenedorActividades.isVisible());
-        btnCronograma.setVisible(!pnlContenedorActividades.isVisible());
+//        btnRegistroActividades.setVisible(!pnlContenedorActividades.isVisible());
+//        btnEstadoActividades.setVisible(!pnlContenedorActividades.isVisible());
+//        btnCronograma.setVisible(!pnlContenedorActividades.isVisible());
         pnlContenedorActividades.setVisible(!pnlContenedorActividades.isVisible());
     }//GEN-LAST:event_btnMostrarActividadesMouseClicked
 
@@ -1322,8 +1333,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         if (!pnlContenedorAnimales.isVisible()) {
             OcultarContenidoMenu();
         }
-        btnAnimales.setVisible(!pnlContenedorAnimales.isVisible());
-        btnMuerteAnimal.setVisible(!pnlContenedorAnimales.isVisible());
+//        btnAnimales.setVisible(!pnlContenedorAnimales.isVisible());
+//        btnMuerteAnimal.setVisible(!pnlContenedorAnimales.isVisible());
         pnlContenedorAnimales.setVisible(!pnlContenedorAnimales.isVisible());
     }//GEN-LAST:event_btnMostrarAnimalesMouseClicked
 
@@ -1525,15 +1536,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarUsuarioMousePressed
 
-    private void btnUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseClicked
+    private void btnMostrarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarUsuariosMouseClicked
         if (!pnlContenedorUsuarios.isVisible()) {
             OcultarContenidoMenu();
         }
-        btnPerfiles.setVisible(!pnlContenedorUsuarios.isVisible());
-        btnPermisos.setVisible(!pnlContenedorUsuarios.isVisible());
-        btnAgregarUsuario.setVisible(!pnlContenedorUsuarios.isVisible());
+//        btnPerfiles.setVisible(!pnlContenedorUsuarios.isVisible());
+//        btnPermisos.setVisible(!pnlContenedorUsuarios.isVisible());
+//        btnAgregarUsuario.setVisible(!pnlContenedorUsuarios.isVisible());
         pnlContenedorUsuarios.setVisible(!pnlContenedorUsuarios.isVisible());
-    }//GEN-LAST:event_btnUsuariosMouseClicked
+    }//GEN-LAST:event_btnMostrarUsuariosMouseClicked
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
@@ -1609,6 +1620,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnMostrarGruposAnimales;
     private javax.swing.JLabel btnMostrarPropietarios;
     private javax.swing.JLabel btnMostrarTraslados;
+    private javax.swing.JLabel btnMostrarUsuarios;
     private javax.swing.JLabel btnMuerteAnimal;
     private javax.swing.JLabel btnPalpacion;
     private javax.swing.JLabel btnPerfiles;
@@ -1621,7 +1633,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnTipoAnimal;
     private javax.swing.JLabel btnTrasladoAnimal;
     private javax.swing.JLabel btnTrasladoGrupo;
-    private javax.swing.JLabel btnUsuarios;
     private javax.swing.JLabel btnVentasAnimal;
     private javax.swing.JLabel btnVerAnimales;
     private javax.swing.JLabel importarExportar;
@@ -1645,16 +1656,52 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public javax.swing.JProgressBar progreso;
     // End of variables declaration//GEN-END:variables
 
+    public void IniciarComponentes(){
+        if(datosUsuario.datos.size() > 0){
+            EstablecerVistaInicial();
+            CargarMenuVertical();
+            
+        }
+    }
+    
     private void OcultarContenidoMenu() {
         pnlContenedorPropietarios.setVisible(false);
-        btnPropietarios.setVisible(false);
-        btnHierros.setVisible(false);
         pnlContenedorFincas.setVisible(false);
         pnlContenedorGruposAnimales.setVisible(false);
         pnlContenedorAnimales.setVisible(false);
         pnlContenedorActividades.setVisible(false);
         pnlContenedorTraslados.setVisible(false);
         pnlContenedorUsuarios.setVisible(false);
+    }
+    private void OcultarModulos(){
+        btnPropietarios.setVisible(false);
+        btnHierros.setVisible(false);
+        btnFincas.setVisible(false);
+        btnBloques.setVisible(false);
+        btnFuenteHidrica.setVisible(false);
+        btnLotes.setVisible(false);
+        btnPluviometro.setVisible(false);
+        btnMacrogrupos.setVisible(false);
+        btnGrupos.setVisible(false);
+        btnTipoAnimal.setVisible(false);
+        btnAnimales.setVisible(false);
+        btnVerAnimales.setVisible(false);
+        btnAnimalxHierro1.setVisible(false);
+        btnVentasAnimal.setVisible(false);
+        btnMuerteAnimal.setVisible(false);
+        btnRegistroActividades.setVisible(false);
+        btnEstadoActividades.setVisible(false);
+        btnCronograma.setVisible(false);
+        btnMedicamentos.setVisible(false);
+        btnPesaje.setVisible(false);
+        btnPalpacion.setVisible(false);
+        btnTrasladoAnimal.setVisible(false);
+        btnTrasladoAnimal.setVisible(false);
+        btnRotacion.setVisible(false);
+        btnInformes.setVisible(false);
+        btnPerfiles.setVisible(false);
+        btnPermisos.setVisible(false);
+        btnAgregarUsuario.setVisible(false);
     }
 
     private void EstablecerTituloVentana(String titulo) {
@@ -1672,5 +1719,210 @@ public class VistaPrincipal extends javax.swing.JFrame {
         VistaInicio vista = new VistaInicio(this);
         MostrarPanel(vista);
     }
-
+    
+    public void CargarMenuVertical(){
+        OcultarContenidoMenu();
+        OcultarModulos();
+        ControlPermisos contPerm = new ControlPermisos();
+        ArrayList<ModeloPermisoxModulos> lista_modulos = contPerm.getModulosxUsuario(datosUsuario.datos.get(0)); 
+        System.out.println("lista_modulos--->"+lista_modulos.size());
+        if (lista_modulos.size() == 0) {
+            JOptionPane.showMessageDialog(null, "No se le han asignado permisos a los modulos del sistema. Por favor comuniquese con el administrador del sistema.");
+            return;
+        }
+        
+        int pnlProp = 0, pnlFnca = 0, pnlGrp = 0, pnlAnmls = 0, pnlActvs = 0, pnlTrsl = 0, pnlUser = 0;
+        for(ModeloPermisoxModulos mod: lista_modulos){
+            if(mod.getModulo().equals("Propietario") && mod.getV().equals("1")){
+                btnPropietarios.setVisible(true);
+                if (pnlProp == 0) {
+                    btnMostrarPropietarios.setVisible(true);
+                    pnlContenedorPropietarios.setVisible(false);
+                    pnlProp = 1;
+                }
+            }else if(mod.getModulo().equals("Hierros") && mod.getV().equals("1")){
+                btnHierros.setVisible(true);
+                if (pnlProp == 0) {
+                    btnMostrarPropietarios.setVisible(true);
+                    pnlContenedorPropietarios.setVisible(false);
+                    pnlProp = 1;
+                }
+            }else if(mod.getModulo().equals("Finca") && mod.getV().equals("1")){
+                btnFincas.setVisible(true);
+                if (pnlFnca == 0) {
+                    btnMostrarFincas.setVisible(true);
+                    pnlContenedorFincas.setVisible(false);
+                    pnlFnca = 1;
+                }
+            }else if(mod.getModulo().equals("Bloques") && mod.getV().equals("1")){
+                btnBloques.setVisible(true);
+                if (pnlFnca == 0) {
+                    btnMostrarFincas.setVisible(true);
+                    pnlContenedorFincas.setVisible(false);
+                    pnlFnca = 1;
+                }
+            }else if(mod.getModulo().equals("Fuente Hidrica") && mod.getV().equals("1")){
+                btnFuenteHidrica.setVisible(true);
+                if (pnlFnca == 0) {
+                    btnMostrarFincas.setVisible(true);
+                    pnlContenedorFincas.setVisible(false);
+                    pnlFnca = 1;
+                }
+            }else if(mod.getModulo().equals("Lotes") && mod.getV().equals("1")){
+                btnLotes.setVisible(true);
+                if (pnlFnca == 0) {
+                    btnMostrarFincas.setVisible(true);
+                    pnlContenedorFincas.setVisible(false);
+                    pnlFnca = 1;
+                }
+            }else if(mod.getModulo().equals("Pluviometro") && mod.getV().equals("1")){
+                btnPluviometro.setVisible(true);
+                if (pnlFnca == 0) {
+                    btnMostrarFincas.setVisible(true);
+                    pnlContenedorFincas.setVisible(false);
+                    pnlFnca = 1;
+                }
+            }else if(mod.getModulo().equals("Macrogrupos") && mod.getV().equals("1")){
+                btnMacrogrupos.setVisible(true);
+                if (pnlGrp == 0) {
+                    btnMostrarGruposAnimales.setVisible(true);
+                    pnlContenedorGruposAnimales.setVisible(false);
+                    pnlGrp = 1;
+                }
+            }else if(mod.getModulo().equals("Grupos") && mod.getV().equals("1")){
+                btnGrupos.setVisible(true);
+                if (pnlGrp == 0) {
+                    btnMostrarGruposAnimales.setVisible(true);
+                    pnlContenedorGruposAnimales.setVisible(false);
+                    pnlGrp = 1;
+                }
+            }else if(mod.getModulo().equals("Tipo Animales") && mod.getV().equals("1")){
+                btnTipoAnimal.setVisible(true);
+                if (pnlGrp == 0) {
+                    btnMostrarGruposAnimales.setVisible(true);
+                    pnlContenedorGruposAnimales.setVisible(false);
+                    pnlGrp = 1;
+                }
+            }else if(mod.getModulo().equals("Agregar Animal") && mod.getV().equals("1")){
+                btnAnimales.setVisible(true);
+                if (pnlAnmls == 0) {
+                    btnMostrarAnimales.setVisible(true);
+                    pnlContenedorAnimales.setVisible(false);
+                    pnlAnmls = 1;
+                }
+            }else if(mod.getModulo().equals("Ver Animales") && mod.getV().equals("1")){
+                btnVerAnimales.setVisible(true);
+                if (pnlAnmls == 0) {
+                    btnMostrarAnimales.setVisible(true);
+                    pnlContenedorAnimales.setVisible(false);
+                    pnlAnmls = 1;
+                }
+            }else if(mod.getModulo().equals("Hierro por Animal") && mod.getV().equals("1")){
+                btnAnimalxHierro1.setVisible(true);
+                if (pnlAnmls == 0) {
+                    btnMostrarAnimales.setVisible(true);
+                    pnlContenedorAnimales.setVisible(false);
+                    pnlAnmls = 1;
+                }
+            }else if(mod.getModulo().equals("Ventas") && mod.getV().equals("1")){
+                btnVentasAnimal.setVisible(true);
+                if (pnlAnmls == 0) {
+                    btnMostrarAnimales.setVisible(true);
+                    pnlContenedorAnimales.setVisible(false);
+                    pnlAnmls = 1;
+                }
+            }else if(mod.getModulo().equals("Muertes") && mod.getV().equals("1")){
+                btnMuerteAnimal.setVisible(true);
+                if (pnlAnmls == 0) {
+                    btnMostrarAnimales.setVisible(true);
+                    pnlContenedorAnimales.setVisible(false);
+                    pnlAnmls = 1;
+                }
+            }else if(mod.getModulo().equals("Registro") && mod.getV().equals("1")){
+                btnRegistroActividades.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Estado") && mod.getV().equals("1")){
+                btnEstadoActividades.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Cronograma") && mod.getV().equals("1")){
+                btnCronograma.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Medicamentos") && mod.getV().equals("1")){
+                btnMedicamentos.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Pesajes") && mod.getV().equals("1")){
+                btnPesaje.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Palpacion") && mod.getV().equals("1")){
+                btnPalpacion.setVisible(true);
+                if (pnlActvs == 0) {
+                    btnMostrarActividades.setVisible(true);
+                    pnlContenedorActividades.setVisible(false);
+                    pnlActvs = 1;
+                }
+            }else if(mod.getModulo().equals("Traslado Animal") && mod.getV().equals("1")){
+                btnTrasladoAnimal.setVisible(true);
+                if (pnlTrsl == 0) {
+                    btnMostrarTraslados.setVisible(true);
+                    pnlContenedorTraslados.setVisible(false);
+                    pnlTrsl = 1;
+                }
+            }else if(mod.getModulo().equals("Traslado Grupo") && mod.getV().equals("1")){
+                btnTrasladoAnimal.setVisible(true);
+                if (pnlTrsl == 0) {
+                    btnMostrarTraslados.setVisible(true);
+                    pnlContenedorTraslados.setVisible(false);
+                    pnlTrsl = 1;
+                }
+            }else if(mod.getModulo().equals("Rotacion") && mod.getV().equals("1")){
+                btnRotacion.setVisible(true);
+            }else if(mod.getModulo().equals("Analisis de Datos") && mod.getV().equals("1")){
+                btnInformes.setVisible(true);
+            }else if(mod.getModulo().equals("Perfiles") && mod.getV().equals("1")){
+                btnPerfiles.setVisible(true);
+                if (pnlUser == 0) {
+                    btnMostrarUsuarios.setVisible(true);
+                    pnlContenedorUsuarios.setVisible(false);
+                    pnlUser = 1;
+                }
+            }else if(mod.getModulo().equals("Permisos") && mod.getV().equals("1")){
+                btnPermisos.setVisible(true);
+                if (pnlUser == 0) {
+                    btnMostrarUsuarios.setVisible(true);
+                    pnlContenedorUsuarios.setVisible(false);
+                    pnlUser = 1;
+                }
+            }else if(mod.getModulo().equals("Agregar Usuario") && mod.getV().equals("1")){
+                btnAgregarUsuario.setVisible(true);
+                if (pnlUser == 0) {
+                    btnMostrarUsuarios.setVisible(true);
+                    pnlContenedorUsuarios.setVisible(false);
+                    pnlUser = 1;
+                }
+            }
+        }
+        
+        
+    }
+    
 }
