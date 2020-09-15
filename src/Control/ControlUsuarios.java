@@ -45,7 +45,7 @@ public class ControlUsuarios {
                         "LEFT JOIN permisosxmodulos perm ON perm.id_permiso = tbl.IDPERMISO\n" +
                         "LEFT JOIN permisosxpropietarios perp ON perp.id_permiso = tbl.IDPERMISO\n" +
                         "LEFT JOIN propietario prop ON prop.id = perp.id_propietario*/\n" +
-                        "WHERE us.id = '1'";
+                        "WHERE us.id = '"+idUsuario+"'";
             
             List<Map<String, String>> lista = gsql.ListSQL(consulta);
             return lista;

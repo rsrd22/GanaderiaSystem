@@ -258,7 +258,15 @@ public class ControlInformes {
 
             System.out.println("COMIENZO DE ARCHIVO");
             String nombreArchivo = "ArchivoCargaMasivaAnimales_" + complemento + ".xlsx";
-            controlArchivo.EscribirExcelAct(Parametros.RutaWindows, nombreArchivo, Encabezado, new ArrayList<ArrayList<String>>());
+            ArrayList<ArrayList<String>> datos = new ArrayList<ArrayList<String>>();
+            for (int i = 0; i < 300; i++) {
+                ArrayList<String> d = new ArrayList<>();
+                for (int j = 0; j < Encabezado.size(); j++) {
+                    d.add(" ");
+                }
+                datos.add(d);
+            }
+            controlArchivo.EscribirExcelAct(Parametros.RutaWindows, nombreArchivo, Encabezado, datos);
         } catch (Exception e) {
             e.printStackTrace();
         }
