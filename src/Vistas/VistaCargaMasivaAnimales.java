@@ -430,8 +430,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     private void CargarListaFincas() {
         listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
                 + "UNION\n"
-                + "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n"
-                + "FROM `fincas`\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM fincas\n"
                 + "/*UNION \n"
                 + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
 
@@ -445,7 +445,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
                 + "UNION\n"
                 + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
-                + "FROM `tipo_animales`\n"
+                + "FROM tipo_animales\n"
                 + "WHERE id_finca = '" + idFinca + "' AND estado = 'Activo'\n"
                 + "ORDER BY id ASC");
 
@@ -516,10 +516,10 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 List<Map<String, String>> listaInfoGrupos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                         + "FROM grupos \n"
-                        + "WHERE `id_tipo_animal` = '" + idTipoAnimal + "' AND  UPPER(`descripcion`) IN (" + inGrupos + ")");
+                        + "WHERE id_tipo_animal = '" + idTipoAnimal + "' AND  UPPER(descripcion) IN (" + inGrupos + ")");
 
-                List<Map<String, String>> listaInfoHierros = controlgen.GetComboBox("SELECT id AS ID, `id_propietario` AS IDPROPIETARIO, descripcion AS DESCRIPCION\n"
-                        + "FROM `propietarioxhierro`\n"
+                List<Map<String, String>> listaInfoHierros = controlgen.GetComboBox("SELECT id AS ID, id_propietario AS IDPROPIETARIO, descripcion AS DESCRIPCION\n"
+                        + "FROM propietarioxhierro\n"
                         + "WHERE UPPER(TRIM(descripcion)) IN (" + inHierros + ")");
 //</editor-fold>
 
@@ -555,9 +555,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                             motivo = "No se encontro un sexo especifico para el animal. por favor verifique e intentelo nuevamente.";
                         }
                         if (infoGrupo.isEmpty()) {
-                            motivo = "No se entontro el Grupo " + info.get("GRUPO") + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
+                            motivo = "No se entontro el Grupo " + Utilidades.decodificarElemento(info.get("GRUPO")) + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
                         } else {
-                            motivo = "No se entontro el Hierro " + info.get("HIERRO") + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
+                            motivo = "No se entontro el Hierro " + Utilidades.decodificarElemento(info.get("HIERRO")) + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
                         }
                         if (info.get("FEC_NACIMIENTO").equals("_")) {
                             motivo = "La fecha de Nacimiento no puede estar vacia. por favor verifique e intentelo nuevamente.";
@@ -623,7 +623,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     }
 
                     //</editor-fold>
-                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE `numero` = '" + info.get("NUM_ANIMAL") + "' ");
+                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' ");
                     int resp = -10;
                     if (InfoAnimal.size() > 0) {
                         info.put("IDANIMAL", "" + InfoAnimal.get(0).get("ID"));
@@ -751,7 +751,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 if (listaMedicamentos.size() > 0) {
                     listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                             + "FROM medicamentos \n"
-                            + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                            + "WHERE descripcion IN (" + inMedicamentos + ")");
                 }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
@@ -930,7 +930,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 if (listaMedicamentos.size() > 0) {
                     listaInfoMedicamentos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                             + "FROM medicamentos \n"
-                            + "WHERE `descripcion` IN (" + inMedicamentos + ")");
+                            + "WHERE descripcion IN (" + inMedicamentos + ")");
                 }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
@@ -1072,12 +1072,13 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             String in = "";
 
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("**************" + i + "*****************");
+                System.out.println(i+":[");
                 for (Map.Entry<String, String> entry : lista.get(i).entrySet()) {
                     String k = entry.getKey();
                     String v = entry.getValue();
-                    System.out.println("k-->" + k + "-----v->" + v);
+                    System.out.println("\t{\n\t\tkey: " + k + ",\n\t\tvalue: " + v+"\n\t}");
                 }
+                System.out.println("]");
             }
 
             for (Map<String, String> map : lista) {
@@ -1090,7 +1091,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             return in;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 
@@ -1138,7 +1139,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         Map<String, String> ret = new HashMap<String, String>();
 
         for (Map<String, String> map : lista) {
-            if (map.get(Key).equals(valorB)) {
+            if (Utilidades.CodificarElemento(map.get(Key)).equals(valorB)) {
                 return map;
             }
         }

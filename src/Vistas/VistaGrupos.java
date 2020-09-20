@@ -711,7 +711,7 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         String macroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : cbMacroGrupo.getSelectedItem().toString();
         String codigoMacroGrupo = (txtCodigoMacroGrupo.getText().trim().isEmpty()) ? "NULL" : txtCodigoMacroGrupo.getText().trim();
         String codigoGrupo = (editar == Estado.ACTUALIZAR) ? txtCodigoGrupo.getText() : "0";
-        String tipo = "default";
+        String tipo = "'default'";
         for (int i = 0; i < checks.length; i++) {
             if (checks[i].isSelected()) {
                 tipo = "'" + checks[i].getText().toLowerCase() + "'";

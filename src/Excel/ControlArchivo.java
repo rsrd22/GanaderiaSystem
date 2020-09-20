@@ -205,6 +205,7 @@ public class ControlArchivo {
                 Iterator rows = sheet.rowIterator();
                 while (rows.hasNext()) {
 
+                    int truncar = 0;
                     col = 0;
                     XSSFRow row = (XSSFRow) rows.next();
                     Iterator iterator = row.cellIterator();
@@ -227,7 +228,7 @@ public class ControlArchivo {
                                     obj.put(keys.get(col), "" + value);
                                     System.out.println("value-->" + value);
                                 } else {
-                                    conten = "" + xssfCell.getNumericCellValue();
+//                                    conten = "" + xssfCell.getNumericCellValue();
                                     conten = "" + xssfCell.getRawValue();
                                     conten = conten.replace(",", ".");
                                     if (conten.indexOf(".") > -1) {
@@ -248,8 +249,12 @@ public class ControlArchivo {
                                 System.out.println("conten---" + conten);
                                 obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
+                            truncar += (col < 5 && conten.equals("_")) ? 1 : 0;
                         }
                         col++;
+                    }
+                    if (truncar == 5) {
+                        break;
                     }
 
                     if (k == 0) {
