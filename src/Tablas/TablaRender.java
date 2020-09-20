@@ -6,6 +6,7 @@
 package Tablas;
 
 import Actividades.Colores;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import javax.swing.JButton;
@@ -39,10 +40,21 @@ public class TablaRender extends DefaultTableCellRenderer {
             JCheckBox ch = (JCheckBox) value;
             return ch;
         }
+        
+        if(row%2 == 0){
+            setBackground(Colores.bgOverTable);
+            setForeground(Colores.TEXT_TABLE);
+        }else{
+            setBackground(Colores.bgNormalTable);
+            setForeground(Colores.TEXT_TABLE);
+        }
+        
         if(table.getValueAt(row, 11).toString().equals("*")){
             setBackground(Colores.DANGER);
             setForeground(Colores.TEXT_DANGER);
         }
+        
+        
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
     }
 }
