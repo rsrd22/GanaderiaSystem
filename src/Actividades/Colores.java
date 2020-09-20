@@ -44,5 +44,7 @@ public class Colores {
     public final static Color TEXT_FADED = new Color(41, 43, 44);
     public final static Color TEXT_TABLE = new Color(59,123,50);
     
-    
+    public final static Color bgOverTable = new Color(59,145,70);
+    public final static Color bgNormalTable = new Color(147,147,147);
+     
 }

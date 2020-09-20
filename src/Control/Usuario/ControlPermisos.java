@@ -82,6 +82,7 @@ public class ControlPermisos implements IControl{
                     );
                     
                 }
+                System.out.println("listaModeloPermisoModulos--->"+listaModeloPermisoModulos.size());
                 modeloRetorno.setListaPermisoModulos(listaModeloPermisoModulos);
             }
             

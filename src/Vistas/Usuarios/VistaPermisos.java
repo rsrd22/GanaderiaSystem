@@ -73,7 +73,7 @@ public class VistaPermisos extends javax.swing.JPanel {
         modeloPermisos = new ModeloPermisos();
         tPaneModulos.setEnabledAt(1, false);
         EncabezadoModulos = new String[]{
-            "Modulo", "Descripción", "S", "I", "U", "D", "V", "T"
+            "Modulo", "Descripción", "Seleccionar", "Iinsertar", "Actualizar", "Eliminar", "Visualizar", "Sel. todo"
         };
         rbPerfil.setSelected(true);
         InicializarTblModulos();
@@ -165,7 +165,7 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(txtUsuario, gridBagConstraints);
@@ -181,7 +181,8 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 13;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
         add(lblBsqUsuario, gridBagConstraints);
 
@@ -189,12 +190,12 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         add(separador, gridBagConstraints);
 
         cbPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -253,6 +254,11 @@ public class VistaPermisos extends javax.swing.JPanel {
                 tblModulosMouseReleased(evt);
             }
         });
+        tblModulos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                tblModulosMouseMoved(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblModulos);
 
         tPaneModulos.addTab("Modulos", jScrollPane1);
@@ -289,8 +295,8 @@ public class VistaPermisos extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.weightx = 0.9;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(8, 15, 15, 15);
         add(tPaneModulos, gridBagConstraints);
 
@@ -483,15 +489,12 @@ public class VistaPermisos extends javax.swing.JPanel {
             tcr.setFont(new Font("Tahoma", 1, 12));
             if(i == 0){
                 tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                tcr.setForeground(new Color(26, 82, 118));
                 tblModulos.getColumnModel().getColumn(i).setCellRenderer(tcr);
             }else if(i== 1){
                 tcr.setHorizontalAlignment(SwingConstants.LEFT);
-                tcr.setForeground(new Color(26, 82, 118));
                 tblModulos.getColumnModel().getColumn(i).setCellRenderer(tcr);
             }else{
                 tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                tcr.setForeground(new Color(26, 82, 118));
                 
             }
             
@@ -545,12 +548,6 @@ public class VistaPermisos extends javax.swing.JPanel {
 
     }//GEN-LAST:event_cbPerfilActionPerformed
 
-    private void tblModulosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblModulosMouseReleased
-        boolean sel = (boolean) tblModulos.getValueAt(tblModulos.getSelectedRow(), tblModulos.getSelectedColumn());
-        System.out.println("sel---->"+sel);
-        EventoTblModulos();
-    }//GEN-LAST:event_tblModulosMouseReleased
-
     private void tblPropietariosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPropietariosMouseReleased
         //EventoTblPropietarios();
     }//GEN-LAST:event_tblPropietariosMouseReleased
@@ -572,8 +569,23 @@ public class VistaPermisos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
-
+        Descartar();
     }//GEN-LAST:event_btnDescartarActionPerformed
+
+    private void tblModulosMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblModulosMouseMoved
+        int fila = tblModulos.rowAtPoint(evt.getPoint());
+        tblModulos.getSelectionModel().setSelectionInterval(fila, fila);
+    }//GEN-LAST:event_tblModulosMouseMoved
+
+    private void tblModulosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblModulosMouseReleased
+        if(tblModulos.isEnabled()){
+            if(tblModulos.getSelectedColumn()> 1){
+                boolean sel = (boolean) tblModulos.getValueAt(tblModulos.getSelectedRow(), tblModulos.getSelectedColumn());
+                System.out.println("sel---->"+sel);
+                EventoTblModulos();
+            }
+        }
+    }//GEN-LAST:event_tblModulosMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -641,6 +653,9 @@ public class VistaPermisos extends javax.swing.JPanel {
     }
     
     public void EventoTablaModulos(MouseEvent e){
+        if(!tblModulos.isEnabled())
+            return;
+        
         int c = tblModulos.columnAtPoint(e.getPoint());//se obtiene el indice del encabezado
         boolean valor = (boolean) tblModulos.getModel().getValueAt(0,c);
         if(c > 1  && c < 7){
@@ -689,18 +704,12 @@ public class VistaPermisos extends javax.swing.JPanel {
             txtUsuario.setVisible(false);
             separador.setVisible(false);
             lblBsqUsuario.setVisible(false);
-            
-            cbPerfil.setLocation(30, 120);
         }else{
             lblTipo.setText("Usuario");
             cbPerfil.setVisible(false);
             txtUsuario.setVisible(true);
             separador.setVisible(true);
             lblBsqUsuario.setVisible(true);
-            
-            txtUsuario.setLocation(30, 120);
-            separador.setLocation(30, 150);
-            lblBsqUsuario.setLocation(340, 120);
         }
     }
 
@@ -719,10 +728,12 @@ public class VistaPermisos extends javax.swing.JPanel {
     }
 
     public void LlenarTablas(String tipo, String valor) {
+        
         Utilidades.LimpiarTabla(tblModulos);
         Utilidades.LimpiarTabla(tblPropietarios);
         System.out.println("tipo-->"+tipo);
         System.out.println("valor--->"+valor);
+        System.out.println("tblModulos...>"+tblModulos.getRowCount());
         Map<String, String> datos = new HashMap<>();
         datos.put("TIPO", tipo);
         datos.put("VALOR", valor);
@@ -739,7 +750,7 @@ public class VistaPermisos extends javax.swing.JPanel {
         //     0           1        2    3  4  5  6  7  8    9
         //ID_PERMISO, ID_MODULO, MODULO, S, I, U, D, V, T, IDPXM
         if (ListaPermisoxModulos.size() > 0) {
-            
+            System.out.println("tblModulos...>"+tblModulos.getRowCount());
             for (ModeloPermisoxModulos lista : ListaPermisoxModulos) {
                 agregarFilaTblModulos(new Object[]{
                     lista.getId_modulo(),
@@ -993,7 +1004,9 @@ public class VistaPermisos extends javax.swing.JPanel {
         }
     }
     
-    
+    public void Descartar(){
+        PermisosEstadoFormulario(0);
+    }
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Metodo Busqueda Retorno">
@@ -1020,6 +1033,7 @@ public class VistaPermisos extends javax.swing.JPanel {
             }
             
             EstadoTipoPermiso();
+            Utilidades.LimpiarTabla(tblModulos);
             EstablecerTablas(modeloPermisos.getTipo());
             
 

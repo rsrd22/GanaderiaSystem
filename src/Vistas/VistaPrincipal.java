@@ -60,7 +60,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Utilidades.EstablecerIcono(this);
         scroll = new JScrollPane();
         this.setLocationRelativeTo(null);
-        Consultas.Agregar();
+        Consultas.Agregar();  
         ie = new ImportExport(this);
         max = 0;
         OcultarContenidoMenu();
@@ -546,7 +546,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorGruposAnimales.setBackground(new java.awt.Color(59, 145, 70));
-        pnlContenedorGruposAnimales.setPreferredSize(new java.awt.Dimension(200, 90));
 
         btnMacrogrupos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMacrogrupos.setForeground(new java.awt.Color(255, 255, 255));
@@ -597,7 +596,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnGrupos)
                 .addGap(0, 0, 0)
                 .addComponent(btnTipoAnimal)
-                .addGap(30, 30, 30))
+                .addGap(0, 0, 0))
         );
 
         btnMostrarAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -615,7 +614,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorAnimales.setBackground(new java.awt.Color(59, 145, 70));
-        pnlContenedorAnimales.setPreferredSize(new java.awt.Dimension(212, 150));
 
         btnAnimales.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAnimales.setForeground(new java.awt.Color(255, 255, 255));
@@ -683,7 +681,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnAnimalxHierro1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVentasAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMuerteAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12))
+                .addGap(0, 0, 0))
         );
         pnlContenedorAnimalesLayout.setVerticalGroup(
             pnlContenedorAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -697,7 +695,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnVentasAnimal)
                 .addGap(0, 0, 0)
                 .addComponent(btnMuerteAnimal)
-                .addGap(30, 30, 30))
+                .addGap(0, 0, 0))
         );
 
         btnMostrarActividades.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -821,7 +819,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorTraslados.setBackground(new java.awt.Color(59, 145, 70));
-        pnlContenedorTraslados.setPreferredSize(new java.awt.Dimension(200, 60));
 
         btnTrasladoAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnTrasladoAnimal.setForeground(new java.awt.Color(255, 255, 255));
@@ -858,7 +855,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnTrasladoAnimal)
                 .addGap(0, 0, 0)
                 .addComponent(btnTrasladoGrupo)
-                .addGap(60, 60, 60))
+                .addGap(0, 0, 0))
         );
 
         btnRotacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -888,6 +885,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/factura_mini_2.png"))); // NOI18N
         btnMostrarUsuarios.setText("Usuarios");
         btnMostrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarUsuarios.setPreferredSize(new java.awt.Dimension(200, 30));
         btnMostrarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarUsuariosMouseClicked(evt);
@@ -895,7 +893,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
 
         pnlContenedorUsuarios.setBackground(new java.awt.Color(59, 145, 70));
-        pnlContenedorUsuarios.setPreferredSize(new java.awt.Dimension(200, 90));
 
         btnPerfiles.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPerfiles.setForeground(new java.awt.Color(255, 255, 255));
@@ -946,7 +943,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnPermisos)
                 .addGap(0, 0, 0)
                 .addComponent(btnAgregarUsuario)
-                .addGap(30, 30, 30))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
@@ -967,7 +964,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addComponent(pnlContenedorTraslados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnRotacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMostrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMostrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         pnlMenuLayout.setVerticalGroup(
@@ -975,11 +972,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addComponent(btnMostrarPropietarios)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarFincas)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorFincas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarGruposAnimales)
                 .addGap(0, 0, 0)
@@ -991,7 +988,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarActividades)
                 .addGap(0, 0, 0)
-                .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContenedorActividades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnMostrarTraslados)
                 .addGap(0, 0, 0)
@@ -1001,12 +998,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnInformes)
                 .addGap(0, 0, 0)
-                .addComponent(btnMostrarUsuarios)
+                .addComponent(btnMostrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(pnlContenedorUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jScrollPane1.setViewportView(pnlMenu);
+        pnlMenu.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout pnlMenuVerticalLayout = new javax.swing.GroupLayout(pnlMenuVertical);
         pnlMenuVertical.setLayout(pnlMenuVerticalLayout);
@@ -1537,6 +1535,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarUsuarioMousePressed
 
     private void btnMostrarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarUsuariosMouseClicked
+        System.out.println("klasdnffkalnsdlnasdlfnka.----"+pnlContenedorUsuarios.isVisible());
+        
         if (!pnlContenedorUsuarios.isVisible()) {
             OcultarContenidoMenu();
         }
@@ -1674,6 +1674,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorUsuarios.setVisible(false);
     }
     private void OcultarModulos(){
+        btnMostrarActividades.setVisible(false);
+        btnMostrarAnimales.setVisible(false);
+        btnMostrarFincas.setVisible(false);
+        btnMostrarGruposAnimales.setVisible(false);
+        btnMostrarPropietarios.setVisible(false);
+        btnMostrarTraslados.setVisible(false);
+        btnMostrarUsuarios.setVisible(false);
+        
         btnPropietarios.setVisible(false);
         btnHierros.setVisible(false);
         btnFincas.setVisible(false);
@@ -1723,6 +1731,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public void CargarMenuVertical(){
         OcultarContenidoMenu();
         OcultarModulos();
+        
         ControlPermisos contPerm = new ControlPermisos();
         ArrayList<ModeloPermisoxModulos> lista_modulos = contPerm.getModulosxUsuario(datosUsuario.datos.get(0)); 
         System.out.println("lista_modulos--->"+lista_modulos.size());
@@ -1888,7 +1897,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     pnlTrsl = 1;
                 }
             }else if(mod.getModulo().equals("Traslado Grupo") && mod.getV().equals("1")){
-                btnTrasladoAnimal.setVisible(true);
+                btnTrasladoGrupo.setVisible(true);
                 if (pnlTrsl == 0) {
                     btnMostrarTraslados.setVisible(true);
                     pnlContenedorTraslados.setVisible(false);

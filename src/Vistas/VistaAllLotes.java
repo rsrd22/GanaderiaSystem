@@ -497,6 +497,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 20);
         add(pnlAgregarLote, gridBagConstraints);
 
+        tbl_Lotes.setForeground(new java.awt.Color(59, 123, 50));
         tbl_Lotes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
