@@ -10,6 +10,7 @@ import Control.ControlCronograma;
 import Control.ControlGeneral;
 import Control.Retorno;
 import Modelo.ModeloCronograma;
+import Modelo.Usuario.ModeloPermisoxModulos;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
@@ -61,14 +62,16 @@ public class PanelActividades extends JPanel {
     public static boolean clickDerechoPresionado;
     public static boolean arrastreDelMouse;
     public Calendar cal = Calendar.getInstance();
+    public int idModulo = 18;
+    public ModeloPermisoxModulos Modulo;
 
     public PanelActividades(VistaPrincipal vp) {
         this.vp = vp;
+        Modulo = datosUsuario.getModulo(""+idModulo);
         listaDatos = new ArrayList<>();
         controlCronograma = new ControlCronograma();
         clickDerechoPresionado = false;
         arrastreDelMouse = false;
-        
         int anchoVentana = 300+160*mesesamostrar+120;
         Dimension dim = new Dimension(anchoVentana,vp.getSize().height);
         setPreferredSize(dim);

@@ -58,12 +58,14 @@ public class VistaPesaje extends javax.swing.JPanel {
     public String fechaAnterior = "";
     private String fechaFiltro = "";
     private String ban = "0";
+    public int idModulo = 20;
 
     /**
      * Creates new form VistaVerAnimales
      */
     public VistaPesaje() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();

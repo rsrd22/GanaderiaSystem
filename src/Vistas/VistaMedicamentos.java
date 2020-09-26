@@ -33,12 +33,14 @@ public class VistaMedicamentos extends javax.swing.JPanel {
     private JButton[] botones;
     private ModeloMedicamentos modelo;
     private ControlMedicamentos control;
+    public int idModulo = 19;
 
     /**
      * Creates new form VistaMedicamentos
      */
     public VistaMedicamentos() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modelo=new ModeloMedicamentos();
         control=new ControlMedicamentos();

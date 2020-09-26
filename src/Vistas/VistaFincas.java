@@ -61,12 +61,13 @@ public class VistaFincas extends javax.swing.JPanel {
     public String[] EncabezadoTblLotes;
     private ControlGeneral controlGral;
     private List<Map<String, String>> Tipo_moneda;
-
+    public int idModulo = 3;
     /**
      * Creates new form VistaFincas
      */
     public VistaFincas() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         banBQDPropietarios = 0;
         banBQD = 0;
         lblIdPropietario.setVisible(false);

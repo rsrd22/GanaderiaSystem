@@ -21,10 +21,6 @@ public class ControlUsuarios {
         gsql = new gestorMySQL();
     }
     
-    
-    
-    
-    
     //<editor-fold defaultstate="collapsed" desc="DATOS DE USUARIO">
         public List<Map<String, String>> getUsuarios(String idUsuario) {
         try{

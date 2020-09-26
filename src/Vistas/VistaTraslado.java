@@ -43,12 +43,13 @@ public class VistaTraslado extends javax.swing.JPanel {
     private ControlTraslado controlTraslado = new ControlTraslado();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
-    
+    public int idModulo = 22;
     /**
      * Creates new form VistaTraslado
      */
     public VistaTraslado() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();

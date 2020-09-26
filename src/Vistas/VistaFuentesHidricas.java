@@ -26,12 +26,13 @@ public class VistaFuentesHidricas extends javax.swing.JPanel {
     private ControlFuentesHidricas controlFuentesHidricas;
     private int banBQD;
     ModeloGestorBusqueda objetoBusqueda;
-
+    public int idModulo = 5;
     /**
      * Creates new form VistaFuentesHidricas
      */
     public VistaFuentesHidricas() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new ModeloFuentesHidricas();
         controlFuentesHidricas = new ControlFuentesHidricas();
         banBQD = 0;

@@ -39,12 +39,13 @@ public class VistaAllHierros extends javax.swing.JPanel {
     private ArrayList<ModeloHierros> ListamodeloHierros;
     ModeloVentanaGeneral objetoVentana;
     ModeloGestorBusqueda objetoBusqueda;
-
+    public int idModulo = 2;
     /**
      * Creates new form VistaAllHierros
      */
     public VistaAllHierros() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         lblIdPropietario.setVisible(false);
         EncabezadoTblHierro = new String[]{
             "No", "Descripción", "Imagen", "Estado", "Ver", "Modificar", "Eliminar"

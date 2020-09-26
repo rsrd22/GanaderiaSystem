@@ -43,12 +43,14 @@ public class VistaRotacion extends javax.swing.JPanel {
     public String idFinca;
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
+    public int idModulo = 24;
     
     /**
      * Creates new form VistaRotacion
      */
     public VistaRotacion() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modeloLotes = new ModeloRotacionLotes();
         modeloGrupos = new ModeloRotacionGrupos();
         //controlPropietario = new ControlPropietarios();

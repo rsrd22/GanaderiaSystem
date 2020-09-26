@@ -1733,7 +1733,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         OcultarModulos();
         
         ControlPermisos contPerm = new ControlPermisos();
-        ArrayList<ModeloPermisoxModulos> lista_modulos = contPerm.getModulosxUsuario(datosUsuario.datos.get(0)); 
+        ArrayList<ModeloPermisoxModulos> lista_modulos = contPerm.getModulosxUsuario(datosUsuario.datos.get(0));
+        datosUsuario.ModulosUsuario = lista_modulos;
         System.out.println("lista_modulos--->"+lista_modulos.size());
         if (lista_modulos.size() == 0) {
             JOptionPane.showMessageDialog(null, "No se le han asignado permisos a los modulos del sistema. Por favor comuniquese con el administrador del sistema.");

@@ -32,9 +32,11 @@ public class VistaPerfiles extends javax.swing.JPanel implements IControlesUsuar
     private GestionEstadoControles controles;
     private int editar;
     private JButton[] botones;
+    public int idModulo = 26;
 
     public VistaPerfiles() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modelo = new modeloPerfiles();
         control = new ControlPerfiles();

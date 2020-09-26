@@ -37,11 +37,13 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     private String[] EncabezadoTblVentas;
     //Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public ModeloVentanaGeneral objetoVentana;
+    public int idModulo = 14;
     /**
      * Creates new form VistaHistoricoVentas
      */
     public VistaHistoricoVentas() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new DefaultTableModel();
         EncabezadoTblVentas = new String[]{
             "Nro. Animal",    //0

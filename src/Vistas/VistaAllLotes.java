@@ -55,7 +55,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public List<Map<String, String>> listaFincas;
     public List<Map<String, String>> listaBloques;
     public List<Map<String, String>> listaFuentesHidricas;
-    
+    public int idModulo = 6;
     public ArrayList<ModeloOpcionesMultiples> ListaDatosMultiple = new ArrayList<>();
     public ArrayList<ModeloOpcionesMultiples> ListaSeleccionados = new ArrayList<>();
     public ArrayList<JPanel> ListaPnlOpciones= new ArrayList<>();
@@ -70,6 +70,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     
     public VistaAllLotes() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         lstFuentesHidricas.setSelectionModel(new DefaultListSelectionModel() {
             private int i0 = -1;
             private int i1 = -1;

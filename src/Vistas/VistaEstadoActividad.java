@@ -35,9 +35,11 @@ public class VistaEstadoActividad extends javax.swing.JPanel implements IControl
     private ControlEstadoActividades control;
     private GestionEstadoControles controles;
     private JButton[] botones;
+    public int idModulo = 17; 
 
     public VistaEstadoActividad() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modelo = new ModeloEstadoActividades();
         control = new ControlEstadoActividades();

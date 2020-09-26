@@ -47,12 +47,13 @@ public class VistaPluviometro extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public int fila;
-    
+    public int idModulo = 7;
     /**
      * Creates new form VistaPubliometro
      */
     public VistaPluviometro() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         EncabezadoTblPluviometro = new String[]{
             "No", "Fecha", "Cantidad", "Modificar", "Eliminar"
         };

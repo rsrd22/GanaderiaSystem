@@ -62,12 +62,14 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private ControlGeneral controlGral;
     private ModeloTraslado modeloTraslado;
     private ControlTraslado controlTraslado;
+    public int idModulo = 11;
 
     /**
      * Creates new form VistaAnimales
      */
     public VistaAnimales() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
 
         lblPesoDestete.setVisible(false);

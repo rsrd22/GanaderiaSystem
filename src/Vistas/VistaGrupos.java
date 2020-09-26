@@ -46,12 +46,14 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     private List<Map<String, String>> macroGrupos;
     private ControlGeneral controlGral;
     private JCheckBox[] checks;
+    public int idModulo = 9;
 
     /**
      * Creates new form VistaGrupos
      */
     public VistaGrupos() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modelo = new ModeloGrupos();
         control = new ControlGrupos();
