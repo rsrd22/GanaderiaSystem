@@ -63,13 +63,14 @@ public class VistaPermisos extends javax.swing.JPanel {
     public String id, estadog;
     public DefaultTableModel modeloModulos;
     public String[] EncabezadoModulos; 
-    
+    public int idModulo = 27;
     
     /**
      * Creates new form VistaPermisos
      */
     public VistaPermisos() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modeloPermisos = new ModeloPermisos();
         tPaneModulos.setEnabledAt(1, false);
         EncabezadoModulos = new String[]{

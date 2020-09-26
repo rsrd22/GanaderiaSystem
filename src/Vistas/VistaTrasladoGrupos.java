@@ -47,11 +47,13 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     public DefaultListModel modlistGrupos;
     public DefaultListModel modlistGruposDestino;
     private ControlTraslado controlTraslado = new ControlTraslado();
+    public int idModulo = 23;
     /**
      * Creates new form VistaTrasladoGrupos
      */
     public VistaTrasladoGrupos() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         lstGruposOrigen.setSelectionModel(new DefaultListSelectionModel() {
             private int i0 = -1;
             private int i1 = -1;

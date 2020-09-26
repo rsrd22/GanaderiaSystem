@@ -3,6 +3,7 @@ package Utilidades;
 import BaseDeDatos.Encryptar;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
+import Modelo.Usuario.ModeloPermisoxModulos;
 import Vistas.VistaGeneral;
 import java.awt.Color;
 import java.awt.Component;
@@ -70,9 +71,10 @@ public class Utilidades {
     public static void EstablecerPermisosVista2(Container vista, int idVista, int ban) {
 
         Component[] componentes = vista.getComponents();
+        ModeloPermisoxModulos  Modulo = new ModeloPermisoxModulos();
         int bane = ban;
         if (bane == 0) {
-            datosUsuario.Moduloscrud = data_list(3, datosUsuario.ModulosUsuario, new String[]{"IDMODULO<->" + idVista});
+            Modulo = datosUsuario.getModulo(""+idVista);
 //            
         }
         int num = 0, numbtns = 0;
@@ -90,20 +92,20 @@ public class Utilidades {
                 if (object.getName() != null) {
                     if (object.getName().equals("btnGuardar")) {/// I
                         //bane = 1;
-                        object.setEnabled(datosUsuario.Moduloscrud.get(0).get("I").equals("1"));
-                        object.setVisible(datosUsuario.Moduloscrud.get(0).get("I").equals("1"));
+                        object.setEnabled(Modulo.getI().equals("1"));
+                        object.setVisible(Modulo.getI().equals("1"));
                     } else if (object.getName().equals("btnModificar")) {/// 
                         //bane = 1;
-                        object.setEnabled(datosUsuario.Moduloscrud.get(0).get("U").equals("1"));
-                        object.setVisible(datosUsuario.Moduloscrud.get(0).get("U").equals("1"));
+                        object.setEnabled(Modulo.getU().equals("1"));
+                        object.setVisible(Modulo.getU().equals("1"));
                     } else if (object.getName().equals("btnConsultar")) {/// 
                         //bane = 1;
-                        object.setEnabled(datosUsuario.Moduloscrud.get(0).get("S").equals("1"));
-                        object.setVisible(datosUsuario.Moduloscrud.get(0).get("S").equals("1"));
+                        object.setEnabled(Modulo.getS().equals("1"));
+                        object.setVisible(Modulo.getS().equals("1"));
                     } else if (object.getName().equals("btnEliminar")) {/// 
                         //bane = 1;
-                        object.setEnabled(datosUsuario.Moduloscrud.get(0).get("D").equals("1"));
-                        object.setVisible(datosUsuario.Moduloscrud.get(0).get("D").equals("1"));
+                        object.setEnabled(Modulo.getD().equals("1"));
+                        object.setVisible(Modulo.getD().equals("1"));
                     }
                 }
             }

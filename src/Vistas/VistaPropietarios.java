@@ -53,12 +53,14 @@ public class VistaPropietarios extends javax.swing.JPanel {
     public String[] EncabezadoTblHierro;
     private ModeloHierros modeloHierro;
     private ArrayList<ModeloHierros> ListamodeloHierros;
+    public int idModulo = 1;
 
     /**
      * Creates new form VistaPropietarios
      */
     public VistaPropietarios() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new ModeloPropietarios();
         controlPropietario = new ControlPropietarios();
         EncabezadoTblHierro = new String[]{

@@ -40,12 +40,14 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
     private ModeloVentanaGeneral modeloVentanaGeneral;
     private ControlGeneral controlGral;
     private List<Map<String, String>> fincas;
+    public int idModulo = 8;
 
     /**
      * Creates new form VistaMacroGrupo
      */
     public VistaMacroGrupo() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modelo = new ModeloMacroGrupo();
         control = new ControlMacroGrupo();

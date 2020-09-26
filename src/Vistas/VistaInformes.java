@@ -30,12 +30,14 @@ public class VistaInformes extends javax.swing.JPanel {
     private JPanel panel;
     private VistaInformePalpacion vistaPalpacion;
     private VistaInformePesaje vistaPesaje;
+    public int idModulo = 25;
 
     /**
      * Creates new form VistaInformes
      */
     public VistaInformes() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modlistCategorias = new DefaultListModel();
         modlistInformes = new DefaultListModel();
         cargarArray();

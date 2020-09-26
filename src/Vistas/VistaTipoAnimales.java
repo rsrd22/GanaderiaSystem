@@ -40,12 +40,14 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
     private GestionEstadoControles controles;
     private JButton[] botones;
     private List<Map<String, String>> fincas;
+    public int idModulo = 10;
 
     /**
      * Creates new form VistaTipoAnimales
      */
     public VistaTipoAnimales() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         modeloVentanaGeneral = new ModeloVentanaGeneral();
         modelo = new ModeloTipoAnimales();

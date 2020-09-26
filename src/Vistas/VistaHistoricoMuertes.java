@@ -36,11 +36,13 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     private String[] EncabezadoTblMuertes;
     //Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public ModeloVentanaGeneral objetoVentana;
+    public int idModulo = 15;
     /**
      * Creates new form VistaHistoricoMuertes
      */
     public VistaHistoricoMuertes() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new DefaultTableModel();
         EncabezadoTblMuertes = new String[]{
             "Nro. Animal",    //0

@@ -50,12 +50,14 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public ArrayList<String> NameColumnasFiltro;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     private TareaActuralizaListaAnimales actListaAnimales;
+    public int idModulo = 12;
 
     /**
      * Creates new form VistaVerAnimales
      */
     public VistaVerAnimales() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();

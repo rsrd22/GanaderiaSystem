@@ -42,10 +42,12 @@ public class VistaUsuarios extends javax.swing.JPanel implements IControlesUsuar
     private final char MASCARA_CONTRASENIA = '●';
     private ControlGeneral controlGral;
     private List<Map<String, String>> perfiles;
+    public int idModulo = 28;
 
     public VistaUsuarios() {
         initComponents();
-        iniciarComponentes();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
+        iniciarComponentes(); 
         modelo = new ModeloUsuarios();
         modeloEmpleado = new ModeloEmpleado();
         control = new ControlUsuarios();

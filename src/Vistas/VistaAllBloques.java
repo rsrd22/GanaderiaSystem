@@ -33,12 +33,13 @@ public class VistaAllBloques extends javax.swing.JPanel {
     public String idFinca;
     public String AreaFinca;
     public int fila;
-
+    public int idModulo = 4;
     /**
      * Creates new form VistaAllBloques
      */
     public VistaAllBloques() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         EncabezadoTblBloques = new String[]{
             "No", "Número", "Área Total", "Modificar", "Eliminar"
         };

@@ -6,6 +6,7 @@
 package Utilidades;
 
 import Control.ControlGeneral;
+import Modelo.Usuario.ModeloPermisoxModulos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,18 @@ public class datosUsuario {
     
     public static List<Map<String, String>> datos = new ArrayList<>();
     
-    public static List<Map<String, String>> ModulosUsuario = new ArrayList<>();
+    public static ArrayList<ModeloPermisoxModulos> ModulosUsuario = new ArrayList<>();
     public static List<Map<String, String>> PropietariosUsuario = new ArrayList<>();
-    public static List<Map<String, String>> Moduloscrud = new ArrayList<>();
+    
+    public static ModeloPermisoxModulos getModulo(String idModulo){
+        ModeloPermisoxModulos  Modulo = new ModeloPermisoxModulos();
+        for (ModeloPermisoxModulos mod : ModulosUsuario) {
+            if( mod.getId_modulo().equals(idModulo)){
+                return mod;
+            }
+        }
+        
+        return Modulo;
+    }
     
 }

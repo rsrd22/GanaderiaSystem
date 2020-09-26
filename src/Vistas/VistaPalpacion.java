@@ -61,7 +61,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public String fechaAnterior = "";
     public String fecha = "";
     public String ban = "0";
-    
+    public int idModulo = 21;
     
 
     /**
@@ -69,6 +69,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
      */
     public VistaPalpacion() {
         initComponents();
+        Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         idTipoAnimal = "";
         NameColumnasFiltro = new ArrayList<>();
