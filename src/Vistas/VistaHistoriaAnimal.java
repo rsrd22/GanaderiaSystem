@@ -2225,6 +2225,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                     System.out.println("-------------------------------");
                     System.out.println("key: " + key[1] + ":" + key[2]);
                     System.out.println("value: " + value.getText());
+                    
+                    if(key[2].equalsIgnoreCase("capado") && lbltitNovilla.getText().equalsIgnoreCase("novilla?")){
+                        return;
+                    }
 
                     if (band == 0) {
                         band=1;
