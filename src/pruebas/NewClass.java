@@ -19,10 +19,13 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,7 +68,7 @@ public class NewClass {
 //        }
 //        //</editor-fold>
         // ActualizarPesajes();
-        
+
 //        Map<String, String> datosp = new HashMap<>();
 //        datosp.put("F.U.P", "DOLOLOLOAL");
 //        datosp.put("PRU", "JGNASKDA");
@@ -81,11 +84,18 @@ public class NewClass {
 //                
 //            }
 //        
-        
-        double random = Math.random();
-        System.out.println((""+random));
-        System.out.println((""+random).substring(2,6));
-        
+//        double random = Math.random();
+//        System.out.println((""+random));
+//        System.out.println((""+random).substring(2,6));
+        Properties properties = System.getProperties();
+        for (int i = 0; i < properties.size(); i++) {
+            Collection<Object> props = properties.values();
+            for (Object prop : props) {
+                System.out.println(""+prop.toString());
+            }
+            break;
+        }
+
     }
 
     private static void cargarPeriodos() {

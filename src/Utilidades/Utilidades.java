@@ -39,7 +39,7 @@ public class Utilidades {
     public static String SOLO_NUMEROS = "^[0-9]+$";
     public static String PACIENTES_AUXILIARES_OCASIONALES = "^[A|O]$";
     public static Double FACTOR_CONVERSION = 2.20462;
-    public static String DATOS_HISTORICO = "Implante|Descornado|Destete|Hierro fisico";
+    public static String DATOS_HISTORICO = "Implante|Descornado|Destete|Hierro fisico|Capado";
     public static String DATOS_PALPACION = "vacia|preñada|repaso";
 
 //    public static void main(String[] args) {

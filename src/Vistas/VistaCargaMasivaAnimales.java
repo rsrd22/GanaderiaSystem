@@ -623,7 +623,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     }
 
                     //</editor-fold>
-                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "'");
+                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '"+idTipoAnimal+"'");
                     int resp = -10;
                     if (InfoAnimal.size() > 0) {
                         info.put("IDANIMAL", "" + InfoAnimal.get(0).get("ID"));
@@ -755,7 +755,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
-                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ")");
+                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ") AND id_tipo_animal = '"+idTipoAnimal+"'");
                 //</editor-fold>
 
                 for (Map<String, String> info : listaInfoLeida) {
@@ -934,7 +934,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
-                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ")");
+                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ") "
+                        + "AND id_tipo_animal = '"+idTipoAnimal+"'");
                 //</editor-fold>
 
                 for (Map<String, String> info : listaInfoLeida) {
