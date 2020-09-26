@@ -516,7 +516,6 @@ public class Utilidades {
         try {
             String[] info = texto.trim().toLowerCase().replace(" ", ":").split(":");
             String ret = "";
-            System.out.println("*********************CapitaliceTexto********************" + texto + "**********");
             String inf = "";
             for (int i = 0; i < info.length; i++) {
                 inf = info[i];
@@ -528,7 +527,7 @@ public class Utilidades {
                     ret += (ret.equals("") ? "" : " ") + ini.toUpperCase() + fin;
                 }
             }
-            System.out.println("***END***");
+            System.out.println("ret: "+ret);
             return ret;
         } catch (Exception e) {
             e.printStackTrace();

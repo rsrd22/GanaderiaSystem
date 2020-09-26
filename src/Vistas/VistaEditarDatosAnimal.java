@@ -335,11 +335,19 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
         if (Utilidades.validarSINO(key[0])) {
             String valorSeleccionado = cbCombo.getSelectedItem().toString();
-            consultas.add(
-                    "update " + key[1] + " "
-                    + "set " + key[2] + "='" + (valorSeleccionado.equalsIgnoreCase("no") ? "0" : "1") + "' "
-                    + "where id=" + key[3]
-            );
+            if (key[2].equalsIgnoreCase("capado")) {
+                consultas.add(
+                        "update " + key[1] + " "
+                        + "set " + key[2] + "='" + Utilidades.CapitaliceTexto(valorSeleccionado) + "' "
+                        + "where id=" + key[3]
+                );
+            } else {
+                consultas.add(
+                        "update " + key[1] + " "
+                        + "set " + key[2] + "='" + (valorSeleccionado.equalsIgnoreCase("no") ? "0" : "1") + "' "
+                        + "where id=" + key[3]
+                );
+            }
         } else if (key[0].equalsIgnoreCase("notas")) {
             consultas.add(
                     "update " + key[1] + " "
