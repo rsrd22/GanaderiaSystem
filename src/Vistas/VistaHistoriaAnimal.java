@@ -10,6 +10,7 @@ import Tablas.TablaRender;
 import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -76,6 +77,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private int alto;
     public int band;
     private String STRING_VACIO="      ";
+    private final String FECHA_POR_DEFECTO = "1900-01-01";
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -422,9 +424,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pnlDatosBasicos = new javax.swing.JPanel();
-        lblNotas = new javax.swing.JLabel();
-        lbltitNovilla = new javax.swing.JLabel();
-        lbltitle8 = new javax.swing.JLabel();
         lblTid1 = new javax.swing.JLabel();
         lblTipoAnimal = new javax.swing.JLabel();
         lblGrupo = new javax.swing.JLabel();
@@ -432,16 +431,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFinca = new javax.swing.JLabel();
         lblLocalizacion = new javax.swing.JLabel();
         lblPartoNumero = new javax.swing.JLabel();
-        lblNovilla = new javax.swing.JLabel();
-        lblCalificacion = new javax.swing.JLabel();
-        lbltitle18 = new javax.swing.JLabel();
-        lblHierroColocado = new javax.swing.JLabel();
         lblNumPartos = new javax.swing.JLabel();
-        lbltitle20 = new javax.swing.JLabel();
         lblFechaDestete = new javax.swing.JLabel();
         lblGenero = new javax.swing.JLabel();
         lblHierro = new javax.swing.JLabel();
-        lblDescornado = new javax.swing.JLabel();
         lblNumMama = new javax.swing.JLabel();
         lblNumeroCria = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
@@ -450,8 +443,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         panelBtnParto = new javax.swing.JPanel();
         btnParto = new javax.swing.JButton();
         lblFecUltParto = new javax.swing.JLabel();
-        lbltitle27 = new javax.swing.JLabel();
-        lblImplante = new javax.swing.JLabel();
         separador = new javax.swing.JSeparator();
         separador1 = new javax.swing.JSeparator();
         lblFechaNacimiento = new javax.swing.JLabel();
@@ -461,6 +452,19 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         separador2 = new javax.swing.JSeparator();
         lblMesesAbierto = new javax.swing.JLabel();
         separadorHembra = new javax.swing.JSeparator();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lbltitle8 = new javax.swing.JLabel();
+        lblCalificacion = new javax.swing.JLabel();
+        lblHierroColocado = new javax.swing.JLabel();
+        lbltitle18 = new javax.swing.JLabel();
+        lbltitle20 = new javax.swing.JLabel();
+        lblDescornado = new javax.swing.JLabel();
+        lblImplante = new javax.swing.JLabel();
+        lbltitle27 = new javax.swing.JLabel();
+        lbltitNovilla = new javax.swing.JLabel();
+        lblNovilla = new javax.swing.JLabel();
+        lblNotas = new javax.swing.JLabel();
         pnlMuerte = new javax.swing.JPanel();
         lblTid4 = new javax.swing.JLabel();
         txtFechaMuerte = new javax.swing.JTextField();
@@ -536,187 +540,253 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 pnlDatosBasicosMouseReleased(evt);
             }
         });
-        pnlDatosBasicos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblNotas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNotas.setForeground(new java.awt.Color(59, 123, 50));
-        lblNotas.setText("Finca");
-        lblNotas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblNotas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Notas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        lblNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 440, 300, 100));
-
-        lbltitNovilla.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitNovilla.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitNovilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitNovilla.setText("Novilla");
-        lbltitNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lbltitNovilla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 180, 20));
-
-        lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitle8.setText("Calificación");
-        lbltitle8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lbltitle8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 180, 20));
+        java.awt.GridBagLayout pnlDatosBasicosLayout = new java.awt.GridBagLayout();
+        pnlDatosBasicosLayout.columnWidths = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        pnlDatosBasicosLayout.rowHeights = new int[] {0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0, 11, 0};
+        pnlDatosBasicos.setLayout(pnlDatosBasicosLayout);
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTid1.setText("Hoja de Vida Animal");
-        pnlDatosBasicos.add(lblTid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 635, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 497;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
+        pnlDatosBasicos.add(lblTid1, gridBagConstraints);
 
-        lblTipoAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblTipoAnimal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTipoAnimal.setForeground(new java.awt.Color(59, 123, 50));
         lblTipoAnimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTipoAnimal.setText("Finca");
         lblTipoAnimal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo de animal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblTipoAnimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 210, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 171;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblTipoAnimal, gridBagConstraints);
 
-        lblGrupo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblGrupo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblGrupo.setForeground(new java.awt.Color(59, 123, 50));
         lblGrupo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblGrupo.setText("Finca");
         lblGrupo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblGrupo, gridBagConstraints);
 
-        lblPesoDestete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblPesoDestete.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
         lblPesoDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblPesoDestete.setText("Finca");
         lblPesoDestete.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peso destete", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         lblPesoDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblPesoDestete, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 130, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 91;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblPesoDestete, gridBagConstraints);
 
-        lblFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblFinca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblFinca.setForeground(new java.awt.Color(59, 123, 50));
         lblFinca.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFinca.setText("Finca");
         lblFinca.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Finca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblFinca, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 190, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 151;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblFinca, gridBagConstraints);
 
-        lblLocalizacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblLocalizacion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblLocalizacion.setForeground(new java.awt.Color(59, 123, 50));
         lblLocalizacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblLocalizacion.setText("Finca");
         lblLocalizacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Localización", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblLocalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 130, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 91;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(lblLocalizacion, gridBagConstraints);
 
-        lblPartoNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblPartoNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblPartoNumero.setForeground(new java.awt.Color(59, 123, 50));
         lblPartoNumero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblPartoNumero.setText("Finca");
         lblPartoNumero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "# parto (hijo #x) ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblPartoNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 185, 140, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 101;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(lblPartoNumero, gridBagConstraints);
 
-        lblNovilla.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNovilla.setForeground(new java.awt.Color(59, 123, 50));
-        lblNovilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNovilla.setText("Finca");
-        lblNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lblNovilla, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, 120, 20));
-
-        lblCalificacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblCalificacion.setForeground(new java.awt.Color(59, 123, 50));
-        lblCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCalificacion.setText("Finca");
-        lblCalificacion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        lblCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblCalificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 440, 120, 20));
-
-        lbltitle18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle18.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitle18.setText("Colocado?");
-        lbltitle18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lbltitle18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 180, 20));
-
-        lblHierroColocado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblHierroColocado.setForeground(new java.awt.Color(59, 123, 50));
-        lblHierroColocado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHierroColocado.setText("Finca");
-        lblHierroColocado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lblHierroColocado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 460, 120, 20));
-
-        lblNumPartos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumPartos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNumPartos.setForeground(new java.awt.Color(59, 123, 50));
         lblNumPartos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumPartos.setText("Finca");
         lblNumPartos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número de partos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblNumPartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 160, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 22;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 121;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblNumPartos, gridBagConstraints);
 
-        lbltitle20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltitle20.setForeground(new java.awt.Color(59, 123, 50));
-        lbltitle20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbltitle20.setText("Descornado?");
-        lbltitle20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lbltitle20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 180, 20));
-
-        lblFechaDestete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblFechaDestete.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblFechaDestete.setForeground(new java.awt.Color(59, 123, 50));
         lblFechaDestete.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFechaDestete.setText("Finca");
         lblFechaDestete.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de destete", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         lblFechaDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblFechaDestete, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblFechaDestete, gridBagConstraints);
 
-        lblGenero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblGenero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblGenero.setForeground(new java.awt.Color(59, 123, 50));
         lblGenero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblGenero.setText("Finca");
         lblGenero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 150, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 111;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblGenero, gridBagConstraints);
 
-        lblHierro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblHierro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblHierro.setForeground(new java.awt.Color(59, 123, 50));
         lblHierro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblHierro.setText("Finca");
         lblHierro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hierro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblHierro, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(lblHierro, gridBagConstraints);
 
-        lblDescornado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblDescornado.setForeground(new java.awt.Color(59, 123, 50));
-        lblDescornado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDescornado.setText("Finca");
-        lblDescornado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        lblDescornado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblDescornado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 120, 20));
-
-        lblNumMama.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumMama.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNumMama.setForeground(new java.awt.Color(59, 123, 50));
         lblNumMama.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumMama.setText("Finca");
         lblNumMama.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número de la Madre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblNumMama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblNumMama, gridBagConstraints);
 
-        lblNumeroCria.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumeroCria.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNumeroCria.setForeground(new java.awt.Color(59, 123, 50));
         lblNumeroCria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumeroCria.setText("Finca");
         lblNumeroCria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número de cria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        lblNumeroCria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblNumeroCria, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 85, 160, 40));
+        lblNumeroCria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 121;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(lblNumeroCria, gridBagConstraints);
 
-        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(59, 123, 50));
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblEstado.setText("Finca");
         lblEstado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 200, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 20;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 161;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblEstado, gridBagConstraints);
 
-        lblNumMeses.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumMeses.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNumMeses.setForeground(new java.awt.Color(59, 123, 50));
         lblNumMeses.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumMeses.setText("Finca");
         lblNumMeses.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Meses", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblNumMeses, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 80, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 20;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 41;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(lblNumMeses, gridBagConstraints);
 
-        lblNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNumero.setForeground(new java.awt.Color(59, 123, 50));
         lblNumero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNumero.setText("Finca");
         lblNumero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número animal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 85, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblNumero, gridBagConstraints);
 
         panelBtnParto.setBackground(new java.awt.Color(59, 123, 50));
         panelBtnParto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -753,79 +823,343 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             .addComponent(btnParto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pnlDatosBasicos.add(panelBtnParto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 22;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        pnlDatosBasicos.add(panelBtnParto, gridBagConstraints);
 
-        lblFecUltParto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblFecUltParto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblFecUltParto.setForeground(new java.awt.Color(59, 123, 50));
         lblFecUltParto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFecUltParto.setText("Finca");
         lblFecUltParto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Ultimo Parto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblFecUltParto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 170, 40));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 20;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblFecUltParto, gridBagConstraints);
 
-        lbltitle27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        separador.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 619;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(separador, gridBagConstraints);
+
+        separador1.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 619;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(separador1, gridBagConstraints);
+
+        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFechaNacimiento.setForeground(new java.awt.Color(59, 123, 50));
+        lblFechaNacimiento.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        lblFechaNacimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblFechaNacimiento, gridBagConstraints);
+
+        lblPesoNecimiento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblPesoNecimiento.setForeground(new java.awt.Color(59, 123, 50));
+        lblPesoNecimiento.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblPesoNecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peso nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        lblPesoNecimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 101;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblPesoNecimiento, gridBagConstraints);
+
+        lblFecUltPeso.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFecUltPeso.setForeground(new java.awt.Color(59, 123, 50));
+        lblFecUltPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFecUltPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha ultimo peso ó novilla ó descarte ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 98;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblFecUltPeso, gridBagConstraints);
+
+        lblUltimoPeso.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUltimoPeso.setForeground(new java.awt.Color(59, 123, 50));
+        lblUltimoPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblUltimoPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peso (kg) o peso novilla o peso descarte ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        lblUltimoPeso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 91;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblUltimoPeso, gridBagConstraints);
+
+        separador2.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 619;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(separador2, gridBagConstraints);
+
+        lblMesesAbierto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblMesesAbierto.setForeground(new java.awt.Color(59, 123, 50));
+        lblMesesAbierto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblMesesAbierto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Meses abierto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 22;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 121;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        pnlDatosBasicos.add(lblMesesAbierto, gridBagConstraints);
+
+        separadorHembra.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 619;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlDatosBasicos.add(separadorHembra, gridBagConstraints);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 11, 0, 11, 0, 11, 0};
+        jPanel3Layout.rowHeights = new int[] {0};
+        jPanel3.setLayout(jPanel3Layout);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        lbltitle8.setBackground(new java.awt.Color(255, 255, 255));
+        lbltitle8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltitle8.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltitle8.setText("Calificación");
+        lbltitle8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lbltitle8, gridBagConstraints);
+
+        lblCalificacion.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblCalificacion.setForeground(new java.awt.Color(59, 123, 50));
+        lblCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCalificacion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        lblCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lblCalificacion, gridBagConstraints);
+
+        lblHierroColocado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblHierroColocado.setForeground(new java.awt.Color(59, 123, 50));
+        lblHierroColocado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHierroColocado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        lblHierroColocado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lblHierroColocado, gridBagConstraints);
+
+        lbltitle18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltitle18.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltitle18.setText("Colocado?");
+        lbltitle18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lbltitle18, gridBagConstraints);
+
+        lbltitle20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltitle20.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitle20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltitle20.setText("Descornado?");
+        lbltitle20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lbltitle20, gridBagConstraints);
+
+        lblDescornado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblDescornado.setForeground(new java.awt.Color(59, 123, 50));
+        lblDescornado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDescornado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        lblDescornado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lblDescornado, gridBagConstraints);
+
+        lblImplante.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblImplante.setForeground(new java.awt.Color(59, 123, 50));
+        lblImplante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImplante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        lblImplante.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lblImplante, gridBagConstraints);
+
+        lbltitle27.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbltitle27.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbltitle27.setText("Implante?");
         lbltitle27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        pnlDatosBasicos.add(lbltitle27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 180, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lbltitle27, gridBagConstraints);
 
-        lblImplante.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblImplante.setForeground(new java.awt.Color(59, 123, 50));
-        lblImplante.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblImplante.setText("Finca");
-        lblImplante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        lblImplante.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblImplante, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 500, 120, 20));
+        lbltitNovilla.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbltitNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lbltitNovilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbltitNovilla.setText("Novilla");
+        lbltitNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lbltitNovilla, gridBagConstraints);
 
-        separador.setBackground(new java.awt.Color(59, 123, 50));
-        pnlDatosBasicos.add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 620, 5));
+        lblNovilla.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lblNovilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        lblNovilla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        jPanel2.add(lblNovilla, gridBagConstraints);
 
-        separador1.setBackground(new java.awt.Color(59, 123, 50));
-        pnlDatosBasicos.add(separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 175, 620, 5));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 1.0;
+        jPanel3.add(jPanel2, gridBagConstraints);
 
-        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblFechaNacimiento.setForeground(new java.awt.Color(59, 123, 50));
-        lblFechaNacimiento.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFechaNacimiento.setText("Finca");
-        lblFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        lblFechaNacimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 185, 170, 40));
+        lblNotas.setBackground(new java.awt.Color(255, 255, 255));
+        lblNotas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblNotas.setForeground(new java.awt.Color(59, 123, 50));
+        lblNotas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblNotas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Notas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        lblNotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 0.8;
+        gridBagConstraints.weighty = 1.0;
+        jPanel3.add(lblNotas, gridBagConstraints);
 
-        lblPesoNecimiento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblPesoNecimiento.setForeground(new java.awt.Color(59, 123, 50));
-        lblPesoNecimiento.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblPesoNecimiento.setText("Finca");
-        lblPesoNecimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peso nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        lblPesoNecimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblPesoNecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 185, 140, 40));
-
-        lblFecUltPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblFecUltPeso.setForeground(new java.awt.Color(59, 123, 50));
-        lblFecUltPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFecUltPeso.setText("fehca");
-        lblFecUltPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha ultimo peso ó novilla ó descarte ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblFecUltPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 275, 140, 40));
-
-        lblUltimoPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblUltimoPeso.setForeground(new java.awt.Color(59, 123, 50));
-        lblUltimoPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblUltimoPeso.setText("Finca");
-        lblUltimoPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peso (kg) o peso novilla o peso descarte ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        lblUltimoPeso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlDatosBasicos.add(lblUltimoPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 130, 40));
-
-        separador2.setBackground(new java.awt.Color(59, 123, 50));
-        pnlDatosBasicos.add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 620, 5));
-
-        lblMesesAbierto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblMesesAbierto.setForeground(new java.awt.Color(59, 123, 50));
-        lblMesesAbierto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblMesesAbierto.setText("Finca");
-        lblMesesAbierto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Meses abierto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        pnlDatosBasicos.add(lblMesesAbierto, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 160, 40));
-
-        separadorHembra.setBackground(new java.awt.Color(59, 123, 50));
-        pnlDatosBasicos.add(separadorHembra, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 425, 620, 5));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 26;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
+        pnlDatosBasicos.add(jPanel3, gridBagConstraints);
 
         jTabbedPane1.addTab("Datos Basicos", pnlDatosBasicos);
 
@@ -1548,11 +1882,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1920,6 +2254,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2033,7 +2369,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
-        lblNovilla.setText(ListaDatos.get(0).getCapado().equals("0") ? "No" : "Si");
+        lblNovilla.setText(
+                ListaDatos.get(0).getGenero().equals("hembra")?
+                (ListaDatos.get(0).getFechaNovilla().equals(FECHA_POR_DEFECTO)?"No":"Si"):
+                (ListaDatos.get(0).getCapado().equals("0") ? "No" : "Si")
+        );
         lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra")?"Novilla":"Capado");
         lblNumeroCria.setVisible(ListaDatos.get(0).getGenero().equals("hembra"));
         
@@ -2047,7 +2387,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete", ListaDatos.get(0).getId()}, lblPesoDestete);
         listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
-//        listaHistorico.put(new String[]{"Destete", "animales", "destete", ListaDatos.get(0).getId()}, lblDestete);
+        listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
         
 //        lblPeso.setText(ListaDatos.get(0).getPeso());
 //        lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
@@ -2073,7 +2413,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         if (esHembra) {
             getDatosHembra();
-        } 
+        } else {
+            lblNovilla.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
 
         if (ListaDatos.get(0).getVenta().equals("1")) {
             GetDatosVentaAnimal();
