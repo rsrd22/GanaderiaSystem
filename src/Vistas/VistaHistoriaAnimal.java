@@ -39,7 +39,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private String id_Animal = "";
     private String numero_Animal = "";
-    private String localizacion = "", pesoNac ="";
+    private String localizacion = "", pesoNac ="", FecUltPeso = "";
     private ControlAnimales controlAnimales = new ControlAnimales();
     private ControlPesaje controlPesaje = new ControlPesaje();
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
@@ -2026,7 +2026,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
         lblFecUltParto.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
-        lblUltimoPeso.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
+        lblUltimoPeso.setText(ListaDatos.get(0).getPeso());
         
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
         
@@ -2098,6 +2098,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
         
         lblLocalizacion.setText(""+localizacion);
+        lblFecUltPeso.setText(""+FecUltPeso);
     }
 
     public void ActualizarDatosAnimal() {
@@ -2307,7 +2308,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         Utilidades.LimpiarTabla(tblDatosPeso);
 
         for (int i = 0; i < listaPesajes.size(); i++) {
-
+            if(i==0){
+                FecUltPeso = listaPesajes.get(i).getFecha_pesado();
+            }
             Utilidades.agregarFilaTabla(
                     modeloTblPeso,
                     new Object[]{
