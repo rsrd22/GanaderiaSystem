@@ -82,7 +82,7 @@ public class ControlCargaMasivaAnimales {
                 + ")\n"
                 + "VALUES (\n"
                 + "0,\n"
-                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"'),\n"
+                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                 + "" + datos.get("IDFINCA")+ ",\n"
                 + "" + datos.get("IDGRUPO") + ",\n"
                 + "     NOW(),\n"
@@ -100,7 +100,7 @@ public class ControlCargaMasivaAnimales {
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "0,\n"
-                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"'),\n"
+                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                 + "     NOW(),\n"
                 + "" + datos.get("PESO") + ",\n"
                 + "0,\n"

@@ -10,6 +10,7 @@ import Control.ControlGrupos;
 import Control.Retorno;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloGrupos;
+import Utilidades.Utilidades;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -87,17 +88,18 @@ public class NewClass {
 //        double random = Math.random();
 //        System.out.println((""+random));
 //        System.out.println((""+random).substring(2,6));
-        Properties properties = System.getProperties();
-        for (int i = 0; i < properties.size(); i++) {
-            Collection<Object> props = properties.values();
-            for (Object prop : props) {
-                System.out.println(""+prop.toString());
-            }
-            break;
-        }
+//        Properties properties = System.getProperties();
+//        for (int i = 0; i < properties.size(); i++) {
+//            Collection<Object> props = properties.values();
+//            for (Object prop : props) {
+//                System.out.println(""+prop.toString());
+//            }
+//            break;
+//        }
+        System.out.println(Utilidades.CapitaliceTexto("si"));
 
     }
-
+    
     private static void cargarPeriodos() {
         ArrayList<Periodo> periodos = new ArrayList<Periodo>();
         Calendar cal = Calendar.getInstance();

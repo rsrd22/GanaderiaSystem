@@ -24,7 +24,7 @@ public class ControlAnimales implements IControl {
 
     private gestorMySQL mySQL;
     private ControlTraslado control;
-    private final Object LISTA_VACIA = new Object();
+    private final ArrayList<ModeloAnimales> LISTA_VACIA = new ArrayList<ModeloAnimales>();
 
     public ControlAnimales() {
         mySQL = new gestorMySQL();

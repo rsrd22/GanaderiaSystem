@@ -581,9 +581,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     }
                     aux = info.get("CAPADO");
                     if (aux.equals("_") || aux.substring(0, 1).toUpperCase().equals("N")) {
-                        info.put("CAPADO", "0");
+                        info.put("CAPADO", "No");
                     } else {
-                        info.put("CAPADO", "1");
+                        info.put("CAPADO", "Si");
                     }
                     aux = info.get("DESCORNADO");
                     if (aux.equals("_") || aux.substring(0, 1).toUpperCase().equals("N")) {

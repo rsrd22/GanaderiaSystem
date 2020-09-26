@@ -2372,7 +2372,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNovilla.setText(
                 ListaDatos.get(0).getGenero().equals("hembra")?
                 (ListaDatos.get(0).getFechaNovilla().equals(FECHA_POR_DEFECTO)?"No":"Si"):
-                (ListaDatos.get(0).getCapado().equals("0") ? "No" : "Si")
+                ListaDatos.get(0).getCapado()
         );
         lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra")?"Novilla":"Capado");
         lblNumeroCria.setVisible(ListaDatos.get(0).getGenero().equals("hembra"));
