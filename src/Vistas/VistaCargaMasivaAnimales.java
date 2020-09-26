@@ -623,7 +623,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     }
 
                     //</editor-fold>
-                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' ");
+                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "'");
                     int resp = -10;
                     if (InfoAnimal.size() > 0) {
                         info.put("IDANIMAL", "" + InfoAnimal.get(0).get("ID"));
