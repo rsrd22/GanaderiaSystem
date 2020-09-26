@@ -116,6 +116,7 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN propietarios f ON f.`id`=d.`id_propietario`\n"
                 + "LEFT JOIN grupos c ON c.id=a.grupo\n"
                 + "WHERE a.id=" + id;
+        System.out.println("consulta--->"+consulta);
         List<Map<String, String>> animales = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         animales = mySQL.ListSQL(consulta);
