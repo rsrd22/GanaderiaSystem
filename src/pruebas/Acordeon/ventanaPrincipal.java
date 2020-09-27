@@ -415,11 +415,7 @@ public class ventanaPrincipal extends javax.swing.JFrame {
                     flags[i]=0;
                 }
             }
-        } else {
-            flags[panelNumber] = 0;
-            panels[panelNumber].setVisible(false);
         }
-
     }
 
     private void hidePanels() {
