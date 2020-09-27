@@ -1623,7 +1623,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             if (!mostrar) {
                 if (editar == Estado.GUARDAR) {
                     if (verificarNroAnimal()) {
-                        JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
+                        JOptionPane.showMessageDialog(
+                                null, 
+                                "El número " + txtNumero.getText() + " pertenece a otro animal.\n"
+                                + "Verifique en el listado de animales o si este se encuentra vendido o muerto."
+                        );
                     }
                 }
             }
@@ -1632,7 +1636,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
     private boolean verificarNroAnimal() {
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
-        lista = (ArrayList<ModeloAnimales>) control.ObtenerDatosFiltro(txtNumero.getText().trim());
+        String[] parametros = new String[]{
+            txtNumero.getText().trim(),
+            txtCodigoTipoAnimal.getText()
+        };
+        lista = (ArrayList<ModeloAnimales>) control.ObtenerDatosFiltro(parametros);
         return lista.size() > 0;
     }
 
