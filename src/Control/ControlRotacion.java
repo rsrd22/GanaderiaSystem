@@ -90,7 +90,7 @@ public class ControlRotacion implements IControl{
     }
     
     
-    public List<Map<String, String>> ObtenerRotacion(String idFinca){
+    public List<Map<String, String>> ObtenerRotacion(String idTipoAnimal){
         try{
             String consulta = "";
             
@@ -109,7 +109,7 @@ public class ControlRotacion implements IControl{
                             "LEFT JOIN `lotes` lot ON lot.`id` = rot.id_lote \n" +
                             "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n" +
                             "LEFT JOIN fincas finc ON finc.`id` = tpoani.`id_finca`\n" +
-                            "WHERE `tpoani`.`id_finca` = '"+idFinca+"'\n" +
+                            "WHERE `tpoani`.`id` = '"+idTipoAnimal+"'\n" +
                             "ORDER BY grup.`id` ASC;";
 
             List<Map<String, String>> rotaciones = new ArrayList<Map<String, String>>();

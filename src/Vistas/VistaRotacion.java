@@ -37,10 +37,12 @@ public class VistaRotacion extends javax.swing.JPanel {
     private ModeloRotacionLotes modeloLotes;
     private ModeloRotacionGrupos modeloGrupos;
     public List<Map<String, String>> listaFincas;
+    public List<Map<String, String>> listaTipoAnimales;
     public ControlGeneral controlgen = new ControlGeneral();
     public ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     public ControlRotacion controlRot = new ControlRotacion();
     public String idFinca;
+    public String idTipoAnimal;
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public int idModulo = 24;
@@ -63,6 +65,7 @@ public class VistaRotacion extends javax.swing.JPanel {
             "No","Grupo", "Bloque / Lote", "Fecha Entrada", "Fecha Salida", "Estado"
         };
         idFinca = "";
+        idTipoAnimal = "";
         InicializarTblGrupos();
         InicializarTblGruposHistorico();
         CargarListaFincas();
@@ -191,6 +194,8 @@ public class VistaRotacion extends javax.swing.JPanel {
         tbl_Grupos = new javax.swing.JTable();
         lblTid = new javax.swing.JLabel();
         cbFinca = new javax.swing.JComboBox();
+        lblTipoanimal = new javax.swing.JLabel();
+        cbTipoAnimales = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_GruposHistorico = new javax.swing.JTable();
@@ -226,6 +231,7 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
@@ -242,7 +248,7 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         jPanel1.add(lblTid, gridBagConstraints);
 
@@ -261,9 +267,41 @@ public class VistaRotacion extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 11;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
         jPanel1.add(cbFinca, gridBagConstraints);
+
+        lblTipoanimal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTipoanimal.setForeground(new java.awt.Color(59, 123, 50));
+        lblTipoanimal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTipoanimal.setText("Tipo Animal");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        jPanel1.add(lblTipoanimal, gridBagConstraints);
+
+        cbTipoAnimales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbTipoAnimales.setForeground(new java.awt.Color(59, 123, 50));
+        cbTipoAnimales.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Cédula de Ciudadania", "Cédula de Extranjeria", "Tarjeta de Identidad", "Registro Civil", "Número de Identificación Tributario", "Número Unico de Identificación", "Pasaporte" }));
+        cbTipoAnimales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoAnimalesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 11;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
+        jPanel1.add(cbTipoAnimales, gridBagConstraints);
 
         jTabbedPane1.addTab("Grupos", jPanel1);
 
@@ -307,9 +345,17 @@ public class VistaRotacion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-        System.out.println("____________________________________");
-        if(cbFinca.getItemCount() > 0)
-            EventoComboFincas();
+        if (cbFinca.getItemCount() > 0) {
+            //EventoComboFincas();
+            System.out.println("cbFinca.getSelectedIndex()--" + cbFinca.getSelectedIndex());
+            if (cbFinca.getSelectedIndex() >= 0) {
+                idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
+                CargarListaTipoAnimal();
+            } else {
+                cbTipoAnimales.removeAllItems();
+                Utilidades.LimpiarTabla(tbl_Grupos);
+            }
+        }
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void tbl_GruposMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_GruposMouseReleased
@@ -357,15 +403,28 @@ public class VistaRotacion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbl_GruposMouseReleased
 
+    private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
+        if (cbTipoAnimales.getItemCount() > 0) {
+            if (cbTipoAnimales.getSelectedIndex() >= 0) {
+                idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
+                EventoComboFincas();
+            } else {
+                Utilidades.LimpiarTabla(tbl_Grupos);
+            }
+        }
+    }//GEN-LAST:event_cbTipoAnimalesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox cbFinca;
+    public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblTid;
+    private javax.swing.JLabel lblTipoanimal;
     private javax.swing.JTable tbl_Grupos;
     private javax.swing.JTable tbl_GruposHistorico;
     // End of variables declaration//GEN-END:variables
@@ -389,40 +448,50 @@ public class VistaRotacion extends javax.swing.JPanel {
          
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
         cbFinca.setSelectedIndex(1);
+        CargarListaTipoAnimal();
+    }
+    
+    private void CargarListaTipoAnimal() {
+        listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM `tipo_animales`\n"
+                + "WHERE id_finca = '" + idFinca + "' AND estado = 'Activo'\n"
+                + "ORDER BY id ASC");
+
+        Utilidades.LlenarComboBox(cbTipoAnimales, listaTipoAnimales, "DESCRIPCION");
+        cbTipoAnimales.setSelectedIndex(0);
         EventoComboFincas();
     }
+    
     public void EventoComboFincas(){
         
         ListaGruposSeleccionados = new ArrayList<>();
-        if(cbFinca.getSelectedIndex() >= 0){
-            idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-            if(idFinca.equals("ALL")){   
-                allFincas = 1; 
-            }else{
-                allFincas = 0;
-            }
-            if(Integer.parseInt(idFinca)>0){
-                ListaRotaciones = controlRot.ObtenerRotacion(""+idFinca);
-                Utilidades.LimpiarTabla(tbl_Grupos);
-                for(int i =0; i < ListaRotaciones.size(); i++){
-                    Utilidades.agregarFilaTabla(
-                            modeloTblGrupos, 
-                            new Object[]{
-                                false,//tbl_Grupos.getRowCount()+1,
-                                Utilidades.decodificarElemento(ListaRotaciones.get(i).get("GRUPO")),
-                                Utilidades.decodificarElemento((allFincas == 1?ListaRotaciones.get(i).get("FINCA")+" / ":"") + 
-                                ListaRotaciones.get(i).get("BLOQUE") + " / " + ListaRotaciones.get(i).get("LOTE")),
-                                ListaRotaciones.get(i).get("FECHA_IN"), 
-                                ListaRotaciones.get(i).get("ESTADO"), 
-                                "Rotar" 
-                            } 
-                        );
-                }
-            }
-
+        if(idFinca.equals("ALL")){   
+            allFincas = 1; 
         }else{
-            Utilidades.LimpiarTabla(tbl_Grupos);
+            allFincas = 0;
         }
+        if(Integer.parseInt(idFinca)>0 && Integer.parseInt(idTipoAnimal)>0){
+            ListaRotaciones = controlRot.ObtenerRotacion(""+idTipoAnimal);
+            Utilidades.LimpiarTabla(tbl_Grupos);
+            for(int i =0; i < ListaRotaciones.size(); i++){
+                Utilidades.agregarFilaTabla(
+                        modeloTblGrupos, 
+                        new Object[]{
+                            false,//tbl_Grupos.getRowCount()+1,
+                            Utilidades.decodificarElemento(ListaRotaciones.get(i).get("GRUPO")),
+                            Utilidades.decodificarElemento((allFincas == 1?ListaRotaciones.get(i).get("FINCA")+" / ":"") + 
+                            ListaRotaciones.get(i).get("BLOQUE") + " / " + ListaRotaciones.get(i).get("LOTE")),
+                            ListaRotaciones.get(i).get("FECHA_IN"), 
+                            ListaRotaciones.get(i).get("ESTADO"), 
+                            "Rotar" 
+                        } 
+                    );
+            }
+        }
+
+        
     }
 
     private int getIndiceLista(String Dato) {
