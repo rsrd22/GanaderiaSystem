@@ -551,7 +551,8 @@ public class ControlAnimales implements IControl {
     }
 
     @Override
-    public Object ObtenerDatosFiltro(Object numero) {
+    public Object ObtenerDatosFiltro(Object o) {
+        String[] parametros = (String[])o;
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
@@ -562,7 +563,7 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
                 + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
-                + "WHERE a.numero=" + numero;
+                + "WHERE a.numero='" + parametros[0] +"'  AND a.id_tipo_animal='"+parametros[1]+"'";
         List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         grupos = mySQL.ListSQL(consulta);
@@ -703,6 +704,30 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
                     + "ORDER BY animal.id ASC";
+            
+            consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
+                    + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
+                    + "grup.descripcion AS GRUPO, \n"
+                    + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
+                    + "IFNULL(blo.id, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, \n"
+                    + "IFNULL(lot.id, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE\n"
+                    + ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n"
+                    + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
+                    + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO,\n"
+                    + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE\n"
+                    + "FROM animales animal\n"
+                    + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
+                    + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
+                    + "LEFT JOIN traslado_animalxgrupo traslado ON traslado.id_animal = animal.id\n"
+                    + "LEFT JOIN grupos grup ON grup.id = traslado.id_grupo\n"
+                    + "LEFT JOIN rotacion_lote rot ON rot.id_grupo = traslado.id_grupo AND rot.estado = 'Activo'\n"
+                    + "LEFT JOIN lotes lot ON lot.id = rot.id_lote\n"
+                    + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
+                    + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
+                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
+                    + "ORDER BY CONVERT(animal.numero,INT) ASC";
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 

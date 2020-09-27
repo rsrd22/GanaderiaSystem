@@ -42,7 +42,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public String idTipoAnimal;
 
     private volatile List<Map<String, String>> ListaAnimales;
-    private List<Map<String, String>> ListaAnimalesMostrar;
+    public List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
@@ -386,7 +386,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         if (cola == 10) {//VER MAS
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             //JOptionPane.showMessageDialog(null, "ID ANIMAL-->"+idAnimal);
-            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, idAnimal);
+            objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, fila);
             objetoVentana.setFila(fila);
             VistaGeneral vis = new VistaGeneral(objetoVentana);
             vis.setVisible(true);
