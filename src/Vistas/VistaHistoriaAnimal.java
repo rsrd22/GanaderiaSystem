@@ -40,7 +40,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private String id_Animal = "";
     private String numero_Animal = "";
-    private String localizacion = "", pesoNac ="", FecUltPeso = "";
+    private String localizacion = "", pesoNac = "", FecUltPeso = "";
     private ControlAnimales controlAnimales = new ControlAnimales();
     private ControlPesaje controlPesaje = new ControlPesaje();
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
@@ -76,8 +76,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private int ancho;
     private int alto;
     public int band;
-    private String STRING_VACIO="      ";
+    private String STRING_VACIO = "      ";
     private final String FECHA_POR_DEFECTO = "1900-01-01";
+    public List<Map<String, String>> ListaAnimalesMostrar;
+    private int filaLista;
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -93,8 +95,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         DatosVenta = new HashMap<String, String>();
         DatosMuerte = new HashMap<String, String>();
         listaHistorico = new HashMap<String[], JLabel>();
+        this.ListaAnimalesMostrar = ((VistaVerAnimales) modeloVentanaGeneral.getPanelPadre()).ListaAnimalesMostrar;
+        filaLista = Integer.parseInt("" + modeloVentanaGeneral.getModeloDatos());
+        id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
         band = 0;
-        id_Animal = "" + modeloVentanaGeneral.getModeloDatos();
         ListaDatos = new ArrayList<>();
         listaPesajes = new ArrayList<>();
         ListaDatosTraslado = new ArrayList<>();
@@ -151,12 +155,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosAnimal();
         pnlGrafico.setVisible(false);
         btnGrilla.setEnabled(false);
-        if (listaDatosPeso.size() > 0) {
-            graficoPeso = new Panel(listaDatosPeso, pnlGrafico);
-            graficoPeso.setBounds(0, 0, pnlGrafico.getWidth(), pnlGrafico.getHeight());
-            pnlGrafico.add(graficoPeso);
-        }
-
     }
 
     public void InicializarTblRotacion() {
@@ -465,6 +463,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lbltitNovilla = new javax.swing.JLabel();
         lblNovilla = new javax.swing.JLabel();
         lblNotas = new javax.swing.JLabel();
+        btnAnterior = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
         pnlMuerte = new javax.swing.JPanel();
         lblTid4 = new javax.swing.JLabel();
         txtFechaMuerte = new javax.swing.JTextField();
@@ -550,13 +550,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTid1.setText("Hoja de Vida Animal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 497;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         pnlDatosBasicos.add(lblTid1, gridBagConstraints);
 
@@ -566,7 +564,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblTipoAnimal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo de animal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 171;
         gridBagConstraints.ipady = 1;
@@ -581,7 +579,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblGrupo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -597,7 +595,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPesoDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 91;
         gridBagConstraints.ipady = 1;
@@ -612,7 +610,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFinca.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Finca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 151;
         gridBagConstraints.ipady = 1;
@@ -627,7 +625,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblLocalizacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Localización", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 91;
         gridBagConstraints.ipady = 1;
@@ -642,7 +640,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPartoNumero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "# parto (hijo #x) ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 101;
         gridBagConstraints.ipady = 1;
@@ -657,7 +655,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumPartos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número de partos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 121;
         gridBagConstraints.ipady = 1;
@@ -673,7 +671,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFechaDestete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -688,7 +686,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblGenero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 111;
         gridBagConstraints.ipady = 1;
@@ -703,7 +701,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblHierro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hierro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -718,7 +716,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumMama.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número de la Madre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -734,7 +732,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumeroCria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 121;
         gridBagConstraints.ipady = 1;
@@ -749,7 +747,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblEstado.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 161;
         gridBagConstraints.ipady = 1;
@@ -764,7 +762,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumMeses.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Meses", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 41;
         gridBagConstraints.ipady = 1;
@@ -779,7 +777,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Número animal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -825,7 +823,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.333333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
@@ -837,7 +835,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFecUltParto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Ultimo Parto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -849,7 +847,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         separador.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 619;
@@ -862,7 +860,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         separador1.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 619;
@@ -879,7 +877,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFechaNacimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.ipady = 1;
@@ -895,7 +893,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPesoNecimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 101;
         gridBagConstraints.ipady = 1;
@@ -910,7 +908,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFecUltPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha ultimo peso ó novilla ó descarte ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 98;
         gridBagConstraints.ipady = 1;
@@ -926,7 +924,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblUltimoPeso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 91;
         gridBagConstraints.ipady = 1;
@@ -938,7 +936,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         separador2.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 619;
@@ -954,7 +952,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblMesesAbierto.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Meses abierto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 121;
         gridBagConstraints.ipady = 1;
@@ -966,7 +964,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         separadorHembra.setBackground(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 619;
@@ -1152,7 +1150,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 26;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
@@ -1160,6 +1158,32 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.9;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         pnlDatosBasicos.add(jPanel3, gridBagConstraints);
+
+        btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.weightx = 0.3333333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        pnlDatosBasicos.add(btnAnterior, gridBagConstraints);
+
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.weightx = 0.3333333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        pnlDatosBasicos.add(btnSiguiente, gridBagConstraints);
 
         jTabbedPane1.addTab("Datos Basicos", pnlDatosBasicos);
 
@@ -1882,11 +1906,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 986, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGap(0, 513, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2213,10 +2237,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
             /**
              * listaHistorico es un Map<String[], JLabel>
-             * el array de string contiene lo siguiente:
-             * (key[0])-pos 0: identificador
-             * (key[1])-pos 1: nombre de la tabla de la base de datos
-             * (key[2])-pos 2: nombre del campo de la tabla anterior
+             * el array de string contiene lo siguiente: (key[0])-pos 0:
+             * identificador (key[1])-pos 1: nombre de la tabla de la base de
+             * datos (key[2])-pos 2: nombre del campo de la tabla anterior
              */
             for (Map.Entry<String[], JLabel> entry : listaHistorico.entrySet()) {
                 String[] key = entry.getKey();
@@ -2225,13 +2248,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                     System.out.println("-------------------------------");
                     System.out.println("key: " + key[1] + ":" + key[2]);
                     System.out.println("value: " + value.getText());
-                    
-                    if(key[2].equalsIgnoreCase("capado") && lbltitNovilla.getText().equalsIgnoreCase("novilla?")){
+
+                    if (key[2].equalsIgnoreCase("capado") && lbltitNovilla.getText().equalsIgnoreCase("novilla?")) {
                         return;
                     }
 
                     if (band == 0) {
-                        band=1;
+                        band = 1;
                         objetoVentana = new ModeloVentanaGeneral(
                                 this, //panelPadre
                                 new VistaEditarDatosAnimal(), //panelHijo
@@ -2248,12 +2271,28 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_pnlDatosBasicosMouseReleased
 
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        filaLista++;
+        btnSiguiente.setEnabled(filaLista < ListaAnimalesMostrar.size());
+        id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
+        GetDatosAnimal();
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        filaLista--;
+        btnAnterior.setEnabled(filaLista > 0);
+        id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
+        GetDatosAnimal();
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminarRotaciones;
     private javax.swing.JButton btnEliminarTraslados;
     private javax.swing.JButton btnGrafico;
     private javax.swing.JButton btnGrilla;
     private javax.swing.JButton btnParto;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2346,6 +2385,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void GetDatosAnimal() {
+        LimpiarFormulario();
         ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
         modeloMadre = ListaDatos.get(0);
         LlenarDatos();
@@ -2367,37 +2407,35 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
         lblFecUltParto.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
         lblUltimoPeso.setText(ListaDatos.get(0).getPeso());
-        
+
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
-        
+
         lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
         lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
         lblNovilla.setText(
-                ListaDatos.get(0).getGenero().equals("hembra")?
-                (ListaDatos.get(0).getFechaNovilla().equals(FECHA_POR_DEFECTO)?"No":"Si"):
-                ListaDatos.get(0).getCapado()
+                ListaDatos.get(0).getGenero().equals("hembra")
+                ? (ListaDatos.get(0).getFechaNovilla().equals(FECHA_POR_DEFECTO) ? "No" : "Si")
+                : ListaDatos.get(0).getCapado()
         );
-        lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra")?"Novilla":"Capado");
+        lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra") ? "Novilla" : "Capado");
         lblNumeroCria.setVisible(ListaDatos.get(0).getGenero().equals("hembra"));
-        
-        lblNotas.setText(ListaDatos.get(0).getNotas().isEmpty()? STRING_VACIO:Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
-        
-        
+
+        lblNotas.setText(ListaDatos.get(0).getNotas().isEmpty() ? STRING_VACIO : Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
+
         listaHistorico.put(new String[]{"Implante", "animales", "implante", ListaDatos.get(0).getId()}, lblImplante);
         listaHistorico.put(new String[]{"Descornado", "animales", "descornado", ListaDatos.get(0).getId()}, lblDescornado);
-        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);       
+        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
         listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico", ListaDatos.get(0).getId()}, lblHierroColocado);
         listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete", ListaDatos.get(0).getId()}, lblPesoDestete);
         listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
-        
+
 //        lblPeso.setText(ListaDatos.get(0).getPeso());
 //        lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
 //        lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
 //        lblDestete.setText(ListaDatos.get(0).getDestete().equals("0") ? "No" : "Si");
-
         boolean esHembra = ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA");
         boolean estaDestetada = ListaDatos.get(0).getDestete().equals("1");
         btnParto.setEnabled(esHembra && estaDestetada);
@@ -2406,7 +2444,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         } else {
             panelBtnParto.setBackground(new Color(101, 101, 101));
         }
-        
+
         lblFecUltParto.setVisible(esHembra);
         lblNumMeses.setVisible(esHembra);
         lblMesesAbierto.setVisible(esHembra);
@@ -2439,12 +2477,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
+        actualizarGraficaPesos();
         if (ListaDatos.get(0).getGenero().equals("hembra")) {
             GetDatosPalpacion();
         }
-        
-        lblLocalizacion.setText(""+localizacion);
-        lblFecUltPeso.setText(""+FecUltPeso);
+
+        lblLocalizacion.setText("" + localizacion);
+        lblFecUltPeso.setText("" + FecUltPeso);
     }
 
     public void ActualizarDatosAnimal() {
@@ -2453,18 +2492,24 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }
 
     private void LimpiarFormulario() {
-        lblCalificacion.setText("");
-        lblFinca.setText("");
-        lblNovilla.setText("");
-        lblGrupo.setText("");
-        lblPesoDestete.setText("");
-        lblNotas.setText("");
-        lblLocalizacion.setText("");
-        lblPartoNumero.setText("");
-        lblTipoAnimal.setText("");
-        LimpiarFormularioVenta();
-        LimpiarFormularioMuerte();
-        
+//        lblCalificacion.setText("");
+//        lblFinca.setText("");
+//        lblNovilla.setText("");
+//        lblGrupo.setText("");
+//        lblPesoDestete.setText("");
+//        lblNotas.setText("");
+//        lblLocalizacion.setText("");
+//        lblPartoNumero.setText("");
+//        lblTipoAnimal.setText("");
+//        
+//        LimpiarFormularioVenta();
+//        LimpiarFormularioMuerte();
+//        
+        for (int i = 0; i < pnlDatosBasicos.getComponentCount(); i++) {
+            if (pnlDatosBasicos.getComponent(i) instanceof JLabel) {
+                ((JLabel) pnlDatosBasicos.getComponent(i)).setText("");
+            }
+        }
 //        lblPeso.setText("");
 //        lblPropietario.setText("");
     }
@@ -2612,9 +2657,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void LlenarTablaRotaciones() {
         Utilidades.LimpiarTabla(tbl_Rotaciones);
-        
+
         for (int i = 0; i < ListaDatosRotacionMostrar.size(); i++) {
-            if(i == 0){
+            if (i == 0) {
                 localizacion = ListaDatosRotacionMostrar.get(i).get("BLOQUE") + " / " + ListaDatosRotacionMostrar.get(i).get("LOTE");
             }
             Utilidades.agregarFilaTabla(
@@ -2634,6 +2679,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="PESO">
     private void cargarHistoricoPesos() {
+        listaDatosPeso = new ArrayList<>();
         listaPesajes = (ArrayList<ModeloPesaje>) controlPesaje.ObtenerDatosFiltro(id_Animal);
         if (listaPesajes.size() > 0) {
             ///////////////////////////   X        Y
@@ -2654,7 +2700,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         Utilidades.LimpiarTabla(tblDatosPeso);
 
         for (int i = 0; i < listaPesajes.size(); i++) {
-            if(i==0){
+            if (i == 0) {
                 FecUltPeso = listaPesajes.get(i).getFecha_pesado();
             }
             Utilidades.agregarFilaTabla(
@@ -2670,7 +2716,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                         "Eliminar"
                     }
             );
-            if(listaPesajes.get(i).getNotas().equals("REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO")){
+            if (listaPesajes.get(i).getNotas().equals("REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO")) {
                 pesoNac = listaPesajes.get(i).getPeso();
             }
         }
@@ -2720,12 +2766,21 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         datosHembra = controlPalpacion.getDatosPalpacion(id_Animal);
         datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
         lbltitNovilla.setText("Novilla?");
-        
+
         lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("1900-01-01") ? "No" : "Si");
         lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
         lblNumeroCria.setText("" + datosHembraPartos.get("CRIA"));
         lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
         lblFecUltParto.setText("" + datosHembraPartos.get("FECHA_ULT_PARTO"));
         lblEstado.setText("" + datosHembra.get("ESTADO"));
+    }
+
+    private void actualizarGraficaPesos() {
+        pnlGrafico.removeAll();
+        if (listaDatosPeso.size() > 0) {
+            graficoPeso = new Panel(listaDatosPeso, pnlGrafico);
+            graficoPeso.setBounds(0, 0, pnlGrafico.getWidth(), pnlGrafico.getHeight());
+            pnlGrafico.add(graficoPeso);
+        }
     }
 }
