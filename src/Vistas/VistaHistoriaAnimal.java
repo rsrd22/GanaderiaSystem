@@ -83,10 +83,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private List<Map<String, String>> ListaAnimalesMostrar;
     private int filaLista;
     private JTable refTablaAnimales;
-    
+
     private int[] flags;
     private JPanel[] panels;
     private final int size = 2;
+    public String[] datoModificado = new String[]{};
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -163,7 +164,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosAnimal();
         pnlGrafico.setVisible(false);
         btnGrilla.setEnabled(false);
-        
+
         //<editor-fold defaultstate="collapsed" desc="INIT ACORDEON">
         flags = new int[size];
         panels = new JPanel[]{
@@ -2398,17 +2399,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
             /**
              * listaHistorico es un Map<String[], JLabel>
-             * el array de string contiene lo siguiente: (key[0])-pos 0:
-             * identificador (key[1])-pos 1: nombre de la tabla de la base de
-             * datos (key[2])-pos 2: nombre del campo de la tabla anterior
+             * el array de string contiene lo siguiente: key[0]:
+             * identificador<br>
+             * key[1]: nombre de la tabla de la base de datos<br>key[2]: nombre
+             * del campo de la tabla anterior
              */
             for (Map.Entry<String[], JLabel> entry : listaHistorico.entrySet()) {
                 String[] key = entry.getKey();
                 JLabel value = entry.getValue();
                 if (label.equals(value)) {
-                    System.out.println("-------------------------------");
-                    System.out.println("key: " + key[1] + ":" + key[2]);
-                    System.out.println("value: " + value.getText());
 
                     if (key[2].equalsIgnoreCase("capado") && lbltitNovilla.getText().equalsIgnoreCase("novilla?")) {
                         return;
@@ -2416,6 +2415,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
                     if (band == 0) {
                         band = 1;
+                        datoModificado = key;
                         objetoVentana = new ModeloVentanaGeneral(
                                 this, //panelPadre
                                 new VistaEditarDatosAnimal(), //panelHijo
@@ -2601,6 +2601,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         lblNotas.setText(ListaDatos.get(0).getNotas().isEmpty() ? STRING_VACIO : Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
 
+        /**
+         * listaHistorico es un Map<String[], JLabel>
+         * el array de string contiene lo siguiente: key[0]: identificador<br>
+         * key[1]: nombre de la tabla de la base de datos<br>key[2]: nombre del
+         * campo de la tabla anterior
+         */
         listaHistorico.put(new String[]{"Implante", "animales", "implante", ListaDatos.get(0).getId()}, lblImplante);
         listaHistorico.put(new String[]{"Descornado", "animales", "descornado", ListaDatos.get(0).getId()}, lblDescornado);
         listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
@@ -2609,11 +2615,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
+        if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumeroMama())) {
+            listaHistorico.put(new String[]{"Número del animal", "animales", "numero", ListaDatos.get(0).getId()}, lblNumero);
+            lblNumero.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        } else {
+            lblNumero.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
 
-//        lblPeso.setText(ListaDatos.get(0).getPeso());
-//        lblPropietario.setText(ListaDatos.get(0).getDescPropietario());
-//        lblNumMamaAdoptiva.setText(ListaDatos.get(0).getNumeroMamaAdoptiva().equals("null") ? "N/A" : ListaDatos.get(0).getNumeroMamaAdoptiva());
-//        lblDestete.setText(ListaDatos.get(0).getDestete().equals("0") ? "No" : "Si");
         boolean esHembra = ListaDatos.get(0).getGenero().toUpperCase().equals("HEMBRA");
         boolean estaDestetada = ListaDatos.get(0).getDestete().equals("1");
         btnParto.setEnabled(esHembra && estaDestetada);
@@ -2666,12 +2674,17 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public void ActualizarDatosAnimal() {
         band = 0;
         GetDatosAnimal();
+        if (datoModificado[0].equalsIgnoreCase("Número del animal")) {
+            String numero = ListaDatos.get(0).getNumero();
+            ListaAnimalesMostrar.get(filaLista).put("NUMERO", numero);
+            refTablaAnimales.setValueAt(numero, filaLista, 2);
+        }
     }
 
     private void LimpiarFormulario() {
         LimpiarFormularioVenta();
         LimpiarFormularioMuerte();
-        
+
         for (int i = 0; i < pnlDatosBasicos.getComponentCount(); i++) {
             if (pnlDatosBasicos.getComponent(i) instanceof JLabel) {
                 ((JLabel) pnlDatosBasicos.getComponent(i)).setText("");
@@ -2969,7 +2982,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosAnimal();
         refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="METODOS PARA EL ACORDEON">
     private void initFlags() {
         for (int flag : flags) {
@@ -2985,7 +2998,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             for (int i = 0; i < panels.length; i++) {
                 if (i != panelNumber) {
                     panels[i].setVisible(false);
-                    flags[i]=0;
+                    flags[i] = 0;
                 }
             }
         }

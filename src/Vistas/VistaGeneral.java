@@ -28,7 +28,7 @@ public class VistaGeneral extends javax.swing.JFrame {
     private int band;
     private Dimension dpanel = new Dimension();
     private Dimension dimensionAnterior;
-    private int ALTO_BARRA_INICIO=40;
+    private int ALTO_BARRA_INICIO = 40;
 
     /**
      * Creates new form VistaGeneral
@@ -309,7 +309,8 @@ public class VistaGeneral extends javax.swing.JFrame {
             if (modeloVista.getPanelHijo() instanceof VistaHierros) {
                 ((VistaAllHierros) modeloVista.getPanelPadre()).btnAgregarHierro.setEnabled(true);
             }
-        } else if (modeloVista.getPanelPadre() instanceof VistaPesaje) {
+        }
+        if (modeloVista.getPanelPadre() instanceof VistaPesaje) {
             if (((VistaIngresoPesaje) modeloVista.getPanelHijo()).guardado != 0) {
                 VistaPesaje vp = ((VistaPesaje) modeloVista.getPanelPadre());
                 if (modeloVista.getOpcion() == 1) {
@@ -317,7 +318,8 @@ public class VistaGeneral extends javax.swing.JFrame {
                 }
                 vp.band = 0;
             }
-        } else if (modeloVista.getPanelPadre() instanceof VistaPalpacion) {
+        }
+        if (modeloVista.getPanelPadre() instanceof VistaPalpacion) {
             ArrayList<String> datos = new ArrayList<>();
             System.out.println("guardado: " + ((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado);
             if (((VistaIngresoPalpacion) modeloVista.getPanelHijo()).guardado != 0) {
@@ -325,7 +327,11 @@ public class VistaGeneral extends javax.swing.JFrame {
                 vp.MostrarTabla();
                 vp.band = 0;
             }
-        } else if (modeloVista.getPanelPadre() instanceof VistaHistoriaAnimal) {
+        }
+        if (modeloVista.getPanelPadre() instanceof VistaEditarDatosAnimal) {
+            
+        }
+        if (modeloVista.getPanelPadre() instanceof VistaHistoriaAnimal) {
 
             VistaHistoriaAnimal vp = ((VistaHistoriaAnimal) modeloVista.getPanelPadre());
             vp.band = 0;
@@ -345,15 +351,15 @@ public class VistaGeneral extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             JLabel lblIcono = (JLabel) (evt.getComponent());
             String icono = "";
-            if (band==0) {
-                band=1;
+            if (band == 0) {
+                band = 1;
                 dimensionAnterior = this.getSize();
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
                 icono = "maximizar";
             } else {
-                band=0;
+                band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
                 setLocationRelativeTo(null);
                 icono = "restaurar";
@@ -366,15 +372,15 @@ public class VistaGeneral extends javax.swing.JFrame {
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         if (evt.getClickCount() == 2) {
             String icono = "";
-            if (band==0) {
-                band=1;
+            if (band == 0) {
+                band = 1;
                 dimensionAnterior = this.getSize();
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
+                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
                 icono = "maximizar";
             } else {
-                band=0;
+                band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
                 setLocationRelativeTo(null);
                 icono = "restaurar";
