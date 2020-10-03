@@ -2675,9 +2675,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         band = 0;
         GetDatosAnimal();
         if (datoModificado[0].equalsIgnoreCase("Número del animal")) {
-            String numero = ListaDatos.get(0).getNumero();
-            ListaAnimalesMostrar.get(filaLista).put("NUMERO", numero);
-            refTablaAnimales.setValueAt(numero, filaLista, 2);
+            String numeroAnimal = ListaDatos.get(0).getNumero();
+            ListaAnimalesMostrar.get(filaLista).put("NUMERO", numeroAnimal);
+            refTablaAnimales.setValueAt(numeroAnimal, filaLista, 2);
         }
     }
 
