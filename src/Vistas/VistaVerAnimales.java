@@ -404,7 +404,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JTable tbl_Animales;
+    public javax.swing.JTable tbl_Animales;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 
