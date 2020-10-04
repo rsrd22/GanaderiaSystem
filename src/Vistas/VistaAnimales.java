@@ -72,7 +72,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
-        
+
         cbFinca.setBackground(Color.YELLOW);
 
         panelFechaNovilla.setVisible(false);
@@ -109,7 +109,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     public VistaAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
-        
+
         cbFinca.setBackground(Color.cyan);
 
         panelFechaNovilla.setVisible(false);
@@ -383,7 +383,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         txtPrecioVenta = new javax.swing.JTextField();
         txtPesoCanal = new javax.swing.JTextField();
         cbTipoVenta = new javax.swing.JComboBox();
-        txtCalculos = new javax.swing.JLabel();
         txtPorcentajeCanal = new javax.swing.JTextField();
         txtValorVenta = new javax.swing.JTextField();
         lblMuerte = new javax.swing.JLabel();
@@ -747,7 +746,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 0.25;
         panelContainer2.add(jdFechaNacimiento, gridBagConstraints);
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(59, 123, 50));
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
         chkNovilla.setBackground(new java.awt.Color(255, 255, 255));
@@ -771,7 +770,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel5.add(chkNovilla, gridBagConstraints);
 
-        chkAdoptivo.setBackground(new java.awt.Color(255, 255, 255));
+        chkAdoptivo.setBackground(new java.awt.Color(59, 123, 50));
         chkAdoptivo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         chkAdoptivo.setForeground(new java.awt.Color(59, 123, 50));
         chkAdoptivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -794,7 +793,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         lblNovilla.setBackground(new java.awt.Color(255, 255, 255));
         lblNovilla.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblNovilla.setForeground(new java.awt.Color(59, 123, 50));
+        lblNovilla.setForeground(new java.awt.Color(255, 255, 255));
         lblNovilla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNovilla.setText("Novilla");
         lblNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -809,7 +808,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         lblAdoptiva.setBackground(new java.awt.Color(255, 51, 51));
         lblAdoptiva.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblAdoptiva.setForeground(new java.awt.Color(59, 123, 50));
+        lblAdoptiva.setForeground(new java.awt.Color(255, 255, 255));
         lblAdoptiva.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdoptiva.setText("Madre adoptiva");
         lblAdoptiva.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -830,7 +829,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         txtNumeroMamaAdoptiva.setForeground(new java.awt.Color(59, 123, 50));
         txtNumeroMamaAdoptiva.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtNumeroMamaAdoptiva.setToolTipText("Número madre adoptiva");
-        txtNumeroMamaAdoptiva.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 10), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumeroMamaAdoptiva.setBorder(null);
         txtNumeroMamaAdoptiva.setCaretColor(new java.awt.Color(59, 123, 50));
         txtNumeroMamaAdoptiva.setSelectionColor(new java.awt.Color(59, 123, 50));
         txtNumeroMamaAdoptiva.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -900,10 +899,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
-        gridBagConstraints.weighty = 1.0;
         panelContainer2.add(jPanel5, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1076,12 +1074,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 1.0;
         jPanel3.add(panelContainer3, gridBagConstraints);
 
-        panelContainer4.setBackground(new java.awt.Color(255, 255, 255));
+        panelContainer4.setBackground(new java.awt.Color(59, 123, 50));
         panelContainer4.setLayout(new java.awt.GridBagLayout());
 
-        lblDestete.setBackground(new java.awt.Color(255, 255, 255));
+        lblDestete.setBackground(new java.awt.Color(59, 123, 50));
         lblDestete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblDestete.setForeground(new java.awt.Color(59, 123, 50));
+        lblDestete.setForeground(new java.awt.Color(255, 255, 255));
         lblDestete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDestete.setText("Destete");
         lblDestete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1094,7 +1092,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 1.0;
         panelContainer4.add(lblDestete, gridBagConstraints);
 
-        chkDestete.setBackground(new java.awt.Color(255, 255, 255));
+        chkDestete.setBackground(new java.awt.Color(59, 123, 50));
         chkDestete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkDestete.setForeground(new java.awt.Color(59, 123, 50));
         chkDestete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1124,7 +1122,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 123;
+        gridBagConstraints.ipadx = 80;
         gridBagConstraints.ipady = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
@@ -1144,9 +1142,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 140;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.15;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         pnlDestete.add(txtPesoDestete, gridBagConstraints);
 
@@ -1160,9 +1159,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weighty = 1.0;
         panelContainer4.add(pnlDestete, gridBagConstraints);
 
-        lblVenta.setBackground(new java.awt.Color(255, 255, 255));
+        lblVenta.setBackground(new java.awt.Color(59, 123, 50));
         lblVenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblVenta.setForeground(new java.awt.Color(59, 123, 50));
+        lblVenta.setForeground(new java.awt.Color(255, 255, 255));
         lblVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblVenta.setText("Venta");
         lblVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1175,7 +1174,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 1.0;
         panelContainer4.add(lblVenta, gridBagConstraints);
 
-        chkVenta.setBackground(new java.awt.Color(255, 255, 255));
+        chkVenta.setBackground(new java.awt.Color(59, 123, 50));
         chkVenta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkVenta.setForeground(new java.awt.Color(59, 123, 50));
         chkVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1204,10 +1203,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 143;
         gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         panelInfoVenta.add(jdFechaVenta, gridBagConstraints);
 
@@ -1233,7 +1232,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 190;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         panelInfoVenta.add(txtPrecioVenta, gridBagConstraints);
 
@@ -1259,7 +1259,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 190;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         panelInfoVenta.add(txtPesoCanal, gridBagConstraints);
 
@@ -1275,24 +1276,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 83;
+        gridBagConstraints.ipadx = 135;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         panelInfoVenta.add(cbTipoVenta, gridBagConstraints);
-
-        txtCalculos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtCalculos.setForeground(new java.awt.Color(59, 123, 50));
-        txtCalculos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.ipadx = 180;
-        gridBagConstraints.ipady = 110;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        panelInfoVenta.add(txtCalculos, gridBagConstraints);
 
         txtPorcentajeCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPorcentajeCanal.setForeground(new java.awt.Color(59, 123, 50));
@@ -1311,7 +1300,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 150;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 15);
         panelInfoVenta.add(txtPorcentajeCanal, gridBagConstraints);
 
@@ -1332,7 +1322,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 150;
         gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
         panelInfoVenta.add(txtValorVenta, gridBagConstraints);
 
@@ -1348,7 +1339,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         lblMuerte.setBackground(new java.awt.Color(255, 255, 255));
         lblMuerte.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblMuerte.setForeground(new java.awt.Color(59, 123, 50));
+        lblMuerte.setForeground(new java.awt.Color(255, 255, 255));
         lblMuerte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMuerte.setText("Muerte");
         lblMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1361,7 +1352,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.weightx = 1.0;
         panelContainer4.add(lblMuerte, gridBagConstraints);
 
-        chkMuerte.setBackground(new java.awt.Color(255, 255, 255));
+        chkMuerte.setBackground(new java.awt.Color(59, 123, 50));
         chkMuerte.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkMuerte.setForeground(new java.awt.Color(59, 123, 50));
         chkMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
@@ -1383,11 +1374,19 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         panelInfoMuerte.setBackground(new java.awt.Color(255, 255, 255));
         panelInfoMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
-        panelInfoMuerte.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelInfoMuerte.setLayout(new java.awt.GridBagLayout());
 
         jdFechaMuerte.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        panelInfoMuerte.add(jdFechaMuerte, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 140, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 80;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.33333333333;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
+        panelInfoMuerte.add(jdFechaMuerte, gridBagConstraints);
 
         ScrollCausaMuerte.setBackground(new java.awt.Color(255, 255, 255));
         ScrollCausaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Causa de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -1400,7 +1399,16 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         txtObservacionMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
         ScrollCausaMuerte.setViewportView(txtObservacionMuerte);
 
-        panelInfoMuerte.add(ScrollCausaMuerte, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 440, 110));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 15, 15);
+        panelInfoMuerte.add(ScrollCausaMuerte, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1603,7 +1611,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 if (editar == Estado.GUARDAR) {
                     if (verificarNroAnimal()) {
                         JOptionPane.showMessageDialog(
-                                null, 
+                                null,
                                 "El número " + txtNumero.getText() + " pertenece a otro animal.\n"
                                 + "Verifique en el listado de animales o si este se encuentra vendido o muerto."
                         );
@@ -1880,7 +1888,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private javax.swing.JSeparator separador3;
     private javax.swing.JSeparator separador4;
     private javax.swing.JSlider slCalificacion;
-    private javax.swing.JLabel txtCalculos;
     private javax.swing.JLabel txtCodigoAnimal;
     private javax.swing.JLabel txtCodigoFinca;
     private javax.swing.JLabel txtCodigoGrupo;
@@ -1995,11 +2002,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 //                    jdFechaDestete.setVisible(false);
 //                    txtPesoDestete.setVisible(false);
 //                } else {
-                    jdFechaDestete.setVisible(true);
-                    txtPesoDestete.setVisible(true);
-                    txtPesoDestete.setText(modelo.getPesoDestete());
-                    fecha = formato.parse(modelo.getFechaDestete());
-                    jdFechaDestete.setDate(fecha);
+                jdFechaDestete.setVisible(true);
+                txtPesoDestete.setVisible(true);
+                txtPesoDestete.setText(modelo.getPesoDestete());
+                fecha = formato.parse(modelo.getFechaDestete());
+                jdFechaDestete.setDate(fecha);
 //                }
 
                 if (modelo.getFechaMuerte().equals(FECHA_POR_DEFECTO)) {
@@ -2337,7 +2344,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         } else {
             long peso = Integer.parseInt(txtPesoOculto.getText());
             long precioDeVenta = (long) (peso * valorDeVenta);
-            return "Valor de Venta $ " + Utilidades.MascaraMonedaConDecimales("" + precioDeVenta);
+            return "$ " + Utilidades.MascaraMonedaConDecimales("" + precioDeVenta);
         }
     }
 
@@ -2349,7 +2356,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
             double peso = Integer.parseInt(txtPesoOculto.getText());
             double porcentajeCanal = pesoCanal / peso * 100;
-            return "Porcentaje de canal: " + df.format(porcentajeCanal) + "%";
+            return df.format(porcentajeCanal) + "%";
         }
     }
 
@@ -2376,27 +2383,24 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         } else {
             chkMuerte.setEnabled(true);
         }
-//        if (chkVenta.isEnabled()) {
-//            if (editar == Estado.ACTUALIZAR) {
-//                boolean chequeado = chkVenta.isSelected();
-//                chkMuerte.setEnabled(!chequeado);
-//                chkMuerte.setSelected(false);
-//                EstadoMuerte(false);
-//                EstadoVenta(chequeado);
-//            }
-//        }
     }
 
     private void setCalculosVenta() {
-        String pv = txtPrecioVenta.getText().indexOf(".") > -1 ? txtPrecioVenta.getText().replace(".", "") : txtPrecioVenta.getText();
-        String pc = txtPesoCanal.getText().indexOf(".") > -1 ? txtPesoCanal.getText().replace(".", "") : txtPesoCanal.getText();
-        txtCalculos.setText(
-                "<html>"
-                + "<p>"
-                + (txtPrecioVenta.getText().length() == 0 ? "" : calcularPrecioDeVenta(Double.parseDouble(pv)) + "<br>")
-                + (txtPesoCanal.getText().length() == 0 ? "" : calcularPorcentajeDeCanal(Double.parseDouble(pc)))
-                + "</p>"
-                + "</html>"
+        String precioVenta = txtPrecioVenta.getText().indexOf(".") > -1 ? txtPrecioVenta.getText().replace(".", "") : txtPrecioVenta.getText();
+        String porcentajeCanal = txtPesoCanal.getText().indexOf(".") > -1 ? txtPesoCanal.getText().replace(".", "") : txtPesoCanal.getText();
+
+        txtPorcentajeCanal.setEnabled(false);
+        txtValorVenta.setEnabled(false);
+        
+        txtPorcentajeCanal.setText(
+                txtPesoCanal.getText().length() == 0
+                ? ""
+                : calcularPorcentajeDeCanal(Double.parseDouble(porcentajeCanal))
+        );
+        txtValorVenta.setText(
+                txtPrecioVenta.getText().length() == 0
+                ? ""
+                : calcularPrecioDeVenta(Double.parseDouble(precioVenta))
         );
     }
 
