@@ -339,11 +339,6 @@ public class VistaGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void pnlContenedorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorComponentResized
-//        if (controles != null) {
-//            controles.ajustarControlesPorDimension();
-//            controles.ajustarControlesPorPosicion();
-//            pnlContenedor.repaint();
-//        }
         EstablecerPnlContenedor();
     }//GEN-LAST:event_pnlContenedorComponentResized
 

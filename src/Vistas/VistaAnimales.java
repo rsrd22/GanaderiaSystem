@@ -1644,7 +1644,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private void chkAdoptivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkAdoptivoMouseClicked
         if (evt.getClickCount() == 1) {
             boolean mostrar = chkAdoptivo.isSelected();
-//            lblNovilla.setVisible(mostrar);
             panelMadreAdoptiva.setVisible(mostrar);
             if (mostrar) {
                 txtNumero.setText(txtNumeroMamaAdoptiva.getText());
