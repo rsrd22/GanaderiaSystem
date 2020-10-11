@@ -27,7 +27,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
     private Map.Entry<String[], JLabel> map;
     private ControlAnimales control;
-    private VistaHistoriaAnimal vha;
+    public VistaHistoriaAnimal vha;
     private ModeloVentanaGeneral vistaGeneral;
 
     public VistaEditarDatosAnimal() {
@@ -295,12 +295,13 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         String[] key = map.getKey();
         JLabel value = map.getValue();
 
+        boolean showTextBox = key[0].equalsIgnoreCase("Peso de destete") || key[0].equalsIgnoreCase("Número del animal");
         lblEtiqueta.setText(key[0]);
         cbCombo.setVisible(Utilidades.validarSINO(key[0]));
         txtNotas.setVisible(key[0].equalsIgnoreCase("notas"));
         jScrollPane2.setVisible(key[0].equalsIgnoreCase("notas"));
-        txtPesoDestete.setVisible(key[0].equalsIgnoreCase("Peso de destete"));
-        sepPesoDestete.setVisible(key[0].equalsIgnoreCase("Peso de destete"));
+        txtPesoDestete.setVisible(showTextBox);
+        sepPesoDestete.setVisible(showTextBox);
         jdFechaDestete.setVisible(key[0].equalsIgnoreCase("Fecha de destete"));
         slCalificacion.setVisible(key[0].equalsIgnoreCase("Calificación"));
 
@@ -310,11 +311,12 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
             txtNotas.setText(value.getText().trim());
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {
             txtPesoDestete.setText(value.getText());
+        } else if (key[0].equalsIgnoreCase("Número del animal")) {
+            txtPesoDestete.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Calificación")) {
             slCalificacion.setValue(Integer.parseInt(value.getText()));
         } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
             try {
-
                 if (value.getText().trim().isEmpty()) {
                     jdFechaDestete.setDate(Calendar.getInstance().getTime());
                 } else {
@@ -348,25 +350,36 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
                         + "where id=" + key[3]
                 );
             }
-        } else if (key[0].equalsIgnoreCase("notas")) {
+        }
+        if (key[0].equalsIgnoreCase("notas")) {
             consultas.add(
                     "update " + key[1] + " "
                     + "set " + key[2] + "='" + Utilidades.CodificarElemento(txtNotas.getText().trim()) + "' "
                     + "where id=" + key[3]
             );
-        } else if (key[0].equalsIgnoreCase("Peso de destete")) {
+        }
+        if (key[0].equalsIgnoreCase("Peso de destete")) {
             consultas.add(
                     "update " + key[1] + " "
                     + "set " + key[2] + "=" + txtPesoDestete.getText().replace(".", "").replace(",", ".") + " "
                     + "where id=" + key[3]
             );
-        } else if (key[0].equalsIgnoreCase("Calificación")) {
+        }
+        if (key[0].equalsIgnoreCase("Número del animal")) {
+            consultas.add(
+                    "update " + key[1] + " "
+                    + "set " + key[2] + "=" + txtPesoDestete.getText().replace(".", "").replace(",", ".") + " "
+                    + "where id=" + key[3]
+            );
+        }
+        if (key[0].equalsIgnoreCase("Calificación")) {
             consultas.add(
                     "update " + key[1] + " "
                     + "set " + key[2] + "=" + slCalificacion.getValue() + " "
                     + "where id=" + key[3]
             );
-        } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
+        }
+        if (key[0].equalsIgnoreCase("Fecha de destete")) {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Calendar fecha = jdFechaDestete.getCalendar();
             consultas.add(
