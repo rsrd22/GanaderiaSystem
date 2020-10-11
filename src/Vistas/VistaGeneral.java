@@ -26,7 +26,8 @@ public class VistaGeneral extends javax.swing.JFrame {
     private AjustarControles controles;
     private JPanel panel;
     private int band;
-    private Dimension dpanel = new Dimension();
+    private int flagResize;
+    private Dimension dimensionPanel = new Dimension();
     private Dimension dimensionAnterior;
     private int ALTO_BARRA_INICIO = 40;
 
@@ -41,7 +42,8 @@ public class VistaGeneral extends javax.swing.JFrame {
         this.modeloVista = modeloVista;
         controles = null;
         CargarVista();
-        band = 1;
+        band = 0;
+        flagResize = 1;
         this.setLocationRelativeTo(null);
     }
 
@@ -49,7 +51,7 @@ public class VistaGeneral extends javax.swing.JFrame {
         this.panel = panel;
         pnlContenedor.removeAll();
         pnlContenedor.add(panel);
-        dpanel = new Dimension(panel.getSize());
+        dimensionPanel = new Dimension(panel.getSize());
 
         if (panel instanceof VistaTrasladar) {
             VistaTrasladar vista = (VistaTrasladar) panel;
@@ -329,7 +331,7 @@ public class VistaGeneral extends javax.swing.JFrame {
             }
         }
         if (modeloVista.getPanelPadre() instanceof VistaEditarDatosAnimal) {
-            
+
         }
         if (modeloVista.getPanelPadre() instanceof VistaHistoriaAnimal) {
 
@@ -351,13 +353,15 @@ public class VistaGeneral extends javax.swing.JFrame {
                 dimensionAnterior = this.getSize();
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                 setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+                dimensionPanel = new Dimension((int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
-                icono = "maximizar";
+                icono = "restaurar";
             } else {
                 band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                dimensionPanel = dimensionAnterior;
                 setLocationRelativeTo(null);
-                icono = "restaurar";
+                icono = "maximizar";
             }
             lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
@@ -372,13 +376,15 @@ public class VistaGeneral extends javax.swing.JFrame {
                 dimensionAnterior = this.getSize();
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                 setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+                dimensionPanel = new Dimension((int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
-                icono = "maximizar";
+                icono = "restaurar";
             } else {
                 band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+                dimensionPanel = dimensionAnterior;
                 setLocationRelativeTo(null);
-                icono = "restaurar";
+                icono = "maximizar";
             }
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             jLabel1.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
@@ -559,11 +565,13 @@ public class VistaGeneral extends javax.swing.JFrame {
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
-            System.out.println("band--->" + band);
-            if (band == 0) {
-                pnlContenedor.getComponent(0).setSize(dpanel);
-            } else {
+            System.out.println("band--->" + flagResize);
+            if (flagResize == 0) {
+                flagResize = 1;
                 pnlContenedor.getComponent(0).setSize(pnlContenedor.getWidth(), pnlContenedor.getHeight());
+            } else {
+                pnlContenedor.getComponent(0).setSize(dimensionPanel);
+                flagResize = 0;
             }
             java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 0;

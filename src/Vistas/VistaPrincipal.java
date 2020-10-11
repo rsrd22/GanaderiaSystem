@@ -1408,12 +1408,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                 setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
-                icono = "maximizar";
+                icono = "restaurar";
             } else {
                 band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
                 setLocationRelativeTo(null);
-                icono = "restaurar";
+                icono = "maximizar";
             }
             btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
@@ -1458,12 +1458,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                 setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
                 setLocationRelativeTo(null);
-                icono = "maximizar";
+                icono = "restaurar";
             } else {
                 band = 0;
                 setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
                 setLocationRelativeTo(null);
-                icono = "restaurar";
+                icono = "maximizar";
             }
             btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
             btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
