@@ -692,7 +692,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String numeroMadre = modeloDatos.getNumero();
-        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre);
+        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, modelo.getIdTipoAnimal());
         String idAnimal = "(SELECT a.id FROM animales a WHERE a.numero='" + modeloDatos.getNumero() + "' "
                 + "AND a.numero_descendiente=" + nroDescendiente + " AND a.estado_descendiente=0"
                 + ")";

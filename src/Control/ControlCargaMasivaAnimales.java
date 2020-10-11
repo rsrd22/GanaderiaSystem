@@ -7,6 +7,7 @@
 package Control;
 
 import BaseDeDatos.gestorMySQL;
+import static Utilidades.Consultas.consultas;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import java.sql.SQLException;
@@ -55,7 +56,7 @@ public class ControlCargaMasivaAnimales {
                 + "" + datos.get("PESO") + ",\n"
                 + "" + datos.get("IDGRUPO") + ",\n"
                 + "" + datos.get("IDHIERRO") + ",\n"
-                + "1,\n"
+                + "" + datos.get("NUMERO_DESCENDIENTE") + ",\n"
                 + "1,\n"
                 + "'0',\n"
                 + "'0',\n"
@@ -139,6 +140,7 @@ public class ControlCargaMasivaAnimales {
                 + "id_tipo_animal = " + datos.get("IDTIPOANIMAL") + ",\n"
                 + "numero_mama = '" + datos.get("NUM_MADRE").replace("_", "") + "',\n"
                 + "peso = " + datos.get("PESO") + ",\n"
+                + "numero_descendiente = " + datos.get("NUMERO_DESCENDIENTE") + ",\n"
                 + "grupo = " + datos.get("IDGRUPO") + ",\n"
                 + "hierro = " + datos.get("IDHIERRO") + ",\n"
                 + "genero = '" + datos.get("SEXO") + "',\n"
@@ -330,7 +332,15 @@ public class ControlCargaMasivaAnimales {
         }
     }
     
-    
-    
-    
+    public String ObtenerUltimoDescendiente(String numeroMadre, String tipoAnimal) {
+        System.out.println(""+numeroMadre);
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        ControlGeneral controlGral = new ControlGeneral();
+        String consulta = consultas.get("OBTENER_ULTIMO_DESCENDIENTE")
+                .replace("ID_TIPO_ANIMAL", tipoAnimal)
+                .replace("NUMERO_MAMA", numeroMadre);
+        animal = controlGral.GetComboBox(consulta);
+
+        return animal.get(0).get("numeroDescendiente");
+    }
 }

@@ -51,7 +51,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         CargarListaFincas();
         thProceso = new CargaMasiva(this, Estados.CARGA_MASIVA_ANIMALES);
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        cal=Calendar.getInstance();
+        cal = Calendar.getInstance();
         mostrarFecha();
     }
 
@@ -385,7 +385,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         listaIngresados = new ArrayList<>();
         listaNoIngresados = new ArrayList<>();
         txtRespuesta.setText("");
-        int estado = -1;
+        int estado = Estados.DEFAULT;
 
         if (cbCargar.getSelectedItem().equals("Animal")) {
             estado = Estados.CARGA_MASIVA_ANIMALES;
@@ -456,7 +456,6 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     public void CargarAnimales() {
         try {
             String ruta = txtURL.getText().trim();
-            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             ControlArchivo con = new ControlArchivo();
             if (idTipoAnimal.equals("-1")) {
                 return;
@@ -623,14 +622,14 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     }
 
                     //</editor-fold>
-                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '"+idTipoAnimal+"'");
+                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '" + idTipoAnimal + "'");
                     int resp = -10;
+                    info.put("NUMERO_DESCENDIENTE", controlCarga.ObtenerUltimoDescendiente(info.get("NUM_MADRE"), idTipoAnimal));
                     if (InfoAnimal.size() > 0) {
                         info.put("IDANIMAL", "" + InfoAnimal.get(0).get("ID"));
                         resp = controlCarga.ActualizarAnimal(info);
                     } else {
                         resp = controlCarga.GuardarAnimal(info);
-
                     }
 
                     if (resp == Retorno.EXITO) {
@@ -716,7 +715,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             if (ruta.equals("")) {
                 return;
             }
-            
+
             String ext = ruta.substring(ruta.lastIndexOf(".") + 1);
             if (ext.equals("xlsx")) {
                 listaInfoLeida = con.LeerExcelAct(ruta, ConfiguracionPropiedades.getEST_CARGA_MASIVA_PESAJE());
@@ -755,7 +754,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
-                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ") AND id_tipo_animal = '"+idTipoAnimal+"'");
+                        + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ") AND id_tipo_animal = '" + idTipoAnimal + "'");
                 //</editor-fold>
 
                 for (Map<String, String> info : listaInfoLeida) {
@@ -935,7 +934,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 List<Map<String, String>> listaInfoAnimal = controlgen.GetComboBox("SELECT * \n"
                         + "FROM animales\n"
                         + "WHERE CONCAT(numero,'<:-:>', numero_mama) IN (" + inNumAnimales + ") "
-                        + "AND id_tipo_animal = '"+idTipoAnimal+"'");
+                        + "AND id_tipo_animal = '" + idTipoAnimal + "'");
                 //</editor-fold>
 
                 for (Map<String, String> info : listaInfoLeida) {
@@ -950,7 +949,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     info.put("IDANIMAL", "" + datoAnimal.get(0).get("id"));
                     info.put("DESCARTE", "0");
                     info.put("RAZON_DESCARTE", "");
-                    
+
                     //<editor-fold defaultstate="collapsed" desc="Validaciones">
                     info.put("ESTADO", ValidarName(info.get("ESTADO")));
 
@@ -969,7 +968,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                             listaNoIngresados.add(info);
                             continue;
                         }
-                    }else{
+                    } else {
                         info.put("NUM_MESES", "0");
                     }
                     if (info.get("NUM_MESES").equals("_")) {
@@ -978,10 +977,10 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     //</editor-fold>
                     List<Map<String, String>> ListaMedicamentosxPesaje = new ArrayList<>();
                     //<editor-fold defaultstate="collapsed" desc="Medicamentos Map">
-                    
+
                     for (String med : listaMedicamentos) {
-                        System.out.println("info.get(MED_" + med+")---->"+info.get("MED_" + med));
-                        if(info.containsKey("MED_" + med)){
+                        System.out.println("info.get(MED_" + med + ")---->" + info.get("MED_" + med));
+                        if (info.containsKey("MED_" + med)) {
                             if (!info.get("MED_" + med).equals("_")) {
                                 Map<String, String> mapMed = new HashMap<>();
                                 List<Map<String, String>> datoMedicamento = Utilidades.data_list(10, listaInfoMedicamentos, new String[]{"ID"}, new String[]{"DESCRIPCION<->" + med});
@@ -1073,11 +1072,11 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             String in = "";
 
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println(i+":[");
+                System.out.println(i + ":[");
                 for (Map.Entry<String, String> entry : lista.get(i).entrySet()) {
                     String k = entry.getKey();
                     String v = entry.getValue();
-                    System.out.println("\t{\n\t\tkey: " + k + ",\n\t\tvalue: " + v+"\n\t}");
+                    System.out.println("\t{\n\t\tkey: " + k + ",\n\t\tvalue: " + v + "\n\t}");
                 }
                 System.out.println("]");
             }

@@ -51,19 +51,19 @@ public class Consultas {
                 + "prop.id AS IDPROP\n"
                 + "FROM fincas fnc\n"
                 + "INNER JOIN propietarios prop ON prop.id = fnc.id_propietario");
-        
-        consultas.put("BQD_PRMS", "SELECT perm.id AS ID__10__C, perm.`tipo` AS TIPO__80__L, perm.`valor_tipo` AS IDTIPO__10__C, \n" +
-                                    "IF(perm.`tipo` = 'perfil', perf.`descripcion`, users.`usuario`) VALOR_TIPO__100__L\n" +
-                                    "FROM permisos perm\n" +
-                                    "LEFT JOIN perfiles perf ON perf.`id` = perm.`valor_tipo` AND perm.`tipo` = 'perfil'\n" +
-                                    "LEFT JOIN usuarios users ON users.`id` = perm.`valor_tipo` AND perm.`tipo` = 'usuario'\n" +
-                                    "ORDER BY perm.id ASC");
-        
-        consultas.put("BQD_USERS", "SELECT users.`id` AS ID__10__C, users.`usuario` AS USUARIO__200__L, users.`id_perfil` AS IDPERFIL__10__C, perf.`descripcion` AS PERFIL__100__L\n" +
-                                    "FROM `usuarios` users \n" +
-                                    "INNER JOIN perfiles perf ON perf.`id` = users.`id_perfil`\n" +
-                                    "WHERE users.`estado` = 'Activo'\n" +
-                                    "ORDER BY users.`id` ASC");
+
+        consultas.put("BQD_PRMS", "SELECT perm.id AS ID__10__C, perm.`tipo` AS TIPO__80__L, perm.`valor_tipo` AS IDTIPO__10__C, \n"
+                + "IF(perm.`tipo` = 'perfil', perf.`descripcion`, users.`usuario`) VALOR_TIPO__100__L\n"
+                + "FROM permisos perm\n"
+                + "LEFT JOIN perfiles perf ON perf.`id` = perm.`valor_tipo` AND perm.`tipo` = 'perfil'\n"
+                + "LEFT JOIN usuarios users ON users.`id` = perm.`valor_tipo` AND perm.`tipo` = 'usuario'\n"
+                + "ORDER BY perm.id ASC");
+
+        consultas.put("BQD_USERS", "SELECT users.`id` AS ID__10__C, users.`usuario` AS USUARIO__200__L, users.`id_perfil` AS IDPERFIL__10__C, perf.`descripcion` AS PERFIL__100__L\n"
+                + "FROM `usuarios` users \n"
+                + "INNER JOIN perfiles perf ON perf.`id` = users.`id_perfil`\n"
+                + "WHERE users.`estado` = 'Activo'\n"
+                + "ORDER BY users.`id` ASC");
 
         consultas.put("BUSQUEDA_TIPOS_ANIMALES", "SELECT\n"
                 + "a.id ID,\n"
@@ -283,7 +283,8 @@ public class Consultas {
                 + "from \n"
                 + "animales \n"
                 + "where \n"
-                + "numero_mama=");
+                + "id_tipo_animal='ID_TIPO_ANIMAL'\n"
+                + "AND numero_mama='NUMERO_MAMA'");
 
         consultas.put("OBTENER_HISTORICO_VENTAS", "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"

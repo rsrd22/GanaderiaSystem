@@ -1624,8 +1624,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private boolean verificarNroAnimal() {
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         String[] parametros = new String[]{
-            txtNumero.getText().trim(),
-            txtCodigoTipoAnimal.getText()
+            txtNumero.getText().trim(),//numero del animal
+            txtCodigoTipoAnimal.getText()//tipo del animal
         };
         lista = (ArrayList<ModeloAnimales>) control.ObtenerDatosFiltro(parametros);
         return lista.size() > 0;
@@ -1761,7 +1761,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
         String numeroMadre = txtNumeroMama.getText();
-        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre);
+        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoAnimal.getText());
         txtNumeroDescendiente.setText(nroDescendiente);
 
         boolean mostrar = true;

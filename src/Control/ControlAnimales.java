@@ -639,10 +639,12 @@ public class ControlAnimales implements IControl {
         }
     }
 
-    public String ObtenerUltimoDescendiente(String numeroMadre) {
+    public String ObtenerUltimoDescendiente(String numeroMadre, String tipoAnimal) {
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();
-        String consulta = consultas.get("OBTENER_ULTIMO_DESCENDIENTE") + "'" + numeroMadre + "'";
+        String consulta = consultas.get("OBTENER_ULTIMO_DESCENDIENTE")
+                .replace("ID_TIPO_ANIMAL", tipoAnimal)
+                .replace("NUMERO_MAMA", numeroMadre);
         animal = controlGral.GetComboBox(consulta);
 
         return animal.get(0).get("numeroDescendiente");
