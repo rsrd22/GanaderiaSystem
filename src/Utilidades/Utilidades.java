@@ -21,11 +21,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -865,4 +867,53 @@ public class Utilidades {
         int ret = fd.compareTo(fh);
         return ret;
     }
+    
+    public static String getIN(String[] datos) {
+        String in = "";
+        for (String dat : datos) {
+            in += (in.equals("") ? "" : ",") + "'" + dat + "'";
+        }
+        return in;
+    }
+    
+    public static void LlenarJList(List<Map<String, String>> datos, String keyB, JList Lista, DefaultListModel modlist) {
+        LimpiarJList(Lista, modlist);
+        for (Map<String, String> dat : datos) {
+            modlist.addElement(dat.get(keyB));
+        }
+        Lista.setModel(modlist);
+    }
+        
+    public static void LlenarJListByArrayList(ArrayList<String> datos, JList Lista, DefaultListModel modlist) {
+        LimpiarJList(Lista, modlist);
+        for (String dato : datos) {
+            modlist.addElement(dato);
+        }
+        Lista.setModel(modlist);
+    }
+
+    public static String[] getDatosLista(JList lista, List<Map<String, String>> listaDatos, String key) {
+        String[] ids = new String[lista.getSelectedIndices().length];
+        int x = 0;
+        for (int ind : lista.getSelectedIndices()) {
+            ids[x] = listaDatos.get(ind).get("" + key);
+            x++;
+        }
+        return ids;
+    }
+    
+    public static String[] getDatosListaByArrayList(JList lista, ArrayList<String> listaDatos) {
+        String[] ids = new String[lista.getSelectedIndices().length];
+        int x = 0;
+        for (int ind : lista.getSelectedIndices()) {
+            ids[x++] = listaDatos.get(ind);
+        }
+        return ids;
+    }
+
+    public static void LimpiarJList(JList Lista, DefaultListModel modlist) {
+        modlist.removeAllElements();
+        Lista.setModel(modlist);
+    }
+
 }

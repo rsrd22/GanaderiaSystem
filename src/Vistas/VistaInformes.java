@@ -9,6 +9,7 @@ import Control.ControlInformes;
 import Modelo.ModeloInformes;
 import Utilidades.TipoInforme;
 import Utilidades.Utilidades;
+import Vistas.VistasInformes.VistaAnimalesPorFinca;
 import Vistas.VistasInformes.VistaInformePalpacion;
 import Vistas.VistasInformes.VistaInformePesaje;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class VistaInformes extends javax.swing.JPanel {
     private JPanel panel;
     private VistaInformePalpacion vistaPalpacion;
     private VistaInformePesaje vistaPesaje;
+    private VistaAnimalesPorFinca vistaInformeAnimalesxFinca;
     public int idModulo = 25;
 
     /**
@@ -263,6 +265,9 @@ public class VistaInformes extends javax.swing.JPanel {
                 case TipoInforme.CARGA_MASIVA_PALPACION:
                     vistaPalpacion.CrearInforme();
                     break;
+                case TipoInforme.INFORME_ANIMALES_POR_FINCA:
+                    vistaInformeAnimalesxFinca.CrearInforme();
+                    break;
                 case TipoInforme.CARGA_MASIVA_ANIMALES:
                     CrearInformeCargaAnimales();
                     break;
@@ -297,6 +302,7 @@ public class VistaInformes extends javax.swing.JPanel {
         listainformes.add(new String[]{"0", "0", "Carga Masiva Pesajes"});
         listainformes.add(new String[]{"0", "1", "Carga Masiva Palpación"});
         listainformes.add(new String[]{"0", "2", "Carga Masiva Animales"});
+        listainformes.add(new String[]{"0", "3", "Informe"});
     }
 
     private void llenarCategorias() {
@@ -340,7 +346,9 @@ public class VistaInformes extends javax.swing.JPanel {
                     vistaPalpacion = new VistaInformePalpacion();
                     MostrarPanel(vistaPalpacion);
                     break;
-                case TipoInforme.CARGA_MASIVA_ANIMALES:
+                case TipoInforme.INFORME_ANIMALES_POR_FINCA:
+                    vistaInformeAnimalesxFinca = new VistaAnimalesPorFinca();
+                    MostrarPanel(vistaInformeAnimalesxFinca);
                     break;
                 default:
                     return;
@@ -353,7 +361,6 @@ public class VistaInformes extends javax.swing.JPanel {
         pnlOpciones.repaint();
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Mostrar Opciones">
     private void MostrarPanel(JPanel panel) {
         this.panel = panel;
         this.panel.setBounds(0, 0, pnlOpciones.getWidth(), pnlOpciones.getHeight());
@@ -371,11 +378,6 @@ public class VistaInformes extends javax.swing.JPanel {
         pnlOpciones.revalidate();
         pnlOpciones.repaint();
     }
-
-    private void MostrarOpcArchivoPalpacion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    //</editor-fold>
 
     private void CrearInformeCargaAnimales() {
         Map<String, String> infor = new HashMap<>();
