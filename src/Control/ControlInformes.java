@@ -45,7 +45,7 @@ public class ControlInformes {
 
     public void GenerarInformes(Object _info) {
         ModeloInformes informe = (ModeloInformes) _info;
-        Map<String, String> datos = informe.informacion;
+        Map<String, Object> datos = informe.informacion;
         if (informe.categoria.equals("0")) {//ARCHIVO EXCEL
             controlArchivo = new ControlArchivo();
             int tipoInforme = Integer.parseInt(informe.informe);
@@ -65,7 +65,7 @@ public class ControlInformes {
         }
     }
 
-    private void CrearArchivoPesaje(Map<String, String> datos) {
+    private void CrearArchivoPesaje(Map<String, Object> datos) {
         try {
             String consultaPesaje = "SELECT anim.`id` AS ID, anim.`numero` AS NUM_ANIMAL, \n"
                     + "IF(anim.numero_mama_adoptiva IS NULL OR anim.numero_mama_adoptiva = '', anim.numero_mama, anim.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
@@ -143,7 +143,7 @@ public class ControlInformes {
         }
     }
 
-    private void CrearArchivoPalpacion(Map<String, String> datos) {
+    private void CrearArchivoPalpacion(Map<String, Object> datos) {
         try {
             String consultaPalpacion = "SELECT anim.`id` AS ID, anim.`numero` AS NUM_ANIMAL, \n"
                     + "IF(anim.numero_mama_adoptiva IS NULL OR anim.numero_mama_adoptiva = '', anim.numero_mama, anim.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
@@ -237,6 +237,54 @@ public class ControlInformes {
         }
     }
 
+    private void CrearArchivoAnimalesXFinca(Map<String, Object> datos){
+        try{
+            Map<String, String> infBasica = (Map<String, String>)datos.get("Basica");
+            ArrayList<String> infAdicional = (ArrayList<String>)datos.get("Adicional");
+            
+            String consulta = "";
+
+            List<Map<String, String>> listaAnimales = mySQL.ListSQL(consulta);
+            
+            if (listaAnimales.size() > 0) {
+                //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
+                Encabezado.add("NUM");
+                Encabezado.add("FINCA");
+                Encabezado.add("TIPO ANIMAL");
+                Encabezado.add("NUMERO ANIMAL");
+                if (infAdicional.size() > 0) {
+                    for(String adi : infAdicional){
+                        Encabezado.add("" +adi.toUpperCase()); 
+                    }
+                }
+//</editor-fold>
+                int fila = 0;
+                for (Map<String, String> anim : listaAnimales) {
+                    ArrayList listAux = new ArrayList();
+                    fila++;
+
+                    listAux.add("" + fila);
+                    listAux.add("" + anim.get("FINCA"));
+                    listAux.add("" + anim.get("TIPO_ANIMAL"));
+                    listAux.add("" + anim.get("NUM_ANIMAL"));
+                    
+                    if (infAdicional.size() > 0) {
+                        for(String adi : infAdicional){
+                             listAux.add("" + anim.get(""+adi.toUpperCase().replace(" ", "_")));
+                        }
+                    }
+
+
+                    ListaDatos.add(listAux);
+                }
+                String nombreArchivo = "ArchivoInformacionAnimales_" + complemento + ".xlsx";
+                controlArchivo.EscribirExcelAct(Parametros.RutaWindows, nombreArchivo, Encabezado, ListaDatos);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void CrearArchivoAnimal() {
         try {
             Encabezado.add("NUM_ANIMAL");

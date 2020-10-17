@@ -433,11 +433,11 @@ public class VistaInformePesaje extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de animal para realizar la operacion.");
             return;
         }
-        Map<String, String> infor = new HashMap<>();
+        Map<String, Object> infor = new HashMap<>();
         infor.put("IDTIPO", idTipoAnimal);
-        infor.put("IDFINCA", idFinca);
-        infor.put("GRUPOS", inGrupos);
-        infor.put("MEDICAMENTOS", inMedicamentos);
+        infor.put("IDFINCA", idFinca); 
+        infor.put("GRUPOS", inGrupos); 
+        infor.put("MEDICAMENTOS", inMedicamentos); 
         System.out.println("SexoH-->"+SexoH);
         System.out.println("SexoM-->"+SexoM);
         System.out.println("cond1-->"+(SexoH.equals("0") && SexoM.equals("0")));
