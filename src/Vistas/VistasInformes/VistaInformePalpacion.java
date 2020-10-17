@@ -387,7 +387,7 @@ public class VistaInformePalpacion extends javax.swing.JPanel {
             return;
         }
         
-        Map<String, String> infor = new HashMap<>();
+        Map<String, Object> infor = new HashMap<>();
         infor.put("IDTIPO", idTipoAnimal);
         infor.put("IDFINCA", idFinca);
         infor.put("GRUPOS", inGrupos);

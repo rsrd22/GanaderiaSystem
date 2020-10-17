@@ -371,7 +371,7 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");
         informes.setInforme("3");
-//        informes.setInformacion(informacion);
+        informes.setInformacion(informacion);
 
         ControlInformes contInformes = new ControlInformes();
         contInformes.GenerarInformes(informes);
