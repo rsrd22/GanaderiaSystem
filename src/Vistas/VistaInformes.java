@@ -380,7 +380,7 @@ public class VistaInformes extends javax.swing.JPanel {
     }
 
     private void CrearInformeCargaAnimales() {
-        Map<String, String> infor = new HashMap<>();
+        Map<String, Object> infor = new HashMap<>();
         infor.put("IDTIPO", "");
         infor.put("IDFINCA", "");
         infor.put("GRUPOS", "");

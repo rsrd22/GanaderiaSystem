@@ -16,13 +16,13 @@ import java.util.Map;
 public class ModeloInformes {
     public String categoria;
     public String informe;
-    public Map<String, String> informacion;
+    public Map<String, Object> informacion;
     public ModeloInformes() {
         this.categoria = "";
         this.informe = "";
     }
 
-    public ModeloInformes(String categoria, String informe, Map<String, String> informacion) {
+    public ModeloInformes(String categoria, String informe, Map<String, Object> informacion) {
         this.categoria = categoria;
         this.informe = informe;
         this.informacion = informacion;
@@ -44,11 +44,11 @@ public class ModeloInformes {
         this.informe = informe;
     }
 
-    public Map<String, String> getInformacion() {
+    public Map<String, Object> getInformacion() {
         return informacion;
     }
 
-    public void setInformacion(Map<String, String> informacion) {
+    public void setInformacion(Map<String, Object> informacion) {
         this.informacion = informacion;
     }
     
