@@ -7,6 +7,7 @@ package Vistas;
 
 import Control.ControlAnimales;
 import Control.Retorno;
+import Modelo.ModeloAnimales;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
@@ -29,6 +30,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
     private ControlAnimales control;
     public VistaHistoriaAnimal vha;
     private ModeloVentanaGeneral vistaGeneral;
+    private String numeroActualAnimal;
 
     public VistaEditarDatosAnimal() {
         initComponents();
@@ -41,6 +43,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         map = (Map.Entry<String[], JLabel>) modeloVista.getModeloDatos();
         vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
         vistaGeneral = modeloVista;
+        numeroActualAnimal = "";
         cargarDatosIniciales();
     }
 
@@ -248,19 +251,44 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Debe Seleccionar una opción.");
                 return;
             }
-        } else if (key[0].equalsIgnoreCase("notas")) {
+        }
+
+        if (key[0].equalsIgnoreCase("notas")) {
             if (txtNotas.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe especificar algo en las notas.");
                 return;
             }
-        } else if (key[0].equalsIgnoreCase("Peso de destete")) {
+        }
+
+        if (key[0].equalsIgnoreCase("Peso de destete")) {
             if (txtPesoDestete.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe especificar un peso.");
                 return;
             }
-        } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
+        }
+
+        if (key[0].equalsIgnoreCase("Fecha de destete")) {
             if (jdFechaDestete.getDate() == null) {
                 JOptionPane.showMessageDialog(this, "Debe especificar la fecha de destete.");
+                return;
+            }
+        }
+
+        if (key[0].equalsIgnoreCase("Número del animal")) {
+            String nuevoNumeroAnimal = txtPesoDestete.getText().trim();
+            if (nuevoNumeroAnimal.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe especificar un número para el animal");
+                return;
+            }
+            
+            if(nuevoNumeroAnimal.equals(numeroActualAnimal)){
+                JOptionPane.showMessageDialog(this, "El número no puede ser el mismo");
+                return;
+            }
+
+            String tipoAnimal = key[4];
+            if (existeElAnimal(tipoAnimal, nuevoNumeroAnimal)) {
+                JOptionPane.showMessageDialog(this, "El número " + nuevoNumeroAnimal + " se encuentra asignado a otro animal");
                 return;
             }
         }
@@ -313,6 +341,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
             txtPesoDestete.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Número del animal")) {
             txtPesoDestete.setText(value.getText());
+            numeroActualAnimal = value.getText();
         } else if (key[0].equalsIgnoreCase("Calificación")) {
             slCalificacion.setValue(Integer.parseInt(value.getText()));
         } else if (key[0].equalsIgnoreCase("Fecha de destete")) {
@@ -368,7 +397,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         if (key[0].equalsIgnoreCase("Número del animal")) {
             consultas.add(
                     "update " + key[1] + " "
-                    + "set " + key[2] + "=" + txtPesoDestete.getText().replace(".", "").replace(",", ".") + " "
+                    + "set " + key[2] + "=" + txtPesoDestete.getText().trim() + " "
                     + "where id=" + key[3]
             );
         }
@@ -412,5 +441,12 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
             JOptionPane.showMessageDialog(this, mensaje);
         }
+    }
+
+    private boolean existeElAnimal(String tipoAnimal, String nuevoNumeroAnimal) {
+        ArrayList<ModeloAnimales> animales = new ArrayList<>();
+        animales = (ArrayList<ModeloAnimales>) control.buscarAnimalPorTipoyNumero(tipoAnimal, nuevoNumeroAnimal);
+
+        return animales.size() > 0;
     }
 }

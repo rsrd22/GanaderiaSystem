@@ -1018,4 +1018,64 @@ public class ControlAnimales implements IControl {
         }
     }
 
+    public Object buscarAnimalPorTipoyNumero(String tipoAnimal, String numeroAnimal) {
+        String consulta = "SELECT * FROM animales\n"
+                + "WHERE\n"
+                + "numero='"+numeroAnimal+"'\n"
+                + "AND id_tipo_animal='"+tipoAnimal+"'";
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloAnimales> lista = new ArrayList<>();
+        animal = mySQL.ListSQL(consulta);
+
+        if (animal.size() > 0) {
+
+            for (Map<String, String> grupo : animal) {
+                lista.add(new ModeloAnimales(
+                        grupo.get("calificacion"),
+                        grupo.get("capado"),
+                        grupo.get("fecha"),
+                        grupo.get("fecha_destete"),
+                        grupo.get("fecha_muerte"),
+                        grupo.get("fecha_nacimiento"),
+                        grupo.get("fecha_venta"),
+                        grupo.get("genero"),
+                        grupo.get("id"),
+                        grupo.get("id_tipo_animal"),
+                        grupo.get("id_usuario"),
+                        grupo.get("notas"),
+                        grupo.get("numero"),
+                        grupo.get("numero_mama"),
+                        "",
+                        grupo.get("peso"),
+                        grupo.get("numero_mama_adoptiva"),
+                        grupo.get("grupo"),
+                        "",
+                        grupo.get("hierro"),
+                        "",
+                        grupo.get("idFinca"),
+                        "",
+                        grupo.get("numero_descendiente"),
+                        grupo.get("estado_descendiente"),
+                        null,
+                        grupo.get("idPropietario"),
+                        "",
+                        grupo.get("muerte"),
+                        grupo.get("venta"),
+                        grupo.get("precio_venta"),
+                        grupo.get("tipo_venta"),
+                        grupo.get("peso_canal"),
+                        grupo.get("descripcion_muerte"),
+                        grupo.get("fecha_novilla"),
+                        grupo.get("peso_destete"),
+                        grupo.get("hierro_fisico"),
+                        grupo.get("implante"),
+                        grupo.get("descornado"),
+                        grupo.get("destete")
+                ));
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
+    }
 }

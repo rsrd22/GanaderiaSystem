@@ -1761,7 +1761,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
         String numeroMadre = txtNumeroMama.getText();
-        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoAnimal.getText());
+        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
         txtNumeroDescendiente.setText(nroDescendiente);
 
         boolean mostrar = true;
@@ -2152,11 +2152,17 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modeloTraslado.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modeloTraslado.setMotivo("CREACIÓN DEL ANIMAL");
         modeloTraslado.setIdAnimal("(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
+                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
+                + "and fecha=NOW()\n"
                 + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
                 + ")");
 
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
-        String codigoAnimal = (editar == Estado.ACTUALIZAR) ? txtCodigoAnimal.getText() : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
+        String codigoAnimal = (editar == Estado.ACTUALIZAR)
+                ? txtCodigoAnimal.getText()
+                : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
+                + "and id_tipo_animal='"+tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id")+"'\n"
+                + "and fecha=NOW()\n"
                 + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
                 + ")";
 
@@ -2390,7 +2396,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         txtPorcentajeCanal.setEnabled(false);
         txtValorVenta.setEnabled(false);
-        
+
         txtPorcentajeCanal.setText(
                 txtPesoCanal.getText().length() == 0
                 ? ""

@@ -2696,7 +2696,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
         if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumeroMama())) {
-            listaHistorico.put(new String[]{"Número del animal", "animales", "numero", ListaDatos.get(0).getId()}, lblNumero);
+            listaHistorico.put(new String[]{
+                "Número del animal", 
+                "animales",
+                "numero", 
+                ListaDatos.get(0).getId(),
+                ListaDatos.get(0).getIdTipoAnimal()
+            }, lblNumero);
             lblNumero.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else {
             lblNumero.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
