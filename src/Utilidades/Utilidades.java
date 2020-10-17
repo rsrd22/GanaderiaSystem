@@ -49,7 +49,6 @@ public class Utilidades {
 //        Matcher m = p.matcher("Hierro fisco");
 //        System.out.println("" + m.find());
 //    }
-
     public static boolean validarSINO(String texto) {
         Pattern p = Pattern.compile(DATOS_HISTORICO);
         Matcher m = p.matcher(texto);
@@ -73,10 +72,10 @@ public class Utilidades {
     public static void EstablecerPermisosVista2(Container vista, int idVista, int ban) {
 
         Component[] componentes = vista.getComponents();
-        ModeloPermisoxModulos  Modulo = new ModeloPermisoxModulos();
+        ModeloPermisoxModulos Modulo = new ModeloPermisoxModulos();
         int bane = ban;
         if (bane == 0) {
-            Modulo = datosUsuario.getModulo(""+idVista);
+            Modulo = datosUsuario.getModulo("" + idVista);
 //            
         }
         int num = 0, numbtns = 0;
@@ -529,7 +528,7 @@ public class Utilidades {
                     ret += (ret.equals("") ? "" : " ") + ini.toUpperCase() + fin;
                 }
             }
-            System.out.println("ret: "+ret);
+            System.out.println("ret: " + ret);
             return ret;
         } catch (Exception e) {
             e.printStackTrace();
@@ -851,7 +850,7 @@ public class Utilidades {
     public static String ValorNULL(String valor) {
         if (valor == null) {
             valor = "NULL";
-        } else if (valor.trim().equals("") || valor.trim().equals("_") ) {
+        } else if (valor.trim().equals("") || valor.trim().equals("_")) {
             valor = "NULL";
         } else {
             if (!valor.equalsIgnoreCase("now()")) {
@@ -867,7 +866,7 @@ public class Utilidades {
         int ret = fd.compareTo(fh);
         return ret;
     }
-    
+
     public static String getIN(String[] datos) {
         String in = "";
         for (String dat : datos) {
@@ -875,7 +874,7 @@ public class Utilidades {
         }
         return in;
     }
-    
+
     public static void LlenarJList(List<Map<String, String>> datos, String keyB, JList Lista, DefaultListModel modlist) {
         LimpiarJList(Lista, modlist);
         for (Map<String, String> dat : datos) {
@@ -883,7 +882,7 @@ public class Utilidades {
         }
         Lista.setModel(modlist);
     }
-        
+
     public static void LlenarJListByArrayList(ArrayList<String> datos, JList Lista, DefaultListModel modlist) {
         LimpiarJList(Lista, modlist);
         for (String dato : datos) {
@@ -895,20 +894,25 @@ public class Utilidades {
     public static String[] getDatosLista(JList lista, List<Map<String, String>> listaDatos, String key) {
         String[] ids = new String[lista.getSelectedIndices().length];
         int x = 0;
-        for (int ind : lista.getSelectedIndices()) {
-            ids[x] = listaDatos.get(ind).get("" + key);
-            x++;
+        if (lista.isSelectedIndex(0)) {
+            ids = new String[lista.getModel().getSize()-1];
+            for (int i = 1; i < lista.getModel().getSize(); i++) {
+                ids[x++] = listaDatos.get(i).get("" + key);
+            }
+        } else {
+            for (int ind : lista.getSelectedIndices()) {
+                ids[x++] = listaDatos.get(ind).get("" + key);
+            }
         }
         return ids;
     }
-    
-    public static String[] getDatosListaByArrayList(JList lista, ArrayList<String> listaDatos) {
-        String[] ids = new String[lista.getSelectedIndices().length];
-        int x = 0;
+
+    public static ArrayList<String> getDatosListaByArrayList(JList lista, ArrayList<String> listaDatos) {
+        ArrayList<String> salida = new ArrayList<>();
         for (int ind : lista.getSelectedIndices()) {
-            ids[x++] = listaDatos.get(ind);
+            salida.add(listaDatos.get(ind));
         }
-        return ids;
+        return salida;
     }
 
     public static void LimpiarJList(JList Lista, DefaultListModel modlist) {

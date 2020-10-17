@@ -304,10 +304,12 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
     }
 
     private void CargarGrupos() {
-        listaGrupos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+        listaGrupos = controlgen.GetComboBox(""
+                + "SELECT 0 AS ID, 'TODOS' AS DESCRIPCION UNION\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
                 + "FROM grupos\n"
                 + "WHERE `id_tipo_animal` = '" + idTipoAnimal + "' AND estado = 'Activo'\n"
-                + "ORDER BY descripcion ASC");
+                + "ORDER BY ID ASC");
         Utilidades.LlenarJList(listaGrupos, "DESCRIPCION", lstGrupos, modlistGrupos);
     }
 
@@ -331,7 +333,6 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         listaInfoAdicional.add("IMPLANTE");
         listaInfoAdicional.add("MUERTE");
         listaInfoAdicional.add("NOTAS");
-        listaInfoAdicional.add("NUMERO");
         listaInfoAdicional.add("NUMERO DESCENDIENTE");
         listaInfoAdicional.add("NUMERO MAMA");
         listaInfoAdicional.add("NUMERO MAMA ADOPTIVA");
@@ -348,12 +349,9 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
     }
 
     public void CrearInforme() {
-        String[] idsInfoAdicional = Utilidades.getDatosListaByArrayList(listInfoAdicional, listaInfoAdicional);
+        ArrayList<String> idsInfoAdicional = Utilidades.getDatosListaByArrayList(listInfoAdicional, listaInfoAdicional);
         String[] idsGrupos = Utilidades.getDatosLista(lstGrupos, listaGrupos, "ID");
         String inGrupos = Utilidades.getIN(idsGrupos);
-        String inInfoAdicional = Utilidades.getIN(idsInfoAdicional);
-        listaInfoAdicional.add(inGrupos);
-        listaInfoAdicional.add(inInfoAdicional);
         
         if(inGrupos.equals("")){
             JOptionPane.showMessageDialog(null, "Por favor seleccione al menos un grupo para realizar la operacion.");
@@ -364,9 +362,13 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de animal para realizar la operacion.");
             return;
         }
-        informacion.put("IDTIPO", idTipoAnimal);
-        informacion.put("IDFINCA", idFinca);
-        informacion.put("INFORMACION", listaInfoAdicional);
+        
+        informacionBasica.put("IDTIPO", idTipoAnimal);
+        informacionBasica.put("IDFINCA", idFinca);
+        informacionBasica.put("GRUPOS", inGrupos);
+        
+        informacion.put("basica", informacionBasica);
+        informacion.put("adicional", idsInfoAdicional);
         
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");
