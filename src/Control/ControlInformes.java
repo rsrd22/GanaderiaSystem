@@ -59,6 +59,9 @@ public class ControlInformes {
                 case TipoInforme.CARGA_MASIVA_ANIMALES:
                     CrearArchivoAnimal();
                     break;
+                case TipoInforme.INFORME_ANIMALES_POR_FINCA:
+                    CrearArchivoAnimalesXFinca(datos);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -239,10 +242,24 @@ public class ControlInformes {
 
     private void CrearArchivoAnimalesXFinca(Map<String, Object> datos){
         try{
-            Map<String, String> infBasica = (Map<String, String>)datos.get("Basica");
-            ArrayList<String> infAdicional = (ArrayList<String>)datos.get("Adicional");
+            Map<String, String> infBasica = (Map<String, String>)datos.get("basica");
+            ArrayList<String> infAdicional = (ArrayList<String>)datos.get("adicional");
             
-            String consulta = "";
+            String consulta = "select finc.`descripcion` as FINCA, tpo.`descripcion` as TIPO_ANIMAL, anim.`numero` as NUM_ANIMAL,\n" +
+                                "anim.`calificacion` as CALIFICACION, anim.`capado` as CAPADO, anim.`descornado` as DESCORNADO, anim.`descripcion_muerte` as DESCRIPCION_MUERTE,\n" +
+                                "anim.`destete` as DESTETE, anim.`fecha_destete` as FECHA_DESTETE, anim.`fecha_muerte` as FECHA_MUERTE,\n" +
+                                "anim.`fecha_nacimiento` as FECHA_NACIMIENTO, anim.`fecha_novilla` as FECHA_NOVILLA, anim.`fecha_venta` as FECHA_VENTA,\n" +
+                                "grup.`descripcion` as GRUPO, anim.`hierro` as HIERRO, anim.`hierro_fisico` as HIERRO_FISICO, anim.`implante` as IMPLANTE,\n" +
+                                "anim.`muerte` as MUERTE, anim.`notas` as NOTAS, anim.`numero_descendiente` as NUMERO_DESCENDIENTE, anim.`numero_mama` as NUMERO_MAMA,\n" +
+                                "anim.`numero_mama_adoptiva` as NUMERO_MAMA_ADOPTIVA, anim.`peso` as PESO, anim.`peso_canal` as PESO_CANAL, anim.`peso_destete` as PESO_DESTETE,\n" +
+                                "anim.`precio_venta` as PRECIO_VENTA, anim.`tipo_venta` as TIPO_VENTA, anim.`genero` as SEXO, anim.`venta` as VENTA\n" +
+                                "from `animales` anim\n" +
+                                "inner join grupos grup on grup.`id` = anim.`grupo`\n" +
+                                "inner join `tipo_animales` tpo on tpo.`id` = anim.`id_tipo_animal`\n" +
+                                "inner join `fincas` finc on finc.`id` = tpo.`id_finca`\n" +
+                                "where tpo.`id` = '"+infBasica.get("IDTIPO")+"' and finc.`id` = '"+infBasica.get("IDFINCA")+"' \n" + 
+                                "and grup.`id` in ("+infBasica.get("GRUPOS")+")\n" +
+                                "order by anim.`numero` asc";
 
             List<Map<String, String>> listaAnimales = mySQL.ListSQL(consulta);
             
