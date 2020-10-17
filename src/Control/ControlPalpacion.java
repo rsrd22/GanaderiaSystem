@@ -445,12 +445,18 @@ public class ControlPalpacion implements IControl {
 
     public List<Map<String, String>> getDatosParto(ModeloAnimales modelo) {
         try {
-            String consulta = "select an.id as IDANIMAL, an.`numero` as NUMERO, DATE_FORMAT(an.`fecha_nacimiento`, '%d/%m/%Y') as FEC_NAC, an.`numero_descendiente` AS NUMPARTO, \n" +
-                                "gr.`descripcion` as GRUPO, an.`genero` as SEXO, ifnull(pes.`peso`, '') as PES_NAC, ifnull(an.notas, '') as NOTAS\n" +
-                                "from animales an\n" +
-                                "inner join `grupos` gr on gr.`id` = an.grupo\n" +
-                                "left join `pesaje` pes on pes.`id_animal` = an.`id` and pes.notas = 'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO'\n" +
-                                "where an.numero_mama = '"+modelo.getNumero()+"' and an.`id_tipo_animal` = '"+modelo.getIdTipoAnimal()+"'";
+            String consulta = "select an.id as IDANIMAL, an.`numero` as NUMERO, "
+                    + "DATE_FORMAT(an.`fecha_nacimiento`, '%d/%m/%Y') as FEC_NAC, "
+                    + "an.`numero_descendiente` AS NUMPARTO, \n"
+                    + "gr.`descripcion` as GRUPO, an.`genero` as SEXO, "
+                    + "ifnull(pes.`peso`, '') as PES_NAC, ifnull(an.notas, '') as NOTAS\n"
+                    + "from animales an\n"
+                    + "inner join `grupos` gr on gr.`id` = an.grupo\n"
+                    + "left join `pesaje` pes on pes.`id_animal` = an.`id` "
+                    + "and pes.notas = 'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO'\n"
+                    + "where an.numero_mama = '" + modelo.getNumero() + "' "
+                    + "and an.`id_tipo_animal` = '" + modelo.getIdTipoAnimal() + "'\n"
+                    + "ORDER BY an.`numero_descendiente` ASC";
 
             System.out.println("getDatosParto...>" + consulta);
 
