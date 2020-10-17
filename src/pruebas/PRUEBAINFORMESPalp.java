@@ -375,7 +375,7 @@ public class PRUEBAINFORMESPalp extends javax.swing.JFrame {
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");
         informes.setInforme("1");
-        informes.setInformacion(infor);
+//        informes.setInformacion(infor);
         
         ControlInformes contInformes = new ControlInformes();
         contInformes.GenerarInformes(informes);
