@@ -9,6 +9,7 @@ import Control.ControlGeneral;
 import Control.ControlInformes;
 import Modelo.ModeloInformes;
 import Utilidades.Utilidades;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -170,6 +171,11 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
             public Object getElementAt(int i) { return strings[i]; }
         });
         lstGrupos.setSelectionBackground(new java.awt.Color(59, 123, 50));
+        lstGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                lstGruposMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstGrupos);
 
         lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -265,6 +271,10 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
+
+    private void lstGruposMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstGruposMouseReleased
+        seleccionarLista(evt);
+    }//GEN-LAST:event_lstGruposMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox cbFinca;
@@ -377,7 +387,17 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
 
         ControlInformes contInformes = new ControlInformes();
         contInformes.GenerarInformes(informes);
+    }
 
+    private void seleccionarLista(MouseEvent evt) {
+        if (lstGrupos.isSelectedIndex(0)) {
+            for (int i = 1; i < lstGrupos.getModel().getSize(); i++) {
+                lstGrupos.setSelectedIndex(i);
+            }
+        } else {
+            for (int ind : lstGrupos.getSelectedIndices()) {
+            }
+        }
     }
 
 }

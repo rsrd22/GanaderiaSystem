@@ -202,6 +202,9 @@
               <Color blue="32" green="7b" red="3b" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lstGruposMouseReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
