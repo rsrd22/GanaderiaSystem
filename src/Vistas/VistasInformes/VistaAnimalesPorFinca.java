@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,6 +114,7 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lblTid1 = new javax.swing.JLabel();
         cbFinca = new javax.swing.JComboBox();
@@ -127,11 +129,23 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         listInfoAdicional = new javax.swing.JList();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
+        layout.columnWidths = new int[] {0, 15, 0};
+        layout.rowHeights = new int[] {0, 11, 0, 11, 0, 11, 0, 11, 0};
+        setLayout(layout);
 
         lblTid1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid1.setForeground(new java.awt.Color(59, 123, 50));
         lblTid1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid1.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        add(lblTid1, gridBagConstraints);
 
         cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbFinca.setForeground(new java.awt.Color(59, 123, 50));
@@ -140,11 +154,28 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
                 cbFincaActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        add(cbFinca, gridBagConstraints);
 
         lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid2.setForeground(new java.awt.Color(59, 123, 50));
         lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid2.setText("Tipo Animales");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 15);
+        add(lblTid2, gridBagConstraints);
 
         cbTipoAnimales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoAnimales.setForeground(new java.awt.Color(59, 123, 50));
@@ -153,15 +184,41 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
                 cbTipoAnimalesActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 15);
+        add(cbTipoAnimales, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(59, 123, 50));
         jLabel1.setText("Informe");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(11, 14, 0, 0);
+        add(jLabel1, gridBagConstraints);
 
         lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid4.setForeground(new java.awt.Color(59, 123, 50));
         lblTid4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid4.setText("Grupos");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        add(lblTid4, gridBagConstraints);
 
         lstGrupos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lstGrupos.setForeground(new java.awt.Color(59, 123, 50));
@@ -178,10 +235,28 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(lstGrupos);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 15, 0);
+        add(jScrollPane2, gridBagConstraints);
+
         lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid5.setForeground(new java.awt.Color(59, 123, 50));
         lblTid5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid5.setText("Información adicional");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 15);
+        add(lblTid5, gridBagConstraints);
 
         listInfoAdicional.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         listInfoAdicional.setForeground(new java.awt.Color(59, 123, 50));
@@ -193,59 +268,15 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         listInfoAdicional.setSelectionBackground(new java.awt.Color(59, 123, 50));
         jScrollPane3.setViewportView(listInfoAdicional);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTid1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(lblTid2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTid4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(68, 68, 68)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTid5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(cbFinca, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(10, 10, 10)
-                            .addComponent(cbTipoAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTid1)
-                    .addComponent(lblTid2))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbFinca, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbTipoAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTid4)
-                        .addGap(0, 0, 0)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTid5)
-                        .addGap(0, 0, 0)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 15, 15);
+        add(jScrollPane3, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -362,24 +393,24 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
         ArrayList<String> idsInfoAdicional = Utilidades.getDatosListaByArrayList(listInfoAdicional, listaInfoAdicional);
         String[] idsGrupos = Utilidades.getDatosLista(lstGrupos, listaGrupos, "ID");
         String inGrupos = Utilidades.getIN(idsGrupos);
-        
-        if(inGrupos.equals("")){
+
+        if (inGrupos.equals("")) {
             JOptionPane.showMessageDialog(null, "Por favor seleccione al menos un grupo para realizar la operacion.");
             return;
         }
-        
-        if(idTipoAnimal.equals("-1")){
+
+        if (idTipoAnimal.equals("-1")) {
             JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de animal para realizar la operacion.");
             return;
         }
-        
+
         informacionBasica.put("IDTIPO", idTipoAnimal);
         informacionBasica.put("IDFINCA", idFinca);
         informacionBasica.put("GRUPOS", inGrupos);
-        
+
         informacion.put("basica", informacionBasica);
         informacion.put("adicional", idsInfoAdicional);
-        
+
         ModeloInformes informes = new ModeloInformes();
         informes.setCategoria("0");
         informes.setInforme("3");
@@ -390,12 +421,21 @@ public class VistaAnimalesPorFinca extends javax.swing.JPanel {
     }
 
     private void seleccionarLista(MouseEvent evt) {
-        if (lstGrupos.isSelectedIndex(0)) {
-            for (int i = 1; i < lstGrupos.getModel().getSize(); i++) {
-                lstGrupos.setSelectedIndex(i);
+        int[] indices = lstGrupos.getSelectedIndices();
+        int currentIndex = lstGrupos.getLeadSelectionIndex();
+        int tamanio = lstGrupos.getModel().getSize();
+
+        if (currentIndex == 0) {
+            if (indices[0] == 0) {
+                lstGrupos.addSelectionInterval(0, tamanio - 1);
+            } else {
+                lstGrupos.removeSelectionInterval(0, tamanio - 1);
             }
         } else {
-            for (int ind : lstGrupos.getSelectedIndices()) {
+            if (indices.length == tamanio - 1) {
+                lstGrupos.setSelectedIndex(0);
+            } else {
+                lstGrupos.removeSelectionInterval(0, 0);
             }
         }
     }

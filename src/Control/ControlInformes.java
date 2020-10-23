@@ -240,29 +240,53 @@ public class ControlInformes {
         }
     }
 
-    private void CrearArchivoAnimalesXFinca(Map<String, Object> datos){
-        try{
-            Map<String, String> infBasica = (Map<String, String>)datos.get("basica");
-            ArrayList<String> infAdicional = (ArrayList<String>)datos.get("adicional");
+    private void CrearArchivoAnimalesXFinca(Map<String, Object> datos) {
+        try {
+            Map<String, String> infBasica = (Map<String, String>) datos.get("basica");
+            ArrayList<String> infAdicional = (ArrayList<String>) datos.get("adicional");
+
+            String consulta = "select finc.`descripcion` as FINCA, tpo.`descripcion` as TIPO_ANIMAL, anim.`numero` as NUM_ANIMAL,\n"
+                    + "anim.`calificacion` as CALIFICACION, anim.`capado` as CAPADO, anim.`descornado` as DESCORNADO, anim.`descripcion_muerte` as DESCRIPCION_MUERTE,\n"
+                    + "anim.`destete` as DESTETE, anim.`fecha_destete` as FECHA_DESTETE, anim.`fecha_muerte` as FECHA_MUERTE,\n"
+                    + "anim.`fecha_nacimiento` as FECHA_NACIMIENTO, anim.`fecha_novilla` as FECHA_NOVILLA, anim.`fecha_venta` as FECHA_VENTA,\n"
+                    + "grup.`descripcion` as GRUPO, anim.`hierro` as HIERRO, anim.`hierro_fisico` as HIERRO_FISICO, anim.`implante` as IMPLANTE,\n"
+                    + "anim.`muerte` as MUERTE, anim.`notas` as NOTAS, anim.`numero_descendiente` as NUMERO_DESCENDIENTE, anim.`numero_mama` as NUMERO_MAMA,\n"
+                    + "anim.`numero_mama_adoptiva` as NUMERO_MAMA_ADOPTIVA, anim.`peso` as PESO, anim.`peso_canal` as PESO_CANAL, anim.`peso_destete` as PESO_DESTETE,\n"
+                    + "anim.`precio_venta` as PRECIO_VENTA, anim.`tipo_venta` as TIPO_VENTA, anim.`genero` as SEXO, anim.`venta` as VENTA\n"
+                    + "from `animales` anim\n"
+                    + "inner join grupos grup on grup.`id` = anim.`grupo`\n"
+                    + "inner join `tipo_animales` tpo on tpo.`id` = anim.`id_tipo_animal`\n"
+                    + "inner join `fincas` finc on finc.`id` = tpo.`id_finca`\n"
+                    + "where tpo.`id` = '" + infBasica.get("IDTIPO") + "' and finc.`id` = '" + infBasica.get("IDFINCA") + "' \n"
+                    + "and grup.`id` in (" + infBasica.get("GRUPOS") + ")\n"
+                    + "order by anim.`numero` asc";
             
-            String consulta = "select finc.`descripcion` as FINCA, tpo.`descripcion` as TIPO_ANIMAL, anim.`numero` as NUM_ANIMAL,\n" +
-                                "anim.`calificacion` as CALIFICACION, anim.`capado` as CAPADO, anim.`descornado` as DESCORNADO, anim.`descripcion_muerte` as DESCRIPCION_MUERTE,\n" +
-                                "anim.`destete` as DESTETE, anim.`fecha_destete` as FECHA_DESTETE, anim.`fecha_muerte` as FECHA_MUERTE,\n" +
-                                "anim.`fecha_nacimiento` as FECHA_NACIMIENTO, anim.`fecha_novilla` as FECHA_NOVILLA, anim.`fecha_venta` as FECHA_VENTA,\n" +
-                                "grup.`descripcion` as GRUPO, anim.`hierro` as HIERRO, anim.`hierro_fisico` as HIERRO_FISICO, anim.`implante` as IMPLANTE,\n" +
-                                "anim.`muerte` as MUERTE, anim.`notas` as NOTAS, anim.`numero_descendiente` as NUMERO_DESCENDIENTE, anim.`numero_mama` as NUMERO_MAMA,\n" +
-                                "anim.`numero_mama_adoptiva` as NUMERO_MAMA_ADOPTIVA, anim.`peso` as PESO, anim.`peso_canal` as PESO_CANAL, anim.`peso_destete` as PESO_DESTETE,\n" +
-                                "anim.`precio_venta` as PRECIO_VENTA, anim.`tipo_venta` as TIPO_VENTA, anim.`genero` as SEXO, anim.`venta` as VENTA\n" +
-                                "from `animales` anim\n" +
-                                "inner join grupos grup on grup.`id` = anim.`grupo`\n" +
-                                "inner join `tipo_animales` tpo on tpo.`id` = anim.`id_tipo_animal`\n" +
-                                "inner join `fincas` finc on finc.`id` = tpo.`id_finca`\n" +
-                                "where tpo.`id` = '"+infBasica.get("IDTIPO")+"' and finc.`id` = '"+infBasica.get("IDFINCA")+"' \n" + 
-                                "and grup.`id` in ("+infBasica.get("GRUPOS")+")\n" +
-                                "order by anim.`numero` asc";
+            consulta = "SELECT finc.`descripcion` AS FINCA, tpo.`descripcion` AS TIPO_ANIMAL, anim.`numero` AS NUM_ANIMAL,\n"
+                    + "anim.`calificacion` AS CALIFICACION, anim.`capado` AS CAPADO, IF(anim.`descornado` = '0', 'No', 'Si') AS DESCORNADO,\n"
+                    + "anim.`descripcion_muerte` AS DESCRIPCION_MUERTE,IFNULL(anim.`destete`, '') AS DESTETE,\n"
+                    + "IF(anim.`fecha_destete` = '1900-01-01', '', DATE_FORMAT(anim.`fecha_destete`, '%d/%m/%Y')) AS FECHA_DESTETE, IF(anim.`fecha_muerte` = '1900-01-01', '', DATE_FORMAT(anim.`fecha_muerte`, '%d/%m/%Y')) AS FECHA_MUERTE,\n"
+                    + "DATE_FORMAT(anim.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO,\n"
+                    + "IF(anim.`fecha_novilla` = '1900-01-01', '', DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y')) AS FECHA_NOVILLA,\n"
+                    + "IF(anim.`fecha_venta` = '1900-01-01', '', DATE_FORMAT(anim.`fecha_venta`, '%d/%m/%Y')) AS FECHA_VENTA,\n"
+                    + "grup.`descripcion` AS GRUPO,\n"
+                    + "IFNULL(hierr.`descripcion`, '') AS HIERRO,\n"
+                    + "IF(anim.`hierro_fisico` = '0', 'No', 'Si') AS HIERRO_FISICO, IF(anim.`implante` = '0', 'No', 'Si') AS IMPLANTE, IF(anim.`muerte` = '0', 'No', 'Si') AS MUERTE, anim.`notas` AS NOTAS, anim.`numero_descendiente` AS NUMERO_DESCENDIENTE,\n"
+                    + "anim.`numero_mama` AS NUMERO_MAMA, IFNULL(anim.`numero_mama_adoptiva`, '') AS NUMERO_MAMA_ADOPTIVA, anim.`peso` AS PESO,\n"
+                    + "IFNULL(anim.`peso_canal`, '') AS PESO_CANAL, anim.`peso_destete` AS PESO_DESTETE,\n"
+                    + "IFNULL(anim.`precio_venta`, '') AS PRECIO_VENTA, IFNULL(anim.`tipo_venta`, '') AS TIPO_VENTA, anim.`genero` AS SEXO,\n"
+                    + "IF(anim.`venta` = '0', 'No', 'Si') AS VENTA\n"
+                    + "FROM `animales` anim\n"
+                    + "INNER JOIN grupos grup ON grup.`id` = anim.`grupo`\n"
+                    + "INNER JOIN `tipo_animales` tpo ON tpo.`id` = anim.`id_tipo_animal`\n"
+                    + "INNER JOIN `fincas` finc ON finc.`id` = tpo.`id_finca`\n"
+                    + "LEFT JOIN `propietarioxhierro` hierr ON hierr.`id` = anim.`hierro`\n"
+                    + "where tpo.`id` = '" + infBasica.get("IDTIPO") + "' "
+                    + "and finc.`id` = '" + infBasica.get("IDFINCA") + "' \n"
+                    + "and grup.`id` in (" + infBasica.get("GRUPOS") + ")\n"
+                    + "ORDER BY anim.`numero` ASC";
 
             List<Map<String, String>> listaAnimales = mySQL.ListSQL(consulta);
-            
+
             if (listaAnimales.size() > 0) {
                 //<editor-fold defaultstate="collapsed" desc="ENCABEZADO">
                 Encabezado.add("NUM");
@@ -270,8 +294,8 @@ public class ControlInformes {
                 Encabezado.add("TIPO ANIMAL");
                 Encabezado.add("NUMERO ANIMAL");
                 if (infAdicional.size() > 0) {
-                    for(String adi : infAdicional){
-                        Encabezado.add("" +adi.toUpperCase()); 
+                    for (String adi : infAdicional) {
+                        Encabezado.add("" + adi.toUpperCase());
                     }
                 }
 //</editor-fold>
@@ -284,13 +308,12 @@ public class ControlInformes {
                     listAux.add("" + anim.get("FINCA"));
                     listAux.add("" + anim.get("TIPO_ANIMAL"));
                     listAux.add("" + anim.get("NUM_ANIMAL"));
-                    
+
                     if (infAdicional.size() > 0) {
-                        for(String adi : infAdicional){
-                             listAux.add("" + anim.get(""+adi.toUpperCase().replace(" ", "_")));
+                        for (String adi : infAdicional) {
+                            listAux.add("" + anim.get("" + adi.toUpperCase().replace(" ", "_")));
                         }
                     }
-
 
                     ListaDatos.add(listAux);
                 }
@@ -301,7 +324,7 @@ public class ControlInformes {
             e.printStackTrace();
         }
     }
-    
+
     private void CrearArchivoAnimal() {
         try {
             Encabezado.add("NUM_ANIMAL");

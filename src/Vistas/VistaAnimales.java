@@ -1181,9 +1181,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkVenta.setBorderPainted(true);
         chkVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         chkVenta.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        chkVenta.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chkVentaStateChanged(evt);
+        chkVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                chkVentaMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1203,7 +1203,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 143;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1230,7 +1230,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 190;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1257,7 +1257,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 190;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1276,7 +1276,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 135;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1298,7 +1298,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1320,7 +1320,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.3333333333333333;
@@ -1359,9 +1359,9 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         chkMuerte.setBorderPainted(true);
         chkMuerte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         chkMuerte.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        chkMuerte.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chkMuerteStateChanged(evt);
+        chkMuerte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                chkMuerteMouseReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1385,6 +1385,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.ipady = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.33333333333;
+        gridBagConstraints.weighty = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         panelInfoMuerte.add(jdFechaMuerte, gridBagConstraints);
 
@@ -1406,7 +1407,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weighty = 0.9;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 15, 15);
         panelInfoMuerte.add(ScrollCausaMuerte, gridBagConstraints);
 
@@ -1784,24 +1785,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         }
     }//GEN-LAST:event_chkCapadoStateChanged
 
-    private void chkMuerteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkMuerteStateChanged
-        boolean chequeado = chkMuerte.isSelected();
-        panelInfoMuerte.setVisible(chequeado);
-        if (panelInfoVenta.isVisible()) {
-            panelInfoVenta.setVisible(!chequeado);
-            chkVenta.setSelected(!chequeado);
-        }
-    }//GEN-LAST:event_chkMuerteStateChanged
-
-    private void chkVentaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkVentaStateChanged
-        boolean chequeado = chkVenta.isSelected();
-        panelInfoVenta.setVisible(chequeado);
-        if (panelInfoMuerte.isVisible()) {
-            panelInfoMuerte.setVisible(!chequeado);
-            chkMuerte.setSelected(!chequeado);
-        }
-    }//GEN-LAST:event_chkVentaStateChanged
-
     private void txtPesoDesteteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoDesteteKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPesoDesteteKeyReleased
@@ -1826,6 +1809,16 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private void txtValorVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorVentaKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValorVentaKeyReleased
+
+    private void chkVentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkVentaMouseReleased
+        boolean venta = chkVenta.isSelected();
+        casoVenta();
+    }//GEN-LAST:event_chkVentaMouseReleased
+
+    private void chkMuerteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkMuerteMouseReleased
+        boolean muerte = chkMuerte.isSelected();
+        casoMuerte();
+    }//GEN-LAST:event_chkMuerteMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
@@ -1997,16 +1990,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                     jdFechaDeNovilla.setDate(fecha);
                 }
 
-//                if (modelo.getFechaDestete().equals(FECHA_POR_DEFECTO)) {
-//                    jdFechaDestete.setVisible(false);
-//                    txtPesoDestete.setVisible(false);
-//                } else {
                 jdFechaDestete.setVisible(true);
                 txtPesoDestete.setVisible(true);
                 txtPesoDestete.setText(modelo.getPesoDestete());
                 fecha = formato.parse(modelo.getFechaDestete());
                 jdFechaDestete.setDate(fecha);
-//                }
 
                 if (modelo.getFechaMuerte().equals(FECHA_POR_DEFECTO)) {
                     jdFechaMuerte.setVisible(false);
@@ -2161,7 +2149,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         String codigoAnimal = (editar == Estado.ACTUALIZAR)
                 ? txtCodigoAnimal.getText()
                 : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
-                + "and id_tipo_animal='"+tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id")+"'\n"
+                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
                 + "and fecha=NOW()\n"
                 + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
                 + ")";
@@ -2369,24 +2357,23 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         if (chkMuerte.isSelected()) {
             EstadoVenta(false);
             EstadoMuerte(true);
-            chkVenta.setEnabled(false);
+            chkVenta.setSelected(false);
         } else {
-            chkVenta.setEnabled(true);
+            chkVenta.setSelected(true);
+            EstadoVenta(true);
+            EstadoMuerte(false);
         }
-//                boolean chequeado = chkMuerte.isSelected();
-//                chkVenta.setEnabled(!chequeado);
-//                chkVenta.setSelected(false);
-//                EstadoVenta(false);
-//                EstadoMuerte(chequeado);
     }
 
     private void casoVenta() {
         if (chkVenta.isSelected()) {
             EstadoVenta(true);
             EstadoMuerte(false);
-            chkMuerte.setEnabled(false);
+            chkMuerte.setSelected(false);
         } else {
-            chkMuerte.setEnabled(true);
+            chkMuerte.setSelected(true);
+            EstadoVenta(false);
+            EstadoMuerte(true);
         }
     }
 
