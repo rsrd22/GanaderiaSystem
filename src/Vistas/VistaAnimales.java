@@ -72,7 +72,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
-
+        txtValorVenta.setEnabled(false);
+        txtPorcentajeCanal.setEnabled(false);
         cbFinca.setBackground(Color.YELLOW);
 
         panelFechaNovilla.setVisible(false);
@@ -214,6 +215,18 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
 
         control = new Control(true, txtPesoDestete);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkDestete);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkVenta);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, chkMuerte);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
@@ -2035,6 +2048,11 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             cargarComboTipoAnimales();
             cargarComboPropietarios();
         }
+        chkDestete.setEnabled(false);
+        chkVenta.setEnabled(false);
+        chkVenta.setEnabled(false);
+        chkMuerte.setEnabled(false);
+        chkMuerte.setEnabled(false);
     }
 
     private void Guardar() {
@@ -2269,6 +2287,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_MODIFICAR, botones);
         cbGrupos.setEnabled(false);
         editar = Estado.ACTUALIZAR;
+        
+        chkDestete.setEnabled(true);
+        chkVenta.setEnabled(true);
+        chkMuerte.setEnabled(true);
     }
 
     private void Descartar() {
