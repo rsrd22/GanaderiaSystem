@@ -964,9 +964,9 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN fincas d ON d.id=b.id_finca\n"
                     + "LEFT JOIN propietarioxhierro e ON a.hierro=e.id\n"
                     + "WHERE\n"
-                    + "c.pesable='1' and d.id=" + IDFINCA + " and b.id=" + IDTIPOANIMAL + "\n"
+                    + "c.pesable='1' and a.muerte='0' AND venta='0' and d.id=" + IDFINCA + " and b.id=" + IDTIPOANIMAL + "\n"
                     + "ORDER BY\n"
-                    + "a.id ASC";
+                    + "CONVERT(a.numero,DOUBLE) ASC";
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);
@@ -1004,8 +1004,8 @@ public class ControlAnimales implements IControl {
                     + "       AND fecha_palpacion BETWEEN DATE_SUB('" + FECHA + "',  INTERVAL 15 DAY) AND DATE_ADD('" + FECHA + "',  INTERVAL 15 DAY)\n"
                     + "	GROUP BY palp.id_animal \n"
                     + ") tbl ON tbl.IDANIMAL = anim.id \n"
-                    + "WHERE grup.palpable = '1' AND finc.id = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "'\n"
-                    + "ORDER BY anim.id ASC";
+                    + "WHERE grup.palpable = '1' AND a.muerte='0' AND venta='0' AND finc.id = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "'\n"
+                    + "ORDER BY CONVERT(anim.numero,DOUBLE) ASC";
 
             List<Map<String, String>> palpacion = new ArrayList<Map<String, String>>();
 

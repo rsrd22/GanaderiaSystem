@@ -34,7 +34,7 @@ public class ControlPesaje implements IControl {
     @Override
     public Object ObtenerDatosKey(String ID) {
         String consulta = "SELECT * FROM pesaje\n"
-                + " WHERE id_animal=" + ID + " ORDER BY fecha DESC";
+                + " WHERE id_animal=" + ID + " ORDER BY CONVERT(fecha, DATE) DESC";
         List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
         pesajes = mySQL.ListSQL(consulta);
@@ -126,9 +126,9 @@ public class ControlPesaje implements IControl {
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
-                + "destete = '" + modelo.getDestete()+ "',\n"
+                + "destete = '" + modelo.getDestete() + "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
-                + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
+                + "peso_destete = '" + modelo.getPeso_destete() + "',\n"
                 + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
@@ -214,9 +214,9 @@ public class ControlPesaje implements IControl {
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
                 + "descornado = '" + modelo.getDescornado() + "',\n"
-                + "destete = '" + modelo.getDestete()+ "',\n"
+                + "destete = '" + modelo.getDestete() + "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
-                + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
+                + "peso_destete = '" + modelo.getPeso_destete() + "',\n"
                 + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
@@ -243,7 +243,9 @@ public class ControlPesaje implements IControl {
         ModeloPesaje modelo = (ModeloPesaje) o;
 
         ArrayList<ModeloPesaje> lista = new ArrayList<>();
+        ArrayList<ModeloMedicamentosPorPesaje> listaMedicamentos = new ArrayList<>();
         lista = (ArrayList<ModeloPesaje>) ObtenerDatosKey(modelo.getId_animal());
+        listaMedicamentos = (ArrayList<ModeloMedicamentosPorPesaje>) ObtenerListaMedicamentos(modelo.getId());
 
         if (lista.size() > 1) {
             //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS VALORES DEL REGISTRO ANTERIOR">
@@ -256,26 +258,29 @@ public class ControlPesaje implements IControl {
 //</editor-fold>
 
             consultas.add(
-                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
-                    "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
-            //</editor-fold>
-            );
-            consultas.add(
                     //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DEL PESO">
-                    "DELETE FROM pesaje WHERE id_pesaje=" + modelo.getId()
+                    "DELETE FROM pesaje WHERE id=" + modelo.getId()
             //</editor-fold>
             );
+
+            if (listaMedicamentos.size() > 0) {
+                consultas.add(
+                        //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                        "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
+                //</editor-fold>
+                );
+            }
             //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
             consultas.add("update animales\n"
                     + "set \n"
                     + "peso = " + modelo.getPeso() + ",\n"
-                    + "hierro_fisico = '" + modelo.getHierro() + "',\n"
-                    + "implante = '" + modelo.getImplante() + "',\n"
-                    + "descornado = '" + modelo.getDescornado() + "',\n"
-                    + "destete = '" + modelo.getDestete()+ "',\n"
-                    + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
-                    + "peso_destete = '" + modelo.getPeso_destete()+ "',\n"
-                    + "hierro = " + modelo.getIdHierro() + "\n"
+                    + "hierro_fisico = " + (modelo.getHierro().isEmpty() ? "hierro_fisico" : "'" + modelo.getHierro() + "'") + ",\n"
+                    + "implante = " + (modelo.getImplante().isEmpty() ? "implante" : "'" + modelo.getImplante() + "'") + ",\n"
+                    + "descornado = " + (modelo.getDescornado().isEmpty() ? "descornado" : "'" + modelo.getDescornado() + "'") + ",\n"
+                    + "destete = " + (modelo.getDestete().isEmpty() ? "destete" : "'" + modelo.getDestete() + "'") + ",\n"
+                    + "fecha_destete = " + (modelo.getFechaDestete().isEmpty() ? "fecha_destete" : "'" + modelo.getFechaDestete() + "'") + ",\n"
+                    + "peso_destete = " + (modelo.getPeso_destete().isEmpty() ? "peso_destete" : "'" + modelo.getPeso_destete() + "'") + ",\n"
+                    + "hierro = " + (modelo.getIdHierro().isEmpty() ? "hierro" : modelo.getIdHierro()) + "\n"
                     + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>
 
@@ -462,4 +467,21 @@ public class ControlPesaje implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public Object ObtenerListaMedicamentos(String idPesaje) {
+        String consulta = "SELECT * FROM pesajexmedicamento WHERE id_pesaje=" + idPesaje;
+        List<Map<String, String>> medicamentos = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloMedicamentosPorPesaje> lista = new ArrayList<>();
+        medicamentos = mySQL.ListSQL(consulta);
+
+        if (medicamentos.size() > 0) {
+            for (Map<String, String> medicamento : medicamentos) {
+                lista.add(new ModeloMedicamentosPorPesaje());
+            }
+            return lista;
+        } else {
+            return lista;
+        }
+    }
+
 }

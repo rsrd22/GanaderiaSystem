@@ -316,7 +316,15 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
 
-        control = new Control(true, chkCapado);
+        control = new Control(true, txtValorVenta);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(false, txtPorcentajeCanal);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(false, chkCapado);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
     }
@@ -1824,11 +1832,17 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }//GEN-LAST:event_txtValorVentaKeyReleased
 
     private void chkVentaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkVentaMouseReleased
+        if (!chkVenta.isEnabled()) {
+            return;
+        }
         boolean venta = chkVenta.isSelected();
         casoVenta();
     }//GEN-LAST:event_chkVentaMouseReleased
 
     private void chkMuerteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkMuerteMouseReleased
+        if (!chkMuerte.isEnabled()) {
+            return;
+        }
         boolean muerte = chkMuerte.isSelected();
         casoMuerte();
     }//GEN-LAST:event_chkMuerteMouseReleased
@@ -1978,8 +1992,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             txtObservacionMuerte.setVisible(chkMuerte.isSelected());
             txtObservacionMuerte.setText(Utilidades.decodificarElemento(modelo.getDescripcionMuerte()));
             cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
-            txtPrecioVenta.setText(modelo.getPrecioVenta());
-            txtPesoCanal.setText(modelo.getPesoCanal());
+            txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta()));
+            txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal()));
 
             if (chkAdoptivo.isSelected()) {
                 txtNumeroMamaAdoptiva.setText(modelo.getNumeroMamaAdoptiva());
@@ -2287,7 +2301,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_MODIFICAR, botones);
         cbGrupos.setEnabled(false);
         editar = Estado.ACTUALIZAR;
-        
+
         chkDestete.setEnabled(true);
         chkVenta.setEnabled(true);
         chkMuerte.setEnabled(true);
@@ -2400,8 +2414,16 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }
 
     private void setCalculosVenta() {
-        String precioVenta = txtPrecioVenta.getText().indexOf(".") > -1 ? txtPrecioVenta.getText().replace(".", "") : txtPrecioVenta.getText();
-        String porcentajeCanal = txtPesoCanal.getText().indexOf(".") > -1 ? txtPesoCanal.getText().replace(".", "") : txtPesoCanal.getText();
+        if (txtPrecioVenta.getText().lastIndexOf(",") == txtPrecioVenta.getText().length() - 1) {
+            return;
+        }
+
+        String precioVenta = txtPrecioVenta.getText().contains(".") || txtPrecioVenta.getText().contains(",")
+                ? txtPrecioVenta.getText().replace(".", "").replace(",", ".")
+                : txtPrecioVenta.getText();
+        String porcentajeCanal = txtPesoCanal.getText().contains(".") || txtPesoCanal.getText().contains(",")
+                ? txtPesoCanal.getText().replace(".", "").replace(",", ".")
+                : txtPesoCanal.getText();
 
         txtPorcentajeCanal.setEnabled(false);
         txtValorVenta.setEnabled(false);

@@ -692,7 +692,8 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String numeroMadre = modeloDatos.getNumero();
-        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, modelo.getIdTipoAnimal());
+        String idTipoAnimal = modeloDatos.getIdTipoAnimal();
+        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, idTipoAnimal);
         String idAnimal = "(SELECT a.id FROM animales a WHERE a.numero='" + modeloDatos.getNumero() + "' "
                 + "AND a.numero_descendiente=" + nroDescendiente + " AND a.estado_descendiente=0"
                 + ")";
@@ -789,8 +790,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             case Retorno.EXITO:
                 mensaje = "Registro guardado satisfactoriamente.";
                 Parametros.actualizarHistoricoAnimal = true;
-                vha.getDatosHembra();
                 JOptionPane.showMessageDialog(this, mensaje);
+                vha.getDatosHembra();
+                vha.GetDatosParto();
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:
