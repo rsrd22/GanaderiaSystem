@@ -6,11 +6,13 @@
 
 package Vistas;
 
-import Control.ControlGeneral;
+import Control.*;
+import Modelo.*;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,6 +20,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +32,8 @@ import javax.swing.table.JTableHeader;
  */
 public class VistaHistoricoMuertes extends javax.swing.JPanel {
     private ControlGeneral controlGral;
+    private ControlMuertesVentasHistoricos controlMyVHist;
+    private ModeloMuertesVentasHistoricos modeloMyVHist;
     private List<Map<String, String>> fincas;
     private List<Map<String, String>> tipoAnimales;
     private List<Map<String, String>> muertes;
@@ -50,9 +55,12 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
             "Genero",         //2
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Muerte</p></html>", //3
             "Motivo Muerte", //4
-            ""                //5
+            "",                //5
+            ""                //6
         };
         controlGral = new ControlGeneral();
+        controlMyVHist = new ControlMuertesVentasHistoricos();
+        modeloMyVHist = new ModeloMuertesVentasHistoricos();
         InicializarTblMuertes();
         cargarComboFincas();
     }
@@ -64,7 +72,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -95,6 +103,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         tabla.getColumnModel().getColumn(3).setPreferredWidth(80);//3 
         tabla.getColumnModel().getColumn(4).setPreferredWidth(250); //4
         tabla.getColumnModel().getColumn(5).setPreferredWidth(80); //5
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(80); //6
         
         tabla.getTableHeader().setReorderingAllowed(false);
 
@@ -144,7 +153,6 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         if (muertes.size() == 0) {
             return;
         }
-
         MostrarTabla();
     }
 
@@ -160,11 +168,12 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
                     (""+muertes.get(i).get("genero").charAt(0)).toUpperCase(),
                     muertes.get(i).get("fecha_muerte"),
                     Utilidades.decodificarElemento(muertes.get(i).get("descripcion_muerte")),
-                    "Modificar"
+                    "Modificar",
+                    "Anular"
                 }
             );
         }
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -323,6 +332,22 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
             objetoVentana = new ModeloVentanaGeneral(this, new VistaModificarMuerte(), 1, muertes.get(fila));
             objetoVentana.setFila(fila);
             new VistaGeneral(objetoVentana).setVisible(true);
+        }else if(cola == 6){
+            int resp = JOptionPane.showConfirmDialog(null, "¿está seguro de Anular es ta Muerte?", "Anular Muerte", JOptionPane.YES_NO_OPTION);
+            if(resp == JOptionPane.YES_OPTION){
+                modeloMyVHist.setEstado("Activo");
+                modeloMyVHist.setIdAnimal(""+muertes.get(fila).get("id"));
+                modeloMyVHist.setTipo("muerte");
+                modeloMyVHist.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+                
+                int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
+                if(ret == Retorno.EXITO){
+                    JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
+                    cargarHistoricoMuertes();
+                }
+                
+            }
+            
         }
     }//GEN-LAST:event_tablaMouseReleased
 
