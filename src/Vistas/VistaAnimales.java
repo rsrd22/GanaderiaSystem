@@ -1221,6 +1221,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         jdFechaVenta.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        jdFechaVenta.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -1399,6 +1400,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         jdFechaMuerte.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        jdFechaMuerte.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -1981,19 +1983,14 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
             chkCapado.setSelected(capado);
             txtNotas.setText(Utilidades.decodificarElemento(modelo.getNotas()));
             chkAdoptivo.setSelected(adoptado);
+            chkVenta.setSelected(venta);
+            chkMuerte.setSelected(muerte);
 
             chkNovilla.setSelected(esNovilla);
             chkHierro.setSelected(hierroFisico);
             chkImplante.setSelected(implante);
             chkDescornada.setSelected(descornado);
             chkDestete.setSelected(destetado);
-            chkVenta.setSelected(venta);
-            chkMuerte.setSelected(muerte);
-            txtObservacionMuerte.setVisible(chkMuerte.isSelected());
-            txtObservacionMuerte.setText(Utilidades.decodificarElemento(modelo.getDescripcionMuerte()));
-            cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
-            txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta()));
-            txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal()));
 
             if (chkAdoptivo.isSelected()) {
                 txtNumeroMamaAdoptiva.setText(modelo.getNumeroMamaAdoptiva());
@@ -2033,12 +2030,18 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                 }
 
                 if (muerte) {
+                    txtObservacionMuerte.setVisible(chkMuerte.isSelected());
+                    txtObservacionMuerte.setText(Utilidades.decodificarElemento(modelo.getDescripcionMuerte()));
                     chkMuerte.setSelected(muerte);
                     casoMuerte();
                     panelInfoMuerte.setVisible(muerte);
                 }
 
                 if (venta) {
+                    cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
+                    txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta()));
+                    txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal()));
+                    
                     casoVenta();
                     panelInfoVenta.setVisible(venta);
                     fecha = formato.parse(modelo.getFechaVenta());
