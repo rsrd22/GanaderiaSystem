@@ -373,6 +373,76 @@ public class ControlAnimales implements IControl {
         }
     }
 
+    @Override
+    public Object ObtenerDatosFiltro(Object o) {
+        String[] parametros = (String[])o;
+        String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
+                + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
+                + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
+                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,a.destete\n"
+                + "FROM animales a\n"
+                + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
+                + "LEFT JOIN grupos c ON a.grupo=c.id\n"
+                + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
+                + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
+                + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
+                + "WHERE a.numero='" + parametros[0] +"'  AND a.id_tipo_animal='"+parametros[1]+"'";
+        List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
+        ArrayList<ModeloAnimales> lista = new ArrayList<>();
+        grupos = mySQL.ListSQL(consulta);
+
+        if (grupos.size() > 0) {
+
+            for (Map<String, String> grupo : grupos) {
+                lista.add(new ModeloAnimales(
+                        grupo.get("calificacion"),
+                        grupo.get("capado"),
+                        grupo.get("fecha"),
+                        grupo.get("fecha_destete"),
+                        grupo.get("fecha_muerte"),
+                        grupo.get("fecha_nacimiento"),
+                        grupo.get("fecha_venta"),
+                        grupo.get("genero"),
+                        grupo.get("id"),
+                        grupo.get("id_tipo_animal"),
+                        grupo.get("id_usuario"),
+                        grupo.get("notas"),
+                        grupo.get("numero"),
+                        grupo.get("numero_mama"),
+                        grupo.get("descTipoAnimal"),
+                        grupo.get("peso"),
+                        grupo.get("numero_mama_adoptiva"),
+                        grupo.get("grupo"),
+                        grupo.get("descGrupo"),
+                        grupo.get("hierro"),
+                        grupo.get("descHierro"),
+                        grupo.get("idFinca"),
+                        grupo.get("descFinca"),
+                        grupo.get("numero_descendiente"),
+                        grupo.get("estado_descendiente"),
+                        null,
+                        grupo.get("idPropietario"),
+                        grupo.get("descPropietario"),
+                        grupo.get("muerte"),
+                        grupo.get("venta"),
+                        grupo.get("precio_venta"),
+                        grupo.get("tipo_venta"),
+                        grupo.get("peso_canal"),
+                        grupo.get("descripcion_muerte"),
+                        grupo.get("fecha_novilla"),
+                        grupo.get("peso_destete"),
+                        grupo.get("hierro_fisico"),
+                        grupo.get("implante"),
+                        grupo.get("descornado"),
+                        grupo.get("destete")
+                ));
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
+    }
+
     public int GuardarCria(Object _animal, Object obj) {
         ArrayList<String> consultas = new ArrayList<>();
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
@@ -547,76 +617,6 @@ public class ControlAnimales implements IControl {
         } catch (SQLException ex) {
             System.out.println("" + ex.getMessage());
             return Retorno.EXCEPCION_SQL;
-        }
-    }
-
-    @Override
-    public Object ObtenerDatosFiltro(Object o) {
-        String[] parametros = (String[])o;
-        String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
-                + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
-                + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
-                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,a.destete\n"
-                + "FROM animales a\n"
-                + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
-                + "LEFT JOIN grupos c ON a.grupo=c.id\n"
-                + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
-                + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
-                + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
-                + "WHERE a.numero='" + parametros[0] +"'  AND a.id_tipo_animal='"+parametros[1]+"'";
-        List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
-        ArrayList<ModeloAnimales> lista = new ArrayList<>();
-        grupos = mySQL.ListSQL(consulta);
-
-        if (grupos.size() > 0) {
-
-            for (Map<String, String> grupo : grupos) {
-                lista.add(new ModeloAnimales(
-                        grupo.get("calificacion"),
-                        grupo.get("capado"),
-                        grupo.get("fecha"),
-                        grupo.get("fecha_destete"),
-                        grupo.get("fecha_muerte"),
-                        grupo.get("fecha_nacimiento"),
-                        grupo.get("fecha_venta"),
-                        grupo.get("genero"),
-                        grupo.get("id"),
-                        grupo.get("id_tipo_animal"),
-                        grupo.get("id_usuario"),
-                        grupo.get("notas"),
-                        grupo.get("numero"),
-                        grupo.get("numero_mama"),
-                        grupo.get("descTipoAnimal"),
-                        grupo.get("peso"),
-                        grupo.get("numero_mama_adoptiva"),
-                        grupo.get("grupo"),
-                        grupo.get("descGrupo"),
-                        grupo.get("hierro"),
-                        grupo.get("descHierro"),
-                        grupo.get("idFinca"),
-                        grupo.get("descFinca"),
-                        grupo.get("numero_descendiente"),
-                        grupo.get("estado_descendiente"),
-                        null,
-                        grupo.get("idPropietario"),
-                        grupo.get("descPropietario"),
-                        grupo.get("muerte"),
-                        grupo.get("venta"),
-                        grupo.get("precio_venta"),
-                        grupo.get("tipo_venta"),
-                        grupo.get("peso_canal"),
-                        grupo.get("descripcion_muerte"),
-                        grupo.get("fecha_novilla"),
-                        grupo.get("peso_destete"),
-                        grupo.get("hierro_fisico"),
-                        grupo.get("implante"),
-                        grupo.get("descornado"),
-                        grupo.get("destete")
-                ));
-            }
-            return lista;
-        } else {
-            return LISTA_VACIA;
         }
     }
 
