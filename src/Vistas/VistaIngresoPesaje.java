@@ -252,6 +252,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         btnGuardar1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
         chkDestete = new javax.swing.JCheckBox();
         jdFechaPesaje = new com.toedter.calendar.JDateChooser();
         lbltitle19 = new javax.swing.JLabel();
@@ -648,9 +649,27 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         jPanel2.add(btnCancelar, gridBagConstraints);
+
+        btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPesaje.png"))); // NOI18N
+        btnAnular.setToolTipText("Eliminar");
+        btnAnular.setBorderPainted(false);
+        btnAnular.setContentAreaFilled(false);
+        btnAnular.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnAnular.setName("btnCancelar"); // NOI18N
+        btnAnular.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPesaje_over.png"))); // NOI18N
+        btnAnular.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPesaje_over.png"))); // NOI18N
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnAnular, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -946,6 +965,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPesoDesteteKeyReleased
 
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        Anular();
+    }//GEN-LAST:event_btnAnularActionPerformed
+
     private void calcularDiferenciaPesos() {
         if (txtPesoKg.getText().length() == 0) {
             txtPesoActual.setText(datos.get("PESO_ANTERIOR") + " Kg");
@@ -959,6 +982,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnModificar;
@@ -1248,6 +1272,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             estado = (dif > 0 ? "Activo" : "Inactivo");
         }
         return estado;
+    }
+
+    private void Anular() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
