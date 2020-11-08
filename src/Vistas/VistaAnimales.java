@@ -9,6 +9,7 @@ import AjustarControles.AjustarControles;
 import Busqueda.VistaBusqueda;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
+import Control.ControlMuertesVentasHistoricos;
 import Control.ControlPropietarios;
 import Control.ControlTraslado;
 import Control.Retorno;
@@ -18,6 +19,7 @@ import GestionControles.GestionEstadoControles;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloGestorBusqueda;
 import Modelo.ModeloHierros;
+import Modelo.ModeloMuertesVentasHistoricos;
 import Modelo.ModeloTipoAnimales;
 import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
@@ -110,7 +112,6 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     public VistaAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
-
         cbFinca.setBackground(Color.cyan);
 
         panelFechaNovilla.setVisible(false);
@@ -2041,7 +2042,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
                     cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
                     txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta()));
                     txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal()));
-                    
+
                     casoVenta();
                     panelInfoVenta.setVisible(venta);
                     fecha = formato.parse(modelo.getFechaVenta());

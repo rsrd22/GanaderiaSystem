@@ -7,6 +7,7 @@ package Control;
 
 import BaseDeDatos.gestorMySQL;
 import Modelo.ModeloAnimales;
+import Modelo.ModeloMuertesVentasHistoricos;
 import Modelo.ModeloTraslado;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Utilidades;
@@ -24,11 +25,13 @@ public class ControlAnimales implements IControl {
 
     private gestorMySQL mySQL;
     private ControlTraslado control;
+    private ControlMuertesVentasHistoricos controlAnulacionVM;
     private final ArrayList<ModeloAnimales> LISTA_VACIA = new ArrayList<ModeloAnimales>();
 
     public ControlAnimales() {
         mySQL = new gestorMySQL();
         control = new ControlTraslado();
+        controlAnulacionVM = new ControlMuertesVentasHistoricos();
     }
 
     @Override
@@ -116,7 +119,7 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN propietarios f ON f.`id`=d.`id_propietario`\n"
                 + "LEFT JOIN grupos c ON c.id=a.grupo\n"
                 + "WHERE a.id=" + id;
-        System.out.println("consulta--->"+consulta);
+        System.out.println("consulta--->" + consulta);
         List<Map<String, String>> animales = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         animales = mySQL.ListSQL(consulta);
@@ -178,6 +181,19 @@ public class ControlAnimales implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
 
+        if (animal.getVenta().equals("1")) {
+            //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
+            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos("", "venta", animal.getId(), "", "", "");
+            int resultado = controlAnulacionVM.ActualizarAnulacion(modelAnul);
+//</editor-fold>
+        }
+        if (animal.getMuerte().equals("1")) {
+            //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
+            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos("", "muerte", animal.getId(), "", "", "");
+            int resultado = controlAnulacionVM.ActualizarAnulacion(modelAnul);
+//</editor-fold>
+        }
+
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
@@ -218,7 +234,7 @@ public class ControlAnimales implements IControl {
                 + "'" + animal.getHierroFisico() + "',\n"
                 + "'" + animal.getImplante() + "',\n"
                 + "'" + animal.getDescornada() + "',\n"
-                + "'" + animal.getDestete()+ "'\n"
+                + "'" + animal.getDestete() + "'\n"
                 + ")"
         //</editor-fold>
         );
@@ -301,7 +317,7 @@ public class ControlAnimales implements IControl {
                 + "hierro = " + animal.getHierro() + ",\n"
                 + "genero = '" + animal.getGenero() + "',\n"
                 + "calificacion = '" + animal.getCalificacion() + "',\n"
-                + "calificacion = '" + animal.getDestete()+ "',\n"
+                + "calificacion = '" + animal.getDestete() + "',\n"
                 + "notas = '" + animal.getNotas() + "',\n"
                 + "fecha_destete = '" + animal.getFechaDestete() + "',\n"
                 + "fecha_venta = '" + animal.getFechaVenta() + "',\n"
@@ -375,7 +391,7 @@ public class ControlAnimales implements IControl {
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
-        String[] parametros = (String[])o;
+        String[] parametros = (String[]) o;
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
@@ -386,7 +402,7 @@ public class ControlAnimales implements IControl {
                 + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
                 + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
-                + "WHERE a.numero='" + parametros[0] +"'  AND a.id_tipo_animal='"+parametros[1]+"'";
+                + "WHERE a.numero='" + parametros[0] + "'  AND a.id_tipo_animal='" + parametros[1] + "'";
         List<Map<String, String>> grupos = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         grupos = mySQL.ListSQL(consulta);
@@ -706,7 +722,7 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
                     + "ORDER BY animal.id ASC";
-            
+
             consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
                     + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
@@ -1021,8 +1037,8 @@ public class ControlAnimales implements IControl {
     public Object buscarAnimalPorTipoyNumero(String tipoAnimal, String numeroAnimal) {
         String consulta = "SELECT * FROM animales\n"
                 + "WHERE\n"
-                + "numero='"+numeroAnimal+"'\n"
-                + "AND id_tipo_animal='"+tipoAnimal+"'";
+                + "numero='" + numeroAnimal + "'\n"
+                + "AND id_tipo_animal='" + tipoAnimal + "'";
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         animal = mySQL.ListSQL(consulta);
