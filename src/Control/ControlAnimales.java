@@ -183,14 +183,29 @@ public class ControlAnimales implements IControl {
 
         if (animal.getVenta().equals("1")) {
             //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
-            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos("", "venta", animal.getId(), "", "", "");
-            int resultado = controlAnulacionVM.ActualizarAnulacion(modelAnul);
+            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos(
+                    "", "venta", animal.getId(),
+                    "", "", "");
+            if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
+                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
+                consultas.add("UPDATE `anularventasymuertes`\n"
+                        + "SET `estado` = 'Inactivo'\n"
+                        + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
+            }
+
 //</editor-fold>
         }
         if (animal.getMuerte().equals("1")) {
             //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
-            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos("", "muerte", animal.getId(), "", "", "");
-            int resultado = controlAnulacionVM.ActualizarAnulacion(modelAnul);
+            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos(
+                    "", "venta", animal.getId(),
+                    "", "", "");
+            if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
+                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
+                consultas.add("UPDATE `anularventasymuertes`\n"
+                        + "SET `estado` = 'Inactivo'\n"
+                        + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
+            }
 //</editor-fold>
         }
 
@@ -297,7 +312,8 @@ public class ControlAnimales implements IControl {
     }
 
     @Override
-    public int Actualizar(Object _animal) {
+    public int Actualizar(Object _animal
+    ) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
 
@@ -354,7 +370,8 @@ public class ControlAnimales implements IControl {
     }
 
     @Override
-    public int Eliminar(Object _animal) {
+    public int Eliminar(Object _animal
+    ) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
 
@@ -390,7 +407,8 @@ public class ControlAnimales implements IControl {
     }
 
     @Override
-    public Object ObtenerDatosFiltro(Object o) {
+    public Object ObtenerDatosFiltro(Object o
+    ) {
         String[] parametros = (String[]) o;
         String consulta = "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
