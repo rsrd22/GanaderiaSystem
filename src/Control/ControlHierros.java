@@ -86,7 +86,7 @@ public class ControlHierros implements IControl {
                 + "  `imagen` = '" + hierro.getImagen() + "',\n"
                 + "  `estado` = '" + hierro.getEstado() + "',\n"
                 + "  `fecha` = " + hierro.getFecha() + ",\n"
-                + "  `id_usuario` = " + hierro.getId_usuario() + "'\n"
+                + "  `id_usuario` = " + hierro.getId_usuario() + "\n"
                 + "WHERE `id` = " + hierro.getId() + ";" 
 //</editor-fold>
         );

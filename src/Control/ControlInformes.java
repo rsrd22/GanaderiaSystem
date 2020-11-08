@@ -338,6 +338,7 @@ public class ControlInformes {
             Encabezado.add("IMPLANTE");
             Encabezado.add("PESO");
             Encabezado.add("FEC_NACIMIENTO");
+            Encabezado.add("PESO_NACIMIENTO");
             Encabezado.add("DESTETE");
             Encabezado.add("FEC_DESTETE");
             Encabezado.add("PESO_DESTETE");

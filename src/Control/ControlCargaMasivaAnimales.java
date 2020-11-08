@@ -28,7 +28,7 @@ public class ControlCargaMasivaAnimales {
     
     public int GuardarAnimal(Map<String, String> datos){
         ArrayList<String> consultas = new ArrayList<>();
-        
+        int banPesoNac = 0;
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
@@ -95,17 +95,46 @@ public class ControlCargaMasivaAnimales {
         );
 //</editor-fold>
 
+        
+        //<editor-fold defaultstate="collapsed" desc="PESO NACIEMIENTo">
+        if(!datos.get("PESO_NACIMIENTO").equals("0"))  {  
+            consultas.add(
+                       //<editor-fold defaultstate="collapsed" desc="INSERT">
+                    "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
+                    + "0,\n"
+                    + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
+                    + "     NOW(),\n"
+                    + "" + datos.get("PESO_NACIMIENTO") + ",\n"
+                    + "0,\n"
+                    + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
+                    + "'0',\n"
+                    + "'0',\n"
+                    + "'0',\n"
+                    + "'" + datos.get("DESTETE") + "',\n"//AGREGADA
+                    + "NOW(),\n"
+                    + "" + datosUsuario.datos.get(0).get("ID_USUARIO") + "\n"
+                    + ")" //</editor-fold>
+            );
+            banPesoNac = 1;
+        }
+//</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL PRIMER PESO">
+        String add = "";
+        if(banPesoNac == 0){
+            add = ", PRIMER REGISTRO";
+        }
+        
         if(!datos.get("PESO").equals("0"))    
         consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                   //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "0,\n"
                 + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                 + "     NOW(),\n"
                 + "" + datos.get("PESO") + ",\n"
                 + "0,\n"
-                + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
+                + "'REGISTRO AUTOMATICO (VISTA ANIMAL)"+add+"',\n"
                 + "'0',\n"
                 + "'0',\n"
                 + "'0',\n"

@@ -344,7 +344,7 @@ public class VistaHierros extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void CargarDatos() {
-       txtDescripcion.setText(""+modelo.getDescripcion());
+       txtDescripcion.setText(""+Utilidades.decodificarElemento(modelo.getDescripcion()));
        cbEstado.setSelectedItem(""+modelo.getEstado());
     }
 

@@ -364,7 +364,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
                 agregarFilaTabla(modeloTblHierro,
                         new Object[]{
                             tbl_Hierro.getRowCount() + 1,
-                            modeloHierro.getDescripcion(),
+                            Utilidades.decodificarElemento(modeloHierro.getDescripcion()),    
                             modeloHierro.getNombre_imagen(),
                             modeloHierro.getEstado(),
                             "Ver",
