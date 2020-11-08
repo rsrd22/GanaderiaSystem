@@ -45,7 +45,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String idTipoAnimal;
-
+    public Boolean BanFiltroColor;
     public List<Map<String, String>> ListaAnimales;
     public List<Map<String, String>> ListaAnimalesMostrar;
     private ControlAnimales controlAnimales = new ControlAnimales();
@@ -72,6 +72,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         idTipoAnimal = "";
+        BanFiltroColor = true;
         NameColumnasFiltro = new ArrayList<>();
         NameColumnasFiltro.add("NUMERO_ANIMAL");
         NameColumnasFiltro.add("NUMERO_MAMA");
@@ -178,6 +179,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         jdFechaPalpacion = new com.toedter.calendar.JDateChooser();
         cbListadoFechas = new javax.swing.JComboBox();
         lblTid3 = new javax.swing.JLabel();
+        btnFiltroColor = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -190,6 +192,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
@@ -206,6 +209,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 230;
         gridBagConstraints.ipady = 9;
@@ -222,7 +226,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -237,7 +241,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid2.setText("Listado Fechas");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
@@ -292,6 +296,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
@@ -323,7 +328,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -336,7 +341,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
         lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle19.setText("Fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipady = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -349,7 +354,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 10;
@@ -366,7 +371,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
@@ -380,13 +385,26 @@ public class VistaPalpacion extends javax.swing.JPanel {
         lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTid3.setText("Tipo Animales");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lblTid3, gridBagConstraints);
+
+        btnFiltroColor.setMaximumSize(new java.awt.Dimension(33, 30));
+        btnFiltroColor.setMinimumSize(new java.awt.Dimension(33, 30));
+        btnFiltroColor.setPreferredSize(new java.awt.Dimension(33, 30));
+        btnFiltroColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroColorActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        add(btnFiltroColor, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -488,8 +506,20 @@ public class VistaPalpacion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbListadoFechasActionPerformed
 
+    private void btnFiltroColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroColorActionPerformed
+        if(!BanFiltroColor){
+            BanFiltroColor =true;
+            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png")));
+        }else{
+            BanFiltroColor =false;
+            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verSlash.png")));
+        }
+        MostrarTabla();
+    }//GEN-LAST:event_btnFiltroColorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFiltroColor;
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbListadoFechas;
     public javax.swing.JComboBox cbTipoAnimales;
@@ -603,7 +633,13 @@ public class VistaPalpacion extends javax.swing.JPanel {
         for (int i = 0; i < ListaAnimales.size(); i++) {
             b = 1;
             if (filtro.isEmpty()) {
-                retorno.add(ListaAnimales.get(i));
+                if(BanFiltroColor){
+                    retorno.add(ListaAnimales.get(i));
+                }else{
+                    if (!ListaAnimales.get(i).get("EST").equals("*")) {
+                        retorno.add(ListaAnimales.get(i));
+                    }
+                }   
             } else {
                 valores = "";
                 for (int j = 0; j < NameColumnasFiltro.size(); j++) {
@@ -614,7 +650,12 @@ public class VistaPalpacion extends javax.swing.JPanel {
                 boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
                 System.out.println("i-" + i + "-b-" + b);
                 if (encontro) {
-                    retorno.add(ListaAnimales.get(i));
+                    if(BanFiltroColor)
+                        retorno.add(ListaAnimales.get(i));
+                    else{
+                        if(!ListaAnimales.get(i).get("EST").equals("*"))
+                            retorno.add(ListaAnimales.get(i));
+                    }
                 }
             }
         }
