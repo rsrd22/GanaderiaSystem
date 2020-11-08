@@ -150,9 +150,6 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         System.out.println("consulta-->"+consulta);
         muertes = controlGral.GetConsulta(consulta);
 
-        if (muertes.size() == 0) {
-            return;
-        }
         MostrarTabla();
     }
 
@@ -340,14 +337,14 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
                 modeloMyVHist.setTipo("muerte");
                 modeloMyVHist.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
                 
-                int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
-                if(ret == Retorno.EXITO){
-                    JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
-                    cargarHistoricoMuertes();
-                }
-                
+                ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(
+                                this, //panelPadre
+                                new VistaObservacion(), //panelHijo
+                                1, //opcion
+                                modeloMyVHist //modeloDeDatos
+                        );
+                new VistaGeneral(objetoVentana).setVisible(true);
             }
-            
         }
     }//GEN-LAST:event_tablaMouseReleased
 
@@ -369,5 +366,13 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
 
     public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral) {
         cargarHistoricoMuertes();
+    }
+    
+    public void GuardarAnulacion(ModeloMuertesVentasHistoricos modeloMyVHist){
+        int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
+        if (ret == Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
+            cargarHistoricoMuertes();
+        }
     }
 }

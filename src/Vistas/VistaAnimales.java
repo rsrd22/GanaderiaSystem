@@ -2040,8 +2040,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
                 if (venta) {
                     cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
-                    txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta()));
-                    txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal()));
+                    txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta().replace(".", ",")));
+                    txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal().replace(".", ",")));
 
                     casoVenta();
                     panelInfoVenta.setVisible(venta);

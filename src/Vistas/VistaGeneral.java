@@ -142,6 +142,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Modificar");
+        } else if (panel instanceof VistaObservacion) {
+            VistaObservacion vista = (VistaObservacion) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Observaciones de anulación");
 
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -553,6 +558,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaEditarDatosAnimal) {
 
             VistaEditarDatosAnimal vista = new VistaEditarDatosAnimal(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaObservacion) {
+
+            VistaObservacion vista = new VistaObservacion(modeloVista);
             MostrarPanel(vista);
 
         }

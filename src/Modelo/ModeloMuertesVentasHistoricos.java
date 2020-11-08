@@ -17,6 +17,7 @@ public class ModeloMuertesVentasHistoricos {
     private String estado;
     private String fecha;
     private String idUsuario;
+    private String observacion;
 
     public ModeloMuertesVentasHistoricos() {
         this.id = "";
@@ -27,13 +28,22 @@ public class ModeloMuertesVentasHistoricos {
         this.idUsuario = "";
     }
 
-    public ModeloMuertesVentasHistoricos(String id, String tipo, String idAnimal, String estado, String fecha, String idUsuario) {
+    public ModeloMuertesVentasHistoricos(String id, String tipo, String idAnimal, String estado, String fecha, String idUsuario, String observacion) {
         this.id = id;
         this.tipo = tipo;
         this.idAnimal = idAnimal;
         this.estado = estado;
         this.fecha = fecha;
         this.idUsuario = idUsuario;
+        this.observacion = observacion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     public String getId() {

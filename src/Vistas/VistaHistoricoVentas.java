@@ -43,6 +43,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     //Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public ModeloVentanaGeneral objetoVentana;
     public int idModulo = 14;
+
     /**
      * Creates new form VistaHistoricoVentas
      */
@@ -51,18 +52,18 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new DefaultTableModel();
         EncabezadoTblVentas = new String[]{
-            "Nro. Animal",    //0
-            "Nro. Madre",     //1
-            "Genero",         //2
-            "<html><p style=\"text-align:center;\">Vendido</p><p style=\"text-align:center;\">a</p></html>",      //3
+            "Nro. Animal", //0
+            "Nro. Madre", //1
+            "Genero", //2
+            "<html><p style=\"text-align:center;\">Vendido</p><p style=\"text-align:center;\">a</p></html>", //3
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Venta</p></html>", //4
-            "Peso (Kg)",      //5
-            "<html><p style=\"text-align:center;\">Peso</p><p style=\"text-align:center;\">Canal (Kg)</p></html>",  //6
-            "<html><p style=\"text-align:center;\">Porcentaje</p><p style=\"text-align:center;\">Canal (%)</p></html>",     //7
+            "Peso (Kg)", //5
+            "<html><p style=\"text-align:center;\">Peso</p><p style=\"text-align:center;\">Canal (Kg)</p></html>", //6
+            "<html><p style=\"text-align:center;\">Porcentaje</p><p style=\"text-align:center;\">Canal (%)</p></html>", //7
             "<html><p style=\"text-align:center;\">Precio</p><p style=\"text-align:center;\">Venta (Kg)</p></html>",//8 
             "<html><p style=\"text-align:center;\">Valor</p><p style=\"text-align:center;\">Venta</p></html>", //9
-            "",                //10  
-            ""                //11  
+            "", //10  
+            "" //11  
         };
         controlGral = new ControlGeneral();
         controlMyVHist = new ControlMuertesVentasHistoricos();
@@ -70,15 +71,15 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         InicializarTblVentas();
         cargarComboFincas();
     }
-    
+
     public void InicializarTblVentas() {
         tabla.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modelo = new DefaultTableModel(EncabezadoTblVentas, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -115,24 +116,24 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         tabla.getColumnModel().getColumn(9).setPreferredWidth(90); //9
         tabla.getColumnModel().getColumn(10).setPreferredWidth(60); //10
         tabla.getColumnModel().getColumn(11).setPreferredWidth(60); //11
-        
+
         tabla.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modelo.getColumnCount(); i++) {
             tabla.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
+
 //            if(i == 3 ){
 //                tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //               
 //            }else{
-                tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
 //            }
             tcr.setForeground(new Color(26, 82, 118));
             tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
+
         }
         JTableHeader header = tabla.getTableHeader();
 
@@ -159,7 +160,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
 
     public void cargarHistoricoVentas() {
         String consulta = consultas.get("OBTENER_HISTORICO_VENTAS").replace("PARAMETRO1", txtCodigoTipoAnimal.getText());
-        System.out.println("consulta-->"+consulta);
+        System.out.println("consulta-->" + consulta);
         Utilidades.LimpiarTabla(tabla);
         ventas = controlGral.GetConsulta(consulta);
 
@@ -173,34 +174,36 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     private void MostrarTabla() {
         Utilidades.LimpiarTabla(tabla);
         DecimalFormat df = new DecimalFormat("#.0");
+        DecimalFormat dfvv = new DecimalFormat("#.00");
         for (int i = 0; i < ventas.size(); i++) {
             double porc = 0;
             double valor_venta = 0;
-            
-            if(!ventas.get(i).get("peso_canal").equals("0")){
+
+            if (!ventas.get(i).get("peso_canal").equals("0")) {
                 porc = Math.round(Double.parseDouble(ventas.get(i).get("peso_canal")) / Double.parseDouble(ventas.get(i).get("peso")) * 100);
-                
-                valor_venta = Double.parseDouble(ventas.get(i).get("precio_venta"))*Double.parseDouble(ventas.get(i).get("peso_canal"));
-            }else{
-                valor_venta = Double.parseDouble(ventas.get(i).get("precio_venta"))*Double.parseDouble(ventas.get(i).get("peso"));
+
+                valor_venta = Double.parseDouble(ventas.get(i).get("precio_venta")) * Double.parseDouble(ventas.get(i).get("peso_canal"));
+            } else {
+                valor_venta = Double.parseDouble(ventas.get(i).get("precio_venta")) * Double.parseDouble(ventas.get(i).get("peso"));
             }
-            
+
+            dfvv.format(valor_venta);
             Utilidades.agregarFilaTabla(
-                modelo,
-                new Object[]{
-                    ventas.get(i).get("numero"),
-                    ventas.get(i).get("numero_mama"),
-                    (""+ventas.get(i).get("genero").charAt(0)).toUpperCase(),
-                    ventas.get(i).get("tipo_venta").toUpperCase(),
-                    ventas.get(i).get("fecha_venta"),
-                    ventas.get(i).get("peso"),
-                    ventas.get(i).get("peso_canal"),
-                    (!ventas.get(i).get("peso_canal").equals("0")?""+df.format(porc):""),
-                    Utilidades.MascaraMonedaConDecimales(ventas.get(i).get("precio_venta").replace(".", ",")),
-                    ""+Utilidades.MascaraMonedaConDecimales((""+valor_venta).replace(".", ",")),
-                    "Modificar",
-                    "Anular"
-                }
+                    modelo,
+                    new Object[]{
+                        ventas.get(i).get("numero"),
+                        ventas.get(i).get("numero_mama"),
+                        ("" + ventas.get(i).get("genero").charAt(0)).toUpperCase(),
+                        ventas.get(i).get("tipo_venta").toUpperCase(),
+                        ventas.get(i).get("fecha_venta"),
+                        ventas.get(i).get("peso"),
+                        ventas.get(i).get("peso_canal"),
+                        (!ventas.get(i).get("peso_canal").equals("0") ? "" + df.format(porc) : ""),
+                        Utilidades.MascaraMonedaConDecimales(ventas.get(i).get("precio_venta").replace(".", ",")),
+                        "" + Utilidades.MascaraMonedaConDecimales(("" + valor_venta).replace(".", ",")),
+                        "Modificar",
+                        "Anular"
+                    }
             );
         }
     }
@@ -346,7 +349,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
             txtCodigoTipoAnimal.setText(idTipoAnimal);
-            
+
             cargarHistoricoVentas();
         } else {
             Utilidades.LimpiarTabla(tabla);
@@ -354,32 +357,33 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
     }//GEN-LAST:event_cbTipoAnimalActionPerformed
 
     private void tablaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyReleased
-        
+
     }//GEN-LAST:event_tablaKeyReleased
 
     private void tablaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseReleased
         int fila = tabla.getSelectedRow();
         int cola = tabla.getSelectedColumn();
-        System.out.println("cola:"+cola);
-        String dato = ""+tabla.getValueAt(fila, cola);
-        if(cola == 10){
+        System.out.println("cola:" + cola);
+        String dato = "" + tabla.getValueAt(fila, cola);
+        if (cola == 10) {
             objetoVentana = new ModeloVentanaGeneral(this, new VistaModificarVenta(), 1, ventas.get(fila));
             objetoVentana.setFila(fila);
             new VistaGeneral(objetoVentana).setVisible(true);
-        }else if(cola == 11){
+        } else if (cola == 11) {
             int resp = JOptionPane.showConfirmDialog(null, "¿está seguro de Anular esta Venta?", "Anular Venta", JOptionPane.YES_NO_OPTION);
-            if(resp == JOptionPane.YES_OPTION){
+            if (resp == JOptionPane.YES_OPTION) {
                 modeloMyVHist.setEstado("Activo");
-                modeloMyVHist.setIdAnimal(""+ventas.get(fila).get("id"));
+                modeloMyVHist.setIdAnimal("" + ventas.get(fila).get("id"));
                 modeloMyVHist.setTipo("venta");
                 modeloMyVHist.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-                
-                int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
-                if(ret == Retorno.EXITO){
-                    JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
-                    cargarHistoricoVentas();
-                }
-                
+
+                ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(
+                        this, //panelPadre
+                        new VistaObservacion(), //panelHijo
+                        2, //opcion
+                        modeloMyVHist //modeloDeDatos
+                );
+                new VistaGeneral(objetoVentana).setVisible(true);
             }
         }
     }//GEN-LAST:event_tablaMouseReleased
@@ -398,5 +402,13 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
 
     public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral) {
         cargarHistoricoVentas();
+    }
+
+    public void GuardarAnulacion(ModeloMuertesVentasHistoricos modeloMyVHist) {
+        int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
+        if (ret == Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
+            cargarHistoricoVentas();
+        }
     }
 }
