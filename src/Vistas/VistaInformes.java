@@ -12,6 +12,7 @@ import Utilidades.Utilidades;
 import Vistas.VistasInformes.VistaAnimalesPorFinca;
 import Vistas.VistasInformes.VistaInformePalpacion;
 import Vistas.VistasInformes.VistaInformePesaje;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -351,6 +352,9 @@ public class VistaInformes extends javax.swing.JPanel {
                     MostrarPanel(vistaInformeAnimalesxFinca);
                     break;
                 default:
+                    JPanel panel = new JPanel();
+                    panel.setBackground(Color.white);
+                    MostrarPanel(panel);
                     return;
             }
         }
