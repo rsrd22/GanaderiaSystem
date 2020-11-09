@@ -1019,7 +1019,7 @@ public class ControlAnimales implements IControl {
                     + "IFNULL(DATE_FORMAT(NumeroHijos(anim.numero, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO,\n"
                     + "IFNULL(tbl.NMESES, '') AS NUMERO_MESES, tbl.NOTAS, tbl.ESTPALP,\n"
                     + "finc.id as IDFINCA, tpo.id as IDTIPOA, \n"
-                    + "IF(DATEDIFF(NOW(),tbl.FPALP)<30, '*', '') AS EST\n"
+                    + "IF(DATEDIFF('" + FECHA + "',tbl.FPALP)<30, '*', '') AS EST\n"
                     + "FROM animales anim\n"
                     + "LEFT JOIN tipo_animales tpo ON anim.id_tipo_animal=tpo.id\n"
                     + "LEFT JOIN grupos grup ON anim.grupo=grup.id\n"
@@ -1035,7 +1035,7 @@ public class ControlAnimales implements IControl {
                     + "       AND fecha_palpacion BETWEEN DATE_SUB('" + FECHA + "',  INTERVAL 15 DAY) AND DATE_ADD('" + FECHA + "',  INTERVAL 15 DAY)\n"
                     + "	GROUP BY palp.id_animal \n"
                     + ") tbl ON tbl.IDANIMAL = anim.id \n"
-                    + "WHERE grup.palpable = '1' AND a.muerte='0' AND venta='0' AND finc.id = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "'\n"
+                    + "WHERE grup.palpable = '1' AND anim.muerte='0' AND anim.venta='0' AND finc.id = '" + IDFINCA + "' AND tpo.id = '" + IDTIPOFINCA + "'\n"
                     + "ORDER BY CONVERT(anim.numero,DOUBLE) ASC";
 
             List<Map<String, String>> palpacion = new ArrayList<Map<String, String>>();

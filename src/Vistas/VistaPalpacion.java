@@ -393,6 +393,10 @@ public class VistaPalpacion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         add(lblTid3, gridBagConstraints);
 
+        btnFiltroColor.setBackground(new java.awt.Color(255, 255, 255));
+        btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verAmarilla.png"))); // NOI18N
+        btnFiltroColor.setBorderPainted(false);
+        btnFiltroColor.setContentAreaFilled(false);
         btnFiltroColor.setMaximumSize(new java.awt.Dimension(33, 30));
         btnFiltroColor.setMinimumSize(new java.awt.Dimension(33, 30));
         btnFiltroColor.setPreferredSize(new java.awt.Dimension(33, 30));
@@ -509,10 +513,10 @@ public class VistaPalpacion extends javax.swing.JPanel {
     private void btnFiltroColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroColorActionPerformed
         if(!BanFiltroColor){
             BanFiltroColor =true;
-            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/ver.png")));
+            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verAmarilla.png")));
         }else{
             BanFiltroColor =false;
-            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verSlash.png")));
+            btnFiltroColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/verSlashAmarillo.png")));
         }
         MostrarTabla();
     }//GEN-LAST:event_btnFiltroColorActionPerformed
