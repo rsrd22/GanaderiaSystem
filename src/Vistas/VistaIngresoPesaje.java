@@ -107,8 +107,10 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             iniciarChecks();
             cargarComboHierros();
             cargarDatosActuales();
+            btnAnular.setEnabled(false);
         } else {
             cargarDatosEditar();
+            btnAnular.setEnabled(true);
         }
 
         lblFechaDestete.setVisible(chkDestete.isSelected());
@@ -654,7 +656,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
         jPanel2.add(btnCancelar, gridBagConstraints);
 
         btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPesaje.png"))); // NOI18N
-        btnAnular.setToolTipText("Eliminar");
+        btnAnular.setToolTipText("Anular pesaje");
         btnAnular.setBorderPainted(false);
         btnAnular.setContentAreaFilled(false);
         btnAnular.setMargin(new java.awt.Insets(2, 10, 2, 8));
