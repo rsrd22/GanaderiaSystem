@@ -2404,7 +2404,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 switch (retorno) {
                     case Retorno.EXITO:
                         mensaje = "Registro eliminado satisfactoriamente.";
-                        cargarHistoricoPesos();
+                        GetDatosAnimal();
                         break;
                     case Retorno.ERROR:
                         mensaje = "El registro no pudo ser eliminado.";

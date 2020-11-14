@@ -8,6 +8,7 @@ package Control;
 import BaseDeDatos.gestorMySQL;
 import Modelo.ModeloMedicamentosPorPesaje;
 import Modelo.ModeloPesaje;
+import Utilidades.datosUsuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -242,64 +243,72 @@ public class ControlPesaje implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloPesaje modelo = (ModeloPesaje) o;
 
-        ArrayList<ModeloPesaje> lista = new ArrayList<>();
         ArrayList<ModeloMedicamentosPorPesaje> listaMedicamentos = new ArrayList<>();
-        lista = (ArrayList<ModeloPesaje>) ObtenerDatosKey(modelo.getId_animal());
         listaMedicamentos = (ArrayList<ModeloMedicamentosPorPesaje>) ObtenerListaMedicamentos(modelo.getId());
+        String campo = "(SELECT $||$ FROM pesaje WHERE id_animal=" + modelo.getId_animal() + " ORDER BY CONVERT(fecha_pesado, DATE) DESC LIMIT 1)";
 
-        if (lista.size() > 1) {
-            //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS VALORES DEL REGISTRO ANTERIOR">
-            modelo.setPeso(lista.get(1).getPeso());
-            modelo.setHierro(lista.get(1).getHierro());
-            modelo.setImplante(lista.get(1).getImplante());
-            modelo.setDescornado(lista.get(1).getDescornado());
-            modelo.setFechaDestete(lista.get(1).getFechaDestete());
-            modelo.setIdHierro(lista.get(1).getIdHierro());
+        //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS VALORES DEL REGISTRO MAS RECIENTE">
+        modelo.setPeso(campo.replace("$||$", "peso"));
+        modelo.setHierro(campo.replace("$||$", "hierro"));
+        modelo.setImplante(campo.replace("$||$", "implante"));
+        modelo.setDescornado(campo.replace("$||$", "descornado"));
+        modelo.setDestete(campo.replace("$||$", "destete"));
+        modelo.setFechaDestete(campo.replace("$||$", "fecha_destete"));
+        modelo.setIdHierro("");
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DEL PESO">
+        consultas.add(
+                "DELETE FROM pesaje WHERE id=" + modelo.getId()
+        );
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="PROCEDIMIENTO PARA ACTUALIZAR HISTORICO DE PESOS">
+        consultas.add(
+                "CALL actualizarPesos("
+                + modelo.getId_animal() + ", "
+                + datosUsuario.datos.get(0).get("ID_USUARIO") + ""
+                + ");"
+        );
+//</editor-fold>
+
+        if (listaMedicamentos.size() > 0) {
             consultas.add(
-                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DEL PESO">
-                    "DELETE FROM pesaje WHERE id=" + modelo.getId()
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                    "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
             //</editor-fold>
             );
-
-            if (listaMedicamentos.size() > 0) {
-                consultas.add(
-                        //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
-                        "DELETE FROM pesajexmedicamento WHERE id_pesaje=" + modelo.getId()
-                //</editor-fold>
-                );
-            }
-            //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
-            consultas.add("update animales\n"
-                    + "set \n"
-                    + "peso = " + modelo.getPeso() + ",\n"
-                    + "hierro_fisico = " + (modelo.getHierro().isEmpty() ? "hierro_fisico" : "'" + modelo.getHierro() + "'") + ",\n"
-                    + "implante = " + (modelo.getImplante().isEmpty() ? "implante" : "'" + modelo.getImplante() + "'") + ",\n"
-                    + "descornado = " + (modelo.getDescornado().isEmpty() ? "descornado" : "'" + modelo.getDescornado() + "'") + ",\n"
-                    + "destete = " + (modelo.getDestete().isEmpty() ? "destete" : "'" + modelo.getDestete() + "'") + ",\n"
-                    + "fecha_destete = " + (modelo.getFechaDestete().isEmpty() ? "fecha_destete" : "'" + modelo.getFechaDestete() + "'") + ",\n"
-                    + "peso_destete = " + (modelo.getPeso_destete().isEmpty() ? "peso_destete" : "'" + modelo.getPeso_destete() + "'") + ",\n"
-                    + "hierro = " + (modelo.getIdHierro().isEmpty() ? "hierro" : modelo.getIdHierro()) + "\n"
-                    + "where id = " + modelo.getId_animal() + "");
-//</editor-fold>
-
-            try {
-                if (mySQL.EnviarConsultas(consultas)) {
-                    return Retorno.EXITO;
-                } else {
-                    return Retorno.ERROR;
-                }
-            } catch (ClassNotFoundException ex) {
-                System.out.println("" + ex.getMessage());
-                return Retorno.CLASE_NO_ENCONTRADA;
-            } catch (SQLException ex) {
-                System.out.println("" + ex.getMessage());
-                return Retorno.EXCEPCION_SQL;
-            }
-        } else {
-            return Retorno.MENSAJE;
         }
+
+        //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
+        consultas.add("update animales\n"
+                + "set \n"
+                + "peso = " + modelo.getPeso() + ",\n"
+                + "hierro_fisico = " + modelo.getHierro() + ",\n"
+                + "implante = " + modelo.getImplante() + ",\n"
+                + "descornado = " + modelo.getDescornado() + ",\n"
+                + "destete = " + modelo.getDestete() + ",\n"
+                + "fecha_destete = " + modelo.getFechaDestete() + ",\n"
+                + "peso_destete = " + modelo.getPeso_destete() + ",\n"
+                + "hierro = " + (modelo.getIdHierro().isEmpty() ? "hierro" : modelo.getIdHierro()) + "\n"
+                + "where id = " + modelo.getId_animal() + ""
+        );
+        //</editor-fold>
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+
     }
 
     @Override

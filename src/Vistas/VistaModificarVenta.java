@@ -595,6 +595,7 @@ public class VistaModificarVenta extends javax.swing.JPanel {
     }
 
     private void Guardar() {
+        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
         if (jdFechaVenta.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Debe especificar la fecha de venta del animal.");
             jdFechaVenta.requestFocusInWindow();
@@ -620,6 +621,7 @@ public class VistaModificarVenta extends javax.swing.JPanel {
                 return;
             }
         }
+//</editor-fold>
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
