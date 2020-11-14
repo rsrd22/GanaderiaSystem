@@ -178,6 +178,7 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         for (int i = 0; i < ventas.size(); i++) {
             double porc = 0;
             double valor_venta = 0;
+            double precio = 0;
 
             if (!ventas.get(i).get("peso_canal").equals("0")) {
                 porc = Math.round(Double.parseDouble(ventas.get(i).get("peso_canal")) / Double.parseDouble(ventas.get(i).get("peso")) * 100);
@@ -187,7 +188,9 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
                 valor_venta = Double.parseDouble(ventas.get(i).get("precio_venta")) * Double.parseDouble(ventas.get(i).get("peso"));
             }
 
-            dfvv.format(valor_venta);
+            precio = Double.parseDouble(ventas.get(i).get("precio_venta"));
+            String precioDeVenta = dfvv.format(precio);
+            String valorDeVenta = dfvv.format(valor_venta);
             Utilidades.agregarFilaTabla(
                     modelo,
                     new Object[]{
@@ -199,8 +202,8 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
                         ventas.get(i).get("peso"),
                         ventas.get(i).get("peso_canal"),
                         (!ventas.get(i).get("peso_canal").equals("0") ? "" + df.format(porc) : ""),
-                        Utilidades.MascaraMonedaConDecimales(ventas.get(i).get("precio_venta").replace(".", ",")),
-                        "" + Utilidades.MascaraMonedaConDecimales(("" + valor_venta).replace(".", ",")),
+                        Utilidades.MascaraMonedaConDecimales(precioDeVenta.replace(".", ",")),
+                        Utilidades.MascaraMonedaConDecimales(valorDeVenta.replace(".", ",")),
                         "Modificar",
                         "Anular"
                     }
