@@ -484,4 +484,74 @@ public class ControlPesaje implements IControl {
         }
     }
 
+    public int AnularPesaje(ModeloPesaje modelo) {
+        ArrayList<String> consultas = new ArrayList<>();
+        consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DEL PESO">
+                "DELETE FROM pesaje WHERE id=" + modelo.getId()
+        //</editor-fold>
+        );
+
+        if (modelo.getListaMedicamentos().size() > 0) {
+            for (ModeloMedicamentosPorPesaje lista : modelo.getListaMedicamentos()) {
+                consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS">
+                    "DELETE FROM pesajexmedicamento WHERE id=" + lista.getId()
+            //</editor-fold>
+                );
+            }
+        }
+        
+        try {
+            
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int ActualizarDatosAnimal(ModeloPesaje modelo){
+        ArrayList<String> consultas = new ArrayList<>();
+        ArrayList<ModeloPesaje> lista = (ArrayList<ModeloPesaje>) ObtenerDatosKey(modelo.getId_animal());
+        
+        if(lista.size()>0){
+            //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
+                consultas.add("update animales\n"
+                        + "set \n"
+                        + "peso = " + lista.get(0).getPeso() + ",\n"
+                        + "hierro_fisico = " + (lista.get(0).getHierro().isEmpty() ? "hierro_fisico" : "'" + lista.get(0).getHierro() + "'") + ",\n"
+                        + "implante = " + (lista.get(0).getImplante().isEmpty() ? "implante" : "'" + lista.get(0).getImplante() + "'") + ",\n"
+                        + "descornado = " + (lista.get(0).getDescornado().isEmpty() ? "descornado" : "'" + lista.get(0).getDescornado() + "'") + ",\n"
+                        + "destete = " + (lista.get(0).getDestete().isEmpty() ? "destete" : "'" + lista.get(0).getDestete() + "'") + ",\n"
+                        + "fecha_destete = " + (lista.get(0).getFechaDestete().isEmpty() ? "fecha_destete" : "'" + lista.get(0).getFechaDestete() + "'") + ",\n"
+                        + "peso_destete = " + (lista.get(0).getPeso_destete().isEmpty() ? "peso_destete" : "'" + lista.get(0).getPeso_destete() + "'") + ",\n"
+                        + "hierro = " + (lista.get(0).getIdHierro().isEmpty() ? "hierro" : lista.get(0).getIdHierro()) + "\n"
+                        + "where id = " + lista.get(0).getId_animal() + "");
+    //</editor-fold>
+        }
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
+    
+
 }

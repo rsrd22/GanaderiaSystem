@@ -1247,6 +1247,7 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }
 
     private void establecerRegistroPesado(String idAnimal) {
+        
         for (int i = 0; i < vp.ListaAnimales.size(); i++) {
             String id = vp.ListaAnimales.get(i).get("ID_ANIMAL");
             if (id.equals(idAnimal)) {
@@ -1277,7 +1278,51 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
     }
 
     private void Anular() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        modelo.setId(editar == Estado.GUARDAR ? "0" : txtCodigo.getText());
+        modelo.setId_animal(idAnimal);
+        for (int i = 0; i < listaMedicamentos.size(); i++) {
+            modelompp.setEliminar(eliminar);
+            modelompp = new ModeloMedicamentosPorPesaje();
+            modelompp.setId_medicamento(listaMedicamentos.get(i)[0].toString());
+            modelompp.setDosis(listaMedicamentos.get(i)[2].toString().replace(".", "").replace(",", "."));
+            modelo.addMedicamentos(modelompp);
+        } 
+        modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro de anular este registro?", "Anular Pesaje", JOptionPane.YES_NO_OPTION);
+        
+        if(resp == JOptionPane.YES_OPTION){
+            int retorno = control.AnularPesaje(modelo);
+            String mensaje = "";
+            switch (retorno) {
+                case Retorno.EXITO:
+                    mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
+                    guardado = editar;
+                    break;
+                case Retorno.ERROR:
+                    mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
+                    break;
+                case Retorno.EXCEPCION_SQL:
+                    mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                    break;
+                case Retorno.CLASE_NO_ENCONTRADA:
+                    mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                    break;
+            }
+            JOptionPane.showMessageDialog(this, mensaje);
+            if (retorno == Retorno.EXITO) {
+                
+                int ret = control.ActualizarPesos("CALL actualizarPesos(" + idAnimal + ", " + datosUsuario.datos.get(0).get("ID_USUARIO") + ");");
+                int ret2 = control.ActualizarDatosAnimal(modelo);
+                if (ret == Retorno.EXITO) {
+                    System.out.println("---------------------actualizarPesos OK");
+                } else {
+                    System.out.println("---------------------actualizarPesos ERROR");
+                }
+                vp.cargarTablaFiltro();
+                vp.band = 0;
+                ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+            }
+        }
     }
 
 }
