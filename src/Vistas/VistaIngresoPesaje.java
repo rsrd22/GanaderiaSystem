@@ -1295,11 +1295,11 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
             String mensaje = "";
             switch (retorno) {
                 case Retorno.EXITO:
-                    mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
+                    mensaje = "Registro anulado satisfactoriamente.";
                     guardado = editar;
                     break;
                 case Retorno.ERROR:
-                    mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
+                    mensaje = "El registro no pudo ser anulado.";
                     break;
                 case Retorno.EXCEPCION_SQL:
                     mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
@@ -1313,11 +1313,6 @@ public class VistaIngresoPesaje extends javax.swing.JPanel {
                 
                 int ret = control.ActualizarPesos("CALL actualizarPesos(" + idAnimal + ", " + datosUsuario.datos.get(0).get("ID_USUARIO") + ");");
                 int ret2 = control.ActualizarDatosAnimal(modelo);
-                if (ret == Retorno.EXITO) {
-                    System.out.println("---------------------actualizarPesos OK");
-                } else {
-                    System.out.println("---------------------actualizarPesos ERROR");
-                }
                 vp.cargarTablaFiltro();
                 vp.band = 0;
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();

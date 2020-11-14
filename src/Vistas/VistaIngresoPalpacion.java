@@ -8,9 +8,11 @@ package Vistas;
 import Control.*;
 import Modelo.*;
 import static Utilidades.Consultas.consultas;
+import Utilidades.Estado;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
+import static Vistas.VistaIngresoPesaje.guardado;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -172,6 +174,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         btnGuardar1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnAnularPalpacion = new javax.swing.JButton();
         jdFechaPalpacion = new com.toedter.calendar.JDateChooser();
         lbltitle19 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -501,9 +504,29 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         jPanel2.add(btnCancelar, gridBagConstraints);
+
+        btnAnularPalpacion.setBackground(new java.awt.Color(255, 255, 255));
+        btnAnularPalpacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPalpacion.png"))); // NOI18N
+        btnAnularPalpacion.setToolTipText("");
+        btnAnularPalpacion.setContentAreaFilled(false);
+        btnAnularPalpacion.setMaximumSize(new java.awt.Dimension(87, 73));
+        btnAnularPalpacion.setMinimumSize(new java.awt.Dimension(87, 73));
+        btnAnularPalpacion.setOpaque(false);
+        btnAnularPalpacion.setPreferredSize(new java.awt.Dimension(87, 73));
+        btnAnularPalpacion.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPalpacion_over.png"))); // NOI18N
+        btnAnularPalpacion.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/anularPalpacion_over.png"))); // NOI18N
+        btnAnularPalpacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularPalpacionActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnAnularPalpacion, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -861,9 +884,14 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         calcularDiferenciaPesos();
     }//GEN-LAST:event_txtPesoFocusLost
 
+    private void btnAnularPalpacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularPalpacionActionPerformed
+        Anular();
+    }//GEN-LAST:event_btnAnularPalpacionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAnularPalpacion;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnModificar;
@@ -1273,6 +1301,49 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         }
         System.out.println("estado--->"+estado);
         return estado;
+    }
+
+    private void Anular() {
+        modelo.setId(txtCodigo.getText());
+        modelo.setId_animal(idAnimal);
+        modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+
+        for (int i = 0; i < listaMedicamentos.size(); i++) {
+            modelompp = new ModeloMedicamentosPorPesaje();
+            modelompp.setId(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO"));
+            modelompp.setId_medicamento(listaMedicamentos.get(i).get("ID"));
+            modelompp.setDosis(listaMedicamentos.get(i).get("CANTIDAD").toString().replace(".", "").replace(",", "."));
+            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0")?"0":(listaMedicamentos.get(i).get("UPDATE").equals("1")?"1":"-1"));
+            modelo.addMedicamentos(modelompp);
+        }
+        
+        int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro de anular este registro?", "Anular Pesaje", JOptionPane.YES_NO_OPTION);
+        
+        if(resp == JOptionPane.YES_OPTION){
+            int retorno = control.AnularPalpacion(modelo);
+            String mensaje = "";
+            switch (retorno) {
+                case Retorno.EXITO:
+                    mensaje = "Registro anulado satisfactoriamente.";
+                    break;
+                case Retorno.ERROR:
+                    mensaje = "El registro no pudo ser anulado .";
+                    break;
+                case Retorno.EXCEPCION_SQL:
+                    mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
+                    break;
+                case Retorno.CLASE_NO_ENCONTRADA:
+                    mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
+                    break;
+            }
+            JOptionPane.showMessageDialog(this, mensaje);
+            if (retorno == Retorno.EXITO) {
+                vp.EventoComboFincas();
+                vp.band = 0;
+                ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
+            }
+        }
+        
     }
     
 }

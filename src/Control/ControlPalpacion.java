@@ -470,4 +470,40 @@ public class ControlPalpacion implements IControl {
             return new ArrayList<>();
         }
     }
+
+    public int AnularPalpacion(ModeloPalpacion modelo){
+        ArrayList<String> consultas = new ArrayList<>();
+        consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DE PALPACION">
+                "DELETE FROM palpacion WHERE id=" + modelo.getId()
+        //</editor-fold>
+        );
+
+        if (modelo.getListaMedicamentos().size() > 0) {
+            for (ModeloMedicamentosPorPesaje lista : modelo.getListaMedicamentos()) {
+                consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS PALPACION">
+                    "DELETE FROM palpacionxtratamiento WHERE id=" + lista.getId()
+            //</editor-fold>
+                );
+            }
+        }
+        
+        try {
+            
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+
 }
