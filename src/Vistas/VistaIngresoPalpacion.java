@@ -63,7 +63,6 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     public String pesoAnterior = "";
     private VistaPalpacion vp;
     public DefaultListModel modlistDiagnostico = new DefaultListModel();
-    
 
     /**
      * Creates new form VistaIngresoPesaje
@@ -92,9 +91,9 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         datos = new HashMap<>();
         datos = (Map<String, String>) modeloVistaGeneral.getModeloDatos();
         idAnimal = datos.get("IDANIMAL");
-        
+
         txtReferenciaAnimal.setText("<html><p>Número Mamá: <b>" + datos.get("NUMERO_MAMA") + "</b></p><p>Animal número: <b>" + datos.get("NUMERO_ANIMAL") + "</b></p></html>");
-        pesoAnterior=datos.get("PESO");
+        pesoAnterior = datos.get("PESO");
         listaMedicamentos = new ArrayList<>();
         this.vp = ((VistaPalpacion) modeloVistaGeneral.getPanelPadre());
         fechaA = vp.fechaAnterior;
@@ -117,9 +116,10 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         modelompp = new ModeloMedicamentosPorPesaje();
         control = new ControlPalpacion();
         txtNumMeses.setEnabled(false);
-        
-        
-        if(!datos.get("IDPALPACION").equals("")){
+        btnAnularPalpacion.setEnabled(false);
+
+        if (!datos.get("IDPALPACION").equals("")) {
+            btnAnularPalpacion.setEnabled(true);
             guardar = 1;
             LlenarFormulario();
         }
@@ -762,7 +762,6 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
-
     private void txtNumMesesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumMesesKeyReleased
         String peso = txtNumMeses.getText();
         String pesoSinPuntos = peso.indexOf(".") > -1 ? peso.replace(".", "") : peso;
@@ -792,7 +791,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             }
             int opcion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de elimar el medicamento?", "Confirmacion", JOptionPane.YES_NO_OPTION);
             if (opcion == JOptionPane.YES_OPTION) {
-                if(!listaMedicamentos.get(fila).get("IDPALPMEDICAMENTO").equals("0")){
+                if (!listaMedicamentos.get(fila).get("IDPALPMEDICAMENTO").equals("0")) {
                     int rep = control.deletePalpacionMedicamento(listaMedicamentos.get(fila).get("IDPALPMEDICAMENTO"));
                     JOptionPane.showMessageDialog(this, "El registro se elimino exitosamente.");
                 }
@@ -827,13 +826,13 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         vp.MostrarTabla();
-        vp.band=0;
+        vp.band = 0;
         ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void lstDiagnosticoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDiagnosticoMouseReleased
         txtNumMeses.setEnabled(lstDiagnostico.getSelectedValue().equals("Preñada"));
-        if(lstDiagnostico.getSelectedValue().equals("Preñada")){
+        if (lstDiagnostico.getSelectedValue().equals("Preñada")) {
             txtNumMeses.requestFocus();
         }
     }//GEN-LAST:event_lstDiagnosticoMouseReleased
@@ -861,7 +860,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPesoKgKeyReleased
 
     private void txtRazonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonKeyReleased
-        
+
     }//GEN-LAST:event_txtRazonKeyReleased
 
     private void chkDescarteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkDescarteStateChanged
@@ -956,7 +955,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         dtm = (DefaultTableModel) tablaMedicamentos.getModel();
         dtm.addRow(getFila());
         tablaMedicamentos.setModel(dtm);
-        
+
 // a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
         Map<String, String> mp = new HashMap<String, String>();
         mp.put("ID", txtCodigoMedicamento.getText());
@@ -965,7 +964,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         mp.put("IDPALPMEDICAMENTO", "0");
         mp.put("UPDATE", "0");
         listaMedicamentos.add(mp);
-        
+
     }
 
     private Object[] getFila() {
@@ -1043,25 +1042,23 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         SimpleDateFormat sdfes = new SimpleDateFormat("dd/MM/yyyy");
         Calendar fecha = jdFechaPalpacion.getCalendar();
         String idgrupoDescarte = "";
-        
-        
+
         //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
-        
-        if(chkDescarte.isSelected()){ // BUSCAR IDGRUPO DESCARTE
+        if (chkDescarte.isSelected()) { // BUSCAR IDGRUPO DESCARTE
             controlGrupo = new ControlGrupos();
-            ArrayList<ModeloGrupos> dat = (ArrayList<ModeloGrupos>)controlGrupo.ObtenerIdGrupoxDescripcion(datos.get("IDFINCA"), datos.get("IDTIPOA"), "DESCARTE");
-            if(dat.size()>0){
+            ArrayList<ModeloGrupos> dat = (ArrayList<ModeloGrupos>) controlGrupo.ObtenerIdGrupoxDescripcion(datos.get("IDFINCA"), datos.get("IDTIPOA"), "DESCARTE");
+            if (dat.size() > 0) {
                 idgrupoDescarte = dat.get(0).getId();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se encontro el grupo DESCARTE en la finca Seleccionada. \nPor favor crear el grupo para poder realizar la operación.");
                 return;
             }
-            
+
             if (txtRazon.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Se debe ingresar la razon por la cual se descarta al animal, para continuar la operacion.");
                 return;
             }
-            
+
         }
         if (listaMedicamentos.size() == 0) {
             int opcion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de guardar el pesaje sin agregar los medicamentos?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -1076,19 +1073,19 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         //</editor-fold>
         String estado = "";
         String fechaEstadoActivo = "";
-        if(!datos.get("ESTPALP").equals("Activo")){
+        if (!datos.get("ESTPALP").equals("Activo")) {
             fechaEstadoActivo = control.getFechaPalpActiva(idAnimal);
-        }else{
+        } else {
             fechaEstadoActivo = datos.get("FECHA_PALP");
         }
         estado = getEstadoGuardar(sdfes.format(fecha.getTime()), fechaEstadoActivo);
-        
+
         modelo.setId(txtCodigo.getText());
         modelo.setId_animal(idAnimal);
         modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
-        modelo.setDiagnostico(""+lstDiagnostico.getSelectedValue().toString());
+        modelo.setDiagnostico("" + lstDiagnostico.getSelectedValue().toString());
         modelo.setFecha_palpacion(sdf.format(fecha.getTime()));
-        modelo.setNum_meses((txtNumMeses.getText().equals("")?"0":txtNumMeses.getText()));    
+        modelo.setNum_meses((txtNumMeses.getText().equals("") ? "0" : txtNumMeses.getText()));
         modelo.setFecha_ultimo_parto("");
         modelo.setDescarte(chkDescarte.isSelected() ? "1" : "0");
         modelo.setRazondescarte(chkDescarte.isSelected() ? Utilidades.CodificarElemento(txtRazon.getText()) : "");
@@ -1101,19 +1098,18 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             modelompp.setId(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO"));
             modelompp.setId_medicamento(listaMedicamentos.get(i).get("ID"));
             modelompp.setDosis(listaMedicamentos.get(i).get("CANTIDAD").toString().replace(".", "").replace(",", "."));
-            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0")?"0":(listaMedicamentos.get(i).get("UPDATE").equals("1")?"1":"-1"));
+            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0") ? "0" : (listaMedicamentos.get(i).get("UPDATE").equals("1") ? "1" : "-1"));
             modelo.addMedicamentos(modelompp);
         }
-        
-        
+
         int retorno = -1;
-            
-        if(guardar == 0){
-            if(estado.equals("Activo")){ 
+
+        if (guardar == 0) {
+            if (estado.equals("Activo")) {
                 int r = control.InactivarEstadoAnterior(idAnimal);
             }
             retorno = control.Guardar(modelo);
-        }else{
+        } else {
             retorno = control.Actualizar(modelo);
         }
 //        //<editor-fold defaultstate="collapsed" desc="DESCARTE">
@@ -1156,11 +1152,11 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 //            }
 //        }
 ////</editor-fold>
-        
+
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
-                mensaje = "Registro "+(guardar == 0?"guardado":"actualizado") +" satisfactoriamente.";
+                mensaje = "Registro " + (guardar == 0 ? "guardado" : "actualizado") + " satisfactoriamente.";
                 guardado = 0;
                 break;
             case Retorno.ERROR:
@@ -1177,30 +1173,30 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, mensaje);
         if (retorno == Retorno.EXITO) {
             EstablecerRegistroPalpado(idAnimal);
-            vp.band=0;
+            vp.band = 0;
             ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
         }
     }
-    
-    public void IniciarFecha(){
+
+    public void IniciarFecha() {
         try {
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            Date fecha = formato.parse(fechaA);  
+            Date fecha = formato.parse(fechaA);
             jdFechaPalpacion.setDate(fecha);
         } catch (ParseException ex) {
             Logger.getLogger(VistaIngresoPalpacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void EstablecerRegistroPalpado(String idAnimal) { 
-        System.out.println("id-->"+idAnimal);
+
+    private void EstablecerRegistroPalpado(String idAnimal) {
+        System.out.println("id-->" + idAnimal);
         for (int i = 0; i < vp.ListaAnimales.size(); i++) {
             String id = vp.ListaAnimales.get(i).get("IDANIMAL");
             if (id.equals(idAnimal)) {
                 vp.ListaAnimales.get(i).put("EST", "*");
-                vp.ListaAnimales.get(i).put("NUMERO_MESES", ""+modelo.getNum_meses());
-                vp.ListaAnimales.get(i).put("ESTADO", ""+modelo.getDiagnostico());
-                vp.ListaAnimales.get(i).put("NOTAS", ""+modelo.getNotas());
+                vp.ListaAnimales.get(i).put("NUMERO_MESES", "" + modelo.getNum_meses());
+                vp.ListaAnimales.get(i).put("ESTADO", "" + modelo.getDiagnostico());
+                vp.ListaAnimales.get(i).put("NOTAS", "" + modelo.getNotas());
                 vp.fechaAnterior = modelo.getFecha_palpacion();
                 vp.EventoComboFincas();
                 vp.CargarListadoFechas();
@@ -1208,7 +1204,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void calcularPesoEnLibras() {
         String peso = txtPesoKg.getText();
         String pesoSinPuntos = peso.indexOf(".") > -1 ? peso.replace(".", "") : peso;
@@ -1233,7 +1229,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
         long resultadoRedondeado = Math.round(resultado);
         return "" + resultadoRedondeado;
     }
-    
+
     private String convertirAKilogramos(double pesoEnLibras) {
         Double resultado = pesoEnLibras / Utilidades.FACTOR_CONVERSION;
         long resultadoRedondeado = Math.round(resultado);
@@ -1241,7 +1237,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 
         return "" + resultadoRedondeado;
     }
-    
+
     private void calcularDiferenciaPesos() {
         if (txtPesoKg.getText().length() == 0) {
             txtPesoActual.setText(datos.get("PESO") + " Kg");
@@ -1255,22 +1251,22 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
 
     private void LlenarFormulario() {
         lstDiagnostico.setSelectedValue(datos.get("ESTADO"), true);
-        if(datos.get("ESTADO").equals("Preñada")){
-            txtNumMeses.setText(""+datos.get("NUMERO_MESES"));
+        if (datos.get("ESTADO").equals("Preñada")) {
+            txtNumMeses.setText("" + datos.get("NUMERO_MESES"));
             txtNumMeses.setEnabled(true);
         }
-        txtCodigo.setText(""+datos.get("IDPALPACION"));
+        txtCodigo.setText("" + datos.get("IDPALPACION"));
         fechaA = datos.get("FECHA_PALP");
         txtNotas.setText(Utilidades.decodificarElemento(datos.get("NOTAS")));
         getMedicamentos(datos.get("IDPALPACION"));
-        
+
     }
-    
+
     private void getMedicamentos(String id) {
         String consulta = consultas.get("GET_MEDICAMENTOS_POR_PALPACION") + id;
         select = controlGral.GetComboBox(consulta);
         dtm = (DefaultTableModel) tablaMedicamentos.getModel();
-        
+
 // a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
         for (Map<String, String> lista : select) {
             Object[] fila = new Object[]{
@@ -1282,24 +1278,23 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             };
             dtm.addRow(fila);
             tablaMedicamentos.setModel(dtm);
-            
+
             // a.id_medicamento AS ID, b.descripcion AS DESCRIPCION,a.dosis AS CANTIDAD, b.unidad_medida AS UNIDAD_MEDIDA, a.`id` AS IDPALPMEDICAMENTO
-            
             listaMedicamentos.add(lista);
         }
     }
 
     private String getEstadoGuardar(String fechaForm, String fechaEstadoActivo) {
         String estado = "Activo";
-        System.out.println("fechaForm--->"+fechaForm);
-        System.out.println("fechaEstadoActivo--->"+fechaEstadoActivo);
+        System.out.println("fechaForm--->" + fechaForm);
+        System.out.println("fechaEstadoActivo--->" + fechaEstadoActivo);
         System.out.println("");
-        if(!fechaEstadoActivo.equals("")){
+        if (!fechaEstadoActivo.equals("")) {
             int dif = Utilidades.CompararFechas(fechaForm, fechaEstadoActivo);
-            System.out.println("dif-->"+dif);
-            estado = (dif>0?"Activo":"Inactivo");
+            System.out.println("dif-->" + dif);
+            estado = (dif > 0 ? "Activo" : "Inactivo");
         }
-        System.out.println("estado--->"+estado);
+        System.out.println("estado--->" + estado);
         return estado;
     }
 
@@ -1313,13 +1308,13 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
             modelompp.setId(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO"));
             modelompp.setId_medicamento(listaMedicamentos.get(i).get("ID"));
             modelompp.setDosis(listaMedicamentos.get(i).get("CANTIDAD").toString().replace(".", "").replace(",", "."));
-            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0")?"0":(listaMedicamentos.get(i).get("UPDATE").equals("1")?"1":"-1"));
+            modelompp.setEstadoG(listaMedicamentos.get(i).get("IDPALPMEDICAMENTO").equals("0") ? "0" : (listaMedicamentos.get(i).get("UPDATE").equals("1") ? "1" : "-1"));
             modelo.addMedicamentos(modelompp);
         }
-        
+
         int resp = JOptionPane.showConfirmDialog(this, "¿Esta seguro de anular este registro?", "Anular Pesaje", JOptionPane.YES_NO_OPTION);
-        
-        if(resp == JOptionPane.YES_OPTION){
+
+        if (resp == JOptionPane.YES_OPTION) {
             int retorno = control.AnularPalpacion(modelo);
             String mensaje = "";
             switch (retorno) {
@@ -1343,7 +1338,7 @@ public class VistaIngresoPalpacion extends javax.swing.JPanel {
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
             }
         }
-        
+
     }
-    
+
 }
