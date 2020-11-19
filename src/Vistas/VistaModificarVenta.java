@@ -578,7 +578,8 @@ public class VistaModificarVenta extends javax.swing.JPanel {
         }
         cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(datosVenta.get("tipo_venta")));
         txtPesoCanal.setText(""+datosVenta.get("peso_canal"));
-        txtPrecioVenta.setText(""+datosVenta.get("precio_venta"));
+        txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(""+datosVenta.get("precio_venta").replace(".", ",")));
+//        txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta().replace(".", ",")));
         double porc = 0;
         double valor_venta = 0;
         DecimalFormat df = new DecimalFormat("#.0");
