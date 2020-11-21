@@ -94,6 +94,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMaximizar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnInicio1 = new javax.swing.JLabel();
+        btnLibroDiaario = new javax.swing.JLabel();
+        btnInventario = new javax.swing.JLabel();
         pnlContenedor = new javax.swing.JPanel();
         pnlMenuVertical = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -206,7 +208,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
@@ -223,7 +225,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
@@ -234,7 +236,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Ventana Principal");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
@@ -305,7 +307,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
@@ -339,6 +341,46 @@ public class VistaPrincipal extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlTitulo.add(btnInicio1, gridBagConstraints);
+
+        btnLibroDiaario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLibroDiaario.setForeground(new java.awt.Color(255, 255, 255));
+        btnLibroDiaario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
+        btnLibroDiaario.setText("INICIO");
+        btnLibroDiaario.setToolTipText("INICIO");
+        btnLibroDiaario.setMaximumSize(new java.awt.Dimension(30, 30));
+        btnLibroDiaario.setMinimumSize(new java.awt.Dimension(30, 30));
+        btnLibroDiaario.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnLibroDiaario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLibroDiaarioMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        pnlTitulo.add(btnLibroDiaario, gridBagConstraints);
+
+        btnInventario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInventario.setForeground(new java.awt.Color(255, 255, 255));
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
+        btnInventario.setText("INICIO");
+        btnInventario.setToolTipText("INICIO");
+        btnInventario.setMaximumSize(new java.awt.Dimension(30, 30));
+        btnInventario.setMinimumSize(new java.awt.Dimension(30, 30));
+        btnInventario.setPreferredSize(new java.awt.Dimension(30, 30));
+        btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventarioMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        pnlTitulo.add(btnInventario, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1546,6 +1588,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorUsuarios.setVisible(!pnlContenedorUsuarios.isVisible());
     }//GEN-LAST:event_btnMostrarUsuariosMouseClicked
 
+    private void btnLibroDiaarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibroDiaarioMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLibroDiaarioMouseClicked
+
+    private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInventarioMouseClicked
+
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
             Component panel = pnlContenedor.getComponent(0);
@@ -1608,6 +1658,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel btnInformes;
     private javax.swing.JLabel btnInicio;
     private javax.swing.JLabel btnInicio1;
+    private javax.swing.JLabel btnInventario;
+    private javax.swing.JLabel btnLibroDiaario;
     private javax.swing.JLabel btnLotes;
     private javax.swing.JLabel btnMacrogrupos;
     private javax.swing.JLabel btnMaximizar;
