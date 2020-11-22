@@ -20,6 +20,7 @@ import Utilidades.Consultas;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import Vistas.Inventario.VistaLibroDiario;
+import Vistas.Inventario.VistaLibroDiarioCopia;
 import Vistas.Usuarios.*;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -1590,7 +1591,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnLibroDiaarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibroDiaarioMouseClicked
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Libro Diario");
-            VistaLibroDiario vista = new VistaLibroDiario();
+            VistaLibroDiarioCopia vista = new VistaLibroDiarioCopia();
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnLibroDiaarioMouseClicked
