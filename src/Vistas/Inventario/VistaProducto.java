@@ -5,20 +5,25 @@
  */
 package Vistas.Inventario;
 
-import Control.Inventario.ControlInventario;
+import Control.ControlGeneral;
+import Control.Inventario.*;
 import Control.Retorno;
 import GestionControles.Control;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
+import Modelo.Inventario.ModeloLibro;
 import Modelo.Inventario.ModeloProducto;
 import Modelo.ModeloVentanaGeneral;
-import Utilidades.Estado;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import Vistas.IControlesUsuario;
+import Vistas.VistaGeneral;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,27 +32,48 @@ import javax.swing.JOptionPane;
  */
 public class VistaProducto extends javax.swing.JPanel implements IControlesUsuario {
 
+    private ControlGeneral controlgen = new ControlGeneral();
     private GestionEstadoControles controles;
     private ModeloProducto modelo;
     private ControlInventario control;
+    private ModeloLibro modeloLibro;
+    private ControlLibro controlLD;
+    private List<Map<String, String>> listaFincas;
+    private List<Map<String, String>> listaProductos;
+    private String idFinca;
+    private String id_producto;
+    private ModeloVentanaGeneral vg;
 
     public VistaProducto() {
         initComponents();
         iniciarComponentes();
-        setSize(480, 300);
+        setSize(600, 330);
+        listaProductos = new ArrayList<>();
+        listaFincas = new ArrayList<>();
+        modeloLibro = new ModeloLibro();
         controles.habilitarControles();
         modelo = new ModeloProducto();
         control = new ControlInventario();
+        jdFecha.setCalendar(Calendar.getInstance());
+        id_producto = "0";
+        CargarListaFincas();
     }
 
     public VistaProducto(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
-        setSize(480, 300);
+        setSize(600, 330);
+        vg = modeloVista;
+        listaProductos = new ArrayList<>();
+        listaFincas = new ArrayList<>();
+        modeloLibro = new ModeloLibro();
         controles.habilitarControles();
         modelo = new ModeloProducto();
         control = new ControlInventario();
         jdFecha.setCalendar(Calendar.getInstance());
+        id_producto = "0";
+        CargarListaFincas();
+        CargarListaProductos();
     }
 
     @Override
@@ -75,6 +101,23 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
     }
 
+    private void CargarListaFincas() {
+        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM fincas\n"
+                + "/*UNION \n"
+                + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
+
+        Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
+        cbFinca.setSelectedIndex(1);
+    }
+
+    private void CargarListaProductos() {
+        listaProductos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM productos");
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,12 +137,14 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
+        lblTid = new javax.swing.JLabel();
+        cbFinca = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0};
-        layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0};
+        layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0};
         setLayout(layout);
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -115,7 +160,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -130,11 +175,11 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         txtPrecioUnidad.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.375;
+        gridBagConstraints.weightx = 0.5;
         add(txtPrecioUnidad, gridBagConstraints);
 
         jdFecha.setBackground(new java.awt.Color(255, 255, 255));
@@ -143,7 +188,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         jdFecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -156,7 +201,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         lbltitle19.setText("Fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(lbltitle19, gridBagConstraints);
@@ -169,7 +214,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         txtProducto.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
@@ -184,11 +229,11 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         cbTipo.setEditor(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = -3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.375;
+        gridBagConstraints.weightx = 0.25;
         add(cbTipo, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -241,12 +286,41 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         add(jPanel2, gridBagConstraints);
+
+        lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        add(lblTid, gridBagConstraints);
+
+        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
+        cbFinca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFincaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        add(cbFinca, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
@@ -279,6 +353,11 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             cbTipo.requestFocusInWindow();
             return;
         }
+        if (cbFinca.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una finca.");
+            cbFinca.requestFocusInWindow();
+            return;
+        }
 //</editor-fold>
         Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -287,13 +366,19 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         Descartar();
     }//GEN-LAST:event_btnDescartarActionPerformed
 
+    private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
+    }//GEN-LAST:event_cbFincaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnGuardar;
+    public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipo;
     private javax.swing.JPanel jPanel2;
     public com.toedter.calendar.JDateChooser jdFecha;
+    private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lbltitle19;
     public javax.swing.JTextField txtCantidad;
     public javax.swing.JTextField txtPrecioUnidad;
@@ -301,15 +386,31 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     // End of variables declaration//GEN-END:variables
 
     private void Guardar() {
+        String nombreProducto = txtProducto.getText().trim();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = jdFecha.getCalendar();
-        modelo.setFecha("'"+sdf.format(fecha.getTime())+"'");
+        modelo.setFecha("'" + sdf.format(fecha.getTime()) + "'");
 
-        modelo.setDescripcion(Utilidades.CodificarElemento(txtProducto.getText().trim()));
+        modelo.setDescripcion(Utilidades.CodificarElemento(nombreProducto));
         modelo.setEstado("Activo");
         modelo.setId("0");
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setTipo_salida(cbTipo.getSelectedItem().toString());
+
+        //<editor-fold defaultstate="collapsed" desc="LIBRO DIARIO">
+        modeloLibro.setCantidad(txtCantidad.getText().trim());
+        modeloLibro.setDebe("0");
+        modeloLibro.setDetalle(Utilidades.CodificarElemento(txtProducto.getText().trim()));
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro("NOW()");
+        modeloLibro.setHaber("0");
+        modeloLibro.setId("0");
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().trim());
+        modeloLibro.setSaldo("0");
+        modeloLibro.setId_producto(id_producto);
+//</editor-fold>
 
         int retorno = Retorno.DEFECTO;
 
@@ -318,24 +419,53 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         String mensaje = "";
         switch (retorno) {
             case Retorno.EXITO:
-                mensaje = "Registro guardado satisfactoriamente.";
+                CargarListaProductos();
+                id_producto = getIDProducto(Utilidades.CodificarElemento(nombreProducto));
+                modeloLibro.setId_producto(id_producto);
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser guardado.";
-                break;
+                JOptionPane.showMessageDialog(this, mensaje);
+                return;
             case Retorno.EXCEPCION_SQL:
                 mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
-                break;
+                JOptionPane.showMessageDialog(this, mensaje);
+                return;
             case Retorno.CLASE_NO_ENCONTRADA:
                 mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
-                break;
+                JOptionPane.showMessageDialog(this, mensaje);
+                return;
         }
 
-        JOptionPane.showMessageDialog(this, mensaje);
+        int ret_entrada = control.GuardarEntrada(modeloLibro);
+        if (ret_entrada != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Hubo un error al momento de ingresar la entrada del producto.");
+            return;
+        }
+        int ret_Inventario = control.GuardarInventario(modeloLibro);
+        if (ret_Inventario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Hubo un error al momento de Actualizar el producto al Inventario.");
+            return;
+        }
+        
+        JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
+
+        ((VistaGeneral) vg.getFrameVentana()).dispose();
     }
 
     private void Descartar() {
         Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_DESCARTAR, controles);
+    }
+
+    private String getIDProducto(String producto) {
+        String ret = "";
+        for (Map<String, String> map : listaProductos) {
+            if (producto.equals(map.get("DESCRIPCION"))) {
+                ret = map.get("ID");
+                break;
+            }
+        }
+        return ret;
     }
 
 }
