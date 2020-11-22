@@ -19,6 +19,7 @@ import Modelo.Usuario.ModeloPermisoxModulos;
 import Utilidades.Consultas;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
+import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaLibroDiario;
 import Vistas.Inventario.VistaLibroDiarioCopia;
 import Vistas.Usuarios.*;
@@ -1599,7 +1600,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Inventario");
-            VistaInicio vista = new VistaInicio(this);
+            VistaInventario vista = new VistaInventario();
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnInventarioMouseClicked

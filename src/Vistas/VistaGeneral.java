@@ -8,6 +8,7 @@ package Vistas;
 import AjustarControles.AjustarControles;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
+import Vistas.Inventario.VistaProducto;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -147,6 +148,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Observaciones de anulación");
+        } else if (panel instanceof VistaProducto) {
+            VistaProducto vista = (VistaProducto) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Agregar productos");
 
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -562,6 +568,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaObservacion) {
 
             VistaObservacion vista = new VistaObservacion(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaProducto) {
+
+            VistaProducto vista = new VistaProducto(modeloVista);
             MostrarPanel(vista);
 
         }

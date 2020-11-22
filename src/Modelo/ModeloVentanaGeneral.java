@@ -38,8 +38,7 @@ public class ModeloVentanaGeneral {
         this.fila = -2;
     }
 /**
- * contructor #3
- * 
+ * constructor #3
  * @param panelPadre
  * @param panelHijo
  * @param opcion
