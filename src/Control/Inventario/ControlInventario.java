@@ -9,6 +9,7 @@ package Control.Inventario;
 import BaseDeDatos.gestorMySQL;
 import Control.IControl;
 import Control.Retorno;
+import Modelo.Inventario.ModeloLibro;
 import Modelo.Inventario.ModeloProducto;
 import Modelo.Usuario.modeloPerfiles;
 import java.sql.SQLException;
@@ -88,6 +89,91 @@ public class ControlInventario implements IControl{
                 "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n" +
                 "VALUES \n" +
                 "('"+modeloProducto.getDescripcion()+"', '"+modeloProducto.getTipo_salida()+"', '"+modeloProducto.getEstado()+"', "+modeloProducto.getFecha()+", '"+modeloProducto.getId_usuario()+"');"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int GuardarEntrada(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `entradas`\n" +
+                "(`id_finca`, `id_producto`, `cantidad`, \n" +
+                "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n" +
+                "VALUES \n" +
+                "("+modeloLibro.getId_finca()+", "+modeloLibro.getId_producto()+", "+modeloLibro.getCantidad()+", \n" +
+                ""+modeloLibro.getPrecioxunidad()+", "+modeloLibro.getFecha_libro()+", NOW(), "+modeloLibro.getId_usuario()+");"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int GuardarInventario(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `inventario`\n" +
+                "(`id_finca`, `id_producto`, `entrada`, \n" +
+                "`salidas`, `stock`, `fecha`, `id_usuario`)\n" +
+                "VALUES \n" +
+                "("+modeloLibro.getId_finca()+", "+modeloLibro.getId_producto()+", "+modeloLibro.getCantidad()+", \n" +
+                "0, "+modeloLibro.getCantidad()+", NOW(), "+modeloLibro.getId_usuario()+");"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int ActualizarEntradaInventario(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE `inventario`\n" +
+            "SET `entrada` = entrada + "+modeloLibro.getCantidad()+",\n" +
+            "  `stock` = stock + "+modeloLibro.getCantidad()+"\n" +
+            "WHERE `id_producto` = "+modeloLibro.getId_producto()+";"
         //</editor-fold>
         );
 

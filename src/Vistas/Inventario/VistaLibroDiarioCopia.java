@@ -939,6 +939,20 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         Double total = Double.parseDouble(cantidad)*Double.parseDouble(precio);
         String id = filaSeleccionada>=0?datoaModificar.get("ID"):"0";
          
+        
+        modeloLibro.setCantidad(cantidad);
+        modeloLibro.setDebe(Radio.equals("DEBE")?""+total:"0");
+        modeloLibro.setDetalle(detalle);
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro(fechaFormateada);
+        modeloLibro.setHaber(Radio.equals("HABER")?""+total:"0");
+        modeloLibro.setId(id);
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(precio);
+        modeloLibro.setSaldo("0");
+        modeloLibro.setId_producto(id_producto);
+        
         if(chInventario){
             modeloProducto.setDescripcion(detalle);
             modeloProducto.setEstado("Activo");
@@ -955,25 +969,39 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                     LimpiarLst();
                     LlenarListaProductos();
                     id_producto = getIDProducto(detalle);
+                    modeloLibro.setId_producto(id_producto);
+                    
+                    int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
+                    if(ret_entrada != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar la Entrada del producto.");
+                        return;
+                    }
+                    
+                    int ret_Inventario = controlInventario.GuardarInventario(modeloLibro);
+                    if(ret_Inventario != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar el producto al Inventario.");
+                        return;
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar el producto.");
                     return;
                 }
-            }
+            }else{
+                //ACTUALIZAR INVENTARIO
+                int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
+                if(ret_entrada != Retorno.EXITO){
+                    JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar la Entrada del producto.");
+                    return;
+                }
+                int ret_Inventario = controlInventario.ActualizarEntradaInventario(modeloLibro);
+                if(ret_Inventario != Retorno.EXITO){
+                    JOptionPane.showMessageDialog(null, "Hubo un error al momento de Actualizar el producto al Inventario.");
+                    return;
+                }
+            } 
+            
         }
         
-        modeloLibro.setCantidad(cantidad);
-        modeloLibro.setDebe(Radio.equals("DEBE")?""+total:"0");
-        modeloLibro.setDetalle(detalle);
-        modeloLibro.setFecha("NOW()");
-        modeloLibro.setFecha_libro(fechaFormateada);
-        modeloLibro.setHaber(Radio.equals("HABER")?""+total:"0");
-        modeloLibro.setId(id);
-        modeloLibro.setId_finca(idFinca);
-        modeloLibro.setId_producto(id_producto);
-        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modeloLibro.setPrecioxunidad(precio);
-        modeloLibro.setSaldo("0");
         int ret;
         if(id_libro.equals("0")){
             ret = controlLibro.Guardar(modeloLibro);
@@ -982,9 +1010,6 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         }
         if(ret == Retorno.EXITO){
             //LLAMAR PROC ALMA
-            
-            
-            
             
             JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
         }
