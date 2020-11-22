@@ -47,7 +47,7 @@ public class ControlLibro implements IControl{
                 "`debe`, `haber`, `saldo`, `fecha_libro`, `fecha`, `id_usuario`)\n" +
                 "VALUES \n" +
                 "('"+modelo.getId_finca()+"', '"+modelo.getDetalle()+"', '"+modelo.getId_producto()+"', "+modelo.getCantidad()+","+modelo.getPrecioxunidad()+", \n" +
-                ""+modelo.getDebe()+", "+modelo.getHaber()+", "+modelo.getSaldo()+", "+modelo.getFecha_libro()+", "+modelo.getFecha()+", "+modelo.getId_usuario()+");"
+                ""+modelo.getDebe()+", "+modelo.getHaber()+", "+modelo.getSaldo()+", '"+modelo.getFecha_libro()+"', "+modelo.getFecha()+", "+modelo.getId_usuario()+");"
         //</editor-fold>
         );
 
@@ -114,7 +114,7 @@ public class ControlLibro implements IControl{
                         "FROM `libro_diario` lbro\n" +
                         "LEFT JOIN productos pdct ON pdct.`id` = lbro.`id_producto`\n" +
                         "WHERE lbro.`id_finca` = '"+o.toString()+"'\n" +
-                        "ORDER BY lbro.`fecha_libro` ASC";
+                        "ORDER BY lbro.`fecha_libro` ASC, lbro.id ASC";
             
             List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
 
@@ -124,6 +124,24 @@ public class ControlLibro implements IControl{
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public int ActualizarSaldos(String procedimientoAlmacenado) {
+        try {
+            ArrayList<String> consultas = new ArrayList<>();
+            consultas.add(procedimientoAlmacenado);
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
         }
     }
 }

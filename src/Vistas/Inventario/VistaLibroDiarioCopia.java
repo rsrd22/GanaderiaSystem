@@ -114,13 +114,13 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
             "E"
         };
         EstadoPanelAdd(false);
+        InicializarTblLibro();
         listaFincas = new ArrayList<>();
         CargarListaFincas();
-        InicializarTblLibro();
     }
 
     public void InicializarTblLibro() {
-        tbl_LibroDiario.setDefaultRenderer(Object.class, new TablaRender());
+        //tbl_LibroDiario.setDefaultRenderer(Object.class, new TablaRender());
 
         modeloTblLibro = new DefaultTableModel(EncabezadoTblLibro, 0) {
             Class[] types = new Class[]{
@@ -206,7 +206,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         btnBorrar = new javax.swing.JButton();
         chkInventariable = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_LibroDiario = new Tablas.DiarioTable();
+        tbl_LibroDiario = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         cbFinca = new javax.swing.JComboBox();
@@ -823,6 +823,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         if (listaFiltro.getSelectedValue() != null) {
             txtDetalle.setText(listaFiltro.getSelectedValue().toString());
             id_producto = getIDProducto(listaFiltro.getSelectedValue().toString());
+            chkInventariable.setSelected(true);
             panelFiltro.setVisible(false);
         }
 //</editor-fold>
@@ -1009,16 +1010,18 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         }
         if(ret == Retorno.EXITO){
             //LLAMAR PROC ALMA
-            
+            ret = controlLibro.ActualizarSaldos("CALL ActualizarSaldoLibroDiario(" + idFinca + ");");
             JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
         }
         LimpiarFomulario();
+        cargarTablaFiltro();
     }
 
     private void LimpiarFomulario() {
         EstadoPanelAdd(false);
         rbDebe.setSelected(false);
         rbHaber.setSelected(false);
+        chkInventariable.setSelected(false);
         datoaModificar = new HashMap<>();
         filaSeleccionada = -1;
         id_libro = "0";

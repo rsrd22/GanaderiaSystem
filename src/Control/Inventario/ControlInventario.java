@@ -145,7 +145,7 @@ public class ControlInventario implements IControl{
                 "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n" +
                 "VALUES \n" +
                 "("+modeloLibro.getId_finca()+", "+modeloLibro.getId_producto()+", "+modeloLibro.getCantidad()+", \n" +
-                ""+modeloLibro.getPrecioxunidad()+", "+modeloLibro.getFecha_libro()+", NOW(), "+modeloLibro.getId_usuario()+");"
+                ""+modeloLibro.getPrecioxunidad()+", '"+modeloLibro.getFecha_libro()+"', NOW(), "+modeloLibro.getId_usuario()+");"
         //</editor-fold>
         );
 
