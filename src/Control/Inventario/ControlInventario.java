@@ -61,7 +61,35 @@ public class ControlInventario implements IControl{
 
     @Override
     public int Guardar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloProducto modeloProducto = (ModeloProducto)o;
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `productos`\n" +
+                "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n" +
+                "VALUES \n" +
+                "('"+modeloProducto.getDescripcion()+"', "
+                        + "'"+modeloProducto.getTipo_salida()+"', "
+                        + "'"+modeloProducto.getEstado()+"', "
+                        + ""+modeloProducto.getFecha()+","
+                        + " '"+modeloProducto.getId_usuario()+"');"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override

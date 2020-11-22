@@ -15,7 +15,6 @@ import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
-import com.sun.mail.imap.protocol.ID;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
