@@ -354,8 +354,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconos/histograma.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="INICIO"/>
-                <Property name="toolTipText" type="java.lang.String" value="INICIO"/>
+                <Property name="toolTipText" type="java.lang.String" value="Libro Diario"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[30, 30]"/>
                 </Property>
@@ -386,8 +385,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/iconos/histograma.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="INICIO"/>
-                <Property name="toolTipText" type="java.lang.String" value="INICIO"/>
+                <Property name="toolTipText" type="java.lang.String" value="Inventario"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[30, 30]"/>
                 </Property>

@@ -19,6 +19,7 @@ import Modelo.Usuario.ModeloPermisoxModulos;
 import Utilidades.Consultas;
 import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
+import Vistas.Inventario.VistaLibroDiario;
 import Vistas.Usuarios.*;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -345,8 +346,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnLibroDiaario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLibroDiaario.setForeground(new java.awt.Color(255, 255, 255));
         btnLibroDiaario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
-        btnLibroDiaario.setText("INICIO");
-        btnLibroDiaario.setToolTipText("INICIO");
+        btnLibroDiaario.setToolTipText("Libro Diario");
         btnLibroDiaario.setMaximumSize(new java.awt.Dimension(30, 30));
         btnLibroDiaario.setMinimumSize(new java.awt.Dimension(30, 30));
         btnLibroDiaario.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -365,8 +365,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInventario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
-        btnInventario.setText("INICIO");
-        btnInventario.setToolTipText("INICIO");
+        btnInventario.setToolTipText("Inventario");
         btnInventario.setMaximumSize(new java.awt.Dimension(30, 30));
         btnInventario.setMinimumSize(new java.awt.Dimension(30, 30));
         btnInventario.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -1589,11 +1588,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarUsuariosMouseClicked
 
     private void btnLibroDiaarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibroDiaarioMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Libro Diario");
+            VistaLibroDiario vista = new VistaLibroDiario();
+            MostrarPanel(vista);
+        }
     }//GEN-LAST:event_btnLibroDiaarioMouseClicked
 
     private void btnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInventarioMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Inventario");
+            VistaInicio vista = new VistaInicio(this);
+            MostrarPanel(vista);
+        }
     }//GEN-LAST:event_btnInventarioMouseClicked
 
     public void EstablecerPnlContenedor() {
