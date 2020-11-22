@@ -3,28 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pruebas;
 
 import Busqueda.VistaBusqueda;
 import Control.IBusqueda;
 import Modelo.ModeloGestorBusqueda;
 import Utilidades.Consultas;
+import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.util.Map;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
 
 /**
  *
  * @author MERRY
  */
-public class prueba extends javax.swing.JPanel implements IBusqueda{
-    
+public class prueba extends javax.swing.JPanel implements IBusqueda {
+
     ModeloGestorBusqueda objeto;
+    ListModel modeloGral;
+
     /**
      * Creates new form prueba
      */
     public prueba() {
         initComponents();
-        Consultas.Agregar();
+        this.setSize(new Dimension(500, 500));
+        panelFiltro.setVisible(false);
+        btnBorrar.setEnabled(false);
+        modeloGral = listaFiltro.getModel();
     }
 
     /**
@@ -35,8 +46,63 @@ public class prueba extends javax.swing.JPanel implements IBusqueda{
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        panelFiltro = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaFiltro = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        txtFiltro = new javax.swing.JTextField();
+        btnBorrar = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(204, 204, 255));
+        setLayout(new java.awt.GridBagLayout());
+
+        panelFiltro.setMinimumSize(new java.awt.Dimension(384, 80));
+        panelFiltro.setPreferredSize(new java.awt.Dimension(384, 80));
+        panelFiltro.setLayout(new java.awt.GridBagLayout());
+
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(35, 80));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(35, 80));
+
+        listaFiltro.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "maria", "laura", "patricia", "martha", "yolanda", "aura", "esther", "camila", "lucia", "lucas", "mark", "augusto", "pepito perez", "camilo restrepo", "luisa fernanda" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        listaFiltro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        listaFiltro.setMaximumSize(new java.awt.Dimension(33, 400));
+        listaFiltro.setMinimumSize(new java.awt.Dimension(33, 400));
+        listaFiltro.setPreferredSize(new java.awt.Dimension(33, 400));
+        listaFiltro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaFiltroValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaFiltro);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        panelFiltro.add(jScrollPane1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        add(panelFiltro, gridBagConstraints);
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -44,23 +110,75 @@ public class prueba extends javax.swing.JPanel implements IBusqueda{
                 jButton1ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(jButton1, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(jButton1)
-                .addContainerGap(190, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(200, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(77, 77, 77))
-        );
+        jTextField2.setText("jTextField2");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        add(jTextField2, gridBagConstraints);
+
+        jTextField3.setText("jTextField3");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(jTextField3, gridBagConstraints);
+
+        jTextField4.setText("jTextField4");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        add(jTextField4, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPanel2.add(txtFiltro, gridBagConstraints);
+
+        btnBorrar.setText("x");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel2.add(btnBorrar, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -68,14 +186,69 @@ public class prueba extends javax.swing.JPanel implements IBusqueda{
         new VistaBusqueda(objeto).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBorrar.setEnabled(true);
+            panelFiltro.setVisible(false);
+            return;
+        }
+        
+        buscarElementos(txtFiltro, panelFiltro, listaFiltro);
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void listaFiltroValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaFiltroValueChanged
+        if (listaFiltro.getSelectedValue() != null) {
+            txtFiltro.setText(listaFiltro.getSelectedValue().toString());
+            panelFiltro.setVisible(false);
+        }
+    }//GEN-LAST:event_listaFiltroValueChanged
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        txtFiltro.setText("");
+        panelFiltro.setVisible(false);
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JList listaFiltro;
+    private javax.swing.JPanel panelFiltro;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void RetornoBusqueda(Map<String, String> retorno){
+    public void RetornoBusqueda(Map<String, String> retorno) {
         System.out.println("HACER prueba");
+    }
+
+    private void buscarElementos(JTextField txtFiltro, JPanel panelFiltro, JList listaFiltro) {
+        String texto = txtFiltro.getText();
+        if (texto.length() == 0) {
+            panelFiltro.setVisible(false);
+            btnBorrar.setEnabled(false);
+            return;
+        }
+
+        ListModel modelo = modeloGral;
+        DefaultListModel modeloFiltro = new DefaultListModel();
+        System.out.println("----------------elementos filtrados------------------");
+        for (int i = 0; i < modelo.getSize(); i++) {
+            if (modelo.getElementAt(i).toString().toLowerCase().contains(texto.toLowerCase())) {
+                modeloFiltro.addElement(modelo.getElementAt(i));
+                System.out.println(modelo.getElementAt(i));
+            }
+        }
+
+        listaFiltro.setModel(modeloFiltro);
+        listaFiltro.setBounds(0, 0, listaFiltro.getWidth(), modeloFiltro.getSize() * 8);
+        panelFiltro.setVisible(modeloFiltro.getSize() > 0);
+        btnBorrar.setEnabled(txtFiltro.getText().length() > 0);
     }
 
 }
