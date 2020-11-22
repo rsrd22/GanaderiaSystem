@@ -12,4 +12,5 @@ package Control.Inventario;
  */
 public class ControlInventario {
     
+    
 }

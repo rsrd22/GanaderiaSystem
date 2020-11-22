@@ -602,7 +602,7 @@ public class VistaLibroDiario extends javax.swing.JPanel {
     
     public void cargarTablaFiltro() {
         
-        if (Integer.parseInt(idFinca) > 0) {
+        if (Integer.parseInt(idFinca) > 0) { 
             listaLibro = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal, fechaFiltro);
             if (ListaAnimales.size() > 0) {
                 String col = "";
