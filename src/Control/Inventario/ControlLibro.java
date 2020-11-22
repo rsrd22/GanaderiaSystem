@@ -8,6 +8,9 @@ package Control.Inventario;
 
 import BaseDeDatos.gestorMySQL;
 import Control.IControl;
+import Control.Retorno;
+import Modelo.Inventario.ModeloLibro;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +38,65 @@ public class ControlLibro implements IControl{
 
     @Override
     public int Guardar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloLibro modelo = (ModeloLibro) o;
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `libro_diario`\n" +
+                "(`id_finca`,`detalle`,`id_producto`,`cantidad`,`precioxunidad`,\n" +
+                "`debe`, `haber`, `saldo`, `fecha_libro`, `fecha`, `id_usuario`)\n" +
+                "VALUES \n" +
+                "('"+modelo.getId_finca()+"', '"+modelo.getDetalle()+"', '"+modelo.getId_producto()+"', "+modelo.getCantidad()+","+modelo.getPrecioxunidad()+", \n" +
+                ""+modelo.getDebe()+", "+modelo.getHaber()+", "+modelo.getSaldo()+", "+modelo.getFecha_libro()+", "+modelo.getFecha()+", "+modelo.getId_usuario()+");"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
     public int Actualizar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        ModeloLibro modelo = (ModeloLibro) o;
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "UPDATE `libro_diario`\n" +
+                    "SET `detalle` = '"+modelo.getDetalle()+"',\n" +
+                    "  `id_producto` = "+modelo.getId_producto()+",\n" +
+                    "  `cantidad` = "+modelo.getCantidad()+",\n" +
+                    "  `precioxunidad` = "+modelo.getPrecioxunidad()+",\n" +
+                    "  `debe` = "+modelo.getDebe()+",\n" +
+                    "  `haber` = "+modelo.getHaber()+",\n" +
+                    "  `fecha_libro` = '"+modelo.getFecha_libro()+"'\n" +
+                    "WHERE `id` = '"+modelo.getId()+"';"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
@@ -52,7 +108,7 @@ public class ControlLibro implements IControl{
     public Object ObtenerDatosFiltro(Object o) {
         try {
             String consulta = "SELECT DATE_FORMAT(lbro.`fecha_libro`, '%d/%m/%Y') AS FECHA,lbro.`detalle` AS DETALLE, \n" +
-                        "lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, \n" +
+                        "lbro.id AS ID,lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, \n" +
                         "lbro.debe AS DEBE, lbro.`haber` AS HABER, lbro.`saldo` AS SALDO, IFNULL(pdct.`tipo_salida`, '0') TIPO,\n" +
                         "IF(lbro.debe IS NULL, 'HABER', 'DEBE') RADIO\n" +
                         "FROM `libro_diario` lbro\n" +

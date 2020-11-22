@@ -6,22 +6,32 @@
 package Vistas.Inventario;
 
 import Control.ControlGeneral;
+import Control.Inventario.ControlInventario;
+import Control.Inventario.ControlLibro;
+import Control.Retorno;
+import Modelo.Inventario.ModeloLibro;
+import Modelo.Inventario.ModeloProducto;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
+import Utilidades.datosUsuario;
+import com.sun.mail.imap.protocol.ID;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
@@ -42,11 +52,24 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     public String[] EncabezadoTblLibro;
     public List<Map<String, String>> listaFincas;
     public List<Map<String, String>> listaLibro;
+    public List<Map<String, String>> ListaLibroMostrar;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
+    Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public int idModulo = 1990;
+    public int filaSeleccionada = -1;
+    public int band =0 ;
+    public ArrayList<ModeloProducto> listaProductos = new ArrayList<ModeloProducto>();
+    public ControlInventario controlInventario =  new ControlInventario();
+    public ControlLibro controlLibro =  new ControlLibro();
+    public ModeloProducto modeloProducto = new ModeloProducto();
+    public ModeloLibro modeloLibro = new ModeloLibro();
+    public Map<String, String> datoaModificar = new HashMap<String, String>();
+    public String id_producto = "0";
+    public String id_libro = "0";
+    
     //<editor-fold defaultstate="collapsed" desc="filtro">
-    private ListModel modeloGral;
+    private DefaultListModel modeloGral;
     //</editor-fold>
 
     /**
@@ -54,11 +77,15 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
      */
     public VistaLibroDiarioCopia() {
         initComponents();
+        
         //<editor-fold defaultstate="collapsed" desc="filtro">
         panelFiltro.setVisible(false);
         btnBorrar.setEnabled(false);
-        modeloGral = listaFiltro.getModel();
+        modeloGral = new DefaultListModel();
 //</editor-fold>
+        listaProductos = controlInventario.getProductosSistema();
+        LlenarListaProductos();
+        
 
         //Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
@@ -164,21 +191,21 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         cbTipo = new javax.swing.JComboBox();
         txtCantidad = new javax.swing.JTextField();
         txtPrecioUnidad = new javax.swing.JTextField();
-        jdFechaPesaje = new com.toedter.calendar.JDateChooser();
+        jdFecha = new com.toedter.calendar.JDateChooser();
         lbltitle19 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbHaber = new javax.swing.JRadioButton();
+        rbDebe = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         lbltitle1 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
         txtDetalle = new javax.swing.JTextField();
         btnBorrar = new javax.swing.JButton();
-        chkPesable = new javax.swing.JCheckBox();
+        chkInventariable = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_LibroDiario = new Tablas.DiarioTable();
         txtFiltro = new javax.swing.JTextField();
@@ -337,13 +364,13 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 15);
         pnlAgregarLibro.add(txtPrecioUnidad, gridBagConstraints);
 
-        jdFechaPesaje.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaPesaje.setForeground(new java.awt.Color(59, 123, 50));
-        jdFechaPesaje.setDateFormatString("dd/MM/yyyy");
-        jdFechaPesaje.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jdFechaPesaje.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jdFecha.setBackground(new java.awt.Color(255, 255, 255));
+        jdFecha.setForeground(new java.awt.Color(59, 123, 50));
+        jdFecha.setDateFormatString("dd/MM/yyyy");
+        jdFecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jdFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jdFechaPesajePropertyChange(evt);
+                jdFechaPropertyChange(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -354,7 +381,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 0.3333333333333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 15, 0);
-        pnlAgregarLibro.add(jdFechaPesaje, gridBagConstraints);
+        pnlAgregarLibro.add(jdFecha, gridBagConstraints);
 
         lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
@@ -422,27 +449,27 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         jPanel3Layout.rowHeights = new int[] {0};
         jPanel3.setLayout(jPanel3Layout);
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        grpTipo.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(59, 123, 50));
-        jRadioButton1.setText("Haber");
+        rbHaber.setBackground(new java.awt.Color(255, 255, 255));
+        grpTipo.add(rbHaber);
+        rbHaber.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbHaber.setForeground(new java.awt.Color(59, 123, 50));
+        rbHaber.setText("Haber");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jRadioButton1, gridBagConstraints);
+        jPanel3.add(rbHaber, gridBagConstraints);
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        grpTipo.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(59, 123, 50));
-        jRadioButton2.setText("Debe");
+        rbDebe.setBackground(new java.awt.Color(255, 255, 255));
+        grpTipo.add(rbDebe);
+        rbDebe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbDebe.setForeground(new java.awt.Color(59, 123, 50));
+        rbDebe.setText("Debe");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel3.add(jRadioButton2, gridBagConstraints);
+        jPanel3.add(rbDebe, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -553,16 +580,16 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
         pnlAgregarLibro.add(jPanel4, gridBagConstraints);
 
-        chkPesable.setBackground(new java.awt.Color(255, 255, 255));
-        chkPesable.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chkPesable.setForeground(new java.awt.Color(59, 123, 50));
-        chkPesable.setText("Inventariable");
+        chkInventariable.setBackground(new java.awt.Color(255, 255, 255));
+        chkInventariable.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chkInventariable.setForeground(new java.awt.Color(59, 123, 50));
+        chkInventariable.setText("Inventariable");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
-        pnlAgregarLibro.add(chkPesable, gridBagConstraints);
+        pnlAgregarLibro.add(chkInventariable, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -748,43 +775,25 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioUnidadKeyReleased
 
-    private void jdFechaPesajePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPesajePropertyChange
+    private void jdFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPropertyChange
 
-    }//GEN-LAST:event_jdFechaPesajePropertyChange
+    }//GEN-LAST:event_jdFechaPropertyChange
 
     private void tbl_LibroDiarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LibroDiarioMouseReleased
-//        filaSeleccionada = tbl_LibroDiario.getSelectedRow();
-//        int cola = tbl_LibroDiario.getSelectedColumn();
-//        String dato = tbl_LibroDiario.getValueAt(filaSeleccionada, cola).toString();
-//
-//        if (band == 0) {
-//            if (dato.equalsIgnoreCase("PESAJE") && tbl_LibroDiario.getValueAt(filaSeleccionada, cola + 1).toString().isEmpty()) {
-//                tbl_LibroDiario.setValueAt("*", filaSeleccionada, cola + 1);
-//                band = 1;
-//                if (fechaAnterior.equals("")) {
-//                    fechaAnterior = fechaFiltro;
-//                }
-//                objetoVentana = new ModeloVentanaGeneral(
-//                    this,
-//                    new VistaIngresoPesaje(),
-//                    1,
-//                    ListaAnimalesMostrar.get(filaSeleccionada)
-//                );
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//            } else if (dato.equalsIgnoreCase("*")) {
-//                band = 1;
-//                if (fechaAnterior.equals("")) {
-//                    fechaAnterior = fechaFiltro;
-//                }
-//                objetoVentana = new ModeloVentanaGeneral(
-//                    this,
-//                    new VistaIngresoPesaje(),
-//                    2,
-//                    ListaAnimalesMostrar.get(filaSeleccionada)
-//                );
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//            }
-//        }
+        filaSeleccionada = tbl_LibroDiario.getSelectedRow();
+        int cola = tbl_LibroDiario.getSelectedColumn();
+        String dato = tbl_LibroDiario.getValueAt(filaSeleccionada, cola).toString();
+
+        if (band == 0) {
+            if (dato.equalsIgnoreCase("Modificar")) {
+                band = 1;
+                datoaModificar = ListaLibroMostrar.get(filaSeleccionada);
+                EditarRegistro();
+            } else if (dato.equalsIgnoreCase("Eliminar")) {
+                
+                
+            }
+        }
     }//GEN-LAST:event_tbl_LibroDiarioMouseReleased
 
     private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
@@ -814,13 +823,17 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         //<editor-fold defaultstate="collapsed" desc="filtro">
         if (listaFiltro.getSelectedValue() != null) {
             txtDetalle.setText(listaFiltro.getSelectedValue().toString());
+            id_producto = getIDProducto(listaFiltro.getSelectedValue().toString());
             panelFiltro.setVisible(false);
         }
 //</editor-fold>
     }//GEN-LAST:event_listaFiltroValueChanged
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        rbDebe.setEnabled(true);
+        rbHaber.setEnabled(true);
         EstadoPanelAdd(true);
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
 
@@ -831,19 +844,17 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     private javax.swing.JButton btnGuardar;
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipo;
-    private javax.swing.JCheckBox chkPesable;
+    private javax.swing.JCheckBox chkInventariable;
     private javax.swing.ButtonGroup grpTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator6;
-    public com.toedter.calendar.JDateChooser jdFechaPesaje;
+    public com.toedter.calendar.JDateChooser jdFecha;
     private javax.swing.JLabel lblId_Bloque;
     private javax.swing.JLabel lblTid;
     public javax.swing.JLabel lbltitle1;
@@ -851,6 +862,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     private javax.swing.JList listaFiltro;
     private javax.swing.JPanel panelFiltro;
     private javax.swing.JPanel pnlAgregarLibro;
+    private javax.swing.JRadioButton rbDebe;
+    private javax.swing.JRadioButton rbHaber;
     public javax.swing.JTable tbl_LibroDiario;
     public javax.swing.JTextField txtCantidad;
     public javax.swing.JTextField txtDetalle;
@@ -870,59 +883,220 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         cbFinca.setSelectedIndex(1);
         AccionCombo();
     }
-
-    private void EstadoPanelAdd(boolean estado) {
-        btnAgregarLibro.setEnabled(!estado);
+    private void EstadoPanelAdd(boolean estado){
+        btnAgregar.setEnabled(!estado);
         pnlAgregarLibro.setVisible(estado);
     }
-
+    
     private void AccionCombo() {
         cargarTablaFiltro();
     }
-
-//    SELECT DATE_FORMAT(lbro.`fecha_libro`, '5d/%m/%Y') AS FECHA,lbro.`detalle` AS DETALLE,
-//lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, 
-//lbro.debe AS DEBE, lbro.`haber` AS HABER, lbro.`saldo` AS SALDO
-//FROM `libro_diario` lbro
-//WHERE lbro.`id_finca` = ''
-//ORDER BY lbro.`fecha_libro` ASC
+    
+    
     public void cargarTablaFiltro() {
+        
+        if (Integer.parseInt(idFinca) > 0) { 
+            listaLibro = (List<Map<String, String>>) controlLibro.ObtenerDatosFiltro(idFinca);
+            if (listaLibro.size() > 0) {
+                String col = "";
+                for (Map.Entry<String, String> entry : listaLibro.get(0).entrySet()) {
+                    String key = entry.getKey();
+                    String[] split = key.split(Utilidades.SeparadorBusqueda);
+                    Map h = new HashMap<String, String>();
+                    h.put("nameCol", key);
+                    if (split.length > 1) {
+                        h.put("tamanio", split[1]);
+                    }
+                    if (split.length > 2) {
+                        h.put("alineacion", split[2]);
+                    }
+                    PropiedadesColumnas.put(split[0], h);
+                    col += (col.equals("") ? "" : "<::>") + split[0];
+                }
 
-//        if (Integer.parseInt(idFinca) > 0) { 
-//            listaLibro = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal, fechaFiltro);
-//            if (ListaAnimales.size() > 0) {
-//                String col = "";
-//                for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
-//                    String key = entry.getKey();
-//                    String[] split = key.split(Utilidades.SeparadorBusqueda);
-//                    Map h = new HashMap<String, String>();
-//                    h.put("nameCol", key);
-//                    if (split.length > 1) {
-//                        h.put("tamanio", split[1]);
-//                    }
-//                    if (split.length > 2) {
-//                        h.put("alineacion", split[2]);
-//                    }
-//                    PropiedadesColumnas.put(split[0], h);
-//                    col += (col.equals("") ? "" : "<::>") + split[0];
-//                }
-//
-//                NameColumnas = col.split("<::>");
-//
-//            } else {
-//                //CERRAR VENTAANA
-//            }
-//            MostrarTabla();
-//        }
+                NameColumnas = col.split("<::>");
+
+            } else {
+                //CERRAR VENTAANA
+            }
+            MostrarTabla();
+        }
     }
+    
+    
 
     private void Guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        boolean chInventario = chkInventariable.isSelected();
+        String Radio = rbDebe.isSelected()?"DEBE":rbHaber.isSelected()?"HABER":"";
+        String detalle = txtDetalle.getText().trim();
+        String cantidad = txtCantidad.getText().trim();
+        String precio = txtPrecioUnidad.getText().trim();
+        String tipo = ""+cbTipo.getSelectedItem();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFecha.getCalendar();
+        String fechaFormateada = sdf.format(fecha.getTime());
+        Double total = Double.parseDouble(cantidad)*Double.parseDouble(precio);
+        String id = filaSeleccionada>=0?datoaModificar.get("ID"):"0";
+         
+        if(chInventario){
+            modeloProducto.setDescripcion(detalle);
+            modeloProducto.setEstado("Activo");
+            modeloProducto.setFecha("NOW()");
+            modeloProducto.setId(id_producto);
+            modeloProducto.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+            modeloProducto.setTipo_salida(tipo);
+            
+            if(id_producto.equals("0")){
+                int ret = controlInventario.GuardarProducto(modeloProducto);
+                if(ret == Retorno.EXITO){
+                    listaProductos = controlInventario.getProductosSistema();
+                    
+                    LimpiarLst();
+                    LlenarListaProductos();
+                    id_producto = getIDProducto(detalle);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar el producto.");
+                    return;
+                }
+            }
+        }
+        
+        modeloLibro.setCantidad(cantidad);
+        modeloLibro.setDebe(Radio.equals("DEBE")?""+total:"0");
+        modeloLibro.setDetalle(detalle);
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro(fechaFormateada);
+        modeloLibro.setHaber(Radio.equals("HABER")?""+total:"0");
+        modeloLibro.setId(id);
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_producto(id_producto);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(precio);
+        modeloLibro.setSaldo("0");
+        int ret;
+        if(id_libro.equals("0")){
+            ret = controlLibro.Guardar(modeloLibro);
+        }else{
+            ret = controlLibro.Actualizar(modeloLibro);
+        }
+        if(ret == Retorno.EXITO){
+            //LLAMAR PROC ALMA
+            
+            
+            
+            
+            JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
+        }
+        LimpiarFomulario();
     }
 
     private void LimpiarFomulario() {
         EstadoPanelAdd(false);
+        rbDebe.setSelected(false);
+        rbHaber.setSelected(false);
+        datoaModificar = new HashMap<>();
+        filaSeleccionada = -1;
+        id_libro = "0";
+        id_producto = "0";
+        txtDetalle.setText("");
+        txtCantidad.setText("");
+        txtPrecioUnidad.setText("");
+        cbTipo.setSelectedIndex(0);
+        jdFecha.setCalendar(Calendar.getInstance());
     }
+
+    private void MostrarTabla() {
+        System.out.println("****************MostrarTabla*****************");
+        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
+        System.out.println("filtro--" + filtro);
+        ListaLibroMostrar = getFiltroLista(filtro);
+
+        Utilidades.LimpiarTabla(tbl_LibroDiario);
+        for (int i = 0; i < ListaLibroMostrar.size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTblLibro,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        ListaLibroMostrar.get(i).get("FECHA"),
+                        ListaLibroMostrar.get(i).get("DETALLE"),
+                        ListaLibroMostrar.get(i).get("CANTIDAD"),
+                        ListaLibroMostrar.get(i).get("PRECIO"),
+                        ListaLibroMostrar.get(i).get("DEBE"),
+                        ListaLibroMostrar.get(i).get("HABER"),
+                        ListaLibroMostrar.get(i).get("SALDO"),
+                        "Modificar",
+                        "Eliminar"
+                    }
+            );
+        }
+    }
+    
+    private List<Map<String, String>> getFiltroLista(String filtro) {
+        List<Map<String, String>> retorno = new ArrayList<>();
+        System.out.println("***************getFiltroLista*****************" + filtro);
+        int b = -1;
+        String[] filtros = filtro.isEmpty() ? null : filtro.replace(" ", "<::>").split("<::>");
+        String valores = "";
+        for (int i = 0; i < listaLibro.size(); i++) {
+            b = 1;
+            if (filtro.isEmpty()) {
+                retorno.add(listaLibro.get(i));
+            } else {
+                valores = "";
+                for (int j = 0; j < NameColumnasFiltro.size(); j++) {
+                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
+                    String value = listaLibro.get(i).get(NameColumnasFiltro.get(j));
+                    valores += "" + value;
+                }
+                boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
+                System.out.println("i-" + i + "-b-" + b);
+                if (encontro) {
+                    retorno.add(listaLibro.get(i));
+                }
+
+            }
+        }
+        System.out.println("********************retorno --> " + retorno.size() + "***********************");
+        return retorno;
+    }
+
+    private void EditarRegistro() {
+        EstadoPanelAdd(true);
+        txtDetalle.setText(datoaModificar.get("DETALLE"));
+        txtCantidad.setText(datoaModificar.get("CANTIDAD"));
+        txtPrecioUnidad.setText(datoaModificar.get("PRECIO"));
+        cbTipo.setSelectedItem(datoaModificar.get("TIPO"));
+        rbDebe.setSelected(datoaModificar.get("RADIO").equals("DEBE"));
+        rbHaber.setSelected(datoaModificar.get("RADIO").equals("HABER"));
+        id_producto = datoaModificar.get("ID_PRODUCTO");
+        id_libro = datoaModificar.get("ID");
+        rbDebe.setEnabled(false);
+        rbHaber.setEnabled(false);
+        try {
+            String fechaSeleccionada = datoaModificar.get("FECHA").toString();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formato.parse(fechaSeleccionada);
+            jdFecha.setDate(fecha); 
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
+        }
+        
+    }
+    
+    
+    private void LimpiarLst() {
+        modeloGral.removeAllElements();
+        listaFiltro.setModel(modeloGral);
+    }
+    
+    private void LlenarListaProductos(){
+        for (ModeloProducto lista: listaProductos) {
+            modeloGral.addElement(lista.getDescripcion());
+        }
+        listaFiltro.setModel(modeloGral);
+    }
+    
     
     //<editor-fold defaultstate="collapsed" desc="filtro">
     private void buscarElementos(JTextField txtFiltro, JPanel panelFiltro, JList listaFiltro) {
@@ -949,4 +1123,17 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         btnBorrar.setEnabled(txtFiltro.getText().length() > 0);
     }
 //</editor-fold>
+
+    private String getIDProducto(String detalle) {
+       String ret = "";
+       
+        for (ModeloProducto mod : listaProductos) {
+            if(detalle.equals(mod.getDescripcion())){
+                ret = mod.getId();
+                break;
+            }
+        }
+       
+       return ret;
+    }
 }
