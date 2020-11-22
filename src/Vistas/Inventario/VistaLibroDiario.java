@@ -7,19 +7,23 @@
 package Vistas.Inventario;
 
 import Control.ControlGeneral;
+import Control.Inventario.*;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -36,9 +40,16 @@ public class VistaLibroDiario extends javax.swing.JPanel {
     public String[] EncabezadoTblLibro;
     public List<Map<String, String>> listaFincas;
     public List<Map<String, String>> listaLibro;
+    public List<Map<String, String>> ListaLibroMostrar;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
+    Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public int idModulo = 1990;
+    public int filaSeleccionada = -1;
+    public int band =0 ;
+    public ControlInventario controlInventario =  new ControlInventario();
+    public ControlLibro controlLibro =  new ControlLibro();
+    public Map<String, String> datoaModificar = new HashMap<String, String>();
     
     /**
      * Creates new form VistaLibroDiario
@@ -48,18 +59,14 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         //Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         NameColumnasFiltro = new ArrayList<>();
-        NameColumnasFiltro.add("NUMERO_ANIMAL");
-        NameColumnasFiltro.add("NUMERO_MAMA");
-        NameColumnasFiltro.add("GENERO");
-        NameColumnasFiltro.add("FECHA_NACIMIENTO");
-        NameColumnasFiltro.add("PESO");
-        NameColumnasFiltro.add("DESC_HIERRO");
-        NameColumnasFiltro.add("CAPADO");
-        NameColumnasFiltro.add("GRUPO");
-        NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("BLOQUE");
-        NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("EST");
+        NameColumnasFiltro.add("FECHA");
+        NameColumnasFiltro.add("DETALLE");
+        NameColumnasFiltro.add("ID_PRODUCTO");
+        NameColumnasFiltro.add("CANTIDAD");
+        NameColumnasFiltro.add("PRECIO");
+        NameColumnasFiltro.add("DEBE");
+        NameColumnasFiltro.add("HABER");
+        NameColumnasFiltro.add("SALDO");
         EncabezadoTblLibro = new String[]{
             "No",
             "Fecha",
@@ -150,10 +157,10 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         lblId_Bloque = new javax.swing.JLabel();
         cbTipo = new javax.swing.JComboBox();
         txtCantidad = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbHaber = new javax.swing.JRadioButton();
+        rbDebe = new javax.swing.JRadioButton();
         txtPrecioUnidad = new javax.swing.JTextField();
-        jdFechaPesaje = new com.toedter.calendar.JDateChooser();
+        jdFecha = new com.toedter.calendar.JDateChooser();
         lbltitle19 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_LibroDiario = new Tablas.DiarioTable();
@@ -301,19 +308,19 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         });
         pnlAgregarLibro.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 40));
 
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        grpTipo.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(59, 123, 50));
-        jRadioButton1.setText("Haber");
-        pnlAgregarLibro.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+        rbHaber.setBackground(new java.awt.Color(255, 255, 255));
+        grpTipo.add(rbHaber);
+        rbHaber.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbHaber.setForeground(new java.awt.Color(59, 123, 50));
+        rbHaber.setText("Haber");
+        pnlAgregarLibro.add(rbHaber, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        grpTipo.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(59, 123, 50));
-        jRadioButton2.setText("Debe");
-        pnlAgregarLibro.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        rbDebe.setBackground(new java.awt.Color(255, 255, 255));
+        grpTipo.add(rbDebe);
+        rbDebe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rbDebe.setForeground(new java.awt.Color(59, 123, 50));
+        rbDebe.setText("Debe");
+        pnlAgregarLibro.add(rbDebe, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         txtPrecioUnidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPrecioUnidad.setForeground(new java.awt.Color(59, 123, 50));
@@ -336,16 +343,16 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         });
         pnlAgregarLibro.add(txtPrecioUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 340, 40));
 
-        jdFechaPesaje.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaPesaje.setForeground(new java.awt.Color(59, 123, 50));
-        jdFechaPesaje.setDateFormatString("dd/MM/yyyy");
-        jdFechaPesaje.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jdFechaPesaje.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        jdFecha.setBackground(new java.awt.Color(255, 255, 255));
+        jdFecha.setForeground(new java.awt.Color(59, 123, 50));
+        jdFecha.setDateFormatString("dd/MM/yyyy");
+        jdFecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jdFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jdFechaPesajePropertyChange(evt);
+                jdFechaPropertyChange(evt);
             }
         });
-        pnlAgregarLibro.add(jdFechaPesaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 150, 30));
+        pnlAgregarLibro.add(jdFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 150, 30));
 
         lbltitle19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle19.setForeground(new java.awt.Color(59, 123, 50));
@@ -489,22 +496,20 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioUnidadKeyReleased
 
-    private void jdFechaPesajePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPesajePropertyChange
+    private void jdFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPropertyChange
         
-    }//GEN-LAST:event_jdFechaPesajePropertyChange
+    }//GEN-LAST:event_jdFechaPropertyChange
 
     private void tbl_LibroDiarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LibroDiarioMouseReleased
-//        filaSeleccionada = tbl_LibroDiario.getSelectedRow();
-//        int cola = tbl_LibroDiario.getSelectedColumn();
-//        String dato = tbl_LibroDiario.getValueAt(filaSeleccionada, cola).toString();
-//
-//        if (band == 0) {
-//            if (dato.equalsIgnoreCase("PESAJE") && tbl_LibroDiario.getValueAt(filaSeleccionada, cola + 1).toString().isEmpty()) {
-//                tbl_LibroDiario.setValueAt("*", filaSeleccionada, cola + 1);
-//                band = 1;
-//                if (fechaAnterior.equals("")) {
-//                    fechaAnterior = fechaFiltro;
-//                }
+        filaSeleccionada = tbl_LibroDiario.getSelectedRow();
+        int cola = tbl_LibroDiario.getSelectedColumn();
+        String dato = tbl_LibroDiario.getValueAt(filaSeleccionada, cola).toString();
+
+        if (band == 0) {
+            if (dato.equalsIgnoreCase("Modificar")) {
+                band = 1;
+                datoaModificar = ListaLibroMostrar.get(filaSeleccionada);
+                EditarRegistro();
 //                objetoVentana = new ModeloVentanaGeneral(
 //                    this,
 //                    new VistaIngresoPesaje(),
@@ -512,20 +517,11 @@ public class VistaLibroDiario extends javax.swing.JPanel {
 //                    ListaAnimalesMostrar.get(filaSeleccionada)
 //                );
 //                new VistaGeneral(objetoVentana).setVisible(true);
-//            } else if (dato.equalsIgnoreCase("*")) {
-//                band = 1;
-//                if (fechaAnterior.equals("")) {
-//                    fechaAnterior = fechaFiltro;
-//                }
-//                objetoVentana = new ModeloVentanaGeneral(
-//                    this,
-//                    new VistaIngresoPesaje(),
-//                    2,
-//                    ListaAnimalesMostrar.get(filaSeleccionada)
-//                );
-//                new VistaGeneral(objetoVentana).setVisible(true);
-//            }
-//        }
+            } else if (dato.equalsIgnoreCase("Eliminar")) {
+                
+                
+            }
+        }
     }//GEN-LAST:event_tbl_LibroDiarioMouseReleased
 
     private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
@@ -541,7 +537,8 @@ public class VistaLibroDiario extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
-        
+        rbDebe.setEnabled(true);
+        rbHaber.setEnabled(true);
         EstadoPanelAdd(true);
     }//GEN-LAST:event_btnAgregarLibroActionPerformed
 
@@ -557,14 +554,14 @@ public class VistaLibroDiario extends javax.swing.JPanel {
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipo;
     private javax.swing.ButtonGroup grpTipo;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    public com.toedter.calendar.JDateChooser jdFechaPesaje;
+    public com.toedter.calendar.JDateChooser jdFecha;
     private javax.swing.JLabel lblId_Bloque;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lbltitle19;
     private javax.swing.JPanel pnlAgregarLibro;
+    private javax.swing.JRadioButton rbDebe;
+    private javax.swing.JRadioButton rbHaber;
     public javax.swing.JTable tbl_LibroDiario;
     public javax.swing.JTextField txtCantidad;
     public javax.swing.JTextField txtDetalle;
@@ -593,20 +590,14 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         cargarTablaFiltro();
     }
     
-//    SELECT DATE_FORMAT(lbro.`fecha_libro`, '5d/%m/%Y') AS FECHA,lbro.`detalle` AS DETALLE,
-//lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, 
-//lbro.debe AS DEBE, lbro.`haber` AS HABER, lbro.`saldo` AS SALDO
-//FROM `libro_diario` lbro
-//WHERE lbro.`id_finca` = ''
-//ORDER BY lbro.`fecha_libro` ASC
     
     public void cargarTablaFiltro() {
         
         if (Integer.parseInt(idFinca) > 0) { 
-            listaLibro = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimalesPesables(idFinca, idTipoAnimal, fechaFiltro);
-            if (ListaAnimales.size() > 0) {
+            listaLibro = (List<Map<String, String>>) controlLibro.ObtenerDatosFiltro(idFinca);
+            if (listaLibro.size() > 0) {
                 String col = "";
-                for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
+                for (Map.Entry<String, String> entry : listaLibro.get(0).entrySet()) {
                     String key = entry.getKey();
                     String[] split = key.split(Utilidades.SeparadorBusqueda);
                     Map h = new HashMap<String, String>();
@@ -633,10 +624,98 @@ public class VistaLibroDiario extends javax.swing.JPanel {
     
 
     private void Guardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String detalle = txtDetalle.getText().trim();
+        String cantidad = txtCantidad.getText().trim();
+        String precio = txtPrecioUnidad.getText().trim();
+        String tipo = ""+cbTipo.getSelectedItem();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFecha.getCalendar();
+        String fechaFormateada = sdf.format(fecha.getTime());
+        
+        
     }
 
     private void LimpiarFomulario() {
         EstadoPanelAdd(false);
+        rbDebe.setSelected(false);
+        rbHaber.setSelected(false);
+        datoaModificar = new HashMap<>();
+        filaSeleccionada = -1;
+    }
+
+    private void MostrarTabla() {
+        System.out.println("****************MostrarTabla*****************");
+        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
+        System.out.println("filtro--" + filtro);
+        ListaLibroMostrar = getFiltroLista(filtro);
+
+        Utilidades.LimpiarTabla(tbl_LibroDiario);
+        for (int i = 0; i < ListaLibroMostrar.size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTblLibro,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        ListaLibroMostrar.get(i).get("FECHA"),
+                        ListaLibroMostrar.get(i).get("DETALLE"),
+                        ListaLibroMostrar.get(i).get("CANTIDAD"),
+                        ListaLibroMostrar.get(i).get("PRECIO"),
+                        ListaLibroMostrar.get(i).get("DEBE"),
+                        ListaLibroMostrar.get(i).get("HABER"),
+                        ListaLibroMostrar.get(i).get("SALDO"),
+                        "Modificar",
+                        "Eliminar"
+                    }
+            );
+        }
+    }
+    
+    private List<Map<String, String>> getFiltroLista(String filtro) {
+        List<Map<String, String>> retorno = new ArrayList<>();
+        System.out.println("***************getFiltroLista*****************" + filtro);
+        int b = -1;
+        String[] filtros = filtro.isEmpty() ? null : filtro.replace(" ", "<::>").split("<::>");
+        String valores = "";
+        for (int i = 0; i < listaLibro.size(); i++) {
+            b = 1;
+            if (filtro.isEmpty()) {
+                retorno.add(listaLibro.get(i));
+            } else {
+                valores = "";
+                for (int j = 0; j < NameColumnasFiltro.size(); j++) {
+                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
+                    String value = listaLibro.get(i).get(NameColumnasFiltro.get(j));
+                    valores += "" + value;
+                }
+                boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
+                System.out.println("i-" + i + "-b-" + b);
+                if (encontro) {
+                    retorno.add(listaLibro.get(i));
+                }
+
+            }
+        }
+        System.out.println("********************retorno --> " + retorno.size() + "***********************");
+        return retorno;
+    }
+
+    private void EditarRegistro() {
+        EstadoPanelAdd(true);
+        txtDetalle.setText(datoaModificar.get("DETALLE"));
+        txtCantidad.setText(datoaModificar.get("CANTIDAD"));
+        txtPrecioUnidad.setText(datoaModificar.get("PRECIO"));
+        cbTipo.setSelectedItem(datoaModificar.get("TIPO"));
+        rbDebe.setSelected(datoaModificar.get("RADIO").equals("DEBE"));
+        rbHaber.setSelected(datoaModificar.get("RADIO").equals("HABER"));
+        rbDebe.setEnabled(false);
+        rbHaber.setEnabled(false);
+        try {
+            String fechaSeleccionada = datoaModificar.get("FECHA").toString();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formato.parse(fechaSeleccionada);
+            jdFecha.setDate(fecha); 
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
+        }
+        
     }
 }
