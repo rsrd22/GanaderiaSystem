@@ -6,6 +6,7 @@
 package Vistas.Inventario;
 
 import Control.ControlGeneral;
+import Control.Inventario.ControlInventario;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import Utilidades.Utilidades;
@@ -14,6 +15,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
@@ -29,17 +31,21 @@ import javax.swing.table.JTableHeader;
 public class VistaInventario extends javax.swing.JPanel {
 
     private ControlGeneral controlgen;
+    private ControlInventario controlInventario;
     public DefaultTableModel modeloTblInventario;
     public String[] NameColumnas;
     public String[] EncabezadoTblInventario;
     public ModeloVentanaGeneral objetoVentana;
     private List<Map<String, String>> listaFincas;
+    public List<Map<String, String>> listaLibro;
     private String idFinca;
 
     public VistaInventario() {
         initComponents();
         listaFincas = new ArrayList<>();
+        listaLibro = new ArrayList<>();
         controlgen = new ControlGeneral();
+        controlInventario = new ControlInventario();
         EncabezadoTblInventario = new String[]{
             "No",
             "Fecha",
@@ -64,6 +70,7 @@ public class VistaInventario extends javax.swing.JPanel {
 
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
         cbFinca.setSelectedIndex(1);
+        AccionCombo();
     }
 
     public void InicializarTblInventario() {
@@ -365,7 +372,6 @@ public class VistaInventario extends javax.swing.JPanel {
         boolean habilitar = cbFinca.getSelectedIndex() > 0;
         btnAgregarProducto.setEnabled(habilitar);
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-        AccionCombo();
     }//GEN-LAST:event_cbFincaActionPerformed
 
 
@@ -387,6 +393,62 @@ public class VistaInventario extends javax.swing.JPanel {
 
     private void AccionCombo() {
         cargarTablaFiltro();
+    }
+    
+    public void cargarTablaFiltro() {
+        
+        if (Integer.parseInt(idFinca) > 0) { 
+            listaLibro = (List<Map<String, String>>) controlInventario.ObtenerDatosFiltro(idFinca);
+            if (listaLibro.size() > 0) {
+                String col = "";
+                for (Map.Entry<String, String> entry : listaLibro.get(0).entrySet()) {
+                    String key = entry.getKey();
+                    String[] split = key.split(Utilidades.SeparadorBusqueda);
+                    Map h = new HashMap<String, String>();
+                    h.put("nameCol", key);
+                    if (split.length > 1) {
+                        h.put("tamanio", split[1]);
+                    }
+                    if (split.length > 2) {
+                        h.put("alineacion", split[2]);
+                    }
+//                    PropiedadesColumnas.put(split[0], h);
+                    col += (col.equals("") ? "" : "<::>") + split[0];
+                }
+
+                NameColumnas = col.split("<::>");
+
+            } else {
+                //CERRAR VENTAANA
+            }
+            MostrarTabla();
+        }
+    }
+    
+    private void MostrarTabla() {
+//        System.out.println("****************MostrarTabla*****************");
+//        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
+//        System.out.println("filtro--" + filtro);
+//        ListaLibroMostrar = getFiltroLista(filtro);
+//
+//        Utilidades.LimpiarTabla(tbl_LibroDiario);
+//        for (int i = 0; i < ListaLibroMostrar.size(); i++) {
+//            Utilidades.agregarFilaTabla(
+//                    modeloTblLibro,
+//                    new Object[]{
+//                        (i + 1),//tbl_Grupos.getRowCount()+1,
+//                        ListaLibroMostrar.get(i).get("FECHA"),
+//                        ListaLibroMostrar.get(i).get("DETALLE"),
+//                        ListaLibroMostrar.get(i).get("CANTIDAD"),
+//                        ListaLibroMostrar.get(i).get("PRECIO"),
+//                        ListaLibroMostrar.get(i).get("DEBE"),
+//                        ListaLibroMostrar.get(i).get("HABER"),
+//                        ListaLibroMostrar.get(i).get("SALDO"),
+//                        "Modificar",
+//                        "Eliminar"
+//                    }
+//            );
+//        }
     }
     
 }
