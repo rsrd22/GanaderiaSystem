@@ -8,6 +8,7 @@ package Vistas;
 import AjustarControles.AjustarControles;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
+import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaProducto;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -331,6 +332,10 @@ public class VistaGeneral extends javax.swing.JFrame {
                 }
                 vp.band = 0;
             }
+        }
+        if (modeloVista.getPanelPadre() instanceof VistaInventario) {
+            VistaInventario vp = ((VistaInventario) modeloVista.getPanelPadre());
+            vp.band = 0;
         }
         if (modeloVista.getPanelPadre() instanceof VistaPalpacion) {
             ArrayList<String> datos = new ArrayList<>();

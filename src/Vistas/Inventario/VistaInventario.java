@@ -9,6 +9,7 @@ import Control.ControlGeneral;
 import Control.Inventario.ControlInventario;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
+import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.VistaGeneral;
 import java.awt.Color;
@@ -33,19 +34,34 @@ public class VistaInventario extends javax.swing.JPanel {
     private ControlGeneral controlgen;
     private ControlInventario controlInventario;
     public DefaultTableModel modeloTblInventario;
+    public ArrayList<String> NameColumnasFiltro;
     public String[] NameColumnas;
     public String[] EncabezadoTblInventario;
     public ModeloVentanaGeneral objetoVentana;
     private List<Map<String, String>> listaFincas;
-    public List<Map<String, String>> listaLibro;
+    public List<Map<String, String>> listaInventario;
+    public List<Map<String, String>> ListaInventarioMostrar;
     private String idFinca;
+    public int filaSeleccionada;
+    public int band;
+    public Map<String, String> datoaModificar;
 
     public VistaInventario() {
         initComponents();
+        filaSeleccionada = -1;
+        band = 0;
+        datoaModificar = new HashMap<String, String>();
         listaFincas = new ArrayList<>();
-        listaLibro = new ArrayList<>();
+        listaInventario = new ArrayList<>();
+        ListaInventarioMostrar = new ArrayList<>();
         controlgen = new ControlGeneral();
         controlInventario = new ControlInventario();
+        NameColumnasFiltro = new ArrayList<>();
+        NameColumnasFiltro.add("FECHA");
+        NameColumnasFiltro.add("PRODUCTO");
+        NameColumnasFiltro.add("ENTRADA");
+        NameColumnasFiltro.add("SALIDA");
+        NameColumnasFiltro.add("EXISTENCIA");
         EncabezadoTblInventario = new String[]{
             "No",
             "Fecha",
@@ -56,8 +72,8 @@ public class VistaInventario extends javax.swing.JPanel {
             "Mod",
             "Agr. Ent."
         };
-        CargarListaFincas();
         InicializarTblInventario();
+        CargarListaFincas();
     }
 
     private void CargarListaFincas() {
@@ -97,11 +113,11 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.getColumnModel().getColumn(0).setPreferredWidth(10);
         tbl_inventario.getColumnModel().getColumn(1).setPreferredWidth(70);
         tbl_inventario.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tbl_inventario.getColumnModel().getColumn(3).setPreferredWidth(50);
-        tbl_inventario.getColumnModel().getColumn(4).setPreferredWidth(50);
-        tbl_inventario.getColumnModel().getColumn(5).setPreferredWidth(50);
-        tbl_inventario.getColumnModel().getColumn(6).setPreferredWidth(10);
-        tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(10);
+        tbl_inventario.getColumnModel().getColumn(3).setPreferredWidth(40);
+        tbl_inventario.getColumnModel().getColumn(4).setPreferredWidth(40);
+        tbl_inventario.getColumnModel().getColumn(5).setPreferredWidth(40);
+        tbl_inventario.getColumnModel().getColumn(6).setPreferredWidth(20);
+        tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(20);
 
         tbl_inventario.getTableHeader().setReorderingAllowed(false);
 
@@ -119,7 +135,6 @@ public class VistaInventario extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-
     }
 
     /**
@@ -136,7 +151,7 @@ public class VistaInventario extends javax.swing.JPanel {
         txtFiltro = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_inventario = new Tablas.DiarioTable();
+        tbl_inventario = new javax.swing.JTable();
         btnFiltro = new javax.swing.JButton();
         btnAgregarProducto = new javax.swing.JButton();
         cbFinca = new javax.swing.JComboBox();
@@ -205,13 +220,10 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.setForeground(new java.awt.Color(59, 123, 50));
         tbl_inventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tbl_inventario.setFocusTraversalPolicyProvider(true);
@@ -343,23 +355,28 @@ public class VistaInventario extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void tbl_inventarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_inventarioMouseReleased
-//        filaSeleccionada = tbl_LibroDiario.getSelectedRow();
-//        int cola = tbl_LibroDiario.getSelectedColumn();
-//        String dato = tbl_LibroDiario.getValueAt(filaSeleccionada, cola).toString();
-//
-//        if (band == 0) {
-//            if (dato.equalsIgnoreCase("Modificar")) {
-//                band = 1;
-//                datoaModificar = ListaLibroMostrar.get(filaSeleccionada);
-//                EditarRegistro();
-//            } else if (dato.equalsIgnoreCase("Eliminar")) {
-//
-//            }
-//        }
+        filaSeleccionada = tbl_inventario.getSelectedRow();
+        int cola = tbl_inventario.getSelectedColumn();
+        String dato = tbl_inventario.getValueAt(filaSeleccionada, cola).toString();
+
+        if (band == 0) {
+            if (dato.equalsIgnoreCase("Modificar")) {
+                band = 1;
+                datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaProducto(), 2, datoaModificar);
+                VistaGeneral vis = new VistaGeneral(objetoVentana);
+                vis.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_tbl_inventarioMouseReleased
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        aplicarFiltro(txtFiltro.getText());
+        String texto = txtFiltro.getText();
+        if (texto.length() == 0) {
+            return;
+        }
+
+        aplicarFiltro(texto);
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
@@ -372,6 +389,8 @@ public class VistaInventario extends javax.swing.JPanel {
         boolean habilitar = cbFinca.getSelectedIndex() > 0;
         btnAgregarProducto.setEnabled(habilitar);
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
+
+        AccionCombo();
     }//GEN-LAST:event_cbFincaActionPerformed
 
 
@@ -388,20 +407,20 @@ public class VistaInventario extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void aplicarFiltro(String text) {
-        
-    }
-
-    private void AccionCombo() {
         cargarTablaFiltro();
     }
-    
-    public void cargarTablaFiltro() {
-        
-        if (Integer.parseInt(idFinca) > 0) { 
-            listaLibro = (List<Map<String, String>>) controlInventario.ObtenerDatosFiltro(idFinca);
-            if (listaLibro.size() > 0) {
+
+    public void AccionCombo() {
+        cargarTablaFiltro();
+    }
+
+    private void cargarTablaFiltro() {
+
+        if (Integer.parseInt(idFinca) > 0) {
+            listaInventario = (List<Map<String, String>>) controlInventario.ObtenerDatosFiltro(idFinca);
+            if (listaInventario.size() > 0) {
                 String col = "";
-                for (Map.Entry<String, String> entry : listaLibro.get(0).entrySet()) {
+                for (Map.Entry<String, String> entry : listaInventario.get(0).entrySet()) {
                     String key = entry.getKey();
                     String[] split = key.split(Utilidades.SeparadorBusqueda);
                     Map h = new HashMap<String, String>();
@@ -424,31 +443,58 @@ public class VistaInventario extends javax.swing.JPanel {
             MostrarTabla();
         }
     }
-    
+
     private void MostrarTabla() {
-//        System.out.println("****************MostrarTabla*****************");
-//        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
-//        System.out.println("filtro--" + filtro);
-//        ListaLibroMostrar = getFiltroLista(filtro);
-//
-//        Utilidades.LimpiarTabla(tbl_LibroDiario);
-//        for (int i = 0; i < ListaLibroMostrar.size(); i++) {
-//            Utilidades.agregarFilaTabla(
-//                    modeloTblLibro,
-//                    new Object[]{
-//                        (i + 1),//tbl_Grupos.getRowCount()+1,
-//                        ListaLibroMostrar.get(i).get("FECHA"),
-//                        ListaLibroMostrar.get(i).get("DETALLE"),
-//                        ListaLibroMostrar.get(i).get("CANTIDAD"),
-//                        ListaLibroMostrar.get(i).get("PRECIO"),
-//                        ListaLibroMostrar.get(i).get("DEBE"),
-//                        ListaLibroMostrar.get(i).get("HABER"),
-//                        ListaLibroMostrar.get(i).get("SALDO"),
-//                        "Modificar",
-//                        "Eliminar"
-//                    }
-//            );
-//        }
+        System.out.println("****************MostrarTabla*****************");
+        String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
+        System.out.println("filtro--" + filtro);
+        ListaInventarioMostrar = getFiltroLista(filtro);
+
+        Utilidades.LimpiarTabla(tbl_inventario);
+        for (int i = 0; i < ListaInventarioMostrar.size(); i++) {
+            Utilidades.agregarFilaTabla(
+                    modeloTblInventario,
+                    new Object[]{
+                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        ListaInventarioMostrar.get(i).get("FECHA"),
+                        ListaInventarioMostrar.get(i).get("PRODUCTO"),
+                        ListaInventarioMostrar.get(i).get("ENTRADA"),
+                        ListaInventarioMostrar.get(i).get("SALIDA"),
+                        ListaInventarioMostrar.get(i).get("EXISTENCIA"),
+                        "Modificar",
+                        "Agr. Ent."
+                    }
+            );
+        }
     }
-    
+
+    private List<Map<String, String>> getFiltroLista(String filtro) {
+        List<Map<String, String>> retorno = new ArrayList<>();
+        System.out.println("***************getFiltroLista*****************" + filtro);
+        int b = -1;
+        String[] filtros = filtro.isEmpty() ? null : filtro.replace(" ", "<::>").split("<::>");
+        String valores = "";
+        for (int i = 0; i < listaInventario.size(); i++) {
+            b = 1;
+            if (filtro.isEmpty()) {
+                retorno.add(listaInventario.get(i));
+            } else {
+                valores = "";
+                for (int j = 0; j < NameColumnasFiltro.size(); j++) {
+                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
+                    String value = listaInventario.get(i).get(NameColumnasFiltro.get(j));
+                    valores += "" + value;
+                }
+                boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
+                System.out.println("i-" + i + "-b-" + b);
+                if (encontro) {
+                    retorno.add(listaInventario.get(i));
+                }
+
+            }
+        }
+        System.out.println("********************retorno --> " + retorno.size() + "***********************");
+        return retorno;
+    }
+
 }
