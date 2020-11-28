@@ -19,7 +19,9 @@ public class ModeloVentanaGeneral {
     private Object modeloDatos;
     private Object frameVentana;
     private int fila;
-
+/**
+ * constructor vacio
+ */
     public ModeloVentanaGeneral() {
         panelPadre = new JPanel();
         panelHijo = new JPanel();
@@ -28,7 +30,12 @@ public class ModeloVentanaGeneral {
         frameVentana = new Object();
         fila = -1;
     }
-
+/**
+ * constructor #2
+ * @param panelPadre
+ * @param panelHijo
+ * @param opcion 
+ */
     public ModeloVentanaGeneral(Object panelPadre, Object panelHijo, int opcion) {
         this.panelPadre = panelPadre;
         this.panelHijo = panelHijo;

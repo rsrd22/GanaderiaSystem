@@ -335,10 +335,8 @@ public class Utilidades {
     public static String MascaraMonedaConDecimales(String dato) {
         String ret = "";
         int con = 0;
-        System.out.println("*********MascaraMonedaConDecimales*******" + dato);
         String ente = dato.split(",")[0];
         String dec = "", ban = "0";
-        System.out.println("ente" + ente);
         if (dato.split(",").length > 1) {
             dec = dato.split(",")[1];
         }

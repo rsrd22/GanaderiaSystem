@@ -92,7 +92,6 @@ public class Expresiones {
     }
 
     public static String procesarSoloNum(String valor) {
-        System.out.println("****procesarSoloNum***");
         String ret = "";
         for (int i = 0; i < valor.length(); i++) {
             if (validarSoloNumeros("" + valor.charAt(i))) {
@@ -103,10 +102,8 @@ public class Expresiones {
     }
     
     public static String procesarSoloNumP(String valor) {
-        System.out.println("******procesarSoloNumP****+");
         String ret = "";
         if (!validarSoloNumerosP("" + valor)) {
-            System.out.println("**validarSoloNumerosP*");
             int ind = valor.lastIndexOf(Parametros.separadorDecimal);
             int sind = valor.indexOf(",");
             if(sind < ind){
@@ -121,14 +118,10 @@ public class Expresiones {
                     ret += "" + valor.charAt(i);
                 }
             }
-            
-            System.out.println("ret --"+ret);
-            
         }else{
             ret = valor;
         }
         
-        System.out.println("***END procesarSoloNumP***"+ret);
         return ret;
     }
 

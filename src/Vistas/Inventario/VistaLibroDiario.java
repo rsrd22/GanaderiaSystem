@@ -403,7 +403,7 @@ public class VistaLibroDiario extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 32, 10);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         add(jScrollPane1, gridBagConstraints);
 
         txtFiltro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

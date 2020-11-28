@@ -24,7 +24,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -38,7 +41,6 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     private ControlInventario control;
     private ModeloLibro modeloLibro;
     private ControlLibro controlLD;
-    private List<Map<String, String>> listaFincas;
     private List<Map<String, String>> listaProductos;
     private String idFinca;
     private String id_producto;
@@ -47,32 +49,30 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     public VistaProducto() {
         initComponents();
         iniciarComponentes();
-        setSize(600, 330);
+        setSize(400, 270);
         listaProductos = new ArrayList<>();
-        listaFincas = new ArrayList<>();
         modeloLibro = new ModeloLibro();
         controles.habilitarControles();
         modelo = new ModeloProducto();
         control = new ControlInventario();
         jdFecha.setCalendar(Calendar.getInstance());
         id_producto = "0";
-        CargarListaFincas();
+        CargarListaProductos();
     }
 
     public VistaProducto(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
-        setSize(600, 330);
+        setSize(400, 270);
         vg = modeloVista;
+        idFinca = modeloVista.getModeloDatos().toString();
         listaProductos = new ArrayList<>();
-        listaFincas = new ArrayList<>();
         modeloLibro = new ModeloLibro();
         controles.habilitarControles();
         modelo = new ModeloProducto();
         control = new ControlInventario();
         jdFecha.setCalendar(Calendar.getInstance());
         id_producto = "0";
-        CargarListaFincas();
         CargarListaProductos();
     }
 
@@ -101,18 +101,6 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         controles.addControl(control);
     }
 
-    private void CargarListaFincas() {
-        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
-                + "UNION\n"
-                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
-                + "FROM fincas\n"
-                + "/*UNION \n"
-                + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
-
-        Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-        cbFinca.setSelectedIndex(1);
-    }
-
     private void CargarListaProductos() {
         listaProductos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                 + "FROM productos");
@@ -137,14 +125,13 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
-        lblTid = new javax.swing.JLabel();
-        cbFinca = new javax.swing.JComboBox();
+        lblCalculo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0};
-        layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0};
+        layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0};
         setLayout(layout);
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -160,7 +147,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -173,9 +160,14 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         txtPrecioUnidad.setCaretColor(new java.awt.Color(59, 123, 50));
         txtPrecioUnidad.setFocusCycleRoot(true);
         txtPrecioUnidad.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPrecioUnidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioUnidadKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -185,10 +177,10 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         jdFecha.setBackground(new java.awt.Color(255, 255, 255));
         jdFecha.setForeground(new java.awt.Color(59, 123, 50));
         jdFecha.setDateFormatString("dd/MM/yyyy");
-        jdFecha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jdFecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -200,8 +192,8 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         lbltitle19.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbltitle19.setText("Fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         add(lbltitle19, gridBagConstraints);
@@ -214,12 +206,12 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         txtProducto.setSelectionColor(new java.awt.Color(59, 123, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.75;
         add(txtProducto, gridBagConstraints);
 
         cbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -229,7 +221,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         cbTipo.setEditor(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = -3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -286,49 +278,28 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         add(jPanel2, gridBagConstraints);
 
-        lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid.setText("Finca");
+        lblCalculo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblCalculo.setForeground(new java.awt.Color(59, 123, 50));
+        lblCalculo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        add(lblTid, gridBagConstraints);
-
-        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
-        cbFinca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFincaActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
-        add(cbFinca, gridBagConstraints);
+        add(lblCalculo, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
-        String areat = txtCantidad.getText();
-        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
-        String dato = Expresiones.procesarSoloNumP(valorsin);
-        dato = Utilidades.MascaraMonedaConDecimales(dato);
-        txtCantidad.setText(dato);
+        setFormatoNumerico(txtCantidad);
+        calcularPrecioPorCantidad();
     }//GEN-LAST:event_txtCantidadKeyReleased
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -353,11 +324,6 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             cbTipo.requestFocusInWindow();
             return;
         }
-        if (cbFinca.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una finca.");
-            cbFinca.requestFocusInWindow();
-            return;
-        }
 //</editor-fold>
         Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -366,19 +332,19 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         Descartar();
     }//GEN-LAST:event_btnDescartarActionPerformed
 
-    private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-        idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-    }//GEN-LAST:event_cbFincaActionPerformed
+    private void txtPrecioUnidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUnidadKeyReleased
+        setFormatoNumerico(txtPrecioUnidad);
+        calcularPrecioPorCantidad();
+    }//GEN-LAST:event_txtPrecioUnidadKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnGuardar;
-    public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipo;
     private javax.swing.JPanel jPanel2;
     public com.toedter.calendar.JDateChooser jdFecha;
-    private javax.swing.JLabel lblTid;
+    private javax.swing.JLabel lblCalculo;
     private javax.swing.JLabel lbltitle19;
     public javax.swing.JTextField txtCantidad;
     public javax.swing.JTextField txtPrecioUnidad;
@@ -439,15 +405,15 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         int ret_entrada = control.GuardarEntrada(modeloLibro);
         if (ret_entrada != Retorno.EXITO) {
-            JOptionPane.showMessageDialog(this, "Hubo un error al momento de ingresar la entrada del producto.");
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de ingresar la entrada del producto.");
             return;
         }
         int ret_Inventario = control.GuardarInventario(modeloLibro);
         if (ret_Inventario != Retorno.EXITO) {
-            JOptionPane.showMessageDialog(this, "Hubo un error al momento de Actualizar el producto al Inventario.");
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de Actualizar el producto en el Inventario.");
             return;
         }
-        
+
         JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
 
         ((VistaGeneral) vg.getFrameVentana()).dispose();
@@ -466,6 +432,43 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             }
         }
         return ret;
+    }
+
+    private void calcularPrecioPorCantidad() {
+        String strCantidad = txtCantidad.getText();
+        String strPrecio = txtPrecioUnidad.getText();
+
+        strCantidad = strCantidad.length() == 0 ? "0" : strCantidad.replace(".", "").replace(",", ".");
+        strPrecio = strPrecio.length() == 0 ? "0" : strPrecio.replace(".", "").replace(",", ".");
+
+        double cantidad = Double.parseDouble(strCantidad);
+        double precio = Double.parseDouble(strPrecio);
+        double resultado = precio * cantidad;
+
+        lblCalculo.setText(String.valueOf(resultado).replace(".", ","));
+        setFormatoNumerico(lblCalculo);
+        lblCalculo.setText("<html>"
+                + "<p>"
+                + "<b>Valor total: </b>"
+                + "<span>" + lblCalculo.getText() + "</span>"
+                + "</p>"
+                + "</html>");
+    }
+
+    private void setFormatoNumerico(JTextField campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
+    }
+
+    private void setFormatoNumerico(JLabel campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
     }
 
 }
