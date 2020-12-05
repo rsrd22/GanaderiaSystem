@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Control.Inventario;
 
 import BaseDeDatos.gestorMySQL;
@@ -11,7 +10,6 @@ import Control.IControl;
 import Control.Retorno;
 import Modelo.Inventario.ModeloLibro;
 import Modelo.Inventario.ModeloProducto;
-import Modelo.Usuario.modeloPerfiles;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +19,23 @@ import java.util.Map;
  *
  * @author MERRY
  */
-public class ControlInventario implements IControl{
+public class ControlInventario implements IControl {
 
-     private gestorMySQL mySQL;
-    
-    public ControlInventario(){
+    private gestorMySQL mySQL;
+
+    public ControlInventario() {
         this.mySQL = new gestorMySQL();
     }
-    
+
     public ArrayList<ModeloProducto> getProductosSistema() {
-       try {
+        try {
             String consulta = "SELECT * FROM `productos`";
-            
+
             List<Map<String, String>> info = new ArrayList<Map<String, String>>();
             ArrayList<ModeloProducto> retorno = new ArrayList<>();
-            
+
             info = mySQL.ListSQL(consulta);
-            if(info.size()>0){
+            if (info.size() > 0) {
                 for (Map<String, String> map : info) {
                     retorno.add(new ModeloProducto(map.get("descripcion"), map.get("estado"), map.get("fecha"), map.get("id"), map.get("id_usuario"), map.get("tipo_salida")));
                 }
@@ -63,18 +61,18 @@ public class ControlInventario implements IControl{
     @Override
     public int Guardar(Object o) {
         ArrayList<String> consultas = new ArrayList<>();
-        ModeloProducto modeloProducto = (ModeloProducto)o;
+        ModeloProducto modeloProducto = (ModeloProducto) o;
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `productos`\n" +
-                "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n" +
-                "VALUES \n" +
-                "('"+modeloProducto.getDescripcion()+"', "
-                        + "'"+modeloProducto.getTipo_salida()+"', "
-                        + "'"+modeloProducto.getEstado()+"', "
-                        + ""+modeloProducto.getFecha()+","
-                        + " '"+modeloProducto.getId_usuario()+"');"
+                "INSERT INTO `productos`\n"
+                + "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "('" + modeloProducto.getDescripcion() + "', "
+                + "'" + modeloProducto.getTipo_salida() + "', "
+                + "'" + modeloProducto.getEstado() + "', "
+                + "" + modeloProducto.getFecha() + ","
+                + "'" + modeloProducto.getId_usuario() + "');"
         //</editor-fold>
         );
 
@@ -106,15 +104,30 @@ public class ControlInventario implements IControl{
     @Override
     public Object ObtenerDatosFiltro(Object o) {
         try {
-            String consulta = "SELECT DATE_FORMAT(lbro.`fecha_libro`, '%d/%m/%Y') AS FECHA,lbro.`detalle` AS DETALLE, \n" +
-                        "lbro.id AS ID,lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, \n" +
-                        "lbro.debe AS DEBE, lbro.`haber` AS HABER, lbro.`saldo` AS SALDO, IFNULL(pdct.`tipo_salida`, '0') TIPO,\n" +
-                        "IF(lbro.debe IS NULL, 'HABER', 'DEBE') RADIO\n" +
-                        "FROM `libro_diario` lbro\n" +
-                        "LEFT JOIN productos pdct ON pdct.`id` = lbro.`id_producto`\n" +
-                        "WHERE lbro.`id_finca` = '"+o.toString()+"'\n" +
-                        "ORDER BY lbro.`fecha_libro` ASC, lbro.id ASC";
-            
+            String consulta = "SELECT a.id,\n"
+                    + "c.precioxunidad PRECIO,\n"
+                    + "a.id_finca,\n"
+                    + "a.id_producto,\n"
+                    + "d.id id_entrada,\n"
+                    + "c.id id_libro_diario,\n"
+                    + "a.entrada,\n"
+                    + "a.salidas,\n"
+                    + "a.stock,\n"
+                    + "b.tipo_salida,\n"
+                    + "DATE_FORMAT(a.fecha, '%d/%m/%Y') FECHA,\n"
+                    + "a.entrada ENTRADA,\n"
+                    + "a.salidas SALIDA,\n"
+                    + "a.stock EXISTENCIA,\n"
+                    + "b.descripcion PRODUCTO\n"
+                    + "FROM \n"
+                    + "inventario a\n"
+                    + "LEFT JOIN productos b ON a.id_producto=b.id\n"
+                    + "LEFT JOIN libro_diario c ON a.id_producto=c.id_producto\n"
+                    + "LEFT JOIN entradas d ON a.id_producto=d.id_producto\n"
+                    + "WHERE \n"
+                    + "a.id_finca = '" + o.toString() + "'\n"
+                    + "ORDER BY a.fecha ASC";
+
             List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
 
             Libros = mySQL.ListSQL(consulta);
@@ -131,10 +144,14 @@ public class ControlInventario implements IControl{
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `productos`\n" +
-                "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n" +
-                "VALUES \n" +
-                "('"+modeloProducto.getDescripcion()+"', '"+modeloProducto.getTipo_salida()+"', '"+modeloProducto.getEstado()+"', "+modeloProducto.getFecha()+", '"+modeloProducto.getId_usuario()+"');"
+                "INSERT INTO `productos`\n"
+                + "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "('" + modeloProducto.getDescripcion() + "',"
+                + " '" + modeloProducto.getTipo_salida() + "', "
+                + "'" + modeloProducto.getEstado() + "', "
+                + "" + modeloProducto.getFecha() + ", "
+                + "'" + modeloProducto.getId_usuario() + "');"
         //</editor-fold>
         );
 
@@ -158,12 +175,12 @@ public class ControlInventario implements IControl{
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `entradas`\n" +
-                "(`id_finca`, `id_producto`, `cantidad`, \n" +
-                "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n" +
-                "VALUES \n" +
-                "("+modeloLibro.getId_finca()+", "+modeloLibro.getId_producto()+", "+modeloLibro.getCantidad()+", \n" +
-                ""+modeloLibro.getPrecioxunidad()+", '"+modeloLibro.getFecha_libro()+"', NOW(), "+modeloLibro.getId_usuario()+");"
+                "INSERT INTO `entradas`\n"
+                + "(`id_finca`, `id_producto`, `cantidad`, \n"
+                + "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "(" + modeloLibro.getId_finca() + ", " + modeloLibro.getId_producto() + ", " + modeloLibro.getCantidad() + ", \n"
+                + "" + modeloLibro.getPrecioxunidad() + ", '" + modeloLibro.getFecha_libro() + "', NOW(), " + modeloLibro.getId_usuario() + ");"
         //</editor-fold>
         );
 
@@ -187,12 +204,12 @@ public class ControlInventario implements IControl{
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `inventario`\n" +
-                "(`id_finca`, `id_producto`, `entrada`, \n" +
-                "`salidas`, `stock`, `fecha`, `id_usuario`)\n" +
-                "VALUES \n" +
-                "("+modeloLibro.getId_finca()+", "+modeloLibro.getId_producto()+", "+modeloLibro.getCantidad()+", \n" +
-                "0, "+modeloLibro.getCantidad()+", NOW(), "+modeloLibro.getId_usuario()+");"
+                "INSERT INTO `inventario`\n"
+                + "(`id_finca`, `id_producto`, `entrada`, \n"
+                + "`salidas`, `stock`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "(" + modeloLibro.getId_finca() + ", " + modeloLibro.getId_producto() + ", " + modeloLibro.getCantidad() + ", \n"
+                + "0, " + modeloLibro.getCantidad() + ", NOW(), " + modeloLibro.getId_usuario() + ");"
         //</editor-fold>
         );
 
@@ -216,10 +233,10 @@ public class ControlInventario implements IControl{
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
-                "UPDATE `inventario`\n" +
-            "SET `entrada` = entrada + "+modeloLibro.getCantidad()+",\n" +
-            "  `stock` = stock + "+modeloLibro.getCantidad()+"\n" +
-            "WHERE `id_producto` = "+modeloLibro.getId_producto()+";"
+                "UPDATE `inventario`\n"
+                + "SET `entrada` = entrada + " + modeloLibro.getCantidad() + ",\n"
+                + "  `stock` = stock + " + modeloLibro.getCantidad() + "\n"
+                + "WHERE `id_producto` = " + modeloLibro.getId_producto() + ";"
         //</editor-fold>
         );
 
@@ -256,18 +273,18 @@ public class ControlInventario implements IControl{
             return false;
         }
     }
-
-    public int ActualizarEntrada(ModeloLibro modeloLibro) {
+    
+    public int GuardarLibroDiario(ModeloLibro o) {
         ArrayList<String> consultas = new ArrayList<>();
-
+        ModeloLibro modelo = (ModeloLibro) o;
         consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="UPDATE">
-                "UPDATE `entradas`\n" +
-                    "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
-                    "  `precioxunidad` = "+modeloLibro.getPrecioxunidad()+",\n" +
-                    "  `fecha` = NOW(),\n" +
-                    "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
-                    "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `libro_diario`\n"
+                + "(`id_finca`,`detalle`,`id_producto`,`cantidad`,`precioxunidad`,\n"
+                + "`debe`, `haber`, `saldo`, `fecha_libro`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "('" + modelo.getId_finca() + "', '" + modelo.getDetalle() + "', '" + modelo.getId_producto() + "', " + modelo.getCantidad() + "," + modelo.getPrecioxunidad() + ", \n"
+                + "" + modelo.getDebe() + ", " + modelo.getHaber() + ", " + modelo.getSaldo() + ", '" + modelo.getFecha_libro() + "', " + modelo.getFecha() + ", " + modelo.getId_usuario() + ");"
         //</editor-fold>
         );
 
@@ -285,6 +302,44 @@ public class ControlInventario implements IControl{
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public int ActualizarEntrada(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE `entradas`\n" +
+                    "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
+                    "  `precioxunidad` = "+modeloLibro.getPrecioxunidad()+",\n" +
+                    "  `fecha` = NOW(),\n" +
+                    "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
+                    "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
+
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+       }
+    }
     
     
+
+    public int ActualizarInventario(ModeloLibro modeloLibro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int ActualizarLibroDiario(ModeloLibro modeloLibro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

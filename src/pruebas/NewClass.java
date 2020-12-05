@@ -96,7 +96,13 @@ public class NewClass {
 //            }
 //            break;
 //        }
-        System.out.println(Utilidades.CapitaliceTexto("si"));
+//        System.out.println(Utilidades.CapitaliceTexto("si"));
+        //<editor-fold defaultstate="collapsed" desc="FORMATO NUMERO">
+        
+        DecimalFormat formato = new DecimalFormat("#,###.###");
+        String resultadoFormat = formato.format(1900.34);
+        System.out.println(resultadoFormat);
+//</editor-fold>
 
     }
     

@@ -19,9 +19,13 @@ import Utilidades.Utilidades;
 import Utilidades.datosUsuario;
 import Vistas.IControlesUsuario;
 import Vistas.VistaGeneral;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JComponent;
@@ -45,6 +49,8 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     private String idFinca;
     private String id_producto;
     private ModeloVentanaGeneral vg;
+    private double resultado;
+    public Map<String, String> producto;
 
     public VistaProducto() {
         initComponents();
@@ -63,17 +69,24 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     public VistaProducto(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
+        controles.habilitarControles();
         setSize(400, 270);
         vg = modeloVista;
-        idFinca = modeloVista.getModeloDatos().toString();
+        producto = new HashMap<String, String>();
+        if (modeloVista.getOpcion() == 1) {
+            idFinca = modeloVista.getModeloDatos().toString();
+            id_producto = "0";
+        }
+        if (modeloVista.getOpcion() == 2) {
+            producto = (HashMap<String, String>) modeloVista.getModeloDatos();
+            cargarProducto(producto);
+        }
         listaProductos = new ArrayList<>();
         modeloLibro = new ModeloLibro();
-        controles.habilitarControles();
         modelo = new ModeloProducto();
         control = new ControlInventario();
         jdFecha.setCalendar(Calendar.getInstance());
-        id_producto = "0";
-        CargarListaProductos();
+//        CargarListaProductos();
     }
 
     @Override
@@ -216,7 +229,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         cbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipo.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "unidad", "peso", "metro" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "unidad", "peso", "metros" }));
         cbTipo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Tipo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         cbTipo.setEditor(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -355,7 +368,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         String nombreProducto = txtProducto.getText().trim();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = jdFecha.getCalendar();
-        modelo.setFecha("'" + sdf.format(fecha.getTime()) + "'");
+        modelo.setFecha("NOW()");
 
         modelo.setDescripcion(Utilidades.CodificarElemento(nombreProducto));
         modelo.setEstado("Activo");
@@ -364,16 +377,16 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         modelo.setTipo_salida(cbTipo.getSelectedItem().toString());
 
         //<editor-fold defaultstate="collapsed" desc="LIBRO DIARIO">
-        modeloLibro.setCantidad(txtCantidad.getText().trim());
-        modeloLibro.setDebe("0");
+        modeloLibro.setCantidad(txtCantidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setDebe(String.valueOf(resultado));
         modeloLibro.setDetalle(Utilidades.CodificarElemento(txtProducto.getText().trim()));
         modeloLibro.setFecha("NOW()");
-        modeloLibro.setFecha_libro("NOW()");
+        modeloLibro.setFecha_libro(sdf.format(fecha.getTime()));
         modeloLibro.setHaber("0");
         modeloLibro.setId("0");
         modeloLibro.setId_finca(idFinca);
         modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().trim());
+        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().replace(".", "").replace(",", "."));
         modeloLibro.setSaldo("0");
         modeloLibro.setId_producto(id_producto);
 //</editor-fold>
@@ -413,9 +426,64 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de Actualizar el producto en el Inventario.");
             return;
         }
+        int ret_libroDiario = control.GuardarLibroDiario(modeloLibro);
+        if (ret_libroDiario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de guardar en el libro diario.");
+            return;
+        }
 
         JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
 
+        ((VistaInventario) vg.getPanelPadre()).AccionCombo();
+        ((VistaGeneral) vg.getFrameVentana()).dispose();
+    }
+
+    private void Actualizar() {
+        String nombreProducto = txtProducto.getText().trim();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFecha.getCalendar();
+        modelo.setFecha("NOW()");
+
+        modelo.setDescripcion(Utilidades.CodificarElemento(nombreProducto));
+        modelo.setEstado("Activo");
+        modelo.setId("0");
+        modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modelo.setTipo_salida(cbTipo.getSelectedItem().toString());
+
+        //<editor-fold defaultstate="collapsed" desc="LIBRO DIARIO">
+        modeloLibro.setCantidad(txtCantidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setDebe(String.valueOf(resultado));
+        modeloLibro.setDetalle(Utilidades.CodificarElemento(txtProducto.getText().trim()));
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro(sdf.format(fecha.getTime()));
+        modeloLibro.setHaber("0");
+        modeloLibro.setId("0");
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setSaldo("0");
+        modeloLibro.setId_producto(id_producto);
+//</editor-fold>
+
+        int ret_entrada = control.ActualizarEntrada(modeloLibro);
+        if (ret_entrada != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de ingresar la entrada del producto.");
+            return;
+        }
+        int ret_Inventario = control.ActualizarInventario(modeloLibro);
+        if (ret_Inventario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de Actualizar el producto en el Inventario.");
+            return;
+        }
+        int ret_libroDiario = control.ActualizarLibroDiario(modeloLibro);
+        if (ret_libroDiario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de guardar en el libro diario.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
+
+        ((VistaInventario) vg.getPanelPadre()).AccionCombo();
         ((VistaGeneral) vg.getFrameVentana()).dispose();
     }
 
@@ -443,9 +511,12 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         double cantidad = Double.parseDouble(strCantidad);
         double precio = Double.parseDouble(strPrecio);
-        double resultado = precio * cantidad;
+        resultado = precio * cantidad;
+        DecimalFormat formato = new DecimalFormat("#,###.##");
+        String resultadoFormat = formato.format(resultado);
+        System.out.println("numero: " + resultadoFormat);
 
-        lblCalculo.setText(String.valueOf(resultado).replace(".", ","));
+        lblCalculo.setText(resultadoFormat);
         setFormatoNumerico(lblCalculo);
         lblCalculo.setText("<html>"
                 + "<p>"
@@ -469,6 +540,27 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         String dato = Expresiones.procesarSoloNumP(valorsin);
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         campoDeTexto.setText(dato);
+    }
+
+    private void cargarProducto(Map<String, String> producto) {
+        id_producto = producto.get("id");
+        idFinca = producto.get("id_finca");
+        txtProducto.setText(producto.get("PRODUCTO"));
+        txtProducto.setEnabled(false);
+        txtCantidad.setText(producto.get("entrada"));
+        setFormatoNumerico(txtCantidad);
+        txtPrecioUnidad.setText(producto.get("PRECIO"));
+        setFormatoNumerico(txtPrecioUnidad);
+        cbTipo.setSelectedItem(producto.get("tipo_salida"));
+        try {
+            String fechaSeleccionada = producto.get("FECHA").toString();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formato.parse(fechaSeleccionada);
+            jdFecha.setDate(fecha);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
+        }
+        calcularPrecioPorCantidad();
     }
 
 }
