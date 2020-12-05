@@ -363,6 +363,37 @@ public class Utilidades {
 
         return ret;
     }
+    public static String MascaraMonedaConDecimalesNeg(String dato) {
+        String ret = "";
+        int con = 0;
+        String ente = dato.split(",")[0];
+        String dec = "", ban = "0";
+        if (dato.split(",").length > 1) {
+            dec = dato.split(",")[1];
+        }
+        if (dato.indexOf(",") > -1) {
+            ban = "1";
+        }
+        for (int i = ente.length() - 1; i >= 0; i--) {
+
+            if (con % 3 == 0 && con > 0) {
+                ret = ((i==0 && (""+ente.charAt(i)).equals("-"))?"":".") + ret;
+                con = 0;
+            }
+            ret = "" + ente.charAt(i) + ret;
+            con++;
+
+        }
+        if (!dec.equals("")) {
+            ret = ret + "," + dec;
+            ban = "0";
+        }
+        if (ban.equals("1")) {
+            ret = ret + ",";
+        }
+
+        return ret;
+    }
 
     /**
      * Este metodo formatea los numeros escritos en un JTextField.<br>
@@ -933,5 +964,9 @@ public class Utilidades {
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         campoDeTexto.setText(dato);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 605e1270d83b9f48fb0d3b07cf7882f374c1a2de
 }

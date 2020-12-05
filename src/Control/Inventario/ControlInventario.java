@@ -288,6 +288,25 @@ public class ControlInventario implements IControl {
         }
     }
 
+    public boolean ExisteDatoFecha(ModeloLibro modeloLibro) {
+        try {
+            String consulta = "Select * from entradas where id_producto = '"+modeloLibro.getId_producto()+"' AND fecha_entrada = '"+modeloLibro.getFecha_libro()+"'";
+            
+            List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
+
+            Libros = mySQL.ListSQL(consulta);
+            if(Libros.size()>0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public int GuardarLibroDiario(ModeloLibro o) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloLibro modelo = (ModeloLibro) o;
@@ -321,6 +340,7 @@ public class ControlInventario implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
 
         consultas.add(
+<<<<<<< .mine
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "UPDATE \n"
                 + "entradas\n"
@@ -334,6 +354,21 @@ public class ControlInventario implements IControl {
                 + "id_finca = " + modeloLibro.getId_finca() + " AND\n"
                 + "id_producto = " + modeloLibro.getId_producto()
         //</editor-fold>
+=======
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE `entradas`\n" +
+                    "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
+                    "  `precioxunidad` = "+modeloLibro.getPrecioxunidad()+",\n" +
+                    "  `fecha` = NOW(),\n" +
+                    "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
+                    "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
+
+
+
+
+
+
+>>>>>>> .theirs
         );
 
         try {
@@ -348,8 +383,10 @@ public class ControlInventario implements IControl {
         } catch (SQLException ex) {
             System.out.println("" + ex.getMessage());
             return Retorno.EXCEPCION_SQL;
-        }
+       }
     }
+    
+    
 
     public int ActualizarInventario(ModeloLibro modeloLibro) {
         ArrayList<String> consultas = new ArrayList<>();
