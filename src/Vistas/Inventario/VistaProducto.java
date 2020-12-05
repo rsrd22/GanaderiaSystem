@@ -570,11 +570,12 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         idFinca = producto.get("id_finca");
         txtProducto.setText(producto.get("PRODUCTO"));
         txtProducto.setEnabled(false);
+        cbTipo.setSelectedItem(producto.get("tipo_salida"));
+        cbTipo.setEnabled(false);
         txtCantidad.setText("");
         Utilidades.setFormatoNumerico(txtCantidad);
         txtPrecioUnidad.setText("");
         Utilidades.setFormatoNumerico(txtPrecioUnidad);
-        cbTipo.setSelectedIndex(0);
         jdFecha.setCalendar(Calendar.getInstance());
         calcularPrecioPorCantidad();
     }

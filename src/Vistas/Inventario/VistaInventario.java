@@ -70,7 +70,8 @@ public class VistaInventario extends javax.swing.JPanel {
             "Salidas",
             "Existencia",
             "Mod",
-            "Agr. Ent."
+            "Agr. Ent.",
+            "List. Ent."
         };
         InicializarTblInventario();
         CargarListaFincas();
@@ -96,7 +97,7 @@ public class VistaInventario extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -118,6 +119,7 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.getColumnModel().getColumn(5).setPreferredWidth(40);
         tbl_inventario.getColumnModel().getColumn(6).setPreferredWidth(20);
         tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(20);
+        tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(40);
 
         tbl_inventario.getTableHeader().setReorderingAllowed(false);
 
@@ -374,6 +376,13 @@ public class VistaInventario extends javax.swing.JPanel {
                 VistaGeneral vis = new VistaGeneral(objetoVentana);
                 vis.setVisible(true);
             }
+            if (dato.equalsIgnoreCase("Lista Entradas")) {
+                band = 1;
+                datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaListaEntradas(), 1, datoaModificar);
+                VistaGeneral vis = new VistaGeneral(objetoVentana);
+                vis.setVisible(true);
+            }
         }
     }//GEN-LAST:event_tbl_inventarioMouseReleased
 
@@ -469,7 +478,8 @@ public class VistaInventario extends javax.swing.JPanel {
                         ListaInventarioMostrar.get(i).get("SALIDA"),
                         ListaInventarioMostrar.get(i).get("EXISTENCIA"),
                         "Modificar",
-                        "Entrada"
+                        "Entrada",
+                        "Lista Entradas"
                     }
             );
         }

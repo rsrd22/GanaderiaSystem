@@ -964,4 +964,12 @@ public class Utilidades {
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         campoDeTexto.setText(dato);
     }
+
+    public static String setFormatoNumerico(String texto) {
+        String areat = texto;
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        return dato;
+    }
 }

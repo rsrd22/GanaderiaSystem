@@ -9,6 +9,7 @@ import AjustarControles.AjustarControles;
 import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
 import Vistas.Inventario.VistaInventario;
+import Vistas.Inventario.VistaListaEntradas;
 import Vistas.Inventario.VistaModificarProducto;
 import Vistas.Inventario.VistaProducto;
 import java.awt.Dimension;
@@ -160,6 +161,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Modificar producto");
+        } else if (panel instanceof VistaListaEntradas) {
+            VistaListaEntradas vista = (VistaListaEntradas) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Listado de entradas producto");
 
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -587,6 +593,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaModificarProducto) {
 
             VistaModificarProducto vista = new VistaModificarProducto(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaListaEntradas) {
+
+            VistaListaEntradas vista = new VistaListaEntradas(modeloVista);
             MostrarPanel(vista);
 
         }
