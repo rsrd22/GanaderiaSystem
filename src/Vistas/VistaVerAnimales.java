@@ -16,6 +16,8 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,9 +50,12 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
+    public ArrayList<String> NameColumnasOrden;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     private TareaActuralizaListaAnimales actListaAnimales;
     public int idModulo = 12;
+    public int bandOrden = 0;
+    public int colOrden = 0;
 
     /**
      * Creates new form VistaVerAnimales
@@ -72,6 +77,21 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
         NameColumnasFiltro.add("LOTE");  
+        
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("NUMERO_ANIMAL");
+            NameColumnasOrden.add("NUMERO_MAMA");
+            NameColumnasOrden.add("GENERO");
+            NameColumnasOrden.add("FECHA_NACIMIENTO");
+            NameColumnasOrden.add("PESO");
+            NameColumnasOrden.add("DESC_HIERRO");
+            NameColumnasOrden.add("CAPADO");
+            NameColumnasOrden.add("GRUPO");
+            NameColumnasOrden.add("FINCA<::>BLOQUE<::>LOTE");
+//</editor-fold>
+        
+        
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -81,8 +101,6 @@ public class VistaVerAnimales extends javax.swing.JPanel {
             "Peso",
             "Hierro",
             "Capado",
-            //"Muerte", 
-            //"Venta",
             "Grupo",
             "Lote",
             "Ver Más"
@@ -152,6 +170,13 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+        tbl_Animales.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
 
     }
 
@@ -537,4 +562,47 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         return retorno;
     }
 
+    public void EventoTablaModulos(MouseEvent e){
+//        if(!tblModulos.isEnabled())
+//            return;
+//        
+//        int c = tblModulos.columnAtPoint(e.getPoint());//se obtiene el indice del encabezado
+//        boolean valor = (boolean) tblModulos.getModel().getValueAt(0,c);
+//        if(c > 1  && c < 7){
+//            for(int i = 0; i < tblModulos.getRowCount(); i++){
+//                tblModulos.getModel().setValueAt(!valor, i, c);
+//                switch(c){
+//                    case 2:
+//                        modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
+//                        break;
+//                    case 3:
+//                        modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
+//                        break;
+//                    case 4:
+//                        modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
+//                        break;
+//                    case 5:
+//                        modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
+//                        break;
+//                    case 6:
+//                        modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
+//                        break;
+//                }
+//                tblModulos.getModel().setValueAt(getCheckTodos(modeloPermisos.getListaPermisoModulos().get(i)), i, 7);   
+//            }
+//        }else if(c == 7){
+//            for(int i = 0; i < tblModulos.getRowCount(); i++){
+//                tblModulos.getModel().setValueAt(!valor, i, c);
+//                modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
+//                modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
+//                modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
+//                modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
+//                modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
+//                for(int j = 2; j < 8; j++){
+//                    tblModulos.getModel().setValueAt(!valor, i, j);
+//                }
+//            }
+//        }
+    }
+    
 }
