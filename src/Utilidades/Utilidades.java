@@ -964,5 +964,4 @@ public class Utilidades {
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         campoDeTexto.setText(dato);
     }
-    
 }

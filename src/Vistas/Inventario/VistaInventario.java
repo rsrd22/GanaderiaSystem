@@ -360,7 +360,14 @@ public class VistaInventario extends javax.swing.JPanel {
         String dato = tbl_inventario.getValueAt(filaSeleccionada, cola).toString();
 
         if (band == 0) {
-            if (dato.equalsIgnoreCase("Modificar")) {
+            if (dato.equalsIgnoreCase("modificar")) {
+                band = 1;
+                datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaModificarProducto(), 1, datoaModificar);
+                VistaGeneral vis = new VistaGeneral(objetoVentana);
+                vis.setVisible(true);
+            }
+            if (dato.equalsIgnoreCase("entrada")) {
                 band = 1;
                 datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaProducto(), 2, datoaModificar);
@@ -455,14 +462,14 @@ public class VistaInventario extends javax.swing.JPanel {
             Utilidades.agregarFilaTabla(
                     modeloTblInventario,
                     new Object[]{
-                        (i + 1),//tbl_Grupos.getRowCount()+1,
+                        (i + 1),//consecutivo,
                         ListaInventarioMostrar.get(i).get("FECHA"),
                         ListaInventarioMostrar.get(i).get("PRODUCTO"),
                         ListaInventarioMostrar.get(i).get("ENTRADA"),
                         ListaInventarioMostrar.get(i).get("SALIDA"),
                         ListaInventarioMostrar.get(i).get("EXISTENCIA"),
                         "Modificar",
-                        "Agr. Ent."
+                        "Entrada"
                     }
             );
         }
