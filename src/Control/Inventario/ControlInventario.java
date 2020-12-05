@@ -340,21 +340,6 @@ public class ControlInventario implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
 
         consultas.add(
-<<<<<<< .mine
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "UPDATE \n"
-                + "entradas\n"
-                + "SET \n"
-                + "cantidad = " + modeloLibro.getCantidad() + ",\n"
-                + "precioxunidad = " + modeloLibro.getPrecioxunidad() + ",\n"
-                + "fecha_entrada = '" + modeloLibro.getFecha_libro() + "',\n"
-                + "fecha = NOW(),\n"
-                + "id_usuario = " + modeloLibro.getId_usuario() + "\n"
-                + "WHERE \n"
-                + "id_finca = " + modeloLibro.getId_finca() + " AND\n"
-                + "id_producto = " + modeloLibro.getId_producto()
-        //</editor-fold>
-=======
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE `entradas`\n" +
                     "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
@@ -362,13 +347,6 @@ public class ControlInventario implements IControl {
                     "  `fecha` = NOW(),\n" +
                     "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
                     "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
-
-
-
-
-
-
->>>>>>> .theirs
         );
 
         try {
