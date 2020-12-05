@@ -111,7 +111,7 @@ public class ControlInventario implements IControl {
                     + "a.salidas,\n"
                     + "a.stock,\n"
                     + "b.tipo_salida,\n"
-                    + "DATE_FORMAT(a.fecha, '%d/%m/%Y') FECHA,\n"
+                    + "DATE_FORMAT(b.fecha, '%d/%m/%Y') FECHA,\n"
                     + "a.entrada ENTRADA,\n"
                     + "a.salidas SALIDA,\n"
                     + "a.stock EXISTENCIA,\n"
@@ -285,23 +285,23 @@ public class ControlInventario implements IControl {
 
     public boolean ExisteDatoFecha(ModeloLibro modeloLibro) {
         try {
-            String consulta = "Select * from entradas where id_producto = '"+modeloLibro.getId_producto()+"' AND fecha_entrada = '"+modeloLibro.getFecha_libro()+"'";
-            
+            String consulta = "Select * from entradas where id_producto = '" + modeloLibro.getId_producto() + "' AND fecha_entrada = '" + modeloLibro.getFecha_libro() + "'";
+
             List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
 
             Libros = mySQL.ListSQL(consulta);
-            if(Libros.size()>0){
+            if (Libros.size() > 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     public int GuardarLibroDiario(ModeloLibro o) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloLibro modelo = (ModeloLibro) o;
@@ -336,12 +336,12 @@ public class ControlInventario implements IControl {
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
-                "UPDATE `entradas`\n" +
-                    "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
-                    "  `precioxunidad` = "+modeloLibro.getPrecioxunidad()+",\n" +
-                    "  `fecha` = NOW(),\n" +
-                    "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
-                    "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
+                "UPDATE `entradas`\n"
+                + "SET `cantidad` = cantidad + " + modeloLibro.getCantidad() + ",\n"
+                + "  `precioxunidad` = " + modeloLibro.getPrecioxunidad() + ",\n"
+                + "  `fecha` = NOW(),\n"
+                + "  `id_usuario` = " + modeloLibro.getId_usuario() + "\n"
+                + "WHERE `id_producto` = '" + modeloLibro.getId_producto() + "' AND `fecha_entrada` = '" + modeloLibro.getFecha_libro() + "';"
         );
 
         try {
@@ -356,10 +356,8 @@ public class ControlInventario implements IControl {
         } catch (SQLException ex) {
             System.out.println("" + ex.getMessage());
             return Retorno.EXCEPCION_SQL;
-       }
+        }
     }
-    
-    
 
     public int ActualizarInventario(ModeloLibro modeloLibro) {
         ArrayList<String> consultas = new ArrayList<>();
@@ -397,6 +395,30 @@ public class ControlInventario implements IControl {
 
     public int ActualizarLibroDiario(ModeloLibro modeloLibro) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object ObtenerEntradas(String finca, String producto) {
+        try {
+            String consulta = "SELECT\n"
+                    + "DATE_FORMAT(a.fecha_entrada, '%d/%m/%Y') FECHA,\n"
+                    + "a.cantidad CANTIDAD,\n"
+                    + "a.precioxunidad PRECIO,\n"
+                    + "(a.cantidad*a.precioxunidad) PRECIOXCANTIDAD\n"
+                    + "FROM entradas a \n"
+                    + "WHERE \n"
+                    + "a.id_finca = "+finca+" AND\n"
+                    + "a.id_producto = "+producto+" \n"
+                    + "ORDER BY a.fecha_entrada DESC";
+
+            List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
+
+            Libros = mySQL.ListSQL(consulta);
+
+            return Libros;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
 }
