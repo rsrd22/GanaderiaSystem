@@ -681,8 +681,11 @@ public class ControlAnimales implements IControl {
         return animal.get(0).get("numeroDescendiente");
     }
 
-    public Object ObtenerDatosAnimales(String IDFINCA, String IDTIPOFINCA) {
+    public Object ObtenerDatosAnimales(String IDFINCA, String IDTIPOFINCA, String Orden) {
         try {
+            if(Orden.isEmpty()){
+                Orden = "CONVERT(animal.numero,INT) ASC";
+            }
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
                     + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
@@ -705,7 +708,7 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
-                    + "ORDER BY CONVERT(animal.numero,INT) ASC";
+                    + "ORDER BY "+Orden;
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
@@ -902,8 +905,11 @@ public class ControlAnimales implements IControl {
         }
     }
 
-    public Object ObtenerDatosAnimalesPesables(String IDFINCA, String IDTIPOANIMAL, String FECHA) {
+    public Object ObtenerDatosAnimalesPesables(String IDFINCA, String IDTIPOANIMAL, String FECHA, String Orden) {
         try {
+            if(Orden.isEmpty()){
+                Orden = "CONVERT(a.numero,DOUBLE) ASC";
+            }
             String consulta = "SELECT\n"
                     + "a.id AS ID_ANIMAL,\n"
                     + "a.numero AS NUMERO_ANIMAL,\n"
@@ -941,8 +947,7 @@ public class ControlAnimales implements IControl {
                     + "LEFT JOIN propietarioxhierro e ON a.hierro=e.id\n"
                     + "WHERE\n"
                     + "c.pesable='1' and a.muerte='0' AND venta='0' and d.id=" + IDFINCA + " and b.id=" + IDTIPOANIMAL + "\n"
-                    + "ORDER BY\n"
-                    + "CONVERT(a.numero,DOUBLE) ASC";
+                    + "ORDER BY "+Orden;
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);

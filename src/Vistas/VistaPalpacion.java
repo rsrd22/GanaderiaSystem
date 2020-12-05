@@ -15,6 +15,7 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
+    public ArrayList<String> NameColumnasOrden;
     public List<Map<String, String>> ListadoFechas;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public int band = 0;
@@ -62,6 +64,9 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public String fecha = "";
     public String ban = "0";
     public int idModulo = 21;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";
     
 
     /**
@@ -83,6 +88,19 @@ public class VistaPalpacion extends javax.swing.JPanel {
         NameColumnasFiltro.add("NUMERO_MESES");
         NameColumnasFiltro.add("FECHA_ULT_PARTO");
         NameColumnasFiltro.add("EST");
+        
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("NUMERO_ANIMAL");
+            NameColumnasOrden.add("NUMERO_MAMA");
+            NameColumnasOrden.add("NUMERO_HIJOS");
+            NameColumnasOrden.add("NUMERO_PARTOS");
+            NameColumnasOrden.add("FECHA_NOVILLA");
+            NameColumnasOrden.add("ESTADO");
+            NameColumnasOrden.add("NUMERO_MESES");
+            NameColumnasOrden.add("FECHA_ULT_PARTO");
+//</editor-fold>
+        
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",
@@ -687,5 +705,51 @@ public class VistaPalpacion extends javax.swing.JPanel {
         cbListadoFechas.setSelectedIndex(0);
     }
     
+    
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_Animales.isEnabled())
+            return;
+        
+        int col = tbl_Animales.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            EventoComboFincas();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        if(ind < 4){
+            ret = "CONVERT("+Dato+",INT)";
+        }else{
+            ret = Dato;
+        }
+        return ret;
+    }
     
 }

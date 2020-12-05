@@ -56,6 +56,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public int idModulo = 12;
     public int bandOrden = 0;
     public int colOrden = 0;
+    public String Orden = "";
 
     /**
      * Creates new form VistaVerAnimales
@@ -472,7 +473,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
             allFincas = 0;
         }
         if (Integer.parseInt(idFinca) > 0) {
-            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + idFinca, idTipoAnimal);
+            ListaAnimales = (List<Map<String, String>>) controlAnimales.ObtenerDatosAnimales("" + idFinca, idTipoAnimal, Orden);
             if (ListaAnimales.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : ListaAnimales.get(0).entrySet()) {
@@ -562,47 +563,50 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         return retorno;
     }
 
-    public void EventoTablaModulos(MouseEvent e){
-//        if(!tblModulos.isEnabled())
-//            return;
-//        
-//        int c = tblModulos.columnAtPoint(e.getPoint());//se obtiene el indice del encabezado
-//        boolean valor = (boolean) tblModulos.getModel().getValueAt(0,c);
-//        if(c > 1  && c < 7){
-//            for(int i = 0; i < tblModulos.getRowCount(); i++){
-//                tblModulos.getModel().setValueAt(!valor, i, c);
-//                switch(c){
-//                    case 2:
-//                        modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
-//                        break;
-//                    case 3:
-//                        modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
-//                        break;
-//                    case 4:
-//                        modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
-//                        break;
-//                    case 5:
-//                        modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
-//                        break;
-//                    case 6:
-//                        modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
-//                        break;
-//                }
-//                tblModulos.getModel().setValueAt(getCheckTodos(modeloPermisos.getListaPermisoModulos().get(i)), i, 7);   
-//            }
-//        }else if(c == 7){
-//            for(int i = 0; i < tblModulos.getRowCount(); i++){
-//                tblModulos.getModel().setValueAt(!valor, i, c);
-//                modeloPermisos.getListaPermisoModulos().get(i).setS(!valor?"1":"0");
-//                modeloPermisos.getListaPermisoModulos().get(i).setI(!valor?"1":"0");
-//                modeloPermisos.getListaPermisoModulos().get(i).setU(!valor?"1":"0");
-//                modeloPermisos.getListaPermisoModulos().get(i).setD(!valor?"1":"0");
-//                modeloPermisos.getListaPermisoModulos().get(i).setV(!valor?"1":"0");
-//                for(int j = 2; j < 8; j++){
-//                    tblModulos.getModel().setValueAt(!valor, i, j);
-//                }
-//            }
-//        }
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_Animales.isEnabled())
+            return;
+        
+        int col = tbl_Animales.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            EventoComboFincas();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        if(ind == 0 || ind == 1){
+            ret = "CONVERT("+Dato+",INT)";
+        }else{
+            ret = Dato;
+        }
+        return ret;
     }
     
 }
