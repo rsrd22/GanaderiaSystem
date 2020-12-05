@@ -105,11 +105,8 @@ public class ControlInventario implements IControl {
     public Object ObtenerDatosFiltro(Object o) {
         try {
             String consulta = "SELECT a.id,\n"
-                    + "c.precioxunidad PRECIO,\n"
                     + "a.id_finca,\n"
                     + "a.id_producto,\n"
-                    + "d.id id_entrada,\n"
-                    + "c.id id_libro_diario,\n"
                     + "a.entrada,\n"
                     + "a.salidas,\n"
                     + "a.stock,\n"
@@ -122,8 +119,6 @@ public class ControlInventario implements IControl {
                     + "FROM \n"
                     + "inventario a\n"
                     + "LEFT JOIN productos b ON a.id_producto=b.id\n"
-                    + "LEFT JOIN libro_diario c ON a.id_producto=c.id_producto\n"
-                    + "LEFT JOIN entradas d ON a.id_producto=d.id_producto\n"
                     + "WHERE \n"
                     + "a.id_finca = '" + o.toString() + "'\n"
                     + "ORDER BY a.fecha ASC";

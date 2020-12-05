@@ -53,6 +53,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
     public Map<String, String> producto;
     private VistaInventario vistaInventario;
     private VistaGeneral vistaGeneral;
+    private int opcion;
 
     public VistaProducto() {
         initComponents();
@@ -73,6 +74,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         iniciarComponentes();
         controles.habilitarControles();
         setSize(430, 270);
+        controlLD = new ControlLibro();
         vistaInventario = (VistaInventario) modeloVista.getPanelPadre();
         vistaGeneral = (VistaGeneral) modeloVista.getFrameVentana();
         listaProductos = new ArrayList<>();
@@ -80,8 +82,16 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         modelo = new ModeloProducto();
         control = new ControlInventario();
         jdFecha.setCalendar(Calendar.getInstance());
+        opcion = modeloVista.getOpcion();
 
-        if (modeloVista.getOpcion() == 2) {
+        boolean mostrar = opcion == 2;
+        btnCancelar.setVisible(mostrar);
+        btnDescartar.setVisible(!mostrar);
+        if (opcion == 1) {
+            idFinca = modeloVista.getModeloDatos().toString();
+            id_producto = "0";
+        }
+        if (opcion == 2) {
             producto = new HashMap<String, String>();
             producto = (HashMap<String, String>) modeloVista.getModeloDatos();
             vistaInventario = (VistaInventario) modeloVista.getPanelPadre();
@@ -138,6 +148,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         jPanel2 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnDescartar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         lblCalculo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -285,9 +296,30 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         jPanel2.add(btnDescartar, gridBagConstraints);
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar.png"))); // NOI18N
+        btnCancelar.setToolTipText("Eliminar");
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setMargin(new java.awt.Insets(2, 10, 2, 8));
+        btnCancelar.setMaximumSize(new java.awt.Dimension(64, 64));
+        btnCancelar.setMinimumSize(new java.awt.Dimension(64, 64));
+        btnCancelar.setName("btnCancelar"); // NOI18N
+        btnCancelar.setPreferredSize(new java.awt.Dimension(64, 64));
+        btnCancelar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar_over.png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cancelar_over.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(btnCancelar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -338,7 +370,12 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             return;
         }
 //</editor-fold>
-        Guardar();
+
+        if (opcion == 2) {
+            AgregarEntrada();
+        } else {
+            Guardar();
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescartarActionPerformed
@@ -350,8 +387,13 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         calcularPrecioPorCantidad();
     }//GEN-LAST:event_txtPrecioUnidadKeyReleased
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        vistaGeneral.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnGuardar;
     public javax.swing.JComboBox cbTipo;
@@ -434,6 +476,52 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
 
+        vistaInventario.AccionCombo();
+        vistaGeneral.dispose();
+    }
+
+    private void AgregarEntrada() {
+        //<editor-fold defaultstate="collapsed" desc="LIBRO DIARIO">
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFecha.getCalendar();
+        modeloLibro.setCantidad(txtCantidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setDebe(String.valueOf(resultado));
+        modeloLibro.setDetalle(Utilidades.CodificarElemento(txtProducto.getText().trim()));
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro(sdf.format(fecha.getTime()));
+        modeloLibro.setHaber("0");
+        modeloLibro.setId("0");
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setSaldo("0");
+        modeloLibro.setId_producto(id_producto);
+//</editor-fold>
+
+        int ret_entrada = control.GuardarEntrada(modeloLibro);
+        if (ret_entrada != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de ingresar la Entrada del producto.");
+            return;
+        }
+
+        int ret_Inventario = control.ActualizarEntradaInventario(modeloLibro);
+        if (ret_Inventario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de actualizar el producto en el inventario.");
+            return;
+        }
+
+        int ret_libro = control.GuardarLibroDiario(modeloLibro);
+        if (ret_libro != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de guardar el producto en el libro diario.");
+            return;
+        }
+
+        int ret_splibro = controlLD.ActualizarSaldos("CALL ActualizarSaldoLibroDiario(" + idFinca + ");");
+        if (ret_splibro != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de actualizar los saldos en el libro diario.");
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
         vistaInventario.AccionCombo();
         vistaGeneral.dispose();
     }
