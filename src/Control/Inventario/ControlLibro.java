@@ -71,11 +71,11 @@ public class ControlLibro implements IControl{
         ArrayList<String> consultas = new ArrayList<>();
         ModeloLibro modelo = (ModeloLibro) o;
         consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE `libro_diario`\n" +
                     "SET `detalle` = '"+modelo.getDetalle()+"',\n" +
                     "  `id_producto` = "+modelo.getId_producto()+",\n" +
-                    "  `cantidad` = "+modelo.getCantidad()+",\n" +
+                    "  `cantidad` = cantidad + "+modelo.getCantidad()+",\n" +
                     "  `precioxunidad` = "+modelo.getPrecioxunidad()+",\n" +
                     "  `debe` = "+modelo.getDebe()+",\n" +
                     "  `haber` = "+modelo.getHaber()+",\n" +
@@ -101,7 +101,46 @@ public class ControlLibro implements IControl{
 
     @Override
     public int Eliminar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        Map<String, String> datos = (Map<String, String>) o;
+        
+        
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="DELETE">
+                "DELETE FROM `libro_diario` WHERE id = '"+datos.get("ID")+"';"
+                //</editor-fold>
+        );
+        
+        if(!datos.get("ID_PRODUCTO").equals("0")){
+            
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="DELETE">
+                    "DELETE FROM entradas WHERE id_producto = '"+datos.get("ID_PRODUCTO")+"' AND fecha_entrada = '"+datos.get("FECHA")+"'"
+                    //</editor-fold>
+            );
+            
+            consultas.add(
+                    //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                    "update `inventario`\n" +
+                    "set `entrada` = entrada - "+datos.get("CANTIDAD")+", `stock` = stock - "+datos.get("CANTIDAD")+", fecha = NOW()\n" +
+                    " where id_producto = '"+datos.get("ID_PRODUCTO")+"';"
+                    //</editor-fold>
+            );
+        }
+        
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     @Override
@@ -142,6 +181,25 @@ public class ControlLibro implements IControl{
         } catch (SQLException ex) {
             System.out.println("" + ex.getMessage());
             return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public String getIdLibroDatoFecha(ModeloLibro modeloLibro) {
+        try {
+            String consulta = "SELECT id as ID FROM libro_diario WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_libro` = '"+modeloLibro.getFecha_libro()+"'";
+            
+            List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
+
+            Libros = mySQL.ListSQL(consulta);
+            if(Libros.size()>0){
+                return Libros.get(0).get("ID");
+            }else{
+                return "0";
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "0";
         }
     }
 }

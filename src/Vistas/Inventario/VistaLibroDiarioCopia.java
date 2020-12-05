@@ -89,18 +89,14 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         //Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         idFinca = "";
         NameColumnasFiltro = new ArrayList<>();
-        NameColumnasFiltro.add("NUMERO_ANIMAL");
-        NameColumnasFiltro.add("NUMERO_MAMA");
-        NameColumnasFiltro.add("GENERO");
-        NameColumnasFiltro.add("FECHA_NACIMIENTO");
-        NameColumnasFiltro.add("PESO");
-        NameColumnasFiltro.add("DESC_HIERRO");
-        NameColumnasFiltro.add("CAPADO");
-        NameColumnasFiltro.add("GRUPO");
-        NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("BLOQUE");
-        NameColumnasFiltro.add("FINCA");
-        NameColumnasFiltro.add("EST");
+        
+        NameColumnasFiltro.add("FECHA");
+        NameColumnasFiltro.add("DETALLE");
+        NameColumnasFiltro.add("CANTIDAD");
+        NameColumnasFiltro.add("PRECIO");
+        NameColumnasFiltro.add("DEBE");
+        NameColumnasFiltro.add("HABER");
+        NameColumnasFiltro.add("SALDO");
         EncabezadoTblLibro = new String[]{
             "No",
             "Fecha",
@@ -115,8 +111,13 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         };
         EstadoPanelAdd(false);
         InicializarTblLibro();
+        IniciarFecha();
         listaFincas = new ArrayList<>();
         CargarListaFincas();
+    }
+    
+    public void IniciarFecha() {
+        jdFecha.setCalendar(Calendar.getInstance());
     }
 
     public void InicializarTblLibro() {
@@ -205,6 +206,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         txtDetalle = new javax.swing.JTextField();
         btnBorrar = new javax.swing.JButton();
         chkInventariable = new javax.swing.JCheckBox();
+        txtTotal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_LibroDiario = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
@@ -276,6 +278,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         pnlAgregarLibro.add(panelFiltro, gridBagConstraints);
@@ -590,6 +593,35 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
         pnlAgregarLibro.add(chkInventariable, gridBagConstraints);
 
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(59, 123, 50));
+        txtTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtTotal.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtTotal.setFocusCycleRoot(true);
+        txtTotal.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTotalFocusLost(evt);
+            }
+        });
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTotalKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTotalKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.3333333333333333;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        pnlAgregarLibro.add(txtTotal, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -755,11 +787,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCantidadKeyPressed
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
-        String areat = txtCantidad.getText();
-        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
-        String dato = Expresiones.procesarSoloNumP(valorsin);
-        dato = Utilidades.MascaraMonedaConDecimales(dato);
-        txtCantidad.setText(dato);
+        Utilidades.setFormatoNumerico(txtCantidad);
+        calcularPrecioPorCantidad();
     }//GEN-LAST:event_txtCantidadKeyReleased
 
     private void txtPrecioUnidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioUnidadFocusLost
@@ -771,11 +800,12 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioUnidadKeyPressed
 
     private void txtPrecioUnidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioUnidadKeyReleased
-        // TODO add your handling code here:
+        Utilidades.setFormatoNumerico(txtPrecioUnidad);
+        calcularPrecioPorCantidad();
     }//GEN-LAST:event_txtPrecioUnidadKeyReleased
 
     private void jdFechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdFechaPropertyChange
-
+        getListaProducto();
     }//GEN-LAST:event_jdFechaPropertyChange
 
     private void tbl_LibroDiarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LibroDiarioMouseReleased
@@ -789,8 +819,11 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                 datoaModificar = ListaLibroMostrar.get(filaSeleccionada);
                 EditarRegistro();
             } else if (dato.equalsIgnoreCase("Eliminar")) {
-                
-                
+                int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el registo seleccionado?", "Eliminar Registro Libro Diario", JOptionPane.YES_NO_OPTION);
+                if(resp == JOptionPane.YES_OPTION){
+                    datoaModificar = ListaLibroMostrar.get(filaSeleccionada);
+                    EliminarRegistro();
+                }
             }
         }
     }//GEN-LAST:event_tbl_LibroDiarioMouseReleased
@@ -800,11 +833,15 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }//GEN-LAST:event_txtFiltroFocusLost
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
-        // TODO add your handling code here:
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            MostrarTabla();
+        }
     }//GEN-LAST:event_txtFiltroKeyPressed
 
     private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
-        // TODO add your handling code here:
+        if (txtFiltro.getText().equals("")) {
+            MostrarTabla();
+        }
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void txtDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDetalleActionPerformed
@@ -822,11 +859,15 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         //<editor-fold defaultstate="collapsed" desc="filtro">
         if (listaFiltro.getSelectedValue() != null) {
             txtDetalle.setText(listaFiltro.getSelectedValue().toString());
-            id_producto = getIDProducto(listaFiltro.getSelectedValue().toString());
+            id_producto = getDatosProducto("id",listaFiltro.getSelectedValue().toString());
+            cbTipo.setSelectedItem(getDatosProducto("tipo",listaFiltro.getSelectedValue().toString()));
+            cbTipo.setEnabled(false);
             chkInventariable.setSelected(true);
+            rbDebe.setSelected(true);
             panelFiltro.setVisible(false);
+            getListaProducto();
         }
-//</editor-fold>
+        //</editor-fold>
     }//GEN-LAST:event_listaFiltroValueChanged
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -835,6 +876,18 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         EstadoPanelAdd(true);
         
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalFocusLost
+
+    private void txtTotalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalKeyPressed
+
+    private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -869,6 +922,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     public javax.swing.JTextField txtDetalle;
     public javax.swing.JTextField txtFiltro;
     public javax.swing.JTextField txtPrecioUnidad;
+    public javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
     private void CargarListaFincas() {
@@ -930,14 +984,14 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         boolean chInventario = chkInventariable.isSelected();
         String Radio = rbDebe.isSelected()?"DEBE":rbHaber.isSelected()?"HABER":"";
         String detalle = txtDetalle.getText().trim();
-        String cantidad = txtCantidad.getText().trim();
-        String precio = txtPrecioUnidad.getText().trim();
+        String cantidad = txtCantidad.getText().trim().replace(".", "").replace(",", ".");
+        String precio = txtPrecioUnidad.getText().trim().replace(".", "").replace(",", ".");
         String tipo = ""+cbTipo.getSelectedItem();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = jdFecha.getCalendar();
         String fechaFormateada = sdf.format(fecha.getTime());
         Double total = Double.parseDouble(cantidad)*Double.parseDouble(precio);
-        String id = filaSeleccionada>=0?datoaModificar.get("ID"):"0";
+        String id = !datoaModificar.isEmpty()?datoaModificar.get("ID"):"0";
          
         
         modeloLibro.setCantidad(cantidad);
@@ -968,7 +1022,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                     
                     LimpiarLst();
                     LlenarListaProductos();
-                    id_producto = getIDProducto(detalle);
+                    id_producto = getDatosProducto("id", detalle);
                     modeloLibro.setId_producto(id_producto);
                     
                     int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
@@ -988,22 +1042,43 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                 }
             }else{
                 //ACTUALIZAR INVENTARIO
-                int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
-                if(ret_entrada != Retorno.EXITO){
-                    JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar la Entrada del producto.");
-                    return;
+                //String id_Libro = controlLibro.getIdLibroDatoFecha(modeloLibro);
+                
+                if(controlInventario.ExisteDatoFecha(modeloLibro)){
+                    //datoaModificar.get("CANTIDAD")
+                    String can = (datoaModificar.containsKey("CANTIDAD")?datoaModificar.get("CANTIDAD"):"0");
+                    Double canti = Double.parseDouble(cantidad) - Double.parseDouble(can);
+                    modeloLibro.setCantidad(""+canti);
+                    int ret_entrada = controlInventario.ActualizarEntrada(modeloLibro);
+                    if(ret_entrada != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de Actualizar la Entrada del producto.");
+                        return;
+                    }
+                    int ret_Inventario = controlInventario.ActualizarEntradaInventario(modeloLibro);
+                    if(ret_Inventario != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de Actualizar el producto al Inventario.");
+                        return;
+                    }
+                    
+                }else{//SI NO EXITE INGRESO PARA ESA FECHA
+                    int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
+                    if(ret_entrada != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar la Entrada del producto.");
+                        return;
+                    }
+                    int ret_Inventario = controlInventario.ActualizarEntradaInventario(modeloLibro);
+                    if(ret_Inventario != Retorno.EXITO){
+                        JOptionPane.showMessageDialog(null, "Hubo un error al momento de Actualizar el producto al Inventario.");
+                        return;
+                    }
                 }
-                int ret_Inventario = controlInventario.ActualizarEntradaInventario(modeloLibro);
-                if(ret_Inventario != Retorno.EXITO){
-                    JOptionPane.showMessageDialog(null, "Hubo un error al momento de Actualizar el producto al Inventario.");
-                    return;
-                }
+                
             } 
-            
+            //String id_Libro = controlLibro.getIdLibroDatoFecha(modeloLibro); && id_Libro.equals("0")
         }
         
         int ret;
-        if(id_libro.equals("0")){
+        if(id_libro.equals("0") ){
             ret = controlLibro.Guardar(modeloLibro);
         }else{
             ret = controlLibro.Actualizar(modeloLibro);
@@ -1012,6 +1087,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
             //LLAMAR PROC ALMA
             ret = controlLibro.ActualizarSaldos("CALL ActualizarSaldoLibroDiario(" + idFinca + ");");
             JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
+        }else{
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación");
         }
         LimpiarFomulario();
         cargarTablaFiltro();
@@ -1024,6 +1101,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         chkInventariable.setSelected(false);
         datoaModificar = new HashMap<>();
         filaSeleccionada = -1;
+        band = 0;
         id_libro = "0";
         id_producto = "0";
         txtDetalle.setText("");
@@ -1047,11 +1125,11 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                         (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaLibroMostrar.get(i).get("FECHA"),
                         ListaLibroMostrar.get(i).get("DETALLE"),
-                        ListaLibroMostrar.get(i).get("CANTIDAD"),
-                        ListaLibroMostrar.get(i).get("PRECIO"),
-                        ListaLibroMostrar.get(i).get("DEBE"),
-                        ListaLibroMostrar.get(i).get("HABER"),
-                        ListaLibroMostrar.get(i).get("SALDO"),
+                        Utilidades.MascaraMonedaConDecimalesNeg(ListaLibroMostrar.get(i).get("CANTIDAD")),
+                        Utilidades.MascaraMonedaConDecimalesNeg(ListaLibroMostrar.get(i).get("PRECIO")),
+                        Utilidades.MascaraMonedaConDecimalesNeg(ListaLibroMostrar.get(i).get("DEBE").replace(".", ",")),
+                        Utilidades.MascaraMonedaConDecimalesNeg(ListaLibroMostrar.get(i).get("HABER").replace(".", ",")),
+                        Utilidades.MascaraMonedaConDecimalesNeg(ListaLibroMostrar.get(i).get("SALDO").replace(".", ",")),
                         "Modificar",
                         "Eliminar"
                     }
@@ -1100,6 +1178,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         id_libro = datoaModificar.get("ID");
         rbDebe.setEnabled(false);
         rbHaber.setEnabled(false);
+        chkInventariable.setSelected(!id_producto.equals("0"));
+        chkInventariable.setEnabled(false);
         try {
             String fechaSeleccionada = datoaModificar.get("FECHA").toString();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -1151,16 +1231,90 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }
 //</editor-fold>
 
-    private String getIDProducto(String detalle) {
+    private String getDatosProducto(String opc, String detalle) {
        String ret = "";
-       
+       String retorno = "";
         for (ModeloProducto mod : listaProductos) {
+            if(opc.equalsIgnoreCase("id")){
+                retorno = mod.getId();
+            }else if(opc.equalsIgnoreCase("tipo")){
+                retorno = mod.getTipo_salida();
+            }
             if(detalle.equals(mod.getDescripcion())){
-                ret = mod.getId();
+                ret = retorno;
                 break;
             }
         }
        
        return ret;
     }
+
+    private void calcularPrecioPorCantidad() {
+        String strCantidad = txtCantidad.getText();
+        String strPrecio = txtPrecioUnidad.getText();
+
+        strCantidad = strCantidad.length() == 0 ? "0" : strCantidad.replace(".", "").replace(",", ".");
+        strPrecio = strPrecio.length() == 0 ? "0" : strPrecio.replace(".", "").replace(",", ".");
+
+        double cantidad = Double.parseDouble(strCantidad);
+        double precio = Double.parseDouble(strPrecio);
+        double resultado = precio * cantidad;
+
+        txtTotal.setText(String.valueOf(resultado).replace(".", ","));
+        Utilidades.setFormatoNumerico(txtTotal);
+    }
+
+    private void EliminarRegistro() {
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fecha = formato.parse(datoaModificar.get("FECHA"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fe = sdf.format(fecha);
+        
+            datoaModificar.put("FECHA", fe);
+            
+            int ret = controlLibro.Eliminar(datoaModificar);
+            
+            if(ret == Retorno.EXITO){
+                datoaModificar = new HashMap<>();
+                filaSeleccionada = -1;
+                ret = controlLibro.ActualizarSaldos("CALL ActualizarSaldoLibroDiario(" + idFinca + ");");
+                cargarTablaFiltro();
+                JOptionPane.showMessageDialog(null, "La operación se realizo con exito");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al momento de realizar la operación");
+            }
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
+        }
+        
+    }
+
+    private void getListaProducto() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar fechaC = jdFecha.getCalendar();
+        String fecha = sdf.format(fechaC.getTime());
+        if(!id_producto.equals("0")){
+            int ind = ValidarProductoFecha(id_producto, fecha);
+            if(ind >=-1){
+                datoaModificar = listaLibro.get(ind);
+                EditarRegistro();
+            }
+        }
+        
+    }
+
+    private int ValidarProductoFecha(String id_producto, String fecha) {
+        int ind = -1;
+        
+        for(int i = 0; i < listaLibro.size(); i++){
+            if(listaLibro.get(i).get("ID_PRODUCTO").equals(id_producto) && listaLibro.get(i).get("FECHA").equals(fecha)){
+                ind = i;
+                break;
+            }
+        }
+        
+        return ind;
+    }
 }
+

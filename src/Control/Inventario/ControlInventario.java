@@ -237,6 +237,54 @@ public class ControlInventario implements IControl{
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public boolean ExisteDatoFecha(ModeloLibro modeloLibro) {
+        try {
+            String consulta = "Select * from entradas where id_producto = '"+modeloLibro.getId_producto()+"' AND fecha_entrada = '"+modeloLibro.getFecha_libro()+"'";
+            
+            List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
+
+            Libros = mySQL.ListSQL(consulta);
+            if(Libros.size()>0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int ActualizarEntrada(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE `entradas`\n" +
+                    "SET `cantidad` = cantidad + "+modeloLibro.getCantidad()+",\n" +
+                    "  `precioxunidad` = "+modeloLibro.getPrecioxunidad()+",\n" +
+                    "  `fecha` = NOW(),\n" +
+                    "  `id_usuario` = "+modeloLibro.getId_usuario()+"\n" +
+                    "WHERE `id_producto` = '"+modeloLibro.getId_producto()+"' AND `fecha_entrada` = '"+modeloLibro.getFecha_libro()+"';"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
     
     
 }

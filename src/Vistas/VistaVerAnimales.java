@@ -71,7 +71,7 @@ public class VistaVerAnimales extends javax.swing.JPanel {
         NameColumnasFiltro.add("GRUPO");
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
-        NameColumnasFiltro.add("LOTE");
+        NameColumnasFiltro.add("LOTE");  
         EncabezadoTblAnimales = new String[]{
             "No",
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>",

@@ -363,6 +363,37 @@ public class Utilidades {
 
         return ret;
     }
+    public static String MascaraMonedaConDecimalesNeg(String dato) {
+        String ret = "";
+        int con = 0;
+        String ente = dato.split(",")[0];
+        String dec = "", ban = "0";
+        if (dato.split(",").length > 1) {
+            dec = dato.split(",")[1];
+        }
+        if (dato.indexOf(",") > -1) {
+            ban = "1";
+        }
+        for (int i = ente.length() - 1; i >= 0; i--) {
+
+            if (con % 3 == 0 && con > 0) {
+                ret = ((i==0 && (""+ente.charAt(i)).equals("-"))?"":".") + ret;
+                con = 0;
+            }
+            ret = "" + ente.charAt(i) + ret;
+            con++;
+
+        }
+        if (!dec.equals("")) {
+            ret = ret + "," + dec;
+            ban = "0";
+        }
+        if (ban.equals("1")) {
+            ret = ret + ",";
+        }
+
+        return ret;
+    }
 
     /**
      * Este metodo formatea los numeros escritos en un JTextField.<br>
@@ -918,4 +949,20 @@ public class Utilidades {
         Lista.setModel(modlist);
     }
 
+    public static void setFormatoNumerico(JTextField campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
+    }
+
+    public static void setFormatoNumerico(JLabel campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
+    }
+    
 }
