@@ -72,7 +72,7 @@ public class ControlInventario implements IControl {
                 + "'" + modeloProducto.getTipo_salida() + "', "
                 + "'" + modeloProducto.getEstado() + "', "
                 + "" + modeloProducto.getFecha() + ","
-                + " '" + modeloProducto.getId_usuario() + "');"
+                + "'" + modeloProducto.getId_usuario() + "');"
         //</editor-fold>
         );
 
@@ -108,6 +108,8 @@ public class ControlInventario implements IControl {
                     + "c.precioxunidad PRECIO,\n"
                     + "a.id_finca,\n"
                     + "a.id_producto,\n"
+                    + "d.id id_entrada,\n"
+                    + "c.id id_libro_diario,\n"
                     + "a.entrada,\n"
                     + "a.salidas,\n"
                     + "a.stock,\n"
@@ -121,6 +123,7 @@ public class ControlInventario implements IControl {
                     + "inventario a\n"
                     + "LEFT JOIN productos b ON a.id_producto=b.id\n"
                     + "LEFT JOIN libro_diario c ON a.id_producto=c.id_producto\n"
+                    + "LEFT JOIN entradas d ON a.id_producto=d.id_producto\n"
                     + "WHERE \n"
                     + "a.id_finca = '" + o.toString() + "'\n"
                     + "ORDER BY a.fecha ASC";
@@ -144,7 +147,11 @@ public class ControlInventario implements IControl {
                 "INSERT INTO `productos`\n"
                 + "(`descripcion`, `tipo_salida`, `estado`, `fecha`, `id_usuario`)\n"
                 + "VALUES \n"
-                + "('" + modeloProducto.getDescripcion() + "', '" + modeloProducto.getTipo_salida() + "', '" + modeloProducto.getEstado() + "', " + modeloProducto.getFecha() + ", '" + modeloProducto.getId_usuario() + "');"
+                + "('" + modeloProducto.getDescripcion() + "',"
+                + " '" + modeloProducto.getTipo_salida() + "', "
+                + "'" + modeloProducto.getEstado() + "', "
+                + "" + modeloProducto.getFecha() + ", "
+                + "'" + modeloProducto.getId_usuario() + "');"
         //</editor-fold>
         );
 
@@ -253,12 +260,12 @@ public class ControlInventario implements IControl {
         ModeloLibro modelo = (ModeloLibro) o;
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `libro_diario`\n" +
-                "(`id_finca`,`detalle`,`id_producto`,`cantidad`,`precioxunidad`,\n" +
-                "`debe`, `haber`, `saldo`, `fecha_libro`, `fecha`, `id_usuario`)\n" +
-                "VALUES \n" +
-                "('"+modelo.getId_finca()+"', '"+modelo.getDetalle()+"', '"+modelo.getId_producto()+"', "+modelo.getCantidad()+","+modelo.getPrecioxunidad()+", \n" +
-                ""+modelo.getDebe()+", "+modelo.getHaber()+", "+modelo.getSaldo()+", '"+modelo.getFecha_libro()+"', "+modelo.getFecha()+", "+modelo.getId_usuario()+");"
+                "INSERT INTO `libro_diario`\n"
+                + "(`id_finca`,`detalle`,`id_producto`,`cantidad`,`precioxunidad`,\n"
+                + "`debe`, `haber`, `saldo`, `fecha_libro`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "('" + modelo.getId_finca() + "', '" + modelo.getDetalle() + "', '" + modelo.getId_producto() + "', " + modelo.getCantidad() + "," + modelo.getPrecioxunidad() + ", \n"
+                + "" + modelo.getDebe() + ", " + modelo.getHaber() + ", " + modelo.getSaldo() + ", '" + modelo.getFecha_libro() + "', " + modelo.getFecha() + ", " + modelo.getId_usuario() + ");"
         //</editor-fold>
         );
 
@@ -275,6 +282,43 @@ public class ControlInventario implements IControl {
             System.out.println("" + ex.getMessage());
             return Retorno.EXCEPCION_SQL;
         }
+    }
+
+    public int ActualizarEntrada(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO `entradas`\n"
+                + "(`id_finca`, `id_producto`, `cantidad`, \n"
+                + "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n"
+                + "VALUES \n"
+                + "(" + modeloLibro.getId_finca() + ", " + modeloLibro.getId_producto() + ", " + modeloLibro.getCantidad() + ", \n"
+                + "" + modeloLibro.getPrecioxunidad() + ", '" + modeloLibro.getFecha_libro() + "', NOW(), " + modeloLibro.getId_usuario() + ");"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
+    public int ActualizarInventario(ModeloLibro modeloLibro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int ActualizarLibroDiario(ModeloLibro modeloLibro) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

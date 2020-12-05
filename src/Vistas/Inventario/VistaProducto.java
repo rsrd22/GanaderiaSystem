@@ -76,7 +76,8 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         if (modeloVista.getOpcion() == 1) {
             idFinca = modeloVista.getModeloDatos().toString();
             id_producto = "0";
-        } else {
+        }
+        if (modeloVista.getOpcion() == 2) {
             producto = (HashMap<String, String>) modeloVista.getModeloDatos();
             cargarProducto(producto);
         }
@@ -437,6 +438,55 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         ((VistaGeneral) vg.getFrameVentana()).dispose();
     }
 
+    private void Actualizar() {
+        String nombreProducto = txtProducto.getText().trim();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = jdFecha.getCalendar();
+        modelo.setFecha("NOW()");
+
+        modelo.setDescripcion(Utilidades.CodificarElemento(nombreProducto));
+        modelo.setEstado("Activo");
+        modelo.setId("0");
+        modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modelo.setTipo_salida(cbTipo.getSelectedItem().toString());
+
+        //<editor-fold defaultstate="collapsed" desc="LIBRO DIARIO">
+        modeloLibro.setCantidad(txtCantidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setDebe(String.valueOf(resultado));
+        modeloLibro.setDetalle(Utilidades.CodificarElemento(txtProducto.getText().trim()));
+        modeloLibro.setFecha("NOW()");
+        modeloLibro.setFecha_libro(sdf.format(fecha.getTime()));
+        modeloLibro.setHaber("0");
+        modeloLibro.setId("0");
+        modeloLibro.setId_finca(idFinca);
+        modeloLibro.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modeloLibro.setPrecioxunidad(txtPrecioUnidad.getText().replace(".", "").replace(",", "."));
+        modeloLibro.setSaldo("0");
+        modeloLibro.setId_producto(id_producto);
+//</editor-fold>
+
+        int ret_entrada = control.ActualizarEntrada(modeloLibro);
+        if (ret_entrada != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de ingresar la entrada del producto.");
+            return;
+        }
+        int ret_Inventario = control.ActualizarInventario(modeloLibro);
+        if (ret_Inventario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de Actualizar el producto en el Inventario.");
+            return;
+        }
+        int ret_libroDiario = control.ActualizarLibroDiario(modeloLibro);
+        if (ret_libroDiario != Retorno.EXITO) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al momento de guardar en el libro diario.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Registro ingresado satisfactoriamente.");
+
+        ((VistaInventario) vg.getPanelPadre()).AccionCombo();
+        ((VistaGeneral) vg.getFrameVentana()).dispose();
+    }
+
     private void Descartar() {
         Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_DESCARTAR, controles);
     }
@@ -506,7 +556,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
             String fechaSeleccionada = producto.get("FECHA").toString();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha = formato.parse(fechaSeleccionada);
-            jdFecha.setDate(fecha); 
+            jdFecha.setDate(fecha);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar la fecha\nDetalle:\n" + ex.getMessage());
         }
