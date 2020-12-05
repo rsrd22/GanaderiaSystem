@@ -170,6 +170,39 @@ public class ControlInventario implements IControl {
         }
     }
 
+    public int ActualizarProducto(ModeloProducto modeloProducto) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "UPDATE \n"
+                + "productos\n"
+                + "SET\n"
+                + "descripcion = '" + modeloProducto.getDescripcion() + "',\n"
+                + "tipo_salida = '" + modeloProducto.getTipo_salida() + "',\n"
+                + "estado = '" + modeloProducto.getEstado() + "',\n"
+                + "fecha = " + modeloProducto.getFecha() + ",\n"
+                + "id_usuario = '" + modeloProducto.getId_usuario() + "'\n"
+                + "WHERE \n"
+                + "id = " + modeloProducto.getId() + ";"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+
     public int GuardarEntrada(ModeloLibro modeloLibro) {
         ArrayList<String> consultas = new ArrayList<>();
 
@@ -289,12 +322,17 @@ public class ControlInventario implements IControl {
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO `entradas`\n"
-                + "(`id_finca`, `id_producto`, `cantidad`, \n"
-                + "`precioxunidad`, `fecha_entrada`, `fecha`, `id_usuario`)\n"
-                + "VALUES \n"
-                + "(" + modeloLibro.getId_finca() + ", " + modeloLibro.getId_producto() + ", " + modeloLibro.getCantidad() + ", \n"
-                + "" + modeloLibro.getPrecioxunidad() + ", '" + modeloLibro.getFecha_libro() + "', NOW(), " + modeloLibro.getId_usuario() + ");"
+                "UPDATE \n"
+                + "entradas\n"
+                + "SET \n"
+                + "cantidad = " + modeloLibro.getCantidad() + ",\n"
+                + "precioxunidad = " + modeloLibro.getPrecioxunidad() + ",\n"
+                + "fecha_entrada = '" + modeloLibro.getFecha_libro() + "',\n"
+                + "fecha = NOW(),\n"
+                + "id_usuario = " + modeloLibro.getId_usuario() + "\n"
+                + "WHERE \n"
+                + "id_finca = " + modeloLibro.getId_finca() + " AND\n"
+                + "id_producto = " + modeloLibro.getId_producto()
         //</editor-fold>
         );
 
@@ -314,7 +352,37 @@ public class ControlInventario implements IControl {
     }
 
     public int ActualizarInventario(ModeloLibro modeloLibro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "UPDATE \n"
+                + "inventario\n"
+                + "SET\n"
+                + "entrada = " + modeloLibro.getCantidad() + ",\n"
+                + "salidas = 'salidas',\n"
+                + "stock = " + modeloLibro.getCantidad() + ",\n"
+                + "fecha = NOW(),\n"
+                + "id_usuario = " + modeloLibro.getId_usuario() + "\n"
+                + "WHERE\n"
+                + "id_finca = " + modeloLibro.getId_finca() + " AND\n"
+                + "id_producto = " + modeloLibro.getId_producto()
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
     }
 
     public int ActualizarLibroDiario(ModeloLibro modeloLibro) {

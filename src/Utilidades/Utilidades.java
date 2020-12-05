@@ -918,4 +918,20 @@ public class Utilidades {
         Lista.setModel(modlist);
     }
 
+    public static void setFormatoNumerico(JTextField campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
+    }
+
+    public static void setFormatoNumerico(JLabel campoDeTexto) {
+        String areat = campoDeTexto.getText();
+        String valorsin = areat.indexOf(".") > -1 ? areat.replace(".", "") : areat;
+        String dato = Expresiones.procesarSoloNumP(valorsin);
+        dato = Utilidades.MascaraMonedaConDecimales(dato);
+        campoDeTexto.setText(dato);
+    }
+
 }
