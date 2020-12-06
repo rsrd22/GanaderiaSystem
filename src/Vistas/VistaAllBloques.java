@@ -10,6 +10,8 @@ import Modelo.*;
 import Tablas.*;
 import Utilidades.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +36,21 @@ public class VistaAllBloques extends javax.swing.JPanel {
     public String AreaFinca;
     public int fila;
     public int idModulo = 4;
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";
     /**
      * Creates new form VistaAllBloques
      */
     public VistaAllBloques() {
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("numero");
+            NameColumnasOrden.add("area");
+//</editor-fold>
         EncabezadoTblBloques = new String[]{
             "No", "Número", "Área Total", "Modificar", "Eliminar"
         };
@@ -97,6 +108,13 @@ public class VistaAllBloques extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+        tbl_Bloques.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
 
     }
 
@@ -385,7 +403,7 @@ public class VistaAllBloques extends javax.swing.JPanel {
         Utilidades.LimpiarTabla(tbl_Bloques);
         modeloBloques.setId_finca("" + idFinca);
         if (Integer.parseInt(idFinca) > 0) {
-            ListamodeloBloques = (ArrayList<ModeloBloques>) controlFinca.ObtenerBloquesxFinca("" + idFinca);
+            ListamodeloBloques = (ArrayList<ModeloBloques>) controlFinca.ObtenerBloquesxFinca("" + idFinca, Orden);
             for (int i = 0; i < ListamodeloBloques.size(); i++) {
                 agregarFilaTabla(modeloTblBloques,
                         new Object[]{
@@ -575,4 +593,49 @@ public class VistaAllBloques extends javax.swing.JPanel {
         }
         return ret;
     }
+    
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_Bloques.isEnabled())
+            return;
+        
+        int col = tbl_Bloques.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            AccionCombo();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        
+            ret = Dato;
+        
+        return ret;
+    }
+    
 }

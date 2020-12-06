@@ -50,10 +50,10 @@ public class VistaVerAnimales extends javax.swing.JPanel {
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
     public ArrayList<String> NameColumnasFiltro;
-    public ArrayList<String> NameColumnasOrden;
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     private TareaActuralizaListaAnimales actListaAnimales;
     public int idModulo = 12;
+    public ArrayList<String> NameColumnasOrden;
     public int bandOrden = 0;
     public int colOrden = 0;
     public String Orden = "";

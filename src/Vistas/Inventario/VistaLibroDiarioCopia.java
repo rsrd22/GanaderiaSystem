@@ -109,6 +109,9 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
             "M",
             "E"
         };
+        txtTotal.setEnabled(false);
+        txtTotal.setBackground(Color.WHITE);
+        txtTotal.setForeground(Color.red);
         EstadoPanelAdd(false);
         InicializarTblLibro();
         IniciarFecha();
@@ -456,6 +459,11 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         rbHaber.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rbHaber.setForeground(new java.awt.Color(59, 123, 50));
         rbHaber.setText("Haber");
+        rbHaber.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                rbHaberMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -467,6 +475,11 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         rbDebe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rbDebe.setForeground(new java.awt.Color(59, 123, 50));
         rbDebe.setText("Debe");
+        rbDebe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                rbDebeMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -586,6 +599,11 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         chkInventariable.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         chkInventariable.setForeground(new java.awt.Color(59, 123, 50));
         chkInventariable.setText("Inventariable");
+        chkInventariable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                chkInventariableMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -597,6 +615,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         txtTotal.setForeground(new java.awt.Color(59, 123, 50));
         txtTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         txtTotal.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtTotal.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTotal.setDisabledTextColor(new java.awt.Color(59, 123, 50));
         txtTotal.setFocusCycleRoot(true);
         txtTotal.setSelectionColor(new java.awt.Color(59, 123, 50));
         txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -761,8 +781,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
             panelFiltro.setVisible(false);
             return;
         }
-
-        buscarElementos(txtDetalle, panelFiltro, listaFiltro);
+        if(rbDebe.isSelected())
+            buscarElementos(txtDetalle, panelFiltro, listaFiltro);
 //</editor-fold>
     }//GEN-LAST:event_txtDetalleKeyReleased
 
@@ -852,6 +872,9 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         //<editor-fold defaultstate="collapsed" desc="filtro">
         txtDetalle.setText("");
         panelFiltro.setVisible(false);
+        chkInventariable.setSelected(false);
+        chkInventariable.setEnabled(true);
+        datoaModificar = new HashMap<>();
 //</editor-fold>
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -863,6 +886,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
             cbTipo.setSelectedItem(getDatosProducto("tipo",listaFiltro.getSelectedValue().toString()));
             cbTipo.setEnabled(false);
             chkInventariable.setSelected(true);
+            chkInventariable.setEnabled(false);
             rbDebe.setSelected(true);
             panelFiltro.setVisible(false);
             getListaProducto();
@@ -888,6 +912,29 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalKeyReleased
+
+    private void rbHaberMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbHaberMouseReleased
+        if(rbHaber.isSelected()){
+            chkInventariable.setSelected(false);
+            chkInventariable.setEnabled(false);
+            txtDetalle.setText("");
+            panelFiltro.setVisible(false);
+            datoaModificar = new HashMap<>();
+        }
+    }//GEN-LAST:event_rbHaberMouseReleased
+
+    private void rbDebeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbDebeMouseReleased
+        if(rbDebe.isSelected()){
+            chkInventariable.setSelected(false);
+            chkInventariable.setEnabled(true);
+        }
+    }//GEN-LAST:event_rbDebeMouseReleased
+
+    private void chkInventariableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkInventariableMouseReleased
+        if(chkInventariable.isSelected()){
+            rbDebe.setSelected(true);
+        }
+    }//GEN-LAST:event_chkInventariableMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1296,7 +1343,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         String fecha = sdf.format(fechaC.getTime());
         if(!id_producto.equals("0")){
             int ind = ValidarProductoFecha(id_producto, fecha);
-            if(ind >=-1){
+            if(ind >-1){
                 datoaModificar = listaLibro.get(ind);
                 EditarRegistro();
             }

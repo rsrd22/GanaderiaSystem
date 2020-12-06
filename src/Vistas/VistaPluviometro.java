@@ -15,6 +15,8 @@ import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,12 +50,22 @@ public class VistaPluviometro extends javax.swing.JPanel {
     public String idFinca;
     public int fila;
     public int idModulo = 7;
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";  
+    
     /**
      * Creates new form VistaPubliometro
      */
     public VistaPluviometro() {
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("FECHAREGISTRO");
+            NameColumnasOrden.add("CANTIDAD");
+//</editor-fold>
         EncabezadoTblPluviometro = new String[]{
             "No", "Fecha", "Cantidad", "Modificar", "Eliminar"
         };
@@ -108,7 +120,7 @@ public class VistaPluviometro extends javax.swing.JPanel {
                 
             tcr.setForeground(new Color(26, 82, 118));
             tbl_Pluviometro.getColumnModel().getColumn(i).setCellRenderer(tcr); 
-            
+             
         }
         JTableHeader header = tbl_Pluviometro.getTableHeader();
 
@@ -116,6 +128,12 @@ public class VistaPluviometro extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
         
+        tbl_Pluviometro.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
     }
     
     /**
@@ -369,7 +387,7 @@ public class VistaPluviometro extends javax.swing.JPanel {
         System.out.println("cbFincaActionPerformed cb-->"+idFinca);
         modeloPluviometro.setId_finca(""+idFinca);
         if(Integer.parseInt(idFinca)>0){
-            ListamodeloPluviometro = (ArrayList<ModeloPluviometro>) controlFinca.ObtenerPluviometroxFinca(""+idFinca);
+            ListamodeloPluviometro = (ArrayList<ModeloPluviometro>) controlFinca.ObtenerPluviometroxFinca(""+idFinca, Orden);
             for(int i =0; i < ListamodeloPluviometro.size(); i++){
                 agregarFilaTabla(modeloTblPluviometro,
                     new Object[]{
@@ -535,5 +553,49 @@ public class VistaPluviometro extends javax.swing.JPanel {
             }
             LimpiarFomulario();
         }
+    }
+
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_Pluviometro.isEnabled())
+            return;
+        
+        int col = tbl_Pluviometro.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            LlenarDatosTabla();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        
+            ret = Dato;
+        
+        return ret;
     }
 }

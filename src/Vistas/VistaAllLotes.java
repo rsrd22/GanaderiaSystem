@@ -21,6 +21,8 @@ import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +65,10 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public boolean ban = false;
     public ControlMultiComboBox obj;
     public DefaultListModel modlistFuentes;
-        
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";    
     /**
      * Creates new form VistaAllLotes
      */
@@ -100,6 +105,14 @@ public class VistaAllLotes extends javax.swing.JPanel {
         controlLote = new ControLotes();
         ListamodeloLotes = new ArrayList<>();
         listaActualizarFuentes = new ArrayList<>();
+        
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("NUMERO_BLOQUE");
+            NameColumnasOrden.add("NUMERO_BLOQUE<::>NUMERO");
+            NameColumnasOrden.add("AREAT");
+            NameColumnasOrden.add("FUENTE_HIDRICA");
+//</editor-fold>
         EncabezadoTblLotes = new String[]{
             "No","Bloque", "Número", "Área Total", "Fuente Hidrica", "Modificar", "Eliminar"
         };
@@ -169,6 +182,13 @@ public class VistaAllLotes extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+        tbl_Lotes.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
         
     }
     /**
@@ -542,7 +562,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
         Utilidades.LimpiarTabla(tbl_Lotes);
         modeloLotes.setId_finca(""+idFinca);
         if(Integer.parseInt(idFinca)>0){
-            ListamodeloLotes = (ArrayList<ModeloLotes>) controlFinca.ObtenerLotesxFinca(""+idFinca);
+            ListamodeloLotes = (ArrayList<ModeloLotes>) controlFinca.ObtenerLotesxFinca(""+idFinca, Orden);
             CargarListaBloques();
             System.out.println("");
             for(int i =0; i < ListamodeloLotes.size(); i++){
@@ -953,5 +973,50 @@ public class VistaAllLotes extends javax.swing.JPanel {
             x++;
         }
         return ids;
+    }
+
+
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_Lotes.isEnabled())
+            return;
+        
+        int col = tbl_Lotes.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            AccionCombo();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        
+            ret = Dato;
+        
+        return ret;
     }
 }

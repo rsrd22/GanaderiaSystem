@@ -16,7 +16,10 @@ import Utilidades.datosUsuario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
@@ -42,6 +45,10 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     //Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     public ModeloVentanaGeneral objetoVentana;
     public int idModulo = 15;
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "a.fecha_venta ASC";
     /**
      * Creates new form VistaHistoricoMuertes
      */
@@ -49,6 +56,14 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new DefaultTableModel();
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("numero");
+            NameColumnasOrden.add("numero_mama");
+            NameColumnasOrden.add("genero");
+            NameColumnasOrden.add("fecha_muerte");
+            NameColumnasOrden.add("descripcion_muerte");
+//</editor-fold>
         EncabezadoTblMuertes = new String[]{
             "Nro. Animal",    //0
             "Nro. Madre",     //1
@@ -128,6 +143,13 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+    
+        tabla.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
     }
 
     private void cargarComboFincas() {
@@ -146,7 +168,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     }
 
     public void cargarHistoricoMuertes() {
-        String consulta = consultas.get("OBTENER_HISTORICO_MUERTES").replace("PARAMETRO1", txtCodigoTipoAnimal.getText());
+        String consulta = consultas.get("OBTENER_HISTORICO_MUERTES").replace("PARAMETRO1", txtCodigoTipoAnimal.getText()).replace("ORDEN", Orden);
         System.out.println("consulta-->"+consulta);
         muertes = controlGral.GetConsulta(consulta);
 
@@ -374,5 +396,51 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
             cargarHistoricoMuertes();
         }
+    }
+    
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tabla.isEnabled())
+            return;
+        
+        int col = tabla.columnAtPoint(e.getPoint());
+        System.out.println("col-->"+colOrden);
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "a.fecha_venta ASC";
+                }else{
+                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            cargarHistoricoMuertes();
+        }
+    }
+
+    private String TipoDato(int ind, String Dato) {
+        String ret = "";
+        if(ind == 0 || ind == 1){
+            ret = "CONVERT("+Dato+",INT)";
+        }else{
+            ret = Dato;
+        }
+        return ret;
     }
 }
