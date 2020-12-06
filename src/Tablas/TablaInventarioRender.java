@@ -29,7 +29,7 @@ public class TablaInventarioRender extends DefaultTableCellRenderer {
             double existencia = Double.parseDouble(table.getValueAt(row, 5).toString());
 
             double porcentajeExistencia = Math.round(existencia / entrada * 100);
-            System.out.println("--------------------------------------------------------------------porcentajeExistencia:" + porcentajeExistencia);
+            System.out.println("--------------------------------------------------------------------porcentajeExistencia: " + porcentajeExistencia);
             if (porcentajeExistencia > 30) {
                 setBackground(Colores.SUCCESS);
                 setForeground(Colores.TEXT_SUCCESS);
