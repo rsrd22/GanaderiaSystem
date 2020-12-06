@@ -229,6 +229,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="INICIO"/>
                 <Property name="toolTipText" type="java.lang.String" value="INICIO"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[30, 30]"/>
                 </Property>
@@ -304,6 +307,9 @@
                   <Image iconType="3" name="/img/iconos/importar.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Importar"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -324,6 +330,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="INICIO"/>
                 <Property name="toolTipText" type="java.lang.String" value="INICIO"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[30, 30]"/>
                 </Property>
@@ -355,6 +364,9 @@
                   <Image iconType="3" name="/img/iconos/libro_diario30.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Libro Diario"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLibroDiaarioMouseClicked"/>
@@ -374,9 +386,12 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconos/histograma.png"/>
+                  <Image iconType="3" name="/img/iconos/inventario30.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Inventario"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInventarioMouseClicked"/>

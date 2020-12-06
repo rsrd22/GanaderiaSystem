@@ -267,6 +267,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
         btnInicio.setText("INICIO");
         btnInicio.setToolTipText("INICIO");
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInicio.setMaximumSize(new java.awt.Dimension(30, 30));
         btnInicio.setMinimumSize(new java.awt.Dimension(30, 30));
         btnInicio.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -318,6 +319,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/importar.png"))); // NOI18N
         jLabel1.setToolTipText("Importar");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -330,6 +332,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInicio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/excel30.png"))); // NOI18N
         btnInicio1.setText("INICIO");
         btnInicio1.setToolTipText("INICIO");
+        btnInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInicio1.setMaximumSize(new java.awt.Dimension(30, 30));
         btnInicio1.setMinimumSize(new java.awt.Dimension(30, 30));
         btnInicio1.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -349,6 +352,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnLibroDiaario.setForeground(new java.awt.Color(255, 255, 255));
         btnLibroDiaario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/libro_diario30.png"))); // NOI18N
         btnLibroDiaario.setToolTipText("Libro Diario");
+        btnLibroDiaario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLibroDiaario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLibroDiaarioMouseClicked(evt);
@@ -363,8 +367,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         btnInventario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
-        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/inventario30.png"))); // NOI18N
         btnInventario.setToolTipText("Inventario");
+        btnInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);

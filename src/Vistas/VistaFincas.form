@@ -359,7 +359,7 @@
                   <Color blue="cc" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconos/add.png"/>
+                  <Image iconType="3" name="/img/iconos/agregar30.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Agregar Arrendatario"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -619,7 +619,7 @@
                   <Color blue="cc" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconos/add.png"/>
+                  <Image iconType="3" name="/img/iconos/agregar30.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Agregar Arrendatario"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
