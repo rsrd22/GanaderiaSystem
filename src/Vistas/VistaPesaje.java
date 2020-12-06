@@ -283,11 +283,6 @@ public class VistaPesaje extends javax.swing.JPanel {
         txtFiltro.setCaretColor(new java.awt.Color(59, 123, 50));
         txtFiltro.setFocusCycleRoot(true);
         txtFiltro.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFiltroFocusLost(evt);
-            }
-        });
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtFiltroKeyPressed(evt);
@@ -468,10 +463,6 @@ public class VistaPesaje extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
-
-    private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
-        //MostrarTabla();
-    }//GEN-LAST:event_txtFiltroFocusLost
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {

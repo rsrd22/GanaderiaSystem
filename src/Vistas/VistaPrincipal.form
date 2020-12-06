@@ -352,7 +352,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/iconos/histograma.png"/>
+                  <Image iconType="3" name="/img/iconos/libro_diario30.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Libro Diario"/>
               </Properties>
@@ -563,7 +563,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Propietarios"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -608,7 +608,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Propietario"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -628,7 +628,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Hierros"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -650,7 +650,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Fincas"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -704,7 +704,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Finca"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -724,7 +724,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Bloques"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -744,7 +744,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Lotes"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -764,7 +764,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Fuente Hidrica"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -784,7 +784,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Pluviometro"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -806,7 +806,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Grupos Animales"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -855,7 +855,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Macrogrupos"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -875,7 +875,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Grupos"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -895,7 +895,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Tipo Animales"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -917,7 +917,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Animales"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -978,7 +978,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Agregar Animal"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -998,7 +998,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Muertes"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1018,7 +1018,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Hierro por Animal"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1038,7 +1038,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Ventas"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1058,7 +1058,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Ver Animales"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1080,7 +1080,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Actividades"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1138,7 +1138,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Registro "/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1158,7 +1158,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Estado"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1178,7 +1178,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Cronograma"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1198,7 +1198,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Pesajes"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1218,7 +1218,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Palpaci&#xf3;n"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1238,7 +1238,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Medicamentos"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1260,7 +1260,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Traslados"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1306,7 +1306,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Traslado Animal"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1326,7 +1326,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Traslado Grupo"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1348,7 +1348,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Rotaci&#xf3;n"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1368,7 +1368,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Analisis de Datos"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1388,7 +1388,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                          <Image iconType="3" name="/img/iconos/agregar30.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Usuarios"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1440,7 +1440,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Perfiles"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1460,7 +1460,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Permisos"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -1480,7 +1480,7 @@
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/img/iconos/factura_mini_2.png"/>
+                              <Image iconType="3" name="/img/iconos/agregar30.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Agregar Usuario"/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">

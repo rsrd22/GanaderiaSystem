@@ -470,7 +470,7 @@ public class VistaFincas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
         jPanel1.add(lbltitle4, gridBagConstraints);
 
-        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/lupa_1.png"))); // NOI18N
+        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/buscar30.png"))); // NOI18N
         lblBsqPropietarios.setToolTipText("Consultar Arrendatario");
         lblBsqPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBsqPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -751,7 +751,7 @@ public class VistaFincas extends javax.swing.JPanel {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 570, 350));
 
         btnAgregarLote.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarLote.setToolTipText("Agregar Arrendatario");
         btnAgregarLote.setBorder(null);
         btnAgregarLote.setBorderPainted(false);

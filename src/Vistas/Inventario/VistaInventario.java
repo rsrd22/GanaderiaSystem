@@ -8,6 +8,7 @@ package Vistas.Inventario;
 import Control.ControlGeneral;
 import Control.Inventario.ControlInventario;
 import Modelo.ModeloVentanaGeneral;
+import Tablas.TablaInventarioRender;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
@@ -70,8 +71,9 @@ public class VistaInventario extends javax.swing.JPanel {
             "Salidas",
             "Existencia",
             "Mod",
-            "Agr. Ent.",
-            "List. Ent."
+            "Ent",
+            "Sal",
+            "ListEnt"
         };
         InicializarTblInventario();
         CargarListaFincas();
@@ -91,13 +93,13 @@ public class VistaInventario extends javax.swing.JPanel {
     }
 
     public void InicializarTblInventario() {
-        tbl_inventario.setDefaultRenderer(Object.class, new TablaRender());
+        tbl_inventario.setDefaultRenderer(Object.class, new TablaInventarioRender());
 
         modeloTblInventario = new DefaultTableModel(EncabezadoTblInventario, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -119,19 +121,20 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.getColumnModel().getColumn(5).setPreferredWidth(40);
         tbl_inventario.getColumnModel().getColumn(6).setPreferredWidth(20);
         tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(20);
-        tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(40);
+        tbl_inventario.getColumnModel().getColumn(8).setPreferredWidth(20);
+        tbl_inventario.getColumnModel().getColumn(9).setPreferredWidth(30);
 
-        tbl_inventario.getTableHeader().setReorderingAllowed(false);
+        tbl_inventario.getTableHeader().setReorderingAllowed(true);
 
-        for (int i = 0; i < modeloTblInventario.getColumnCount(); i++) {
-            tbl_inventario.getColumnModel().getColumn(i).setResizable(false);
-            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-            tcr.setFont(new Font("Tahoma", 0, 12));
-            tcr.setHorizontalAlignment(SwingConstants.CENTER);
-            tcr.setForeground(new Color(59, 123, 50));
-            tbl_inventario.getColumnModel().getColumn(i).setCellRenderer(tcr);
-
-        }
+//        for (int i = 0; i < modeloTblInventario.getColumnCount(); i++) {
+//            tbl_inventario.getColumnModel().getColumn(i).setResizable(false);
+//            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+//            tcr.setFont(new Font("Tahoma", 0, 12));
+//            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+//            tcr.setForeground(new Color(59, 123, 50));
+//            tbl_inventario.getColumnModel().getColumn(i).setCellRenderer(tcr);
+//
+//        }
         JTableHeader header = tbl_inventario.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
@@ -182,16 +185,6 @@ public class VistaInventario extends javax.swing.JPanel {
         txtFiltro.setCaretColor(new java.awt.Color(59, 123, 50));
         txtFiltro.setFocusCycleRoot(true);
         txtFiltro.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFiltro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFiltroActionPerformed(evt);
-            }
-        });
-        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFiltroFocusLost(evt);
-            }
-        });
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtFiltroKeyPressed(evt);
@@ -335,25 +328,22 @@ public class VistaInventario extends javax.swing.JPanel {
         add(lblTid, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFiltroActionPerformed
-
-    private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
-
-    }//GEN-LAST:event_txtFiltroFocusLost
-
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
-
+        String texto = txtFiltro.getText();
+        if (texto.length() == 0) {
+            return;
+        }
+        
+        if (evt.getKeyCode() == evt.VK_ENTER) {
+            aplicarFiltro(texto);
+        }
     }//GEN-LAST:event_txtFiltroKeyPressed
 
     private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
         String texto = txtFiltro.getText();
         if (texto.length() == 0) {
-            return;
+            aplicarFiltro(texto);
         }
-
-        aplicarFiltro(texto);
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void tbl_inventarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_inventarioMouseReleased
@@ -362,21 +352,28 @@ public class VistaInventario extends javax.swing.JPanel {
         String dato = tbl_inventario.getValueAt(filaSeleccionada, cola).toString();
 
         if (band == 0) {
-            if (dato.equalsIgnoreCase("modificar")) {
+            if (dato.equalsIgnoreCase("mod")) {
                 band = 1;
                 datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaModificarProducto(), 1, datoaModificar);
                 VistaGeneral vis = new VistaGeneral(objetoVentana);
                 vis.setVisible(true);
             }
-            if (dato.equalsIgnoreCase("entrada")) {
+            if (dato.equalsIgnoreCase("ent")) {
                 band = 1;
                 datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaProducto(), 2, datoaModificar);
                 VistaGeneral vis = new VistaGeneral(objetoVentana);
                 vis.setVisible(true);
             }
-            if (dato.equalsIgnoreCase("Lista Entradas")) {
+            if (dato.equalsIgnoreCase("sal")) {
+                band = 1;
+                datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaSalida(), 1, datoaModificar);
+                VistaGeneral vis = new VistaGeneral(objetoVentana);
+                vis.setVisible(true);
+            }
+            if (dato.equalsIgnoreCase("ListEnt")) {
                 band = 1;
                 datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
                 objetoVentana = new ModeloVentanaGeneral(this, new VistaListaEntradas(), 1, datoaModificar);
@@ -447,14 +444,12 @@ public class VistaInventario extends javax.swing.JPanel {
                     if (split.length > 2) {
                         h.put("alineacion", split[2]);
                     }
-//                    PropiedadesColumnas.put(split[0], h);
                     col += (col.equals("") ? "" : "<::>") + split[0];
                 }
 
                 NameColumnas = col.split("<::>");
 
             } else {
-                //CERRAR VENTAANA
             }
             MostrarTabla();
         }
@@ -477,9 +472,10 @@ public class VistaInventario extends javax.swing.JPanel {
                         ListaInventarioMostrar.get(i).get("ENTRADA"),
                         ListaInventarioMostrar.get(i).get("SALIDA"),
                         ListaInventarioMostrar.get(i).get("EXISTENCIA"),
-                        "Modificar",
-                        "Entrada",
-                        "Lista Entradas"
+                        "Mod",
+                        "Ent",
+                        "Sal",
+                        "ListEnt"
                     }
             );
         }

@@ -162,7 +162,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
         add(jScrollPane1, gridBagConstraints);
 
         btnAgregarHierro.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarHierro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarHierro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarHierro.setToolTipText("Agregar Hierro");
         btnAgregarHierro.setBorder(null);
         btnAgregarHierro.setBorderPainted(false);
@@ -221,7 +221,7 @@ public class VistaAllHierros extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
         add(jSeparator9, gridBagConstraints);
 
-        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/lupa_1.png"))); // NOI18N
+        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/buscar30.png"))); // NOI18N
         lblBsqPropietarios.setToolTipText("Consultar Arrendatario");
         lblBsqPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBsqPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
