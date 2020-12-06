@@ -240,7 +240,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
 
         cbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipo.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "unidad", "peso", "metros" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecciona...", "unidad", "peso", "metro" }));
         cbTipo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Tipo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         cbTipo.setEditor(null);
         gridBagConstraints = new java.awt.GridBagConstraints();

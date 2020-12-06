@@ -105,6 +105,12 @@ public class ControlInventario implements IControl {
     @Override
     public Object ObtenerDatosFiltro(Object o) {
         try {
+            ArrayList<String> datos = (ArrayList<String>) o;
+            String Orden  = (datos.size()>1?datos.get(1):"");
+            if(Orden.equals("")){
+                Orden = "a.fecha ASC";
+            }
+            
             String consulta = "SELECT a.id,\n"
                     + "a.id_finca,\n"
                     + "a.id_producto,\n"
@@ -121,8 +127,8 @@ public class ControlInventario implements IControl {
                     + "inventario a\n"
                     + "LEFT JOIN productos b ON a.id_producto=b.id\n"
                     + "WHERE \n"
-                    + "a.id_finca = '" + o.toString() + "'\n"
-                    + "ORDER BY a.fecha ASC";
+                    + "a.id_finca = '" + datos.get(0) + "'\n"
+                    + "ORDER BY "+Orden;
 
             List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
 

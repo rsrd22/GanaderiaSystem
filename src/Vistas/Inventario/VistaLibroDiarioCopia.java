@@ -775,7 +775,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDetalleKeyPressed
 
     private void txtDetalleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyReleased
-        //<editor-fold defaultstate="collapsed" desc="filtro">
+        //<editor-fold defaultstate="collapsed" desc="filtro">Producto # 1
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnBorrar.setEnabled(true);
             panelFiltro.setVisible(false);

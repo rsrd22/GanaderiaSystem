@@ -16,6 +16,8 @@ import Vistas.VistaGeneral;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,10 @@ public class VistaInventario extends javax.swing.JPanel {
     public int filaSeleccionada;
     public int band;
     public Map<String, String> datoaModificar;
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";
 
     public VistaInventario() {
         initComponents();
@@ -63,6 +69,15 @@ public class VistaInventario extends javax.swing.JPanel {
         NameColumnasFiltro.add("ENTRADA");
         NameColumnasFiltro.add("SALIDA");
         NameColumnasFiltro.add("EXISTENCIA");
+        
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+            NameColumnasOrden = new ArrayList<>();
+            NameColumnasOrden.add("FECHA");
+            NameColumnasOrden.add("PRODUCTO");
+            NameColumnasOrden.add("ENTRADA");
+            NameColumnasOrden.add("SALIDA");
+            NameColumnasOrden.add("EXISTENCIA");
+//</editor-fold>
         EncabezadoTblInventario = new String[]{
             "No",
             "Fecha",
@@ -124,22 +139,24 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.getColumnModel().getColumn(8).setPreferredWidth(20);
         tbl_inventario.getColumnModel().getColumn(9).setPreferredWidth(30);
 
-        tbl_inventario.getTableHeader().setReorderingAllowed(true);
+        tbl_inventario.getTableHeader().setReorderingAllowed(false);
 
-//        for (int i = 0; i < modeloTblInventario.getColumnCount(); i++) {
-//            tbl_inventario.getColumnModel().getColumn(i).setResizable(false);
-//            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-//            tcr.setFont(new Font("Tahoma", 0, 12));
-//            tcr.setHorizontalAlignment(SwingConstants.CENTER);
-//            tcr.setForeground(new Color(59, 123, 50));
-//            tbl_inventario.getColumnModel().getColumn(i).setCellRenderer(tcr);
-//
-//        }
+        for (int i = 0; i < modeloTblInventario.getColumnCount(); i++) {
+            tbl_inventario.getColumnModel().getColumn(i).setResizable(false);
+
+        }
         JTableHeader header = tbl_inventario.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+        tbl_inventario.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {     
+                EventoOrdenTabla(e);
+            }
+        });
     }
 
     /**
@@ -537,7 +554,10 @@ public class VistaInventario extends javax.swing.JPanel {
     private void cargarTablaFiltro() {
 
         if (Integer.parseInt(idFinca) > 0) {
-            listaInventario = (List<Map<String, String>>) controlInventario.ObtenerDatosFiltro(idFinca);
+            ArrayList<String> datos = new ArrayList<>();
+            datos.add(idFinca);
+            datos.add(Orden);
+            listaInventario = (List<Map<String, String>>) controlInventario.ObtenerDatosFiltro(datos);
             if (listaInventario.size() > 0) {
                 String col = "";
                 for (Map.Entry<String, String> entry : listaInventario.get(0).entrySet()) {
@@ -615,6 +635,41 @@ public class VistaInventario extends javax.swing.JPanel {
         }
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
+    }
+
+    public void EventoOrdenTabla(MouseEvent e){
+        if(!tbl_inventario.isEnabled())
+            return;
+        
+        int col = tbl_inventario.columnAtPoint(e.getPoint());
+        if(col > 0){
+            if(col != colOrden){
+                colOrden = col;
+                bandOrden = 1;//Ascendente
+            }else{
+                if(bandOrden > 0 )
+                    bandOrden = -1;//Descendente
+                else if(bandOrden < 0 )
+                    bandOrden = 0;// Por Defecto
+                else
+                    bandOrden = 1;//Ascendente
+                
+            }
+            String dat = "";
+            String orden = NameColumnasOrden.get(col-1);
+            String[] cols = orden.split("<::>");
+            
+            for(int i = 0; i < cols.length; i++){
+                if(bandOrden == 0){
+                    dat = "";
+                }else{
+                    dat += (dat.equals("")? "":", ") + cols[i]+" "+(bandOrden == 1?"ASC":"DESC");
+                }
+            }
+            
+            Orden = dat;
+            AccionCombo(); 
+        }
     }
 
 }
