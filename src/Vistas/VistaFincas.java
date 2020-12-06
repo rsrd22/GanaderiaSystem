@@ -470,7 +470,7 @@ public class VistaFincas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
         jPanel1.add(lbltitle4, gridBagConstraints);
 
-        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/lupa_1.png"))); // NOI18N
+        lblBsqPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/buscar30.png"))); // NOI18N
         lblBsqPropietarios.setToolTipText("Consultar Arrendatario");
         lblBsqPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBsqPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -487,7 +487,7 @@ public class VistaFincas extends javax.swing.JPanel {
         jPanel1.add(lblBsqPropietarios, gridBagConstraints);
 
         btnAgregarPropietario.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarPropietario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarPropietario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarPropietario.setToolTipText("Agregar Arrendatario");
         btnAgregarPropietario.setBorder(null);
         btnAgregarPropietario.setBorderPainted(false);
@@ -673,7 +673,7 @@ public class VistaFincas extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         btnAgregarBloque.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarBloque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarBloque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarBloque.setToolTipText("Agregar Arrendatario");
         btnAgregarBloque.setBorder(null);
         btnAgregarBloque.setBorderPainted(false);
@@ -751,7 +751,7 @@ public class VistaFincas extends javax.swing.JPanel {
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 570, 350));
 
         btnAgregarLote.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarLote.setToolTipText("Agregar Arrendatario");
         btnAgregarLote.setBorder(null);
         btnAgregarLote.setBorderPainted(false);
@@ -828,15 +828,6 @@ public class VistaFincas extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_lblBsqPropietariosMouseClicked
-
-    private void btnAgregarPropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPropietarioActionPerformed
-        //new VistaContratos(this).setVisible(true);
-        btnAgregarPropietario.setEnabled(false);
-        objetoVentana = new ModeloVentanaGeneral(this, new VistaPropietarios(), 2);
-
-        LimpiarPropietarios();
-        new VistaGeneral(objetoVentana).setVisible(true);
-    }//GEN-LAST:event_btnAgregarPropietarioActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Eliminar();
@@ -932,11 +923,20 @@ public class VistaFincas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTipoMonedaActionPerformed
 
+    private void btnAgregarPropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPropietarioActionPerformed
+        //new VistaContratos(this).setVisible(true);
+        btnAgregarPropietario.setEnabled(false);
+        objetoVentana = new ModeloVentanaGeneral(this, new VistaPropietarios(), 2);
+
+        LimpiarPropietarios();
+        new VistaGeneral(objetoVentana).setVisible(true);
+    }//GEN-LAST:event_btnAgregarPropietarioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregarBloque;
     public javax.swing.JButton btnAgregarLote;
-    public javax.swing.JButton btnAgregarPropietario;
+    private javax.swing.JButton btnAgregarPropietario;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnDescartar;
     private javax.swing.JButton btnEliminar;

@@ -602,12 +602,14 @@ public class VistaPropietarios extends javax.swing.JPanel {
         jPanel2.add(jScrollPane1, gridBagConstraints);
 
         btnAgregarHierro.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarHierro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/add.png"))); // NOI18N
+        btnAgregarHierro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarHierro.setToolTipText("Agregar Hierro");
         btnAgregarHierro.setBorder(null);
         btnAgregarHierro.setBorderPainted(false);
         btnAgregarHierro.setContentAreaFilled(false);
         btnAgregarHierro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarHierro.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30_over.png"))); // NOI18N
+        btnAgregarHierro.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30_over.png"))); // NOI18N
         btnAgregarHierro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarHierroActionPerformed(evt);

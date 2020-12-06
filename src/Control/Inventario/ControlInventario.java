@@ -10,6 +10,7 @@ import Control.IControl;
 import Control.Retorno;
 import Modelo.Inventario.ModeloLibro;
 import Modelo.Inventario.ModeloProducto;
+import Modelo.Inventario.ModeloSalida;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -368,7 +369,7 @@ public class ControlInventario implements IControl {
                 + "inventario\n"
                 + "SET\n"
                 + "entrada = " + modeloLibro.getCantidad() + ",\n"
-                + "salidas = 'salidas',\n"
+                + "salidas = salidas,\n"
                 + "stock = " + modeloLibro.getCantidad() + ",\n"
                 + "fecha = NOW(),\n"
                 + "id_usuario = " + modeloLibro.getId_usuario() + "\n"
@@ -406,8 +407,8 @@ public class ControlInventario implements IControl {
                     + "(a.cantidad*a.precioxunidad) PRECIOXCANTIDAD\n"
                     + "FROM entradas a \n"
                     + "WHERE \n"
-                    + "a.id_finca = "+finca+" AND\n"
-                    + "a.id_producto = "+producto+" \n"
+                    + "a.id_finca = " + finca + " AND\n"
+                    + "a.id_producto = " + producto + " \n"
                     + "ORDER BY a.fecha_entrada DESC";
 
             List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
@@ -418,6 +419,68 @@ public class ControlInventario implements IControl {
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public int GuardarSalida(ModeloSalida modelo) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO salidas\n"
+                + "(id,id_finca,id_producto,cantidad,observacion,fecha_salida,fecha,id_usuario)\n"
+                + "VALUES (\n"
+                + "0,\n"
+                + ""+modelo.getId_finca()+",\n"
+                + ""+modelo.getId_producto()+",\n"
+                + ""+modelo.getCantidad()+",\n"
+                + "'"+modelo.getObservacion()+"',\n"
+                + "'"+modelo.getFecha_salida()+"',\n"
+                + ""+modelo.getFecha()+",\n"
+                + ""+modelo.getId_usuario()+"\n"
+                + ");"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
+        }
+    }
+    
+    public int ActualizarSalidaInventario(ModeloLibro modeloLibro) {
+        ArrayList<String> consultas = new ArrayList<>();
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                "UPDATE `inventario`\n"
+                + "SET `salidas` = `salidas` + " + modeloLibro.getCantidad() + ",\n"
+                + "  `stock` = entrada - salidas\n"
+                + "WHERE `id_producto` = " + modeloLibro.getId_producto() + ";"
+        //</editor-fold>
+        );
+
+        try {
+            if (mySQL.EnviarConsultas(consultas)) {
+                return Retorno.EXITO;
+            } else {
+                return Retorno.ERROR;
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.CLASE_NO_ENCONTRADA;
+        } catch (SQLException ex) {
+            System.out.println("" + ex.getMessage());
+            return Retorno.EXCEPCION_SQL;
         }
     }
 

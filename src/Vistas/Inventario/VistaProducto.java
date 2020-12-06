@@ -304,6 +304,7 @@ public class VistaProducto extends javax.swing.JPanel implements IControlesUsuar
         btnCancelar.setToolTipText("Eliminar");
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setFocusPainted(false);
         btnCancelar.setMargin(new java.awt.Insets(2, 10, 2, 8));
         btnCancelar.setMaximumSize(new java.awt.Dimension(64, 64));
         btnCancelar.setMinimumSize(new java.awt.Dimension(64, 64));
