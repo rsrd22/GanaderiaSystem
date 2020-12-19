@@ -9,13 +9,10 @@ import Control.ControlGeneral;
 import Control.Inventario.ControlInventario;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaInventarioRender;
-import Tablas.TablaRender;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.VistaGeneral;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -23,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -88,7 +84,8 @@ public class VistaInventario extends javax.swing.JPanel {
             "Mod",
             "Ent",
             "Sal",
-            "ListEnt"
+            "ListEnt",
+            "ListSal"
         };
         InicializarTblInventario();
         CargarListaFincas();
@@ -114,7 +111,7 @@ public class VistaInventario extends javax.swing.JPanel {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -138,6 +135,7 @@ public class VistaInventario extends javax.swing.JPanel {
         tbl_inventario.getColumnModel().getColumn(7).setPreferredWidth(20);
         tbl_inventario.getColumnModel().getColumn(8).setPreferredWidth(20);
         tbl_inventario.getColumnModel().getColumn(9).setPreferredWidth(30);
+        tbl_inventario.getColumnModel().getColumn(9).setPreferredWidth(20);
 
         tbl_inventario.getTableHeader().setReorderingAllowed(false);
 
@@ -496,6 +494,13 @@ public class VistaInventario extends javax.swing.JPanel {
                 VistaGeneral vis = new VistaGeneral(objetoVentana);
                 vis.setVisible(true);
             }
+            if (dato.equalsIgnoreCase("ListSal")) {
+                band = 1;
+                datoaModificar = ListaInventarioMostrar.get(filaSeleccionada);
+                objetoVentana = new ModeloVentanaGeneral(this, new VistaListaSalidas(), 1, datoaModificar);
+                VistaGeneral vis = new VistaGeneral(objetoVentana);
+                vis.setVisible(true);
+            }
         }
     }//GEN-LAST:event_tbl_inventarioMouseReleased
 
@@ -602,7 +607,8 @@ public class VistaInventario extends javax.swing.JPanel {
                         "Mod",
                         "Ent",
                         "Sal",
-                        "ListEnt"
+                        "ListEnt",
+                        "ListSal"
                     }
             );
         }

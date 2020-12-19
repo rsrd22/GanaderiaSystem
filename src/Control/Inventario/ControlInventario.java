@@ -428,6 +428,29 @@ public class ControlInventario implements IControl {
         }
     }
 
+    public Object ObtenerSalidas(String finca, String producto) {
+        try {
+            String consulta = "SELECT\n"
+                    + "DATE_FORMAT(a.fecha_salida, '%d/%m/%Y') FECHA,\n"
+                    + "a.cantidad CANTIDAD,\n"
+                    + "a.observacion OBSERVACION\n"
+                    + "FROM salidas a \n"
+                    + "WHERE \n"
+                    + "a.id_finca = " + finca + " AND\n"
+                    + "a.id_producto = " + producto + " \n"
+                    + "ORDER BY a.fecha_salida DESC";
+
+            List<Map<String, String>> Libros = new ArrayList<Map<String, String>>();
+
+            Libros = mySQL.ListSQL(consulta);
+
+            return Libros;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     public int GuardarSalida(ModeloSalida modelo) {
         ArrayList<String> consultas = new ArrayList<>();
 
