@@ -1122,6 +1122,10 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                 
             } 
             //String id_Libro = controlLibro.getIdLibroDatoFecha(modeloLibro); && id_Libro.equals("0")
+        }else{
+            String can = (datoaModificar.containsKey("CANTIDAD")?datoaModificar.get("CANTIDAD"):"0");
+            Double canti = Double.parseDouble(cantidad) - Double.parseDouble(can);
+            modeloLibro.setCantidad(""+canti);
         }
         
         int ret;
