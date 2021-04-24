@@ -379,10 +379,10 @@ public class ControlPalpacion implements IControl {
                 + "FROM `animales` a ON a.`id` = '" + id + "'\n";
 
         consulta = "SELECT CASE WHEN a.numero=a.numero_mama THEN\n"
-                + "0 ELSE IFNULL(`NumeroPartos`(a.numero),0) END NUM_PARTOS, "
-                + "IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n"
-                + "IFNULL(`NumeroHijos`(a.`numero`,3), '') CRIA_ADOPTIVA,\n"
-                + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES, IFNULL(DATE_FORMAT(`NumeroHijos`(a.`numero`, 1), '%d/%m/%Y'), '') FECHA_ULT_PARTO\n"
+                + "0 ELSE IFNULL(`NumeroPartos`(a.numero, a.id_tipo_animal),0) END NUM_PARTOS, "
+                + "IFNULL(`NumeroHijos`(a.`numero`,2, a.id_tipo_animal), '') CRIA,\n"
+                + "IFNULL(`NumeroHijos`(a.`numero`,3, a.id_tipo_animal), '') CRIA_ADOPTIVA,\n"
+                + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES, IFNULL(DATE_FORMAT(`NumeroHijos`(a.`numero`, 1, a.id_tipo_animal), '%d/%m/%Y'), '') FECHA_ULT_PARTO\n"
                 + "FROM `animales` a \n"
                 + "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` and palp.estado = 'Activo'\n"
                 + "WHERE a.`id` = '" + id + "'";

@@ -150,10 +150,10 @@ public class ControlInformes {
         try {
             String consultaPalpacion = "SELECT anim.`id` AS ID, anim.`numero` AS NUM_ANIMAL, \n"
                     + "IF(anim.numero_mama_adoptiva IS NULL OR anim.numero_mama_adoptiva = '', anim.numero_mama, anim.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
-                    + "IFNULL(NumeroPartos(anim.numero), '0') NUM_PARTOS, \n"
+                    + "IFNULL(NumeroPartos(anim.numero, anim.id_tipo_animal), '0') NUM_PARTOS, \n"
                     + "hie.`descripcion` AS HIERRO, \n"
                     + "IF(anim.`fecha_novilla`>'1900-01-01', DATE_FORMAT(anim.`fecha_novilla`, '%d/%m/%Y'), '') FEC_NOVILLA,\n"
-                    + "IFNULL(DATE_FORMAT(NumeroHijos(anim.numero, 1), '%d/%m/%Y'), '') 'F.U.P', \n"
+                    + "IFNULL(DATE_FORMAT(NumeroHijos(anim.numero, 1, anim.id_tipo_animal), '%d/%m/%Y'), '') 'F.U.P', \n"
                     + "IFNULL(SUBSTRING(palp.`diagnostico`,1,1), '') ESTADO, IFNULL(DATE_FORMAT(palp.`fecha_palpacion`, '%d/%m/%Y'), '') FEC_PALP,\n"
                     + "REPLACE(GROUP_CONCAT(IFNULL(CONCAT(trat.`dosis`, ' ', med.`descripcion`), '')), ',', ', ') TRATAMIENTO,\n"
                     + " `NumMeses`(palp.`diagnostico`, anim.`numero`, palp.`fecha_palpacion`) NUM_MESES\n"

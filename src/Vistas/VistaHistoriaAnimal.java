@@ -2678,10 +2678,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblLocalizacion.setText("");
         lblFechaNacimiento.setText(ListaDatos.get(0).getFechaNacimiento());
-        lblPesoNecimiento.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
+        lblPesoNecimiento.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaNacimiento());
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
         lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
+        
         lblFecUltParto.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
         lblUltimoPeso.setText(ListaDatos.get(0).getPeso());
 
