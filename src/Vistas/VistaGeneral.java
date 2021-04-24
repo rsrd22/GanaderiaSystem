@@ -10,6 +10,7 @@ import Modelo.ModeloVentanaGeneral;
 import Utilidades.Utilidades;
 import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaListaEntradas;
+import Vistas.Inventario.VistaListaSalidas;
 import Vistas.Inventario.VistaModificarProducto;
 import Vistas.Inventario.VistaProducto;
 import Vistas.Inventario.VistaSalida;
@@ -172,6 +173,11 @@ public class VistaGeneral extends javax.swing.JFrame {
             this.setSize(vista.getWidth(), vista.getHeight());
             pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
             this.lblTitulo.setText("Registro de salida de producto");
+        } else if (panel instanceof VistaListaSalidas) {
+            VistaListaSalidas vista = (VistaListaSalidas) panel;
+            this.setSize(vista.getWidth(), vista.getHeight());
+            pnlContenedor.setSize(vista.getWidth(), vista.getHeight());
+            this.lblTitulo.setText("Listado de salida del producto");
 
         }
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -607,6 +613,10 @@ public class VistaGeneral extends javax.swing.JFrame {
         } else if (modeloVista.getPanelHijo() instanceof VistaSalida) {
 
             VistaSalida vista = new VistaSalida(modeloVista);
+            MostrarPanel(vista);
+        } else if (modeloVista.getPanelHijo() instanceof VistaListaSalidas) {
+
+            VistaListaSalidas vista = new VistaListaSalidas(modeloVista);
             MostrarPanel(vista);
 
         }
