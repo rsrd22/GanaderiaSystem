@@ -1072,6 +1072,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                     id_producto = getDatosProducto("id", detalle);
                     modeloLibro.setId_producto(id_producto);
                     
+                    
                     int ret_entrada = controlInventario.GuardarEntrada(modeloLibro);
                     if(ret_entrada != Retorno.EXITO){
                         JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar la Entrada del producto.");
@@ -1083,6 +1084,9 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar el producto al Inventario.");
                         return;
                     }
+                    String can = (datoaModificar.containsKey("CANTIDAD")?datoaModificar.get("CANTIDAD"):"0");
+                    Double canti = Double.parseDouble(cantidad) - Double.parseDouble(can);
+                    modeloLibro.setCantidad(""+canti);
                 }else{
                     JOptionPane.showMessageDialog(null, "Hubo un error al momento de ingresar el producto.");
                     return;
@@ -1230,7 +1234,7 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         rbDebe.setEnabled(false);
         rbHaber.setEnabled(false);
         chkInventariable.setSelected(!id_producto.equals("0"));
-        chkInventariable.setEnabled(false);
+        chkInventariable.setEnabled(datoaModificar.get("RADIO").equals("DEBE") && id_producto.equals("0"));
         try {
             String fechaSeleccionada = datoaModificar.get("FECHA").toString();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");

@@ -149,7 +149,7 @@ public class ControlLibro implements IControl{
             String consulta = "SELECT DATE_FORMAT(lbro.`fecha_libro`, '%d/%m/%Y') AS FECHA,lbro.`detalle` AS DETALLE, \n" +
                         "lbro.id AS ID,lbro.`id_producto` AS ID_PRODUCTO, lbro.`cantidad` AS CANTIDAD, lbro.`precioxunidad` AS PRECIO, \n" +
                         "lbro.debe AS DEBE, lbro.`haber` AS HABER, lbro.`saldo` AS SALDO, IFNULL(pdct.`tipo_salida`, '0') TIPO,\n" +
-                        "IF(lbro.debe IS NULL, 'HABER', 'DEBE') RADIO\n" +
+                        "IF(lbro.debe = 0, 'HABER', 'DEBE') RADIO\n" +
                         "FROM `libro_diario` lbro\n" +
                         "LEFT JOIN productos pdct ON pdct.`id` = lbro.`id_producto`\n" +
                         "WHERE lbro.`id_finca` = '"+o.toString()+"'\n" +
