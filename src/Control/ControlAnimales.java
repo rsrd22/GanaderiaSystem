@@ -96,7 +96,8 @@ public class ControlAnimales implements IControl {
                         animal.get("hierro_fisico"),
                         animal.get("implante"),
                         animal.get("descornado"),
-                        animal.get("destete")
+                        animal.get("destete"),
+                        animal.get("numero_partos")
                 ));
             }
             return lista;
@@ -167,7 +168,8 @@ public class ControlAnimales implements IControl {
                         animal.get("hierro_fisico"),
                         animal.get("implante"),
                         animal.get("descornado"),
-                        animal.get("destete")
+                        animal.get("destete"),
+                        animal.get("numero_partos")
                 ));
             }
             return lista;
@@ -465,7 +467,8 @@ public class ControlAnimales implements IControl {
                         grupo.get("hierro_fisico"),
                         grupo.get("implante"),
                         grupo.get("descornado"),
-                        grupo.get("destete")
+                        grupo.get("destete"),
+                        grupo.get("numero_partos")
                 ));
             }
             return lista;
@@ -670,15 +673,21 @@ public class ControlAnimales implements IControl {
         }
     }
 
-    public String ObtenerUltimoDescendiente(String numeroMadre, String tipoAnimal) {
+    public Object[] ObtenerUltimoDescendiente(String numeroMadre, String tipoAnimal) {
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> partos = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();
         String consulta = consultas.get("OBTENER_ULTIMO_DESCENDIENTE")
                 .replace("ID_TIPO_ANIMAL", tipoAnimal)
                 .replace("NUMERO_MAMA", numeroMadre);
         animal = controlGral.GetComboBox(consulta);
-
-        return animal.get(0).get("numeroDescendiente");
+        
+        consulta = consultas.get("OBTENER_NRO_PARTOS")
+                .replace("ID_TIPO_ANIMAL", tipoAnimal)
+                .replace("NUMERO_MAMA", numeroMadre);
+        partos = controlGral.GetConsulta(consulta);
+        
+        return new Object[]{animal.get(0).get("numeroDescendiente"), ""+(partos.size()<1), partos} ;
     }
 
     public Object ObtenerDatosAnimales(String IDFINCA, String IDTIPOFINCA, String Orden) {
@@ -1051,7 +1060,8 @@ public class ControlAnimales implements IControl {
                         grupo.get("hierro_fisico"),
                         grupo.get("implante"),
                         grupo.get("descornado"),
-                        grupo.get("destete")
+                        grupo.get("destete"),
+                        grupo.get("numero_partos")
                 ));
             }
             return lista;
