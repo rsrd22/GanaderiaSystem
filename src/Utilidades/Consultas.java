@@ -286,13 +286,20 @@ public class Consultas {
                 + "id_tipo_animal='ID_TIPO_ANIMAL'\n"
                 + "AND numero_mama='NUMERO_MAMA'");
 
+        consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
+                + "FROM animales \n"
+                + "WHERE \n"
+                + "numero='NUMERO_MAMA' AND \n"
+                + "numero_mama<>'NUMERO_MAMA' AND \n"
+                + "id_tipo_animal='ID_TIPO_ANIMAL'");
+
         consultas.put(
-                "OBTENER_HISTORICO_VENTAS", 
+                "OBTENER_HISTORICO_VENTAS",
                 "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
-                + "IF(`peso_canal` = 0, '', ROUND((`peso_canal`/peso*100),1)) AS PORC,\n" 
+                + "IF(`peso_canal` = 0, '', ROUND((`peso_canal`/peso*100),1)) AS PORC,\n"
                 + "IF(`peso_canal` = 0, (`precio_venta` * peso), ROUND((`peso_canal`*`precio_venta`))) AS VVENTA\n"
                 + "FROM animales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"

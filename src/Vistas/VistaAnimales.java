@@ -66,6 +66,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     private ModeloTraslado modeloTraslado;
     private ControlTraslado controlTraslado;
     public int idModulo = 11;
+    private String txtNumeroMadre;
 
     /**
      * Creates new form VistaAnimales
@@ -380,6 +381,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         separador4 = new javax.swing.JSeparator();
         panelFechaNovilla = new javax.swing.JPanel();
         jdFechaDeNovilla = new com.toedter.calendar.JDateChooser();
+        txtNumeroPartos = new javax.swing.JTextField();
         panelContainer3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtNotas = new javax.swing.JTextArea();
@@ -624,8 +626,8 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         panelContainer2.setBackground(new java.awt.Color(255, 255, 255));
         java.awt.GridBagLayout panelContainer2Layout = new java.awt.GridBagLayout();
-        panelContainer2Layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0};
-        panelContainer2Layout.rowHeights = new int[] {0, 11, 0};
+        panelContainer2Layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0};
+        panelContainer2Layout.rowHeights = new int[] {0, 11, 0, 11, 0};
         panelContainer2.setLayout(panelContainer2Layout);
 
         txtPesoKg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -760,12 +762,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         jdFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         jdFechaNacimiento.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 0.125;
         panelContainer2.add(jdFechaNacimiento, gridBagConstraints);
 
         jPanel5.setBackground(new java.awt.Color(59, 123, 50));
@@ -918,13 +920,29 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         jPanel5.add(panelFechaNovilla, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.25;
         panelContainer2.add(jPanel5, gridBagConstraints);
+
+        txtNumeroPartos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumeroPartos.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumeroPartos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumeroPartos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "# Partos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumeroPartos.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumeroPartos.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumeroPartos.setSelectionColor(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.125;
+        panelContainer2.add(txtNumeroPartos, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1786,9 +1804,17 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
         String numeroMadre = txtNumeroMama.getText();
-        String nroDescendiente = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
+        Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
+        String nroDescendiente = datos[0].toString();
         txtNumeroDescendiente.setText(nroDescendiente);
-
+        
+        System.out.println("mostrar->>>>"+datos[2]);
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        animal=(List<Map<String, String>>)datos[2];
+        if(animal.size()>0){
+            txtNumeroMadre = animal.get(0).get("id");
+        }
+        
         boolean mostrar = true;
         lblNumeroDescendiente.setVisible(mostrar);
         txtNumeroDescendiente.setVisible(mostrar);
@@ -1921,6 +1947,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     public javax.swing.JTextField txtNumeroDescendiente;
     public javax.swing.JTextField txtNumeroMama;
     public javax.swing.JTextField txtNumeroMamaAdoptiva;
+    public javax.swing.JTextField txtNumeroPartos;
     private javax.swing.JTextArea txtObservacionMuerte;
     public javax.swing.JTextField txtPeso;
     public javax.swing.JTextField txtPesoCanal;
@@ -2211,7 +2238,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         modelo.setNumero(txtNumero.getText().trim());
-        modelo.setNumeroMama(txtNumeroMama.getText().trim());
+        modelo.setNumeroMama(txtNumeroMadre);
         modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         modelo.setFechaNacimiento(sdf.format(fechaNacimiento.getTime()));
@@ -2230,6 +2257,12 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modelo.setNumeroDescendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
         modelo.setEstadoDescendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
         modelo.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
+        
+        if(txtNumeroPartos.isVisible()){
+            modelo.setNumero_partos(txtNumeroPartos.getText().trim());
+        }else{
+            modelo.setNumero_partos(modelo.getNumeroDescendiente());
+        }
 
         if (chkMuerte.isSelected()) {
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();

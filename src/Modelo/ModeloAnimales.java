@@ -51,6 +51,7 @@ public class ModeloAnimales {
     private String descornada;
     private String fechaNovilla;
     private String destete;
+    private String numero_partos;
 
     public ModeloAnimales() {
     }
@@ -65,7 +66,8 @@ public class ModeloAnimales {
             String idPropietario, String descPropietario, String muerte, String venta,
             String precioVenta, String tipoVenta, String pesoCanal, String descripcionMuerte,
             String fechaNovilla, String pesoDestete, String hierroFisico, String implante,
-            String descornada,String destete) {
+            String descornada,String destete, String numero_partos) {
+        this.numero_partos = numero_partos;
         this.destete = destete;
         this.descripcionMuerte = descripcionMuerte;
         this.precioVenta = precioVenta;
@@ -106,6 +108,14 @@ public class ModeloAnimales {
         this.implante = implante;
         this.descornada = descornada;
         this.fechaNovilla = fechaNovilla;
+    }
+
+    public String getNumero_partos() {
+        return numero_partos;
+    }
+
+    public void setNumero_partos(String numero_partos) {
+        this.numero_partos = numero_partos;
     }
 
     public String getDestete() {
