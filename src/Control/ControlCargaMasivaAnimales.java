@@ -31,8 +31,10 @@ public class ControlCargaMasivaAnimales {
         int banPesoNac = 0;
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
+                //datos.get("NUM_PARTOS");
+
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO animales (id,id_tipo_animal,numero,numero_mama,numero_mama_adoptiva,genero,"
+                "INSERT INTO animales (id,id_tipo_animal,numero, numero_partos,numero_mama,numero_mama_adoptiva,genero,"
                 + "calificacion,notas,fecha_destete,capado,fecha_nacimiento,fecha_venta,"
                 + "fecha_muerte,fecha,id_usuario,peso,grupo,hierro,numero_descendiente,estado_descendiente,"
                 + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
@@ -41,6 +43,7 @@ public class ControlCargaMasivaAnimales {
                 + "0,\n"
                 + "" + datos.get("IDTIPOANIMAL")+ ",\n"
                 + "'" + datos.get("NUM_ANIMAL") + "',\n"
+                + "" + datos.get("NUM_PARTOS") + ",\n"
                 + "'" + datos.get("NUM_MADRE").replace("_", "") + "',\n"
                 + "'',\n"
                 + "'" + datos.get("SEXO") + "',\n"

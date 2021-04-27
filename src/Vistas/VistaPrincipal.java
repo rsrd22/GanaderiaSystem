@@ -23,6 +23,7 @@ import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaLibroDiario;
 import Vistas.Inventario.VistaLibroDiarioCopia;
 import Vistas.Usuarios.*;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -442,6 +443,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarPropietariosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMostrarPropietariosMouseEntered2(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMostrarPropietariosMouseExited(evt);
             }
         });
 
@@ -1139,7 +1146,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarPropietarios1MousePressed
 
     private void btnPropietariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPropietarios1MouseEntered
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnPropietarios1MouseEntered
 
     private void btnPropietariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPropietarios1MousePressed
@@ -1603,6 +1610,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnInventarioMouseClicked
+
+    private void btnMostrarPropietariosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseExited
+        this.setBackground(new Color(59, 123, 50));
+        System.out.println("btnMostrarPropietariosMouseExited");
+        
+    }//GEN-LAST:event_btnMostrarPropietariosMouseExited
+
+    private void btnMostrarPropietariosMouseEntered2(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseEntered2
+        this.setBackground(new Color(84, 140, 116)); 
+        System.out.println("btnPropietariosMouseEntered");
+    }//GEN-LAST:event_btnMostrarPropietariosMouseEntered2
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {

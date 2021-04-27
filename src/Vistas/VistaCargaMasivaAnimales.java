@@ -623,6 +623,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     if (info.get("PESO_NACIMIENTO").equals("_")) {
                         info.put("PESO_NACIMIENTO", "0");
                     }
+                    if (info.get("NUM_PARTOS").equals("_")) {
+                        info.put("NUM_PARTOS", "0");
+                    }
+                    if (info.get("SEXO").equals("macho")) {
+                        info.put("NUM_PARTOS", "NULL");
+                    }
 
                     //</editor-fold>
                     List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '" + idTipoAnimal + "'");
