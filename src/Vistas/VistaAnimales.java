@@ -90,7 +90,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
-        txtNumeroDescendiente.setEnabled(false);
+//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         modelo = new ModeloAnimales();
@@ -127,7 +127,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
-        txtNumeroDescendiente.setEnabled(false);
+//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         objetoVentana = modeloVista;
@@ -702,7 +702,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 4, 0);
         jPanel1.add(txtNumero, gridBagConstraints);
 
         txtNumeroDescendiente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -717,7 +717,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.ipadx = 30;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 10);
         jPanel1.add(txtNumeroDescendiente, gridBagConstraints);
 
         lblNumeroDescendiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N

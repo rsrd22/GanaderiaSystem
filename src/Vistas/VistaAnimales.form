@@ -1244,7 +1244,7 @@
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="15" insetsTop="0" insetsLeft="10" insetsBottom="0" insetsRight="0" anchor="18" weightX="1.0" weightY="0.0"/>
+                          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="15" insetsTop="0" insetsLeft="10" insetsBottom="4" insetsRight="0" anchor="18" weightX="1.0" weightY="0.0"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1272,7 +1272,7 @@
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                          <GridBagConstraints gridX="4" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="30" ipadY="15" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="10" anchor="18" weightX="0.0" weightY="0.0"/>
+                          <GridBagConstraints gridX="4" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="30" ipadY="15" insetsTop="0" insetsLeft="0" insetsBottom="4" insetsRight="10" anchor="18" weightX="0.0" weightY="0.0"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -1454,7 +1454,7 @@
                         <CodeExpression id="64">
                           <ExpressionOrigin>
                             <Value type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                              <Insets value="[0, 10, 0, 0]"/>
+                              <Insets value="[0, 10, 4, 0]"/>
                             </Value>
                           </ExpressionOrigin>
                         </CodeExpression>
@@ -1564,7 +1564,7 @@
                         <CodeExpression id="72">
                           <ExpressionOrigin>
                             <Value type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                              <Insets value="[0, 0, 0, 10]"/>
+                              <Insets value="[0, 0, 4, 10]"/>
                             </Value>
                           </ExpressionOrigin>
                         </CodeExpression>
