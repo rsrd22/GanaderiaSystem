@@ -4,12 +4,10 @@ import BaseDeDatos.Encryptar;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
 import Modelo.Usuario.ModeloPermisoxModulos;
-import Vistas.VistaGeneral;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -43,6 +40,7 @@ public class Utilidades {
     public static Double FACTOR_CONVERSION = 2.20462;
     public static String DATOS_HISTORICO = "Implante|Descornado|Destete|Hierro fisico|Capado";
     public static String DATOS_PALPACION = "vacia|preñada|repaso";
+    public static String FECHA_POR_DEFECTO = "1900-01-01";
 
 //    public static void main(String[] args) {
 //        Pattern p = Pattern.compile(DATOS_HISTORICO);
@@ -363,6 +361,7 @@ public class Utilidades {
 
         return ret;
     }
+
     public static String MascaraMonedaConDecimalesNeg(String dato) {
         String ret = "";
         int con = 0;
@@ -377,7 +376,7 @@ public class Utilidades {
         for (int i = ente.length() - 1; i >= 0; i--) {
 
             if (con % 3 == 0 && con > 0) {
-                ret = ((i==0 && (""+ente.charAt(i)).equals("-"))?"":".") + ret;
+                ret = ((i == 0 && ("" + ente.charAt(i)).equals("-")) ? "" : ".") + ret;
                 con = 0;
             }
             ret = "" + ente.charAt(i) + ret;
@@ -417,6 +416,10 @@ public class Utilidades {
         Pattern p = Pattern.compile(DATOS_PALPACION);
         Matcher m = p.matcher(estado);
         return m.find();
+    }
+
+    public static boolean contieneElementos(List<Map<String, String>> lista) {
+        return lista.size() > 0;
     }
 
     public String convertirNumeroEnLetras(int numero) {
@@ -924,7 +927,7 @@ public class Utilidades {
         String[] ids = new String[lista.getSelectedIndices().length];
         int x = 0;
         if (lista.isSelectedIndex(0)) {
-            ids = new String[lista.getModel().getSize()-1];
+            ids = new String[lista.getModel().getSize() - 1];
             for (int i = 1; i < lista.getModel().getSize(); i++) {
                 ids[x++] = listaDatos.get(i).get("" + key);
             }
