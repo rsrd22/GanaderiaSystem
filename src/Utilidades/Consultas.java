@@ -281,10 +281,17 @@ public class Consultas {
         consultas.put("OBTENER_ULTIMO_DESCENDIENTE", "select \n"
                 + "case when numero_descendiente is null then 1 else max(numero_descendiente)+1 end numeroDescendiente \n"
                 + "from \n"
-                + "animales \n"
+                + "_animales \n"
                 + "where \n"
                 + "id_tipo_animal='ID_TIPO_ANIMAL'\n"
                 + "AND numero_mama='NUMERO_MAMA'");
+
+        consultas.put("_OBTENER_ULTIMO_DESCENDIENTE", "SELECT \n"
+                + "CASE WHEN nro_descendiente IS NULL THEN 1\n"
+                + "ELSE MAX(nro_descendiente)+1 END numeroDescendiente\n"
+                + "FROM _animales_descendientes WHERE id_madre=ID_MAMA");
+
+        consultas.put("OBTENER_ID_MADRE", "SELECT id FROM _animales WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
                 + "FROM animales \n"
