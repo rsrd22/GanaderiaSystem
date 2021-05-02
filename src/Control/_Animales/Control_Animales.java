@@ -6,12 +6,14 @@
 package Control._Animales;
 
 import BaseDeDatos.gestorMySQL;
+import Control.ControlGeneral;
 import Control.ControlTraslado;
 import Control.IControl;
 import Control.Retorno;
 import Modelo.ModeloMuertesVentasHistoricos;
 import Modelo.ModeloTraslado;
 import Modelo._Animales.*;
+import static Utilidades.Consultas.consultas;
 import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.*;
@@ -268,7 +270,7 @@ public class Control_Animales implements IControl {
                 + "             `descornado`,\n"
                 + "             `fecha`,\n"
                 + "             `id_usuario`)\n"
-                + "values (" + animal.getId() + ",\n"
+                + "values (0,\n"
                 + "" + animal.getId_tipo_animal() + ",\n"
                 + "" + animal.getHierro() + ",\n"
                 + "'" + animal.getNumero() + "',\n"
@@ -307,11 +309,11 @@ public class Control_Animales implements IControl {
                 + "             `id_madre`,\n"
                 + "             `nro_descendiente`,\n"
                 + "             `nro_parto`)\n"
-                + "VALUES ("+descendiente.getId()+",\n"
-                + "        "+descendiente.getId_animal()+",\n"
-                + "        "+descendiente.getId_madre()+",\n"
-                + "        "+descendiente.getNro_descendiente()+",\n"
-                + "        "+descendiente.getNro_parto()+");");
+                + "VALUES (" + descendiente.getId() + ",\n"
+                + "        " + descendiente.getId_animal() + ",\n"
+                + "        " + descendiente.getId_madre() + ",\n"
+                + "        " + descendiente.getNro_descendiente() + ",\n"
+                + "        " + descendiente.getNro_parto() + ");");
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelPrimerTrasladoDelAnimal">
@@ -369,7 +371,89 @@ public class Control_Animales implements IControl {
 
     @Override
     public Object ObtenerDatosFiltro(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] parametros = (String[]) o;
+        
+        //<editor-fold defaultstate="collapsed" desc="selectDatosFromQuery">
+        String consulta = "SELECT \n"
+                + "a.*,\n"
+                + "b.descripcion descTipoAnimal, \n"
+                + "c.descripcion descGrupo, \n"
+                + "d.descripcion descHierro,\n"
+                + "b.id_finca idFinca,\n"
+                + "e.descripcion descFinca,\n"
+                + "d.id_propietario idPropietario,\n"
+                + "CONCAT(\n"
+                + "f.identificacion,\n"
+                + "   ' - ',\n"
+                + "   CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)),\n"
+                + "   ' ',\n"
+                + "   TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))\n"
+                + ") descPropietario,\n"
+                + "IFNULL(a.peso_canal,0) pesocanal,\n"
+                + "IFNULL(a.peso_destete,0) pesodestete\n"
+                + "FROM _animales a\n"
+                + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
+                + "LEFT JOIN grupos c ON a.grupo=c.id\n"
+                + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"
+                + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
+                + "LEFT JOIN propietarios f ON d.id_propietario=f.id\n"
+                + "WHERE a.numero='" + parametros[0] + "'  AND a.id_tipo_animal='" + parametros[1] + "'";
+        //</editor-fold>
+        List<Map<String, String>> _animales = new ArrayList<Map<String, String>>();
+        _animales = mySQL.ListSQL(consulta);
+
+        ArrayList<Modelo_AnimalesSalida> lista = new ArrayList<>();
+
+        if (Utilidades.contieneElementos(_animales)) {
+            for (Map<String, String> animal : _animales) {
+                //<editor-fold defaultstate="collapsed" desc="setDatosToList">
+                lista.add(new Modelo_AnimalesSalida(
+                        animal.get("calificacion"),
+                        animal.get("capado"),
+                        animal.get("descornado"),
+                        animal.get("descripcion_muerte"),
+                        animal.get("destete"),
+                        animal.get("es_madre"),
+                        animal.get("fecha"),
+                        animal.get("fecha_destete"),
+                        animal.get("fecha_muerte"),
+                        animal.get("fecha_nacimiento"),
+                        animal.get("fecha_novilla"),
+                        animal.get("fecha_venta"),
+                        animal.get("genero"),
+                        animal.get("grupo"),
+                        animal.get("hierro"),
+                        animal.get("hierro_fisico"),
+                        animal.get("id"),
+                        animal.get("id_tipo_animal"),
+                        animal.get("id_usuario"),
+                        animal.get("implante"),
+                        animal.get("muerte"),
+                        animal.get("notas"),
+                        animal.get("numero"),
+                        animal.get("numero_mama_adoptiva"),
+                        animal.get("peso"),
+                        animal.get("peso_canal"),
+                        animal.get("peso_destete"),
+                        animal.get("precio_venta"),
+                        animal.get("tipo_venta"),
+                        animal.get("venta"),
+                        animal.get("descTipoAnimal"),
+                        animal.get("descGrupo"),
+                        animal.get("descHierro"),
+                        animal.get("idFinca"),
+                        animal.get("descFinca"),
+                        animal.get("idPropietario"),
+                        animal.get("descPropietario"),
+                        animal.get("pesocanal"),
+                        animal.get("pesodestete")
+                ));
+                //</editor-fold>
+            }
+            return lista;
+        } else {
+            return LISTA_VACIA;
+        }
     }
 
     private int EjecutarConsultas(ArrayList<String> consultas) {
@@ -387,4 +471,33 @@ public class Control_Animales implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
+
+    public String ObtenerUltimoDescendiente(String idMadre) {
+        if(idMadre.equalsIgnoreCase("null")){
+            return "";
+        }
+        
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        ControlGeneral controlGral = new ControlGeneral();
+        String consulta = consultas.get("_OBTENER_ULTIMO_DESCENDIENTE").replaceAll("ID_MAMA", idMadre);
+        animal = controlGral.GetComboBox(consulta);
+
+        return animal.get(0).get("numeroDescendiente");
+    }
+
+    public String ObtenerIDMadre(String numeroMadre, String tipoAnimal) {
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        ControlGeneral controlGral = new ControlGeneral();
+        String consulta = consultas.get("OBTENER_ID_MADRE")
+                .replaceAll("ID_TIPO_ANIMAL", tipoAnimal)
+                .replaceAll("NUMERO_MAMA", numeroMadre);
+        animal = controlGral.GetComboBox(consulta);
+
+        if (Utilidades.contieneElementos(animal)) {
+            return animal.get(0).get("id");
+        } else {
+            return "NULL";
+        }
+    }
+
 }

@@ -67,6 +67,8 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     public int idModulo = 11;
     private String txtNumeroMadre;
 
+    private String idMadre = "0";
+
     /**
      * Creates new form VistaAnimales
      */
@@ -757,12 +759,12 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         jdFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         jdFechaNacimiento.setDateFormatString("dd/MM/yyyy");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.weightx = 0.25;
         panelContainer2.add(jdFechaNacimiento, gridBagConstraints);
 
         jPanel5.setBackground(new java.awt.Color(59, 123, 50));
@@ -915,7 +917,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         jPanel5.add(panelFechaNovilla, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -926,7 +928,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         txtNumeroPartos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumeroPartos.setForeground(new java.awt.Color(59, 123, 50));
         txtNumeroPartos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtNumeroPartos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "# Partos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumeroPartos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Parto Nro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         txtNumeroPartos.setCaretColor(new java.awt.Color(59, 123, 50));
         txtNumeroPartos.setMargin(new java.awt.Insets(2, 5, 2, 5));
         txtNumeroPartos.setSelectionColor(new java.awt.Color(59, 123, 50));
@@ -936,7 +938,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.weightx = 0.25;
         panelContainer2.add(txtNumeroPartos, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1581,7 +1583,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
+        _Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -1651,7 +1653,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
                         JOptionPane.showMessageDialog(
                                 null,
                                 "El número " + txtNumero.getText() + " pertenece a otro animal.\n"
-                                + "Verifique en el listado de animales o si este se encuentra vendido o muerto."
+                                + "Verifique en el listado de animales o compruebe que este no se encuentre vendido o muerto."
                         );
                     }
                 }
@@ -1660,12 +1662,13 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     }//GEN-LAST:event_txtNumeroFocusLost
 
     private boolean verificarNroAnimal() {
+        Control_Animales _control = new Control_Animales();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         String[] parametros = new String[]{
             txtNumero.getText().trim(),//numero del animal
             txtCodigoTipoAnimal.getText()//tipo del animal
         };
-        lista = (ArrayList<ModeloAnimales>) control.ObtenerDatosFiltro(parametros);
+        lista = (ArrayList<ModeloAnimales>) _control.ObtenerDatosFiltro(parametros);
         return lista.size() > 0;
     }
 
@@ -1798,21 +1801,25 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     }//GEN-LAST:event_txtPesoCanalKeyReleased
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
-        String numeroMadre = txtNumeroMama.getText();
-        Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
-        String nroDescendiente = datos[0].toString();
-        txtNumeroDescendiente.setText(nroDescendiente);
+        if (txtNumeroMama.getText().trim().length() != 0) {
+            Control_Animales _control = new Control_Animales();
+            String numeroMadre = txtNumeroMama.getText();
+            String tipoAnimal = txtCodigoTipoAnimal.getText();
 
-        System.out.println("mostrar->>>>" + datos[2]);
-        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
-        animal = (List<Map<String, String>>) datos[2];
-        if (animal.size() > 0) {
-            txtNumeroMadre = animal.get(0).get("id");
+            idMadre = _control.ObtenerIDMadre(numeroMadre, tipoAnimal);
+
+            String nroDescendiente = _control.ObtenerUltimoDescendiente(idMadre);
+            if(nroDescendiente.isEmpty()){
+                JOptionPane.showMessageDialog(this, "La madre número "+numeroMadre+" no existe.");
+                txtNumeroMama.setText("");
+                return ;
+            }
+            txtNumeroDescendiente.setText(nroDescendiente);
+
+            boolean mostrar = true;
+            lblNumeroDescendiente.setVisible(mostrar);
+            txtNumeroDescendiente.setVisible(mostrar);
         }
-
-        boolean mostrar = true;
-        lblNumeroDescendiente.setVisible(mostrar);
-        txtNumeroDescendiente.setVisible(mostrar);
     }//GEN-LAST:event_txtNumeroMamaFocusLost
 
     private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
@@ -2426,7 +2433,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
             }
         }
 //</editor-fold>
-        
+
         Control_Animales _control = new Control_Animales();
         Modelo_AnimalesEntrada modelo = new Modelo_AnimalesEntrada();
         Modelo_Animales ma = new Modelo_Animales();
@@ -2434,25 +2441,8 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         ModeloTraslado mt = new ModeloTraslado();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String capado = chkCapado.isSelected() ? "Si" : "No";
         Calendar fechaDestete = Calendar.getInstance();
         int indiceGrupo = cbGrupos.getSelectedIndex();
-        
-        //<editor-fold defaultstate="collapsed" desc="setDatosModeloTraslado">
-        mt.setId("0");
-        mt.setIdFinca(txtCodigoFinca.getText());
-        mt.setFecha("NOW()");
-        mt.setEstado("Activo");
-        mt.setFechaTraslado("NOW()");
-        mt.setIdGrupo(grupos.get(indiceGrupo).get("id"));
-        mt.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        mt.setMotivo("CREACIÓN DEL ANIMAL");
-        mt.setIdAnimal("(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
-                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
-                + "and fecha=NOW()\n"
-                + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
-                + ")");
-//</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="setModeloAnimales">
         String idAnimal = (editar == Estado.ACTUALIZAR)
@@ -2470,12 +2460,13 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         ma.setHierro_fisico(chkHierro.isSelected() ? "1" : "0");
         ma.setMuerte(chkMuerte.isSelected() ? "1" : "0");
         ma.setVenta(chkVenta.isSelected() ? "1" : "0");
+        ma.setCapado(chkCapado.isSelected() ? "Si" : "No");
         ma.setFecha("NOW()");
+        ma.setEs_madre(editar == Estado.ACTUALIZAR ? (txtNumeroMama.getText().trim().length()==0 ? "No" : "Si") : "No");
         ma.setHierro(hierros.get(cbHierros.getSelectedIndex()).get("id"));
         ma.setGrupo(grupos.get(indiceGrupo).get("id"));
         ma.setId_tipo_animal(tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id"));
         ma.setCalificacion("" + slCalificacion.getValue());
-        ma.setCapado(capado);
         ma.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
         ma.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         ma.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
@@ -2495,7 +2486,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
             ma.setFecha_novilla(Utilidades.FECHA_POR_DEFECTO);
         }
 
-
         if (chkMuerte.isSelected()) {
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();
             ma.setFecha_muerte(sdf.format(fechaMuerte.getTime()));
@@ -2504,43 +2494,67 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         }
         ma.setDescripcion_muerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
 
-//        if (chkVenta.isSelected()) {
-//            Calendar fechaVenta = jdFechaVenta.getCalendar();
-//            ma.setFechaVenta(sdf.format(fechaVenta.getTime()));
-//            ma.setPrecioVenta(txtPrecioVenta.getText().replace(".", "").replace(",", "."));
-//            String pesoCanal = txtPesoCanal.getText();
-//            pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal;
-//            ma.setPesoCanal(pesoCanal.replace(".", "").replace(",", "."));
-//            ma.setTipoVenta("'" + cbTipoVenta.getSelectedItem().toString().toLowerCase() + "'");
-//        } else {
-//            ma.setPrecioVenta("NULL");
-//            ma.setPesoCanal("NULL");
-//            ma.setTipoVenta("NULL");
-//            ma.setFechaVenta(Utilidades.FECHA_POR_DEFECTO);
-//        }
-//        //</editor-fold>
-//
-//        if (chkAdoptivo.isSelected()) {
-//            ma.setNumeroMamaAdoptiva("'" + txtNumeroMamaAdoptiva.getText() + "'");
-//        } else {
-//            ma.setNumeroMamaAdoptiva("NULL");
-//        }
-//
-//        if (chkDestete.isSelected()) {
-//            fechaDestete = jdFechaDestete.getCalendar();
-//            ma.setFechaDestete(sdf.format(fechaDestete.getTime()));
-//            ma.setPesoDestete(txtPesoDestete.getText().replace(".", "").replace(",", "."));
-//        } else {
-//            ma.setFechaDestete(Utilidades.FECHA_POR_DEFECTO);
-//            ma.setPesoDestete("0");
-//        }
+        if (chkVenta.isSelected()) {
+            Calendar fechaVenta = jdFechaVenta.getCalendar();
+            ma.setFecha_venta(sdf.format(fechaVenta.getTime()));
+            ma.setPrecio_venta(txtPrecioVenta.getText().replace(".", "").replace(",", "."));
+            String pesoCanal = txtPesoCanal.getText();
+            pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal;
+            ma.setPeso_canal(pesoCanal.replace(".", "").replace(",", "."));
+            ma.setTipo_venta("'" + cbTipoVenta.getSelectedItem().toString().toLowerCase() + "'");
+        } else {
+            ma.setPrecio_venta("NULL");
+            ma.setPeso_canal("NULL");
+            ma.setTipo_venta("NULL");
+            ma.setFecha_venta(Utilidades.FECHA_POR_DEFECTO);
+        }
 
+        if (chkAdoptivo.isSelected()) {
+            ma.setNumero_mama_adoptiva("'" + txtNumeroMamaAdoptiva.getText() + "'");
+        } else {
+            ma.setNumero_mama_adoptiva("NULL");
+        }
+
+        if (chkDestete.isSelected()) {
+            fechaDestete = jdFechaDestete.getCalendar();
+            ma.setFecha_destete(sdf.format(fechaDestete.getTime()));
+            ma.setPeso_destete(txtPesoDestete.getText().replace(".", "").replace(",", "."));
+        } else {
+            ma.setFecha_destete(Utilidades.FECHA_POR_DEFECTO);
+            ma.setPeso_destete("0");
+        }
+        //</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="setDatosModeloTraslado">
+        mt.setId("0");
+        mt.setIdFinca(txtCodigoFinca.getText());
+        mt.setFecha("NOW()");
+        mt.setEstado("Activo");
+        mt.setFechaTraslado("NOW()");
+        mt.setIdGrupo(grupos.get(indiceGrupo).get("id"));
+        mt.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        mt.setMotivo("CREACIÓN DEL ANIMAL");
+        mt.setIdAnimal(ma.getId());
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="setDatosModeloAnimalesDescendientes">
+        mad.setId("0");
+        mad.setId_animal(ma.getId());
+        mad.setId_madre(idMadre);
+        mad.setNro_descendiente(txtNumeroDescendiente.getText().trim());
+        mad.setNro_parto(txtNumeroPartos.getText().trim());
+//</editor-fold>
+
+        modelo.setAnimal(ma);
+        modelo.setDescendiente(mad);
+        modelo.setModeloTraslado(mt);
+        
         int retorno = Retorno.DEFECTO;
 
         if (editar == Estado.GUARDAR) {
-            retorno = control.Guardar(modelo);
+            retorno = _control.Guardar(modelo);
         } else {
-            retorno = control.Actualizar(modelo);
+            retorno = _control.Actualizar(modelo);
         }
 
         String mensaje = "";
