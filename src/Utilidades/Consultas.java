@@ -400,6 +400,23 @@ public class Consultas {
                 "GET_MAXIMO_ID_PALPACION",
                 "SELECT IFNULL(MAX(id)+1,0) AS IDPALPACION FROM palpacion"
         );
+        
+        consultas.put("BQD_ANML_DESC", 
+                "SELECT animal.id AS ID_ANIMAL, animal.numero AS NUMERO_ANIMAL,\n" +
+                "DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, \n" +
+                "grup.descripcion AS GRUPO,  IFNULL(CONCAT('Bloque ',blo.numero), '') AS BLOQUE, IFNULL(CONCAT('Lote ',lot.numero), '') AS LOTE \n" +
+                "FROM `_animales` animal\n" +
+                "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n" +
+                "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n" +
+                "LEFT JOIN traslado_animalxgrupo traslado ON traslado.id_animal = animal.id\n" +
+                "LEFT JOIN grupos grup ON grup.id = traslado.id_grupo\n" +
+                "LEFT JOIN rotacion_lote rot ON rot.id_grupo = traslado.id_grupo AND rot.estado = 'Activo'\n" +
+                "LEFT JOIN lotes lot ON lot.id = rot.id_lote\n" +
+                "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n" +
+                "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n" +
+                "WHERE traslado.id_finca = 'IDFINCA' AND tpoani.id = 'IDTIPO' AND traslado.estado = 'Activo' AND muerte = '0' AND venta = '0' \n" +
+                "/* ADD */\n" +
+                "ORDER BY CONVERT(animal.numero,INT) ASC");
     }
 
 }

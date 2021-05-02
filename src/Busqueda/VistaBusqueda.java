@@ -11,9 +11,10 @@ import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.*;
-import Vistas.Usuarios.VistaPermisos;
 import Vistas.Usuarios.VistaPerfiles;
+import Vistas.Usuarios.VistaPermisos;
 import Vistas.Usuarios.VistaUsuarios;
+import Vistas._Animales.VistaDescendientesAnimal;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -81,6 +82,9 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private void LlenarListaDatos() {
 
         SQL = consultas.get(objeto.getKeyconsulta());
+        if(!objeto.getParam().equals("")){
+            AplicarParametrosConsulta();
+        }
         System.out.println("sql--->" + SQL);
         list_consul = gsql.ListSQL(SQL);
 
@@ -573,6 +577,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaPerfiles) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaUsuarios) {
                     ((VistaUsuarios) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaDescendientesAnimal) {
+                    ((VistaDescendientesAnimal) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 }
 
                 this.dispose();
@@ -675,6 +681,9 @@ public class VistaBusqueda extends javax.swing.JFrame {
             ((VistaPerfiles) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaUsuarios) {
             ((VistaUsuarios) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaDescendientesAnimal) {
+            ((VistaDescendientesAnimal) objeto.getPanelsolicitante()).banBQDAnimalesMadre = 0;
+            ((VistaDescendientesAnimal) objeto.getPanelsolicitante()).banBQDAnimales = 0;
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -946,6 +955,17 @@ public class VistaBusqueda extends javax.swing.JFrame {
         }
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
+    }
+
+    private void AplicarParametrosConsulta() {
+        String param = objeto.getParam();
+        String[] parm = param.split("<::>");
+        
+        for(String pa : parm){
+            String[] p = pa.split(":");
+            SQL = SQL.replace(p[0], p[1]);
+        }
+        
     }
 
 }

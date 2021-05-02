@@ -23,6 +23,8 @@ import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaLibroDiario;
 import Vistas.Inventario.VistaLibroDiarioCopia;
 import Vistas.Usuarios.*;
+import Vistas._Animales.VistaDescendientesAnimal;
+import Vistas._Animales.Vista_VerAnimales;
 import Vistas._Animales.Vista_Animales;
 import java.awt.Color;
 import java.awt.Component;
@@ -125,7 +127,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorAnimales = new javax.swing.JPanel();
         btnAnimales = new javax.swing.JLabel();
         btnMuerteAnimal = new javax.swing.JLabel();
-        btnAnimalxHierro1 = new javax.swing.JLabel();
+        btnDescendientesAnimal = new javax.swing.JLabel();
         btnVentasAnimal = new javax.swing.JLabel();
         btnVerAnimales = new javax.swing.JLabel();
         btnMostrarActividades = new javax.swing.JLabel();
@@ -687,14 +689,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnAnimalxHierro1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnAnimalxHierro1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnimalxHierro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
-        btnAnimalxHierro1.setText("Hierro por Animal");
-        btnAnimalxHierro1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAnimalxHierro1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDescendientesAnimal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnDescendientesAnimal.setForeground(new java.awt.Color(255, 255, 255));
+        btnDescendientesAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
+        btnDescendientesAnimal.setText("Descendientes");
+        btnDescendientesAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescendientesAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnAnimalxHierro1MousePressed(evt);
+                btnDescendientesAnimalMousePressed(evt);
             }
         });
 
@@ -728,7 +730,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGroup(pnlContenedorAnimalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVerAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAnimalxHierro1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDescendientesAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVentasAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMuerteAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
@@ -740,7 +742,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btnVerAnimales)
                 .addGap(0, 0, 0)
-                .addComponent(btnAnimalxHierro1)
+                .addComponent(btnDescendientesAnimal)
                 .addGap(0, 0, 0)
                 .addComponent(btnVentasAnimal)
                 .addGap(0, 0, 0)
@@ -1350,9 +1352,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_importarExportarMouseClicked
 
-    private void btnAnimalxHierro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalxHierro1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAnimalxHierro1MousePressed
+    private void btnDescendientesAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDescendientesAnimalMousePressed
+        if (evt.getClickCount() == 1) {
+            EstablecerTituloVentana("Descendientes");
+            VistaDescendientesAnimal vista = new VistaDescendientesAnimal();
+            MostrarPanel(vista);
+        }
+    }//GEN-LAST:event_btnDescendientesAnimalMousePressed
 
     private void btnVentasAnimalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentasAnimalMousePressed
         if (evt.getClickCount() == 1) {
@@ -1365,7 +1371,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnVerAnimalesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerAnimalesRealMousePressed
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Ver Animales");
-            VistaVerAnimales vista = new VistaVerAnimales();
+            Vista_VerAnimales vista = new Vista_VerAnimales();
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnVerAnimalesRealMousePressed
@@ -1674,10 +1680,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAgregarUsuario;
     private javax.swing.JLabel btnAnimales;
-    private javax.swing.JLabel btnAnimalxHierro1;
     private javax.swing.JLabel btnBloques;
     private javax.swing.JLabel btnCerrar;
     private javax.swing.JLabel btnCronograma;
+    private javax.swing.JLabel btnDescendientesAnimal;
     private javax.swing.JLabel btnEstadoActividades;
     private javax.swing.JLabel btnFincas;
     private javax.swing.JLabel btnFuenteHidrica;
@@ -1774,7 +1780,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTipoAnimal.setVisible(false);
         btnAnimales.setVisible(false);
         btnVerAnimales.setVisible(false);
-        btnAnimalxHierro1.setVisible(false);
+        btnDescendientesAnimal.setVisible(false);
         btnVentasAnimal.setVisible(false);
         btnMuerteAnimal.setVisible(false);
         btnRegistroActividades.setVisible(false);
@@ -1908,7 +1914,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     pnlAnmls = 1;
                 }
             }else if(mod.getModulo().equals("Hierro por Animal") && mod.getV().equals("1")){
-                btnAnimalxHierro1.setVisible(true);
+                btnDescendientesAnimal.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);

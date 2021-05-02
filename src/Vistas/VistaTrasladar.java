@@ -694,6 +694,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
     }
 
     //</editor-fold>    
+    
     private void getAnimalesSistema() {
         ListaAnimales = controlTraslado.getAnimalesxFinca(idFinca, idTipoAnimalFinca);
     }

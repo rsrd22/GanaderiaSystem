@@ -16,11 +16,19 @@ public class ModeloGestorBusqueda {
     private Object panelsolicitante;
     private String keyconsulta;
     private int opcion;
+    private String param;
 
     public ModeloGestorBusqueda(JPanel panelsolicitante, String keyconsulta, int opcion) {
         this.panelsolicitante = panelsolicitante;
         this.keyconsulta = keyconsulta;
         this.opcion = opcion;
+        this.param = "";
+    }
+    public ModeloGestorBusqueda(JPanel panelsolicitante, String keyconsulta, int opcion, String param) {
+        this.panelsolicitante = panelsolicitante;
+        this.keyconsulta = keyconsulta;
+        this.opcion = opcion;
+        this.param = param;
     }
 
     public Object getPanelsolicitante() {
@@ -46,4 +54,13 @@ public class ModeloGestorBusqueda {
     public void setOpcion(int opc) {
         this.opcion = opc;
     }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
+    }
+    
 }
