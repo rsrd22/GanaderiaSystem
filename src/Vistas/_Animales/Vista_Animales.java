@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
@@ -67,7 +68,8 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     public int idModulo = 11;
     private String txtNumeroMadre;
 
-    private String idMadre = "0";
+    private String idMadre = "NULL";
+    private Map<String, String> datosMadre;
 
     /**
      * Creates new form VistaAnimales
@@ -76,6 +78,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
+        datosMadre = new HashMap<String, String>();
         txtValorVenta.setEnabled(false);
         txtPorcentajeCanal.setEnabled(false);
         cbFinca.setBackground(Color.YELLOW);
@@ -112,6 +115,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     public Vista_Animales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
+        datosMadre = new HashMap<String, String>();
         cbFinca.setBackground(Color.cyan);
 
         panelFechaNovilla.setVisible(false);
@@ -1806,13 +1810,14 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
             String numeroMadre = txtNumeroMama.getText();
             String tipoAnimal = txtCodigoTipoAnimal.getText();
 
-            idMadre = _control.ObtenerIDMadre(numeroMadre, tipoAnimal);
+            datosMadre = _control.ObtenerIDMadre(numeroMadre, tipoAnimal);
+            idMadre = datosMadre.get("ID");
 
             String nroDescendiente = _control.ObtenerUltimoDescendiente(idMadre);
-            if(nroDescendiente.isEmpty()){
-                JOptionPane.showMessageDialog(this, "La madre número "+numeroMadre+" no existe.");
+            if (nroDescendiente.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "La madre número " + numeroMadre + " no existe.");
                 txtNumeroMama.setText("");
-                return ;
+                return;
             }
             txtNumeroDescendiente.setText(nroDescendiente);
 
@@ -2447,11 +2452,10 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         //<editor-fold defaultstate="collapsed" desc="setModeloAnimales">
         String idAnimal = (editar == Estado.ACTUALIZAR)
                 ? txtCodigoAnimal.getText()
-                : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
-                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
-                + "and fecha=NOW()\n"
-                + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
-                + ")";
+                : "(SELECT (AUTO_INCREMENT-1)\n"
+                + "FROM information_schema.tables\n"
+                + "WHERE table_name = '_animales'\n"
+                + "AND table_schema = 'ganadero')";
 
         ma.setId(idAnimal);
         ma.setDescornado(chkDescornada.isSelected() ? "1" : "0");
@@ -2462,7 +2466,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         ma.setVenta(chkVenta.isSelected() ? "1" : "0");
         ma.setCapado(chkCapado.isSelected() ? "Si" : "No");
         ma.setFecha("NOW()");
-        ma.setEs_madre(editar == Estado.ACTUALIZAR ? (txtNumeroMama.getText().trim().length()==0 ? "No" : "Si") : "No");
+        ma.setEs_madre("NULL");
         ma.setHierro(hierros.get(cbHierros.getSelectedIndex()).get("id"));
         ma.setGrupo(grupos.get(indiceGrupo).get("id"));
         ma.setId_tipo_animal(tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id"));
@@ -2541,14 +2545,25 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         mad.setId("0");
         mad.setId_animal(ma.getId());
         mad.setId_madre(idMadre);
-        mad.setNro_descendiente(txtNumeroDescendiente.getText().trim());
-        mad.setNro_parto(txtNumeroPartos.getText().trim());
+        mad.setFecha("NOW()");
+        mad.setNro_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "NULL" : txtNumeroDescendiente.getText().trim());
+        mad.setNro_parto(txtNumeroPartos.getText().trim().length() == 0 ? "NULL" : txtNumeroPartos.getText().trim());
+//</editor-fold>
+
+        //<editor-fold defaultstate="collapsed" desc="actualizarRegistroDeLaMadre">
+        String consulta = "";
+        if (datosMadre.size() > 0) {
+            if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
+                consulta = "UPDATE _animales SET es_madre='Si' WHERE id=" + datosMadre.get("ID");
+            }
+        }
 //</editor-fold>
 
         modelo.setAnimal(ma);
         modelo.setDescendiente(mad);
         modelo.setModeloTraslado(mt);
-        
+        modelo.setActualizarRegistroMadre(consulta);
+
         int retorno = Retorno.DEFECTO;
 
         if (editar == Estado.GUARDAR) {
@@ -2565,6 +2580,11 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
                 Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
                 editar = Estado.GUARDAR;
                 jdFechaDestete.setCalendar(fechaDestete);
+
+                datosMadre = new HashMap<String, String>();
+                idMadre = "NULL";
+                lblNumeroDescendiente.setVisible(false);
+                txtNumeroDescendiente.setVisible(false);
                 break;
             case Retorno.ERROR:
                 mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";

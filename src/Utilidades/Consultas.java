@@ -291,7 +291,8 @@ public class Consultas {
                 + "ELSE MAX(nro_descendiente)+1 END numeroDescendiente\n"
                 + "FROM _animales_descendientes WHERE id_madre=ID_MAMA");
 
-        consultas.put("OBTENER_ID_MADRE", "SELECT id FROM _animales WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
+        consultas.put("OBTENER_ID_MADRE", "SELECT IF(b.`id` IS NULL , a.`id`, b.`id_madre`) ID, IFNULL(a.es_madre,'FALSE') ES_MADRE FROM _animales a \n"
+                + "LEFT JOIN _animales_descendientes b ON a.id=b.id_madre WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
                 + "FROM animales \n"

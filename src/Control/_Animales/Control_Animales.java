@@ -274,46 +274,50 @@ public class Control_Animales implements IControl {
                 + "" + animal.getId_tipo_animal() + ",\n"
                 + "" + animal.getHierro() + ",\n"
                 + "'" + animal.getNumero() + "',\n"
-                + "'" + animal.getEs_madre() + "',\n"
-                + "'" + animal.getNumero_mama_adoptiva() + "',\n"
+                + "" + Utilidades.CampoNULL(animal.getEs_madre()) + ",\n"
+                + "" + Utilidades.CampoNULL(animal.getNumero_mama_adoptiva()) + ",\n"
                 + "" + animal.getPeso() + ",\n"
                 + "'" + animal.getGenero() + "',\n"
                 + "" + animal.getGrupo() + ",\n"
                 + "'" + animal.getCalificacion() + "',\n"
                 + "'" + animal.getNotas() + "',\n"
-                + "'" + animal.getFecha_destete() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_destete()) + ",\n"
                 + "'" + animal.getCapado() + "',\n"
-                + "'" + animal.getFecha_nacimiento() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_nacimiento()) + ",\n"
                 + "'" + animal.getMuerte() + "',\n"
                 + "" + animal.getPeso_destete() + ",\n"
                 + "'" + animal.getDestete() + "',\n"
-                + "'" + animal.getFecha_muerte() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_muerte()) + ",\n"
                 + "'" + animal.getDescripcion_muerte() + "',\n"
                 + "'" + animal.getVenta() + "',\n"
-                + "'" + animal.getFecha_venta() + "',\n"
-                + "'" + animal.getTipo_venta() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_venta()) + ",\n"
+                + "" + Utilidades.CampoNULL(animal.getTipo_venta()) + ",\n"
                 + "" + animal.getPrecio_venta() + ",\n"
                 + "" + animal.getPeso_canal() + ",\n"
-                + "'" + animal.getFecha_novilla() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_novilla()) + ",\n"
                 + "'" + animal.getHierro_fisico() + "',\n"
                 + "'" + animal.getImplante() + "',\n"
                 + "'" + animal.getDescornado() + "',\n"
-                + "'" + animal.getFecha() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
                 + "" + animal.getId_usuario() + ");");
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDeLaGenealogiaDelAnimal">
-        consultas.add("INSERT INTO `_animales_descendientes`\n"
-                + "            (`id`,\n"
-                + "             `id_animal`,\n"
-                + "             `id_madre`,\n"
-                + "             `nro_descendiente`,\n"
-                + "             `nro_parto`)\n"
-                + "VALUES (" + descendiente.getId() + ",\n"
-                + "        " + descendiente.getId_animal() + ",\n"
-                + "        " + descendiente.getId_madre() + ",\n"
-                + "        " + descendiente.getNro_descendiente() + ",\n"
-                + "        " + descendiente.getNro_parto() + ");");
+        if (!descendiente.getId_madre().equalsIgnoreCase("null")) {
+            consultas.add("INSERT INTO `_animales_descendientes`\n"
+                    + "            (`id`,\n"
+                    + "             `id_animal`,\n"
+                    + "             `id_madre`,\n"
+                    + "             `nro_descendiente`,\n"
+                    + "             `nro_parto`,\n"
+                    + "             `fecha`)\n"
+                    + "VALUES (" + descendiente.getId() + ",\n"
+                    + "        " + descendiente.getId_animal() + ",\n"
+                    + "        " + descendiente.getId_madre() + ",\n"
+                    + "        " + descendiente.getNro_descendiente() + ",\n"
+                    + "        " + descendiente.getNro_parto() + ",\n"
+                    + "        " + Utilidades.ValorNULL(descendiente.getFecha())+ ");");
+        }
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelPrimerTrasladoDelAnimal">
@@ -330,7 +334,7 @@ public class Control_Animales implements IControl {
                 + "" + Utilidades.ValorNULL(traslado.getFechaTraslado()) + ",\n"
                 + "'" + traslado.getMotivo() + "',\n"
                 + "'" + traslado.getEstado() + "',\n"
-                + "" + traslado.getFecha() + ",\n"
+                + "" + Utilidades.ValorNULL(traslado.getFecha()) + ",\n"
                 + "" + traslado.getIdUsuario() + ")"
         //</editor-fold>
         );
@@ -342,7 +346,7 @@ public class Control_Animales implements IControl {
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "0,\n"
                 + "" + animal.getId() + ",\n"
-                + "'" + animal.getFecha_nacimiento() + "',\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha_nacimiento()) + ",\n"
                 + "" + animal.getPeso() + ",\n"
                 + "0,\n"
                 + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
@@ -350,10 +354,16 @@ public class Control_Animales implements IControl {
                 + "'0',\n"
                 + "'0',\n"
                 + "'0',\n"
-                + "" + animal.getFecha() + ",\n"
+                + "" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
                 + "" + animal.getId_usuario() + "\n"
                 + ")" //</editor-fold>
         );
+//</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
+        if(!_objeto.getActualizarRegistroMadre().isEmpty()){
+            consultas.add(_objeto.getActualizarRegistroMadre());
+        }
 //</editor-fold>
 
         return EjecutarConsultas(consultas);
@@ -372,7 +382,7 @@ public class Control_Animales implements IControl {
     @Override
     public Object ObtenerDatosFiltro(Object o) {
         String[] parametros = (String[]) o;
-        
+
         //<editor-fold defaultstate="collapsed" desc="selectDatosFromQuery">
         String consulta = "SELECT \n"
                 + "a.*,\n"
@@ -473,10 +483,10 @@ public class Control_Animales implements IControl {
     }
 
     public String ObtenerUltimoDescendiente(String idMadre) {
-        if(idMadre.equalsIgnoreCase("null")){
+        if (idMadre.equalsIgnoreCase("null")) {
             return "";
         }
-        
+
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();
         String consulta = consultas.get("_OBTENER_ULTIMO_DESCENDIENTE").replaceAll("ID_MAMA", idMadre);
@@ -485,7 +495,7 @@ public class Control_Animales implements IControl {
         return animal.get(0).get("numeroDescendiente");
     }
 
-    public String ObtenerIDMadre(String numeroMadre, String tipoAnimal) {
+    public Map<String, String> ObtenerIDMadre(String numeroMadre, String tipoAnimal) {
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
         ControlGeneral controlGral = new ControlGeneral();
         String consulta = consultas.get("OBTENER_ID_MADRE")
@@ -494,9 +504,9 @@ public class Control_Animales implements IControl {
         animal = controlGral.GetComboBox(consulta);
 
         if (Utilidades.contieneElementos(animal)) {
-            return animal.get(0).get("id");
+            return animal.get(0);
         } else {
-            return "NULL";
+            return null;
         }
     }
 

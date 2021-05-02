@@ -16,6 +16,7 @@ public class Modelo_AnimalesEntrada {
     private Modelo_Animales animal;
     private Modelo_AnimalesDescendientes descendiente;
     private ModeloTraslado traslado;
+    private String actualizarRegistroMadre;
 
     public Modelo_AnimalesEntrada() {
     }
@@ -24,6 +25,14 @@ public class Modelo_AnimalesEntrada {
         this.animal = animal;
         this.descendiente = descendiente;
         this.traslado = traslado;
+    }
+
+    public String getActualizarRegistroMadre() {
+        return actualizarRegistroMadre;
+    }
+
+    public void setActualizarRegistroMadre(String actualizarRegistroMadre) {
+        this.actualizarRegistroMadre = actualizarRegistroMadre;
     }
 
     public Modelo_Animales getAnimal() {
