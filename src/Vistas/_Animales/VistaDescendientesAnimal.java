@@ -81,12 +81,31 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         txtNumero1 = new javax.swing.JTextField();
         txtNumero2 = new javax.swing.JTextField();
         txtNumero3 = new javax.swing.JTextField();
-        btnGuardar = new javax.swing.JButton();
-        btnGuardar1 = new javax.swing.JButton();
         txtNumero4 = new javax.swing.JTextField();
         txtNumero5 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        panelAcciones = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnGuardar1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        txtNumero6 = new javax.swing.JTextField();
+        txtNumero7 = new javax.swing.JTextField();
+        txtNumero8 = new javax.swing.JTextField();
+        txtNumero9 = new javax.swing.JTextField();
+        txtNumero10 = new javax.swing.JTextField();
+        txtNumero11 = new javax.swing.JTextField();
+        panelAcciones1 = new javax.swing.JPanel();
+        btnGuardar2 = new javax.swing.JButton();
+        btnGuardar3 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        txtNumero12 = new javax.swing.JTextField();
+        txtNumero13 = new javax.swing.JTextField();
+        txtNumero14 = new javax.swing.JTextField();
+        txtNumero15 = new javax.swing.JTextField();
+        txtNumero16 = new javax.swing.JTextField();
+        txtNumero17 = new javax.swing.JTextField();
+        panelAcciones2 = new javax.swing.JPanel();
+        btnGuardar4 = new javax.swing.JButton();
+        btnGuardar5 = new javax.swing.JButton();
         lblTid3 = new javax.swing.JLabel();
         btnAgregarAnimales = new javax.swing.JButton();
 
@@ -170,7 +189,10 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         jPanel1.setVerifyInputWhenFocusTarget(false);
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
+        jPanel1Layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 0};
+        jPanel1Layout.rowHeights = new int[] {0};
+        jPanel1.setLayout(jPanel1Layout);
 
         txtNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero.setForeground(new java.awt.Color(59, 123, 50));
@@ -194,7 +216,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumeroKeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 60, 52));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel1.add(txtNumero, gridBagConstraints);
 
         txtNumero1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero1.setForeground(new java.awt.Color(59, 123, 50));
@@ -213,7 +242,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumero1KeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 52));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
+        jPanel1.add(txtNumero1, gridBagConstraints);
 
         txtNumero2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero2.setForeground(new java.awt.Color(59, 123, 50));
@@ -232,7 +268,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumero2KeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 80, 52));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel1.add(txtNumero2, gridBagConstraints);
 
         txtNumero3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero3.setForeground(new java.awt.Color(59, 123, 50));
@@ -251,37 +294,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumero3KeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 130, 52));
-
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
-        btnGuardar.setToolTipText("Guardar");
-        btnGuardar.setBorderPainted(false);
-        btnGuardar.setContentAreaFilled(false);
-        btnGuardar.setMargin(new java.awt.Insets(2, 3, 2, 3));
-        btnGuardar.setName("btnGuardar"); // NOI18N
-        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
-        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, -1, -1));
-
-        btnGuardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
-        btnGuardar1.setToolTipText("Guardar");
-        btnGuardar1.setBorderPainted(false);
-        btnGuardar1.setContentAreaFilled(false);
-        btnGuardar1.setMargin(new java.awt.Insets(2, 3, 2, 3));
-        btnGuardar1.setName("btnGuardar"); // NOI18N
-        btnGuardar1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
-        btnGuardar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
-        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardar1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, -1, -1));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel1.add(txtNumero3, gridBagConstraints);
 
         txtNumero4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero4.setForeground(new java.awt.Color(59, 123, 50));
@@ -300,7 +320,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumero4KeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 130, 52));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel1.add(txtNumero4, gridBagConstraints);
 
         txtNumero5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumero5.setForeground(new java.awt.Color(59, 123, 50));
@@ -324,7 +351,59 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
                 txtNumero5KeyReleased(evt);
             }
         });
-        jPanel1.add(txtNumero5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 60, 52));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel1.add(txtNumero5, gridBagConstraints);
+
+        panelAcciones.setBackground(new java.awt.Color(255, 255, 255));
+        panelAcciones.setLayout(new java.awt.GridBagLayout());
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar.setName("btnGuardar"); // NOI18N
+        btnGuardar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        panelAcciones.add(btnGuardar, gridBagConstraints);
+
+        btnGuardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
+        btnGuardar1.setToolTipText("Guardar");
+        btnGuardar1.setBorderPainted(false);
+        btnGuardar1.setContentAreaFilled(false);
+        btnGuardar1.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar1.setName("btnGuardar"); // NOI18N
+        btnGuardar1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        panelAcciones.add(btnGuardar1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        jPanel1.add(panelAcciones, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -334,48 +413,458 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         pnlDescendencia.add(jPanel1, gridBagConstraints);
 
-        jPanel2.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        jPanel4.setVerifyInputWhenFocusTarget(false);
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        txtNumero6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero6.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero6.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Parto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero6.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero6.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero6.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumero6ActionPerformed(evt);
+            }
+        });
+        txtNumero6.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero6FocusLost(evt);
+            }
+        });
+        txtNumero6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero6KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel4.add(txtNumero6, gridBagConstraints);
+
+        txtNumero7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero7.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero7.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Número", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero7.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero7.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero7.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero7.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero7FocusLost(evt);
+            }
+        });
+        txtNumero7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero7KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
+        jPanel4.add(txtNumero7, gridBagConstraints);
+
+        txtNumero8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero8.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero8.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Genero", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero8.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero8.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero8.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero8.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero8FocusLost(evt);
+            }
+        });
+        txtNumero8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero8KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel4.add(txtNumero8, gridBagConstraints);
+
+        txtNumero9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero9.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero9.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero9.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha Nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero9.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero9.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero9.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero9.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero9FocusLost(evt);
+            }
+        });
+        txtNumero9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero9KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel4.add(txtNumero9, gridBagConstraints);
+
+        txtNumero10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero10.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero10.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero10.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero10.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero10.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero10.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero10.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero10FocusLost(evt);
+            }
+        });
+        txtNumero10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero10KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel4.add(txtNumero10, gridBagConstraints);
+
+        txtNumero11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero11.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero11.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Desc", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero11.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero11.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero11.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumero11ActionPerformed(evt);
+            }
+        });
+        txtNumero11.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero11FocusLost(evt);
+            }
+        });
+        txtNumero11.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero11KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel4.add(txtNumero11, gridBagConstraints);
+
+        panelAcciones1.setBackground(new java.awt.Color(255, 255, 255));
+        panelAcciones1.setLayout(new java.awt.GridBagLayout());
+
+        btnGuardar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
+        btnGuardar2.setToolTipText("Guardar");
+        btnGuardar2.setBorderPainted(false);
+        btnGuardar2.setContentAreaFilled(false);
+        btnGuardar2.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar2.setName("btnGuardar"); // NOI18N
+        btnGuardar2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        panelAcciones1.add(btnGuardar2, gridBagConstraints);
+
+        btnGuardar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
+        btnGuardar3.setToolTipText("Guardar");
+        btnGuardar3.setBorderPainted(false);
+        btnGuardar3.setContentAreaFilled(false);
+        btnGuardar3.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar3.setName("btnGuardar"); // NOI18N
+        btnGuardar3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        panelAcciones1.add(btnGuardar3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        jPanel4.add(panelAcciones1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        pnlDescendencia.add(jPanel2, gridBagConstraints);
+        pnlDescendencia.add(jPanel4, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        jPanel5.setVerifyInputWhenFocusTarget(false);
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        txtNumero12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero12.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero12.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Parto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero12.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero12.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero12.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumero12ActionPerformed(evt);
+            }
+        });
+        txtNumero12.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero12FocusLost(evt);
+            }
+        });
+        txtNumero12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero12KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel5.add(txtNumero12, gridBagConstraints);
+
+        txtNumero13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero13.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero13.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Número", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero13.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero13.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero13.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero13.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero13FocusLost(evt);
+            }
+        });
+        txtNumero13.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero13KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 0);
+        jPanel5.add(txtNumero13, gridBagConstraints);
+
+        txtNumero14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero14.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero14.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero14.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Genero", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero14.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero14.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero14.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero14.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero14FocusLost(evt);
+            }
+        });
+        txtNumero14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero14KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel5.add(txtNumero14, gridBagConstraints);
+
+        txtNumero15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero15.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero15.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha Nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero15.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero15.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero15.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero15.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero15FocusLost(evt);
+            }
+        });
+        txtNumero15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero15KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel5.add(txtNumero15, gridBagConstraints);
+
+        txtNumero16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero16.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero16.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero16.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero16.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero16.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero16.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero16FocusLost(evt);
+            }
+        });
+        txtNumero16.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero16KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel5.add(txtNumero16, gridBagConstraints);
+
+        txtNumero17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumero17.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumero17.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumero17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Desc", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtNumero17.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumero17.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtNumero17.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumero17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumero17ActionPerformed(evt);
+            }
+        });
+        txtNumero17.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNumero17FocusLost(evt);
+            }
+        });
+        txtNumero17.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumero17KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        jPanel5.add(txtNumero17, gridBagConstraints);
+
+        panelAcciones2.setBackground(new java.awt.Color(255, 255, 255));
+        panelAcciones2.setLayout(new java.awt.GridBagLayout());
+
+        btnGuardar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/eliminar30.png"))); // NOI18N
+        btnGuardar4.setToolTipText("Guardar");
+        btnGuardar4.setBorderPainted(false);
+        btnGuardar4.setContentAreaFilled(false);
+        btnGuardar4.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar4.setName("btnGuardar"); // NOI18N
+        btnGuardar4.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar4ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        panelAcciones2.add(btnGuardar4, gridBagConstraints);
+
+        btnGuardar5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
+        btnGuardar5.setToolTipText("Guardar");
+        btnGuardar5.setBorderPainted(false);
+        btnGuardar5.setContentAreaFilled(false);
+        btnGuardar5.setMargin(new java.awt.Insets(2, 3, 2, 3));
+        btnGuardar5.setName("btnGuardar"); // NOI18N
+        btnGuardar5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardar5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar5ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        panelAcciones2.add(btnGuardar5, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
+        jPanel5.add(panelAcciones2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        pnlDescendencia.add(jPanel3, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlDescendencia.add(jPanel5, gridBagConstraints);
 
         scrpnlsDecendencia.setViewportView(pnlDescendencia);
 
-        add(scrpnlsDecendencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 490, 260));
+        add(scrpnlsDecendencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 670, 350));
 
         lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTid3.setForeground(new java.awt.Color(59, 123, 50));
@@ -463,6 +952,67 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarAnimalesActionPerformed
 
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNumero5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero5KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero5KeyReleased
+
+    private void txtNumero5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero5FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero5FocusLost
+
+    private void txtNumero5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero5ActionPerformed
+
+    private void txtNumero4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero4KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero4KeyReleased
+
+    private void txtNumero4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero4FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero4FocusLost
+
+    private void txtNumero3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero3KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero3KeyReleased
+
+    private void txtNumero3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero3FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero3FocusLost
+
+    private void txtNumero2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero2KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero2KeyReleased
+
+    private void txtNumero2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero2FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero2FocusLost
+
+    private void txtNumero1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero1KeyReleased
+
+    private void txtNumero1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero1FocusLost
+
+    private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
+        if (!chkAdoptivo.isSelected()) {
+            String numeroMadre = txtNumero.getText().trim();
+            if (!numeroMadre.isEmpty()) {
+                txtNumero.setText(numeroMadre);
+            }
+        }
+    }//GEN-LAST:event_txtNumeroKeyReleased
+
     private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
         String numeroMadre = txtNumero.getText();
         Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
@@ -481,96 +1031,182 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         txtNumeroDescendiente.setVisible(mostrar);
     }//GEN-LAST:event_txtNumeroFocusLost
 
-    private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
-        if (!chkAdoptivo.isSelected()) {
-            String numeroMadre = txtNumero.getText().trim();
-            if (!numeroMadre.isEmpty()) {
-                txtNumero.setText(numeroMadre);
-            }
-        }
-    }//GEN-LAST:event_txtNumeroKeyReleased
-
-    private void txtNumero1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero1FocusLost
-
-    private void txtNumero1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero1KeyReleased
-
-    private void txtNumero2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero2FocusLost
-
-    private void txtNumero2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero2KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero2KeyReleased
-
-    private void txtNumero3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero3FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero3FocusLost
-
-    private void txtNumero3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero3KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero3KeyReleased
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
-
-    private void txtNumero4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero4FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero4FocusLost
-
-    private void txtNumero4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero4KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero4KeyReleased
-
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroActionPerformed
 
-    private void txtNumero5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero5ActionPerformed
+    private void txtNumero6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero5ActionPerformed
+    }//GEN-LAST:event_txtNumero6ActionPerformed
 
-    private void txtNumero5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero5FocusLost
+    private void txtNumero6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero6FocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero5FocusLost
+    }//GEN-LAST:event_txtNumero6FocusLost
 
-    private void txtNumero5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero5KeyReleased
+    private void txtNumero6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero6KeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumero5KeyReleased
+    }//GEN-LAST:event_txtNumero6KeyReleased
+
+    private void txtNumero7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero7FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero7FocusLost
+
+    private void txtNumero7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero7KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero7KeyReleased
+
+    private void txtNumero8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero8FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero8FocusLost
+
+    private void txtNumero8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero8KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero8KeyReleased
+
+    private void txtNumero9FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero9FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero9FocusLost
+
+    private void txtNumero9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero9KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero9KeyReleased
+
+    private void txtNumero10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero10FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero10FocusLost
+
+    private void txtNumero10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero10KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero10KeyReleased
+
+    private void txtNumero11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero11ActionPerformed
+
+    private void txtNumero11FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero11FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero11FocusLost
+
+    private void txtNumero11KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero11KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero11KeyReleased
+
+    private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardar2ActionPerformed
+
+    private void btnGuardar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardar3ActionPerformed
+
+    private void txtNumero12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero12ActionPerformed
+
+    private void txtNumero12FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero12FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero12FocusLost
+
+    private void txtNumero12KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero12KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero12KeyReleased
+
+    private void txtNumero13FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero13FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero13FocusLost
+
+    private void txtNumero13KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero13KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero13KeyReleased
+
+    private void txtNumero14FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero14FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero14FocusLost
+
+    private void txtNumero14KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero14KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero14KeyReleased
+
+    private void txtNumero15FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero15FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero15FocusLost
+
+    private void txtNumero15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero15KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero15KeyReleased
+
+    private void txtNumero16FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero16FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero16FocusLost
+
+    private void txtNumero16KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero16KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero16KeyReleased
+
+    private void txtNumero17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumero17ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero17ActionPerformed
+
+    private void txtNumero17FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumero17FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero17FocusLost
+
+    private void txtNumero17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero17KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumero17KeyReleased
+
+    private void btnGuardar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardar4ActionPerformed
+
+    private void btnGuardar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardar5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregarAnimales;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardar1;
+    private javax.swing.JButton btnGuardar2;
+    private javax.swing.JButton btnGuardar3;
+    private javax.swing.JButton btnGuardar4;
+    private javax.swing.JButton btnGuardar5;
     public javax.swing.JComboBox cbFinca;
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lblBsqAnimalesMadre;
     private javax.swing.JLabel lblTid;
     private javax.swing.JLabel lblTid1;
     private javax.swing.JLabel lblTid2;
     private javax.swing.JLabel lblTid3;
+    private javax.swing.JPanel panelAcciones;
+    private javax.swing.JPanel panelAcciones1;
+    private javax.swing.JPanel panelAcciones2;
     private javax.swing.JPanel pnlDescendencia;
     private javax.swing.JScrollPane scrpnlsDecendencia;
     public javax.swing.JTextField txtNumMama;
-    public javax.swing.JTextField txtNumero;
-    public javax.swing.JTextField txtNumero1;
-    public javax.swing.JTextField txtNumero2;
-    public javax.swing.JTextField txtNumero3;
-    public javax.swing.JTextField txtNumero4;
-    public javax.swing.JTextField txtNumero5;
+    private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtNumero1;
+    public javax.swing.JTextField txtNumero10;
+    public javax.swing.JTextField txtNumero11;
+    public javax.swing.JTextField txtNumero12;
+    public javax.swing.JTextField txtNumero13;
+    public javax.swing.JTextField txtNumero14;
+    public javax.swing.JTextField txtNumero15;
+    public javax.swing.JTextField txtNumero16;
+    public javax.swing.JTextField txtNumero17;
+    private javax.swing.JTextField txtNumero2;
+    private javax.swing.JTextField txtNumero3;
+    private javax.swing.JTextField txtNumero4;
+    private javax.swing.JTextField txtNumero5;
+    public javax.swing.JTextField txtNumero6;
+    public javax.swing.JTextField txtNumero7;
+    public javax.swing.JTextField txtNumero8;
+    public javax.swing.JTextField txtNumero9;
     // End of variables declaration//GEN-END:variables
 
     private void CargarListaFincas() {
