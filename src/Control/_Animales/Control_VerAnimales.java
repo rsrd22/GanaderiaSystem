@@ -34,7 +34,7 @@ public class Control_VerAnimales {
             }
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
-                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', (SELECT id_madre FROM _animales_descendientes WHERE id_animal=animal.id), animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
                     + "grup.descripcion AS GRUPO, \n"
                     + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
@@ -44,7 +44,7 @@ public class Control_VerAnimales {
                     + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
                     + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO,\n"
                     + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE\n"
-                    + "FROM _animales animal\n"
+                    + "FROM ranimales animal\n"
                     + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
                     + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
                     + "LEFT JOIN traslado_animalxgrupo traslado ON traslado.id_animal = animal.id\n"

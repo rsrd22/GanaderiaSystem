@@ -959,7 +959,7 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Guardar();
+//        Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNumero5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumero5KeyReleased
@@ -1007,30 +1007,30 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNumero1FocusLost
 
     private void txtNumeroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyReleased
-        if (!chkAdoptivo.isSelected()) {
-            String numeroMadre = txtNumero.getText().trim();
-            if (!numeroMadre.isEmpty()) {
-                txtNumero.setText(numeroMadre);
-            }
-        }
+//        if (!chkAdoptivo.isSelected()) {
+//            String numeroMadre = txtNumero.getText().trim();
+//            if (!numeroMadre.isEmpty()) {
+//                txtNumero.setText(numeroMadre);
+//            }
+//        }
     }//GEN-LAST:event_txtNumeroKeyReleased
 
     private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
-        String numeroMadre = txtNumero.getText();
-        Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
-        String nroDescendiente = datos[0].toString();
-        txtNumeroDescendiente.setText(nroDescendiente);
-
-        System.out.println("mostrar->>>>" + datos[2]);
-        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
-        animal = (List<Map<String, String>>) datos[2];
-        if (animal.size() > 0) {
-            txtNumeroMadre = animal.get(0).get("id");
-        }
-
-        boolean mostrar = true;
-        lblNumeroDescendiente.setVisible(mostrar);
-        txtNumeroDescendiente.setVisible(mostrar);
+//        String numeroMadre = txtNumero.getText();
+//        Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
+//        String nroDescendiente = datos[0].toString();
+//        txtNumeroDescendiente.setText(nroDescendiente);
+//
+//        System.out.println("mostrar->>>>" + datos[2]);
+//        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+//        animal = (List<Map<String, String>>) datos[2];
+//        if (animal.size() > 0) {
+//            txtNumeroMadre = animal.get(0).get("id");
+//        }
+//
+//        boolean mostrar = true;
+//        lblNumeroDescendiente.setVisible(mostrar);
+//        txtNumeroDescendiente.setVisible(mostrar);
     }//GEN-LAST:event_txtNumeroFocusLost
 
     private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
