@@ -22,10 +22,11 @@ import Utilidades.datosUsuario;
 import Vistas.Inventario.VistaInventario;
 import Vistas.Inventario.VistaLibroDiario;
 import Vistas.Inventario.VistaLibroDiarioCopia;
+import Vistas.RAnimales.VistaRAnimales;
 import Vistas.Usuarios.*;
 import Vistas._Animales.VistaDescendientesAnimal;
-import Vistas._Animales.Vista_VerAnimales;
 import Vistas._Animales.Vista_Animales;
+import Vistas._Animales.Vista_VerAnimales;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -1313,8 +1314,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnAnimalesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalesRealMousePressed
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Animales");
-            VistaAnimales vista = new VistaAnimales();
+//            VistaAnimales vista = new VistaAnimales();
 //            Vista_Animales vista = new Vista_Animales();
+            VistaRAnimales vista = new VistaRAnimales();
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnAnimalesRealMousePressed
