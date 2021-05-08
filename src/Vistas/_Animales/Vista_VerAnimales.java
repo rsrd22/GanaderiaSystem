@@ -285,11 +285,6 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         txtFiltro.setCaretColor(new java.awt.Color(59, 123, 50));
         txtFiltro.setFocusCycleRoot(true);
         txtFiltro.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFiltroFocusLost(evt);
-            }
-        });
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtFiltroKeyPressed(evt);
@@ -392,10 +387,6 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbTipoAnimalesActionPerformed
-
-    private void txtFiltroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusLost
-        //MostrarTabla();
-    }//GEN-LAST:event_txtFiltroFocusLost
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
         if (evt.getKeyCode() == evt.VK_ENTER) {
@@ -517,7 +508,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
                     new Object[]{
                         (i + 1),//tbl_Grupos.getRowCount()+1,
                         ListaAnimalesMostrar.get(i).get("NUMERO_ANIMAL"),
-                        ListaAnimalesMostrar.get(i).get("NUMERO_MAMA"),
+                        ListaAnimalesMostrar.get(i).get("NUMERO_MAMA").equals("null")?"":ListaAnimalesMostrar.get(i).get("NUMERO_MAMA"),
                         ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
                         ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
                         ListaAnimalesMostrar.get(i).get("PESO"),
@@ -552,9 +543,11 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
             } else {
                 valores = "";
                 for (int j = 0; j < NameColumnasFiltro.size(); j++) {
-                    System.out.println("NAme-" + j + "->" + NameColumnasFiltro.get(j));
-                    String value = ListaAnimales.get(i).get(NameColumnasFiltro.get(j));
-                    valores += "" + value;
+                    String key = NameColumnasFiltro.get(j);
+                    System.out.println("key: " + key);
+                    String value = ListaAnimales.get(i).get(key);
+                    valores += value;
+//                    valores += "" + value;
                 }
                 boolean encontro = Expresiones.filtrobusqueda(filtros, valores);
                 System.out.println("i-" + i + "-b-" + b);
