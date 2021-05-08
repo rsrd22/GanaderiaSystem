@@ -1313,8 +1313,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnAnimalesRealMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnimalesRealMousePressed
         if (evt.getClickCount() == 1) {
             EstablecerTituloVentana("Animales");
-//            VistaAnimales vista = new VistaAnimales();
-            Vista_Animales vista = new Vista_Animales();
+            VistaAnimales vista = new VistaAnimales();
+//            Vista_Animales vista = new Vista_Animales();
             MostrarPanel(vista);
         }
     }//GEN-LAST:event_btnAnimalesRealMousePressed
