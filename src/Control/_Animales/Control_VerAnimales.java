@@ -34,7 +34,7 @@ public class Control_VerAnimales {
             }
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
-                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
+                    + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', (SELECT id_madre FROM _animales_descendientes WHERE id_animal=animal.id), animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
                     + "animal.numero AS NUMERO_ANIMAL, animal.peso AS PESO, DATE_FORMAT(animal.fecha_nacimiento, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.genero AS GENERO,\n"
                     + "grup.descripcion AS GRUPO, \n"
                     + "IFNULL(finc.id, '') AS IDFINCA, IFNULL(finc.descripcion, '') AS FINCA, \n"
@@ -55,7 +55,7 @@ public class Control_VerAnimales {
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
                     + "ORDER BY "+Orden;
-            System.out.println("consulta/n"+consulta);
+            System.out.println("consulta:\n"+consulta);
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);

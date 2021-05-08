@@ -873,12 +873,14 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         add(lblTid3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
 
         btnAgregarAnimales.setBackground(new java.awt.Color(0, 0, 204));
-        btnAgregarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
+        btnAgregarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/addFromDB30.png"))); // NOI18N
         btnAgregarAnimales.setToolTipText("Agregar Arrendatario");
         btnAgregarAnimales.setBorder(null);
         btnAgregarAnimales.setBorderPainted(false);
         btnAgregarAnimales.setContentAreaFilled(false);
         btnAgregarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarAnimales.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/addFromDB30_over.png"))); // NOI18N
+        btnAgregarAnimales.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/addFromDB30_over.png"))); // NOI18N
         btnAgregarAnimales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarAnimalesActionPerformed(evt);
@@ -1189,8 +1191,8 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel pnlDescendencia;
     private javax.swing.JScrollPane scrpnlsDecendencia;
     public javax.swing.JTextField txtNumMama;
-    private javax.swing.JTextField txtNumero;
-    private javax.swing.JTextField txtNumero1;
+    public javax.swing.JTextField txtNumero;
+    public javax.swing.JTextField txtNumero1;
     public javax.swing.JTextField txtNumero10;
     public javax.swing.JTextField txtNumero11;
     public javax.swing.JTextField txtNumero12;
@@ -1199,10 +1201,10 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     public javax.swing.JTextField txtNumero15;
     public javax.swing.JTextField txtNumero16;
     public javax.swing.JTextField txtNumero17;
-    private javax.swing.JTextField txtNumero2;
-    private javax.swing.JTextField txtNumero3;
-    private javax.swing.JTextField txtNumero4;
-    private javax.swing.JTextField txtNumero5;
+    public javax.swing.JTextField txtNumero2;
+    public javax.swing.JTextField txtNumero3;
+    public javax.swing.JTextField txtNumero4;
+    public javax.swing.JTextField txtNumero5;
     public javax.swing.JTextField txtNumero6;
     public javax.swing.JTextField txtNumero7;
     public javax.swing.JTextField txtNumero8;

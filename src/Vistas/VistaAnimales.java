@@ -1469,6 +1469,7 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         jPanel3.add(panelContainer4, gridBagConstraints);
 
         jScrollPane1.setViewportView(jPanel3);
@@ -1803,18 +1804,29 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
     }//GEN-LAST:event_txtPesoCanalKeyReleased
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
+        if (txtCodigoTipoAnimal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sebe seleccionar una finca y el tipo de animal.");
+            cbFinca.requestFocusInWindow();
+            txtNumeroMama.setText("");
+            txtNumero.setText("");
+            return;
+        }
+
+        char sufijo = 96;//inicia en a
         String numeroMadre = txtNumeroMama.getText();
         Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, txtCodigoTipoAnimal.getText());
         String nroDescendiente = datos[0].toString();
         txtNumeroDescendiente.setText(nroDescendiente);
-        
-        System.out.println("mostrar->>>>"+datos[2]);
+        sufijo = (char) ((int) sufijo + Integer.parseInt(nroDescendiente));
+        txtNumero.setText((txtNumero.getText() + sufijo).toUpperCase());
+
+        System.out.println("mostrar->>>>" + datos[2]);
         List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
-        animal=(List<Map<String, String>>)datos[2];
-        if(animal.size()>0){
+        animal = (List<Map<String, String>>) datos[2];
+        if (animal.size() > 0) {
             txtNumeroMadre = animal.get(0).get("id");
         }
-        
+
         boolean mostrar = true;
         lblNumeroDescendiente.setVisible(mostrar);
         txtNumeroDescendiente.setVisible(mostrar);
@@ -2257,10 +2269,10 @@ public class VistaAnimales extends javax.swing.JPanel implements IControlesUsuar
         modelo.setNumeroDescendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
         modelo.setEstadoDescendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
         modelo.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
-        
-        if(txtNumeroPartos.isVisible()){
+
+        if (txtNumeroPartos.isVisible()) {
             modelo.setNumero_partos(txtNumeroPartos.getText().trim());
-        }else{
+        } else {
             modelo.setNumero_partos(modelo.getNumeroDescendiente());
         }
 
