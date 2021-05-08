@@ -752,7 +752,7 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 0.15;
         panelContainer2.add(txtPeso, gridBagConstraints);
 
         jPanel5.setBackground(new java.awt.Color(59, 123, 50));
