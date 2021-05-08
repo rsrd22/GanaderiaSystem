@@ -17,6 +17,7 @@ public class ModeloRAnimales {
     private String descornado;
     private String descripcion_muerte;
     private String destete;
+    private String estado_descendiente;
     private String es_madre;
     private String fecha;
     private String fecha_destete;
@@ -49,13 +50,14 @@ public class ModeloRAnimales {
     public ModeloRAnimales() {
     }
 
-    public ModeloRAnimales(String calificacion, String cantidad_parto, String capado, String descornado, String descripcion_muerte, String destete, String es_madre, String fecha, String fecha_destete, String fecha_muerte, String fecha_nacimiento, String fecha_novilla, String fecha_venta, String genero, String grupo, String hierro, String hierro_fisico, String id, String id_tipo_animal, String id_usuario, String implante, String muerte, String notas, String numero, String numero_descendiente, String numero_mama, String numero_mama_adoptiva, String numero_parto, String peso, String peso_canal, String peso_destete, String precio_venta, String tipo_venta, String venta) {
+    public ModeloRAnimales(String calificacion, String cantidad_parto, String capado, String descornado, String descripcion_muerte, String destete, String estado_descendiente, String es_madre, String fecha, String fecha_destete, String fecha_muerte, String fecha_nacimiento, String fecha_novilla, String fecha_venta, String genero, String grupo, String hierro, String hierro_fisico, String id, String id_tipo_animal, String id_usuario, String implante, String muerte, String notas, String numero, String numero_descendiente, String numero_mama, String numero_mama_adoptiva, String numero_parto, String peso, String peso_canal, String peso_destete, String precio_venta, String tipo_venta, String venta) {
         this.calificacion = calificacion;
         this.cantidad_parto = cantidad_parto;
         this.capado = capado;
         this.descornado = descornado;
         this.descripcion_muerte = descripcion_muerte;
         this.destete = destete;
+        this.estado_descendiente = estado_descendiente;
         this.es_madre = es_madre;
         this.fecha = fecha;
         this.fecha_destete = fecha_destete;
@@ -132,6 +134,14 @@ public class ModeloRAnimales {
 
     public void setDestete(String destete) {
         this.destete = destete;
+    }
+
+    public String getEstado_descendiente() {
+        return estado_descendiente;
+    }
+
+    public void setEstado_descendiente(String estado_descendiente) {
+        this.estado_descendiente = estado_descendiente;
     }
 
     public String getEs_madre() {

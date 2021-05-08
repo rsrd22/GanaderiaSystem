@@ -9,6 +9,7 @@ import Busqueda.VistaBusqueda;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
 import Control.ControlTraslado;
+import Control.RAnimales.ControlRAnimales;
 import Control.Retorno;
 import Control._Animales.Control_Animales;
 import GestionControles.Control;
@@ -19,6 +20,7 @@ import Modelo.ModeloGestorBusqueda;
 import Modelo.ModeloTipoAnimales;
 import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
+import Modelo.RAnimales.ModeloRAnimales;
 import Modelo._Animales.Modelo_Animales;
 import Modelo._Animales.Modelo_AnimalesDescendientes;
 import Modelo._Animales.Modelo_AnimalesEntrada;
@@ -47,14 +49,14 @@ import javax.swing.JOptionPane;
  * @author DOLFHANDLER
  */
 public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsuario {
-
-    private ModeloGestorBusqueda objetoBusqueda;
+private ModeloGestorBusqueda objetoBusqueda;
     private ModeloVentanaGeneral objetoVentana;
     private ModeloAnimales modelo;
     private ControlAnimales control;
     private int editar;
     private GestionEstadoControles controles;
     private JButton[] botones;
+    private final String FECHA_POR_DEFECTO = "1900-01-01";
     private final String NULL = "NULL";
     private List<Map<String, String>> grupos;
     private List<Map<String, String>> tipoAnimales;
@@ -68,9 +70,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     public int idModulo = 11;
     private String txtNumeroMadre;
 
-    private String idMadre = "NULL";
-    private Map<String, String> datosMadre;
-
     /**
      * Creates new form VistaAnimales
      */
@@ -78,7 +77,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
-        datosMadre = new HashMap<String, String>();
         txtValorVenta.setEnabled(false);
         txtPorcentajeCanal.setEnabled(false);
         cbFinca.setBackground(Color.YELLOW);
@@ -86,6 +84,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         panelFechaNovilla.setVisible(false);
 
         pnlDestete.setVisible(false);
+//        lblNovilla.setVisible(false);
         panelMadreAdoptiva.setVisible(false);
         txtPesoCanal.setVisible(false);
         panelInfoVenta.setVisible(false);
@@ -93,6 +92,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
+//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         modelo = new ModeloAnimales();
@@ -115,12 +115,12 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     public VistaRAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         iniciarComponentes();
-        datosMadre = new HashMap<String, String>();
         cbFinca.setBackground(Color.cyan);
 
         panelFechaNovilla.setVisible(false);
 
         pnlDestete.setVisible(false);
+//        lblNovilla.setVisible(false);
         panelMadreAdoptiva.setVisible(false);
 
         txtPesoCanal.setVisible(false);
@@ -129,6 +129,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
+//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         objetoVentana = modeloVista;
@@ -1667,7 +1668,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     }//GEN-LAST:event_txtNumeroFocusLost
 
     private boolean verificarNroAnimal() {
-        Control_Animales _control = new Control_Animales();
+        ControlRAnimales _control = new ControlRAnimales();
         ArrayList<ModeloAnimales> lista = new ArrayList<>();
         String[] parametros = new String[]{
             txtNumero.getText().trim(),//numero del animal
@@ -2202,6 +2203,13 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         }
 //</editor-fold>
 
+        
+//        ControlRAnimales _control = new ControlRAnimales();
+//        Modelo_AnimalesEntrada modelo = new Modelo_AnimalesEntrada();
+//        ModeloRAnimales ma = new ModeloRAnimales();
+//        ModeloTraslado mt = new ModeloTraslado();
+
+        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String capado = chkCapado.isSelected() ? "Si" : "No";
         Calendar fechaDestete = Calendar.getInstance();
@@ -2440,7 +2448,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         }
 //</editor-fold>
 
-        Control_Animales _control = new Control_Animales();
+        ControlRAnimales _control = new ControlRAnimales();
         Modelo_AnimalesEntrada modelo = new Modelo_AnimalesEntrada();
         Modelo_Animales ma = new Modelo_Animales();
         Modelo_AnimalesDescendientes mad = new Modelo_AnimalesDescendientes();
