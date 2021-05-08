@@ -371,7 +371,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         txtNumeroDescendiente = new javax.swing.JTextField();
         lblNumeroDescendiente = new javax.swing.JLabel();
         txtPeso = new javax.swing.JTextField();
-        jdFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         chkNovilla = new javax.swing.JCheckBox();
         chkAdoptivo = new javax.swing.JCheckBox();
@@ -381,7 +380,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         txtNumeroMamaAdoptiva = new javax.swing.JTextField();
         separador4 = new javax.swing.JSeparator();
         panelFechaNovilla = new javax.swing.JPanel();
-        jdFechaDeNovilla = new com.toedter.calendar.JDateChooser();
         txtNumeroPartos = new javax.swing.JTextField();
         panelContainer3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -399,12 +397,10 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         lblDestete = new javax.swing.JLabel();
         chkDestete = new javax.swing.JCheckBox();
         pnlDestete = new javax.swing.JPanel();
-        jdFechaDestete = new com.toedter.calendar.JDateChooser();
         txtPesoDestete = new javax.swing.JTextField();
         lblVenta = new javax.swing.JLabel();
         chkVenta = new javax.swing.JCheckBox();
         panelInfoVenta = new javax.swing.JPanel();
-        jdFechaVenta = new com.toedter.calendar.JDateChooser();
         txtPrecioVenta = new javax.swing.JTextField();
         txtPesoCanal = new javax.swing.JTextField();
         cbTipoVenta = new javax.swing.JComboBox();
@@ -413,7 +409,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         lblMuerte = new javax.swing.JLabel();
         chkMuerte = new javax.swing.JCheckBox();
         panelInfoMuerte = new javax.swing.JPanel();
-        jdFechaMuerte = new com.toedter.calendar.JDateChooser();
         ScrollCausaMuerte = new javax.swing.JScrollPane();
         txtObservacionMuerte = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
@@ -759,18 +754,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         gridBagConstraints.weightx = 0.25;
         panelContainer2.add(txtPeso, gridBagConstraints);
 
-        jdFechaNacimiento.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        jdFechaNacimiento.setDateFormatString("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.25;
-        panelContainer2.add(jdFechaNacimiento, gridBagConstraints);
-
         jPanel5.setBackground(new java.awt.Color(59, 123, 50));
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
@@ -896,20 +879,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         panelFechaNovilla.setBackground(new java.awt.Color(255, 255, 255));
         panelFechaNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
         panelFechaNovilla.setLayout(new java.awt.GridBagLayout());
-
-        jdFechaDeNovilla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
-        jdFechaDeNovilla.setToolTipText("Fecha novilla");
-        jdFechaDeNovilla.setDateFormatString("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 15, 10, 15);
-        panelFechaNovilla.add(jdFechaDeNovilla, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -1157,18 +1126,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         pnlDestete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
         pnlDestete.setLayout(new java.awt.GridBagLayout());
 
-        jdFechaDestete.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaDestete.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de destete", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        jdFechaDestete.setDateFormatString("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 80;
-        gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        pnlDestete.add(jdFechaDestete, gridBagConstraints);
-
         txtPesoDestete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPesoDestete.setForeground(new java.awt.Color(59, 123, 50));
         txtPesoDestete.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -1238,19 +1195,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         panelInfoVenta.setBackground(new java.awt.Color(255, 255, 255));
         panelInfoVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
         panelInfoVenta.setLayout(new java.awt.GridBagLayout());
-
-        jdFechaVenta.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        jdFechaVenta.setDateFormatString("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.3333333333333333;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 15, 15);
-        panelInfoVenta.add(jdFechaVenta, gridBagConstraints);
 
         txtPrecioVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPrecioVenta.setForeground(new java.awt.Color(59, 123, 50));
@@ -1417,20 +1361,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
         panelInfoMuerte.setBackground(new java.awt.Color(255, 255, 255));
         panelInfoMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50), 2));
         panelInfoMuerte.setLayout(new java.awt.GridBagLayout());
-
-        jdFechaMuerte.setBackground(new java.awt.Color(255, 255, 255));
-        jdFechaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Fecha de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        jdFechaMuerte.setDateFormatString("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 80;
-        gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.33333333333;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 0);
-        panelInfoMuerte.add(jdFechaMuerte, gridBagConstraints);
 
         ScrollCausaMuerte.setBackground(new java.awt.Color(255, 255, 255));
         ScrollCausaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Causa de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -1914,11 +1844,6 @@ public class Vista_Animales extends javax.swing.JPanel implements IControlesUsua
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private com.toedter.calendar.JDateChooser jdFechaDeNovilla;
-    private com.toedter.calendar.JDateChooser jdFechaDestete;
-    private com.toedter.calendar.JDateChooser jdFechaMuerte;
-    private com.toedter.calendar.JDateChooser jdFechaNacimiento;
-    private com.toedter.calendar.JDateChooser jdFechaVenta;
     private javax.swing.JLabel lblAdoptiva;
     private javax.swing.JLabel lblCapado;
     private javax.swing.JLabel lblDescornado;
