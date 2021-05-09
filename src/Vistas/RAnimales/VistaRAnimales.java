@@ -21,6 +21,7 @@ import Modelo.ModeloTipoAnimales;
 import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
 import Modelo.RAnimales.ModeloRAnimales;
+import Modelo.RAnimales.ModeloRAnimalesEntrada;
 import Modelo._Animales.Modelo_Animales;
 import Modelo._Animales.Modelo_AnimalesDescendientes;
 import Modelo._Animales.Modelo_AnimalesEntrada;
@@ -49,7 +50,8 @@ import javax.swing.JOptionPane;
  * @author DOLFHANDLER
  */
 public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsuario {
-private ModeloGestorBusqueda objetoBusqueda;
+
+    private ModeloGestorBusqueda objetoBusqueda;
     private ModeloVentanaGeneral objetoVentana;
     private ModeloAnimales modelo;
     private ControlAnimales control;
@@ -70,11 +72,15 @@ private ModeloGestorBusqueda objetoBusqueda;
     public int idModulo = 11;
     private String txtNumeroMadre;
 
+    private String idMadre = "NULL";
+    private Map<String, String> datosMadre;
+
     /**
      * Creates new form VistaAnimales
      */
     public VistaRAnimales() {
         initComponents();
+        datosMadre = new HashMap<>();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         txtValorVenta.setEnabled(false);
@@ -114,6 +120,7 @@ private ModeloGestorBusqueda objetoBusqueda;
 
     public VistaRAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
+        datosMadre = new HashMap<>();
         iniciarComponentes();
         cbFinca.setBackground(Color.cyan);
 
@@ -757,7 +764,7 @@ private ModeloGestorBusqueda objetoBusqueda;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.15;
+        gridBagConstraints.weightx = 0.25;
         panelContainer2.add(txtPeso, gridBagConstraints);
 
         jdFechaNacimiento.setBackground(new java.awt.Color(255, 255, 255));
@@ -1589,7 +1596,7 @@ private ModeloGestorBusqueda objetoBusqueda;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        _Guardar();
+        Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -1669,12 +1676,12 @@ private ModeloGestorBusqueda objetoBusqueda;
 
     private boolean verificarNroAnimal() {
         ControlRAnimales _control = new ControlRAnimales();
-        ArrayList<ModeloAnimales> lista = new ArrayList<>();
+        ArrayList<ModeloRAnimales> lista = new ArrayList<>();
         String[] parametros = new String[]{
             txtNumero.getText().trim(),//numero del animal
             txtCodigoTipoAnimal.getText()//tipo del animal
         };
-        lista = (ArrayList<ModeloAnimales>) _control.ObtenerDatosFiltro(parametros);
+        lista = (ArrayList<ModeloRAnimales>) _control.ObtenerDatosFiltro(parametros);
         return lista.size() > 0;
     }
 
@@ -1807,8 +1814,28 @@ private ModeloGestorBusqueda objetoBusqueda;
     }//GEN-LAST:event_txtPesoCanalKeyReleased
 
     private void txtNumeroMamaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroMamaFocusLost
+        if (txtCodigoTipoAnimal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sebe seleccionar una finca y el tipo de animal.");
+            cbFinca.requestFocusInWindow();
+            txtNumeroMama.setText("");
+            txtNumero.setText("");
+            return;
+        }
+
         if (txtNumeroMama.getText().trim().length() != 0) {
-            Control_Animales _control = new Control_Animales();
+            if (!madreExiste(txtNumeroMama.getText().trim(), txtCodigoTipoAnimal.getText())) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "El número " + txtNumeroMama.getText().trim() + " no se encuentra registrado en el sistema."
+                );
+                txtNumero.setText("");
+                txtNumeroMama.setText("");
+                txtNumeroMama.requestFocusInWindow();
+                return;
+            }
+
+            char sufijo = 96;//inicia en a
+            ControlRAnimales _control = new ControlRAnimales();
             String numeroMadre = txtNumeroMama.getText();
             String tipoAnimal = txtCodigoTipoAnimal.getText();
 
@@ -1816,6 +1843,8 @@ private ModeloGestorBusqueda objetoBusqueda;
             idMadre = datosMadre.get("ID");
 
             String nroDescendiente = _control.ObtenerUltimoDescendiente(idMadre);
+            sufijo = (char) ((int) sufijo + Integer.parseInt(nroDescendiente));
+            txtNumero.setText((txtNumero.getText() + sufijo).toUpperCase());
             if (nroDescendiente.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "La madre número " + numeroMadre + " no existe.");
                 txtNumeroMama.setText("");
@@ -1823,11 +1852,21 @@ private ModeloGestorBusqueda objetoBusqueda;
             }
             txtNumeroDescendiente.setText(nroDescendiente);
 
-            boolean mostrar = true;
-            lblNumeroDescendiente.setVisible(mostrar);
-            txtNumeroDescendiente.setVisible(mostrar);
+            lblNumeroDescendiente.setVisible(true);
+            txtNumeroDescendiente.setVisible(true);
         }
     }//GEN-LAST:event_txtNumeroMamaFocusLost
+
+    private boolean madreExiste(String numeroMama, String tipoAnimal) {
+        ControlRAnimales _control = new ControlRAnimales();
+        ArrayList<ModeloRAnimales> lista = new ArrayList<>();
+        String[] parametros = new String[]{
+            numeroMama,//numero del animal
+            tipoAnimal//tipo del animal
+        };
+        lista = (ArrayList<ModeloRAnimales>) _control.ObtenerDatosFiltro(parametros);
+        return lista.size() > 0;
+    }
 
     private void formPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_formPropertyChange
         if (objetoVentana != null) {
@@ -2203,255 +2242,9 @@ private ModeloGestorBusqueda objetoBusqueda;
         }
 //</editor-fold>
 
-        
-//        ControlRAnimales _control = new ControlRAnimales();
-//        Modelo_AnimalesEntrada modelo = new Modelo_AnimalesEntrada();
-//        ModeloRAnimales ma = new ModeloRAnimales();
-//        ModeloTraslado mt = new ModeloTraslado();
-
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String capado = chkCapado.isSelected() ? "Si" : "No";
-        Calendar fechaDestete = Calendar.getInstance();
-
-        int indiceGrupo = cbGrupos.getSelectedIndex();
-        modeloTraslado.setId("0");
-        modeloTraslado.setIdFinca(txtCodigoFinca.getText());
-        modeloTraslado.setFecha("NOW()");
-        modeloTraslado.setEstado("Activo");
-        modeloTraslado.setFechaTraslado("NOW()");
-        modeloTraslado.setIdGrupo(grupos.get(indiceGrupo).get("id"));
-        modeloTraslado.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modeloTraslado.setMotivo("CREACIÓN DEL ANIMAL");
-        modeloTraslado.setIdAnimal("(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
-                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
-                + "and fecha=NOW()\n"
-                + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
-                + ")");
-
-        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO A GUARDAR">
-        String codigoAnimal = (editar == Estado.ACTUALIZAR)
-                ? txtCodigoAnimal.getText()
-                : "(SELECT id FROM animales WHERE numero='" + txtNumero.getText().trim() + "' "
-                + "and id_tipo_animal='" + tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id") + "'\n"
-                + "and fecha=NOW()\n"
-                + (txtNumeroDescendiente.getText().length() == 0 ? "" : "AND numero_descendiente=" + txtNumeroDescendiente.getText())
-                + ")";
-
-        modelo.setDescornada(chkDescornada.isSelected() ? "1" : "0");
-        modelo.setDestete(chkDestete.isSelected() ? "1" : "0");
-        modelo.setImplante(chkImplante.isSelected() ? "1" : "0");
-        modelo.setHierroFisico(chkHierro.isSelected() ? "1" : "0");
-        modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");
-        modelo.setVenta(chkVenta.isSelected() ? "1" : "0");
-        modelo.setModeloTraslado(modeloTraslado);
-        modelo.setId(codigoAnimal);
-        modelo.setFecha("NOW()");
-        modelo.setDescHierro(cbHierros.getSelectedItem().toString());
-        modelo.setHierro(hierros.get(cbHierros.getSelectedIndex()).get("id"));
-        modelo.setGrupo(grupos.get(indiceGrupo).get("id"));
-        modelo.setDescGrupo(cbGrupos.getSelectedItem().toString());
-        modelo.setIdTipoAnimal(tipoAnimales.get(cbTiposDeAnimales.getSelectedIndex()).get("id"));
-        modelo.setCalificacion("" + slCalificacion.getValue());
-        modelo.setCapado(capado);
-        modelo.setDescTipoAnimal(cbTiposDeAnimales.getSelectedItem().toString());
-        modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
-        modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
-        modelo.setNumero(txtNumero.getText().trim());
-        modelo.setNumeroMama(txtNumeroMadre);
-        modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
-        Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
-        modelo.setFechaNacimiento(sdf.format(fechaNacimiento.getTime()));
-
-        if (chkNovilla.isSelected()) {
-            Calendar fechaDeNovilla = jdFechaDeNovilla.getCalendar();
-            modelo.setFechaNovilla(
-                    fechaDeNovilla == null
-                    ? Utilidades.FECHA_POR_DEFECTO
-                    : sdf.format(fechaDeNovilla.getTime())
-            );
-        } else {
-            modelo.setFechaNovilla(Utilidades.FECHA_POR_DEFECTO);
-        }
-
-        modelo.setNumeroDescendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
-        modelo.setEstadoDescendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
-        modelo.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
-
-        if (txtNumeroPartos.isVisible()) {
-            modelo.setNumero_partos(txtNumeroPartos.getText().trim());
-        } else {
-            modelo.setNumero_partos(modelo.getNumeroDescendiente());
-        }
-
-        if (chkMuerte.isSelected()) {
-            Calendar fechaMuerte = jdFechaMuerte.getCalendar();
-            modelo.setFechaMuerte(sdf.format(fechaMuerte.getTime()));
-        } else {
-            modelo.setFechaMuerte(Utilidades.FECHA_POR_DEFECTO);
-        }
-
-        if (chkVenta.isSelected()) {
-            Calendar fechaVenta = jdFechaVenta.getCalendar();
-            modelo.setFechaVenta(sdf.format(fechaVenta.getTime()));
-            modelo.setPrecioVenta(txtPrecioVenta.getText().replace(".", "").replace(",", "."));
-            String pesoCanal = txtPesoCanal.getText();
-            pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal;
-            modelo.setPesoCanal(pesoCanal.replace(".", "").replace(",", "."));
-            modelo.setTipoVenta("'" + cbTipoVenta.getSelectedItem().toString().toLowerCase() + "'");
-        } else {
-            modelo.setPrecioVenta("NULL");
-            modelo.setPesoCanal("NULL");
-            modelo.setTipoVenta("NULL");
-            modelo.setFechaVenta(Utilidades.FECHA_POR_DEFECTO);
-        }
-        //</editor-fold>
-
-        if (chkAdoptivo.isSelected()) {
-            modelo.setNumeroMamaAdoptiva("'" + txtNumeroMamaAdoptiva.getText() + "'");
-        } else {
-            modelo.setNumeroMamaAdoptiva("NULL");
-        }
-
-        if (chkDestete.isSelected()) {
-            fechaDestete = jdFechaDestete.getCalendar();
-            modelo.setFechaDestete(sdf.format(fechaDestete.getTime()));
-            modelo.setPesoDestete(txtPesoDestete.getText().replace(".", "").replace(",", "."));
-        } else {
-            modelo.setFechaDestete(Utilidades.FECHA_POR_DEFECTO);
-            modelo.setPesoDestete("0");
-        }
-
-        int retorno = Retorno.DEFECTO;
-
-        if (editar == Estado.GUARDAR) {
-            retorno = control.Guardar(modelo);
-        } else {
-            retorno = control.Actualizar(modelo);
-        }
-
-        String mensaje = "";
-        switch (retorno) {
-            case Retorno.EXITO:
-                mensaje = "Registro " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + " satisfactoriamente.";
-                Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_GUARDAR, controles);
-                Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_GUARDAR, botones);
-                editar = Estado.GUARDAR;
-                jdFechaDestete.setCalendar(fechaDestete);
-                break;
-            case Retorno.ERROR:
-                mensaje = "El registro no pudo ser " + (editar == Estado.GUARDAR ? "guardado" : "actualizado") + ".";
-                break;
-            case Retorno.EXCEPCION_SQL:
-                mensaje = "Ocurrio un error en la base de datos\nOperación no realizada.";
-                break;
-            case Retorno.CLASE_NO_ENCONTRADA:
-                mensaje = "Ocurrio un error con el conector de la base de datos\nOperación no realizada.";
-                break;
-        }
-
-        JOptionPane.showMessageDialog(this, mensaje);
-    }
-
-    private void _Guardar() {
-        //<editor-fold defaultstate="collapsed" desc="VALIDACIONES">
-        if (cbTiposDeAnimales.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe Seleccionar el tipo de animal a crear.");
-            return;
-        }
-
-        if (cbGrupos.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un grupo para el animal a crear.");
-            return;
-        }
-
-        if (cbPropietario.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un propietario para cargar los hierros asociados a este.");
-            return;
-        }
-
-        if (cbHierros.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un hierro para el animal a crear.");
-            return;
-        }
-
-        if (txtNumero.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe especificar el número con el que se identificara el animal.");
-            txtNumero.requestFocusInWindow();
-            return;
-        }
-
-        if (jdFechaNacimiento.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Debe especificar la fecha de nacimiento del animal.");
-            jdFechaNacimiento.requestFocusInWindow();
-            return;
-        }
-
-        if (cbGenero.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione el sexo del animal a crear.");
-            cbGenero.requestFocusInWindow();
-            return;
-        }
-
-        //<editor-fold defaultstate="collapsed" desc="validacionesParaVenta">
-        if (chkVenta.isSelected()) {
-            if (jdFechaVenta.getDate() == null) {
-                JOptionPane.showMessageDialog(this, "Debe especificar la fecha de venta del animal.");
-                jdFechaVenta.requestFocusInWindow();
-                return;
-            }
-
-            if (txtPrecioVenta.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Debe especificar el precio de venta del animal.");
-                txtPrecioVenta.requestFocusInWindow();
-                return;
-            }
-
-            if (cbTipoVenta.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(this, "Seleccione el tipo de venta del animal a crear.");
-                cbTipoVenta.requestFocusInWindow();
-                return;
-            }
-
-            if (cbTipoVenta.getSelectedIndex() == 2) {
-                if (txtPesoCanal.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Debe especificar el peso de canal para los datos de la venta.");
-                    txtPesoCanal.requestFocusInWindow();
-                    return;
-                }
-            }
-        }
-//</editor-fold>
-
-        if (chkMuerte.isSelected()) {
-            if (jdFechaMuerte.getDate() == null) {
-                JOptionPane.showMessageDialog(this, "Debe especificar la fecha de muerte del animal.");
-                jdFechaMuerte.requestFocusInWindow();
-                return;
-            }
-        }
-
-        boolean numeroAnimalEsIgualAlDeLaMadre = txtNumeroMama.getText().trim().equals(txtNumero.getText().trim());
-        lblNumeroDescendiente.setVisible(numeroAnimalEsIgualAlDeLaMadre);
-        txtNumeroDescendiente.setVisible(numeroAnimalEsIgualAlDeLaMadre);
-        if (!numeroAnimalEsIgualAlDeLaMadre) {
-            if (editar == Estado.GUARDAR) {
-                boolean numeroAnimalEsIgualAlDeLaMadreAdoptiva = txtNumeroMamaAdoptiva.getText().trim().equals(txtNumero.getText().trim());
-                if (!numeroAnimalEsIgualAlDeLaMadreAdoptiva) {
-                    if (verificarNroAnimal()) {
-                        JOptionPane.showMessageDialog(null, "El número " + txtNumero.getText() + " pertenece a otro animal.\n");
-                        return;
-                    }
-                }
-            }
-        }
-//</editor-fold>
-
         ControlRAnimales _control = new ControlRAnimales();
-        Modelo_AnimalesEntrada modelo = new Modelo_AnimalesEntrada();
-        Modelo_Animales ma = new Modelo_Animales();
-        Modelo_AnimalesDescendientes mad = new Modelo_AnimalesDescendientes();
+        ModeloRAnimalesEntrada modelo = new ModeloRAnimalesEntrada();
+        ModeloRAnimales ma = new ModeloRAnimales();
         ModeloTraslado mt = new ModeloTraslado();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -2463,7 +2256,7 @@ private ModeloGestorBusqueda objetoBusqueda;
                 ? txtCodigoAnimal.getText()
                 : "(SELECT (AUTO_INCREMENT-1)\n"
                 + "FROM information_schema.tables\n"
-                + "WHERE table_name = '_animales'\n"
+                + "WHERE table_name = 'ranimales'\n"
                 + "AND table_schema = 'ganadero')";
 
         ma.setId(idAnimal);
@@ -2484,9 +2277,15 @@ private ModeloGestorBusqueda objetoBusqueda;
         ma.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         ma.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         ma.setNumero(txtNumero.getText().trim());
+        ma.setNumero_mama(txtNumeroMadre);
         ma.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         ma.setFecha_nacimiento(sdf.format(fechaNacimiento.getTime()));
+        ma.setNumero_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
+        ma.setEstado_descendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
+        ma.setNumero_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "NULL" : txtNumeroDescendiente.getText().trim());
+        ma.setNumero_parto(txtNumeroPartos.getText().trim().length() == 0 ? "NULL" : txtNumeroPartos.getText().trim());
+        ma.setCantidad_parto(txtNumeroPartos.getText().trim());
 
         if (chkNovilla.isSelected()) {
             Calendar fechaDeNovilla = jdFechaDeNovilla.getCalendar();
@@ -2550,27 +2349,17 @@ private ModeloGestorBusqueda objetoBusqueda;
         mt.setIdAnimal(ma.getId());
 //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="setDatosModeloAnimalesDescendientes">
-        mad.setId("0");
-        mad.setId_animal(ma.getId());
-        mad.setId_madre(idMadre);
-        mad.setFecha("NOW()");
-        mad.setNro_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "NULL" : txtNumeroDescendiente.getText().trim());
-        mad.setNro_parto(txtNumeroPartos.getText().trim().length() == 0 ? "NULL" : txtNumeroPartos.getText().trim());
-//</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="actualizarRegistroDeLaMadre">
         String consulta = "";
         if (datosMadre.size() > 0) {
             if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
-                consulta = "UPDATE _animales SET es_madre='Si' WHERE id=" + datosMadre.get("ID");
+                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID");
             }
         }
 //</editor-fold>
 
         modelo.setAnimal(ma);
-        modelo.setDescendiente(mad);
-        modelo.setModeloTraslado(mt);
+        modelo.setTraslado(mt);
         modelo.setActualizarRegistroMadre(consulta);
 
         int retorno = Retorno.DEFECTO;
@@ -2607,6 +2396,7 @@ private ModeloGestorBusqueda objetoBusqueda;
         }
 
         JOptionPane.showMessageDialog(this, mensaje);
+
     }
 
     private void Modificar() {
