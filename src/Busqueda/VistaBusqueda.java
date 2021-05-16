@@ -11,6 +11,7 @@ import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas.*;
+import Vistas.RAnimales.VistaRAnimales;
 import Vistas.Usuarios.VistaPerfiles;
 import Vistas.Usuarios.VistaPermisos;
 import Vistas.Usuarios.VistaUsuarios;
@@ -258,10 +259,10 @@ public class VistaBusqueda extends javax.swing.JFrame {
             }
         });
         btnRegistroSiguiente.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 btnRegistroSiguienteAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -403,7 +404,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
@@ -417,7 +418,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         jPanel2.add(jLabel6, gridBagConstraints);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -444,7 +445,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
         jLabel8.setToolTipText("Maximizar");
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);
@@ -561,8 +562,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
                     ((VistaAnimales) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaFuentesHidricas) {
                     ((VistaFuentesHidricas) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
-                } else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
-                    ((VistaAnimales) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
+                } else if (objeto.getPanelsolicitante() instanceof VistaRAnimales) {
+                    ((VistaRAnimales) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaEstadoActividad) {
                     ((VistaEstadoActividad) objeto.getPanelsolicitante()).RetornoBusqueda(objeto, retorno);
                 } else if (objeto.getPanelsolicitante() instanceof VistaActividades) {
