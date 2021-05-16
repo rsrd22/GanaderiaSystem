@@ -16,8 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -26,16 +25,15 @@ import sun.misc.BASE64Encoder;
 public class UtilidadesImagenes {
 
     public static final ArrayList<String> imagenesTemporales = new ArrayList<String>();
-    
+
     public static byte[] getBytes(String urlImagen, int tipoCodificacion) {
         try {
             if (tipoCodificacion == TipoCodificacion.IMAGEN_URL_ABSOLUTA) {
                 return Files.readAllBytes(new File(urlImagen).toPath());
-            }
-            else if (tipoCodificacion == TipoCodificacion.IMAGEN_BASE64) {
-                BASE64Decoder decoder = new BASE64Decoder();
-                return decoder.decodeBuffer(urlImagen);
-            }else{
+            } else if (tipoCodificacion == TipoCodificacion.IMAGEN_BASE64) {
+                Base64 instance = new Base64(false);
+                return instance.decode(urlImagen);
+            } else {
                 return null;
             }
         } catch (IOException ex) {
@@ -69,9 +67,7 @@ public class UtilidadesImagenes {
     }
 
     public static String getBase64(byte[] imagen) {
-        String imageString = "";
-        BASE64Encoder encoder = new BASE64Encoder();
-        imageString = encoder.encode(imagen);
-        return imageString;
+        Base64 instance = new Base64(false);
+        return instance.encodeBase64String(imagen);
     }
 }

@@ -1685,7 +1685,7 @@
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                      <GridBagConstraints gridX="2" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="15" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="23" weightX="0.15" weightY="0.0"/>
+                      <GridBagConstraints gridX="2" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="15" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="23" weightX="0.25" weightY="0.0"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -2446,7 +2446,7 @@
                   <Parameters>
                     <CodeExpression id="110">
                       <ExpressionOrigin>
-                        <Value type="double" value="0.15"/>
+                        <Value type="double" value="0.25"/>
                       </ExpressionOrigin>
                     </CodeExpression>
                   </Parameters>
