@@ -22,6 +22,7 @@ import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
 import Modelo.RAnimales.ModeloRAnimales;
 import Modelo.RAnimales.ModeloRAnimalesEntrada;
+import Modelo.RAnimales.ModeloRAnimalesSalida;
 import Modelo._Animales.Modelo_Animales;
 import Modelo._Animales.Modelo_AnimalesDescendientes;
 import Modelo._Animales.Modelo_AnimalesEntrada;
@@ -2009,19 +2010,22 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
         if (objeto.getOpcion() == 0) {//SE LLAMA LA BUSQUEDA DESDE LA MISMA VISTA
+            ControlRAnimales _control = new ControlRAnimales();
+            ModeloRAnimalesSalida mas = new ModeloRAnimalesSalida();
+            
             //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS DATOS DEL FORMULARIO">
             String id = retorno.get("ID");
-            modelo = ((ArrayList<ModeloAnimales>) control.ObtenerDatosKey(id)).get(0);
-            boolean capado = modelo.getCapado().equalsIgnoreCase("si");
-            boolean venta = modelo.getVenta().equalsIgnoreCase("1");
-            boolean muerte = modelo.getMuerte().equalsIgnoreCase("1");
-            boolean implante = modelo.getImplante().equalsIgnoreCase("1");
-            boolean hierroFisico = modelo.getHierroFisico().equalsIgnoreCase("1");
-            boolean descornado = modelo.getDescornada().equalsIgnoreCase("1");
-            boolean destetado = modelo.getDestete().equalsIgnoreCase("1");
-            boolean esNovilla = !(modelo.getFechaNovilla().equals(Utilidades.FECHA_POR_DEFECTO) || modelo.getFechaNovilla().equalsIgnoreCase(NULL));
+            mas = ((ArrayList<ModeloRAnimalesSalida>) _control.ObtenerDatosKey(id)).get(0);
+            boolean capado = mas.getCapado().equalsIgnoreCase("si");
+            boolean venta = mas.getVenta().equalsIgnoreCase("1");
+            boolean muerte = mas.getMuerte().equalsIgnoreCase("1");
+            boolean implante = mas.getImplante().equalsIgnoreCase("1");
+            boolean hierroFisico = mas.getHierro_fisico().equalsIgnoreCase("1");
+            boolean descornado = mas.getDescornado().equalsIgnoreCase("1");
+            boolean destetado = mas.getDestete().equalsIgnoreCase("1");
+            boolean esNovilla = !(mas.getFecha_novilla().equals(Utilidades.FECHA_POR_DEFECTO) || mas.getFecha_novilla().equalsIgnoreCase(NULL));
 
-            String numeroMamaAdoptiva = modelo.getNumeroMamaAdoptiva();
+            String numeroMamaAdoptiva = mas.getNumero_mama_adoptiva();
             boolean adoptado = true;
             if (numeroMamaAdoptiva.isEmpty()) {
                 adoptado = false;
@@ -2030,34 +2034,34 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             }
 
             cargarComboFincas();
-            txtCodigoFinca.setText(modelo.getIdFinca());
-            cbFinca.setSelectedItem(modelo.getDescFinca());
+            txtCodigoFinca.setText(mas.getIdFinca());
+            cbFinca.setSelectedItem(mas.getDescFinca());
 
             cargarComboTipoAnimales();
-            cbTiposDeAnimales.setSelectedItem(modelo.getDescTipoAnimal());
-            txtCodigoTipoAnimal.setText(modelo.getIdTipoAnimal());
+            cbTiposDeAnimales.setSelectedItem(mas.getDescTipoAnimal());
+            txtCodigoTipoAnimal.setText(mas.getId_tipo_animal());
 
             cargarComboGrupos();
-            cbGrupos.setSelectedItem(modelo.getDescGrupo());
-            txtCodigoGrupo.setText(modelo.getGrupo());
+            cbGrupos.setSelectedItem(mas.getDescGrupo());
+            txtCodigoGrupo.setText(mas.getGrupo());
 
             cargarComboPropietarios();
-            cbPropietario.setSelectedItem(modelo.getDescPropietario());
-            txtCodigoPropietario.setText(modelo.getIdPropietario());
+            cbPropietario.setSelectedItem(mas.getDescPropietario());
+            txtCodigoPropietario.setText(mas.getIdPropietario());
 
             cargarComboHierros();
-            cbHierros.setSelectedItem(modelo.getDescHierro());
-            txtCodigoHierro.setText(modelo.getHierro());
+            cbHierros.setSelectedItem(mas.getDescHierro());
+            txtCodigoHierro.setText(mas.getHierro());
 
-            txtCodigoAnimal.setText(modelo.getId());
-            txtNumeroMama.setText(modelo.getNumeroMama());
-            txtNumero.setText(modelo.getNumero());
-            cbGenero.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getGenero()));
-            txtPesoKg.setText(modelo.getPeso());
-            txtPesoOculto.setText(modelo.getPeso());
-            slCalificacion.setValue(Integer.parseInt(modelo.getCalificacion()));
+            txtCodigoAnimal.setText(mas.getId());
+            txtNumeroMama.setText(mas.getNumero_mama());
+            txtNumero.setText(mas.getNumero());
+            cbGenero.setSelectedItem(Utilidades.CapitaliceTexto(mas.getGenero()));
+            txtPesoKg.setText(mas.getPeso());
+            txtPesoOculto.setText(mas.getPeso());
+            slCalificacion.setValue(Integer.parseInt(mas.getCalificacion()));
             chkCapado.setSelected(capado);
-            txtNotas.setText(Utilidades.decodificarElemento(modelo.getNotas()));
+            txtNotas.setText(Utilidades.decodificarElemento(mas.getNotas()));
             chkAdoptivo.setSelected(adoptado);
             chkVenta.setSelected(venta);
             chkMuerte.setSelected(muerte);
@@ -2069,61 +2073,61 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             chkDestete.setSelected(destetado);
 
             if (chkAdoptivo.isSelected()) {
-                txtNumeroMamaAdoptiva.setText(modelo.getNumeroMamaAdoptiva());
+                txtNumeroMamaAdoptiva.setText(mas.getNumero_mama_adoptiva());
             }
 
-            boolean mostrar = modelo.getNumeroDescendiente().length() > 0;
+            boolean mostrar = mas.getNumero_descendiente().length() > 0;
             lblNumeroDescendiente.setVisible(mostrar);
             txtNumeroDescendiente.setVisible(mostrar);
 
-            txtNumeroDescendiente.setText(modelo.getNumeroDescendiente().equals("null") ? "" : modelo.getNumeroDescendiente());
+            txtNumeroDescendiente.setText(mas.getNumero_descendiente().equals("null") ? "" : mas.getNumero_descendiente());
 
             try {
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                Date fecha = formato.parse(modelo.getFechaNacimiento());
+                Date fecha = formato.parse(mas.getFecha_nacimiento());
                 jdFechaNacimiento.setDate(fecha);
 
-                if (modelo.getFechaNovilla().equals(Utilidades.FECHA_POR_DEFECTO) || modelo.getFechaNovilla().equalsIgnoreCase(NULL)) {
+                if (mas.getFecha_novilla().equals(Utilidades.FECHA_POR_DEFECTO) || mas.getFecha_novilla().equalsIgnoreCase(NULL)) {
                     jdFechaDeNovilla.setCalendar(Calendar.getInstance());
                 } else {
-                    fecha = formato.parse(modelo.getFechaNovilla());
+                    fecha = formato.parse(mas.getFecha_novilla());
                     jdFechaDeNovilla.setDate(fecha);
                 }
 
                 jdFechaDestete.setVisible(true);
                 txtPesoDestete.setVisible(true);
-                txtPesoDestete.setText(modelo.getPesoDestete());
-                fecha = formato.parse(modelo.getFechaDestete());
+                txtPesoDestete.setText(mas.getPeso_destete());
+                fecha = formato.parse(mas.getFecha_destete());
                 jdFechaDestete.setDate(fecha);
 
-                if (modelo.getFechaMuerte().equals(Utilidades.FECHA_POR_DEFECTO)) {
+                if (mas.getFecha_muerte().equals(Utilidades.FECHA_POR_DEFECTO)) {
                     jdFechaMuerte.setVisible(false);
                 } else {
                     chkMuerte.setSelected(true);
                     jdFechaMuerte.setVisible(true);
-                    fecha = formato.parse(modelo.getFechaMuerte());
+                    fecha = formato.parse(mas.getFecha_muerte());
                     jdFechaMuerte.setDate(fecha);
                 }
 
                 if (muerte) {
                     txtObservacionMuerte.setVisible(chkMuerte.isSelected());
-                    txtObservacionMuerte.setText(Utilidades.decodificarElemento(modelo.getDescripcionMuerte()));
+                    txtObservacionMuerte.setText(Utilidades.decodificarElemento(mas.getDescripcion_muerte()));
                     chkMuerte.setSelected(muerte);
                     casoMuerte();
                     panelInfoMuerte.setVisible(muerte);
                 }
 
                 if (venta) {
-                    cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(modelo.getTipoVenta()));
-                    txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPrecioVenta().replace(".", ",")));
-                    txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(modelo.getPesoCanal().replace(".", ",")));
+                    cbTipoVenta.setSelectedItem(Utilidades.CapitaliceTexto(mas.getTipo_venta()));
+                    txtPrecioVenta.setText(Utilidades.MascaraMonedaConDecimales(mas.getPrecio_venta().replace(".", ",")));
+                    txtPesoCanal.setText(Utilidades.MascaraMonedaConDecimales(mas.getPeso_canal().replace(".", ",")));
 
                     casoVenta();
                     panelInfoVenta.setVisible(venta);
-                    fecha = formato.parse(modelo.getFechaVenta());
+                    fecha = formato.parse(mas.getFecha_venta());
                     jdFechaVenta.setDate(fecha);
-                    Double precioVenta = Double.parseDouble(modelo.getPrecioVenta());
-                    Double pesoCanal = Double.parseDouble(!modelo.getPesoCanal().equals("null") ? modelo.getPesoCanal() : "0");
+                    Double precioVenta = Double.parseDouble(mas.getPrecio_venta());
+                    Double pesoCanal = Double.parseDouble(!mas.getPeso_canal().equals("null") ? mas.getPeso_canal() : "0");
                     setCalculosVenta();
                 }
             } catch (ParseException pe) {
@@ -2418,7 +2422,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     private void Consultar() {
         //new ventanaBusquedaPaciente(1, "IDENTIFICACION:-:NOMBRE", estadoch, this);
-        objetoBusqueda = new ModeloGestorBusqueda(this, "BUSQUEDA_ANIMALES", 0);
+        objetoBusqueda = new ModeloGestorBusqueda(this, "RBUSQUEDA_ANIMALES", 0);
         VistaBusqueda vistaBusqueda = new VistaBusqueda(objetoBusqueda);
         btnConsultar.setEnabled(false);
     }
