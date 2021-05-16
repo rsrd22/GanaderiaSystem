@@ -323,7 +323,7 @@ public class ControlPesaje implements IControl {
                 + "b.fecha_destete AS FECHA_DESTETE,\n"
                 + "b.peso_destete AS PESO_DESTETE\n"
                 + "FROM pesaje a\n"
-                + "LEFT JOIN animales b ON a.id_animal=b.id\n"
+                + "LEFT JOIN ranimales b ON a.id_animal=b.id\n"
                 + "LEFT JOIN propietarioxhierro c ON b.hierro=c.id\n"
                 + "WHERE id_animal=" + o.toString() + " ORDER BY fecha_pesado DESC";
         List<Map<String, String>> pesajes = new ArrayList<Map<String, String>>();

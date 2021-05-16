@@ -7,6 +7,7 @@ package Control;
 
 import BaseDeDatos.gestorMySQL;
 import Modelo.*;
+import Modelo.RAnimales.ModeloRAnimalesSalida;
 import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -386,6 +387,7 @@ public class ControlPalpacion implements IControl {
                 + "FROM `animales` a \n"
                 + "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` and palp.estado = 'Activo'\n"
                 + "WHERE a.`id` = '" + id + "'";
+        
 
         List<Map<String, String>> datos = new ArrayList<Map<String, String>>();
         datos = mySQL.ListSQL(consulta);
@@ -443,19 +445,19 @@ public class ControlPalpacion implements IControl {
         }
     }
 
-    public List<Map<String, String>> getDatosParto(ModeloAnimales modelo) {
+    public List<Map<String, String>> getDatosParto(ModeloRAnimalesSalida modelo) {
         try {
             String consulta = "select an.id as IDANIMAL, an.`numero` as NUMERO, "
                     + "DATE_FORMAT(an.`fecha_nacimiento`, '%d/%m/%Y') as FEC_NAC, "
                     + "an.`numero_descendiente` AS NUMPARTO, \n"
                     + "gr.`descripcion` as GRUPO, an.`genero` as SEXO, "
-                    + "ifnull(pes.`peso`, '') as PES_NAC, ifnull(an.notas, '') as NOTAS\n"
-                    + "from animales an\n"
+                    + "ifnull(pes.`peso`, an.peso) as PES_NAC, ifnull(an.notas, '') as NOTAS\n"
+                    + "from ranimales an\n"
                     + "inner join `grupos` gr on gr.`id` = an.grupo\n"
                     + "left join `pesaje` pes on pes.`id_animal` = an.`id` "
                     + "and pes.notas = 'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO'\n"
                     + "where an.numero_mama = '" + modelo.getNumero() + "' "
-                    + "and an.`id_tipo_animal` = '" + modelo.getIdTipoAnimal() + "'\n"
+                    + "and an.`id_tipo_animal` = '" + modelo.getId_tipo_animal() + "'\n"
                     + "ORDER BY an.`numero_descendiente` ASC";
 
             System.out.println("getDatosParto...>" + consulta);
