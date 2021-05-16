@@ -316,7 +316,7 @@ public class Consultas {
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
                 + "IF(`peso_canal` = 0, '', ROUND((`peso_canal`/peso*100),1)) AS PORC,\n"
                 + "IF(`peso_canal` = 0, (`precio_venta` * peso), ROUND((`peso_canal`*`precio_venta`))) AS VVENTA\n"
-                + "FROM animales a\n"
+                + "FROM ranimales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN grupos c ON a.grupo=c.id\n"
                 + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"

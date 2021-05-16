@@ -10,12 +10,9 @@ import Control.ControlGeneral;
 import Control.ControlTraslado;
 import Control.IControl;
 import Control.Retorno;
-<<<<<<< HEAD
 import Modelo.ModeloAnimales;
-=======
 import Modelo.ModeloMuertesVentasHistoricos;
 import Modelo.ModeloTraslado;
->>>>>>> 94348c434723bf75d6684db1b3cf0b133fa7b2f3
 import Modelo.RAnimales.ModeloRAnimales;
 import Modelo.RAnimales.ModeloRAnimalesEntrada;
 import Modelo.RAnimales.ModeloRAnimalesSalida;
