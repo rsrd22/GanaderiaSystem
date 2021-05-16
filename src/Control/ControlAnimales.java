@@ -113,7 +113,7 @@ public class ControlAnimales implements IControl {
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
                 + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,\n"
                 + "IFNULL(a.peso_canal,0) pesocanal,IFNULL(a.peso_destete,0) pesodestete,IFNULL(a.precio_venta,0) precioventa, a.destete\n"
-                + "FROM animales a\n"
+                + "FROM ranimales a\n"
                 + "LEFT JOIN tipo_animales b ON a.id_tipo_animal=b.id\n"
                 + "LEFT JOIN fincas e ON b.id_finca=e.id\n"
                 + "LEFT JOIN propietarioxhierro d ON a.hierro=d.id\n"

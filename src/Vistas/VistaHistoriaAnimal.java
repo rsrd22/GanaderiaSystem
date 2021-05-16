@@ -2,12 +2,15 @@ package Vistas;
 
 import Charts.Panel;
 import Control.*;
+import Control.RAnimales.ControlRAnimales;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloPalpacion;
 import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
+import Modelo.RAnimales.*;
 import Tablas.TablaRender;
 import Utilidades.Utilidades;
+import Vistas._Animales.Vista_VerAnimales;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -51,14 +54,14 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private String id_Animal = "";
     private String numero_Animal = "";
     private String localizacion = "", pesoNac = "", FecUltPeso = "";
-    private ControlAnimales controlAnimales = new ControlAnimales();
+    private ControlRAnimales controlAnimales = new ControlRAnimales();
     private ControlPesaje controlPesaje = new ControlPesaje();
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
     private ControlTraslado controlTraslado = new ControlTraslado();
     private ModeloPalpacion modeloPalpacion = new ModeloPalpacion();
     private ModeloPesaje modeloPesaje = new ModeloPesaje();
     private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
-    private ArrayList<ModeloAnimales> ListaDatos;
+    private ArrayList<ModeloRAnimalesSalida> ListaDatos;
     private Map<String, String> DatosVenta;
     private Map<String, String> DatosMuerte;
     private Map<String[], JLabel> listaHistorico;
@@ -70,7 +73,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     public String[] EncabezadoTblPeso;
     public String[] EncabezadoTblPalpacion;
     private List<Map<String, String>> ListaDatosRotacion;
-    private ModeloAnimales modeloMadre = new ModeloAnimales();
+    private ModeloRAnimalesSalida modeloMadre = new ModeloRAnimalesSalida();
     private List<Map<String, String>> ListaDatosRotacionMostrar;
     private List<Map<String, String>> ListaDatosRotacionEliminar;
     private List<Map<String, String>> ListaDatosPartos;
@@ -115,8 +118,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         DatosVenta = new HashMap<String, String>();
         DatosMuerte = new HashMap<String, String>();
         listaHistorico = new HashMap<String[], JLabel>();
-        this.ListaAnimalesMostrar = ((VistaVerAnimales) modeloVentanaGeneral.getPanelPadre()).ListaAnimalesMostrar;
-        this.refTablaAnimales = ((VistaVerAnimales) modeloVentanaGeneral.getPanelPadre()).tbl_Animales;
+        this.ListaAnimalesMostrar = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).ListaAnimalesMostrar;
+        this.refTablaAnimales = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).tbl_Animales;
         filaLista = Integer.parseInt("" + modeloVentanaGeneral.getModeloDatos());
         id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
         band = 0;
@@ -568,6 +571,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlContenedorPartos = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         lblTid2 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jPanel19 = new javax.swing.JPanel();
         btnAnterior = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
 
@@ -2149,21 +2157,120 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
         jPanel15.add(lblTid2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
         pnlContenedorPartos.add(jPanel15, gridBagConstraints);
+
+        jPanel14.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel14.setPreferredSize(new java.awt.Dimension(666, 50));
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        pnlContenedorPartos.add(jPanel14, gridBagConstraints);
+
+        jPanel16.setBackground(new java.awt.Color(204, 204, 255));
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        pnlContenedorPartos.add(jPanel16, gridBagConstraints);
+
+        jPanel17.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel17.setPreferredSize(new java.awt.Dimension(666, 50));
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        pnlContenedorPartos.add(jPanel17, gridBagConstraints);
+
+        jPanel18.setBackground(new java.awt.Color(204, 255, 204));
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        pnlContenedorPartos.add(jPanel18, gridBagConstraints);
+
+        jPanel19.setBackground(new java.awt.Color(51, 255, 204));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 666, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlContenedorPartos.add(jPanel19, gridBagConstraints);
 
         jScrollPane6.setViewportView(pnlContenedorPartos);
 
@@ -2565,7 +2672,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -2663,7 +2775,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void GetDatosAnimal() {
         LimpiarFormulario();
-        ListaDatos = (ArrayList<ModeloAnimales>) controlAnimales.ObtenerDatosKey(id_Animal);
+        ListaDatos = (ArrayList<ModeloRAnimalesSalida>) controlAnimales.ObtenerDatosKey(id_Animal);
         modeloMadre = ListaDatos.get(0);
         LlenarDatos();
     }
@@ -2672,28 +2784,28 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblFinca.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescFinca()));
         lblTipoAnimal.setText(ListaDatos.get(0).getDescTipoAnimal());
         lblHierro.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescHierro()));
-        lblNumMama.setText(ListaDatos.get(0).getNumeroMama());
+        lblNumMama.setText(ListaDatos.get(0).getNumero_mama());
         lblNumero.setText(ListaDatos.get(0).getNumero());
         lblGrupo.setText(Utilidades.decodificarElemento(ListaDatos.get(0).getDescGrupo()));
         lblGenero.setText(Utilidades.CapitalizeTexto(ListaDatos.get(0).getGenero()));
         lblLocalizacion.setText("");
-        lblFechaNacimiento.setText(ListaDatos.get(0).getFechaNacimiento());
-        lblPesoNecimiento.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaNacimiento());
-        lblPartoNumero.setText("" + ListaDatos.get(0).getNumeroDescendiente());
-        lblFechaDestete.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
-        lblPesoDestete.setText("" + ListaDatos.get(0).getPesoDestete());
+        lblFechaNacimiento.setText(ListaDatos.get(0).getFecha_nacimiento());
+        lblPesoNecimiento.setText(ListaDatos.get(0).getFecha_destete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFecha_nacimiento());
+        lblPartoNumero.setText("" + ListaDatos.get(0).getNumero_descendiente());
+        lblFechaDestete.setText(ListaDatos.get(0).getFecha_destete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFecha_destete());
+        lblPesoDestete.setText("" + ListaDatos.get(0).getPeso_destete());
         
-        lblFecUltParto.setText(ListaDatos.get(0).getFechaDestete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFechaDestete());
+        lblFecUltParto.setText(ListaDatos.get(0).getFecha_destete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFecha_destete());
         lblUltimoPeso.setText(ListaDatos.get(0).getPeso());
 
         lblCalificacion.setText(ListaDatos.get(0).getCalificacion());
 
-        lblHierroColocado.setText(ListaDatos.get(0).getHierroFisico().equals("0") ? "No" : "Si");
-        lblDescornado.setText(ListaDatos.get(0).getDescornada().equals("0") ? "No" : "Si");
+        lblHierroColocado.setText(ListaDatos.get(0).getHierro_fisico().equals("0") ? "No" : "Si");
+        lblDescornado.setText(ListaDatos.get(0).getDescornado().equals("0") ? "No" : "Si");
         lblImplante.setText(ListaDatos.get(0).getImplante().equals("0") ? "No" : "Si");
         lblNovilla.setText(
                 ListaDatos.get(0).getGenero().equals("hembra")
-                ? (ListaDatos.get(0).getFechaNovilla().equals(FECHA_POR_DEFECTO) ? "No" : "Si")
+                ? (ListaDatos.get(0).getFecha_novilla().equals(FECHA_POR_DEFECTO) ? "No" : "Si")
                 : ListaDatos.get(0).getCapado()
         );
         lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra") ? "Novilla" : "Capado");
@@ -2715,13 +2827,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
         listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
         listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
-        if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumeroMama())) {
+        if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumero_mama())) {
             listaHistorico.put(new String[]{
                 "Número del animal", 
                 "animales",
                 "numero", 
                 ListaDatos.get(0).getId(),
-                ListaDatos.get(0).getIdTipoAnimal()
+                ListaDatos.get(0).getId_tipo_animal()
             }, lblNumero);
             lblNumero.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else {
@@ -3051,7 +3163,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         datosHembraPartos = controlPalpacion.getDatosPartos(id_Animal);
         lbltitNovilla.setText("Novilla?");
 
-        lblNovilla.setText(ListaDatos.get(0).getFechaNovilla().equals("1900-01-01") ? "No" : "Si");
+        lblNovilla.setText(ListaDatos.get(0).getFecha_novilla().equals("1900-01-01") ? "No" : "Si");
         lblNumMeses.setText("" + datosHembraPartos.get("NUM_MESES"));
         lblNumeroCria.setText("" + datosHembraPartos.get("CRIA"));
         lblNumPartos.setText("" + datosHembraPartos.get("NUM_PARTOS"));
@@ -3090,7 +3202,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="TabbetPane Parto">
     public void GetDatosParto() {
-        ListaDatosPartos = controlPalpacion.getDatosParto(ListaDatos.get(0));
+        ListaDatosPartos = controlPalpacion.getDatosParto(ListaDatos.get(0)); 
 
         if (ListaDatosPartos.size() > 0) {
             LlenarPnlPartos();
@@ -3100,7 +3212,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void LlenarPnlPartos() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        int fila = -1, y = 0;
+        int fila = -1, y = 0, w =0;
         sizeCrias = ListaDatosPartos.size();
 
         //<editor-fold defaultstate="collapsed" desc="INIT ACORDEON CRIAS">
@@ -3127,14 +3239,17 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
         panelEncabezado.add(lblEncabezadoCrias, gridBagConstraints);
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.0;
         gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 15);
         pnlContenedorPartos.add(panelEncabezado, gridBagConstraints);
 //</editor-fold>
@@ -3142,6 +3257,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //</editor-fold>
         for (Map<String, String> datos : ListaDatosPartos) {
             fila++;
+//            if(fila == ListaDatosPartos.size()-1){
+//                w=1;
+//            }
             JPanel panelBtnIrCriaAux = new JPanel();
             JPanel pnlCriaAux = new JPanel();
             JPanel pnlTituloCriaAux = new JPanel();
@@ -3171,6 +3289,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
             gridBagConstraints.weightx = 1.0;
+//            gridBagConstraints.weighty = 0;
             gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
             pnlTituloCriaAux.add(lbltitCria, gridBagConstraints);
 
@@ -3212,7 +3331,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
             gridBagConstraints.ipadx = 1;
             gridBagConstraints.ipady = 1;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
             gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
             pnlContenedorPartos.add(pnlTituloCriaAux, gridBagConstraints);
             //</editor-fold>
@@ -3408,12 +3527,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //</editor-fold>
 
             y++;
+            System.out.println("********************w------"+w);
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = y;
             gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
             gridBagConstraints.ipadx = 0;
             gridBagConstraints.ipady = 0;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 0;
             gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
             gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
 
@@ -3422,7 +3544,42 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
             panelesCria.add(pnlCriaAux);
         }
-        hidePanelsCrias();
+        
+        
+        JPanel panelEnd = new JPanel();
+        JLabel lblEnd = new JLabel();
+        panelEnd.setBackground(new java.awt.Color(255,255,255));
+        panelEnd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        panelEnd.setLayout(new java.awt.GridBagLayout());
+
+        lblEnd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblEnd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEnd.setForeground(new java.awt.Color(255, 255, 255));
+        lblEnd.setText("D");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
+        panelEnd.add(lblEnd, gridBagConstraints);
+        
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = y++;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlContenedorPartos.add(panelEnd, gridBagConstraints);
+        
+//        hidePanelsCrias();
     }
 
     private void IrVistaHojaAnimal(ActionEvent e) {
