@@ -629,9 +629,14 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     if (info.get("SEXO").equals("macho")) {
                         info.put("NUM_PARTOS", "NULL");
                     }
+                    if(info.get("SEXO").equals("macho")){
+                        info.put("ES_MADRE", "NULL");
+                    }else{
+                        info.put("ES_MADRE", "No");
+                    }
 
                     //</editor-fold>
-                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM animales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '" + idTipoAnimal + "'");
+                    List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM ranimales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '" + idTipoAnimal + "'");
                     int resp = -10;
                     info.put("NUMERO_DESCENDIENTE", controlCarga.ObtenerUltimoDescendiente(info.get("NUM_MADRE"), idTipoAnimal));
                     if (InfoAnimal.size() > 0) {

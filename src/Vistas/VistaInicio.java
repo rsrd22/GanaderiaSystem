@@ -356,7 +356,7 @@ public class VistaInicio extends javax.swing.JPanel {
                                                             "LEFT JOIN `macrogrupos` macr ON macr.`id_finca` = finc.`id` AND grup.`id_macrogrupo` = macr.`id`\n" +
                                                             "INNER JOIN `traslado_animalxgrupo` traslado ON traslado.`id_finca` = finc.`id` AND \n" +
                                                             "traslado.`id_grupo` = grup.`id` AND traslado.`estado` = 'Activo'\n" +
-                                                            "INNER JOIN `animales` animal ON animal.`id` = `traslado`.`id_animal` AND animal.venta = '0' AND animal.`muerte` = '0'\n"+
+                                                            "INNER JOIN `ranimales` animal ON animal.`id` = `traslado`.`id_animal` AND animal.venta = '0' AND animal.`muerte` = '0'\n"+
                                                             "LEFT JOIN `rotacion_lotesxgrupo` rotgrup ON rotgrup.`id_grupo` = grup.`id` AND rotgrup.`estado` = 'Activo'\n" +
                                                             "LEFT JOIN `rotacion_lotesxestado` rot ON rot.`id` = rotgrup.`id_rotacion_lotesxestado`\n" +
                                                             "LEFT JOIN `lotes` lot ON lot.`id` = rot.`id_lote`\n" +
@@ -376,7 +376,7 @@ public class VistaInicio extends javax.swing.JPanel {
                     "LEFT JOIN `macrogrupos` macr ON macr.`id_finca` = finc.`id` AND grup.`id_macrogrupo` = macr.`id`\n" +
                     "INNER JOIN `traslado_animalxgrupo` traslado ON traslado.`id_finca` = finc.`id` AND \n" +
                     "traslado.`id_grupo` = grup.`id` AND traslado.`estado` = 'Activo'\n" +
-                    "INNER JOIN `animales` animal ON animal.`id` = `traslado`.`id_animal` AND animal.venta = '0' AND animal.`muerte` = '0'\n" +
+                    "INNER JOIN `ranimales` animal ON animal.`id` = `traslado`.`id_animal` AND animal.venta = '0' AND animal.`muerte` = '0'\n" +
                     "LEFT JOIN `rotacion_lote` rot ON rot.`id_grupo` = grup.id AND rot.`estado` = 'Activo'\n" +
                     "LEFT JOIN `lotes` lot ON lot.`id` = rot.`id_lote`\n" +
                     "LEFT JOIN bloques bloq ON bloq.`id` = lot.`id_bloque` \n" +

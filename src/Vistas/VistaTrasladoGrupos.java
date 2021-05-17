@@ -365,7 +365,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
                                 "INNER JOIN `tipo_animales` tpo ON tpo.`id` = gr.`id_tipo_animal`\n" +
                                 "LEFT JOIN `traslado_animalxgrupo` traslado ON  traslado.`id_grupo` = gr.`id`  \n" +
                                 "AND traslado.`id_finca` = tpo.`id_finca` AND traslado.`estado` = 'Activo'\n" +
-                                "LEFT JOIN `animales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
+                                "LEFT JOIN `ranimales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
                                 "AND ani.muerte = '0' AND ani.`venta` = '0' \n" +
                                 "WHERE tpo.`id_finca` = '"+idFinca+"' AND tpo.`id` = '"+idTipoAnimal+"'  \n" +
                                 "GROUP BY gr.`id` ) AS tbl\n" +
@@ -395,7 +395,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
                                 "INNER JOIN `tipo_animales` tpo ON tpo.`id` = gr.`id_tipo_animal`\n" +
                                 "LEFT JOIN `traslado_animalxgrupo` traslado ON  traslado.`id_grupo` = gr.`id`  \n" +
                                 "AND traslado.`id_finca` = tpo.`id_finca` AND traslado.`estado` = 'Activo'\n" +
-                                "LEFT JOIN `animales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
+                                "LEFT JOIN `ranimales` ani ON traslado.`id_animal` = ani.`id` AND ani.`id_tipo_animal` = gr.`id_tipo_animal` \n" +
                                 "AND ani.muerte = '0' AND ani.`venta` = '0' \n" +
                                 "WHERE tpo.`id_finca` = '"+idFincaDestino+"' AND tpo.`id` = '"+idTipoAnimalDestino+"'  \n" +
                                 "GROUP BY gr.`id` ";
