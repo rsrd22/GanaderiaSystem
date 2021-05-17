@@ -2794,7 +2794,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblPartoNumero.setText("" + ListaDatos.get(0).getNumero_descendiente());
         lblFechaDestete.setText(ListaDatos.get(0).getFecha_destete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFecha_destete());
         lblPesoDestete.setText("" + ListaDatos.get(0).getPeso_destete());
-        
+
         lblFecUltParto.setText(ListaDatos.get(0).getFecha_destete().equals("1900-01-01") ? STRING_VACIO : "" + ListaDatos.get(0).getFecha_destete());
         lblUltimoPeso.setText(ListaDatos.get(0).getPeso());
 
@@ -2829,9 +2829,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
         if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumero_mama())) {
             listaHistorico.put(new String[]{
-                "Número del animal", 
+                "Número del animal",
                 "animales",
-                "numero", 
+                "numero",
                 ListaDatos.get(0).getId(),
                 ListaDatos.get(0).getId_tipo_animal()
             }, lblNumero);
@@ -2869,9 +2869,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             jTabbedPane1.setEnabledAt(1, false);
         }
 
-        jTabbedPane1.setEnabledAt(6, ListaDatos.get(0).getGenero().equals("hembra"));
-        jTabbedPane1.setEnabledAt(7, ListaDatos.get(0).getGenero().equals("hembra"));
-        jTabbedPane1.setSelectedIndex(0);
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.isEnabledAt(jTabbedPane1.getSelectedIndex()) ? jTabbedPane1.getSelectedIndex() : 0);
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
@@ -2882,10 +2880,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             GetDatosParto();
         } else {
             lblNovilla.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            jTabbedPane1.setEnabledAt(6,false);
+            jTabbedPane1.setEnabledAt(7,false);
         }
 
         lblLocalizacion.setText("" + localizacion);
         lblFecUltPeso.setText("" + FecUltPeso);
+        jTabbedPane1.repaint();
     }
 
     public void ActualizarDatosAnimal() {
@@ -3129,10 +3130,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     //<editor-fold defaultstate="collapsed" desc="TabbetPane Palpacion">
     private void GetDatosPalpacion() {
         ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltroNew(id_Animal);
-
-        if (ListaDatosPalpacion.size() > 0) {
+        
+        boolean tienePalpacion = ListaDatosPalpacion.size() > 0;
+        if (tienePalpacion) {
             LlenarTablaPalpacion();
         }
+        jTabbedPane1.setEnabledAt(6, tienePalpacion);
     }
 
     private void LlenarTablaPalpacion() {
@@ -3202,17 +3205,19 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="TabbetPane Parto">
     public void GetDatosParto() {
-        ListaDatosPartos = controlPalpacion.getDatosParto(ListaDatos.get(0)); 
+        ListaDatosPartos = controlPalpacion.getDatosParto(ListaDatos.get(0));
 
-        if (ListaDatosPartos.size() > 0) {
+        boolean tienePartos = ListaDatosPartos.size() > 0;
+        if (tienePartos) {
             LlenarPnlPartos();
         }
+        jTabbedPane1.setEnabledAt(7, tienePartos);
     }
 
     private void LlenarPnlPartos() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        int fila = -1, y = 0, w =0;
+        int fila = -1, y = 0, w = 0;
         sizeCrias = ListaDatosPartos.size();
 
         //<editor-fold defaultstate="collapsed" desc="INIT ACORDEON CRIAS">
@@ -3242,7 +3247,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
         panelEncabezado.add(lblEncabezadoCrias, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -3527,7 +3532,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 //</editor-fold>
 
             y++;
-            System.out.println("********************w------"+w);
+            System.out.println("********************w------" + w);
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = y;
@@ -3544,12 +3549,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
             panelesCria.add(pnlCriaAux);
         }
-        
-        
+
         JPanel panelEnd = new JPanel();
         JLabel lblEnd = new JLabel();
-        panelEnd.setBackground(new java.awt.Color(255,255,255));
-        panelEnd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255,255,255)));
+        panelEnd.setBackground(new java.awt.Color(255, 255, 255));
+        panelEnd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         panelEnd.setLayout(new java.awt.GridBagLayout());
 
         lblEnd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -3566,7 +3570,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
         panelEnd.add(lblEnd, gridBagConstraints);
-        
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = y++;
@@ -3578,7 +3582,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         pnlContenedorPartos.add(panelEnd, gridBagConstraints);
-        
+
 //        hidePanelsCrias();
     }
 
