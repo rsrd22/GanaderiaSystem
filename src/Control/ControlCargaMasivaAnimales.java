@@ -31,50 +31,52 @@ public class ControlCargaMasivaAnimales {
         int banPesoNac = 0;
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL ANIMAL">
         consultas.add(
-                //datos.get("NUM_PARTOS");
+                
+                //<editor-fold defaultstate="collapsed" desc="INSERT RANIMALES">
+                "INSERT INTO `ranimales`\n" +
+                "(`id`,`id_tipo_animal`,`hierro`,`numero`,`numero_descendiente`,`estado_descendiente`,\n" +
+                "`numero_parto`,`cantidad_parto`,`es_madre`,`numero_mama`,`numero_mama_adoptiva`,\n" +
+                "`peso`,`genero`,`grupo`,`calificacion`,`notas`,`fecha_destete`,`capado`,\n" +
+                "`fecha_nacimiento`,`muerte`,`peso_destete`,`destete`,`fecha_muerte`,`descripcion_muerte`,\n" +
+                "`venta`,`fecha_venta`,`tipo_venta`,`precio_venta`,`peso_canal`,`fecha_novilla`,`hierro_fisico`,\n" +
+                "`implante`,`descornado`,`fecha`,`id_usuario`)\n" +
+                "VALUES (0,\n" +
+                "        " + datos.get("IDTIPOANIMAL")+ ",\n" +
+                "        " + datos.get("IDHIERRO") + ",\n" +
+                "        '" + datos.get("NUM_ANIMAL") + "',\n" +
+                "        " + datos.get("NUMERO_DESCENDIENTE") + ",\n" +
+                "        '1',\n" +
+                "        NULL,\n" +
+                "        " + datos.get("NUM_PARTOS") + ",\n" +
+                "        " + datos.get("ES_MADRE") + ",\n" +
+                "        '" + datos.get("NUM_MADRE").replace("_", "") + "',\n" +
+                "        '',\n" +
+                "        " + datos.get("PESO") + ",\n" +
+                "        '" + datos.get("SEXO") + "',\n" +
+                "        " + datos.get("IDGRUPO") + ",\n" +
+                "        '3',\n" +
+                "        '" + datos.get("NOTAS").replace("_", "")+ "',\n" +
+                "        '" + datos.get("FEC_DESTETE") + "',\n" +
+                "        '" + datos.get("CAPADO") + "',\n" +
+                "        '" + datos.get("FEC_NACIMIENTO") + "',\n" +
+                "        '0',\n" +
+                "        " + datos.get("PESO_DESTETE") + ",\n" +
+                "        '" + datos.get("DESTETE") + "',\n" +
+                "        '1900-01-01',\n" +
+                "        '',\n" +
+                "        '0',\n" +
+                "        '1900-01-01',\n" +
+                "        NULL,\n" +
+                "        NULL,\n" +
+                "        NULL,\n" +
+                "        '1900-01-01',\n" +
+                "        '" + datos.get("HIERRO_C") + "',\n" +
+                "        '" + datos.get("IMPLANTE") + "',\n" +
+                "        '" + datos.get("DESCORNADO") + "',\n" +
+                "        NOW(),\n" +
+                "        " + datos.get("ID_USUARIO") + ");"
+//</editor-fold>
 
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO animales (id,id_tipo_animal,numero, numero_partos,numero_mama,numero_mama_adoptiva,genero,"
-                + "calificacion,notas,fecha_destete,capado,fecha_nacimiento,fecha_venta,"
-                + "fecha_muerte,fecha,id_usuario,peso,grupo,hierro,numero_descendiente,estado_descendiente,"
-                + "muerte,venta,precio_venta,tipo_venta,peso_canal,descripcion_muerte,"
-                + "fecha_novilla,peso_destete,hierro_fisico,implante,descornado,destete)\n"
-                + "VALUES (\n"
-                + "0,\n"
-                + "" + datos.get("IDTIPOANIMAL")+ ",\n"
-                + "'" + datos.get("NUM_ANIMAL") + "',\n"
-                + "" + datos.get("NUM_PARTOS") + ",\n"
-                + "'" + datos.get("NUM_MADRE").replace("_", "") + "',\n"
-                + "'',\n"
-                + "'" + datos.get("SEXO") + "',\n"
-                + "'3',\n"
-                + "'" + datos.get("NOTAS").replace("_", "")+ "',\n"
-                + "'" + datos.get("FEC_DESTETE") + "',\n"
-                + "'" + datos.get("CAPADO") + "',\n"
-                + "'" + datos.get("FEC_NACIMIENTO") + "',\n"
-                + "'1900-01-01',\n"
-                + "'1900-01-01',\n"
-                + "NOW(),\n"
-                + ""+datosUsuario.datos.get(0).get("ID_USUARIO")+",\n"
-                + "" + datos.get("PESO") + ",\n"
-                + "" + datos.get("IDGRUPO") + ",\n"
-                + "" + datos.get("IDHIERRO") + ",\n"
-                + "" + datos.get("NUMERO_DESCENDIENTE") + ",\n"
-                + "1,\n"
-                + "'0',\n"
-                + "'0',\n"
-                + "NULL,\n"
-                + "NULL,\n"
-                + "NULL,\n"
-                + "'',\n"
-                + "'1900-01-01',\n"
-                + "" + datos.get("PESO_DESTETE") + ",\n"
-                + "'" + datos.get("HIERRO_C") + "',\n"
-                + "'" + datos.get("IMPLANTE") + "',\n"
-                + "'" + datos.get("DESCORNADO") + "',\n"
-                + "'" + datos.get("DESTETE") + "'\n"//AGREGADA
-                + ")"
-        //</editor-fold>
         );
 //</editor-fold>
 
@@ -86,7 +88,7 @@ public class ControlCargaMasivaAnimales {
                 + ")\n"
                 + "VALUES (\n"
                 + "0,\n"
-                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
+                + "(SELECT id FROM ranimales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                 + "" + datos.get("IDFINCA")+ ",\n"
                 + "" + datos.get("IDGRUPO") + ",\n"
                 + "     NOW(),\n"
@@ -105,7 +107,7 @@ public class ControlCargaMasivaAnimales {
                        //<editor-fold defaultstate="collapsed" desc="INSERT">
                     "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                     + "0,\n"
-                    + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
+                    + "(SELECT id FROM ranimales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                     + "     NOW(),\n"
                     + "" + datos.get("PESO_NACIMIENTO") + ",\n"
                     + "0,\n"
@@ -133,7 +135,7 @@ public class ControlCargaMasivaAnimales {
                    //<editor-fold defaultstate="collapsed" desc="INSERT">
                 "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                 + "0,\n"
-                + "(SELECT id FROM animales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
+                + "(SELECT id FROM ranimales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
                 + "     NOW(),\n"
                 + "" + datos.get("PESO") + ",\n"
                 + "0,\n"
@@ -168,10 +170,11 @@ public class ControlCargaMasivaAnimales {
         ArrayList<String> consultas = new ArrayList<>();
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
-                "UPDATE animales SET\n"
+                "UPDATE ranimales SET\n"
                 + "id_tipo_animal = " + datos.get("IDTIPOANIMAL") + ",\n"
                 + "numero_mama = '" + datos.get("NUM_MADRE").replace("_", "") + "',\n"
                 + "peso = " + datos.get("PESO") + ",\n"
+                + "cantidad_parto =  "+datos.get("NUM_PARTOS") + ",\n"
                 + "numero_descendiente = " + datos.get("NUMERO_DESCENDIENTE") + ",\n"
                 + "grupo = " + datos.get("IDGRUPO") + ",\n"
                 + "hierro = " + datos.get("IDHIERRO") + ",\n"
@@ -235,7 +238,7 @@ public class ControlCargaMasivaAnimales {
 
         //<editor-fold defaultstate="collapsed" desc="Actualiza peso tbl Animal">
         consultas.add(
-                "update `animales`\n" +
+                "update `ranimales`\n" +
                     "set `peso` = " + datos.get("PESO") + "\n" +
                     "where `id` = " + datos.get("IDANIMAL")+ ";"
         

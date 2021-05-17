@@ -56,7 +56,7 @@ public class ControlTraslado implements IControl {
                                 "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
                                 "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n" +
                                 ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n"+
-                                "FROM `animales` animal\n" +
+                                "FROM `ranimales` animal\n" +
                                 "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"+
                                 "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n" +
                                 "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n" +
@@ -84,7 +84,7 @@ public class ControlTraslado implements IControl {
                                 "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n" +
                                 "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n" +
                                 ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n"+
-                                "FROM `animales` animal\n" +
+                                "FROM `ranimales` animal\n" +
                                 "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"+
                                 "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n" +
                                 "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n" +
@@ -218,7 +218,7 @@ public class ControlTraslado implements IControl {
                             "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n" +
                             "grup.`descripcion` AS GRUPO\n" +
                             ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n" +
-                            "FROM `animales` animal\n" +
+                            "FROM `ranimales` animal\n" +
                             "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n" +
                             "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n" +
                             "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n" +
@@ -239,7 +239,7 @@ public class ControlTraslado implements IControl {
                             "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n" +
                             "grup.`descripcion` AS GRUPO\n" +
                             ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n" +
-                            "FROM `animales` animal\n" +
+                            "FROM `ranimales` animal\n" +
                             "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n" +
                             "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n" +
                             "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n" +
@@ -277,7 +277,7 @@ public class ControlTraslado implements IControl {
             add = ", fecha_novilla = "+Utilidades.ValorNULL(datos.getFechaTraslado())+" \n";
         }
         
-        consultas.add("UPDATE `animales`\n" +
+        consultas.add("UPDATE `ranimales`\n" +
                         "SET `id_tipo_animal` = '"+datos.getLote()+"', \n" +
                         "grupo = '"+datos.getIdGrupo()+"'\n"+    
                         add+
@@ -299,7 +299,7 @@ public class ControlTraslado implements IControl {
     }
 
     public List<Map<String, String>> getIdsAnimalesxGrupos(String id_tipo_animal, String ids_grupos) {
-        String consulta = "SELECT id as ID FROM `animales` ani \n" +
+        String consulta = "SELECT id as ID FROM `ranimales` ani \n" +
                             "WHERE ani.`id_tipo_animal` = '"+id_tipo_animal+"' AND grupo in ("+ids_grupos+")\n" +
                             "AND venta = '0' AND muerte = '0'";
         
@@ -312,7 +312,7 @@ public class ControlTraslado implements IControl {
     public int ActulizarAnimales(Map<String, String> datos) {
         ArrayList<String> consultas = new ArrayList<>();
                 
-        consultas.add("UPDATE `animales`\n" +
+        consultas.add("UPDATE `ranimales`\n" +
                             "SET `id_tipo_animal` = '"+datos.get("IDTPO_DESTINO")+"',  \n" +
                             "grupo = '"+datos.get("IDGPO_DESTINO")+"'   \n" +
                             "WHERE id_tipo_animal = '"+datos.get("IDTPO_ORIGEN")+"' AND grupo = '"+datos.get("IDGPO_ORIGEN")+"' AND venta = '0' AND muerte ='0';");
@@ -360,7 +360,7 @@ public class ControlTraslado implements IControl {
         for (ModeloTraslado traslado: ListamodeloTraslado) {
             consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                    "INSERT INTO ganadero.traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                    "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
                     + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
                     + ")\n"
                     + "VALUES (\n"
