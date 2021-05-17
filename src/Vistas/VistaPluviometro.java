@@ -6,6 +6,7 @@
 
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.*;
 import Modelo.*;
 import Tablas.TablaRender;
@@ -81,6 +82,8 @@ public class VistaPluviometro extends javax.swing.JPanel {
         LimpiarFomulario();
         CargarListaFincas();
         InicializarTblPluviometro();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     public void InicializarTblPluviometro() {
@@ -375,7 +378,8 @@ public class VistaPluviometro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-        //LimpiarFomulario();
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
         LlenarDatosTabla();
 

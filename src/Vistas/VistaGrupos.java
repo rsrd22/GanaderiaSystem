@@ -6,6 +6,7 @@
 package Vistas;
 
 import Busqueda.VistaBusqueda;
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.ControlGrupos;
 import Control.Retorno;
@@ -76,6 +77,9 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
         };
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimal);
     }
 
     private void cargarComboFincas() {
@@ -598,6 +602,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     }//GEN-LAST:event_cbEstadoActionPerformed
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             String idFinca = fincas.get(indice).get("id");
@@ -610,6 +616,8 @@ public class VistaGrupos extends javax.swing.JPanel implements IControlesUsuario
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void cbTipoAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimal);
+        
         int indice = cbTipoAnimal.getSelectedIndex();
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");

@@ -6,6 +6,7 @@
 package Vistas;
 
 import Busqueda.VistaBusqueda;
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.ControlTipoAnimales;
 import Control.Retorno;
@@ -64,6 +65,8 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     VistaTipoAnimales(ModeloVentanaGeneral modeloVentanaGeneral) {
@@ -393,6 +396,8 @@ public class VistaTipoAnimales extends javax.swing.JPanel implements IControlesU
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             txtCodigoFinca.setText(fincas.get(indice).get("id"));

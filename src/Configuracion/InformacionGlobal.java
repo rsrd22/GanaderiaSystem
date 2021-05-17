@@ -5,29 +5,47 @@
  */
 package Configuracion;
 
+import javax.swing.JComboBox;
+
 /**
  *
  * @author DOLFHANDLER
  */
 public class InformacionGlobal {
 
-    private static String idFinca = "";
-    private static String idTipoAnimal = "";
+    private static String finca = "";
+    private static String tipoAnimal = "";
 
-    public static String getIdFinca() {
-        return idFinca;
+    public static void setFincaDesdeConstructor(JComboBox combo) {
+        if (combo.getModel().getSize() > 1) {
+            if (!InformacionGlobal.finca.isEmpty()) {
+                combo.getModel().setSelectedItem(InformacionGlobal.finca);
+            }
+        }
     }
 
-    public static void setIdFinca(String aIdFinca) {
-        idFinca = aIdFinca;
+    public static void setFincaDesdeEventoChange(JComboBox combo) {
+        if (combo.getModel().getSize() > 1) {
+            if (combo.getSelectedIndex() > 0) {
+                InformacionGlobal.finca = combo.getSelectedItem().toString();
+            }
+        }
     }
 
-    public static String getIdTipoAnimal() {
-        return idTipoAnimal;
+    public static void setTipoAnimalDesdeConstructor(JComboBox combo) {
+        if (combo.getModel().getSize() > 1) {
+            if (!InformacionGlobal.tipoAnimal.isEmpty()) {
+                combo.getModel().setSelectedItem(InformacionGlobal.finca);
+            }
+        }
     }
 
-    public static void setIdTipoAnimal(String aIdTipoAnimal) {
-        idTipoAnimal = aIdTipoAnimal;
+    public static void setTipoAnimalDesdeEventoChange(JComboBox combo) {
+        if (combo.getModel().getSize() > 1) {
+            if (combo.getSelectedIndex() > 0) {
+                InformacionGlobal.tipoAnimal = combo.getSelectedItem().toString();
+            }
+        }
     }
 
 }

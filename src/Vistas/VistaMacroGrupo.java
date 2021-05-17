@@ -6,6 +6,7 @@
 package Vistas;
 
 import Busqueda.VistaBusqueda;
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.ControlMacroGrupo;
 import Control.Retorno;
@@ -64,6 +65,8 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     public VistaMacroGrupo(ModeloVentanaGeneral modeloVentanaGeneral) {
@@ -384,6 +387,8 @@ public class VistaMacroGrupo extends javax.swing.JPanel implements IControlesUsu
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             txtCodigoFinca.setText(fincas.get(indice).get("id"));

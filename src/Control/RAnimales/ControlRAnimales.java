@@ -371,7 +371,7 @@ public class ControlRAnimales implements IControl {
         if (!_objeto.getActualizarRegistroMadre().isEmpty()) {
             consultas.add(_objeto.getActualizarRegistroMadre());
         }
-//</editor-fold>
+        //</editor-fold>
 
         return EjecutarConsultas(consultas);
     }
@@ -379,10 +379,11 @@ public class ControlRAnimales implements IControl {
     @Override
     public int Actualizar(Object o) {
         ArrayList<String> consultas = new ArrayList<>();
-        ModeloRAnimales animal = (ModeloRAnimales)o;
+        ModeloRAnimalesEntrada _objeto = (ModeloRAnimalesEntrada) o;
+        ModeloRAnimales animal = _objeto.getAnimal();
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelAnimal">
-        consultas.add("UPDATE `ranimales` SET \n"                
+        consultas.add("UPDATE `ranimales` SET \n"
                 + "id_tipo_animal=" + animal.getId_tipo_animal() + ",\n"
                 + "hierro=" + animal.getHierro() + ",\n"
                 + "numero='" + animal.getNumero() + "',\n"
@@ -416,9 +417,14 @@ public class ControlRAnimales implements IControl {
                 + "descornado='" + animal.getDescornado() + "',\n"
                 + "fecha=" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
                 + "id_usuario=" + animal.getId_usuario() + "\n"
-                + "WHERE id="+animal.getId());
+                + "WHERE id=" + animal.getId());
 //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
+        if (!_objeto.getActualizarRegistroMadre().isEmpty()) {
+            consultas.add(_objeto.getActualizarRegistroMadre());
+        }
+        //</editor-fold>
         return EjecutarConsultas(consultas);
     }
 

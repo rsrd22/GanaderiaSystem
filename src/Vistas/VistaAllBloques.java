@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.*;
 import Modelo.*;
 import Tablas.*;
@@ -64,6 +65,8 @@ public class VistaAllBloques extends javax.swing.JPanel {
         CargarListaFincas();
         LimpiarFomulario();
         InicializarTblBloques();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     public void InicializarTblBloques() {
@@ -392,7 +395,8 @@ public class VistaAllBloques extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
         AreaFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("AREA");
         AccionCombo();
