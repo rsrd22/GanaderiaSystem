@@ -588,7 +588,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
             }
 
         } catch (HeadlessException e) {
-
+                JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -668,6 +668,8 @@ public class VistaBusqueda extends javax.swing.JFrame {
             ((VistaGrupos) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaAnimales) {
             ((VistaAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
+        } else if (objeto.getPanelsolicitante() instanceof VistaRAnimales) {
+            ((VistaRAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaTipoAnimales) {
             ((VistaTipoAnimales) objeto.getPanelsolicitante()).btnConsultar.setEnabled(true);
         } else if (objeto.getPanelsolicitante() instanceof VistaActividades) {

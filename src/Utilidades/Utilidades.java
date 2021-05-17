@@ -422,6 +422,10 @@ public class Utilidades {
         return lista.size() > 0;
     }
 
+    public static boolean isNullOREmpty(String texto) {
+        return texto.isEmpty() || texto.equalsIgnoreCase("null");
+    }
+
     public String convertirNumeroEnLetras(int numero) {
         String moneda = "";
 

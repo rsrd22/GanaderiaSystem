@@ -5,13 +5,13 @@ package Vistas.RAnimales;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import BaseDeDatos.gestorMySQL;
 import Busqueda.VistaBusqueda;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
 import Control.ControlTraslado;
 import Control.RAnimales.ControlRAnimales;
 import Control.Retorno;
-import Control._Animales.Control_Animales;
 import GestionControles.Control;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
@@ -23,9 +23,6 @@ import Modelo.ModeloVentanaGeneral;
 import Modelo.RAnimales.ModeloRAnimales;
 import Modelo.RAnimales.ModeloRAnimalesEntrada;
 import Modelo.RAnimales.ModeloRAnimalesSalida;
-import Modelo._Animales.Modelo_Animales;
-import Modelo._Animales.Modelo_AnimalesDescendientes;
-import Modelo._Animales.Modelo_AnimalesEntrada;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Estado;
 import Utilidades.Expresiones;
@@ -75,6 +72,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     private String idMadre = "NULL";
     private Map<String, String> datosMadre;
+    private Map<String, String> datosPartos;
 
     /**
      * Creates new form VistaAnimales
@@ -82,6 +80,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     public VistaRAnimales() {
         initComponents();
         datosMadre = new HashMap<>();
+        datosPartos = new HashMap<>();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
         txtValorVenta.setEnabled(false);
@@ -91,7 +90,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         panelFechaNovilla.setVisible(false);
 
         pnlDestete.setVisible(false);
-//        lblNovilla.setVisible(false);
         panelMadreAdoptiva.setVisible(false);
         txtPesoCanal.setVisible(false);
         panelInfoVenta.setVisible(false);
@@ -99,7 +97,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
-//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         modelo = new ModeloAnimales();
@@ -122,13 +119,13 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     public VistaRAnimales(ModeloVentanaGeneral modeloVista) {
         initComponents();
         datosMadre = new HashMap<>();
+        datosPartos = new HashMap<>();
         iniciarComponentes();
         cbFinca.setBackground(Color.cyan);
 
         panelFechaNovilla.setVisible(false);
 
         pnlDestete.setVisible(false);
-//        lblNovilla.setVisible(false);
         panelMadreAdoptiva.setVisible(false);
 
         txtPesoCanal.setVisible(false);
@@ -137,7 +134,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
         lblNumeroDescendiente.setVisible(false);
         txtNumeroDescendiente.setVisible(false);
-//        txtNumeroDescendiente.setEnabled(false);
 
         controlGral = new ControlGeneral();
         objetoVentana = modeloVista;
@@ -339,6 +335,14 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         control = new Control(false, chkCapado);
         control.setLimpiarDespuesDeGuardar(true);
         controles.addControl(control);
+
+        control = new Control(true, txtNumeroPartos);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
+
+        control = new Control(true, txtNumeroDescendiente);
+        control.setLimpiarDespuesDeGuardar(true);
+        controles.addControl(control);
     }
 
     /**
@@ -461,7 +465,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         slCalificacion.setPaintTicks(true);
         slCalificacion.setValue(3);
         slCalificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Calificación", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(59, 123, 50))); // NOI18N
-        slCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        slCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 12;
@@ -558,9 +562,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cbGenero.setForeground(new java.awt.Color(59, 123, 50));
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Hembra", "Macho" }));
         cbGenero.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        cbGenero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbGeneroActionPerformed(evt);
+        cbGenero.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbGeneroItemStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1658,7 +1662,15 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
         if (!txtNumero.getText().isEmpty()) {
-            boolean mostrar = txtNumeroMama.getText().trim().equals(txtNumero.getText().trim());
+            String numero = "";
+            if (txtNumero.getText().trim().contains("-")) {
+                String sep[] = txtNumero.getText().trim().split("-");
+                numero = sep[0];
+            } else {
+                numero = txtNumero.getText().trim();
+            }
+
+            boolean mostrar = txtNumeroMama.getText().trim().equals(numero);
             lblNumeroDescendiente.setVisible(mostrar);
             txtNumeroDescendiente.setVisible(mostrar);
             if (!mostrar) {
@@ -1707,12 +1719,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             }
         }
     }//GEN-LAST:event_chkAdoptivoMouseClicked
-
-    private void cbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGeneroActionPerformed
-        boolean habilitar = cbGenero.getSelectedItem().toString().equalsIgnoreCase("macho");
-        chkCapado.setEnabled(habilitar);
-        chkCapado.setSelected(!habilitar ? false : chkCapado.isSelected());
-    }//GEN-LAST:event_cbGeneroActionPerformed
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         int indice = cbFinca.getSelectedIndex();
@@ -1827,7 +1833,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             if (!madreExiste(txtNumeroMama.getText().trim(), txtCodigoTipoAnimal.getText())) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "El número " + txtNumeroMama.getText().trim() + " no se encuentra registrado en el sistema."
+                        "El número " + txtNumeroMama.getText().trim() + " no se encuentra registrado en el sistema"
+                        + "\n para la finca y el tipo de animal seleccionado."
                 );
                 txtNumero.setText("");
                 txtNumeroMama.setText("");
@@ -1845,7 +1852,16 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
             String nroDescendiente = _control.ObtenerUltimoDescendiente(idMadre);
             sufijo = (char) ((int) sufijo + Integer.parseInt(nroDescendiente));
-            txtNumero.setText((txtNumero.getText() + sufijo).toUpperCase());
+
+            if (txtNumero.getText().contains("-")) {
+                String sep[] = txtNumero.getText().split("-");
+                if (sep.length > 1) {
+                    txtNumero.setText((sep[0] + "-" + sufijo).toUpperCase());
+                }
+            } else {
+                txtNumero.setText((txtNumero.getText() + "-" + sufijo).toUpperCase());
+            }
+
             if (nroDescendiente.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "La madre número " + numeroMadre + " no existe.");
                 txtNumeroMama.setText("");
@@ -1924,6 +1940,16 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         boolean muerte = chkMuerte.isSelected();
         casoMuerte();
     }//GEN-LAST:event_chkMuerteMouseReleased
+
+    private void cbGeneroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbGeneroItemStateChanged
+        enabledChkGenero();
+    }//GEN-LAST:event_cbGeneroItemStateChanged
+
+    private void enabledChkGenero() {
+        boolean habilitar = cbGenero.getSelectedItem().toString().equalsIgnoreCase("macho");
+        chkCapado.setEnabled(habilitar);
+        chkCapado.setSelected(!habilitar ? false : chkCapado.isSelected());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollCausaMuerte;
@@ -2012,7 +2038,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         if (objeto.getOpcion() == 0) {//SE LLAMA LA BUSQUEDA DESDE LA MISMA VISTA
             ControlRAnimales _control = new ControlRAnimales();
             ModeloRAnimalesSalida mas = new ModeloRAnimalesSalida();
-            
+
             //<editor-fold defaultstate="collapsed" desc="SE ESTABLECEN LOS DATOS DEL FORMULARIO">
             String id = retorno.get("ID");
             mas = ((ArrayList<ModeloRAnimalesSalida>) _control.ObtenerDatosKey(id)).get(0);
@@ -2054,7 +2080,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             txtCodigoHierro.setText(mas.getHierro());
 
             txtCodigoAnimal.setText(mas.getId());
-            txtNumeroMama.setText(mas.getNumero_mama());
+            txtNumeroMama.setText(Utilidades.isNullOREmpty(mas.getNumero_mama()) ? "" : mas.getNumero_mama());
             txtNumero.setText(mas.getNumero());
             cbGenero.setSelectedItem(Utilidades.CapitaliceTexto(mas.getGenero()));
             txtPesoKg.setText(mas.getPeso());
@@ -2076,11 +2102,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
                 txtNumeroMamaAdoptiva.setText(mas.getNumero_mama_adoptiva());
             }
 
-            boolean mostrar = mas.getNumero_descendiente().length() > 0;
-            lblNumeroDescendiente.setVisible(mostrar);
-            txtNumeroDescendiente.setVisible(mostrar);
+            txtNumeroDescendiente.setText(Utilidades.isNullOREmpty(mas.getNumero_descendiente()) ? "" : mas.getNumero_descendiente());
 
-            txtNumeroDescendiente.setText(mas.getNumero_descendiente().equals("null") ? "" : mas.getNumero_descendiente());
+            mostrarCampoDescendiente();
 
             try {
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -2097,10 +2121,16 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
                 jdFechaDestete.setVisible(true);
                 txtPesoDestete.setVisible(true);
                 txtPesoDestete.setText(mas.getPeso_destete());
-                fecha = formato.parse(mas.getFecha_destete());
-                jdFechaDestete.setDate(fecha);
+
+                if (mas.getFecha_destete().equals(Utilidades.FECHA_POR_DEFECTO)) {
+                    jdFechaDestete.setCalendar(Calendar.getInstance());
+                } else {
+                    fecha = formato.parse(mas.getFecha_destete());
+                    jdFechaDestete.setDate(fecha);
+                }
 
                 if (mas.getFecha_muerte().equals(Utilidades.FECHA_POR_DEFECTO)) {
+                    jdFechaMuerte.setCalendar(Calendar.getInstance());
                     jdFechaMuerte.setVisible(false);
                 } else {
                     chkMuerte.setSelected(true);
@@ -2281,15 +2311,23 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         ma.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         ma.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         ma.setNumero(txtNumero.getText().trim());
-        ma.setNumero_mama(txtNumeroMadre);
+        ma.setNumero_mama(txtNumeroMama.getText().trim());
         ma.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         ma.setFecha_nacimiento(sdf.format(fechaNacimiento.getTime()));
         ma.setNumero_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
-        ma.setEstado_descendiente(txtNumeroMama.getText().trim().equals(txtNumero.getText().trim()) ? "0" : "1");
+
+        String numero = "";
+        if (txtNumero.getText().contains("-")) {
+            String sep[] = txtNumero.getText().split("-");
+            numero = sep[0].trim();
+        } else {
+            numero = txtNumero.getText().trim();
+        }
+        ma.setEstado_descendiente(txtNumeroMama.getText().trim().equals(numero) ? "0" : "1");
         ma.setNumero_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "NULL" : txtNumeroDescendiente.getText().trim());
         ma.setNumero_parto(txtNumeroPartos.getText().trim().length() == 0 ? "NULL" : txtNumeroPartos.getText().trim());
-        ma.setCantidad_parto(txtNumeroPartos.getText().trim());
+        ma.setCantidad_parto("NULL");
 
         if (chkNovilla.isSelected()) {
             Calendar fechaDeNovilla = jdFechaDeNovilla.getCalendar();
@@ -2357,8 +2395,18 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         String consulta = "";
         if (datosMadre.size() > 0) {
             if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
-                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID");
+                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID")+";";
             }
+        }
+
+        if (!ma.getNumero_mama().isEmpty()) {
+            int cantidadParto = 0;
+            datosPartos = _control.ObtenerCantidadPartos(ma.getNumero_mama(), ma.getId_tipo_animal());
+            int partos = Integer.parseInt(datosPartos.get("PARTOS"));
+            int numeroParto = Integer.parseInt(ma.getNumero_parto());
+            cantidadParto = partos > numeroParto ? partos : numeroParto;
+            consulta += "UPDATE ranimales SET cantidad_parto ="+cantidadParto+" "
+                    + "WHERE numero='" + ma.getNumero_mama() + "' AND id_tipo_animal='"+ma.getId_tipo_animal()+"';";
         }
 //</editor-fold>
 
@@ -2383,7 +2431,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
                 editar = Estado.GUARDAR;
                 jdFechaDestete.setCalendar(fechaDestete);
 
-                datosMadre = new HashMap<String, String>();
+                datosMadre = new HashMap<>();
+                datosPartos = new HashMap<>();
                 idMadre = "NULL";
                 lblNumeroDescendiente.setVisible(false);
                 txtNumeroDescendiente.setVisible(false);
@@ -2400,7 +2449,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         }
 
         JOptionPane.showMessageDialog(this, mensaje);
-
     }
 
     private void Modificar() {
@@ -2412,12 +2460,20 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         chkDestete.setEnabled(true);
         chkVenta.setEnabled(true);
         chkMuerte.setEnabled(true);
+        enabledChkGenero();
+        mostrarCampoDescendiente();
     }
 
     private void Descartar() {
         Utilidades.estadoFormulario(EstadoControles.DESPUES_DE_DESCARTAR, controles);
         Utilidades.estadoBotonesDeControl(EstadoControles.DESPUES_DE_DESCARTAR, botones);
         editar = Estado.GUARDAR;
+
+        lblNumeroDescendiente.setVisible(false);
+        txtNumeroDescendiente.setVisible(false);
+        txtNumeroDescendiente.setText("");
+
+        enabledChkGenero();
     }
 
     private void Consultar() {
@@ -2430,7 +2486,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     private void Eliminar() {
         int respuesta = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar este Registro?");
         if (respuesta == JOptionPane.YES_OPTION) {
-            int retorno = control.Eliminar(modelo);
+            ControlRAnimales _control = new ControlRAnimales();
+
+            int retorno = _control.Eliminar(txtCodigoAnimal.getText());
 
             String mensaje = "";
             switch (retorno) {
@@ -2554,6 +2612,13 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             consulta = lista.get("IDPESAJE");
         }
         return consulta;
+    }
+
+    private void mostrarCampoDescendiente() {
+        boolean mostrar = txtNumeroDescendiente.getText().length() > 0;
+
+        lblNumeroDescendiente.setVisible(mostrar);
+        txtNumeroDescendiente.setVisible(mostrar);
     }
 
 }

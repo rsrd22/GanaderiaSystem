@@ -43,13 +43,13 @@ public class ControlRAnimales implements IControl {
     public Object ObtenerDatos() {
         //<editor-fold defaultstate="collapsed" desc="selectDatosFromQuery">
         String consulta = "SELECT \n"
-                + "a.*,\n"
-                + "b.descripcion descTipoAnimal, \n"
-                + "c.descripcion descGrupo, \n"
-                + "d.descripcion descHierro,\n"
-                + "b.id_finca idFinca,\n"
-                + "e.descripcion descFinca,\n"
-                + "d.id_propietario idPropietario,\n"
+                + "a.id,a.id_tipo_animal,a.hierro,a.numero,a.numero_descendiente,a.estado_descendiente,\n"
+                + "a.numero_parto,a.cantidad_parto,a.es_madre,a.numero_mama,a.numero_mama_adoptiva,\n"
+                + "a.peso,a.genero,a.grupo,a.calificacion,a.notas,a.fecha_destete,a.capado,a.fecha_nacimiento,\n"
+                + "a.muerte,a.peso_destete,a.destete,a.fecha_muerte,a.descripcion_muerte,a.venta,a.fecha_venta,\n"
+                + "a.tipo_venta,a.precio_venta,a.peso_canal,a.fecha_novilla,a.hierro_fisico,a.implante,\n"
+                + "a.descornado,a.fecha,a.id_usuario,b.descripcion descTipoAnimal,c.descripcion descGrupo, \n"
+                + "d.descripcion descHierro,b.id_finca idFinca,e.descripcion descFinca,d.id_propietario idPropietario,\n"
                 + "CONCAT(\n"
                 + "f.identificacion,\n"
                 + "   ' - ',\n"
@@ -133,13 +133,13 @@ public class ControlRAnimales implements IControl {
     public Object ObtenerDatosKey(String ID) {
         //<editor-fold defaultstate="collapsed" desc="selectDatosFromQuery">
         String consulta = "SELECT \n"
-                + "a.*,\n"
-                + "b.descripcion descTipoAnimal, \n"
-                + "c.descripcion descGrupo, \n"
-                + "d.descripcion descHierro,\n"
-                + "b.id_finca idFinca,\n"
-                + "e.descripcion descFinca,\n"
-                + "d.id_propietario idPropietario,\n"
+                + "a.id,a.id_tipo_animal,a.hierro,a.numero,a.numero_descendiente,a.estado_descendiente,\n"
+                + "a.numero_parto,a.cantidad_parto,a.es_madre,a.numero_mama,a.numero_mama_adoptiva,\n"
+                + "a.peso,a.genero,a.grupo,a.calificacion,a.notas,a.fecha_destete,a.capado,a.fecha_nacimiento,\n"
+                + "a.muerte,a.peso_destete,a.destete,a.fecha_muerte,a.descripcion_muerte,a.venta,a.fecha_venta,\n"
+                + "a.tipo_venta,a.precio_venta,a.peso_canal,a.fecha_novilla,a.hierro_fisico,a.implante,\n"
+                + "a.descornado,a.fecha,a.id_usuario,b.descripcion descTipoAnimal,c.descripcion descGrupo, \n"
+                + "d.descripcion descHierro,b.id_finca idFinca,e.descripcion descFinca,d.id_propietario idPropietario,\n"
                 + "CONCAT(\n"
                 + "f.identificacion,\n"
                 + "   ' - ',\n"
@@ -232,7 +232,7 @@ public class ControlRAnimales implements IControl {
                     "", "venta", animal.getId(),
                     "", "", "", "");
             if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
-                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
+                    + "and id_animal = " + modelAnul.getIdAnimal() + " and estado = 'Activo'")) {
                 consultas.add("UPDATE `anularventasymuertes`\n"
                         + "SET `estado` = 'Inactivo'\n"
                         + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
@@ -245,7 +245,7 @@ public class ControlRAnimales implements IControl {
                     "", "muerte", animal.getId(),
                     "", "", "", "");
             if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
-                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
+                    + "and id_animal = " + modelAnul.getIdAnimal() + " and estado = 'Activo'")) {
                 consultas.add("UPDATE `anularventasymuertes`\n"
                         + "SET `estado` = 'Inactivo'\n"
                         + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
@@ -294,10 +294,10 @@ public class ControlRAnimales implements IControl {
                 + "" + animal.getId_tipo_animal() + ",\n"
                 + "" + animal.getHierro() + ",\n"
                 + "'" + animal.getNumero() + "',\n"
-                + "" + animal.getNumero_descendiente()+ ",\n"
-                + "'" + animal.getEstado_descendiente()+ "',\n"
-                + "" + animal.getNumero_parto()+ ",\n"
-                + "0,\n"
+                + "" + animal.getNumero_descendiente() + ",\n"
+                + "'" + animal.getEstado_descendiente() + "',\n"
+                + "" + animal.getNumero_parto() + ",\n"
+                + "" + animal.getCantidad_parto() + ",\n"
                 + "" + Utilidades.CampoNULL(animal.getEs_madre()) + ",\n"
                 + "" + Utilidades.CampoNULL(animal.getNumero_mama()) + ",\n"
                 + "" + Utilidades.CampoNULL(animal.getNumero_mama_adoptiva()) + ",\n"
@@ -451,9 +451,9 @@ public class ControlRAnimales implements IControl {
                 + "" + animal.getId_tipo_animal() + ",\n"
                 + "" + animal.getHierro() + ",\n"
                 + "'" + animal.getNumero() + "',\n"
-                + "" + animal.getNumero_descendiente()+ ",\n"
-                + "'" + animal.getEstado_descendiente()+ "',\n"
-                + "" + animal.getNumero_parto()+ ",\n"
+                + "" + animal.getNumero_descendiente() + ",\n"
+                + "'" + animal.getEstado_descendiente() + "',\n"
+                + "" + animal.getNumero_parto() + ",\n"
                 + "0,\n"
                 + "" + Utilidades.CampoNULL(animal.getEs_madre()) + ",\n"
                 + "" + Utilidades.CampoNULL(animal.getNumero_mama()) + ",\n"
@@ -535,7 +535,26 @@ public class ControlRAnimales implements IControl {
 
     @Override
     public int Eliminar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> consultas = new ArrayList<>();
+        int id = Integer.parseInt(o.toString());
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL ANIMAL">
+                "DELETE FROM ranimales WHERE id = " + id
+        //</editor-fold>
+        );
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS EN EL TRASLADO">
+                "DELETE FROM traslado_animalxgrupo WHERE id_animal=" + id
+        //</editor-fold>
+        );
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS DEL HISTORICO DE PESOS">
+                "DELETE FROM pesaje WHERE id_animal=" + id
+        //</editor-fold>
+        );
+
+        return EjecutarConsultas(consultas);
     }
 
     @Override
@@ -544,13 +563,13 @@ public class ControlRAnimales implements IControl {
 
         //<editor-fold defaultstate="collapsed" desc="selectDatosFromQuery">
         String consulta = "SELECT \n"
-                + "a.*,\n"
-                + "b.descripcion descTipoAnimal, \n"
-                + "c.descripcion descGrupo, \n"
-                + "d.descripcion descHierro,\n"
-                + "b.id_finca idFinca,\n"
-                + "e.descripcion descFinca,\n"
-                + "d.id_propietario idPropietario,\n"
+                + "a.id,a.id_tipo_animal,a.hierro,a.numero,a.numero_descendiente,a.estado_descendiente,\n"
+                + "a.numero_parto,a.cantidad_parto,a.es_madre,a.numero_mama,a.numero_mama_adoptiva,\n"
+                + "a.peso,a.genero,a.grupo,a.calificacion,a.notas,a.fecha_destete,a.capado,a.fecha_nacimiento,\n"
+                + "a.muerte,a.peso_destete,a.destete,a.fecha_muerte,a.descripcion_muerte,a.venta,a.fecha_venta,\n"
+                + "a.tipo_venta,a.precio_venta,a.peso_canal,a.fecha_novilla,a.hierro_fisico,a.implante,\n"
+                + "a.descornado,a.fecha,a.id_usuario,b.descripcion descTipoAnimal,c.descripcion descGrupo, \n"
+                + "d.descripcion descHierro,b.id_finca idFinca,e.descripcion descFinca,d.id_propietario idPropietario,\n"
                 + "CONCAT(\n"
                 + "f.identificacion,\n"
                 + "   ' - ',\n"
@@ -645,6 +664,21 @@ public class ControlRAnimales implements IControl {
         }
     }
 
+    public Map<String, String> ObtenerCantidadPartos(String numeroMadre, String tipoAnimal) {
+        List<Map<String, String>> animal = new ArrayList<Map<String, String>>();
+        ControlGeneral controlGral = new ControlGeneral();
+        String consulta = consultas.get("ROBTENER_CANTIDAD_PARTOS")
+                .replaceAll("ID_TIPO_ANIMAL", tipoAnimal)
+                .replaceAll("NUMERO_MAMA", numeroMadre);
+        animal = controlGral.GetComboBox(consulta);
+
+        if (Utilidades.contieneElementos(animal)) {
+            return animal.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public String ObtenerUltimoDescendiente(String idMadre) {
         if (idMadre.equalsIgnoreCase("null")) {
             return "";
@@ -674,8 +708,6 @@ public class ControlRAnimales implements IControl {
         }
     }
 
-    
-    
     public Map<String, String> GetDatosVenta(String id_Animal) {
         try {
             String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
@@ -696,7 +728,7 @@ public class ControlRAnimales implements IControl {
             return new HashMap<String, String>();
         }
     }
-    
+
     public int ActualizarVenta(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloAnimales animal = (ModeloAnimales) _animal;
@@ -862,7 +894,7 @@ public class ControlRAnimales implements IControl {
 
     public Object ObtenerDatosAnimalesPesables(String IDFINCA, String IDTIPOANIMAL, String FECHA, String Orden) {
         try {
-            if(Orden.isEmpty()){
+            if (Orden.isEmpty()) {
                 Orden = "CONVERT(a.numero,DOUBLE) ASC";
             }
             String consulta = "SELECT\n"
@@ -902,7 +934,7 @@ public class ControlRAnimales implements IControl {
                     + "LEFT JOIN propietarioxhierro e ON a.hierro=e.id\n"
                     + "WHERE\n"
                     + "c.pesable='1' and a.muerte='0' AND venta='0' and d.id=" + IDFINCA + " and b.id=" + IDTIPOANIMAL + "\n"
-                    + "ORDER BY "+Orden;
+                    + "ORDER BY " + Orden;
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 
             traslados = mySQL.ListSQL(consulta);

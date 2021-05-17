@@ -172,7 +172,7 @@ public class Consultas {
                 + ") PROPIETARIO__200__L,\n"
                 + "e.descripcion GRUPO__120__L,\n"
                 + "UPPER(IFNULL(f.descripcion,'')) HIERRO__150__L,\n"
-                + "a.numero_mama NRO_MAMA__100__L,\n"
+                + "IFNULL(a.numero_mama,'') NRO_MAMA__100__L,\n"
                 + "a.numero NUMERO__100__L,\n"
                 + "UPPER(a.genero) GENERO__80__L\n"
                 + "FROM \n"
@@ -315,7 +315,7 @@ public class Consultas {
                 + "FROM _animales_descendientes WHERE id_madre=ID_MAMA");
 
         consultas.put("ROBTENER_ULTIMO_DESCENDIENTE", "SELECT \n"
-                + "CASE WHEN numero_descendiente IS NULL THEN 1 ELSE MAX(numero_descendiente)+1 END numeroDescendiente \n"
+                + "CASE WHEN numero_descendiente IS NULL THEN 1 ELSE COUNT(numero_descendiente)+1 END numeroDescendiente \n"
                 + "FROM ranimales WHERE numero_mama=(SELECT numero FROM ranimales WHERE id=ID_MAMA)");
 
         consultas.put("OBTENER_ID_MADRE", "SELECT IF(b.`id` IS NULL , a.`id`, b.`id_madre`) ID, IFNULL(a.es_madre,'FALSE') ES_MADRE FROM _animales a \n"
@@ -323,6 +323,9 @@ public class Consultas {
 
         consultas.put("ROBTENER_ID_MADRE", "SELECT a.`id` ID, IFNULL(a.es_madre,'FALSE') ES_MADRE FROM ranimales a \n"
                 + "WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
+
+        consultas.put("ROBTENER_CANTIDAD_PARTOS", "SELECT IFNULL(MAX(numero_parto),0) PARTOS FROM ranimales\n"
+                    + "WHERE numero_mama='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
                 + "FROM animales \n"
