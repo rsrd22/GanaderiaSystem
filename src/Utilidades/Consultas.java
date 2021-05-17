@@ -339,7 +339,7 @@ public class Consultas {
                 "SELECT a.*,b.descripcion descTipoAnimal, c.descripcion descGrupo, d.descripcion descHierro,\n"
                 + "b.id_finca idFinca, e.descripcion descFinca, d.id_propietario idPropietario,\n"
                 + "CONCAT(f.identificacion,' - ',CONCAT(TRIM(CONCAT(f.primer_nombre,' ',f.segundo_nombre)\n"
-                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario\n"
+                + "),' ',TRIM(CONCAT(f.primer_apellido,' ',f.segundo_apellido)))) descPropietario,\n"
                 + "IF(`peso_canal` = 0, '', ROUND((`peso_canal`/peso*100),1)) AS PORC,\n"
                 + "IF(`peso_canal` = 0, (`precio_venta` * peso), ROUND((`peso_canal`*`precio_venta`))) AS VVENTA\n"
                 + "FROM ranimales a\n"

@@ -1272,11 +1272,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         txtPrecioVenta.setCaretColor(new java.awt.Color(59, 123, 50));
         txtPrecioVenta.setMargin(new java.awt.Insets(2, 5, 2, 5));
         txtPrecioVenta.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPrecioVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecioVentaActionPerformed(evt);
-            }
-        });
         txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioVentaKeyReleased(evt);
@@ -1798,6 +1793,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     private void cbTipoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoVentaActionPerformed
         boolean mostrar = cbTipoVenta.getSelectedIndex() == 2;
         txtPesoCanal.setVisible(mostrar);
+        System.out.println("mostrar: "+mostrar);
+        panelInfoVenta.repaint();
     }//GEN-LAST:event_cbTipoVentaActionPerformed
 
     private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
@@ -1908,10 +1905,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         boolean chequeado = chkNovilla.isSelected();
         panelFechaNovilla.setVisible(chequeado);
     }//GEN-LAST:event_chkNovillaStateChanged
-
-    private void txtPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioVentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioVentaActionPerformed
 
     private void txtPorcentajeCanalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPorcentajeCanalKeyReleased
         // TODO add your handling code here:
@@ -2079,6 +2072,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             cbHierros.setSelectedItem(mas.getDescHierro());
             txtCodigoHierro.setText(mas.getHierro());
 
+            txtNumeroPartos.setText(mas.getNumero_parto());
             txtCodigoAnimal.setText(mas.getId());
             txtNumeroMama.setText(Utilidades.isNullOREmpty(mas.getNumero_mama()) ? "" : mas.getNumero_mama());
             txtNumero.setText(mas.getNumero());
@@ -2355,7 +2349,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             String pesoCanal = txtPesoCanal.getText();
             pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal;
             ma.setPeso_canal(pesoCanal.replace(".", "").replace(",", "."));
-            ma.setTipo_venta("'" + cbTipoVenta.getSelectedItem().toString().toLowerCase() + "'");
+            ma.setTipo_venta(cbTipoVenta.getSelectedItem().toString().toLowerCase());
         } else {
             ma.setPrecio_venta("NULL");
             ma.setPeso_canal("NULL");
@@ -2364,7 +2358,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         }
 
         if (chkAdoptivo.isSelected()) {
-            ma.setNumero_mama_adoptiva("'" + txtNumeroMamaAdoptiva.getText() + "'");
+            ma.setNumero_mama_adoptiva(txtNumeroMamaAdoptiva.getText());
         } else {
             ma.setNumero_mama_adoptiva("NULL");
         }
@@ -2419,7 +2413,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         if (editar == Estado.GUARDAR) {
             retorno = _control.Guardar(modelo);
         } else {
-            retorno = _control.Actualizar(modelo);
+            retorno = _control.Actualizar(ma);
         }
 
         String mensaje = "";

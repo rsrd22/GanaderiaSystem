@@ -379,155 +379,44 @@ public class ControlRAnimales implements IControl {
     @Override
     public int Actualizar(Object o) {
         ArrayList<String> consultas = new ArrayList<>();
-        ModeloRAnimalesEntrada _objeto = (ModeloRAnimalesEntrada) o;
-        ModeloRAnimales animal = _objeto.getAnimal();
-        ModeloTraslado traslado = _objeto.getTraslado();
-
-        if (animal.getVenta().equals("1")) {
-            //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
-            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos(
-                    "", "venta", animal.getId(),
-                    "", "", "", "");
-            if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
-                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
-                consultas.add("UPDATE `anularventasymuertes`\n"
-                        + "SET `estado` = 'Inactivo'\n"
-                        + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
-            }
-//</editor-fold>
-        }
-        if (animal.getMuerte().equals("1")) {
-            //<editor-fold defaultstate="collapsed" desc="VERIFICAR SI HAY REGISTROS ANULADOS ACTIVOS">
-            ModeloMuertesVentasHistoricos modelAnul = new ModeloMuertesVentasHistoricos(
-                    "", "muerte", animal.getId(),
-                    "", "", "", "");
-            if (mySQL.ExistenDatos("select * from anularventasymuertes where tipo = '" + modelAnul.getTipo() + "' "
-                    + "and id_animal = '" + modelAnul.getIdAnimal() + "' and estado = 'Activo'")) {
-                consultas.add("UPDATE `anularventasymuertes`\n"
-                        + "SET `estado` = 'Inactivo'\n"
-                        + "WHERE `tipo` = '" + modelAnul.getTipo() + "' AND `id_animal` = '" + modelAnul.getIdAnimal() + "' AND estado = 'Activo'");
-            }
-//</editor-fold>
-        }
+        ModeloRAnimales animal = (ModeloRAnimales)o;
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelAnimal">
-        consultas.add("insert into `ganadero`.`ranimales`\n"
-                + "            (`id`,\n"
-                + "             `id_tipo_animal`,\n"
-                + "             `hierro`,\n"
-                + "             `numero`,\n"
-                + "             `numero_descendiente`,\n"
-                + "             `estado_descendiente`,\n"
-                + "             `numero_parto`,\n"
-                + "             `cantidad_parto`,\n"
-                + "             `es_madre`,\n"
-                + "             `numero_mama`,\n"
-                + "             `numero_mama_adoptiva`,\n"
-                + "             `peso`,\n"
-                + "             `genero`,\n"
-                + "             `grupo`,\n"
-                + "             `calificacion`,\n"
-                + "             `notas`,\n"
-                + "             `fecha_destete`,\n"
-                + "             `capado`,\n"
-                + "             `fecha_nacimiento`,\n"
-                + "             `muerte`,\n"
-                + "             `peso_destete`,\n"
-                + "             `destete`,\n"
-                + "             `fecha_muerte`,\n"
-                + "             `descripcion_muerte`,\n"
-                + "             `venta`,\n"
-                + "             `fecha_venta`,\n"
-                + "             `tipo_venta`,\n"
-                + "             `precio_venta`,\n"
-                + "             `peso_canal`,\n"
-                + "             `fecha_novilla`,\n"
-                + "             `hierro_fisico`,\n"
-                + "             `implante`,\n"
-                + "             `descornado`,\n"
-                + "             `fecha`,\n"
-                + "             `id_usuario`)\n"
-                + "values (0,\n"
-                + "" + animal.getId_tipo_animal() + ",\n"
-                + "" + animal.getHierro() + ",\n"
-                + "'" + animal.getNumero() + "',\n"
-                + "" + animal.getNumero_descendiente() + ",\n"
-                + "'" + animal.getEstado_descendiente() + "',\n"
-                + "" + animal.getNumero_parto() + ",\n"
-                + "0,\n"
-                + "" + Utilidades.CampoNULL(animal.getEs_madre()) + ",\n"
-                + "" + Utilidades.CampoNULL(animal.getNumero_mama()) + ",\n"
-                + "" + Utilidades.CampoNULL(animal.getNumero_mama_adoptiva()) + ",\n"
-                + "" + animal.getPeso() + ",\n"
-                + "'" + animal.getGenero() + "',\n"
-                + "" + animal.getGrupo() + ",\n"
-                + "'" + animal.getCalificacion() + "',\n"
-                + "'" + animal.getNotas() + "',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_destete()) + ",\n"
-                + "'" + animal.getCapado() + "',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_nacimiento()) + ",\n"
-                + "'" + animal.getMuerte() + "',\n"
-                + "" + animal.getPeso_destete() + ",\n"
-                + "'" + animal.getDestete() + "',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_muerte()) + ",\n"
-                + "'" + animal.getDescripcion_muerte() + "',\n"
-                + "'" + animal.getVenta() + "',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_venta()) + ",\n"
-                + "" + Utilidades.CampoNULL(animal.getTipo_venta()) + ",\n"
-                + "" + animal.getPrecio_venta() + ",\n"
-                + "" + animal.getPeso_canal() + ",\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_novilla()) + ",\n"
-                + "'" + animal.getHierro_fisico() + "',\n"
-                + "'" + animal.getImplante() + "',\n"
-                + "'" + animal.getDescornado() + "',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
-                + "" + animal.getId_usuario() + ");");
-//</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="guardarDatosDelPrimerTrasladoDelAnimal">
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
-                + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
-                + ")\n"
-                + "VALUES (\n"
-                + "0,\n"
-                + "" + traslado.getIdAnimal() + ",\n"
-                + "" + traslado.getIdFinca() + ",\n"
-                + "" + traslado.getIdGrupo() + ",\n"
-                + "" + Utilidades.ValorNULL(traslado.getFechaTraslado()) + ",\n"
-                + "'" + traslado.getMotivo() + "',\n"
-                + "'" + traslado.getEstado() + "',\n"
-                + "" + Utilidades.ValorNULL(traslado.getFecha()) + ",\n"
-                + "" + traslado.getIdUsuario() + ")"
-        //</editor-fold>
-        );
-//</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="guardarDatosDelPrimerPeso">
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
-                + "0,\n"
-                + "" + animal.getId() + ",\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha_nacimiento()) + ",\n"
-                + "" + animal.getPeso() + ",\n"
-                + "0,\n"
-                + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
-                + "'0',\n"
-                + "'0',\n"
-                + "'0',\n"
-                + "'0',\n"
-                + "" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
-                + "" + animal.getId_usuario() + "\n"
-                + ")" //</editor-fold>
-        );
-//</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
-        if (!_objeto.getActualizarRegistroMadre().isEmpty()) {
-            consultas.add(_objeto.getActualizarRegistroMadre());
-        }
+        consultas.add("UPDATE `ranimales` SET \n"                
+                + "id_tipo_animal=" + animal.getId_tipo_animal() + ",\n"
+                + "hierro=" + animal.getHierro() + ",\n"
+                + "numero='" + animal.getNumero() + "',\n"
+                + "numero_descendiente=" + animal.getNumero_descendiente() + ",\n"
+                + "estado_descendiente='" + animal.getEstado_descendiente() + "',\n"
+                + "numero_parto=" + animal.getNumero_parto() + ",\n"
+                + "es_madre=" + Utilidades.CampoNULL(animal.getEs_madre()) + ",\n"
+                + "numero_mama=" + Utilidades.CampoNULL(animal.getNumero_mama()) + ",\n"
+                + "numero_mama_adoptiva=" + Utilidades.CampoNULL(animal.getNumero_mama_adoptiva()) + ",\n"
+                + "peso=" + animal.getPeso() + ",\n"
+                + "genero='" + animal.getGenero() + "',\n"
+                + "grupo=" + animal.getGrupo() + ",\n"
+                + "calificacion='" + animal.getCalificacion() + "',\n"
+                + "notas='" + animal.getNotas() + "',\n"
+                + "fecha_destete=" + Utilidades.ValorNULL(animal.getFecha_destete()) + ",\n"
+                + "capado='" + animal.getCapado() + "',\n"
+                + "fecha_nacimiento=" + Utilidades.ValorNULL(animal.getFecha_nacimiento()) + ",\n"
+                + "muerte='" + animal.getMuerte() + "',\n"
+                + "peso_destete=" + animal.getPeso_destete() + ",\n"
+                + "destete='" + animal.getDestete() + "',\n"
+                + "fecha_muerte=" + Utilidades.ValorNULL(animal.getFecha_muerte()) + ",\n"
+                + "descripcion_muerte='" + animal.getDescripcion_muerte() + "',\n"
+                + "venta='" + animal.getVenta() + "',\n"
+                + "fecha_venta=" + Utilidades.ValorNULL(animal.getFecha_venta()) + ",\n"
+                + "tipo_venta=" + Utilidades.CampoNULL(animal.getTipo_venta()) + ",\n"
+                + "precio_venta=" + animal.getPrecio_venta() + ",\n"
+                + "peso_canal=" + animal.getPeso_canal() + ",\n"
+                + "fecha_novilla=" + Utilidades.ValorNULL(animal.getFecha_novilla()) + ",\n"
+                + "hierro_fisico='" + animal.getHierro_fisico() + "',\n"
+                + "implante='" + animal.getImplante() + "',\n"
+                + "descornado='" + animal.getDescornado() + "',\n"
+                + "fecha=" + Utilidades.ValorNULL(animal.getFecha()) + ",\n"
+                + "id_usuario=" + animal.getId_usuario() + "\n"
+                + "WHERE id="+animal.getId());
 //</editor-fold>
 
         return EjecutarConsultas(consultas);
