@@ -454,7 +454,6 @@ public class VistaRotacion extends javax.swing.JPanel {
                                                 "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION");
          
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-        cbFinca.setSelectedIndex(1);
         CargarListaTipoAnimal();
     }
     

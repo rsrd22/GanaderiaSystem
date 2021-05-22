@@ -365,6 +365,7 @@ public class VistaTraslado extends javax.swing.JPanel {
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
+        
         if(cbTipoAnimales.getItemCount() > 0){
             //EventoComboFincas();
             System.out.println("cbTipoAnimales.getSelectedIndex()>"+cbTipoAnimales.getSelectedIndex());
@@ -424,8 +425,6 @@ public class VistaTraslado extends javax.swing.JPanel {
                                                 "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
          
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-        cbFinca.setSelectedIndex(1);
-        cbTipoAnimales.requestFocusInWindow();
         CargarListaTipoAnimales();
         
         //EventoComboFincas();
@@ -459,7 +458,6 @@ public class VistaTraslado extends javax.swing.JPanel {
         System.out.println("cbFinca.getSelectedIndex()..>"+cbFinca.getSelectedIndex());
         ListaAnimaleSeleccionados = new ArrayList<>();
         
-            //idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
         System.out.println("idFinca-->"+idFinca);
         if(idFinca.equals("ALL")){   
             allFincas = 1; 

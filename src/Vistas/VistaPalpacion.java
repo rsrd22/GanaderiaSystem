@@ -9,6 +9,7 @@ import Configuracion.InformacionGlobal;
 import Control.*;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
+import Control.RAnimales.ControlRAnimales;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
@@ -50,7 +51,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
     public Boolean BanFiltroColor;
     public List<Map<String, String>> ListaAnimales;
     public List<Map<String, String>> ListaAnimalesMostrar;
-    private ControlAnimales controlAnimales = new ControlAnimales();
+    private ControlRAnimales controlAnimales = new ControlRAnimales();
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
@@ -574,9 +575,7 @@ public class VistaPalpacion extends javax.swing.JPanel {
                 + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
 
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-        cbFinca.setSelectedIndex(1);
         CargarListaTipoAnimales();
-        //EventoComboFincas();
     }
 
     private void CargarListaTipoAnimales() {

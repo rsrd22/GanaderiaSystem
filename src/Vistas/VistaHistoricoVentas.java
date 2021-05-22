@@ -177,7 +177,6 @@ public class VistaHistoricoVentas extends javax.swing.JPanel {
         fincas = controlGral.GetComboBox(consulta);
 
         Utilidades.LlenarComboBox(cbFinca, fincas, "descripcion");
-        cbFinca.setSelectedIndex(1);
     }
 
     private void cargarComboTipoAnimales() {
