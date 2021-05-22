@@ -82,6 +82,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         NameColumnasFiltro.add("FINCA");
         NameColumnasFiltro.add("BLOQUE");
         NameColumnasFiltro.add("LOTE");  
+        NameColumnasFiltro.add("ESTADO_ANIMAL");  
         
         //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
             NameColumnasOrden = new ArrayList<>();
@@ -89,6 +90,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
             NameColumnasOrden.add("NUMERO_MAMA");
             NameColumnasOrden.add("GENERO");
             NameColumnasOrden.add("FECHA_NACIMIENTO");
+            NameColumnasOrden.add("ESTADO_ANIMAL");
             NameColumnasOrden.add("PESO");
             NameColumnasOrden.add("DESC_HIERRO");
             NameColumnasOrden.add("CAPADO");
@@ -103,6 +105,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
             "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
             "Genero",
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Nacimiento</p></html>",
+            "Estado",
             "Peso",
             "Hierro",
             "Capado",
@@ -124,7 +127,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         modeloTblAnimales = new DefaultTableModel(EncabezadoTblAnimales, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class //, java.lang.Object.class, java.lang.Object.class
             };
 
@@ -146,12 +149,11 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         tbl_Animales.getColumnModel().getColumn(4).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(5).setPreferredWidth(70);
         tbl_Animales.getColumnModel().getColumn(6).setPreferredWidth(70);
-        tbl_Animales.getColumnModel().getColumn(7).setPreferredWidth(50);
-//        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(60);
-//        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(70);
-        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(90);
-        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(130);
-        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(80);
+        tbl_Animales.getColumnModel().getColumn(7).setPreferredWidth(70);
+        tbl_Animales.getColumnModel().getColumn(8).setPreferredWidth(50);
+        tbl_Animales.getColumnModel().getColumn(9).setPreferredWidth(90);
+        tbl_Animales.getColumnModel().getColumn(10).setPreferredWidth(130);
+        tbl_Animales.getColumnModel().getColumn(11).setPreferredWidth(80);
 
         tbl_Animales.getTableHeader().setReorderingAllowed(false);
 
@@ -404,7 +406,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         int fila = tbl_Animales.getSelectedRow();
         int cola = tbl_Animales.getSelectedColumn();
         String dato = "" + tbl_Animales.getValueAt(fila, cola);
-        if (cola == 10) {//VER MAS
+        if (cola == 11) {//VER MAS
             String idAnimal = ListaAnimalesMostrar.get(fila).get("ID_ANIMAL");
             //JOptionPane.showMessageDialog(null, "ID ANIMAL-->"+idAnimal);
             objetoVentana = new ModeloVentanaGeneral(this, new VistaHistoriaAnimal(), 1, fila);
@@ -511,6 +513,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
                         ListaAnimalesMostrar.get(i).get("NUMERO_MAMA").equals("null")?"":ListaAnimalesMostrar.get(i).get("NUMERO_MAMA"),
                         ListaAnimalesMostrar.get(i).get("GENERO").toUpperCase(),
                         ListaAnimalesMostrar.get(i).get("FECHA_NACIMIENTO"),
+                        ListaAnimalesMostrar.get(i).get("ESTADO_ANIMAL"),
                         ListaAnimalesMostrar.get(i).get("PESO"),
                         Utilidades.decodificarElemento(ListaAnimalesMostrar.get(i).get("DESC_HIERRO")),
                         ListaAnimalesMostrar.get(i).get("CAPADO"),

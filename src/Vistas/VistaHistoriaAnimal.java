@@ -517,12 +517,17 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumeroCria = new javax.swing.JLabel();
         lblLocalizacion = new javax.swing.JLabel();
         pnlMuerte = new javax.swing.JPanel();
-        lblTid4 = new javax.swing.JLabel();
-        txtFechaMuerte = new javax.swing.JTextField();
-        jSeparator8 = new javax.swing.JSeparator();
-        lblTid5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtMotivoMuerte = new javax.swing.JTextArea();
+        panelBtnMuerte = new javax.swing.JPanel();
+        btnParto1 = new javax.swing.JButton();
+        panelBody3 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jdFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        ScrollCausaMuerte = new javax.swing.JScrollPane();
+        txtObservacionMuerte = new javax.swing.JTextArea();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         pnlVenta = new javax.swing.JPanel();
         lblTid6 = new javax.swing.JLabel();
         txtFechaVenta = new javax.swing.JTextField();
@@ -1367,91 +1372,141 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlMuerte.setBackground(new java.awt.Color(255, 255, 255));
         pnlMuerte.setLayout(new java.awt.GridBagLayout());
 
-        lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid4.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid4.setText("Fecha Muerte");
+        panelBtnMuerte.setBackground(new java.awt.Color(59, 123, 50));
+        panelBtnMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        panelBtnMuerte.setLayout(new java.awt.GridBagLayout());
+
+        btnParto1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnParto1.setForeground(new java.awt.Color(255, 255, 255));
+        btnParto1.setText("Ingresar Muerte");
+        btnParto1.setBorderPainted(false);
+        btnParto1.setContentAreaFilled(false);
+        btnParto1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnParto1.setFocusPainted(false);
+        btnParto1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnParto1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnParto1MouseExited(evt);
+            }
+        });
+        btnParto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParto1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 28;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        pnlMuerte.add(lblTid4, gridBagConstraints);
+        panelBtnMuerte.add(btnParto1, gridBagConstraints);
 
-        txtFechaMuerte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFechaMuerte.setForeground(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.setBorder(null);
-        txtFechaMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.setFocusCycleRoot(true);
-        txtFechaMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFechaMuerteFocusLost(evt);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        pnlMuerte.add(panelBtnMuerte, gridBagConstraints);
+
+        panelBody3.setBackground(new java.awt.Color(255, 255, 255));
+        panelBody3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        panelBody3.setLayout(new java.awt.GridBagLayout());
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setLayout(new java.awt.GridBagLayout());
+
+        jdFechaNacimiento.setBackground(new java.awt.Color(255, 255, 255));
+        jdFechaNacimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        jdFechaNacimiento.setDateFormatString("dd/MM/yyyy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel20.add(jdFechaNacimiento, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        panelBody3.add(jPanel20, gridBagConstraints);
+
+        ScrollCausaMuerte.setBackground(new java.awt.Color(255, 255, 255));
+        ScrollCausaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Causa de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+
+        txtObservacionMuerte.setColumns(20);
+        txtObservacionMuerte.setForeground(new java.awt.Color(59, 123, 50));
+        txtObservacionMuerte.setRows(5);
+        txtObservacionMuerte.setBorder(null);
+        txtObservacionMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtObservacionMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
+        ScrollCausaMuerte.setViewportView(txtObservacionMuerte);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 15, 15);
+        panelBody3.add(ScrollCausaMuerte, gridBagConstraints);
+
+        jToggleButton1.setText("jToggleButton1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        panelBody3.add(jToggleButton1, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.25;
+        pnlMuerte.add(panelBody3, gridBagConstraints);
+
+        jPanel21.setBackground(new java.awt.Color(59, 123, 50));
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        jPanel21.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Pesos");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
+        jPanel21.add(jLabel4, gridBagConstraints);
+
+        jButton3.setText("jButton1");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
-        txtFechaMuerte.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtFechaMuerteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFechaMuerteKeyReleased(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
+        jPanel21.add(jButton3, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 130;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
-        pnlMuerte.add(txtFechaMuerte, gridBagConstraints);
-
-        jSeparator8.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 129;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
-        pnlMuerte.add(jSeparator8, gridBagConstraints);
-
-        lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid5.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid5.setText("Motivo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 67;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 20, 0, 0);
-        pnlMuerte.add(lblTid5, gridBagConstraints);
-
-        txtMotivoMuerte.setColumns(20);
-        txtMotivoMuerte.setForeground(new java.awt.Color(59, 123, 50));
-        txtMotivoMuerte.setRows(5);
-        txtMotivoMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtMotivoMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
-        jScrollPane3.setViewportView(txtMotivoMuerte);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 267;
-        gridBagConstraints.ipady = 67;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 20, 20);
-        pnlMuerte.add(jScrollPane3, gridBagConstraints);
+        pnlMuerte.add(jPanel21, gridBagConstraints);
 
         jTabbedPane1.addTab("Muerte", pnlMuerte);
 
@@ -2083,11 +2138,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGap(0, 653, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addGap(0, 681, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2176,7 +2231,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2196,7 +2251,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2217,7 +2272,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2237,7 +2292,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2257,7 +2312,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 683, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2331,18 +2386,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         add(btnSiguiente, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtFechaMuerteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaMuerteFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteFocusLost
-
-    private void txtFechaMuerteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaMuerteKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteKeyPressed
-
-    private void txtFechaMuerteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaMuerteKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteKeyReleased
 
     private void txtFechaVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaVentaFocusLost
         // TODO add your handling code here:
@@ -2651,22 +2694,42 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         togglePanel(panelNumber);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnParto1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParto1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnParto1MouseEntered
+
+    private void btnParto1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParto1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnParto1MouseExited
+
+    private void btnParto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnParto1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollCausaMuerte;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminarRotaciones;
     private javax.swing.JButton btnEliminarTraslados;
     private javax.swing.JButton btnGrafico;
     private javax.swing.JButton btnGrilla;
     private javax.swing.JButton btnParto;
+    private javax.swing.JButton btnParto1;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -2679,6 +2742,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -2688,7 +2753,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -2698,9 +2762,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
-    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private com.toedter.calendar.JDateChooser jdFechaNacimiento;
     private javax.swing.JLabel lblCalificacion;
     private javax.swing.JLabel lblDescornado;
     private javax.swing.JLabel lblEstado;
@@ -2731,8 +2796,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lblTid11;
     private javax.swing.JLabel lblTid12;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JLabel lblTid4;
-    private javax.swing.JLabel lblTid5;
     private javax.swing.JLabel lblTid6;
     private javax.swing.JLabel lblTid7;
     private javax.swing.JLabel lblTid8;
@@ -2746,6 +2809,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle8;
     private javax.swing.JPanel panelBody1;
     private javax.swing.JPanel panelBody2;
+    private javax.swing.JPanel panelBody3;
+    private javax.swing.JPanel panelBtnMuerte;
     private javax.swing.JPanel panelBtnParto;
     private javax.swing.JPanel pnlContenedorPartos;
     private javax.swing.JPanel pnlDatosBasicos;
@@ -2762,9 +2827,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JTable tbl_Palpacion;
     private javax.swing.JTable tbl_Rotaciones;
     private javax.swing.JTable tbl_Traslados;
-    public javax.swing.JTextField txtFechaMuerte;
     public javax.swing.JTextField txtFechaVenta;
-    private javax.swing.JTextArea txtMotivoMuerte;
+    private javax.swing.JTextArea txtObservacionMuerte;
     public javax.swing.JTextField txtPeso;
     public javax.swing.JTextField txtPesoCanal;
     public javax.swing.JTextField txtPorcentajeCanal;
@@ -2856,22 +2920,22 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblEstado.setVisible(esHembra);
         panelBtnParto.setVisible(esHembra);
 
-        if (ListaDatos.get(0).getVenta().equals("1")) {
-            GetDatosVentaAnimal();
-            jTabbedPane1.setEnabledAt(2, true);
-        } else {
-            jTabbedPane1.setEnabledAt(2, false);
-        }
-        if (ListaDatos.get(0).getMuerte().equals("1")) {
-            GetDatosMuerteAnimal();
-            jTabbedPane1.setEnabledAt(1, true);
-        } else {
-            jTabbedPane1.setEnabledAt(1, false);
-        }
+//        if (ListaDatos.get(0).getVenta().equals("1")) {
+//            jTabbedPane1.setEnabledAt(2, true);
+//        } else {
+//            jTabbedPane1.setEnabledAt(2, false);
+//        }
+//        if (ListaDatos.get(0).getMuerte().equals("1")) {
+//            jTabbedPane1.setEnabledAt(1, true);
+//        } else {
+//            jTabbedPane1.setEnabledAt(1, false);
+//        }
 
         jTabbedPane1.setEnabledAt(6, ListaDatos.get(0).getGenero().equals("hembra"));
         jTabbedPane1.setEnabledAt(7, ListaDatos.get(0).getGenero().equals("hembra"));
         jTabbedPane1.setSelectedIndex(0);
+        GetDatosVentaAnimal();
+        GetDatosMuerteAnimal();
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
