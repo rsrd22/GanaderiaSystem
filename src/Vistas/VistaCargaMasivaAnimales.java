@@ -6,6 +6,7 @@
 package Vistas;
 
 import Configuracion.ConfiguracionPropiedades;
+import Configuracion.InformacionGlobal;
 import Control.*;
 import Excel.ControlArchivo;
 import ImportExport.CargaMasiva;
@@ -53,6 +54,9 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         cal = Calendar.getInstance();
         mostrarFecha();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
 
     /**
@@ -348,6 +352,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         if (cbFinca.getItemCount() > 0) {
             if (cbFinca.getSelectedIndex() >= 0) {
                 idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
@@ -357,6 +363,8 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
+        
         if (cbTipoAnimales.getItemCount() > 0) {
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");

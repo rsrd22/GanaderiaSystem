@@ -16,34 +16,34 @@ public class InformacionGlobal {
     private static String finca = "";
     private static String tipoAnimal = "";
 
-    public static void setFincaDesdeConstructor(JComboBox combo) {
-        if (combo.getModel().getSize() > 1) {
+    public static void setFincaDesdeConstructor(JComboBox comboFinca) {
+        if (comboFinca.getModel().getSize() > 1) {
             if (!InformacionGlobal.finca.isEmpty()) {
-                combo.getModel().setSelectedItem(InformacionGlobal.finca);
+                comboFinca.getModel().setSelectedItem(InformacionGlobal.finca);
             }
         }
     }
 
-    public static void setFincaDesdeEventoChange(JComboBox combo) {
-        if (combo.getModel().getSize() > 1) {
-            if (combo.getSelectedIndex() > 0) {
-                InformacionGlobal.finca = combo.getSelectedItem().toString();
+    public static void setFincaDesdeEventoChange(JComboBox comboFinca) {
+        if (comboFinca.getModel().getSize() > 1) {
+            if (comboFinca.getSelectedIndex() > 0) {
+                InformacionGlobal.finca = comboFinca.getSelectedItem().toString();
             }
         }
     }
 
-    public static void setTipoAnimalDesdeConstructor(JComboBox combo) {
-        if (combo.getModel().getSize() > 1) {
+    public static void setTipoAnimalDesdeConstructor(JComboBox comboTipoAnimal) {
+        if (comboTipoAnimal.getModel().getSize() > 1) {
             if (!InformacionGlobal.tipoAnimal.isEmpty()) {
-                combo.getModel().setSelectedItem(InformacionGlobal.finca);
+                comboTipoAnimal.getModel().setSelectedItem(InformacionGlobal.tipoAnimal);
             }
         }
     }
 
-    public static void setTipoAnimalDesdeEventoChange(JComboBox combo) {
-        if (combo.getModel().getSize() > 1) {
-            if (combo.getSelectedIndex() > 0) {
-                InformacionGlobal.tipoAnimal = combo.getSelectedItem().toString();
+    public static void setTipoAnimalDesdeEventoChange(JComboBox comboTipoAnimal) {
+        if (comboTipoAnimal.getModel().getSize() > 1) {
+            if (comboTipoAnimal.getSelectedIndex() > 0) {
+                InformacionGlobal.tipoAnimal = comboTipoAnimal.getSelectedItem().toString();
             }
         }
     }

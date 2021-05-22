@@ -6,6 +6,7 @@
 
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.*;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
@@ -76,6 +77,8 @@ public class VistaTraslado extends javax.swing.JPanel {
         InicializarTblBloques();
         CargarListaFincas();
         
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
     
     public void InicializarTblBloques() {
@@ -312,6 +315,8 @@ public class VistaTraslado extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         if(cbFinca.getItemCount() > 0){
             //EventoComboFincas();
             System.out.println("cbFinca.getSelectedIndex()--"+cbFinca.getSelectedIndex());
@@ -359,6 +364,7 @@ public class VistaTraslado extends javax.swing.JPanel {
     }//GEN-LAST:event_tbl_TrasladoMouseReleased
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
         if(cbTipoAnimales.getItemCount() > 0){
             //EventoComboFincas();
             System.out.println("cbTipoAnimales.getSelectedIndex()>"+cbTipoAnimales.getSelectedIndex());

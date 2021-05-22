@@ -6,6 +6,7 @@
 
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.*;
 import Modelo.*;
 import Modelo.ModeloVentanaGeneral;
@@ -78,6 +79,9 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         modeloMyVHist = new ModeloMuertesVentasHistoricos();
         InicializarTblMuertes();
         cargarComboFincas();
+                
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimal);
     }
     
     public void InicializarTblMuertes() {
@@ -322,6 +326,8 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             String idFinca = fincas.get(indice).get("id");
@@ -331,6 +337,8 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void cbTipoAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimal);
+        
         int indice = cbTipoAnimal.getSelectedIndex();
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
