@@ -9,6 +9,7 @@ import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
 import Modelo.RAnimales.*;
 import Tablas.TablaRender;
+import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas._Animales.Vista_VerAnimales;
 import java.awt.Color;
@@ -22,11 +23,17 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
@@ -59,6 +66,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private ControlPalpacion controlPalpacion = new ControlPalpacion();
     private ControlTraslado controlTraslado = new ControlTraslado();
     private ModeloPalpacion modeloPalpacion = new ModeloPalpacion();
+    private ModeloRAnimales modeloAnimal = new ModeloRAnimales();
     private ModeloPesaje modeloPesaje = new ModeloPesaje();
     private ControlRotacionDosTablas controlRotacion = new ControlRotacionDosTablas();
     private ArrayList<ModeloRAnimalesSalida> ListaDatos;
@@ -122,6 +130,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         this.refTablaAnimales = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).tbl_Animales;
         filaLista = Integer.parseInt("" + modeloVentanaGeneral.getModeloDatos());
         id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
+        modeloAnimal.setId(id_Animal);
         band = 0;
         ListaDatos = new ArrayList<>();
         listaPesajes = new ArrayList<>();
@@ -171,6 +180,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "Ver Más",
             "Eliminar"
         };
+        
         InicializarTblRotacion();
         InicializarTblTralado();
         InicializarTblPeso();
@@ -517,37 +527,32 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumeroCria = new javax.swing.JLabel();
         lblLocalizacion = new javax.swing.JLabel();
         pnlMuerte = new javax.swing.JPanel();
-        lblTid4 = new javax.swing.JLabel();
-        txtFechaMuerte = new javax.swing.JTextField();
-        jSeparator8 = new javax.swing.JSeparator();
-        lblTid5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtMotivoMuerte = new javax.swing.JTextArea();
+        panelBody3 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jdFechaMuerte = new com.toedter.calendar.JDateChooser();
+        ScrollCausaMuerte = new javax.swing.JScrollPane();
+        txtObservacionMuerte = new javax.swing.JTextArea();
+        btnGuardarMuerte = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        panelBtnMuerte = new javax.swing.JPanel();
+        btnMuerte = new javax.swing.JButton();
         pnlVenta = new javax.swing.JPanel();
-        lblTid6 = new javax.swing.JLabel();
-        txtFechaVenta = new javax.swing.JTextField();
-        jSeparator9 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        txtTipoVenta = new javax.swing.JTextField();
-        lblTid7 = new javax.swing.JLabel();
-        lblTid8 = new javax.swing.JLabel();
-        txtPeso = new javax.swing.JTextField();
-        jSeparator11 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
-        lblTid9 = new javax.swing.JLabel();
-        txtPesoCanal = new javax.swing.JTextField();
-        jSeparator12 = new javax.swing.JSeparator();
-        jLabel15 = new javax.swing.JLabel();
-        lblTid10 = new javax.swing.JLabel();
-        txtPorcentajeCanal = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        jSeparator13 = new javax.swing.JSeparator();
-        lblTid11 = new javax.swing.JLabel();
-        lblTid12 = new javax.swing.JLabel();
-        txtPrecioTotal = new javax.swing.JTextField();
-        jSeparator14 = new javax.swing.JSeparator();
-        jSeparator15 = new javax.swing.JSeparator();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        panelBtnVenta = new javax.swing.JPanel();
+        btnVenta = new javax.swing.JButton();
+        panelBody4 = new javax.swing.JPanel();
+        jPanel23 = new javax.swing.JPanel();
+        jdFechaVenta = new com.toedter.calendar.JDateChooser();
+        btnGuardarVenta = new javax.swing.JButton();
+        cbTipoVenta = new javax.swing.JComboBox();
         txtPrecioVenta = new javax.swing.JTextField();
+        txtPeso = new javax.swing.JTextField();
+        txtValorVenta = new javax.swing.JTextField();
+        txtPorcentajeCanal = new javax.swing.JTextField();
+        txtPesoCanal = new javax.swing.JTextField();
+        jPanel24 = new javax.swing.JPanel();
         pnlTraslados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Traslados = new javax.swing.JTable();
@@ -1367,512 +1372,418 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlMuerte.setBackground(new java.awt.Color(255, 255, 255));
         pnlMuerte.setLayout(new java.awt.GridBagLayout());
 
-        lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid4.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid4.setText("Fecha Muerte");
+        panelBody3.setBackground(new java.awt.Color(255, 255, 255));
+        panelBody3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        panelBody3.setLayout(new java.awt.GridBagLayout());
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setLayout(new java.awt.GridBagLayout());
+
+        jdFechaMuerte.setBackground(new java.awt.Color(255, 255, 255));
+        jdFechaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        jdFechaMuerte.setDateFormatString("dd/MM/yyyy");
+        jdFechaMuerte.setPreferredSize(new java.awt.Dimension(150, 44));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        pnlMuerte.add(lblTid4, gridBagConstraints);
+        jPanel20.add(jdFechaMuerte, gridBagConstraints);
 
-        txtFechaMuerte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFechaMuerte.setForeground(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.setBorder(null);
-        txtFechaMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.setFocusCycleRoot(true);
-        txtFechaMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFechaMuerte.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFechaMuerteFocusLost(evt);
-            }
-        });
-        txtFechaMuerte.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtFechaMuerteKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFechaMuerteKeyReleased(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 0, 0);
+        panelBody3.add(jPanel20, gridBagConstraints);
+
+        ScrollCausaMuerte.setBackground(new java.awt.Color(255, 255, 255));
+        ScrollCausaMuerte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Causa de muerte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+
+        txtObservacionMuerte.setColumns(20);
+        txtObservacionMuerte.setForeground(new java.awt.Color(59, 123, 50));
+        txtObservacionMuerte.setRows(5);
+        txtObservacionMuerte.setBorder(null);
+        txtObservacionMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtObservacionMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
+        ScrollCausaMuerte.setViewportView(txtObservacionMuerte);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 130;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 20);
-        pnlMuerte.add(txtFechaMuerte, gridBagConstraints);
-
-        jSeparator8.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 129;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
-        pnlMuerte.add(jSeparator8, gridBagConstraints);
-
-        lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid5.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid5.setText("Motivo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 67;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 20, 0, 0);
-        pnlMuerte.add(lblTid5, gridBagConstraints);
-
-        txtMotivoMuerte.setColumns(20);
-        txtMotivoMuerte.setForeground(new java.awt.Color(59, 123, 50));
-        txtMotivoMuerte.setRows(5);
-        txtMotivoMuerte.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtMotivoMuerte.setSelectionColor(new java.awt.Color(59, 123, 50));
-        jScrollPane3.setViewportView(txtMotivoMuerte);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 267;
-        gridBagConstraints.ipady = 67;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 20, 20);
-        pnlMuerte.add(jScrollPane3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 15, 15, 15);
+        panelBody3.add(ScrollCausaMuerte, gridBagConstraints);
+
+        btnGuardarMuerte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
+        btnGuardarMuerte.setBorderPainted(false);
+        btnGuardarMuerte.setContentAreaFilled(false);
+        btnGuardarMuerte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarMuerte.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardarMuerte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarMuerteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -29;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 20);
+        panelBody3.add(btnGuardarMuerte, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlMuerte.add(panelBody3, gridBagConstraints);
+
+        jPanel21.setBackground(new java.awt.Color(59, 123, 50));
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        jPanel21.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Muerte");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
+        jPanel21.add(jLabel4, gridBagConstraints);
+
+        panelBtnMuerte.setBackground(new java.awt.Color(59, 123, 50));
+        panelBtnMuerte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        panelBtnMuerte.setLayout(new java.awt.GridBagLayout());
+
+        btnMuerte.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnMuerte.setForeground(new java.awt.Color(255, 255, 255));
+        btnMuerte.setText("Ingresar Muerte");
+        btnMuerte.setBorderPainted(false);
+        btnMuerte.setContentAreaFilled(false);
+        btnMuerte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMuerte.setFocusPainted(false);
+        btnMuerte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMuerteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMuerteMouseExited(evt);
+            }
+        });
+        btnMuerte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuerteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        panelBtnMuerte.add(btnMuerte, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel21.add(panelBtnMuerte, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
+        pnlMuerte.add(jPanel21, gridBagConstraints);
 
         jTabbedPane1.addTab("Muerte", pnlMuerte);
 
         pnlVenta.setBackground(new java.awt.Color(255, 255, 255));
         pnlVenta.setLayout(new java.awt.GridBagLayout());
 
-        lblTid6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid6.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid6.setText("Fecha Venta");
+        jPanel22.setBackground(new java.awt.Color(59, 123, 50));
+        jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        jPanel22.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Venta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 36;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
-        pnlVenta.add(lblTid6, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
+        jPanel22.add(jLabel5, gridBagConstraints);
 
-        txtFechaVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtFechaVenta.setForeground(new java.awt.Color(59, 123, 50));
-        txtFechaVenta.setBorder(null);
-        txtFechaVenta.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtFechaVenta.setFocusCycleRoot(true);
-        txtFechaVenta.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtFechaVenta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtFechaVentaFocusLost(evt);
+        panelBtnVenta.setBackground(new java.awt.Color(59, 123, 50));
+        panelBtnVenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        panelBtnVenta.setLayout(new java.awt.GridBagLayout());
+
+        btnVenta.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btnVenta.setForeground(new java.awt.Color(255, 255, 255));
+        btnVenta.setText("Ingresar Venta");
+        btnVenta.setBorderPainted(false);
+        btnVenta.setContentAreaFilled(false);
+        btnVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVenta.setFocusPainted(false);
+        btnVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVentaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnVentaMouseExited(evt);
             }
         });
-        txtFechaVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtFechaVentaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFechaVentaKeyReleased(evt);
+        btnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentaActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        pnlVenta.add(txtFechaVenta, gridBagConstraints);
-
-        jSeparator9.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
-        pnlVenta.add(jSeparator9, gridBagConstraints);
-
-        jSeparator10.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        pnlVenta.add(jSeparator10, gridBagConstraints);
-
-        txtTipoVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtTipoVenta.setForeground(new java.awt.Color(59, 123, 50));
-        txtTipoVenta.setBorder(null);
-        txtTipoVenta.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtTipoVenta.setFocusCycleRoot(true);
-        txtTipoVenta.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtTipoVenta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTipoVentaFocusLost(evt);
-            }
-        });
-        txtTipoVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTipoVentaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTipoVentaKeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        pnlVenta.add(txtTipoVenta, gridBagConstraints);
-
-        lblTid7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid7.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid7.setText("Tipo Venta");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 44;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        pnlVenta.add(lblTid7, gridBagConstraints);
+        panelBtnVenta.add(btnVenta, gridBagConstraints);
 
-        lblTid8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid8.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid8.setText("Peso");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel22.add(panelBtnVenta, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 81;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
-        pnlVenta.add(lblTid8, gridBagConstraints);
-
-        txtPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPeso.setForeground(new java.awt.Color(59, 123, 50));
-        txtPeso.setBorder(null);
-        txtPeso.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtPeso.setFocusCycleRoot(true);
-        txtPeso.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPeso.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPesoFocusLost(evt);
-            }
-        });
-        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPesoKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPesoKeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        pnlVenta.add(txtPeso, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 15, 0, 15);
+        pnlVenta.add(jPanel22, gridBagConstraints);
 
-        jSeparator11.setBackground(new java.awt.Color(59, 123, 50));
+        panelBody4.setBackground(new java.awt.Color(255, 255, 255));
+        panelBody4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
+        java.awt.GridBagLayout panelBody4Layout = new java.awt.GridBagLayout();
+        panelBody4Layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0};
+        panelBody4Layout.rowHeights = new int[] {0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0};
+        panelBody4.setLayout(panelBody4Layout);
+
+        jPanel23.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel23.setLayout(new java.awt.GridBagLayout());
+
+        jdFechaVenta.setBackground(new java.awt.Color(255, 255, 255));
+        jdFechaVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        jdFechaVenta.setDateFormatString("dd/MM/yyyy");
+        jdFechaVenta.setPreferredSize(new java.awt.Dimension(150, 44));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
-        pnlVenta.add(jSeparator11, gridBagConstraints);
+        gridBagConstraints.gridy = 0;
+        jPanel23.add(jdFechaVenta, gridBagConstraints);
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel14.setText("Kg");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        pnlVenta.add(jLabel14, gridBagConstraints);
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(jPanel23, gridBagConstraints);
 
-        lblTid9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid9.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid9.setText("Peso Canal");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 44;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 30, 0, 0);
-        pnlVenta.add(lblTid9, gridBagConstraints);
-
-        txtPesoCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPesoCanal.setForeground(new java.awt.Color(59, 123, 50));
-        txtPesoCanal.setBorder(null);
-        txtPesoCanal.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtPesoCanal.setFocusCycleRoot(true);
-        txtPesoCanal.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPesoCanal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPesoCanalFocusLost(evt);
-            }
-        });
-        txtPesoCanal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPesoCanalKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPesoCanalKeyReleased(evt);
+        btnGuardarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30.png"))); // NOI18N
+        btnGuardarVenta.setBorderPainted(false);
+        btnGuardarVenta.setContentAreaFilled(false);
+        btnGuardarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarVenta.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar30_over.png"))); // NOI18N
+        btnGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarVentaActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        pnlVenta.add(txtPesoCanal, gridBagConstraints);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        panelBody4.add(btnGuardarVenta, gridBagConstraints);
 
-        jSeparator12.setBackground(new java.awt.Color(59, 123, 50));
+        cbTipoVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbTipoVenta.setForeground(new java.awt.Color(59, 123, 50));
+        cbTipoVenta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Particular", "Matadero" }));
+        cbTipoVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tipo de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        cbTipoVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoVentaActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
-        pnlVenta.add(jSeparator12, gridBagConstraints);
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel15.setText("Kg");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0E-4;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        pnlVenta.add(jLabel15, gridBagConstraints);
-
-        lblTid10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid10.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid10.setText("Porcentaje Canal");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 0, 0);
-        pnlVenta.add(lblTid10, gridBagConstraints);
-
-        txtPorcentajeCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPorcentajeCanal.setForeground(new java.awt.Color(59, 123, 50));
-        txtPorcentajeCanal.setBorder(null);
-        txtPorcentajeCanal.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtPorcentajeCanal.setFocusCycleRoot(true);
-        txtPorcentajeCanal.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPorcentajeCanal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPorcentajeCanalFocusLost(evt);
-            }
-        });
-        txtPorcentajeCanal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPorcentajeCanalKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPorcentajeCanalKeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.4;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        pnlVenta.add(txtPorcentajeCanal, gridBagConstraints);
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(59, 123, 50));
-        jLabel13.setText("%");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0E-4;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 20);
-        pnlVenta.add(jLabel13, gridBagConstraints);
-
-        jSeparator13.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        pnlVenta.add(jSeparator13, gridBagConstraints);
-
-        lblTid11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid11.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid11.setText("Precio Venta");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.ipadx = 33;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
-        pnlVenta.add(lblTid11, gridBagConstraints);
-
-        lblTid12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid12.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid12.setText("Precio Total");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.ipadx = 38;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
-        pnlVenta.add(lblTid12, gridBagConstraints);
-
-        txtPrecioTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtPrecioTotal.setForeground(new java.awt.Color(59, 123, 50));
-        txtPrecioTotal.setBorder(null);
-        txtPrecioTotal.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtPrecioTotal.setFocusCycleRoot(true);
-        txtPrecioTotal.setName(""); // NOI18N
-        txtPrecioTotal.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPrecioTotal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPrecioTotalFocusLost(evt);
-            }
-        });
-        txtPrecioTotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPrecioTotalKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPrecioTotalKeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 0);
-        pnlVenta.add(txtPrecioTotal, gridBagConstraints);
-
-        jSeparator14.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        pnlVenta.add(jSeparator14, gridBagConstraints);
-
-        jSeparator15.setBackground(new java.awt.Color(59, 123, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 279;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
-        pnlVenta.add(jSeparator15, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(cbTipoVenta, gridBagConstraints);
 
         txtPrecioVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtPrecioVenta.setForeground(new java.awt.Color(59, 123, 50));
-        txtPrecioVenta.setBorder(null);
+        txtPrecioVenta.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtPrecioVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Precio de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
         txtPrecioVenta.setCaretColor(new java.awt.Color(59, 123, 50));
-        txtPrecioVenta.setFocusCycleRoot(true);
+        txtPrecioVenta.setMargin(new java.awt.Insets(2, 5, 2, 5));
         txtPrecioVenta.setSelectionColor(new java.awt.Color(59, 123, 50));
-        txtPrecioVenta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPrecioVentaFocusLost(evt);
-            }
-        });
         txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtPrecioVentaKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPrecioVentaKeyReleased(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(txtPrecioVenta, gridBagConstraints);
+
+        txtPeso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPeso.setForeground(new java.awt.Color(59, 123, 50));
+        txtPeso.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtPeso.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Peso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtPeso.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtPeso.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtPeso.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPeso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesoActionPerformed(evt);
+            }
+        });
+        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesoKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(txtPeso, gridBagConstraints);
+
+        txtValorVenta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtValorVenta.setForeground(new java.awt.Color(59, 123, 50));
+        txtValorVenta.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtValorVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Valor de venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtValorVenta.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtValorVenta.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtValorVenta.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtValorVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValorVentaKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(txtValorVenta, gridBagConstraints);
+
+        txtPorcentajeCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPorcentajeCanal.setForeground(new java.awt.Color(59, 123, 50));
+        txtPorcentajeCanal.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtPorcentajeCanal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "% de canal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtPorcentajeCanal.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtPorcentajeCanal.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtPorcentajeCanal.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPorcentajeCanal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPorcentajeCanalKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(txtPorcentajeCanal, gridBagConstraints);
+
+        txtPesoCanal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtPesoCanal.setForeground(new java.awt.Color(59, 123, 50));
+        txtPesoCanal.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtPesoCanal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Peso de canal", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        txtPesoCanal.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtPesoCanal.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        txtPesoCanal.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtPesoCanal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesoCanalActionPerformed(evt);
+            }
+        });
+        txtPesoCanal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesoCanalKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        panelBody4.add(txtPesoCanal, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 30, 0, 0);
-        pnlVenta.add(txtPrecioVenta, gridBagConstraints);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        pnlVenta.add(panelBody4, gridBagConstraints);
+
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlVenta.add(jPanel24, gridBagConstraints);
 
         jTabbedPane1.addTab("Venta", pnlVenta);
 
@@ -2083,11 +1994,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         pnlGrafico.setLayout(pnlGraficoLayout);
         pnlGraficoLayout.setHorizontalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 636, Short.MAX_VALUE)
+            .addGap(0, 879, Short.MAX_VALUE)
         );
         pnlGraficoLayout.setVerticalGroup(
             pnlGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addGap(0, 867, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -2176,7 +2087,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 909, Short.MAX_VALUE)
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2196,7 +2107,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 909, Short.MAX_VALUE)
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2217,7 +2128,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 909, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2237,7 +2148,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 909, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2257,7 +2168,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGap(0, 909, Short.MAX_VALUE)
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2331,102 +2242,6 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         add(btnSiguiente, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtFechaMuerteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaMuerteFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteFocusLost
-
-    private void txtFechaMuerteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaMuerteKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteKeyPressed
-
-    private void txtFechaMuerteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaMuerteKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaMuerteKeyReleased
-
-    private void txtFechaVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaVentaFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaVentaFocusLost
-
-    private void txtFechaVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaVentaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaVentaKeyPressed
-
-    private void txtFechaVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaVentaKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaVentaKeyReleased
-
-    private void txtTipoVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTipoVentaFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoVentaFocusLost
-
-    private void txtTipoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoVentaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoVentaKeyPressed
-
-    private void txtTipoVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoVentaKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoVentaKeyReleased
-
-    private void txtPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoFocusLost
-
-    private void txtPesoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoKeyPressed
-
-    private void txtPesoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoKeyReleased
-
-    private void txtPesoCanalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesoCanalFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoCanalFocusLost
-
-    private void txtPesoCanalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoCanalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoCanalKeyPressed
-
-    private void txtPesoCanalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoCanalKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesoCanalKeyReleased
-
-    private void txtPorcentajeCanalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPorcentajeCanalFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPorcentajeCanalFocusLost
-
-    private void txtPorcentajeCanalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPorcentajeCanalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPorcentajeCanalKeyPressed
-
-    private void txtPorcentajeCanalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPorcentajeCanalKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPorcentajeCanalKeyReleased
-
-    private void txtPrecioTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioTotalFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioTotalFocusLost
-
-    private void txtPrecioTotalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioTotalKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioTotalKeyPressed
-
-    private void txtPrecioTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioTotalKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioTotalKeyReleased
-
-    private void txtPrecioVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioVentaFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioVentaFocusLost
-
-    private void txtPrecioVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioVentaKeyPressed
-
-    private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
     private void tbl_TrasladosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TrasladosMousePressed
         int tamfilas = tbl_Traslados.getSelectedRows().length;
@@ -2651,22 +2466,172 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         togglePanel(panelNumber);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnMuerteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMuerteMouseEntered
+        Utilidades.establecerColorDeFondo(panelBtnMuerte, true);
+    }//GEN-LAST:event_btnMuerteMouseEntered
+
+    private void btnMuerteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMuerteMouseExited
+        Utilidades.establecerColorDeFondo(panelBtnMuerte, false);
+    }//GEN-LAST:event_btnMuerteMouseExited
+
+    private void btnMuerteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuerteActionPerformed
+        jdFechaMuerte.setEnabled(true);
+        txtObservacionMuerte.setEnabled(true);
+        btnGuardarMuerte.setVisible(true);
+    }//GEN-LAST:event_btnMuerteActionPerformed
+
+    private void btnGuardarMuerteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMuerteActionPerformed
+        int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la muerte?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
+        if(ret == JOptionPane.YES_OPTION){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar fechaMuerte = jdFechaMuerte.getCalendar();
+            String observacion = txtObservacionMuerte.getText().trim();
+            String fecha_Muerte = sdf.format(fechaMuerte.getTime());
+            modeloAnimal.setFecha_muerte(fecha_Muerte);
+            modeloAnimal.setDescripcion_muerte(observacion);
+
+            int resp = controlAnimales.ActualizarMuerte(modeloAnimal);
+            if(resp == Retorno.EXITO){
+                jdFechaMuerte.setEnabled(false);
+                txtObservacionMuerte.setEnabled(false);
+                DatosMuerte.put("MUERTE", "1");
+                BloquearFormularioMuerte();
+                ValidarVentasyMuertes();
+            }
+        }else{
+            
+        }
+    }//GEN-LAST:event_btnGuardarMuerteActionPerformed
+
+    private void btnVentaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentaMouseEntered
+        Utilidades.establecerColorDeFondo(panelBtnVenta, true);
+    }//GEN-LAST:event_btnVentaMouseEntered
+
+    private void btnVentaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVentaMouseExited
+        Utilidades.establecerColorDeFondo(panelBtnVenta, false);
+    }//GEN-LAST:event_btnVentaMouseExited
+
+    private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
+        jdFechaVenta.setEnabled(true);
+        cbTipoVenta.setEnabled(true);
+        txtPrecioVenta.setEnabled(true);
+        txtPesoCanal.setEnabled(true);
+        btnGuardarVenta.setVisible(true);
+    }//GEN-LAST:event_btnVentaActionPerformed
+
+    private void btnGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVentaActionPerformed
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fechaVenta = jdFechaVenta.getCalendar();
+        String fecha_Venta = sdf.format(fechaVenta.getTime());
+        String precio_Venta  = txtPrecioVenta.getText().replace(".", "").replace(",", ".");
+        String pesoCanal = txtPesoCanal.getText();
+        pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal.replace(".", "").replace(",", ".");
+        String tipo_Venta = cbTipoVenta.getSelectedItem().toString().toLowerCase();
+
+        //<editor-fold defaultstate="collapsed" desc="VALIDAR VENTA">
+        if(tipo_Venta.equals("seleccionar")){
+            JOptionPane.showMessageDialog(this, "Por favor seleccionar el tipo de venta.");
+            return;
+        }
+        if(precio_Venta.equals("")){
+            JOptionPane.showMessageDialog(this, "Por favor digitar el precio de venta.");
+            return;
+        }
+        if(tipo_Venta.equals("matadero") && pesoCanal.equals("0")){
+            JOptionPane.showMessageDialog(this, "Por favor digitar el peso de canal.");
+            return;
+        }
+
+
+//</editor-fold>
+
+        modeloAnimal.setFecha_venta(fecha_Venta);
+        modeloAnimal.setPrecio_venta(precio_Venta);
+        modeloAnimal.setTipo_venta(tipo_Venta);
+        modeloAnimal.setPeso_canal(pesoCanal);
+
+        int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la venta?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
+        if(ret == JOptionPane.YES_OPTION){
+            int resp = controlAnimales.ActualizarVenta(modeloAnimal);
+            if(resp == Retorno.EXITO){
+                jdFechaVenta.setEnabled(false);
+                cbTipoVenta.setEnabled(false);
+                txtPrecioVenta.setEnabled(false);
+                txtPesoCanal.setEnabled(false);
+                DatosVenta.put("VENTA", "1");
+                BloquearFormularioVenta();
+                ValidarVentasyMuertes();
+            }
+        }
+    }//GEN-LAST:event_btnGuardarVentaActionPerformed
+
+    private void cbTipoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoVentaActionPerformed
+        boolean mostrar = cbTipoVenta.getSelectedIndex() == 2;
+        txtPesoCanal.setVisible(mostrar);
+        txtPorcentajeCanal.setVisible(mostrar);
+    }//GEN-LAST:event_cbTipoVentaActionPerformed
+
+    private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
+        String precioVenta = txtPrecioVenta.getText();
+        String precioSinPuntos = precioVenta.indexOf(".") > -1 ? precioVenta.replace(".", "") : precioVenta;
+        String precioFormateado = Expresiones.procesarSoloNumP(precioSinPuntos);
+        precioFormateado = Utilidades.MascaraMonedaConDecimales(precioFormateado);
+        txtPrecioVenta.setText(precioFormateado);
+
+        setCalculosVenta();
+    }//GEN-LAST:event_txtPrecioVentaKeyReleased
+
+    private void txtPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesoActionPerformed
+
+    private void txtPesoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyReleased
+        
+    }//GEN-LAST:event_txtPesoKeyReleased
+
+    private void txtValorVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorVentaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorVentaKeyReleased
+
+    private void txtPorcentajeCanalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPorcentajeCanalKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPorcentajeCanalKeyReleased
+
+    private void txtPesoCanalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesoCanalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesoCanalActionPerformed
+
+    private void txtPesoCanalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoCanalKeyReleased
+        String pesoCanal = txtPesoCanal.getText();
+        String pesoCanalSinPuntos = pesoCanal.indexOf(".") > -1 ? pesoCanal.replace(".", "") : pesoCanal;
+        String pesoCanalFormateado = Expresiones.procesarSoloNumP(pesoCanalSinPuntos);
+        pesoCanalFormateado = Utilidades.MascaraMonedaConDecimales(pesoCanalFormateado);
+        txtPesoCanal.setText(pesoCanalFormateado);
+
+        setCalculosVenta();
+    }//GEN-LAST:event_txtPesoCanalKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollCausaMuerte;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminarRotaciones;
     private javax.swing.JButton btnEliminarTraslados;
     private javax.swing.JButton btnGrafico;
     private javax.swing.JButton btnGrilla;
+    private javax.swing.JButton btnGuardarMuerte;
+    private javax.swing.JButton btnGuardarVenta;
+    private javax.swing.JButton btnMuerte;
     private javax.swing.JButton btnParto;
     private javax.swing.JButton btnSiguiente;
+    private javax.swing.JButton btnVenta;
+    public javax.swing.JComboBox cbTipoVenta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -2679,6 +2644,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -2688,19 +2658,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator12;
-    private javax.swing.JSeparator jSeparator13;
-    private javax.swing.JSeparator jSeparator14;
-    private javax.swing.JSeparator jSeparator15;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private com.toedter.calendar.JDateChooser jdFechaMuerte;
+    private com.toedter.calendar.JDateChooser jdFechaVenta;
     private javax.swing.JLabel lblCalificacion;
     private javax.swing.JLabel lblDescornado;
     private javax.swing.JLabel lblEstado;
@@ -2727,16 +2690,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lblPesoDestete;
     private javax.swing.JLabel lblPesoNecimiento;
     private javax.swing.JLabel lblTid1;
-    private javax.swing.JLabel lblTid10;
-    private javax.swing.JLabel lblTid11;
-    private javax.swing.JLabel lblTid12;
     private javax.swing.JLabel lblTid2;
-    private javax.swing.JLabel lblTid4;
-    private javax.swing.JLabel lblTid5;
-    private javax.swing.JLabel lblTid6;
-    private javax.swing.JLabel lblTid7;
-    private javax.swing.JLabel lblTid8;
-    private javax.swing.JLabel lblTid9;
     private javax.swing.JLabel lblTipoAnimal;
     private javax.swing.JLabel lblUltimoPeso;
     private javax.swing.JLabel lbltitNovilla;
@@ -2746,7 +2700,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JLabel lbltitle8;
     private javax.swing.JPanel panelBody1;
     private javax.swing.JPanel panelBody2;
+    private javax.swing.JPanel panelBody3;
+    private javax.swing.JPanel panelBody4;
+    private javax.swing.JPanel panelBtnMuerte;
     private javax.swing.JPanel panelBtnParto;
+    private javax.swing.JPanel panelBtnVenta;
     private javax.swing.JPanel pnlContenedorPartos;
     private javax.swing.JPanel pnlDatosBasicos;
     private javax.swing.JPanel pnlGrafico;
@@ -2762,15 +2720,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private javax.swing.JTable tbl_Palpacion;
     private javax.swing.JTable tbl_Rotaciones;
     private javax.swing.JTable tbl_Traslados;
-    public javax.swing.JTextField txtFechaMuerte;
-    public javax.swing.JTextField txtFechaVenta;
-    private javax.swing.JTextArea txtMotivoMuerte;
+    private javax.swing.JTextArea txtObservacionMuerte;
     public javax.swing.JTextField txtPeso;
     public javax.swing.JTextField txtPesoCanal;
     public javax.swing.JTextField txtPorcentajeCanal;
-    public javax.swing.JTextField txtPrecioTotal;
     public javax.swing.JTextField txtPrecioVenta;
-    public javax.swing.JTextField txtTipoVenta;
+    public javax.swing.JTextField txtValorVenta;
     // End of variables declaration//GEN-END:variables
 
     private void GetDatosAnimal() {
@@ -2855,21 +2810,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumPartos.setVisible(esHembra);
         lblEstado.setVisible(esHembra);
         panelBtnParto.setVisible(esHembra);
-
-        if (ListaDatos.get(0).getVenta().equals("1")) {
-            GetDatosVentaAnimal();
-            jTabbedPane1.setEnabledAt(2, true);
-        } else {
-            jTabbedPane1.setEnabledAt(2, false);
-        }
-        if (ListaDatos.get(0).getMuerte().equals("1")) {
-            GetDatosMuerteAnimal();
-            jTabbedPane1.setEnabledAt(1, true);
-        } else {
-            jTabbedPane1.setEnabledAt(1, false);
-        }
-
+        
+        GetDatosVentaAnimal();
+        GetDatosMuerteAnimal();
+        ValidarVentasyMuertes();
         jTabbedPane1.setSelectedIndex(jTabbedPane1.isEnabledAt(jTabbedPane1.getSelectedIndex()) ? jTabbedPane1.getSelectedIndex() : 0);
+
         GetDatosTraslado();
         GetDatosRotaciones();
         cargarHistoricoPesos();
@@ -2913,57 +2859,136 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     //<editor-fold defaultstate="collapsed" desc="TabbetPane Venta">
     private void GetDatosVentaAnimal() {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         DatosVenta = controlAnimales.GetDatosVenta(id_Animal);
 
         LimpiarFormularioVenta();
-        txtFechaVenta.setText("" + DatosVenta.get("FECHA_VENTA"));
-        txtTipoVenta.setText("" + DatosVenta.get("TIPO_VENTA"));
-        txtPeso.setText("" + DatosVenta.get("PESO"));
-        if (DatosVenta.get("TIPO_VENTA").equals("matadero")) {
-            txtPesoCanal.setText("" + DatosVenta.get("PESO_CANAL"));
-            txtPorcentajeCanal.setText("" + DatosVenta.get("PORCENTAJE_CANAL"));
+        BloquearFormularioVenta();
+        //btnVenta.setEnabled(DatosVenta.get("VENTA").equals("0"));
+        
+        if(DatosVenta.get("VENTA").equals("1")){
+            try {
+                Date fecha = formato.parse(DatosVenta.get("FECHA_VENTA"));
+                jdFechaMuerte.setDate(fecha);
+                cbTipoVenta.setSelectedItem("" + Utilidades.CapitaliceTexto(DatosVenta.get("TIPO_VENTA")));   
+                txtPeso.setText("" + DatosVenta.get("PESO"));
+                if (DatosVenta.get("TIPO_VENTA").equals("matadero")) {
+                    txtPesoCanal.setText("" + DatosVenta.get("PESO_CANAL"));
+                    txtPorcentajeCanal.setText("" + DatosVenta.get("PORCENTAJE_CANAL"));
+                    txtPesoCanal.setVisible(true);
+                    txtPorcentajeCanal.setVisible(true);
+                }
+                txtPrecioVenta.setText("" + DatosVenta.get("PRECIO_VENTA"));
+                txtValorVenta.setText("" + DatosVenta.get("PRECIO_TOTAL"));
+            } catch (ParseException ex) {
+                Logger.getLogger(VistaHistoriaAnimal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        txtPrecioVenta.setText("" + DatosVenta.get("PRECIO_VENTA"));
-        txtPrecioTotal.setText("" + DatosVenta.get("PRECIO_TOTAL"));
+        
+        
     }
 
     public void LimpiarFormularioVenta() {
-        txtFechaVenta.setText("");
-        txtTipoVenta.setText("");
+        Date fecha = new Date();
+        jdFechaVenta.setDate(fecha);
+        cbTipoVenta.setSelectedIndex(0);
         txtPeso.setText("");
         txtPesoCanal.setText("");
         txtPorcentajeCanal.setText("");
         txtPrecioVenta.setText("");
-        txtPrecioTotal.setText("");
+        txtValorVenta.setText("");
     }
 
     public void BloquearFormularioVenta() {
-        txtFechaVenta.setEnabled(false);
-        txtTipoVenta.setEnabled(false);
+        jdFechaVenta.setEnabled(false);
+        cbTipoVenta.setEnabled(false);
         txtPeso.setEnabled(false);
         txtPesoCanal.setEnabled(false);
         txtPorcentajeCanal.setEnabled(false);
         txtPrecioVenta.setEnabled(false);
-        txtPrecioTotal.setEnabled(false);
+        txtValorVenta.setEnabled(false);
+        btnGuardarVenta.setVisible(false);
+    }
+
+    private void setCalculosVenta() {
+        if (txtPrecioVenta.getText().lastIndexOf(",") == txtPrecioVenta.getText().length() - 1) {
+            return;
+        }
+
+        String precioVenta = txtPrecioVenta.getText().contains(".") || txtPrecioVenta.getText().contains(",")
+                ? txtPrecioVenta.getText().replace(".", "").replace(",", ".")
+                : txtPrecioVenta.getText();
+        String porcentajeCanal = txtPesoCanal.getText().contains(".") || txtPesoCanal.getText().contains(",")
+                ? txtPesoCanal.getText().replace(".", "").replace(",", ".")
+                : txtPesoCanal.getText();
+
+        txtPorcentajeCanal.setEnabled(false);
+        txtValorVenta.setEnabled(false);
+
+        txtPorcentajeCanal.setText(
+                txtPesoCanal.getText().length() == 0
+                ? ""
+                : calcularPorcentajeDeCanal(Double.parseDouble(porcentajeCanal))
+        );
+        txtValorVenta.setText(
+                txtPrecioVenta.getText().length() == 0
+                ? ""
+                : calcularPrecioDeVenta(Double.parseDouble(precioVenta))
+        );
+    }
+    
+    private String calcularPrecioDeVenta(double valorDeVenta) {
+        if (txtPeso.getText().length() == 0) {
+            return "";
+        } else {
+            long peso = Integer.parseInt(txtPeso.getText());
+            long precioDeVenta = (long) (peso * valorDeVenta);
+            return "$ " + Utilidades.MascaraMonedaConDecimales("" + precioDeVenta);
+        }
+    }
+
+    private String calcularPorcentajeDeCanal(double pesoCanal) {
+        if (txtPeso.getText().length() == 0) {
+            return "";
+        } else {
+            DecimalFormat df = new DecimalFormat("#.00");
+
+            double peso = Integer.parseInt(txtPeso.getText());
+            double porcentajeCanal = pesoCanal / peso * 100;
+            return df.format(porcentajeCanal) + "%";
+        }
     }
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="TabblePane Muerte">
     private void BloquearFormularioMuerte() {
-        txtFechaMuerte.setEnabled(false);
-        txtMotivoMuerte.setEnabled(false);
+        jdFechaMuerte.setEnabled(false);
+        txtObservacionMuerte.setEnabled(false);
+        btnGuardarMuerte.setVisible(false);
     }
 
     private void GetDatosMuerteAnimal() {
-        DatosMuerte = controlAnimales.GetDatosMuerte(id_Animal);
-        LimpiarFormularioMuerte();
-        txtFechaMuerte.setText(Utilidades.decodificarElemento(DatosMuerte.get("FECHA_MUERTE")));
-        txtMotivoMuerte.setText(DatosMuerte.get("MOTIVO"));
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            DatosMuerte = controlAnimales.GetDatosMuerte(id_Animal);
+            LimpiarFormularioMuerte();
+            BloquearFormularioMuerte();
+            //btnMuerte.setEnabled(DatosMuerte.get("MUERTE").equals("0"));
+            
+            if(DatosMuerte.get("MUERTE").equals("1")){
+                Date fecha = formato.parse(DatosMuerte.get("FECHA_MUERTE"));
+                jdFechaMuerte.setDate(fecha);
+                txtObservacionMuerte.setText(DatosMuerte.get("MOTIVO"));                
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(VistaHistoriaAnimal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void LimpiarFormularioMuerte() {
-        txtFechaMuerte.setText("");
-        txtMotivoMuerte.setText("");
+        Date fecha = new Date();
+        jdFechaMuerte.setDate(fecha);
+        txtObservacionMuerte.setText("");
     }
     //</editor-fold>
 
@@ -3665,5 +3690,20 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
     }
 //</editor-fold>
+
+    private void ValidarVentasyMuertes() {
+        btnVenta.setEnabled(DatosVenta.get("VENTA").equals("0"));
+        btnMuerte.setEnabled(DatosMuerte.get("MUERTE").equals("0"));
+        
+        if(DatosMuerte.get("MUERTE").equals("1")){
+            btnGuardarVenta.setVisible(false);
+            btnVenta.setEnabled(false);
+        }
+        if(DatosVenta.get("VENTA").equals("1")){
+            btnGuardarMuerte.setVisible(false);
+            btnMuerte.setEnabled(false);
+        }
+        
+    }
 
 }

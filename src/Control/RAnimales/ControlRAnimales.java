@@ -806,8 +806,8 @@ public class ControlRAnimales implements IControl {
 
     public Map<String, String> GetDatosVenta(String id_Animal) {
         try {
-            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
-                    + "DATE_FORMAT(fecha_venta, '%d/%m/%Y') AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n"
+            String consulta = "SELECT venta as VENTA, numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
+                    + "fecha_venta AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n"
                     + "MascaraMonedaDecimal(REPLACE(precio_venta, '.', ',')) AS PRECIO_VENTA, peso AS PESO, peso_canal AS PESO_CANAL, \n"
                     + "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(peso_canal IS NULL, peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n"
                     + "ROUND((peso_canal/peso * 100), 0) PORCENTAJE_CANAL \n"
@@ -825,18 +825,21 @@ public class ControlRAnimales implements IControl {
         }
     }
 
+    
+    
     public int ActualizarVenta(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
-        ModeloAnimales animal = (ModeloAnimales) _animal;
+        ModeloRAnimales animal = (ModeloRAnimales) _animal;
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE ranimales SET\n"
+                + "venta = '1',\n"
                 + "peso = " + animal.getPeso() + ",\n"
-                + "precio_venta = " + animal.getPrecioVenta() + ",\n"
-                + "peso_canal = " + animal.getPesoCanal() + ",\n"
-                + "fecha_venta = '" + animal.getFechaVenta() + "',\n"
-                + "tipo_venta = " + animal.getTipoVenta() + "\n"
+                + "precio_venta = " + animal.getPrecio_venta() + ",\n"
+                + "peso_canal = " + animal.getPeso_canal() + ",\n"
+                + "fecha_venta = '" + animal.getFecha_venta() + "',\n"
+                + "tipo_venta = " + animal.getTipo_venta() + "\n"
                 + "WHERE id = " + animal.getId()
         //</editor-fold>
         );
@@ -858,13 +861,14 @@ public class ControlRAnimales implements IControl {
 
     public int ActualizarMuerte(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
-        ModeloAnimales animal = (ModeloAnimales) _animal;
+        ModeloRAnimales animal = (ModeloRAnimales) _animal;
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE ranimales SET\n"
-                + "fecha_muerte = '" + animal.getFechaMuerte() + "',\n"
-                + "descripcion_muerte = '" + animal.getDescripcionMuerte() + "'\n"
+                + "muerte = '1',\n"
+                + "fecha_muerte = '" + animal.getFecha_muerte() + "',\n"
+                + "descripcion_muerte = '" + animal.getDescripcion_muerte() + "'\n"
                 + "WHERE id = " + animal.getId()
         //</editor-fold>
         );
@@ -886,8 +890,9 @@ public class ControlRAnimales implements IControl {
 
     public Map<String, String> GetDatosMuerte(String id_Animal) {
         try {
-            String consulta = "SELECT numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
-                    + "DATE_FORMAT(fecha_muerte, '%d/%m/%Y') AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n"
+            System.out.println("------------GetDatosMuerte------------");
+            String consulta = "SELECT muerte AS MUERTE, numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
+                    + "fecha_muerte AS FECHA_MUERTE, descripcion_muerte AS MOTIVO \n"
                     + "FROM ranimales \n"
                     + "WHERE id = '" + id_Animal + "'";
 

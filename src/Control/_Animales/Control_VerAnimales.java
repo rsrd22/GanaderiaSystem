@@ -32,6 +32,7 @@ public class Control_VerAnimales {
             if(Orden.isEmpty()){
                 Orden = "CONVERT(animal.numero,INT) ASC";
             }
+            //AND muerte = '0' and venta = '0'
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.id AS ID_TRASLADO, animal.id AS ID_ANIMAL, traslado.id_finca AS ID_FINCA, traslado.id_grupo AS ID_GRUPO,\n"
                     + "traslado.id_usuario AS ID_USUARIO, traslado.motivo AS MOTIVO, IF(animal.numero_mama_adoptiva IS NULL OR animal.numero_mama_adoptiva = '', animal.numero_mama, animal.numero_mama_adoptiva) AS NUMERO_MAMA,\n"
@@ -44,7 +45,8 @@ public class Control_VerAnimales {
                     + ", animal.id_tipo_animal AS IDTIPO_ANIMAL, tpoani.descripcion AS TIPO_ANIMAL, \n"
                     + "IFNULL(animal.capado, 'No') AS CAPADO,  IF(animal.muerte = '0', 'No', 'Si') AS MUERTE,\n"
                     + "IF(animal.venta = '0', 'No', 'Si') AS VENTA,  animal.hierro AS IDHIERRO, hierro.descripcion AS DESC_HIERRO,\n"
-                    + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE\n"
+                    + "IF(animal.destete = '0', 'No', 'Si') AS DESTETE,\n"
+                    + "IF(animal.venta = 1, 'Vendido', IF(animal.muerte = 1, 'Muerto', 'Activo')) AS ESTADO_ANIMAL\n"
                     + "FROM ranimales animal\n"
                     + "INNER JOIN propietarioxhierro hierro ON hierro.id = animal.hierro \n"
                     + "INNER JOIN tipo_animales tpoani ON tpoani.id = animal.id_tipo_animal \n"
@@ -54,7 +56,7 @@ public class Control_VerAnimales {
                     + "LEFT JOIN lotes lot ON lot.id = rot.id_lote\n"
                     + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
-                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' AND muerte = '0' and venta = '0'\n"
+                    + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' \n"
                     + "ORDER BY "+Orden;
             System.out.println("consulta:\n"+consulta);
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
