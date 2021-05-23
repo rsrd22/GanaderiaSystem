@@ -354,13 +354,14 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
 
     public void eventocbFinca(){
         InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         if(cbFinca.getItemCount() > 0){
             idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
             FuncionLlenarTipoAnimales(0);
         }
     }
     
-    public void eventocbTipoAnimales(){
+    public void eventocbTipoAnimales(){ 
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
         
         if(cbTipoAnimales.getItemCount() > 0){
@@ -458,7 +459,6 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     
     private void CargarListaFincas(int opc, JComboBox jcombo) {
         Utilidades.LlenarComboBox(jcombo, listaFincas, "DESCRIPCION");
-        jcombo.setSelectedIndex(1);
     }
     
     private void FuncionLlenarTipoAnimales(int opc){

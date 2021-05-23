@@ -47,6 +47,8 @@ public class VistaSeleccionarFinca extends javax.swing.JPanel {
         this.modeloVentanaGeneral = modeloVentanaGeneral;
         controlGral = new ControlGeneral();
         cargarComboFincas();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     private void cargarComboFincas() {

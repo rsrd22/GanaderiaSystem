@@ -18,8 +18,8 @@ public class InformacionGlobal {
 
     public static void setFincaDesdeConstructor(JComboBox comboFinca) {
         if (comboFinca.getModel().getSize() > 1) {
-            if (!InformacionGlobal.finca.isEmpty()) {
-                comboFinca.getModel().setSelectedItem(InformacionGlobal.finca);
+            if (!finca.isEmpty()) {
+                comboFinca.getModel().setSelectedItem(finca);
             }
         }
     }
@@ -27,15 +27,15 @@ public class InformacionGlobal {
     public static void setFincaDesdeEventoChange(JComboBox comboFinca) {
         if (comboFinca.getModel().getSize() > 1) {
             if (comboFinca.getSelectedIndex() > 0) {
-                InformacionGlobal.finca = comboFinca.getSelectedItem().toString();
+                finca = comboFinca.getSelectedItem().toString();
             }
         }
     }
 
     public static void setTipoAnimalDesdeConstructor(JComboBox comboTipoAnimal) {
         if (comboTipoAnimal.getModel().getSize() > 1) {
-            if (!InformacionGlobal.tipoAnimal.isEmpty()) {
-                comboTipoAnimal.getModel().setSelectedItem(InformacionGlobal.tipoAnimal);
+            if (!tipoAnimal.isEmpty()) {
+                comboTipoAnimal.getModel().setSelectedItem(tipoAnimal);
             }
         }
     }
@@ -43,7 +43,7 @@ public class InformacionGlobal {
     public static void setTipoAnimalDesdeEventoChange(JComboBox comboTipoAnimal) {
         if (comboTipoAnimal.getModel().getSize() > 1) {
             if (comboTipoAnimal.getSelectedIndex() > 0) {
-                InformacionGlobal.tipoAnimal = comboTipoAnimal.getSelectedItem().toString();
+                tipoAnimal = comboTipoAnimal.getSelectedItem().toString();
             }
         }
     }

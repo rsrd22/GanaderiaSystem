@@ -9,6 +9,7 @@ import Configuracion.InformacionGlobal;
 import Control.*;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
+import Control.RAnimales.ControlRAnimales;
 import Modelo.ModeloVentanaGeneral;
 import Tablas.TablaRender;
 import Utilidades.Expresiones;
@@ -50,7 +51,7 @@ public class VistaPesaje extends javax.swing.JPanel {
     public List<Map<String, String>> ListaAnimales;
     public List<Map<String, String>> ListaAnimalesMostrar;
     public List<Map<String, String>> ListadoFechas;
-    private ControlAnimales controlAnimales = new ControlAnimales();
+    private ControlRAnimales controlAnimales = new ControlRAnimales();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public String[] NameColumnas;
@@ -581,9 +582,7 @@ public class VistaPesaje extends javax.swing.JPanel {
                 + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
 
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-        cbFinca.setSelectedIndex(1);
         CargarListaTipoAnimales();
-        //EventoComboFincas();
     }
 
     private void CargarListaTipoAnimales() {
