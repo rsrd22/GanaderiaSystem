@@ -44,14 +44,18 @@ public class ControlTraslado implements IControl {
         }
     }
 
-    public Object ObtenerDatosTraslado(String IDFINCA, String IDTIPOFINCA) {
+    public Object ObtenerDatosTraslado(String IDFINCA, String IDTIPOFINCA, String Orden) {
         try {
+            if(Orden.isEmpty()){
+                Orden = "CONVERT(animal.numero,INT) ASC";
+            }
             String consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n"
                     + "traslado.`id_usuario` AS ID_USUARIO, traslado.`motivo` AS MOTIVO,\n"
                     + "IF(animal.`numero_mama_adoptiva` IS NULL, IF(animal.`numero_mama` IS NULL, '',animal.`numero_mama`), animal.`numero_mama_adoptiva`) AS NUMERO_MAMA,\n"
                     + "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n"
                     + "grup.`descripcion` AS GRUPO, \n"
+                    + "animal.`fecha_nacimiento` F_NACIMIENTO, \n"
                     + "IFNULL(finc.`id`, '') AS IDFINCA, IFNULL(finc.`descripcion`, '') AS FINCA, \n"
                     + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
                     + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n"
@@ -73,36 +77,7 @@ public class ControlTraslado implements IControl {
                     + "LEFT JOIN fincas finc ON finc.`id` = `traslado`.`id_finca`\n"
                     + "WHERE traslado.`id_finca` = '" + IDFINCA + "' AND tpoani.`id` = '" + IDTIPOFINCA + "' \n"
                     + " AND traslado.`estado` = 'Activo' AND animal.venta = '0' AND animal.`muerte` = '0'\n"
-                    + "ORDER BY animal.`id` ASC";
-
-            consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
-                    + "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n"
-                    + "traslado.`id_usuario` AS ID_USUARIO, traslado.`motivo` AS MOTIVO,\n"
-                    + "IF(animal.`numero_mama_adoptiva` IS NULL, IF(animal.`numero_mama` IS NULL, '',animal.`numero_mama`), animal.`numero_mama_adoptiva`) AS NUMERO_MAMA,\n"
-                    + "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n"
-                    + "grup.`descripcion` AS GRUPO, \n"
-                    + "IFNULL(finc.`id`, '') AS IDFINCA, IFNULL(finc.`descripcion`, '') AS FINCA, \n"
-                    + "IFNULL(blo.`id`, '') AS IDBLOQUE, IFNULL(CONCAT('Bloque ',blo.`numero`), '') AS BLOQUE, \n"
-                    + "IFNULL(lot.`id`, '') AS IDLOTE, IFNULL(CONCAT('Lote ',lot.`numero`), '') AS LOTE\n"
-                    + ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n"
-                    + "FROM `ranimales` animal\n"
-                    + "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"
-                    + "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n"
-                    + "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n"
-                    + "LEFT JOIN (\n"
-                    + "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n"
-                    + "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n"
-                    + "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n"
-                    + "FROM `rotacion_lotesxestado` rot\n"
-                    + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n"
-                    + "WHERE rot.estado = 'Activo' AND rotgrup.`estado` = 'Activo'\n"
-                    + ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n"
-                    + "LEFT JOIN `lotes` lot ON lot.`id` = tbl.ID_LOTE \n"
-                    + "LEFT JOIN `bloques` blo ON blo.`id` = lot.`id_bloque`\n"
-                    + "LEFT JOIN fincas finc ON finc.`id` = `traslado`.`id_finca`\n"
-                    + "WHERE traslado.`id_finca` = '" + IDFINCA + "' AND tpoani.`id` = '" + IDTIPOFINCA + "' \n"
-                    + " AND traslado.`estado` = 'Activo' AND animal.venta = '0' AND animal.`muerte` = '0'\n"
-                    + "ORDER BY CONVERT(animal.numero,INT) ASC";
+                    + "ORDER BY "+Orden;
 
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();
 

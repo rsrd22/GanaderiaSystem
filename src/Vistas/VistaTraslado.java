@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Configuracion.InformacionGlobal;
@@ -15,7 +14,10 @@ import Utilidades.Utilidades;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
@@ -29,6 +31,7 @@ import javax.swing.table.*;
  * @author MERRY
  */
 public class VistaTraslado extends javax.swing.JPanel {
+
     public DefaultTableModel modeloTblTraslado;
     public String[] EncabezadoTblTraslado;
     public List<Map<String, String>> listaFincas;
@@ -37,14 +40,22 @@ public class VistaTraslado extends javax.swing.JPanel {
     public String idFinca;
     public String idTipoAnimal;
     public ArrayList<String> NameColumnasFiltro;
-    
-    private List<Map<String, String>>  ListaTraslado;
-    private List<Map<String, String>>  ListaTrasladoMostrar;
-    private List<Map<String, String>>  ListaAnimaleSeleccionados;
+
+    private List<Map<String, String>> ListaTraslado;
+    private List<Map<String, String>> ListaTrasladoMostrar;
+    private List<Map<String, String>> ListaAnimaleSeleccionados;
     private ControlTraslado controlTraslado = new ControlTraslado();
     public int allFincas;
     public ModeloVentanaGeneral objetoVentana;
     public int idModulo = 22;
+
+    public ArrayList<String> NameColumnasOrden;
+    public int bandOrden = 0;
+    public int colOrden = 0;
+    public String Orden = "";
+    Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
+    public String[] NameColumnas;
+
     /**
      * Creates new form VistaTraslado
      */
@@ -65,25 +76,25 @@ public class VistaTraslado extends javax.swing.JPanel {
         NameColumnasFiltro.add("PESO");
         NameColumnasFiltro.add("ESTADO");
         EncabezadoTblTraslado = new String[]{
-            "No", "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>", 
-            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>", "Grupo", "Lote", 
+            "No", "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Mamá</p></html>",
+            "<html><p style=\"text-align:center;\">Número</p><p style=\"text-align:center;\">Animal</p></html>", "Grupo", "Lote",
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Nacimiento</p></html>", "Genero", "Peso", "Estado", "Trasladar"
         };
         ListaTraslado = new ArrayList<>();
         listaFincas = new ArrayList<>();
         listaTipoAnimales = new ArrayList<>();
         ListaAnimaleSeleccionados = new ArrayList<>();
-        
+
         InicializarTblBloques();
         CargarListaFincas();
-        
+
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
-    
+
     public void InicializarTblBloques() {
         tbl_Traslado.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblTraslado = new DefaultTableModel(EncabezadoTblTraslado, 0) {
             Class[] types = new Class[]{
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class,
@@ -113,33 +124,95 @@ public class VistaTraslado extends javax.swing.JPanel {
         tbl_Traslado.getColumnModel().getColumn(7).setPreferredWidth(50);
         tbl_Traslado.getColumnModel().getColumn(8).setPreferredWidth(60);
         tbl_Traslado.getColumnModel().getColumn(9).setPreferredWidth(70);
-        
+
         tbl_Traslado.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblTraslado.getColumnCount(); i++) {
             tbl_Traslado.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            if(i > 0){
-//                if(i == 2 ){
-//                    tcr.setHorizontalAlignment(SwingConstants.RIGHT);
-//
-//                }else{
-                    tcr.setHorizontalAlignment(SwingConstants.CENTER);
-
-//                }
+            if (i > 0) {
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
                 tcr.setForeground(new Color(26, 82, 118));
                 tbl_Traslado.getColumnModel().getColumn(i).setCellRenderer(tcr);
             }
-            
         }
         JTableHeader header = tbl_Traslado.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
+        //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
+        NameColumnasOrden = new ArrayList<>();
+        NameColumnasOrden.add("NUMERO_MAMA");
+        NameColumnasOrden.add("NUMERO_ANIMAL");
+        NameColumnasOrden.add("GRUPO");
+        NameColumnasOrden.add("LOTE");
+        NameColumnasOrden.add("F_NACIMIENTO");
+        NameColumnasOrden.add("GENERO");
+        NameColumnasOrden.add("PESO");
+//</editor-fold>
+
+        header.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                EventoOrdenTabla(e);
+            }
+
+            private void EventoOrdenTabla(MouseEvent e) {
+                if (!tbl_Traslado.isEnabled()) {
+                    return;
+                }
+
+                int col = tbl_Traslado.columnAtPoint(e.getPoint());
+                System.out.println("col-->" + colOrden);
+                final int colEstado = 8;
+                if (col > 0 && col < colEstado) {
+                    if (col != colOrden) {
+                        colOrden = col;
+                        bandOrden = 1;//Ascendente
+                    } else {
+                        if (bandOrden > 0) {
+                            bandOrden = -1;//Descendente
+                        } else if (bandOrden < 0) {
+                            bandOrden = 0;// Por Defecto
+                        } else {
+                            bandOrden = 1;//Ascendente
+                        }
+                    }
+                    String dat = "";
+                    String orden = NameColumnasOrden.get(col - 1);
+                    String[] cols = orden.split("<::>");
+
+                    for (int i = 0; i < cols.length; i++) {
+                        if (bandOrden == 0) {
+                            dat = "";
+                        } else {
+                            dat += (dat.equals("") ? "" : ", ") + TipoDato(col - 1, cols[i]) + " " + (bandOrden == 1 ? "ASC" : "DESC");
+                        }
+                    }
+
+                    Orden = dat;
+                    EventoComboFincas();
+                }
+            }
+
+            private String TipoDato(int ind, String Dato) {
+                String ret = "";
+                if (ind == 0 || ind == 1) {
+                    ret = "CONVERT(" + Dato + ",INT)";
+                }else if (Dato.toLowerCase().contains("fecha")) {
+                    ret = "CONVERT(" + Dato + ",INT)";
+                }                 else {
+                    ret = Dato;
+                }
+                return ret;
+            }
+
+        });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -316,14 +389,14 @@ public class VistaTraslado extends javax.swing.JPanel {
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
-        
-        if(cbFinca.getItemCount() > 0){
+
+        if (cbFinca.getItemCount() > 0) {
             //EventoComboFincas();
-            System.out.println("cbFinca.getSelectedIndex()--"+cbFinca.getSelectedIndex());
-            if(cbFinca.getSelectedIndex() >= 0){
+            System.out.println("cbFinca.getSelectedIndex()--" + cbFinca.getSelectedIndex());
+            if (cbFinca.getSelectedIndex() >= 0) {
                 idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
                 CargarListaTipoAnimales();
-            }else{
+            } else {
                 cbTipoAnimales.removeAllItems();
                 Utilidades.LimpiarTabla(tbl_Traslado);
             }
@@ -333,46 +406,42 @@ public class VistaTraslado extends javax.swing.JPanel {
     private void tbl_TrasladoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TrasladoMouseReleased
         int fila = tbl_Traslado.getSelectedRow();
         int cola = tbl_Traslado.getSelectedColumn();
-        
-        if(cola == 0){//SELECCIONAR
+
+        if (cola == 0) {//SELECCIONAR
             boolean sel = (boolean) tbl_Traslado.getValueAt(fila, cola);
             tbl_Traslado.getModel().setValueAt(!sel, fila, cola);
-            if(!sel){//SELECCIONADO
+            if (!sel) {//SELECCIONADO
                 ListaAnimaleSeleccionados.add(ListaTrasladoMostrar.get(fila));
-            }else{// NO SELECCIONADO
+            } else {// NO SELECCIONADO
                 int ind = getIndiceLista(ListaTrasladoMostrar.get(fila).get("ID_GRUPO"));
                 ListaAnimaleSeleccionados.remove(ind);
             }
-        } else if(cola == 9){
+        } else if (cola == 9) {
             tbl_Traslado.setValueAt(true, fila, 0);
-            System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
-            if(!ListaAnimaleSeleccionados.contains(ListaTrasladoMostrar.get(fila)))
+            System.out.println("ListaAnimaleSeleccionados--->" + ListaAnimaleSeleccionados.size());
+            if (!ListaAnimaleSeleccionados.contains(ListaTrasladoMostrar.get(fila))) {
                 ListaAnimaleSeleccionados.add(ListaTrasladoMostrar.get(fila));
-            System.out.println("ListaAnimaleSeleccionados--->"+ListaAnimaleSeleccionados.size());
-            
+            }
+            System.out.println("ListaAnimaleSeleccionados--->" + ListaAnimaleSeleccionados.size());
+
             objetoVentana = new ModeloVentanaGeneral(this, new VistaTrasladar(), 1, ListaAnimaleSeleccionados);
             objetoVentana.setFila(fila);
             new VistaGeneral(objetoVentana).setVisible(true);
             boolean sel = (boolean) tbl_Traslado.getValueAt(fila, 0);
-//            if(sel){
-//                
-//            }else{
-//                JOptionPane.showMessageDialog(this, "Por favor seleccione esta fila para realizar la operación.");
-//            }
         }
-        
+
     }//GEN-LAST:event_tbl_TrasladoMouseReleased
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
-        
-        if(cbTipoAnimales.getItemCount() > 0){
+
+        if (cbTipoAnimales.getItemCount() > 0) {
             //EventoComboFincas();
-            System.out.println("cbTipoAnimales.getSelectedIndex()>"+cbTipoAnimales.getSelectedIndex());
-            if(cbTipoAnimales.getSelectedIndex() > 0){
+            System.out.println("cbTipoAnimales.getSelectedIndex()>" + cbTipoAnimales.getSelectedIndex());
+            if (cbTipoAnimales.getSelectedIndex() > 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
                 EventoComboFincas();
-            }else{
+            } else {
                 Utilidades.LimpiarTabla(tbl_Traslado);
                 cbTipoAnimales.requestFocusInWindow();
             }
@@ -407,36 +476,37 @@ public class VistaTraslado extends javax.swing.JPanel {
     private javax.swing.JTable tbl_Traslado;
     public javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
-    
+
     public void RetornoVistaGeneral(ModeloVentanaGeneral objeto, Object retorno) {
-        
-        if(objeto.getOpcion() == 1){// VISTA ROTAR
-            
+
+        if (objeto.getOpcion() == 1) {// VISTA ROTAR
+
             EventoComboFincas();
         }
     }
-    
+
     private void CargarListaFincas() {
-        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                "UNION\n" +
-                                                "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n" +
-                                                "FROM `fincas`\n"+
-                                                "/*UNION \n"+
-                                                "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
-         
+        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n"
+                + "FROM `fincas`\n"
+                + "/*UNION \n"
+                + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
+
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
         CargarListaTipoAnimales();
-        
+
         //EventoComboFincas();
     }
+
     private void CargarListaTipoAnimales() {
-        listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                    "UNION\n" +
-                                                    "SELECT id AS ID, descripcion AS DESCRIPCION\n" +
-                                                    "FROM `tipo_animales`\n" +
-                                                    "WHERE id_finca = '"+idFinca+"' AND estado = 'Activo'\n" +
-                                                    "ORDER BY id ASC");
-         
+        listaTipoAnimales = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT id AS ID, descripcion AS DESCRIPCION\n"
+                + "FROM `tipo_animales`\n"
+                + "WHERE id_finca = '" + idFinca + "' AND estado = 'Activo'\n"
+                + "ORDER BY id ASC");
+
         Utilidades.LlenarComboBox(cbTipoAnimales, listaTipoAnimales, "DESCRIPCION");
         cbTipoAnimales.setSelectedIndex(0);
         cbTipoAnimales.requestFocusInWindow();
@@ -444,8 +514,8 @@ public class VistaTraslado extends javax.swing.JPanel {
     }
 
     private int getIndiceLista(String Dato) {
-        for(int i = 0; i < ListaAnimaleSeleccionados.size(); i++){
-            if(ListaAnimaleSeleccionados.get(i).get("ID_GRUPO").equals(Dato)){
+        for (int i = 0; i < ListaAnimaleSeleccionados.size(); i++) {
+            if (ListaAnimaleSeleccionados.get(i).get("ID_GRUPO").equals(Dato)) {
                 return i;
             }
         }
@@ -453,57 +523,57 @@ public class VistaTraslado extends javax.swing.JPanel {
     }
 
     private void EventoComboFincas() {
-        System.out.println("cbFincaActionPerformed---_>"+listaFincas.size());
-        System.out.println("cbFinca.--->"+cbFinca.getItemCount());
-        System.out.println("cbFinca.getSelectedIndex()..>"+cbFinca.getSelectedIndex());
+        System.out.println("cbFincaActionPerformed---_>" + listaFincas.size());
+        System.out.println("cbFinca.--->" + cbFinca.getItemCount());
+        System.out.println("cbFinca.getSelectedIndex()..>" + cbFinca.getSelectedIndex());
         ListaAnimaleSeleccionados = new ArrayList<>();
-        
-        System.out.println("idFinca-->"+idFinca);
-        if(idFinca.equals("ALL")){   
-            allFincas = 1; 
-        }else{
+
+        System.out.println("idFinca-->" + idFinca);
+        if (idFinca.equals("ALL")) {
+            allFincas = 1;
+        } else {
             allFincas = 0;
         }
-        if(Integer.parseInt(idFinca)>0){
-            ListaTraslado =(List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado(""+idFinca, idTipoAnimal);
-        
+        if (Integer.parseInt(idFinca) > 0) {
+            ListaTraslado = (List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado("" + idFinca, idTipoAnimal, Orden);
+            
             MostrarTabla();
         }
-        
+
     }
-    
+
     private void MostrarTabla() {
         System.out.println("****************MostrarTabla*****************");
         String filtro = Utilidades.CodificarElemento(txtFiltro.getText());
-        System.out.println("filtro--"+filtro);
+        System.out.println("filtro--" + filtro);
         ListaTrasladoMostrar = getFiltroLista(filtro);
-        
-        if(Integer.parseInt(idFinca)>0){
+
+        if (Integer.parseInt(idFinca) > 0) {
             //ListaTraslado =(List<Map<String, String>>) controlTraslado.ObtenerDatosTraslado(""+idFinca, idTipoAnimal);
             Utilidades.LimpiarTabla(tbl_Traslado);
-            for(int i =0; i < ListaTrasladoMostrar.size(); i++){
+            for (int i = 0; i < ListaTrasladoMostrar.size(); i++) {
                 Utilidades.agregarFilaTabla(
-                        modeloTblTraslado,  
+                        modeloTblTraslado,
                         new Object[]{
                             false,//tbl_Grupos.getRowCount()+1,
                             ListaTrasladoMostrar.get(i).get("NUMERO_MAMA"),
                             ListaTrasladoMostrar.get(i).get("NUMERO_ANIMAL"),
                             Utilidades.decodificarElemento(ListaTrasladoMostrar.get(i).get("GRUPO")),
-                            (allFincas == 1?Utilidades.decodificarElemento(ListaTrasladoMostrar.get(i).get("FINCA"))+" / ":"") + 
-                            ListaTrasladoMostrar.get(i).get("BLOQUE") + " / " + ListaTraslado.get(i).get("LOTE"),
-                            ListaTrasladoMostrar.get(i).get("FECHA_NACIMIENTO"), 
-                            ListaTrasladoMostrar.get(i).get("GENERO").toUpperCase(), 
-                            ListaTrasladoMostrar.get(i).get("PESO"), 
-                            ListaTrasladoMostrar.get(i).get("ESTADO"), 
-                            "Trasladar" 
-                        } 
-                    );
+                            (allFincas == 1 ? Utilidades.decodificarElemento(ListaTrasladoMostrar.get(i).get("FINCA")) + " / " : "")
+                            + ListaTrasladoMostrar.get(i).get("BLOQUE") + " / " + ListaTraslado.get(i).get("LOTE"),
+                            ListaTrasladoMostrar.get(i).get("FECHA_NACIMIENTO"),
+                            ListaTrasladoMostrar.get(i).get("GENERO").toUpperCase(),
+                            ListaTrasladoMostrar.get(i).get("PESO"),
+                            ListaTrasladoMostrar.get(i).get("ESTADO"),
+                            "Trasladar"
+                        }
+                );
             }
             cbTipoAnimales.requestFocusInWindow();
         }
-        
+
     }
-    
+
     private List<Map<String, String>> getFiltroLista(String filtro) {
         List<Map<String, String>> retorno = new ArrayList<>();
         System.out.println("***************getFiltroLista*****************" + filtro);
@@ -531,5 +601,5 @@ public class VistaTraslado extends javax.swing.JPanel {
         System.out.println("********************retorno --> " + retorno.size() + "***********************");
         return retorno;
     }
-    
+
 }

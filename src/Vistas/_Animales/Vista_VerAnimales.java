@@ -75,7 +75,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         NameColumnasFiltro.add("NUMERO_ANIMAL");
         NameColumnasFiltro.add("NUMERO_MAMA");
         NameColumnasFiltro.add("GENERO");
-        NameColumnasFiltro.add("FECHA_NACIMIENTO");
+        NameColumnasFiltro.add("F_NACIMIENTO");
         NameColumnasFiltro.add("PESO");
         NameColumnasFiltro.add("DESC_HIERRO");
         NameColumnasFiltro.add("CAPADO");
