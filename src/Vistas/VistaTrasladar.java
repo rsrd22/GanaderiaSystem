@@ -56,12 +56,12 @@ public class VistaTrasladar extends javax.swing.JPanel {
      */
     public VistaTrasladar() {
         initComponents();
-        setSize(749, 612);
+        setSize(745, 615);
     }
 
     public VistaTrasladar(ModeloVentanaGeneral modeloVentanaGeneral) {
         initComponents();
-        setSize(749, 612);
+        setSize(745, 615);
         System.out.println("******************VistaRotar***************+fasdfasdfasd+");
         this.modeloVentanaGeneral = modeloVentanaGeneral;
         controlTraslado = new ControlTraslado();
@@ -105,24 +105,27 @@ public class VistaTrasladar extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cbFinca = new javax.swing.JComboBox();
-        lblTid = new javax.swing.JLabel();
-        cbGrupo = new javax.swing.JComboBox();
-        lblTid2 = new javax.swing.JLabel();
-        scrpnlsGrupos = new javax.swing.JScrollPane();
-        pnlGrupos = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnDescartar = new javax.swing.JButton();
-        lblTid3 = new javax.swing.JLabel();
-        jdFechaTraslado = new com.toedter.calendar.JDateChooser();
-        lblTid4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtMotivo = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
         scrpnlsAnimalesMostrar = new javax.swing.JScrollPane();
         pnlAnimalesMostrar = new javax.swing.JPanel();
-        lblTid5 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         cbTipoAnimales = new javax.swing.JComboBox();
+        lblTid2 = new javax.swing.JLabel();
+        cbGrupo = new javax.swing.JComboBox();
+        lblTid4 = new javax.swing.JLabel();
+        jdFechaTraslado = new com.toedter.calendar.JDateChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtMotivo = new javax.swing.JTextArea();
+        lblTid5 = new javax.swing.JLabel();
+        cbFinca = new javax.swing.JComboBox();
+        lblTid = new javax.swing.JLabel();
+        scrpnlsGrupos = new javax.swing.JScrollPane();
+        pnlGrupos = new javax.swing.JPanel();
+        lblTid3 = new javax.swing.JLabel();
         chNovilla = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        btnGuardar = new javax.swing.JButton();
+        btnDescartar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
@@ -132,37 +135,71 @@ public class VistaTrasladar extends javax.swing.JPanel {
             }
         });
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
-        layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0, 15, 0};
-        layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        layout.columnWidths = new int[] {0, 15, 0, 15, 0};
+        layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0};
         setLayout(layout);
 
-        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
-        cbFinca.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        scrpnlsAnimalesMostrar.setBackground(new java.awt.Color(255, 255, 255));
+        scrpnlsAnimalesMostrar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Animales a Trasladar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
+        scrpnlsAnimalesMostrar.setForeground(new java.awt.Color(59, 123, 50));
+
+        pnlAnimalesMostrar.setBackground(new java.awt.Color(255, 255, 255));
+        pnlAnimalesMostrar.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                pnlAnimalesMostrarComponentAdded(evt);
+            }
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                pnlAnimalesMostrarComponentRemoved(evt);
+            }
+        });
+        pnlAnimalesMostrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        scrpnlsAnimalesMostrar.setViewportView(pnlAnimalesMostrar);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(scrpnlsAnimalesMostrar, gridBagConstraints);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 15, 0, 15, 0, 15, 0};
+        jPanel3Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jPanel3.setLayout(jPanel3Layout);
+
+        cbTipoAnimales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbTipoAnimales.setForeground(new java.awt.Color(59, 123, 50));
+        cbTipoAnimales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbFincaActionPerformed(evt);
+                cbTipoAnimalesActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(cbFinca, gridBagConstraints);
+        gridBagConstraints.weightx = 0.5;
+        jPanel3.add(cbTipoAnimales, gridBagConstraints);
 
-        lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid.setText("Finca");
+        lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid2.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid2.setText("Motivo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(lblTid, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(lblTid2, gridBagConstraints);
 
         cbGrupo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbGrupo.setForeground(new java.awt.Color(59, 123, 50));
@@ -173,25 +210,87 @@ public class VistaTrasladar extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        add(cbGrupo, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(cbGrupo, gridBagConstraints);
 
-        lblTid2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid2.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid2.setText("Motivo");
+        lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid4.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid4.setText("Fecha Traslado");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 20;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        add(lblTid2, gridBagConstraints);
+        gridBagConstraints.weightx = 0.15;
+        jPanel3.add(lblTid4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 60;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel3.add(jdFechaTraslado, gridBagConstraints);
+
+        txtMotivo.setColumns(20);
+        txtMotivo.setRows(5);
+        jScrollPane2.setViewportView(txtMotivo);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
+        jPanel3.add(jScrollPane2, gridBagConstraints);
+
+        lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid5.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid5.setText("Tipo Animales");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        jPanel3.add(lblTid5, gridBagConstraints);
+
+        cbFinca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbFinca.setForeground(new java.awt.Color(59, 123, 50));
+        cbFinca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFincaActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        jPanel3.add(cbFinca, gridBagConstraints);
+
+        lblTid.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid.setText("Finca");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        jPanel3.add(lblTid, gridBagConstraints);
 
         scrpnlsGrupos.setBackground(new java.awt.Color(255, 255, 255));
         scrpnlsGrupos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Animales a Trasladar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
@@ -211,13 +310,53 @@ public class VistaTrasladar extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 0.5;
-        add(scrpnlsGrupos, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel3.add(scrpnlsGrupos, gridBagConstraints);
+
+        lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTid3.setForeground(new java.awt.Color(59, 123, 50));
+        lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTid3.setText("Grupo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        jPanel3.add(lblTid3, gridBagConstraints);
+
+        chNovilla.setBackground(new java.awt.Color(255, 255, 255));
+        chNovilla.setText("Novilla?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.weightx = 0.15;
+        jPanel3.add(chNovilla, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(jPanel3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(jPanel1, gridBagConstraints);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/guardar.png"))); // NOI18N
         btnGuardar.setToolTipText("Guardar");
@@ -233,14 +372,11 @@ public class VistaTrasladar extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 26;
-        gridBagConstraints.ipadx = -23;
-        gridBagConstraints.ipady = -9;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(10, 40, 18, 0);
-        add(btnGuardar, gridBagConstraints);
+        jPanel2.add(btnGuardar, gridBagConstraints);
 
         btnDescartar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/descartar.png"))); // NOI18N
         btnDescartar.setToolTipText("Descartar");
@@ -255,122 +391,18 @@ public class VistaTrasladar extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 26;
-        gridBagConstraints.ipadx = -23;
-        gridBagConstraints.ipady = -9;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(10, 6, 18, 0);
-        add(btnDescartar, gridBagConstraints);
-
-        lblTid3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid3.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid3.setText("Grupo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        add(lblTid3, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(jdFechaTraslado, gridBagConstraints);
-
-        lblTid4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid4.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid4.setText("Fecha Traslado");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(lblTid4, gridBagConstraints);
-
-        txtMotivo.setColumns(20);
-        txtMotivo.setRows(5);
-        jScrollPane2.setViewportView(txtMotivo);
+        jPanel2.add(btnDescartar, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 22;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 0.5;
-        add(jScrollPane2, gridBagConstraints);
-
-        scrpnlsAnimalesMostrar.setBackground(new java.awt.Color(255, 255, 255));
-        scrpnlsAnimalesMostrar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)), "Animales a Trasladar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-        scrpnlsAnimalesMostrar.setForeground(new java.awt.Color(59, 123, 50));
-
-        pnlAnimalesMostrar.setBackground(new java.awt.Color(255, 255, 255));
-        pnlAnimalesMostrar.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                pnlAnimalesMostrarComponentAdded(evt);
-            }
-            public void componentRemoved(java.awt.event.ContainerEvent evt) {
-                pnlAnimalesMostrarComponentRemoved(evt);
-            }
-        });
-        pnlAnimalesMostrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        scrpnlsAnimalesMostrar.setViewportView(pnlAnimalesMostrar);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridheight = 17;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 1.0;
-        add(scrpnlsAnimalesMostrar, gridBagConstraints);
-
-        lblTid5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTid5.setForeground(new java.awt.Color(59, 123, 50));
-        lblTid5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTid5.setText("Tipo Animales");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(lblTid5, gridBagConstraints);
-
-        cbTipoAnimales.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbTipoAnimales.setForeground(new java.awt.Color(59, 123, 50));
-        cbTipoAnimales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTipoAnimalesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 0.15;
-        add(cbTipoAnimales, gridBagConstraints);
-
-        chNovilla.setBackground(new java.awt.Color(255, 255, 255));
-        chNovilla.setText("Novilla?");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 16;
-        gridBagConstraints.weightx = 0.15;
-        add(chNovilla, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        add(jPanel2, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
@@ -435,6 +467,9 @@ public class VistaTrasladar extends javax.swing.JPanel {
     public javax.swing.JComboBox cbGrupo;
     public javax.swing.JComboBox cbTipoAnimales;
     private javax.swing.JCheckBox chNovilla;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private com.toedter.calendar.JDateChooser jdFechaTraslado;
     private javax.swing.JLabel lblTid;

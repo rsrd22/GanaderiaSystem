@@ -206,27 +206,7 @@ public class ControlTraslado implements IControl {
                 + "WHERE rot.estado = 'Activo' AND rotgrup.`estado` = 'Activo'\n"
                 + ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n"
                 + "WHERE traslado.`id_finca` = '" + idFinca + "' AND tpoani.`id` = '" + idTipoAnimal + "' AND traslado.`estado` = 'Activo'\n"
-                + "ORDER BY animal.`id` ASC";
-
-        consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
-                + "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n"
-                + "traslado.`id_usuario` AS ID_USUARIO, traslado.`motivo` AS MOTIVO, IF(animal.`numero_mama_adoptiva` IS NULL, animal.`numero_mama`, animal.`numero_mama_adoptiva`) AS NUMERO_MAMA,\n"
-                + "animal.`numero` AS NUMERO_ANIMAL, animal.`peso` AS PESO, DATE_FORMAT(animal.`fecha_nacimiento`, '%d/%m/%Y') AS FECHA_NACIMIENTO, animal.`genero` AS GENERO,\n"
-                + "grup.`descripcion` AS GRUPO\n"
-                + ", animal.`id_tipo_animal` AS IDTIPO_ANIMAL, tpoani.`descripcion` AS TIPO_ANIMAL \n"
-                + "FROM `ranimales` animal\n"
-                + "INNER JOIN `tipo_animales` tpoani ON tpoani.`id` = animal.`id_tipo_animal` \n"
-                + "LEFT JOIN `traslado_animalxgrupo` traslado ON traslado.`id_animal` = animal.`id`\n"
-                + "LEFT JOIN `grupos` grup ON grup.`id` = traslado.`id_grupo`\n"
-                + "LEFT JOIN (\n"
-                + "SELECT rot.`id` AS ID_ROTACION, rotgrup.`id` AS ID_ROT_GRUPO, rot.`id_lote` AS ID_LOTE, rotgrup.`id_grupo` AS ID_GRUPO,\n"
-                + "rot.`fecha_entrada` AS FECHA_ENTRADA, rot.`fecha_registro` AS FECHA_REGISTRO,\n"
-                + "rot.`fecha_salida` AS FECHA_SALIDA, rot.estado AS ESTADO_LOTE, rotgrup.`estado` AS ESTADO_GRUPO\n"
-                + "FROM `rotacion_lotesxestado` rot\n"
-                + "INNER JOIN rotacion_lotesxgrupo rotgrup ON rotgrup.`id_rotacion_lotesxestado` = rot.`id`\n"
-                + "WHERE rot.estado = 'Activo' AND rotgrup.`estado` = 'Activo'\n"
-                + ") AS tbl ON tbl.ID_GRUPO = traslado.`id_grupo`\n"
-                + "WHERE traslado.`id_finca` = '" + idFinca + "' AND tpoani.`id` = '" + idTipoAnimal + "' AND traslado.`estado` = 'Activo'\n"
+                + "AND animal.`muerte`='0' AND animal.`venta`='0'\n"
                 + "ORDER BY CONVERT(animal.numero,INT) ASC";
 
         List<Map<String, String>> listaModelo = new ArrayList<Map<String, String>>();
