@@ -7,6 +7,7 @@ package Vistas;
 
 import Actividades.ActividadesPorPeriodo;
 import Actividades.PanelActividades;
+import Configuracion.InformacionGlobal;
 import Control.ControlCronograma;
 import Control.ControlGeneral;
 import Modelo.ModeloVentanaGeneral;
@@ -36,6 +37,8 @@ public class VistaSeleccionarFinca extends javax.swing.JPanel {
     public VistaSeleccionarFinca() {
         initComponents();
         controlGral = new ControlGeneral();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     VistaSeleccionarFinca(ModeloVentanaGeneral modeloVentanaGeneral) {
@@ -145,6 +148,8 @@ public class VistaSeleccionarFinca extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             idFinca = fincas.get(indice).get("id");

@@ -6,6 +6,7 @@
 
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.ControlTraslado;
 import Modelo.ModeloTraslado;
@@ -130,6 +131,8 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
         CargarListaFincas(0, cbFinca);
         CargarListaFincas(1, cbFincaDestino);
         
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
 
     /**
@@ -350,6 +353,7 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void eventocbFinca(){
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
         if(cbFinca.getItemCount() > 0){
             idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
             FuncionLlenarTipoAnimales(0);
@@ -357,6 +361,8 @@ public class VistaTrasladoGrupos extends javax.swing.JPanel {
     }
     
     public void eventocbTipoAnimales(){
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
+        
         if(cbTipoAnimales.getItemCount() > 0){
             idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
             String consulta = "SELECT * FROM ( SELECT gr.`id`, gr.`descripcion` AS DESCGRUPO, \n" +

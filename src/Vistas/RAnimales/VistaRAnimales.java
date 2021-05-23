@@ -7,6 +7,7 @@ package Vistas.RAnimales;
  */
 import BaseDeDatos.gestorMySQL;
 import Busqueda.VistaBusqueda;
+import Configuracion.InformacionGlobal;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
 import Control.ControlTraslado;
@@ -114,6 +115,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTiposDeAnimales);
     }
 
     public VistaRAnimales(ModeloVentanaGeneral modeloVista) {
@@ -152,6 +156,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTiposDeAnimales);
     }
 
     private void cargarComboFincas() {
@@ -1694,6 +1701,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     }
 
     private void cbTiposDeAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTiposDeAnimalesActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTiposDeAnimales);
+        
         int indice = cbTiposDeAnimales.getSelectedIndex();
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
@@ -1716,6 +1725,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     }//GEN-LAST:event_chkAdoptivoMouseClicked
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             String idFinca = fincas.get(indice).get("id");
@@ -1723,6 +1734,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
             cargarComboPropietarios();
             cargarComboTipoAnimales();
+            
         }
     }//GEN-LAST:event_cbFincaActionPerformed
 
@@ -2413,7 +2425,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         if (editar == Estado.GUARDAR) {
             retorno = _control.Guardar(modelo);
         } else {
-            retorno = _control.Actualizar(ma);
+            retorno = _control.Actualizar(modelo);
         }
 
         String mensaje = "";

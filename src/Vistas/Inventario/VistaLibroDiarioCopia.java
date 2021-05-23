@@ -5,6 +5,7 @@
  */
 package Vistas.Inventario;
 
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.Inventario.ControlInventario;
 import Control.Inventario.ControlLibro;
@@ -117,6 +118,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
         IniciarFecha();
         listaFincas = new ArrayList<>();
         CargarListaFincas();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
     
     public void IniciarFecha() {
@@ -760,6 +763,8 @@ public class VistaLibroDiarioCopia extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
         System.out.println("cbFincaActionPerformed cb-->" + idFinca);
 

@@ -7,6 +7,7 @@
 package Vistas._Animales;
 
 import Busqueda.VistaBusqueda;
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control._Animales.ControlDescendientes;
 import Modelo.ModeloFincas;
@@ -54,6 +55,9 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
         listaHijos = new ArrayList<>();
         DatoHijoConsultado = new HashMap<>();
         CargarListaFincas();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
+        InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
 
     /**
@@ -890,6 +894,8 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         if (cbFinca.getItemCount() > 0) {
             //EventoComboFincas();
             System.out.println("cbFinca.getSelectedIndex()--" + cbFinca.getSelectedIndex());
@@ -903,6 +909,8 @@ public class VistaDescendientesAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_cbFincaActionPerformed
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
+        InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
+        
         if (cbTipoAnimales.getItemCount() > 0) {
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");

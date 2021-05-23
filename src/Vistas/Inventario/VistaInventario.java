@@ -5,6 +5,7 @@
  */
 package Vistas.Inventario;
 
+import Configuracion.InformacionGlobal;
 import Control.ControlGeneral;
 import Control.Inventario.ControlInventario;
 import Modelo.ModeloVentanaGeneral;
@@ -89,6 +90,8 @@ public class VistaInventario extends javax.swing.JPanel {
         };
         InicializarTblInventario();
         CargarListaFincas();
+        
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
 
     private void CargarListaFincas() {
@@ -520,6 +523,8 @@ public class VistaInventario extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
+        
         boolean habilitar = cbFinca.getSelectedIndex() > 0;
         btnAgregarProducto.setEnabled(habilitar);
         idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");

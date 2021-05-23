@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.ControLotes;
 import Control.ControlBloques;
 import Control.ControlFincas;
@@ -42,14 +42,15 @@ import javax.swing.table.JTableHeader;
  * @author MERRY
  */
 public class VistaAllLotes extends javax.swing.JPanel {
+
     private ControlFincas controlFinca;
     private ControLotes controlLote;
-    private ModeloLotes  modeloLotes;
-    private ArrayList<ModeloLotes>  ListamodeloLotes;
+    private ModeloLotes modeloLotes;
+    private ArrayList<ModeloLotes> ListamodeloLotes;
     public DefaultTableModel modeloTblLotes;
-    public String[] EncabezadoTblLotes; 
-    public String[] idsFuentesAux; 
-    public ArrayList<Map<String, String>> listaActualizarFuentes; 
+    public String[] EncabezadoTblLotes;
+    public String[] idsFuentesAux;
+    public ArrayList<Map<String, String>> listaActualizarFuentes;
     public ControlGeneral controlgen = new ControlGeneral();
     public String idFinca;
     public String AreaBloque;
@@ -60,7 +61,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public int idModulo = 6;
     public ArrayList<ModeloOpcionesMultiples> ListaDatosMultiple = new ArrayList<>();
     public ArrayList<ModeloOpcionesMultiples> ListaSeleccionados = new ArrayList<>();
-    public ArrayList<JPanel> ListaPnlOpciones= new ArrayList<>();
+    public ArrayList<JPanel> ListaPnlOpciones = new ArrayList<>();
     public JPanel pnlOpcionesAux = new JPanel();
     public boolean ban = false;
     public ControlMultiComboBox obj;
@@ -68,11 +69,11 @@ public class VistaAllLotes extends javax.swing.JPanel {
     public ArrayList<String> NameColumnasOrden;
     public int bandOrden = 0;
     public int colOrden = 0;
-    public String Orden = "";    
+    public String Orden = "";
+
     /**
      * Creates new form VistaAllLotes
      */
-    
     public VistaAllLotes() {
         initComponents();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
@@ -81,22 +82,23 @@ public class VistaAllLotes extends javax.swing.JPanel {
             private int i1 = -1;
 
             public void setSelectionInterval(int index0, int index1) {
-                if(i0 == index0 && i1 == index1){
-                    if(getValueIsAdjusting()){
-                         setValueIsAdjusting(false);
-                         setSelection(index0, index1);
+                if (i0 == index0 && i1 == index1) {
+                    if (getValueIsAdjusting()) {
+                        setValueIsAdjusting(false);
+                        setSelection(index0, index1);
                     }
-                }else{
+                } else {
                     i0 = index0;
                     i1 = index1;
                     setValueIsAdjusting(false);
                     setSelection(index0, index1);
                 }
             }
-            private void setSelection(int index0, int index1){
-                if(super.isSelectedIndex(index0)) {
+
+            private void setSelection(int index0, int index1) {
+                if (super.isSelectedIndex(index0)) {
                     super.removeSelectionInterval(index0, index1);
-                }else {
+                } else {
                     super.addSelectionInterval(index0, index1);
                 }
             }
@@ -105,16 +107,16 @@ public class VistaAllLotes extends javax.swing.JPanel {
         controlLote = new ControLotes();
         ListamodeloLotes = new ArrayList<>();
         listaActualizarFuentes = new ArrayList<>();
-        
+
         //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
-            NameColumnasOrden = new ArrayList<>();
-            NameColumnasOrden.add("NUMERO_BLOQUE");
-            NameColumnasOrden.add("NUMERO_BLOQUE<::>NUMERO");
-            NameColumnasOrden.add("AREAT");
-            NameColumnasOrden.add("FUENTE_HIDRICA");
+        NameColumnasOrden = new ArrayList<>();
+        NameColumnasOrden.add("NUMERO_BLOQUE");
+        NameColumnasOrden.add("NUMERO_BLOQUE<::>NUMERO");
+        NameColumnasOrden.add("AREAT");
+        NameColumnasOrden.add("FUENTE_HIDRICA");
 //</editor-fold>
         EncabezadoTblLotes = new String[]{
-            "No","Bloque", "Número", "Área Total", "Fuente Hidrica", "Modificar", "Eliminar"
+            "No", "Bloque", "Número", "Área Total", "Fuente Hidrica", "Modificar", "Eliminar"
         };
         lblId_Bloque.setVisible(false);
         modeloLotes = new ModeloLotes();
@@ -125,19 +127,18 @@ public class VistaAllLotes extends javax.swing.JPanel {
         LimpiarFomulario();
         CargarListaFuentesHidricas();
         CargarListaFincas();
-        
-        
         InicializarTblLotes();
-        
+
+        InformacionGlobal.setFincaDesdeConstructor(cbFinca);
     }
-    
+
     public void InicializarTblLotes() {
         tbl_Lotes.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modeloTblLotes = new DefaultTableModel(EncabezadoTblLotes, 0) {
             Class[] types = new Class[]{
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -158,39 +159,40 @@ public class VistaAllLotes extends javax.swing.JPanel {
         tbl_Lotes.getColumnModel().getColumn(4).setPreferredWidth(100);
         tbl_Lotes.getColumnModel().getColumn(5).setPreferredWidth(80);
         tbl_Lotes.getColumnModel().getColumn(6).setPreferredWidth(80);
-        
+
         tbl_Lotes.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modeloTblLotes.getColumnCount(); i++) {
             tbl_Lotes.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
+
 //            if(i == 3 ){
 //                tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //               
 //            }else{
-                tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
 //            }
             tcr.setForeground(new Color(26, 82, 118));
             tbl_Lotes.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
+
         }
         JTableHeader header = tbl_Lotes.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-        
+
         tbl_Lotes.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {     
+            public void mouseClicked(MouseEvent e) {
                 EventoOrdenTabla(e);
             }
         });
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -552,29 +554,37 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
-        idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
-        System.out.println("cbFincaActionPerformed cb-->"+idFinca);
+
+        InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
         
-        AccionCombo();
+        cambiarComboFinca();
     }//GEN-LAST:event_cbFincaActionPerformed
 
-    private void AccionCombo(){
+    private void cambiarComboFinca() {
+        int indice = cbFinca.getSelectedIndex();
+        idFinca = listaFincas.get(indice).get("ID");
+        System.out.println("cbFincaActionPerformed cb-->" + idFinca);
+
+        AccionCombo();
+    }
+
+    private void AccionCombo() {
         Utilidades.LimpiarTabla(tbl_Lotes);
-        modeloLotes.setId_finca(""+idFinca);
-        if(Integer.parseInt(idFinca)>0){
-            ListamodeloLotes = (ArrayList<ModeloLotes>) controlFinca.ObtenerLotesxFinca(""+idFinca, Orden);
+        modeloLotes.setId_finca("" + idFinca);
+        if (Integer.parseInt(idFinca) > 0) {
+            ListamodeloLotes = (ArrayList<ModeloLotes>) controlFinca.ObtenerLotesxFinca("" + idFinca, Orden);
             CargarListaBloques();
             System.out.println("");
-            for(int i =0; i < ListamodeloLotes.size(); i++){
+            for (int i = 0; i < ListamodeloLotes.size(); i++) {
                 String f = "";
-                for(String d:ListamodeloLotes.get(i).getFuente_Hidrica()){
-                    f += (f.equals("")?"":", ")+d;
+                for (String d : ListamodeloLotes.get(i).getFuente_Hidrica()) {
+                    f += (f.equals("") ? "" : ", ") + d;
                 }
-                
-                agregarFilaTabla(modeloTblLotes, 
+
+                agregarFilaTabla(modeloTblLotes,
                         new Object[]{
-                            tbl_Lotes.getRowCount()+1,
-                            "Bloque "+ListamodeloLotes.get(i).getNumero_bloque(),
+                            tbl_Lotes.getRowCount() + 1,
+                            "Bloque " + ListamodeloLotes.get(i).getNumero_bloque(),
                             ListamodeloLotes.get(i).getNumero(),
                             Utilidades.MascaraMonedaConDecimales(ListamodeloLotes.get(i).getArea().replace(".", ",")),
                             f,
@@ -582,11 +592,11 @@ public class VistaAllLotes extends javax.swing.JPanel {
                             "Eliminar"
                         });
             }
-        }else{
+        } else {
             Utilidades.LimpiarTabla(tbl_Lotes);
         }
     }
-    
+
     private void txtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNumeroFocusLost
 
     }//GEN-LAST:event_txtNumeroFocusLost
@@ -624,7 +634,7 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDescartarActionPerformed
 
     private void cbBloqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBloqueActionPerformed
-        if(listaBloques.size()>0 && cbBloque.getItemCount()>0){
+        if (listaBloques.size() > 0 && cbBloque.getItemCount() > 0) {
             AreaBloque = listaBloques.get(cbBloque.getSelectedIndex()).get("AREA");
         }
     }//GEN-LAST:event_cbBloqueActionPerformed
@@ -632,33 +642,32 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private void tbl_LotesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_LotesMouseReleased
         int fila = tbl_Lotes.getSelectedRow();
         int cola = tbl_Lotes.getSelectedColumn();
-        if(cola == 5){// ACTUALIZAR
+        if (cola == 5) {// ACTUALIZAR
             this.fila = fila;
             modeloLotes = ListamodeloLotes.get(fila);
-            modeloLotes.setId_finca(""+idFinca);
-            
-            int[] indices = getIndicesLista(); 
+            modeloLotes.setId_finca("" + idFinca);
+
+            int[] indices = getIndicesLista();
             //System.arraycopy(modeloLotes.getId_fuente_hidrica(), 0, idsFuentesAux, 0, modeloLotes.getId_fuente_hidrica().length);
             //idsFuentesAux = modeloLotes.getId_fuente_hidrica();
-            
+
             cbBloque.setSelectedIndex(getIndexLista(modeloLotes.getId_bloque(), listaBloques));
             //cbFuenteHidrica.setSelectedIndex(getIndexLista(modeloLotes.getId_fuente_hidrica(), listaFuentesHidricas));
             lstFuentesHidricas.setSelectedIndices(indices);
-            txtNumero.setText(""+modeloLotes.getNumero());
-            txtAreaT.setText(""+Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea().replace(".", ",")));
+            txtNumero.setText("" + modeloLotes.getNumero());
+            txtAreaT.setText("" + Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea().replace(".", ",")));
             txtNumero.requestFocusInWindow();
-            
+
 //            objetoVentana = new ModeloVentanaGeneral(this, new VistaLotes(), 3,modeloLotes);
 //            objetoVentana.setFila(fila);
 //
 //            new VistaGeneral(objetoVentana).setVisible(true);
-
-        }else if(cola == 6){ //ELIMINAR
+        } else if (cola == 6) { //ELIMINAR
             modeloLotes = ListamodeloLotes.get(fila);
             int resp = JOptionPane.showConfirmDialog(this, "¿Esta Seguro de Eliminar esta Fila?");
-            if(resp == JOptionPane.YES_OPTION){
+            if (resp == JOptionPane.YES_OPTION) {
                 int ret = controlLote.Eliminar(modeloLotes);
-                if(ret == 0){
+                if (ret == 0) {
                     JOptionPane.showMessageDialog(null, "La operación se realizo exitosamente.");
                     AccionCombo();
                 }
@@ -666,10 +675,10 @@ public class VistaAllLotes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbl_LotesMouseReleased
 
-    public int getIndexLista(String id, List<Map<String, String>> lista){
+    public int getIndexLista(String id, List<Map<String, String>> lista) {
         int ind = -1;
-        for(int i = 0; i < lista.size(); i++){
-            if(lista.get(i).get("ID").equals(""+id)){
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).get("ID").equals("" + id)) {
                 ind = i;
                 break;
             }
@@ -703,83 +712,83 @@ public class VistaAllLotes extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void CargarListaFincas() {
-        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n" +
-                                                "UNION\n" +
-                                                "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n" +
-                                                "FROM `fincas`\n"+
-                                                "/*UNION \n"+
-                                                "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
-         
+        listaFincas = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION\n"
+                + "UNION\n"
+                + "SELECT `id` AS ID, `descripcion` AS DESCRIPCION\n"
+                + "FROM `fincas`\n"
+                + "/*UNION \n"
+                + "SELECT 'ALL' AS ID, 'TODOS' AS DESCRIPCION*/");
+
         Utilidades.LlenarComboBox(cbFinca, listaFincas, "DESCRIPCION");
-       
+
     }
-    
+
     private void CargarListaBloques() {
-        listaBloques = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION, '0' as AREA\n" +
-                                                "UNION\n" +
-                                                "SELECT id AS ID, CONCAT('Bloque ', numero) AS DESCRIPCION, area as AREA\n" +
-                                                "FROM `bloques` \n" +
-                                                "WHERE id_finca = '"+idFinca+"'");
-         
+        listaBloques = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION, '0' as AREA\n"
+                + "UNION\n"
+                + "SELECT id AS ID, CONCAT('Bloque ', numero) AS DESCRIPCION, area as AREA\n"
+                + "FROM `bloques` \n"
+                + "WHERE id_finca = '" + idFinca + "'");
+
         Utilidades.LlenarComboBox(cbBloque, listaBloques, "DESCRIPCION");
-       
+
     }
-    
+
     private void CargarListaFuentesHidricas() {
         listaFuentesHidricas = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION FROM fuentes_hidricas WHERE estado = 'Activo'");
         LlenarListaFuentes();
     }
-    
+
     private void agregarFilaTabla(DefaultTableModel modelotbl, Object[] fila) {
         modelotbl.addRow(fila);
     }
 
     private void Guardar() {
-        if(cbBloque.getSelectedIndex()==0){
+        if (cbBloque.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un bloque para realizar la operación.");
             return;
         }
-        if(txtAreaT.getText().trim().isEmpty()){
+        if (txtAreaT.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe especificar el área total para realizar la operación.");
             return;
         }
-        String id_Bloque = ""+listaBloques.get(cbBloque.getSelectedIndex()).get("ID");
-        
+        String id_Bloque = "" + listaBloques.get(cbBloque.getSelectedIndex()).get("ID");
+
         String AreaT = txtAreaT.getText().trim().replace(".", "").replace(",", ".");
         double AcuAreaLotesxBloques = getAcumuladoArea(id_Bloque, modeloLotes.getId());
         double AreaTo = Double.parseDouble(AreaT);
-        
-        System.out.println("AcuAreaLotesxBloques--->"+AcuAreaLotesxBloques);
-        System.out.println("AreaTo--->"+AreaTo);
-        System.out.println("AreaBloque--->"+AreaBloque);
-        
+
+        System.out.println("AcuAreaLotesxBloques--->" + AcuAreaLotesxBloques);
+        System.out.println("AreaTo--->" + AreaTo);
+        System.out.println("AreaBloque--->" + AreaBloque);
+
         String[] idsFuentes = getIDs();
         String[] Fuentes = getValues();
-        if(idFinca.equals("-1")){
+        if (idFinca.equals("-1")) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una finca para realizar la operación.");
             return;
         }
-        if(modeloLotes.getId().equals("0")){
+        if (modeloLotes.getId().equals("0")) {
             boolean Valnumero = controlLote.VerificarNumeroLotexBloque(id_Bloque, txtNumero.getText().trim());
-            if(Valnumero){
+            if (Valnumero) {
                 JOptionPane.showMessageDialog(this, "El número ingresado a se encuentra registrado en el sistema.");
                 return;
             }
         }
-        if(Double.parseDouble(AreaBloque) < AcuAreaLotesxBloques+AreaTo){
-            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total del bloque. \n el area del bloque es "+AreaBloque);
+        if (Double.parseDouble(AreaBloque) < AcuAreaLotesxBloques + AreaTo) {
+            JOptionPane.showMessageDialog(this, "El area debe ser menor al area total del bloque. \n el area del bloque es " + AreaBloque);
             return;
         }
-        if(idsFuentes.length<=0){
+        if (idsFuentes.length <= 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar al menos una fuente hidrica");
             return;
         }
-        
-        if(!modeloLotes.getId().equals("0")){
+
+        if (!modeloLotes.getId().equals("0")) {
             LlenarListaFuentesActualizar(idsFuentes);
             RecorrerLista();
         }
-        
+
         modeloLotes.setId_bloque(id_Bloque);
         modeloLotes.setNumero(txtNumero.getText().trim());
         modeloLotes.setArea(txtAreaT.getText().trim().replace(".", "").replace(",", "."));
@@ -787,42 +796,41 @@ public class VistaAllLotes extends javax.swing.JPanel {
         modeloLotes.setFuente_Hidrica(Fuentes);
         modeloLotes.setFecha("NOW()");
         modeloLotes.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        if(modeloLotes.getId_finca().equals("-1")){ 
+        if (modeloLotes.getId_finca().equals("-1")) {
             JOptionPane.showMessageDialog(this, "Por favor seleccione una finca para realizar la operación.");
             return;
         }
-        
+
         int ret = -1;
-        System.out.println("modeloLotes.getId()-->"+modeloLotes.getId());
-        if(modeloLotes.getId().equals("0")){//INSERT
+        System.out.println("modeloLotes.getId()-->" + modeloLotes.getId());
+        if (modeloLotes.getId().equals("0")) {//INSERT
             System.out.println("HOLA");
             ret = controlLote.Guardar(modeloLotes);
-        }else{
+        } else {
             System.out.println("ENTRE PRO ACA");
-            
+
             ret = controlLote.Actualizar(modeloLotes);
-            
+
             int rret = controlLote.ActualizarFuentexLotes(listaActualizarFuentes);
-            
+
         }
-        
-        if(ret == 0){
-            System.out.println("fila-->"+fila);
-            if(fila > -1){//ESTA EN TABLA ACTUALIZAR
+
+        if (ret == 0) {
+            System.out.println("fila-->" + fila);
+            if (fila > -1) {//ESTA EN TABLA ACTUALIZAR
                 String f = "";
-                for(String d:modeloLotes.getFuente_Hidrica()){
-                    f += (f.equals("")?"":", ")+d;
+                for (String d : modeloLotes.getFuente_Hidrica()) {
+                    f += (f.equals("") ? "" : ", ") + d;
                 }
-                System.out.println("f--->"+f);
+                System.out.println("f--->" + f);
                 ListamodeloLotes.set(fila, modeloLotes);
-                tbl_Lotes.setValueAt("Bloque "+modeloLotes.getNumero_bloque(), fila, 1);
+                tbl_Lotes.setValueAt("Bloque " + modeloLotes.getNumero_bloque(), fila, 1);
                 tbl_Lotes.setValueAt(modeloLotes.getNumero(), fila, 2);
                 tbl_Lotes.setValueAt(modeloLotes.getNumero(), fila, 2);
                 tbl_Lotes.setValueAt(Utilidades.MascaraMonedaConDecimales(modeloLotes.getArea().replace(".", ",")), fila, 3);
                 tbl_Lotes.setValueAt(f, fila, 4);
-                
-                
-            }else{  
+
+            } else {
 //                ListamodeloLotes.add(modeloLotes);
 //                agregarFilaTabla(modeloTblLotes,
 //                        new Object[]{
@@ -840,22 +848,23 @@ public class VistaAllLotes extends javax.swing.JPanel {
     }
 
     private void LimpiarFomulario() {
-        if(cbBloque.getItemCount()>0)
+        if (cbBloque.getItemCount() > 0) {
             cbBloque.setSelectedIndex(0);
-        
+        }
+
         //cbFuenteHidrica.setSelectedIndex(0);
         InicializarMultiComboBox();
         txtNumero.setText("");
         txtAreaT.setText("");
         modeloLotes = new ModeloLotes();
-        modeloLotes.setId_finca(""+idFinca);
+        modeloLotes.setId_finca("" + idFinca);
         modeloLotes.setId("0");
         fila = -1;
         LimpiarLstFuentes();
     }
-    
-    public void InicializarMultiComboBox(){
-        for(ModeloOpcionesMultiples dato: ListaDatosMultiple){
+
+    public void InicializarMultiComboBox() {
+        for (ModeloOpcionesMultiples dato : ListaDatosMultiple) {
             dato.setEstado(false);
         }
     }
@@ -863,24 +872,23 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private double getAcumuladoArea(String id_Bloque, String id_Lote) {
         double ret = 0;
         String valor = "";
-        for(int i = 0; i < ListamodeloLotes.size(); i++){
-            if(ListamodeloLotes.get(i).getId_bloque().equals(id_Bloque) && !ListamodeloLotes.get(i).getId().equals(id_Lote)){
+        for (int i = 0; i < ListamodeloLotes.size(); i++) {
+            if (ListamodeloLotes.get(i).getId_bloque().equals(id_Bloque) && !ListamodeloLotes.get(i).getId().equals(id_Lote)) {
                 valor = ListamodeloLotes.get(i).getArea().trim();
                 ret += Double.parseDouble(valor);
             }
         }
         return ret;
     }
-    
 
     private void LlenarListaFuentes() {
-        
-        for (Map<String, String> lista: listaFuentesHidricas) {
+
+        for (Map<String, String> lista : listaFuentesHidricas) {
             modlistFuentes.addElement(lista.get("DESCRIPCION"));
         }
         lstFuentesHidricas.setModel(modlistFuentes);
     }
- 
+
     private void LimpiarLstFuentes() {
         lstFuentesHidricas.setModel(modlistFuentes);
     }
@@ -888,9 +896,9 @@ public class VistaAllLotes extends javax.swing.JPanel {
     private int[] getIndicesLista() {
         int[] ret = new int[modeloLotes.getFuente_Hidrica().length];
         int ind = 0;
-        for(String fuente: modeloLotes.getFuente_Hidrica()){
-            for(int i = 0; i < modlistFuentes.size(); i++){
-                if(modlistFuentes.getElementAt(i).equals(fuente)){
+        for (String fuente : modeloLotes.getFuente_Hidrica()) {
+            for (int i = 0; i < modlistFuentes.size(); i++) {
+                if (modlistFuentes.getElementAt(i).equals(fuente)) {
                     ret[ind] = i;
                     ind++;
                 }
@@ -901,8 +909,8 @@ public class VistaAllLotes extends javax.swing.JPanel {
 
     private String[] getIDs() {
         String[] ids = new String[lstFuentesHidricas.getSelectedIndices().length];
-        int x =0;
-        for(int ind :lstFuentesHidricas.getSelectedIndices()){
+        int x = 0;
+        for (int ind : lstFuentesHidricas.getSelectedIndices()) {
             ids[x] = listaFuentesHidricas.get(ind).get("ID");
             x++;
         }
@@ -911,55 +919,55 @@ public class VistaAllLotes extends javax.swing.JPanel {
 
     private void LlenarListaFuentesActualizar(String[] idsFuentes) {
         int ban = 0;
-        System.out.println("****************LlenarListaFuentesActualizar*****************"+idsFuentes.length);
-            
-            for(int i= 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++){
-                ban=0;
-                for(String ids: idsFuentes){
-                    if(ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])){
-                        ban = 1;
-                        break;
-                    }
-                }
-                if(ban == 0){
-                    Map<String, String> map =  new HashMap<>();
-                    map.put("INSERT", "1");
-                    map.put("IDLOTE", ""+ListamodeloLotes.get(fila).getId());
-                    map.put("IDFUENTE", ""+ListamodeloLotes.get(fila).getId_fuente_hidrica()[i]);
-                    map.put("IDUSUARIO", ""+ListamodeloLotes.get(fila).getId_usuario());
-                    map.put("ID", ""+ListamodeloLotes.get(fila).getIdxfuentehidrica()[i]);
-                    listaActualizarFuentes.add(map);
+        System.out.println("****************LlenarListaFuentesActualizar*****************" + idsFuentes.length);
+
+        for (int i = 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++) {
+            ban = 0;
+            for (String ids : idsFuentes) {
+                if (ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])) {
+                    ban = 1;
+                    break;
                 }
             }
-            for(String ids: idsFuentes){
-                ban=0;
-                for(int i= 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++){
-                    if(ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])){
-                        ban = 1;
-                        break;
-                    }
-                }
-                if(ban == 0){
-                    Map<String, String> map =  new HashMap<>();
-                    map.put("INSERT", "0");
-                    map.put("IDLOTE", ""+ListamodeloLotes.get(fila).getId());
-                    map.put("IDFUENTE", ""+ids);
-                    map.put("IDUSUARIO", ""+ListamodeloLotes.get(fila).getId_usuario());
-                    map.put("ID", "0");
-                    listaActualizarFuentes.add(map);
+            if (ban == 0) {
+                Map<String, String> map = new HashMap<>();
+                map.put("INSERT", "1");
+                map.put("IDLOTE", "" + ListamodeloLotes.get(fila).getId());
+                map.put("IDFUENTE", "" + ListamodeloLotes.get(fila).getId_fuente_hidrica()[i]);
+                map.put("IDUSUARIO", "" + ListamodeloLotes.get(fila).getId_usuario());
+                map.put("ID", "" + ListamodeloLotes.get(fila).getIdxfuentehidrica()[i]);
+                listaActualizarFuentes.add(map);
+            }
+        }
+        for (String ids : idsFuentes) {
+            ban = 0;
+            for (int i = 0; i < ListamodeloLotes.get(fila).getId_fuente_hidrica().length; i++) {
+                if (ids.equals(ListamodeloLotes.get(fila).getId_fuente_hidrica()[i])) {
+                    ban = 1;
+                    break;
                 }
             }
-            System.out.println("*****************LlenarListaFuentesActualizar*******************"+listaActualizarFuentes.size());
+            if (ban == 0) {
+                Map<String, String> map = new HashMap<>();
+                map.put("INSERT", "0");
+                map.put("IDLOTE", "" + ListamodeloLotes.get(fila).getId());
+                map.put("IDFUENTE", "" + ids);
+                map.put("IDUSUARIO", "" + ListamodeloLotes.get(fila).getId_usuario());
+                map.put("ID", "0");
+                listaActualizarFuentes.add(map);
+            }
+        }
+        System.out.println("*****************LlenarListaFuentesActualizar*******************" + listaActualizarFuentes.size());
     }
 
     private void RecorrerLista() {
         System.out.println("*********RecorrerLista**********");
-        for(Map<String, String> map : listaActualizarFuentes){
+        for (Map<String, String> map : listaActualizarFuentes) {
             System.out.println("*********************************************");
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                System.out.println("key-->"+key+"___________value-->"+value);
+                System.out.println("key-->" + key + "___________value-->" + value);
             }
         }
         System.out.println("*****************RecorrerLista******************");
@@ -967,46 +975,46 @@ public class VistaAllLotes extends javax.swing.JPanel {
 
     private String[] getValues() {
         String[] ids = new String[lstFuentesHidricas.getSelectedIndices().length];
-        int x =0;
-        for(int ind :lstFuentesHidricas.getSelectedIndices()){
+        int x = 0;
+        for (int ind : lstFuentesHidricas.getSelectedIndices()) {
             ids[x] = listaFuentesHidricas.get(ind).get("DESCRIPCION");
             x++;
         }
         return ids;
     }
 
-
-    public void EventoOrdenTabla(MouseEvent e){
-        if(!tbl_Lotes.isEnabled())
+    public void EventoOrdenTabla(MouseEvent e) {
+        if (!tbl_Lotes.isEnabled()) {
             return;
-        
+        }
+
         int col = tbl_Lotes.columnAtPoint(e.getPoint());
-        System.out.println("col-->"+colOrden);
-        if(col > 0){
-            if(col != colOrden){
+        System.out.println("col-->" + colOrden);
+        if (col > 0) {
+            if (col != colOrden) {
                 colOrden = col;
                 bandOrden = 1;//Ascendente
-            }else{
-                if(bandOrden > 0 )
+            } else {
+                if (bandOrden > 0) {
                     bandOrden = -1;//Descendente
-                else if(bandOrden < 0 )
+                } else if (bandOrden < 0) {
                     bandOrden = 0;// Por Defecto
-                else
+                } else {
                     bandOrden = 1;//Ascendente
-                
-            }
-            String dat = "";
-            String orden = NameColumnasOrden.get(col-1);
-            String[] cols = orden.split("<::>");
-            
-            for(int i = 0; i < cols.length; i++){
-                if(bandOrden == 0){
-                    dat = "";
-                }else{
-                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
                 }
             }
-            
+            String dat = "";
+            String orden = NameColumnasOrden.get(col - 1);
+            String[] cols = orden.split("<::>");
+
+            for (int i = 0; i < cols.length; i++) {
+                if (bandOrden == 0) {
+                    dat = "";
+                } else {
+                    dat += (dat.equals("") ? "" : ", ") + TipoDato(col - 1, cols[i]) + " " + (bandOrden == 1 ? "ASC" : "DESC");
+                }
+            }
+
             Orden = dat;
             AccionCombo();
         }
@@ -1014,9 +1022,9 @@ public class VistaAllLotes extends javax.swing.JPanel {
 
     private String TipoDato(int ind, String Dato) {
         String ret = "";
-        
-            ret = Dato;
-        
+
+        ret = Dato;
+
         return ret;
     }
 }
