@@ -77,7 +77,7 @@ public class ControlPesaje implements IControl {
             );
 
             //<editor-fold defaultstate="collapsed" desc="ACTUALIZO EL PESO EN LA TABLA ANIMALES">
-            consultas.add("update animales\n"
+            consultas.add("update ranimales\n"
                     + "set \n"
                     + "peso = " + modelo.getPeso() + "\n"
                     + "where id = " + modelo.getId_animal() + "");
@@ -122,7 +122,7 @@ public class ControlPesaje implements IControl {
 //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="ACTUALIZO LA TABLA ANIMALES">
-        consultas.add("update animales\n"
+        consultas.add("update ranimales\n"
                 + "set \n"
                 + "hierro_fisico = '" + modelo.getHierro() + "',\n"
                 + "implante = '" + modelo.getImplante() + "',\n"
@@ -130,7 +130,6 @@ public class ControlPesaje implements IControl {
                 + "destete = '" + modelo.getDestete() + "',\n"
                 + "fecha_destete = '" + modelo.getFechaDestete() + "',\n"
                 + "peso_destete = '" + modelo.getPeso_destete() + "',\n"
-                + "peso_destete = " + modelo.getPeso_destete() + ",\n"
                 + "hierro = " + modelo.getIdHierro() + "\n"
                 + "where id = " + modelo.getId_animal() + "");
 //</editor-fold>

@@ -2321,7 +2321,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         ma.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         ma.setFecha_nacimiento(sdf.format(fechaNacimiento.getTime()));
-        ma.setNumero_descendiente(txtNumeroDescendiente.getText().trim().length() == 0 ? "0" : txtNumeroDescendiente.getText().trim());
 
         String numero = "";
         if (txtNumero.getText().contains("-")) {

@@ -7,10 +7,14 @@ package Vistas;
 
 import Control.ControlAnimales;
 import Control.ControlGeneral;
+import Control.RAnimales.ControlRAnimales;
 import Control.Retorno;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloTraslado;
 import Modelo.ModeloVentanaGeneral;
+import Modelo.RAnimales.ModeloRAnimales;
+import Modelo.RAnimales.ModeloRAnimalesEntrada;
+import Modelo.RAnimales.ModeloRAnimalesSalida;
 import static Utilidades.Consultas.consultas;
 import Utilidades.Expresiones;
 import Utilidades.Parametros;
@@ -19,6 +23,7 @@ import Utilidades.datosUsuario;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -33,13 +38,16 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     private List<Map<String, String>> idGrupos;
     private ControlGeneral controlGral;
     private ModeloAnimales modeloDatos;
-    private ModeloAnimales modelo;
+    private ModeloRAnimales modelo;
     private ModeloVentanaGeneral modeloVistaGeneral;
     private ModeloTraslado modeloTraslado;
-    private ControlAnimales control;
+    private ControlRAnimales control;
     private final String FECHA_POR_DEFECTO = "1900-01-01";
     private final String GRUPO_VACIAS = "PARIDAS";
     private VistaHistoriaAnimal vha;
+
+    private Map<String, String> datosMadre;
+    private Map<String, String> datosPartos;
 
     public VistaNacimientoAnimal() {
         initComponents();
@@ -48,12 +56,14 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     public VistaNacimientoAnimal(ModeloVentanaGeneral modeloVista) {
         initComponents();
         setSize(644, 427);
+        datosMadre = new HashMap<>();
+        datosPartos = new HashMap<>();
         grupos = new ArrayList<>();
         controlGral = new ControlGeneral();
         modeloDatos = new ModeloAnimales();
-        control = new ControlAnimales();
+        control = new ControlRAnimales();
         modeloTraslado = new ModeloTraslado();
-        modelo = new ModeloAnimales();
+        modelo = new ModeloRAnimales();
         modeloDatos = (ModeloAnimales) modeloVista.getModeloDatos();
         vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
         IniciarFecha();
@@ -61,7 +71,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloVistaGeneral = modeloVista;
         cbGrupos.setEnabled(false);
         chkMuerte.setSelected(false);
-        
+
         mostrarDatosMuerte();
     }
 
@@ -169,7 +179,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         lbltitle10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbltitle10.setForeground(new java.awt.Color(59, 123, 50));
         lbltitle10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lbltitle10.setText("Sexo");
+        lbltitle10.setText("Genero");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -563,9 +573,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         String fecM = sdf.format(fechaM.getTime());
         String fecN = sdf.format(fechaN.getTime());
         int com = Utilidades.CompararFechas(fecM, fecN);
-        System.out.println("comp-->"+com);
-        if(com<0){
-            jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());   
+        System.out.println("comp-->" + com);
+        if (com < 0) {
+            jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());
             JOptionPane.showMessageDialog(null, "La fecha de Muerte no uede ser menor a la fecha de nacimiento. Por favor verifique los datos para seguir con la operación.");
         }
     }//GEN-LAST:event_jdFechaMuertePropertyChange
@@ -641,7 +651,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
 
     private void mostrarDatosMuerte() {
         boolean chequeado = chkMuerte.isSelected();
-        jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());    
+        jdFechaMuerte.setCalendar(jdFechaNacimiento.getCalendar());
         lblFechaMuerte.setVisible(chequeado);
         jdFechaMuerte.setVisible(chequeado);
         lblCausaMuerte.setVisible(chequeado);
@@ -689,16 +699,18 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         }
 //</editor-fold>
 
+        ModeloRAnimalesEntrada modeloEntrada = new ModeloRAnimalesEntrada();
+
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         String numeroMadre = modeloDatos.getNumero();
-        String idTipoAnimal = modeloDatos.getIdTipoAnimal();
-        Object[] datos = control.ObtenerUltimoDescendiente(numeroMadre, idTipoAnimal);
-        String nroDescendiente = datos[0].toString();
-        String idAnimal = "(SELECT a.id FROM animales a WHERE a.numero='" + modeloDatos.getNumero() + "' "
-                + "AND a.numero_descendiente=" + nroDescendiente + " AND a.estado_descendiente=0"
-                + ")";
-        String idMadre = modeloDatos.getId();
+        String tipoAnimal = modeloDatos.getIdTipoAnimal();
+
+        datosMadre = control.ObtenerIDMadre(numeroMadre, tipoAnimal);
+        String idMadre = datosMadre.get("ID");
+
+        String nroDescendiente = control.ObtenerUltimoDescendiente(idMadre);
 
         String idMuerte = "";
         if (chkMuerte.isSelected()) {
@@ -714,14 +726,58 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             }
 
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();
-            modelo.setFechaMuerte(sdf.format(fechaMuerte.getTime()));
+            modelo.setFecha_muerte(sdf.format(fechaMuerte.getTime()));
         } else {
-            modelo.setFechaMuerte(FECHA_POR_DEFECTO);
+            modelo.setFecha_muerte(FECHA_POR_DEFECTO);
         }
 
-        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO TRASLADO">
+        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO ANIMAL">
         String datosAdicionales = modeloDatos.getGrupo();
         int indiceGrupo = cbGrupos.getSelectedIndex();
+        String idAnimal = "(SELECT (AUTO_INCREMENT-1)\n"
+                + "FROM information_schema.tables\n"
+                + "WHERE table_name = 'ranimales'\n"
+                + "AND table_schema = 'ganadero')";
+
+        modelo.setDescornado("0");
+        modelo.setImplante("0");
+        modelo.setHierro_fisico("0");
+        modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");
+        modelo.setVenta("0");
+        modelo.setId("0");
+        modelo.setFecha("NOW()");
+        modelo.setHierro(modeloDatos.getHierro());
+        modelo.setGrupo(chkMuerte.isSelected() ? idMuerte : grupos.get(indiceGrupo).get("id"));
+        modelo.setId_tipo_animal(modeloDatos.getIdTipoAnimal());
+        modelo.setCalificacion("" + slCalificacion.getValue());
+        modelo.setCapado("NO");
+        modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
+        modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
+        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
+        modelo.setNumero(modeloDatos.getNumero());
+        modelo.setNumero_mama(modeloDatos.getNumero());
+        modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
+        Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
+        modelo.setFecha_nacimiento(sdf.format(fechaNacimiento.getTime()));
+        modelo.setFecha_novilla(FECHA_POR_DEFECTO);
+        modelo.setNumero_descendiente(nroDescendiente);
+        modelo.setEstado_descendiente("0");
+        modelo.setDescripcion_muerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
+        modelo.setPrecio_venta("NULL");
+        modelo.setPeso_canal("NULL");
+        modelo.setTipo_venta("NULL");
+        modelo.setFecha_venta(FECHA_POR_DEFECTO);
+        modelo.setNumero_mama_adoptiva("NULL");
+        modelo.setFecha_destete(FECHA_POR_DEFECTO);
+        modelo.setDestete("0");
+        modelo.setPeso_destete("0");
+        
+        modelo.setNumero_parto("NULL");
+        modelo.setCantidad_parto("NULL");
+
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO TRASLADO">
         modeloTraslado.setId("0");
         modeloTraslado.setIdFinca(modeloDatos.getIdFinca());
         modeloTraslado.setFecha("NOW()");
@@ -743,48 +799,32 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado.setMotivo("PARTO");
         modeloTraslado.setIdAnimal(idMadre);
         traslados.add(modeloTraslado);
-//</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO ANIMAL">
-        modelo.setDescornada("0");
-        modelo.setImplante("0");
-        modelo.setHierroFisico("0");
-        modelo.setMuerte(chkMuerte.isSelected() ? "1" : "0");
-        modelo.setVenta("0");
-        modelo.setModeloTraslado(traslados);
-        modelo.setId(idAnimal);
-        modelo.setFecha("NOW()");
-        modelo.setDescHierro(Utilidades.CodificarElemento(modeloDatos.getDescHierro()));
-        modelo.setHierro(modeloDatos.getHierro());
-        modelo.setGrupo(chkMuerte.isSelected() ? idMuerte : grupos.get(indiceGrupo).get("id"));
-        modelo.setDescGrupo(Utilidades.CodificarElemento(cbGrupos.getSelectedItem().toString()));
-        modelo.setIdTipoAnimal(modeloDatos.getIdTipoAnimal());
-        modelo.setCalificacion("" + slCalificacion.getValue());
-        modelo.setCapado("NO");
-        modelo.setDescTipoAnimal(modeloDatos.getDescTipoAnimal());
-        modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
-        modelo.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-        modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
-        modelo.setNumero(modeloDatos.getNumero());
-        modelo.setNumeroMama(modeloDatos.getNumero());
-        modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
-        Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
-        modelo.setFechaNacimiento(sdf.format(fechaNacimiento.getTime()));
-        modelo.setFechaNovilla(FECHA_POR_DEFECTO);
-        modelo.setNumeroDescendiente(nroDescendiente);
-        modelo.setEstadoDescendiente("0");
-        modelo.setDescripcionMuerte(Utilidades.CodificarElemento(txtObservacionMuerte.getText()));
-        modelo.setPrecioVenta("NULL");
-        modelo.setPesoCanal("NULL");
-        modelo.setTipoVenta("NULL");
-        modelo.setFechaVenta(FECHA_POR_DEFECTO);
-        modelo.setNumeroMamaAdoptiva("NULL");
-        modelo.setFechaDestete(FECHA_POR_DEFECTO);
-        modelo.setDestete("0");
-        modelo.setPesoDestete("0");
-
         //</editor-fold>
-        int retorno = control.GuardarCria(modelo, datosAdicionales);
+
+        //<editor-fold defaultstate="collapsed" desc="actualizarRegistroDeLaMadre">
+        String consulta = "";
+        if (datosMadre.size() > 0) {
+            if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
+                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID") + ";";
+            }
+        }
+
+        if (!modelo.getNumero_mama().isEmpty()) {
+            int cantidadParto = 0;
+            datosPartos = control.ObtenerCantidadPartos(modelo.getNumero_mama(), modelo.getId_tipo_animal());
+            int partos = Integer.parseInt(datosPartos.get("PARTOS"));
+            int numeroParto = Integer.parseInt(modelo.getNumero_parto());
+            cantidadParto = partos > numeroParto ? partos : numeroParto;
+            consulta += "UPDATE ranimales SET cantidad_parto =" + cantidadParto + " "
+                    + "WHERE numero='" + modelo.getNumero_mama() + "' AND id_tipo_animal='" + modelo.getId_tipo_animal() + "';";
+        }
+//</editor-fold>
+        
+        modeloEntrada.setAnimal(modelo);
+        modeloEntrada.setTraslado(null);
+        modeloEntrada.setActualizarRegistroMadre(consulta);
+        
+        int retorno = control.GuardarCria(new Object[]{modeloEntrada, traslados}, datosAdicionales);
 
         String mensaje = "";
         switch (retorno) {
@@ -812,9 +852,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         }
     }
 
-    public void IniciarFecha(){
+    public void IniciarFecha() {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        jdFechaNacimiento.setCalendar(Calendar.getInstance());    
+        jdFechaNacimiento.setCalendar(Calendar.getInstance());
     }
-    
+
 }
