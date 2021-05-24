@@ -318,6 +318,12 @@ public class Consultas {
                 + "CASE WHEN numero_descendiente IS NULL THEN 1 ELSE COUNT(numero_descendiente)+1 END numeroDescendiente \n"
                 + "FROM ranimales WHERE numero_mama=(SELECT numero FROM ranimales WHERE id=ID_MAMA)");
 
+        consultas.put("ROBTENER_NUMERO_PARTO", "SELECT \n"
+                + "cantidad_parto+IF(\n"
+                + "(SELECT IFNULL(MAX(aa.fecha_nacimiento),NOW()) FROM ranimales aa WHERE aa.numero_mama=a.numero)=FUP,\n"
+                + "0,1) NUMERO_PARTO\n"
+                + "FROM ranimales a WHERE a.id=ID_MAMA");
+
         consultas.put("OBTENER_ID_MADRE", "SELECT IF(b.`id` IS NULL , a.`id`, b.`id_madre`) ID, IFNULL(a.es_madre,'FALSE') ES_MADRE FROM _animales a \n"
                 + "LEFT JOIN _animales_descendientes b ON a.id=b.id_madre WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
@@ -325,7 +331,7 @@ public class Consultas {
                 + "WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("ROBTENER_CANTIDAD_PARTOS", "SELECT IFNULL(MAX(numero_parto),0) PARTOS FROM ranimales\n"
-                    + "WHERE numero_mama='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
+                + "WHERE numero_mama='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
                 + "FROM ranimales \n"

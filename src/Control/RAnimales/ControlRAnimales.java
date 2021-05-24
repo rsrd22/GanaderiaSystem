@@ -587,14 +587,29 @@ public class ControlRAnimales implements IControl {
         return animal.get(0).get("numeroDescendiente");
     }
 
+    public String ObtenerNumeroParto(String idMadre, String fup) {
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        ControlGeneral controlGral = new ControlGeneral();
+        String consulta = consultas.get("ROBTENER_NUMERO_PARTO")
+                .replaceAll("ID_MAMA", idMadre)
+                .replaceAll("FUP", fup);
+        data = controlGral.GetComboBox(consulta);
+
+        return data.get(0).get("NUMERO_PARTO");
+    }
+
     public int GuardarCria(Object[] array, Object obj) {
         ArrayList<String> consultas = new ArrayList<>();
         ArrayList<ModeloTraslado> traslados = new ArrayList<>();
         ModeloRAnimalesEntrada me = (ModeloRAnimalesEntrada) array[0];
         ModeloRAnimales animal = me.getAnimal();
-        
+
         String grupoAnteriorMama = (String) obj;
         String idMadre = "";
+        String idAnimal = "(SELECT (AUTO_INCREMENT-1)\n"
+                + "FROM information_schema.tables\n"
+                + "WHERE table_name = 'ranimales'\n"
+                + "AND table_schema = 'ganadero')";
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelAnimal">
         consultas.add("insert into `ganadero`.`ranimales`\n"
@@ -728,9 +743,10 @@ public class ControlRAnimales implements IControl {
         //<editor-fold defaultstate="collapsed" desc="GUARDAR DATOS DEL PRIMER PESO">
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="INSERT">
-                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
+                "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) "
+                + "VALUES(\n"
                 + "0,\n"
-                + "" + animal.getId() + ",\n"
+                + "" + idAnimal + ",\n"
                 + "'" + animal.getFecha_nacimiento() + "',\n"
                 + "" + animal.getPeso() + ",\n"
                 + "0,\n"
@@ -778,13 +794,13 @@ public class ControlRAnimales implements IControl {
         //</editor-fold>
         );
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
         if (!me.getActualizarRegistroMadre().isEmpty()) {
             consultas.add(me.getActualizarRegistroMadre());
         }
         //</editor-fold>
-        
+
         return EjecutarConsultas(consultas);
     }
 
@@ -825,8 +841,6 @@ public class ControlRAnimales implements IControl {
         }
     }
 
-    
-    
     public int ActualizarVenta(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloRAnimales animal = (ModeloRAnimales) _animal;
@@ -839,7 +853,7 @@ public class ControlRAnimales implements IControl {
                 + "precio_venta = " + animal.getPrecio_venta() + ",\n"
                 + "peso_canal = " + animal.getPeso_canal() + ",\n"
                 + "fecha_venta = '" + animal.getFecha_venta() + "',\n"
-                + "tipo_venta = " + animal.getTipo_venta() + "\n"
+                + "tipo_venta = " + Utilidades.CampoNULL(animal.getTipo_venta()) + "\n"
                 + "WHERE id = " + animal.getId()
         //</editor-fold>
         );
@@ -1152,5 +1166,9 @@ public class ControlRAnimales implements IControl {
             return LISTA_VACIA;
         }
     }
-    
+
+    public int EnviarConsultas(ArrayList<String> consultas) {
+        return EjecutarConsultas(consultas);
+    }
+
 }

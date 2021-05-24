@@ -6,6 +6,7 @@
 package Vistas;
 
 import Control.ControlAnimales;
+import Control.RAnimales.ControlRAnimales;
 import Control.Retorno;
 import Modelo.ModeloAnimales;
 import Modelo.ModeloVentanaGeneral;
@@ -27,7 +28,7 @@ import javax.swing.JOptionPane;
 public class VistaEditarDatosAnimal extends javax.swing.JPanel {
 
     private Map.Entry<String[], JLabel> map;
-    private ControlAnimales control;
+    private ControlRAnimales control;
     public VistaHistoriaAnimal vha;
     private ModeloVentanaGeneral vistaGeneral;
     private String numeroActualAnimal;
@@ -39,7 +40,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
     VistaEditarDatosAnimal(ModeloVentanaGeneral modeloVista) {
         initComponents();
         setSize(261, 200);
-        control = new ControlAnimales();
+        control = new ControlRAnimales();
         map = (Map.Entry<String[], JLabel>) modeloVista.getModeloDatos();
         vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
         vistaGeneral = modeloVista;

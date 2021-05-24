@@ -84,8 +84,6 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         datosPartos = new HashMap<>();
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         iniciarComponentes();
-        txtValorVenta.setEnabled(false);
-        txtPorcentajeCanal.setEnabled(false);
         cbFinca.setBackground(Color.YELLOW);
 
         panelFechaNovilla.setVisible(false);
@@ -93,6 +91,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         pnlDestete.setVisible(false);
         panelMadreAdoptiva.setVisible(false);
         txtPesoCanal.setVisible(false);
+        txtPorcentajeCanal.setVisible(false);
         panelInfoVenta.setVisible(false);
         panelInfoMuerte.setVisible(false);
 
@@ -115,6 +114,9 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
+        
+        txtValorVenta.setEnabled(false);
+        txtPorcentajeCanal.setEnabled(false);
         
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTiposDeAnimales);
@@ -1805,7 +1807,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
     private void cbTipoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoVentaActionPerformed
         boolean mostrar = cbTipoVenta.getSelectedIndex() == 2;
         txtPesoCanal.setVisible(mostrar);
-        System.out.println("mostrar: "+mostrar);
+        txtPorcentajeCanal.setVisible(mostrar);
+        panelInfoVenta.revalidate();
         panelInfoVenta.repaint();
     }//GEN-LAST:event_cbTipoVentaActionPerformed
 
@@ -2408,6 +2411,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             int cantidadParto = 0;
             datosPartos = _control.ObtenerCantidadPartos(ma.getNumero_mama(), ma.getId_tipo_animal());
             int partos = Integer.parseInt(datosPartos.get("PARTOS"));
+            partos += partos == 0 ? 1 : 0;
             int numeroParto = Integer.parseInt(ma.getNumero_parto());
             cantidadParto = partos > numeroParto ? partos : numeroParto;
             consulta += "UPDATE ranimales SET cantidad_parto ="+cantidadParto+" "

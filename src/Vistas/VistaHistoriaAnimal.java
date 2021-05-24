@@ -3,7 +3,6 @@ package Vistas;
 import Charts.Panel;
 import Control.*;
 import Control.RAnimales.ControlRAnimales;
-import Modelo.ModeloAnimales;
 import Modelo.ModeloPalpacion;
 import Modelo.ModeloPesaje;
 import Modelo.ModeloVentanaGeneral;
@@ -13,7 +12,6 @@ import Utilidades.Expresiones;
 import Utilidades.Utilidades;
 import Vistas._Animales.Vista_VerAnimales;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -180,7 +178,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             "Ver Más",
             "Eliminar"
         };
-        
+
         InicializarTblRotacion();
         InicializarTblTralado();
         InicializarTblPeso();
@@ -2482,7 +2480,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
     private void btnGuardarMuerteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarMuerteActionPerformed
         int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la muerte?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
-        if(ret == JOptionPane.YES_OPTION){
+        if (ret == JOptionPane.YES_OPTION) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();
             String observacion = txtObservacionMuerte.getText().trim();
@@ -2491,15 +2489,15 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             modeloAnimal.setDescripcion_muerte(observacion);
 
             int resp = controlAnimales.ActualizarMuerte(modeloAnimal);
-            if(resp == Retorno.EXITO){
+            if (resp == Retorno.EXITO) {
                 jdFechaMuerte.setEnabled(false);
                 txtObservacionMuerte.setEnabled(false);
                 DatosMuerte.put("MUERTE", "1");
                 BloquearFormularioMuerte();
                 ValidarVentasyMuertes();
             }
-        }else{
-            
+        } else {
+
         }
     }//GEN-LAST:event_btnGuardarMuerteActionPerformed
 
@@ -2523,37 +2521,35 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fechaVenta = jdFechaVenta.getCalendar();
         String fecha_Venta = sdf.format(fechaVenta.getTime());
-        String precio_Venta  = txtPrecioVenta.getText().replace(".", "").replace(",", ".");
+        String precio_Venta = txtPrecioVenta.getText().replace(".", "").replace(",", ".");
         String pesoCanal = txtPesoCanal.getText();
         pesoCanal = pesoCanal.isEmpty() ? "0" : pesoCanal.replace(".", "").replace(",", ".");
         String tipo_Venta = cbTipoVenta.getSelectedItem().toString().toLowerCase();
 
         //<editor-fold defaultstate="collapsed" desc="VALIDAR VENTA">
-        if(tipo_Venta.equals("seleccionar")){
+        if (tipo_Venta.equals("seleccionar")) {
             JOptionPane.showMessageDialog(this, "Por favor seleccionar el tipo de venta.");
             return;
         }
-        if(precio_Venta.equals("")){
+        if (precio_Venta.equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor digitar el precio de venta.");
             return;
         }
-        if(tipo_Venta.equals("matadero") && pesoCanal.equals("0")){
+        if (tipo_Venta.equals("matadero") && pesoCanal.equals("0")) {
             JOptionPane.showMessageDialog(this, "Por favor digitar el peso de canal.");
             return;
         }
 
-
 //</editor-fold>
-
         modeloAnimal.setFecha_venta(fecha_Venta);
         modeloAnimal.setPrecio_venta(precio_Venta);
         modeloAnimal.setTipo_venta(tipo_Venta);
         modeloAnimal.setPeso_canal(pesoCanal);
 
         int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la venta?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
-        if(ret == JOptionPane.YES_OPTION){
+        if (ret == JOptionPane.YES_OPTION) {
             int resp = controlAnimales.ActualizarVenta(modeloAnimal);
-            if(resp == Retorno.EXITO){
+            if (resp == Retorno.EXITO) {
                 jdFechaVenta.setEnabled(false);
                 cbTipoVenta.setEnabled(false);
                 txtPrecioVenta.setEnabled(false);
@@ -2569,6 +2565,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         boolean mostrar = cbTipoVenta.getSelectedIndex() == 2;
         txtPesoCanal.setVisible(mostrar);
         txtPorcentajeCanal.setVisible(mostrar);
+        panelBody4.revalidate();
+        panelBody4.repaint();
     }//GEN-LAST:event_cbTipoVentaActionPerformed
 
     private void txtPrecioVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyReleased
@@ -2586,7 +2584,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPesoActionPerformed
 
     private void txtPesoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyReleased
-        
+
     }//GEN-LAST:event_txtPesoKeyReleased
 
     private void txtValorVentaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorVentaKeyReleased
@@ -2774,18 +2772,19 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
          * key[1]: nombre de la tabla de la base de datos<br>key[2]: nombre del
          * campo de la tabla anterior
          */
-        listaHistorico.put(new String[]{"Implante", "animales", "implante", ListaDatos.get(0).getId()}, lblImplante);
-        listaHistorico.put(new String[]{"Descornado", "animales", "descornado", ListaDatos.get(0).getId()}, lblDescornado);
-        listaHistorico.put(new String[]{"Fecha de destete", "animales", "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
-        listaHistorico.put(new String[]{"Hierro fisico", "animales", "hierro_fisico", ListaDatos.get(0).getId()}, lblHierroColocado);
-        listaHistorico.put(new String[]{"Peso de destete", "animales", "peso_destete", ListaDatos.get(0).getId()}, lblPesoDestete);
-        listaHistorico.put(new String[]{"Calificación", "animales", "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
-        listaHistorico.put(new String[]{"Notas", "animales", "notas", ListaDatos.get(0).getId()}, lblNotas);
-        listaHistorico.put(new String[]{"Capado", "animales", "capado", ListaDatos.get(0).getId()}, lblNovilla);
+        String tabla = "ranimales";
+        listaHistorico.put(new String[]{"Implante", tabla, "implante", ListaDatos.get(0).getId()}, lblImplante);
+        listaHistorico.put(new String[]{"Descornado", tabla, "descornado", ListaDatos.get(0).getId()}, lblDescornado);
+        listaHistorico.put(new String[]{"Fecha de destete", tabla, "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
+        listaHistorico.put(new String[]{"Hierro fisico", tabla, "hierro_fisico", ListaDatos.get(0).getId()}, lblHierroColocado);
+        listaHistorico.put(new String[]{"Peso de destete", tabla, "peso_destete", ListaDatos.get(0).getId()}, lblPesoDestete);
+        listaHistorico.put(new String[]{"Calificación", tabla, "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
+        listaHistorico.put(new String[]{"Notas", tabla, "notas", ListaDatos.get(0).getId()}, lblNotas);
+        listaHistorico.put(new String[]{"Capado", tabla, "capado", ListaDatos.get(0).getId()}, lblNovilla);
         if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumero_mama())) {
             listaHistorico.put(new String[]{
                 "Número del animal",
-                "animales",
+                tabla,
                 "numero",
                 ListaDatos.get(0).getId(),
                 ListaDatos.get(0).getId_tipo_animal()
@@ -2810,7 +2809,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lblNumPartos.setVisible(esHembra);
         lblEstado.setVisible(esHembra);
         panelBtnParto.setVisible(esHembra);
-        
+
         GetDatosVentaAnimal();
         GetDatosMuerteAnimal();
         ValidarVentasyMuertes();
@@ -2826,8 +2825,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             GetDatosParto();
         } else {
             lblNovilla.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            jTabbedPane1.setEnabledAt(6,false);
-            jTabbedPane1.setEnabledAt(7,false);
+            jTabbedPane1.setEnabledAt(6, false);
+            jTabbedPane1.setEnabledAt(7, false);
         }
 
         lblLocalizacion.setText("" + localizacion);
@@ -2865,13 +2864,13 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         LimpiarFormularioVenta();
         BloquearFormularioVenta();
         //btnVenta.setEnabled(DatosVenta.get("VENTA").equals("0"));
-        
-        if(DatosVenta.get("VENTA").equals("1")){
+
+        txtPeso.setText("" + ListaDatos.get(0).getPeso());
+        if (DatosVenta.get("VENTA").equals("1")) {
             try {
                 Date fecha = formato.parse(DatosVenta.get("FECHA_VENTA"));
                 jdFechaMuerte.setDate(fecha);
-                cbTipoVenta.setSelectedItem("" + Utilidades.CapitaliceTexto(DatosVenta.get("TIPO_VENTA")));   
-                txtPeso.setText("" + DatosVenta.get("PESO"));
+                cbTipoVenta.setSelectedItem("" + Utilidades.CapitaliceTexto(DatosVenta.get("TIPO_VENTA")));
                 if (DatosVenta.get("TIPO_VENTA").equals("matadero")) {
                     txtPesoCanal.setText("" + DatosVenta.get("PESO_CANAL"));
                     txtPorcentajeCanal.setText("" + DatosVenta.get("PORCENTAJE_CANAL"));
@@ -2884,8 +2883,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 Logger.getLogger(VistaHistoriaAnimal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
+
     }
 
     public void LimpiarFormularioVenta() {
@@ -2936,7 +2934,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 : calcularPrecioDeVenta(Double.parseDouble(precioVenta))
         );
     }
-    
+
     private String calcularPrecioDeVenta(double valorDeVenta) {
         if (txtPeso.getText().length() == 0) {
             return "";
@@ -2974,11 +2972,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             LimpiarFormularioMuerte();
             BloquearFormularioMuerte();
             //btnMuerte.setEnabled(DatosMuerte.get("MUERTE").equals("0"));
-            
-            if(DatosMuerte.get("MUERTE").equals("1")){
+
+            if (DatosMuerte.get("MUERTE").equals("1")) {
                 Date fecha = formato.parse(DatosMuerte.get("FECHA_MUERTE"));
                 jdFechaMuerte.setDate(fecha);
-                txtObservacionMuerte.setText(DatosMuerte.get("MOTIVO"));                
+                txtObservacionMuerte.setText(DatosMuerte.get("MOTIVO"));
             }
         } catch (ParseException ex) {
             Logger.getLogger(VistaHistoriaAnimal.class.getName()).log(Level.SEVERE, null, ex);
@@ -3155,7 +3153,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     //<editor-fold defaultstate="collapsed" desc="TabbetPane Palpacion">
     private void GetDatosPalpacion() {
         ListaDatosPalpacion = (ArrayList<ModeloPalpacion>) controlPalpacion.ObtenerDatosFiltroNew(id_Animal);
-        
+
         boolean tienePalpacion = ListaDatosPalpacion.size() > 0;
         if (tienePalpacion) {
             LlenarTablaPalpacion();
@@ -3694,16 +3692,16 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private void ValidarVentasyMuertes() {
         btnVenta.setEnabled(DatosVenta.get("VENTA").equals("0"));
         btnMuerte.setEnabled(DatosMuerte.get("MUERTE").equals("0"));
-        
-        if(DatosMuerte.get("MUERTE").equals("1")){
+
+        if (DatosMuerte.get("MUERTE").equals("1")) {
             btnGuardarVenta.setVisible(false);
             btnVenta.setEnabled(false);
         }
-        if(DatosVenta.get("VENTA").equals("1")){
+        if (DatosVenta.get("VENTA").equals("1")) {
             btnGuardarMuerte.setVisible(false);
             btnMuerte.setEnabled(false);
         }
-        
+
     }
 
 }

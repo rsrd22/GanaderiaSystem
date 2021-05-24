@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Configuracion.InformacionGlobal;
 import Control.ControlAnimales;
 import Control.ControlGeneral;
 import Control.RAnimales.ControlRAnimales;
@@ -37,7 +38,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     private List<Map<String, String>> grupos;
     private List<Map<String, String>> idGrupos;
     private ControlGeneral controlGral;
-    private ModeloAnimales modeloDatos;
+    private ModeloRAnimalesSalida modeloDatos;
     private ModeloRAnimales modelo;
     private ModeloVentanaGeneral modeloVistaGeneral;
     private ModeloTraslado modeloTraslado;
@@ -60,16 +61,16 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         datosPartos = new HashMap<>();
         grupos = new ArrayList<>();
         controlGral = new ControlGeneral();
-        modeloDatos = new ModeloAnimales();
+        modeloDatos = new ModeloRAnimalesSalida();
         control = new ControlRAnimales();
         modeloTraslado = new ModeloTraslado();
         modelo = new ModeloRAnimales();
-        modeloDatos = (ModeloAnimales) modeloVista.getModeloDatos();
+        modeloDatos = (ModeloRAnimalesSalida) modeloVista.getModeloDatos();
         vha = (VistaHistoriaAnimal) modeloVista.getPanelPadre();
         IniciarFecha();
-        cargarComboGrupos(modeloDatos.getIdFinca(), modeloDatos.getIdTipoAnimal());
+        cargarComboGrupos(modeloDatos.getIdFinca(), modeloDatos.getId_tipo_animal());
         modeloVistaGeneral = modeloVista;
-        cbGrupos.setEnabled(false);
+//        cbGrupos.setEnabled(false);
         chkMuerte.setSelected(false);
 
         mostrarDatosMuerte();
@@ -705,7 +706,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         String numeroMadre = modeloDatos.getNumero();
-        String tipoAnimal = modeloDatos.getIdTipoAnimal();
+        String tipoAnimal = modeloDatos.getId_tipo_animal();
 
         datosMadre = control.ObtenerIDMadre(numeroMadre, tipoAnimal);
         String idMadre = datosMadre.get("ID");
@@ -748,13 +749,15 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setFecha("NOW()");
         modelo.setHierro(modeloDatos.getHierro());
         modelo.setGrupo(chkMuerte.isSelected() ? idMuerte : grupos.get(indiceGrupo).get("id"));
-        modelo.setId_tipo_animal(modeloDatos.getIdTipoAnimal());
+        modelo.setId_tipo_animal(modeloDatos.getId_tipo_animal());
         modelo.setCalificacion("" + slCalificacion.getValue());
         modelo.setCapado("NO");
         modelo.setGenero(cbGenero.getSelectedItem().toString().toLowerCase());
         modelo.setId_usuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
         modelo.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
-        modelo.setNumero(modeloDatos.getNumero());
+
+        modelo.setNumero(getNumeroCria(modeloDatos));
+
         modelo.setNumero_mama(modeloDatos.getNumero());
         modelo.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
@@ -771,12 +774,11 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modelo.setFecha_destete(FECHA_POR_DEFECTO);
         modelo.setDestete("0");
         modelo.setPeso_destete("0");
-        
-        modelo.setNumero_parto("NULL");
+
+        modelo.setNumero_parto(getNumeroParto(modeloDatos));
         modelo.setCantidad_parto("NULL");
 
         //</editor-fold>
-        
         //<editor-fold defaultstate="collapsed" desc="ESTABLECIENDO LOS DATOS DEL MODELO TRASLADO">
         modeloTraslado.setId("0");
         modeloTraslado.setIdFinca(modeloDatos.getIdFinca());
@@ -800,12 +802,11 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         modeloTraslado.setIdAnimal(idMadre);
         traslados.add(modeloTraslado);
         //</editor-fold>
-
         //<editor-fold defaultstate="collapsed" desc="actualizarRegistroDeLaMadre">
         String consulta = "";
         if (datosMadre.size() > 0) {
             if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
-                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID") + ";";
+                consulta = "UPDATE ranimales SET es_madre='Si' PARAMUPDATE WHERE id=" + datosMadre.get("ID") + ";";
             }
         }
 
@@ -813,17 +814,20 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             int cantidadParto = 0;
             datosPartos = control.ObtenerCantidadPartos(modelo.getNumero_mama(), modelo.getId_tipo_animal());
             int partos = Integer.parseInt(datosPartos.get("PARTOS"));
-            int numeroParto = Integer.parseInt(modelo.getNumero_parto());
+            partos += partos == 0 ? 1 : 0;
+            int numeroParto = Integer.parseInt(modelo.getNumero_parto().equalsIgnoreCase("null") ? "0" : modelo.getNumero_parto());
             cantidadParto = partos > numeroParto ? partos : numeroParto;
-            consulta += "UPDATE ranimales SET cantidad_parto =" + cantidadParto + " "
-                    + "WHERE numero='" + modelo.getNumero_mama() + "' AND id_tipo_animal='" + modelo.getId_tipo_animal() + "';";
+
+            consulta = consulta.replaceAll("PARAMUPDATE", ", cantidad_parto=" + cantidadParto);
+        } else {
+            consulta = consulta.replaceAll("PARAMUPDATE", "");
         }
 //</editor-fold>
-        
+
         modeloEntrada.setAnimal(modelo);
         modeloEntrada.setTraslado(null);
         modeloEntrada.setActualizarRegistroMadre(consulta);
-        
+
         int retorno = control.GuardarCria(new Object[]{modeloEntrada, traslados}, datosAdicionales);
 
         String mensaje = "";
@@ -833,7 +837,6 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
                 Parametros.actualizarHistoricoAnimal = true;
                 JOptionPane.showMessageDialog(this, mensaje);
                 vha.getDatosHembra();
-                vha.GetDatosParto();
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:
@@ -855,6 +858,25 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     public void IniciarFecha() {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         jdFechaNacimiento.setCalendar(Calendar.getInstance());
+    }
+
+    private String getNumeroCria(ModeloRAnimalesSalida modelo) {
+        char sufijo = 96;//inicia en a
+        String numeroMadre = modelo.getNumero();
+
+        String idMadre = modelo.getId();
+
+        String nroDescendiente = control.ObtenerUltimoDescendiente(idMadre);
+        sufijo = (char) ((int) sufijo + Integer.parseInt(nroDescendiente));
+
+        return (numeroMadre + "-" + sufijo).toUpperCase();
+    }
+
+    private String getNumeroParto(ModeloRAnimalesSalida modelo) {
+        return control.ObtenerNumeroParto(
+            modelo.getId(),
+            "(SELECT IFNULL(MAX(fecha_nacimiento),NOW()) FROM ranimales WHERE numero_mama='"+modelo.getNumero()+"')"
+        );
     }
 
 }

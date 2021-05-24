@@ -355,7 +355,7 @@ public class ControlPalpacion implements IControl {
     public Map<String, String> getDatosPalpacion(String id) {
         String consulta = "SELECT IFNULL(palp.`diagnostico`, '') AS ESTADO\n"
                 + "FROM `palpacion` palp \n"
-                + "INNER JOIN `animales` a ON a.`id` = palp.`id_animal`\n"
+                + "INNER JOIN `ranimales` a ON a.`id` = palp.`id_animal`\n"
                 + "WHERE id_animal = '" + id + "'\n"
                 + "ORDER BY palp.id DESC\n"
                 + "LIMIT 1;";
@@ -375,19 +375,21 @@ public class ControlPalpacion implements IControl {
     }
 
     public Map<String, String> getDatosPartos(String id) {
-        String consulta = "SELECT IFNULL(`NumeroPartos`(a.numero),0) NUM_PARTOS, IFNULL(`NumeroHijos`(a.`numero`,2), '') CRIA,\n"
-                + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES\n"
-                + "FROM `animales` a ON a.`id` = '" + id + "'\n";
-
-        consulta = "SELECT CASE WHEN a.numero=a.numero_mama THEN\n"
-                + "0 ELSE IFNULL(`NumeroPartos`(a.numero, a.id_tipo_animal),0) END NUM_PARTOS, "
-                + "IFNULL(`NumeroHijos`(a.`numero`,2, a.id_tipo_animal), '') CRIA,\n"
-                + "IFNULL(`NumeroHijos`(a.`numero`,3, a.id_tipo_animal), '') CRIA_ADOPTIVA,\n"
-                + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES, IFNULL(DATE_FORMAT(`NumeroHijos`(a.`numero`, 1, a.id_tipo_animal), '%d/%m/%Y'), '') FECHA_ULT_PARTO\n"
-                + "FROM `animales` a \n"
-                + "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` and palp.estado = 'Activo'\n"
+        String consulta = "SELECT \n"
+                + "IFNULL(a.cantidad_parto, 0) NUM_PARTOS,\n"
+                + "CASE WHEN a.es_madre='Si' THEN\n"
+                + "(SELECT IFNULL(MAX(aa.numero),'') FROM ranimales aa WHERE aa.numero_mama=a.numero)\n"
+                + "ELSE '' END CRIA,\n"
+                + "CASE WHEN a.es_madre='Si' THEN\n"
+                + "(SELECT IFNULL(MAX(aa.numero),'') FROM ranimales aa WHERE aa.numero_mama_adoptiva=a.numero)\n"
+                + "ELSE '' END CRIA_ADOPTIVA,\n"
+                + "NumMeses(palp.`diagnostico`, palp.`num_meses`, palp.`fecha_palpacion`) NUM_MESES,\n"
+                + "CASE WHEN a.es_madre='Si' THEN\n"
+                + "(SELECT IFNULL(MAX(aa.fecha_nacimiento),'') FROM ranimales aa WHERE aa.numero_mama=a.numero)\n"
+                + "ELSE '' END FECHA_ULT_PARTO\n"
+                + "FROM `ranimales` a \n"
+                + "LEFT JOIN `palpacion` palp ON palp.`id_animal` = a.`id` AND palp.estado = 'Activo'\n"
                 + "WHERE a.`id` = '" + id + "'";
-        
 
         List<Map<String, String>> datos = new ArrayList<Map<String, String>>();
         datos = mySQL.ListSQL(consulta);
@@ -449,7 +451,7 @@ public class ControlPalpacion implements IControl {
         try {
             String consulta = "select an.id as IDANIMAL, an.`numero` as NUMERO, "
                     + "DATE_FORMAT(an.`fecha_nacimiento`, '%d/%m/%Y') as FEC_NAC, "
-                    + "an.`numero_descendiente` AS NUMPARTO, \n"
+                    + "an.`numero_parto` AS NUMPARTO, \n"
                     + "gr.`descripcion` as GRUPO, an.`genero` as SEXO, "
                     + "ifnull(pes.`peso`, an.peso) as PES_NAC, ifnull(an.notas, '') as NOTAS\n"
                     + "from ranimales an\n"
@@ -473,10 +475,10 @@ public class ControlPalpacion implements IControl {
         }
     }
 
-    public int AnularPalpacion(ModeloPalpacion modelo){
+    public int AnularPalpacion(ModeloPalpacion modelo) {
         ArrayList<String> consultas = new ArrayList<>();
         consultas.add(
-                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DE PALPACION">
+                //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL REGISTRO DE PALPACION">
                 "DELETE FROM palpacion WHERE id=" + modelo.getId()
         //</editor-fold>
         );
@@ -484,15 +486,15 @@ public class ControlPalpacion implements IControl {
         if (modelo.getListaMedicamentos().size() > 0) {
             for (ModeloMedicamentosPorPesaje lista : modelo.getListaMedicamentos()) {
                 consultas.add(
-                    //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS PALPACION">
-                    "DELETE FROM palpacionxtratamiento WHERE id=" + lista.getId()
-            //</editor-fold>
+                        //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS MEDICAMENTOS PALPACION">
+                        "DELETE FROM palpacionxtratamiento WHERE id=" + lista.getId()
+                //</editor-fold>
                 );
             }
         }
-        
+
         try {
-            
+
             if (mySQL.EnviarConsultas(consultas)) {
                 return Retorno.EXITO;
             } else {
@@ -506,6 +508,5 @@ public class ControlPalpacion implements IControl {
             return Retorno.EXCEPCION_SQL;
         }
     }
-
 
 }
