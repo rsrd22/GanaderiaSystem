@@ -523,7 +523,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 }
                 List<Map<String, String>> listaInfoGrupos = controlgen.GetComboBox("SELECT id AS ID, descripcion AS DESCRIPCION\n"
                         + "FROM grupos \n"
-                        + "WHERE id_tipo_animal = '" + idTipoAnimal + "' AND  UPPER(descripcion) IN (" + inGrupos + ")");
+                        + "WHERE id_tipo_animal = '" + idTipoAnimal + "' AND  UPPER(descripcion) IN (" + inGrupos.toUpperCase() + ")");
 
                 List<Map<String, String>> listaInfoHierros = controlgen.GetComboBox("SELECT id AS ID, id_propietario AS IDPROPIETARIO, descripcion AS DESCRIPCION\n"
                         + "FROM propietarioxhierro\n"

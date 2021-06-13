@@ -464,7 +464,7 @@ public class Vista_VerAnimales extends javax.swing.JPanel {
         EventoComboFincas();
     }
 
-    private void EventoComboFincas() {
+    public void EventoComboFincas() {
         System.out.println("cbFincaActionPerformed---_>" + listaFincas.size());
         System.out.println("cbFinca.--->" + cbFinca.getItemCount());
         System.out.println("cbFinca.getSelectedIndex()..>" + cbFinca.getSelectedIndex());
