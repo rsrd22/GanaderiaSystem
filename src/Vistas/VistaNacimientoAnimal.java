@@ -806,7 +806,9 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         String consulta = "";
         if (datosMadre.size() > 0) {
             if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
-                consulta = "UPDATE ranimales SET es_madre='Si' PARAMUPDATE WHERE id=" + datosMadre.get("ID") + ";";
+                consulta = "UPDATE ranimales SET es_madre='Si', PARAMUPDATE WHERE id=" + datosMadre.get("ID") + ";";
+            } else {
+                consulta = "UPDATE ranimales SET PARAMUPDATE WHERE id=" + datosMadre.get("ID") + ";";
             }
         }
 
@@ -814,11 +816,12 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
             int cantidadParto = 0;
             datosPartos = control.ObtenerCantidadPartos(modelo.getNumero_mama(), modelo.getId_tipo_animal());
             int partos = Integer.parseInt(datosPartos.get("PARTOS"));
-            partos += partos == 0 ? 1 : 0;
+            partos = partos + 1;
             int numeroParto = Integer.parseInt(modelo.getNumero_parto().equalsIgnoreCase("null") ? "0" : modelo.getNumero_parto());
             cantidadParto = partos > numeroParto ? partos : numeroParto;
 
-            consulta = consulta.replaceAll("PARAMUPDATE", ", cantidad_parto=" + cantidadParto);
+            modelo.setNumero_parto("" + cantidadParto);
+            consulta = consulta.replaceAll("PARAMUPDATE", "cantidad_parto=" + cantidadParto);
         } else {
             consulta = consulta.replaceAll("PARAMUPDATE", "");
         }
@@ -874,8 +877,8 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
 
     private String getNumeroParto(ModeloRAnimalesSalida modelo) {
         return control.ObtenerNumeroParto(
-            modelo.getId(),
-            "(SELECT IFNULL(MAX(fecha_nacimiento),NOW()) FROM ranimales WHERE numero_mama='"+modelo.getNumero()+"')"
+                modelo.getId(),
+                "(SELECT IFNULL(MAX(fecha_nacimiento),NOW()) FROM ranimales WHERE numero_mama='" + modelo.getNumero() + "')"
         );
     }
 

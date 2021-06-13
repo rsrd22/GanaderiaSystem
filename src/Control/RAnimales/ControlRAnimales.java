@@ -369,7 +369,10 @@ public class ControlRAnimales implements IControl {
 
         //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
         if (!_objeto.getActualizarRegistroMadre().isEmpty()) {
-            consultas.add(_objeto.getActualizarRegistroMadre());
+            String[] cons = _objeto.getActualizarRegistroMadre().split(";");
+            for (String con : cons) {
+                consultas.add(con);
+            }
         }
         //</editor-fold>
 
@@ -797,7 +800,10 @@ public class ControlRAnimales implements IControl {
 
         //<editor-fold defaultstate="collapsed" desc="actualizarElRegistroDeLaMadre">
         if (!me.getActualizarRegistroMadre().isEmpty()) {
-            consultas.add(me.getActualizarRegistroMadre());
+            String[] cons = me.getActualizarRegistroMadre().split(";");
+            for (String con : cons) {
+                consultas.add(con);
+            }
         }
         //</editor-fold>
 
