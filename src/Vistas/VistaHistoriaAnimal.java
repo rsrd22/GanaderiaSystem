@@ -2495,6 +2495,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 DatosMuerte.put("MUERTE", "1");
                 BloquearFormularioMuerte();
                 ValidarVentasyMuertes();
+                refTablaAnimales.setValueAt("Muerto", filaLista, 5);
             }
         } else {
 
@@ -2545,6 +2546,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         modeloAnimal.setPrecio_venta(precio_Venta);
         modeloAnimal.setTipo_venta(tipo_Venta);
         modeloAnimal.setPeso_canal(pesoCanal);
+        
 
         int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la venta?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
         if (ret == JOptionPane.YES_OPTION) {
@@ -2557,6 +2559,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 DatosVenta.put("VENTA", "1");
                 BloquearFormularioVenta();
                 ValidarVentasyMuertes();
+                refTablaAnimales.setValueAt("Vendido", filaLista, 5);
+                
             }
         }
     }//GEN-LAST:event_btnGuardarVentaActionPerformed
@@ -2866,6 +2870,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         //btnVenta.setEnabled(DatosVenta.get("VENTA").equals("0"));
 
         txtPeso.setText("" + ListaDatos.get(0).getPeso());
+        modeloAnimal.setPeso(ListaDatos.get(0).getPeso());
         if (DatosVenta.get("VENTA").equals("1")) {
             try {
                 Date fecha = formato.parse(DatosVenta.get("FECHA_VENTA"));

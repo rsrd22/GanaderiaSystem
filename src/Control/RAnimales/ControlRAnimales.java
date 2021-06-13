@@ -831,7 +831,7 @@ public class ControlRAnimales implements IControl {
             String consulta = "SELECT venta as VENTA, numero AS NUMERO_ANIMAL, IF(numero_mama_adoptiva IS NULL OR numero_mama_adoptiva = '',numero_mama, numero_mama_adoptiva) AS NUMERO_MAMA, \n"
                     + "fecha_venta AS FECHA_VENTA, tipo_venta AS TIPO_VENTA, \n"
                     + "MascaraMonedaDecimal(REPLACE(precio_venta, '.', ',')) AS PRECIO_VENTA, peso AS PESO, peso_canal AS PESO_CANAL, \n"
-                    + "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(peso_canal IS NULL, peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n"
+                    + "MascaraMonedaDecimal(REPLACE((PRECIO_VENTA * IF(`tipo_venta` = 'particular', peso, peso_canal)), '.', ',')) PRECIO_TOTAL, \n"
                     + "ROUND((peso_canal/peso * 100), 0) PORCENTAJE_CANAL \n"
                     + "FROM ranimales \n"
                     + "WHERE id = '" + id_Animal + "'";

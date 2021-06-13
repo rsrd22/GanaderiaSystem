@@ -48,7 +48,7 @@ public class ControlCargaMasivaAnimales {
                 "        '1',\n" +
                 "        NULL,\n" +
                 "        " + datos.get("NUM_PARTOS") + ",\n" +
-                "        " + datos.get("ES_MADRE") + ",\n" +
+                "        " + Utilidades.CampoNULL(datos.get("ES_MADRE")) + ",\n" +
                 "        '" + datos.get("NUM_MADRE").replace("_", "") + "',\n" +
                 "        '',\n" +
                 "        " + datos.get("PESO") + ",\n" +
@@ -176,6 +176,7 @@ public class ControlCargaMasivaAnimales {
                 + "peso = " + datos.get("PESO") + ",\n"
                 + "cantidad_parto =  "+datos.get("NUM_PARTOS") + ",\n"
                 + "numero_descendiente = " + datos.get("NUMERO_DESCENDIENTE") + ",\n"
+                + "es_madre = " + Utilidades.CampoNULL(datos.get("ES_MADRE")) + ",\n"
                 + "grupo = " + datos.get("IDGRUPO") + ",\n"
                 + "hierro = " + datos.get("IDHIERRO") + ",\n"
                 + "genero = '" + datos.get("SEXO") + "',\n"
