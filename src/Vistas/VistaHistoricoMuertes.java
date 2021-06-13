@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Vistas;
 
 import Configuracion.InformacionGlobal;
@@ -35,6 +34,7 @@ import javax.swing.table.JTableHeader;
  * @author MERRY
  */
 public class VistaHistoricoMuertes extends javax.swing.JPanel {
+
     private ControlGeneral controlGral;
     private ControlMuertesVentasHistoricos controlMyVHist;
     private ModeloMuertesVentasHistoricos modeloMyVHist;
@@ -50,6 +50,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     public int bandOrden = 0;
     public int colOrden = 0;
     public String Orden = "a.fecha_venta ASC";
+
     /**
      * Creates new form VistaHistoricoMuertes
      */
@@ -58,40 +59,40 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         Utilidades.EstablecerPermisosVista2(this, idModulo, 0);
         modelo = new DefaultTableModel();
         //<editor-fold defaultstate="collapsed" desc="ORDEN TABLA">
-            NameColumnasOrden = new ArrayList<>();
-            NameColumnasOrden.add("numero");
-            NameColumnasOrden.add("numero_mama");
-            NameColumnasOrden.add("genero");
-            NameColumnasOrden.add("fecha_muerte");
-            NameColumnasOrden.add("descripcion_muerte");
+        NameColumnasOrden = new ArrayList<>();
+        NameColumnasOrden.add("numero");
+        NameColumnasOrden.add("numero_mama");
+        NameColumnasOrden.add("genero");
+        NameColumnasOrden.add("fecha_muerte");
+        NameColumnasOrden.add("descripcion_muerte");
 //</editor-fold>
         EncabezadoTblMuertes = new String[]{
-            "Nro. Animal",    //0
-            "Nro. Madre",     //1
-            "Genero",         //2
+            "Nro. Animal", //0
+            "Nro. Madre", //1
+            "Genero", //2
             "<html><p style=\"text-align:center;\">Fecha</p><p style=\"text-align:center;\">Muerte</p></html>", //3
             "Motivo Muerte", //4
-            "",                //5
-            ""                //6
+            "", //5
+            "" //6
         };
         controlGral = new ControlGeneral();
         controlMyVHist = new ControlMuertesVentasHistoricos();
         modeloMyVHist = new ModeloMuertesVentasHistoricos();
         InicializarTblMuertes();
         cargarComboFincas();
-                
+
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimal);
     }
-    
+
     public void InicializarTblMuertes() {
         tabla.setDefaultRenderer(Object.class, new TablaRender());
-        
+
         modelo = new DefaultTableModel(EncabezadoTblMuertes, 0) {
             Class[] types = new Class[]{
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
-                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int col) {
@@ -123,34 +124,34 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
         tabla.getColumnModel().getColumn(4).setPreferredWidth(250); //4
         tabla.getColumnModel().getColumn(5).setPreferredWidth(80); //5
         tabla.getColumnModel().getColumn(6).setPreferredWidth(80); //6
-        
+
         tabla.getTableHeader().setReorderingAllowed(false);
 
         for (int i = 0; i < modelo.getColumnCount(); i++) {
             tabla.getColumnModel().getColumn(i).setResizable(false);
             DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
             tcr.setFont(new Font("Tahoma", 0, 12));
-            
+
 //            if(i == 3 ){
 //                tcr.setHorizontalAlignment(SwingConstants.RIGHT);
 //               
 //            }else{
-                tcr.setHorizontalAlignment(SwingConstants.CENTER);
-                
+            tcr.setHorizontalAlignment(SwingConstants.CENTER);
+
 //            }
             tcr.setForeground(new Color(26, 82, 118));
             tabla.getColumnModel().getColumn(i).setCellRenderer(tcr);
-            
+
         }
         JTableHeader header = tabla.getTableHeader();
 
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
-    
+
         tabla.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {     
+            public void mouseClicked(MouseEvent e) {
                 EventoOrdenTabla(e);
             }
         });
@@ -172,7 +173,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
 
     public void cargarHistoricoMuertes() {
         String consulta = consultas.get("OBTENER_HISTORICO_MUERTES").replace("PARAMETRO1", txtCodigoTipoAnimal.getText()).replace("ORDEN", Orden);
-        System.out.println("consulta-->"+consulta);
+        System.out.println("consulta-->" + consulta);
         muertes = controlGral.GetConsulta(consulta);
 
         MostrarTabla();
@@ -181,21 +182,21 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     private void MostrarTabla() {
         Utilidades.LimpiarTabla(tabla);
         for (int i = 0; i < muertes.size(); i++) {
-            
+
             Utilidades.agregarFilaTabla(
-                modelo,
-                new Object[]{
-                    muertes.get(i).get("numero"),
-                    muertes.get(i).get("numero_mama"),
-                    (""+muertes.get(i).get("genero").charAt(0)).toUpperCase(),
-                    muertes.get(i).get("fecha_muerte"),
-                    Utilidades.decodificarElemento(muertes.get(i).get("descripcion_muerte")),
-                    "Modificar",
-                    "Anular"
-                }
+                    modelo,
+                    new Object[]{
+                        muertes.get(i).get("numero"),
+                        muertes.get(i).get("numero_mama"),
+                        ("" + muertes.get(i).get("genero").charAt(0)).toUpperCase(),
+                        muertes.get(i).get("fecha_muerte"),
+                        Utilidades.decodificarElemento(muertes.get(i).get("descripcion_muerte")),
+                        "Modificar",
+                        "Anular"
+                    }
             );
         }
-    } 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -326,7 +327,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
-        
+
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             String idFinca = fincas.get(indice).get("id");
@@ -337,7 +338,7 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
 
     private void cbTipoAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalActionPerformed
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimal);
-        
+
         int indice = cbTipoAnimal.getSelectedIndex();
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
@@ -352,26 +353,26 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     private void tablaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseReleased
         int fila = tabla.getSelectedRow();
         int cola = tabla.getSelectedColumn();
-        System.out.println("cola:"+cola);
-        String dato = ""+tabla.getValueAt(fila, cola);
-        if(cola == 5){
+        System.out.println("cola:" + cola);
+        String dato = "" + tabla.getValueAt(fila, cola);
+        if (cola == 5) {
             objetoVentana = new ModeloVentanaGeneral(this, new VistaModificarMuerte(), 1, muertes.get(fila));
             objetoVentana.setFila(fila);
             new VistaGeneral(objetoVentana).setVisible(true);
-        }else if(cola == 6){
+        } else if (cola == 6) {
             int resp = JOptionPane.showConfirmDialog(null, "¿está seguro de Anular es ta Muerte?", "Anular Muerte", JOptionPane.YES_NO_OPTION);
-            if(resp == JOptionPane.YES_OPTION){
+            if (resp == JOptionPane.YES_OPTION) {
                 modeloMyVHist.setEstado("Activo");
-                modeloMyVHist.setIdAnimal(""+muertes.get(fila).get("id"));
+                modeloMyVHist.setIdAnimal("" + muertes.get(fila).get("id"));
                 modeloMyVHist.setTipo("muerte");
                 modeloMyVHist.setIdUsuario(datosUsuario.datos.get(0).get("ID_USUARIO"));
-                
+
                 ModeloVentanaGeneral objetoVentana = new ModeloVentanaGeneral(
-                                this, //panelPadre
-                                new VistaObservacion(), //panelHijo
-                                1, //opcion
-                                modeloMyVHist //modeloDeDatos
-                        );
+                        this, //panelPadre
+                        new VistaObservacion(), //panelHijo
+                        1, //opcion
+                        modeloMyVHist //modeloDeDatos
+                );
                 new VistaGeneral(objetoVentana).setVisible(true);
             }
         }
@@ -396,56 +397,56 @@ public class VistaHistoricoMuertes extends javax.swing.JPanel {
     public void RetornoVistaGeneral(ModeloVentanaGeneral modeloVentanaGeneral) {
         cargarHistoricoMuertes();
     }
-    
-    public void GuardarAnulacion(ModeloMuertesVentasHistoricos modeloMyVHist){
+
+    public void GuardarAnulacion(ModeloMuertesVentasHistoricos modeloMyVHist) {
         int ret = controlMyVHist.GuardarAnular(modeloMyVHist);
         if (ret == Retorno.EXITO) {
             JOptionPane.showMessageDialog(null, "La operación se realizo con exito.");
             cargarHistoricoMuertes();
         }
     }
-    
-    public void EventoOrdenTabla(MouseEvent e){
-        if(!tabla.isEnabled())
+
+    public void EventoOrdenTabla(MouseEvent e) {
+        if (!tabla.isEnabled()) {
             return;
-        
-        int col = tabla.columnAtPoint(e.getPoint());
-        System.out.println("col-->"+colOrden);
-        if(col > 0){
-            if(col != colOrden){
-                colOrden = col;
-                bandOrden = 1;//Ascendente
-            }else{
-                if(bandOrden > 0 )
-                    bandOrden = -1;//Descendente
-                else if(bandOrden < 0 )
-                    bandOrden = 0;// Por Defecto
-                else
-                    bandOrden = 1;//Ascendente
-                
-            }
-            String dat = "";
-            String orden = NameColumnasOrden.get(col-1);
-            String[] cols = orden.split("<::>");
-            
-            for(int i = 0; i < cols.length; i++){
-                if(bandOrden == 0){
-                    dat = "a.fecha_venta ASC";
-                }else{
-                    dat += (dat.equals("")? "":", ") + TipoDato(col-1, cols[i])+" "+(bandOrden == 1?"ASC":"DESC");
-                }
-            }
-            
-            Orden = dat;
-            cargarHistoricoMuertes();
         }
+
+        int col = tabla.columnAtPoint(e.getPoint());
+        System.out.println("col-->" + colOrden);
+
+        if (col != colOrden) {
+            colOrden = col;
+            bandOrden = 1;//Ascendente
+        } else {
+            if (bandOrden > 0) {
+                bandOrden = -1;//Descendente
+            } else if (bandOrden < 0) {
+                bandOrden = 0;// Por Defecto
+            } else {
+                bandOrden = 1;//Ascendente
+            }
+        }
+        String dat = "";
+        String orden = NameColumnasOrden.get(col);
+        String[] cols = orden.split("<::>");
+
+        for (int i = 0; i < cols.length; i++) {
+            if (bandOrden == 0) {
+                dat = "a.fecha_venta ASC";
+            } else {
+                dat += (dat.equals("") ? "" : ", ") + TipoDato(col , cols[i]) + " " + (bandOrden == 1 ? "ASC" : "DESC");
+            }
+        }
+
+        Orden = dat;
+        cargarHistoricoMuertes();
     }
 
     private String TipoDato(int ind, String Dato) {
         String ret = "";
-        if(ind == 0 || ind == 1){
-            ret = "CONVERT("+Dato+",INT)";
-        }else{
+        if (ind == 1) {
+            ret = "CONVERT(" + Dato + ",INT)";
+        } else {
             ret = Dato;
         }
         return ret;
