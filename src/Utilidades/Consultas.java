@@ -330,7 +330,7 @@ public class Consultas {
         consultas.put("ROBTENER_ID_MADRE", "SELECT a.`id` ID, IFNULL(a.es_madre,'FALSE') ES_MADRE FROM ranimales a \n"
                 + "WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
-        consultas.put("ROBTENER_CANTIDAD_PARTOS", "SELECT IFNULL(MAX(numero_parto),0) PARTOS FROM ranimales\n"
+        consultas.put("ROBTENER_CANTIDAD_PARTOS", "SELECT IFNULL(MAX(cantidad_parto),0) PARTOS FROM ranimales\n"
                 + "WHERE numero_mama='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
