@@ -331,7 +331,7 @@ public class Consultas {
                 + "WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("ROBTENER_CANTIDAD_PARTOS", "SELECT IFNULL(MAX(cantidad_parto),0) PARTOS FROM ranimales\n"
-                + "WHERE numero_mama='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
+                + "WHERE numero='NUMERO_MAMA' AND id_tipo_animal='ID_TIPO_ANIMAL'");
 
         consultas.put("OBTENER_NRO_PARTOS", "SELECT id,numero_partos \n"
                 + "FROM ranimales \n"

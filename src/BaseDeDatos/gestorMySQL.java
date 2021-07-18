@@ -581,4 +581,9 @@ public class gestorMySQL implements IBaseDeDatos {
 
     }
 
+    public String getBD() {
+        return BD;
+    }
+    
+
 }

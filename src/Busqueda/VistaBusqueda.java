@@ -58,7 +58,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     Map<String, Map<String, String>> PropiedadesColumnas = new HashMap<>();
     ModeloGestorBusqueda objeto;
     private Dimension dimensionAnterior;
-    private int ALTO_BARRA_INICIO=40;
+    private int ALTO_BARRA_INICIO = 40;
 
     /**
      * Creates new form ventanaBusqueda
@@ -66,6 +66,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     public VistaBusqueda() {
         initComponents();
         Utilidades.EstablecerIcono(this);
+        ban = 0;
     }
 
     public VistaBusqueda(ModeloGestorBusqueda objeto) {
@@ -73,7 +74,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         Utilidades.EstablecerIcono(this);
         gsql = new gestorMySQL();
         this.objeto = objeto;
-
+        ban = 0;
         modelo = new DefaultTableModel();
         this.setLocationRelativeTo(null);
         LlenarListaDatos();
@@ -83,7 +84,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private void LlenarListaDatos() {
 
         SQL = consultas.get(objeto.getKeyconsulta());
-        if(!objeto.getParam().equals("")){
+        if (!objeto.getParam().equals("")) {
             AplicarParametrosConsulta();
         }
         System.out.println("sql--->" + SQL);
@@ -404,7 +405,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
@@ -415,10 +416,11 @@ public class VistaBusqueda extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jLabel6, gridBagConstraints);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -429,6 +431,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jLabel5, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -440,15 +443,15 @@ public class VistaBusqueda extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 15);
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
         jPanel2.add(jLabel4, gridBagConstraints);
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
         jLabel8.setToolTipText("Maximizar");
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel8MousePressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -456,6 +459,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(jLabel8, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -588,7 +592,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
             }
 
         } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -702,48 +706,15 @@ public class VistaBusqueda extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        if (evt.getClickCount() == 1) {
-            JLabel lblIcono = (JLabel) (evt.getComponent());
-            String icono = "";
-            if (band==0) {
-                band=1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            } else {
-                band=0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            }
-            lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
-        }
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         if (evt.getClickCount() == 2) {
-            String icono = "";
-            if (band==0) {
-                band=1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight()-ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            } else {
-                band=0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            }
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            jLabel8.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
+            minimizarMaximizar();
         }
     }//GEN-LAST:event_jPanel2MouseClicked
+
+    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
+        minimizarMaximizar();
+    }//GEN-LAST:event_jLabel8MousePressed
 
     /**
      * @param args the command line arguments
@@ -963,12 +934,31 @@ public class VistaBusqueda extends javax.swing.JFrame {
     private void AplicarParametrosConsulta() {
         String param = objeto.getParam();
         String[] parm = param.split("<::>");
-        
-        for(String pa : parm){
+
+        for (String pa : parm) {
             String[] p = pa.split(":");
             SQL = SQL.replace(p[0], p[1]);
         }
-        
+
+    }
+
+    private void minimizarMaximizar() {
+        String icono = "";
+        if (band == 0) {
+            band = 1;
+            dimensionAnterior = this.getSize();
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+            setLocationRelativeTo(null);
+            icono = "maximizar";
+        } else {
+            band = 0;
+            setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+            setLocationRelativeTo(null);
+            icono = "restaurar";
+        }
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+        jLabel8.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
     }
 
 }

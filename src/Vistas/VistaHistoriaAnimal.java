@@ -2413,10 +2413,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
             /**
              * listaHistorico es un Map<String[], JLabel>
-             * el array de string contiene lo siguiente: key[0]:
-             * identificador<br>
-             * key[1]: nombre de la tabla de la base de datos<br>key[2]: nombre
-             * del campo de la tabla anterior
+             * el array de string contiene lo siguiente: <br>
+             * key[0]: identificador<br>
+             * key[1]: nombre de la tabla de la base de datos<br>
+             * key[2]: nombre del campo de la tabla anterior
              */
             for (Map.Entry<String[], JLabel> entry : listaHistorico.entrySet()) {
                 String[] key = entry.getKey();
@@ -2785,14 +2785,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Calificación", tabla, "calificacion", ListaDatos.get(0).getId()}, lblCalificacion);
         listaHistorico.put(new String[]{"Notas", tabla, "notas", ListaDatos.get(0).getId()}, lblNotas);
         listaHistorico.put(new String[]{"Capado", tabla, "capado", ListaDatos.get(0).getId()}, lblNovilla);
-        if (ListaDatos.get(0).getNumero().equals(ListaDatos.get(0).getNumero_mama())) {
-            listaHistorico.put(new String[]{
-                "Número del animal",
-                tabla,
-                "numero",
-                ListaDatos.get(0).getId(),
-                ListaDatos.get(0).getId_tipo_animal()
-            }, lblNumero);
+        String numero = ListaDatos.get(0).getNumero().split("-")[0];
+        if (numero.equals(ListaDatos.get(0).getNumero_mama())) {
+            listaHistorico.put(new String[]{"Número del animal", tabla, "numero",  ListaDatos.get(0).getId(), ListaDatos.get(0).getId_tipo_animal()}, lblNumero);
             lblNumero.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else {
             lblNumero.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
