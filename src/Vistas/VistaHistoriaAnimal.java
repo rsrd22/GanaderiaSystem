@@ -96,6 +96,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private int ancho;
     private int alto;
     public int band;
+    public String id_finca = "";
     private String STRING_VACIO = "      ";
     private final String FECHA_POR_DEFECTO = "1900-01-01";
     private List<Map<String, String>> ListaAnimalesMostrar;
@@ -109,6 +110,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
     private final int size = 2;
     private int sizeCrias = 0;
     public String[] datoModificado = new String[]{};
+    Vista_VerAnimales vistaVAnimales = new Vista_VerAnimales();
 
     /**
      * Creates new form VistaHistoriaAnimal
@@ -126,8 +128,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico = new HashMap<String[], JLabel>();
         this.ListaAnimalesMostrar = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).ListaAnimalesMostrar;
         this.refTablaAnimales = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).tbl_Animales;
+        this.vistaVAnimales = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre());
         filaLista = Integer.parseInt("" + modeloVentanaGeneral.getModeloDatos());
         id_Animal = ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL");
+        this.id_finca = ((Vista_VerAnimales) modeloVentanaGeneral.getPanelPadre()).idFinca;
         modeloAnimal.setId(id_Animal);
         band = 0;
         ListaDatos = new ArrayList<>();
@@ -2485,8 +2489,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             Calendar fechaMuerte = jdFechaMuerte.getCalendar();
             String observacion = txtObservacionMuerte.getText().trim();
             String fecha_Muerte = sdf.format(fechaMuerte.getTime());
+            modeloAnimal.setId_tipo_animal(ListaAnimalesMostrar.get(filaLista).get("IDTIPO_ANIMAL"));
             modeloAnimal.setFecha_muerte(fecha_Muerte);
             modeloAnimal.setDescripcion_muerte(observacion);
+            modeloAnimal.setVenta(""+id_finca);
 
             int resp = controlAnimales.ActualizarMuerte(modeloAnimal);
             if (resp == Retorno.EXITO) {
@@ -2496,6 +2502,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 BloquearFormularioMuerte();
                 ValidarVentasyMuertes();
                 refTablaAnimales.setValueAt("Muerto", filaLista, 5);
+                QuitarMuerteVenta();
+                
+                
+            }else if(resp == Retorno.MENSAJE){
+                JOptionPane.showMessageDialog(null, "No se encontro el grupo MUERTE, para realizar la operación.");
             }
         } else {
 
@@ -2542,10 +2553,12 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         }
 
 //</editor-fold>
+        modeloAnimal.setId_tipo_animal(ListaAnimalesMostrar.get(filaLista).get("IDTIPO_ANIMAL"));
         modeloAnimal.setFecha_venta(fecha_Venta);
         modeloAnimal.setPrecio_venta(precio_Venta);
         modeloAnimal.setTipo_venta(tipo_Venta);
         modeloAnimal.setPeso_canal(pesoCanal);
+        modeloAnimal.setMuerte(""+id_finca);
         
 
         int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la venta?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
@@ -2560,7 +2573,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 BloquearFormularioVenta();
                 ValidarVentasyMuertes();
                 refTablaAnimales.setValueAt("Vendido", filaLista, 5);
-                
+                QuitarMuerteVenta();
+            }else if(resp == Retorno.MENSAJE){
+                JOptionPane.showMessageDialog(null, "No se encontro el grupo VENTA, para realizar la operación.");
             }
         }
     }//GEN-LAST:event_btnGuardarVentaActionPerformed
@@ -3227,6 +3242,22 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         btnAnterior.setEnabled(filaLista > 0);
         id_Animal = btnSiguiente.isEnabled() ? ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL") : id_Animal;
         filaLista -= btnSiguiente.isEnabled() ? 0 : 1;
+        GetDatosAnimal();
+        refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
+    }
+    
+    public void QuitarMuerteVenta(){
+        vistaVAnimales.EventoComboFincas();
+        this.ListaAnimalesMostrar = vistaVAnimales.ListaAnimalesMostrar;
+        
+        btnSiguiente.setEnabled(filaLista < ListaAnimalesMostrar.size());
+        btnAnterior.setEnabled(filaLista > 0);
+        
+        
+        filaLista += btnAnterior.isEnabled() ? 0 : 1;
+        filaLista -= btnSiguiente.isEnabled() ? 0 : 1;
+        
+        id_Animal = btnSiguiente.isEnabled() ? ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL") : id_Animal;
         GetDatosAnimal();
         refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
     }

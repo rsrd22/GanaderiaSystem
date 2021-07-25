@@ -850,11 +850,35 @@ public class ControlRAnimales implements IControl {
     public int ActualizarVenta(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloRAnimales animal = (ModeloRAnimales) _animal;
+        
+        if(!mySQL.ExistenDatos("SELECT * FROM grupos WHERE `id_tipo_animal` = '"+animal.getId_tipo_animal()+"' AND UPPER(descripcion) LIKE '%VENTA%'")){
+            return Retorno.MENSAJE;
+        }
+        String id_GVenta = mySQL.SELECT("SELECT id FROM grupos WHERE `id_tipo_animal` = '"+animal.getId_tipo_animal()+"' AND UPPER(descripcion) LIKE '%VENTA%'").get(0)[0];
+
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
+                + ")\n"
+                + "VALUES (\n"
+                + "0,\n"
+                + "" + animal.getId() + ",\n"
+                + "" + animal.getMuerte() + ",\n" //ES ID FINCA
+                + "" + id_GVenta + ",\n"
+                + "NOW(),\n"
+                + "'Muerte a animal',\n"
+                + "'Activo',\n"
+                + "NOW(),\n"
+                + "" + animal.getId_usuario() + ")"
+        //</editor-fold>
+        );
 
         consultas.add(
                 //<editor-fold defaultstate="collapsed" desc="UPDATE">
                 "UPDATE ranimales SET\n"
                 + "venta = '1',\n"
+                + "grupo = '" + id_GVenta + "', \n"
                 + "peso = " + animal.getPeso() + ",\n"
                 + "precio_venta = " + animal.getPrecio_venta() + ",\n"
                 + "peso_canal = " + animal.getPeso_canal() + ",\n"
@@ -882,15 +906,39 @@ public class ControlRAnimales implements IControl {
     public int ActualizarMuerte(Object _animal) {
         ArrayList<String> consultas = new ArrayList<>();
         ModeloRAnimales animal = (ModeloRAnimales) _animal;
+        
+        if(!mySQL.ExistenDatos("SELECT * FROM grupos WHERE `id_tipo_animal` = '"+animal.getId_tipo_animal()+"' AND UPPER(descripcion) LIKE '%MUERTE%'")){
+            return Retorno.MENSAJE;
+        }
+        String id_GMuerte = mySQL.SELECT("SELECT id FROM grupos WHERE `id_tipo_animal` = '"+animal.getId_tipo_animal()+"' AND UPPER(descripcion) LIKE '%MUERTE%'").get(0)[0];
 
         consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="UPDATE">
-                "UPDATE ranimales SET\n"
-                + "muerte = '1',\n"
-                + "fecha_muerte = '" + animal.getFecha_muerte() + "',\n"
-                + "descripcion_muerte = '" + animal.getDescripcion_muerte() + "'\n"
-                + "WHERE id = " + animal.getId()
+                //<editor-fold defaultstate="collapsed" desc="INSERT">
+                "INSERT INTO traslado_animalxgrupo(id,id_animal,id_finca,\n"
+                + "id_grupo,fecha_traslado,motivo,estado,fecha,id_usuario\n"
+                + ")\n"
+                + "VALUES (\n"
+                + "0,\n"
+                + "" + animal.getId() + ",\n"
+                + "" + animal.getVenta() + ",\n" //ES ID FINCA
+                + "" + id_GMuerte + ",\n"
+                + "NOW(),\n"
+                + "'Muerte a animal',\n"
+                + "'Activo',\n"
+                + "NOW(),\n"
+                + "" + animal.getId_usuario() + ")"
         //</editor-fold>
+        );
+        
+        consultas.add(
+                //<editor-fold defaultstate="collapsed" desc="UPDATE">
+                        "UPDATE ranimales SET\n"
+                        + "muerte = '1',\n"
+                        + "grupo = '" + id_GMuerte + "', \n"
+                        + "fecha_muerte = '" + animal.getFecha_muerte() + "',\n"
+                        + "descripcion_muerte = '" + animal.getDescripcion_muerte() + "'\n"
+                        + "WHERE id = " + animal.getId()
+                //</editor-fold>
         );
 
         try {

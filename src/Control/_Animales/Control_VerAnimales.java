@@ -57,6 +57,7 @@ public class Control_VerAnimales {
                     + "LEFT JOIN bloques blo ON blo.id = lot.id_bloque\n"
                     + "LEFT JOIN fincas finc ON finc.id = traslado.id_finca\n"
                     + "WHERE traslado.id_finca = '" + IDFINCA + "' AND tpoani.id = '" + IDTIPOFINCA + "' AND traslado.estado = 'Activo' \n"
+                    + "AND animal.venta = '0' and animal.muerte = '0' \n"
                     + "ORDER BY "+Orden;
             System.out.println("consulta:\n"+consulta);
             List<Map<String, String>> traslados = new ArrayList<Map<String, String>>();

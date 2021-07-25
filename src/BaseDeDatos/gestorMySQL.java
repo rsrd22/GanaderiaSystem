@@ -107,7 +107,7 @@ public class gestorMySQL implements IBaseDeDatos {
             ResultSet contenedorQUERY = null;
             ArrayList<String[]> datosQUERY = new ArrayList<>();
             boolean existenDatos = false;
-            //System.out.println("Existen Datos-->" + sentenciaSQL);
+            System.out.println("Existen Datos-->" + sentenciaSQL);
             if (!Conectar()) {
                 JOptionPane.showMessageDialog(null, mensaje);
             } else {
