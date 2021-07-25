@@ -108,7 +108,7 @@ public class ControlCargaMasivaAnimales {
                     "INSERT INTO pesaje (id,id_animal,fecha_pesado,peso,peso_anterior,notas,hierro,descornado,implante,destete,fecha,id_usuario) VALUES(\n"
                     + "0,\n"
                     + "(SELECT id FROM ranimales WHERE numero = '"+datos.get("NUM_ANIMAL")+"' and id_tipo_animal='"+ datos.get("IDTIPOANIMAL")+"'),\n"
-                    + "     NOW(),\n"
+                    + "" + datos.get("FEC_NACIMIENTO") + ",\n"
                     + "" + datos.get("PESO_NACIMIENTO") + ",\n"
                     + "0,\n"
                     + "'REGISTRO AUTOMATICO (VISTA ANIMAL), PESO DE NACIMIENTO',\n"
