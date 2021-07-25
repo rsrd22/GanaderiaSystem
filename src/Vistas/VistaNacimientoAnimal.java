@@ -535,7 +535,10 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_chkMuerteStateChanged
 
     private void btnGuardar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar3ActionPerformed
-        Guardar();
+        try {
+            Guardar();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnGuardar3ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -840,6 +843,8 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
                 Parametros.actualizarHistoricoAnimal = true;
                 JOptionPane.showMessageDialog(this, mensaje);
                 vha.getDatosHembra();
+                vha.GetDatosPalpacion();
+                vha.GetDatosParto();
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:

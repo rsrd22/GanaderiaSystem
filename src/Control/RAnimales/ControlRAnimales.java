@@ -254,7 +254,7 @@ public class ControlRAnimales implements IControl {
         }
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelAnimal">
-        consultas.add("insert into `ganadero`.`ranimales`\n"
+        consultas.add("insert into `ranimales`\n"
                 + "            (`id`,\n"
                 + "             `id_tipo_animal`,\n"
                 + "             `hierro`,\n"
@@ -612,10 +612,10 @@ public class ControlRAnimales implements IControl {
         String idAnimal = "(SELECT (AUTO_INCREMENT-1)\n"
                 + "FROM information_schema.tables\n"
                 + "WHERE table_name = 'ranimales'\n"
-                + "AND table_schema = 'ganadero')";
+                + "AND table_schema = '"+mySQL.getBD()+"')";
 
         //<editor-fold defaultstate="collapsed" desc="guardarDatosDelAnimal">
-        consultas.add("insert into `ganadero`.`ranimales`\n"
+        consultas.add("insert into `"+mySQL.getBD()+"`.`ranimales`\n"
                 + "            (`id`,\n"
                 + "             `id_tipo_animal`,\n"
                 + "             `hierro`,\n"

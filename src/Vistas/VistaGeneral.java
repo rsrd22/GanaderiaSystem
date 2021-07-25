@@ -272,9 +272,10 @@ public class VistaGeneral extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
         jLabel1.setToolTipText("Maximizar");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -384,52 +385,15 @@ public class VistaGeneral extends javax.swing.JFrame {
         EstablecerPnlContenedor();
     }//GEN-LAST:event_pnlContenedorComponentResized
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        if (evt.getClickCount() == 1) {
-            JLabel lblIcono = (JLabel) (evt.getComponent());
-            String icono = "";
-            if (band == 0) {
-                band = 1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                dimensionPanel = new Dimension((int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                dimensionPanel = dimensionAnterior;
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            }
-            lblIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            lblIcono.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
-        }
-    }//GEN-LAST:event_jLabel1MouseClicked
-
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         if (evt.getClickCount() == 2) {
-            String icono = "";
-            if (band == 0) {
-                band = 1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                dimensionPanel = new Dimension((int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                dimensionPanel = dimensionAnterior;
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            }
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            jLabel1.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
+            minimizarMaximizar();
         }
     }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        minimizarMaximizar();
+    }//GEN-LAST:event_jLabel1MousePressed
 
     /**
      * @param args the command line arguments
@@ -648,6 +612,27 @@ public class VistaGeneral extends javax.swing.JFrame {
             pnlContenedor.revalidate();
             pnlContenedor.repaint();
         }
+    }
+
+    private void minimizarMaximizar() {
+        String icono = "";
+        if (band == 0) {
+            band = 1;
+            dimensionAnterior = this.getSize();
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+            dimensionPanel = new Dimension((int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+            setLocationRelativeTo(null);
+            icono = "restaurar";
+        } else {
+            band = 0;
+            setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+            dimensionPanel = dimensionAnterior;
+            setLocationRelativeTo(null);
+            icono = "maximizar";
+        }
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+        jLabel1.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
     }
 
 }

@@ -68,14 +68,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Utilidades.EstablecerIcono(this);
         scroll = new JScrollPane();
         this.setLocationRelativeTo(null);
-        Consultas.Agregar();  
+        Consultas.Agregar();
         ie = new ImportExport(this);
         max = 0;
+        band = 0;
         OcultarContenidoMenu();
         dpanel = new Dimension(pnlContenedor.getSize());
         anchoMenuLateral = pnlMenuVertical.getWidth();
-        //OcultarMenu();
-
     }
 
     /**
@@ -311,8 +310,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMaximizar.setToolTipText("Maximizar");
         btnMaximizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMaximizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMaximizarMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMaximizarMousePressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -431,6 +430,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setMinimumSize(new java.awt.Dimension(220, 612));
+        jScrollPane1.setName(""); // NOI18N
         jScrollPane1.setOpaque(false);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(220, 612));
 
@@ -1150,7 +1150,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarPropietarios1MousePressed
 
     private void btnPropietariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPropietarios1MouseEntered
-        
+
     }//GEN-LAST:event_btnPropietarios1MouseEntered
 
     private void btnPropietariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPropietarios1MousePressed
@@ -1454,30 +1454,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
             );
             bandCE = 0;
         }
+        
 //        jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_btnMenuVerticalMouseClicked
-
-    private void btnMaximizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMouseClicked
-        if (evt.getClickCount() == 1) {
-            String icono = "";
-            if (band == 0) {
-                band = 1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            }
-            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
-        }
-    }//GEN-LAST:event_btnMaximizarMouseClicked
 
     private void pnlContenedorComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlContenedorComponentResized
         EstablecerPnlContenedor();
@@ -1510,22 +1490,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void pnlTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTituloMouseClicked
         if (evt.getClickCount() == 2) {
-            String icono = "";
-            if (band == 0) {
-                band = 1;
-                dimensionAnterior = this.getSize();
-                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
-                setLocationRelativeTo(null);
-                icono = "restaurar";
-            } else {
-                band = 0;
-                setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
-                setLocationRelativeTo(null);
-                icono = "maximizar";
-            }
-            btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
-            btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
+            minimizarMaximizar();
         }
     }//GEN-LAST:event_pnlTituloMouseClicked
 
@@ -1594,8 +1559,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarUsuarioMousePressed
 
     private void btnMostrarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarUsuariosMouseClicked
-        System.out.println("klasdnffkalnsdlnasdlfnka.----"+pnlContenedorUsuarios.isVisible());
-        
+        System.out.println("klasdnffkalnsdlnasdlfnka.----" + pnlContenedorUsuarios.isVisible());
+
         if (!pnlContenedorUsuarios.isVisible()) {
             OcultarContenidoMenu();
         }
@@ -1624,13 +1589,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnMostrarPropietariosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseExited
         this.setBackground(new Color(59, 123, 50));
         System.out.println("btnMostrarPropietariosMouseExited");
-        
+
     }//GEN-LAST:event_btnMostrarPropietariosMouseExited
 
     private void btnMostrarPropietariosMouseEntered2(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMostrarPropietariosMouseEntered2
-        this.setBackground(new Color(84, 140, 116)); 
+        this.setBackground(new Color(84, 140, 116));
         System.out.println("btnPropietariosMouseEntered");
     }//GEN-LAST:event_btnMostrarPropietariosMouseEntered2
+
+    private void btnMaximizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMousePressed
+        minimizarMaximizar();
+    }//GEN-LAST:event_btnMaximizarMousePressed
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
@@ -1744,14 +1713,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
     public javax.swing.JProgressBar progreso;
     // End of variables declaration//GEN-END:variables
 
-    public void IniciarComponentes(){
-        if(datosUsuario.datos.size() > 0){
+    public void IniciarComponentes() {
+        if (datosUsuario.datos.size() > 0) {
             EstablecerVistaInicial();
             CargarMenuVertical();
-            
+
         }
     }
-    
+
     private void OcultarContenidoMenu() {
         pnlContenedorPropietarios.setVisible(false);
         pnlContenedorFincas.setVisible(false);
@@ -1761,7 +1730,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         pnlContenedorTraslados.setVisible(false);
         pnlContenedorUsuarios.setVisible(false);
     }
-    private void OcultarModulos(){
+
+    private void OcultarModulos() {
         btnMostrarActividades.setVisible(false);
         btnMostrarAnimales.setVisible(false);
         btnMostrarFincas.setVisible(false);
@@ -1769,7 +1739,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarPropietarios.setVisible(false);
         btnMostrarTraslados.setVisible(false);
         btnMostrarUsuarios.setVisible(false);
-        
+
         btnPropietarios.setVisible(false);
         btnHierros.setVisible(false);
         btnFincas.setVisible(false);
@@ -1815,202 +1785,202 @@ public class VistaPrincipal extends javax.swing.JFrame {
         VistaInicio vista = new VistaInicio(this);
         MostrarPanel(vista);
     }
-    
-    public void CargarMenuVertical(){
+
+    public void CargarMenuVertical() {
         OcultarContenidoMenu();
         OcultarModulos();
-        
+
         ControlPermisos contPerm = new ControlPermisos();
         ArrayList<ModeloPermisoxModulos> lista_modulos = contPerm.getModulosxUsuario(datosUsuario.datos.get(0));
         datosUsuario.ModulosUsuario = lista_modulos;
-        System.out.println("lista_modulos--->"+lista_modulos.size());
+        System.out.println("lista_modulos--->" + lista_modulos.size());
         if (lista_modulos.size() == 0) {
             JOptionPane.showMessageDialog(null, "No se le han asignado permisos a los modulos del sistema. Por favor comuniquese con el administrador del sistema.");
             return;
         }
-        
+
         int pnlProp = 0, pnlFnca = 0, pnlGrp = 0, pnlAnmls = 0, pnlActvs = 0, pnlTrsl = 0, pnlUser = 0;
-        for(ModeloPermisoxModulos mod: lista_modulos){
-            if(mod.getModulo().equals("Propietario") && mod.getV().equals("1")){
+        for (ModeloPermisoxModulos mod : lista_modulos) {
+            if (mod.getModulo().equals("Propietario") && mod.getV().equals("1")) {
                 btnPropietarios.setVisible(true);
                 if (pnlProp == 0) {
                     btnMostrarPropietarios.setVisible(true);
                     pnlContenedorPropietarios.setVisible(false);
                     pnlProp = 1;
                 }
-            }else if(mod.getModulo().equals("Hierros") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Hierros") && mod.getV().equals("1")) {
                 btnHierros.setVisible(true);
                 if (pnlProp == 0) {
                     btnMostrarPropietarios.setVisible(true);
                     pnlContenedorPropietarios.setVisible(false);
                     pnlProp = 1;
                 }
-            }else if(mod.getModulo().equals("Finca") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Finca") && mod.getV().equals("1")) {
                 btnFincas.setVisible(true);
                 if (pnlFnca == 0) {
                     btnMostrarFincas.setVisible(true);
                     pnlContenedorFincas.setVisible(false);
                     pnlFnca = 1;
                 }
-            }else if(mod.getModulo().equals("Bloques") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Bloques") && mod.getV().equals("1")) {
                 btnBloques.setVisible(true);
                 if (pnlFnca == 0) {
                     btnMostrarFincas.setVisible(true);
                     pnlContenedorFincas.setVisible(false);
                     pnlFnca = 1;
                 }
-            }else if(mod.getModulo().equals("Fuente Hidrica") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Fuente Hidrica") && mod.getV().equals("1")) {
                 btnFuenteHidrica.setVisible(true);
                 if (pnlFnca == 0) {
                     btnMostrarFincas.setVisible(true);
                     pnlContenedorFincas.setVisible(false);
                     pnlFnca = 1;
                 }
-            }else if(mod.getModulo().equals("Lotes") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Lotes") && mod.getV().equals("1")) {
                 btnLotes.setVisible(true);
                 if (pnlFnca == 0) {
                     btnMostrarFincas.setVisible(true);
                     pnlContenedorFincas.setVisible(false);
                     pnlFnca = 1;
                 }
-            }else if(mod.getModulo().equals("Pluviometro") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Pluviometro") && mod.getV().equals("1")) {
                 btnPluviometro.setVisible(true);
                 if (pnlFnca == 0) {
                     btnMostrarFincas.setVisible(true);
                     pnlContenedorFincas.setVisible(false);
                     pnlFnca = 1;
                 }
-            }else if(mod.getModulo().equals("Macrogrupos") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Macrogrupos") && mod.getV().equals("1")) {
                 btnMacrogrupos.setVisible(true);
                 if (pnlGrp == 0) {
                     btnMostrarGruposAnimales.setVisible(true);
                     pnlContenedorGruposAnimales.setVisible(false);
                     pnlGrp = 1;
                 }
-            }else if(mod.getModulo().equals("Grupos") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Grupos") && mod.getV().equals("1")) {
                 btnGrupos.setVisible(true);
                 if (pnlGrp == 0) {
                     btnMostrarGruposAnimales.setVisible(true);
                     pnlContenedorGruposAnimales.setVisible(false);
                     pnlGrp = 1;
                 }
-            }else if(mod.getModulo().equals("Tipo Animales") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Tipo Animales") && mod.getV().equals("1")) {
                 btnTipoAnimal.setVisible(true);
                 if (pnlGrp == 0) {
                     btnMostrarGruposAnimales.setVisible(true);
                     pnlContenedorGruposAnimales.setVisible(false);
                     pnlGrp = 1;
                 }
-            }else if(mod.getModulo().equals("Agregar Animal") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Agregar Animal") && mod.getV().equals("1")) {
                 btnAnimales.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);
                     pnlAnmls = 1;
                 }
-            }else if(mod.getModulo().equals("Ver Animales") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Ver Animales") && mod.getV().equals("1")) {
                 btnVerAnimales.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);
                     pnlAnmls = 1;
                 }
-            }else if(mod.getModulo().equals("Hierro por Animal") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Hierro por Animal") && mod.getV().equals("1")) {
                 btnDescendientesAnimal.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);
                     pnlAnmls = 1;
                 }
-            }else if(mod.getModulo().equals("Ventas") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Ventas") && mod.getV().equals("1")) {
                 btnVentasAnimal.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);
                     pnlAnmls = 1;
                 }
-            }else if(mod.getModulo().equals("Muertes") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Muertes") && mod.getV().equals("1")) {
                 btnMuerteAnimal.setVisible(true);
                 if (pnlAnmls == 0) {
                     btnMostrarAnimales.setVisible(true);
                     pnlContenedorAnimales.setVisible(false);
                     pnlAnmls = 1;
                 }
-            }else if(mod.getModulo().equals("Registro") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Registro") && mod.getV().equals("1")) {
                 btnRegistroActividades.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Estado") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Estado") && mod.getV().equals("1")) {
                 btnEstadoActividades.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Cronograma") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Cronograma") && mod.getV().equals("1")) {
                 btnCronograma.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Medicamentos") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Medicamentos") && mod.getV().equals("1")) {
                 btnMedicamentos.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Pesajes") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Pesajes") && mod.getV().equals("1")) {
                 btnPesaje.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Palpacion") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Palpacion") && mod.getV().equals("1")) {
                 btnPalpacion.setVisible(true);
                 if (pnlActvs == 0) {
                     btnMostrarActividades.setVisible(true);
                     pnlContenedorActividades.setVisible(false);
                     pnlActvs = 1;
                 }
-            }else if(mod.getModulo().equals("Traslado Animal") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Traslado Animal") && mod.getV().equals("1")) {
                 btnTrasladoAnimal.setVisible(true);
                 if (pnlTrsl == 0) {
                     btnMostrarTraslados.setVisible(true);
                     pnlContenedorTraslados.setVisible(false);
                     pnlTrsl = 1;
                 }
-            }else if(mod.getModulo().equals("Traslado Grupo") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Traslado Grupo") && mod.getV().equals("1")) {
                 btnTrasladoGrupo.setVisible(true);
                 if (pnlTrsl == 0) {
                     btnMostrarTraslados.setVisible(true);
                     pnlContenedorTraslados.setVisible(false);
                     pnlTrsl = 1;
                 }
-            }else if(mod.getModulo().equals("Rotacion") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Rotacion") && mod.getV().equals("1")) {
                 btnRotacion.setVisible(true);
-            }else if(mod.getModulo().equals("Analisis de Datos") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Analisis de Datos") && mod.getV().equals("1")) {
                 btnInformes.setVisible(true);
-            }else if(mod.getModulo().equals("Perfiles") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Perfiles") && mod.getV().equals("1")) {
                 btnPerfiles.setVisible(true);
                 if (pnlUser == 0) {
                     btnMostrarUsuarios.setVisible(true);
                     pnlContenedorUsuarios.setVisible(false);
                     pnlUser = 1;
                 }
-            }else if(mod.getModulo().equals("Permisos") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Permisos") && mod.getV().equals("1")) {
                 btnPermisos.setVisible(true);
                 if (pnlUser == 0) {
                     btnMostrarUsuarios.setVisible(true);
                     pnlContenedorUsuarios.setVisible(false);
                     pnlUser = 1;
                 }
-            }else if(mod.getModulo().equals("Agregar Usuario") && mod.getV().equals("1")){
+            } else if (mod.getModulo().equals("Agregar Usuario") && mod.getV().equals("1")) {
                 btnAgregarUsuario.setVisible(true);
                 if (pnlUser == 0) {
                     btnMostrarUsuarios.setVisible(true);
@@ -2019,8 +1989,26 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 }
             }
         }
-        
-        
+
     }
-    
+
+    private void minimizarMaximizar() {
+        String icono = "";
+        if (band == 0) {
+            band = 1;
+            dimensionAnterior = this.getSize();
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            setBounds(0, 0, (int) dim.getWidth(), (int) dim.getHeight() - ALTO_BARRA_INICIO);
+            setLocationRelativeTo(null);
+            icono = "restaurar";
+        } else {
+            band = 0;
+            setBounds(0, 0, (int) dimensionAnterior.getWidth(), (int) dimensionAnterior.getHeight());
+            setLocationRelativeTo(null);
+            icono = "maximizar";
+        }
+        btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/" + icono + ".png")));
+        btnMaximizar.setToolTipText(("" + icono.charAt(0)).toUpperCase() + icono.substring(1));
+    }
+
 }

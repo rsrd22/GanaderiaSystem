@@ -68,6 +68,8 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         txtPesoDestete = new javax.swing.JTextField();
         sepPesoDestete = new javax.swing.JSeparator();
         slCalificacion = new javax.swing.JSlider();
+        txtNumeroAnimal = new javax.swing.JTextField();
+        sepNumeroAnimal = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -228,6 +230,39 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         gridBagConstraints.weightx = 0.33333333;
         gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
         add(slCalificacion, gridBagConstraints);
+
+        txtNumeroAnimal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNumeroAnimal.setForeground(new java.awt.Color(59, 123, 50));
+        txtNumeroAnimal.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtNumeroAnimal.setBorder(null);
+        txtNumeroAnimal.setCaretColor(new java.awt.Color(59, 123, 50));
+        txtNumeroAnimal.setSelectionColor(new java.awt.Color(59, 123, 50));
+        txtNumeroAnimal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNumeroAnimalKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(txtNumeroAnimal, gridBagConstraints);
+
+        sepNumeroAnimal.setBackground(new java.awt.Color(59, 123, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 15);
+        add(sepNumeroAnimal, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -306,6 +341,10 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         txtPesoDestete.setText(pesoFormateado);
     }//GEN-LAST:event_txtPesoDesteteKeyReleased
 
+    private void txtNumeroAnimalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroAnimalKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroAnimalKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
@@ -314,9 +353,11 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jdFechaDestete;
     private javax.swing.JLabel lblEtiqueta;
     private javax.swing.JPanel panelBtnGuardar;
+    private javax.swing.JSeparator sepNumeroAnimal;
     private javax.swing.JSeparator sepPesoDestete;
     private javax.swing.JSlider slCalificacion;
     private javax.swing.JTextArea txtNotas;
+    public javax.swing.JTextField txtNumeroAnimal;
     public javax.swing.JTextField txtPesoDestete;
     // End of variables declaration//GEN-END:variables
 
@@ -324,13 +365,16 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         String[] key = map.getKey();
         JLabel value = map.getValue();
 
-        boolean showTextBox = key[0].equalsIgnoreCase("Peso de destete") || key[0].equalsIgnoreCase("Número del animal");
+        boolean showTextBoxDestete = key[0].equalsIgnoreCase("Peso de destete");
+        boolean showTextBoxNumero = key[0].equalsIgnoreCase("Número del animal");
         lblEtiqueta.setText(key[0]);
         cbCombo.setVisible(Utilidades.validarSINO(key[0]));
         txtNotas.setVisible(key[0].equalsIgnoreCase("notas"));
         jScrollPane2.setVisible(key[0].equalsIgnoreCase("notas"));
-        txtPesoDestete.setVisible(showTextBox);
-        sepPesoDestete.setVisible(showTextBox);
+        txtPesoDestete.setVisible(showTextBoxDestete);
+        sepPesoDestete.setVisible(showTextBoxDestete);
+        txtNumeroAnimal.setVisible(showTextBoxNumero);
+        sepNumeroAnimal.setVisible(showTextBoxNumero);
         jdFechaDestete.setVisible(key[0].equalsIgnoreCase("Fecha de destete"));
         slCalificacion.setVisible(key[0].equalsIgnoreCase("Calificación"));
 
@@ -341,7 +385,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {
             txtPesoDestete.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Número del animal")) {
-            txtPesoDestete.setText(value.getText());
+            txtNumeroAnimal.setText(value.getText());
             numeroActualAnimal = value.getText();
         } else if (key[0].equalsIgnoreCase("Calificación")) {
             slCalificacion.setValue(Integer.parseInt(value.getText()));
@@ -398,7 +442,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         if (key[0].equalsIgnoreCase("Número del animal")) {
             consultas.add(
                     "update " + key[1] + " "
-                    + "set " + key[2] + "=" + txtPesoDestete.getText().trim() + " "
+                    + "set " + key[2] + "=" + txtNumeroAnimal.getText().trim() + " "
                     + "where id=" + key[3]
             );
         }
