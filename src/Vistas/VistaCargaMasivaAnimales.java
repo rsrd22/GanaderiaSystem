@@ -54,7 +54,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         cal = Calendar.getInstance();
         mostrarFecha();
-        
+
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTipoAnimales);
     }
@@ -353,7 +353,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
-        
+
         if (cbFinca.getItemCount() > 0) {
             if (cbFinca.getSelectedIndex() >= 0) {
                 idFinca = listaFincas.get(cbFinca.getSelectedIndex()).get("ID");
@@ -364,7 +364,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
 
     private void cbTipoAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAnimalesActionPerformed
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTipoAnimales);
-        
+
         if (cbTipoAnimales.getItemCount() > 0) {
             if (cbTipoAnimales.getSelectedIndex() >= 0) {
                 idTipoAnimal = listaTipoAnimales.get(cbTipoAnimales.getSelectedIndex()).get("ID");
@@ -486,7 +486,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                 thProceso.terminar();
                 return;
             }
-            
+
             int valor = 1;
             progreso.setMaximum(listaInfoLeida.size());
             String inGrupos = "", inHierros = "";
@@ -563,7 +563,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         }
                         if (infoGrupo.isEmpty()) {
                             motivo = "No se entontro el Grupo " + Utilidades.decodificarElemento(info.get("GRUPO")) + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
-                        } 
+                        }
                         if (infoHierro.isEmpty()) {
                             motivo = "No se entontro el Hierro " + Utilidades.decodificarElemento(info.get("HIERRO")) + " registrado en el sistema. por favor verifique e intentelo nuevamente.";
                         }
@@ -616,6 +616,12 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                         String[] dat = info.get("FEC_NACIMIENTO").split("/");
                         info.put("FEC_NACIMIENTO", dat[2] + "-" + dat[1] + "-" + dat[0]);
                     }
+                    if (!info.get("FEC_PESAJE").equals("_")) {
+                        String[] dat = info.get("FEC_PESAJE").split("/");
+                        info.put("FEC_PESAJE", dat[2] + "-" + dat[1] + "-" + dat[0]);
+                    } else {
+                        info.put("FEC_PESAJE", "NOW()");
+                    }
                     if (!info.get("FEC_DESTETE").equals("_")) {
                         String[] dat = info.get("FEC_DESTETE").split("/");
                         info.put("FEC_DESTETE", dat[2] + "-" + dat[1] + "-" + dat[0]);
@@ -638,16 +644,16 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
                     if (info.get("SEXO").equals("macho")) {
                         info.put("NUM_PARTOS", "NULL");
                     }
-                    if(info.get("SEXO").equals("macho")){
+                    if (info.get("SEXO").equals("macho")) {
                         info.put("ES_MADRE", "NULL");
-                    }else{
-                        if(Integer.parseInt(info.get("NUM_PARTOS"))>0){
+                    } else {
+                        if (Integer.parseInt(info.get("NUM_PARTOS")) > 0) {
                             info.put("ES_MADRE", "Si");
-                        }else{
+                        } else {
                             info.put("ES_MADRE", "No");
                         }
                     }
-                    info.put("ID_USUARIO", ""+datos.get(0).get("ID_USUARIO"));
+                    info.put("ID_USUARIO", "" + datos.get(0).get("ID_USUARIO"));
                     //</editor-fold>
                     List<Map<String, String>> InfoAnimal = controlgen.GetComboBox("SELECT id AS ID FROM ranimales  WHERE numero = '" + info.get("NUM_ANIMAL") + "' AND id_tipo_animal = '" + idTipoAnimal + "'");
                     int resp = -10;
