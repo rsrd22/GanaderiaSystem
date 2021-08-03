@@ -241,16 +241,20 @@ public class ControlArchivo {
                                 conten = xssfCell.getStringCellValue();
                                 conten = conten.trim();
 
-                                System.out.println("keys.get(" + col + ")---" + keys.get(col));
 
                                 if (conten.isEmpty() || conten.equals("null")) {
                                     conten = "_";
                                 }
-                                System.out.println("conten---" + conten);
                                 obj.put(keys.get(col), "" + Utilidades.CodificarElemento(conten));
                             }
+                            System.out.println("****************************************************************");
+                            System.out.println("keys.get(" + col + ")---" + keys.get(col));
+                            System.out.println("conten---" + conten);
                             truncar += (col < 5 && conten.equals("_")) ? 1 : 0;
+                            System.out.println("truncar->"+truncar);
                         }
+                        
+                        
                         col++;
                     }
                     if (truncar == 5) {
@@ -268,6 +272,8 @@ public class ControlArchivo {
             }
 
             boolean encontrado = false;
+            System.out.println("keys.size()--->"+keys.size());
+            System.out.println("keysConf.size()--->"+keysConf.length);
             if (keysConf.length > 0 && keys.size() > 0) {
                 for (int i = 0; i < keysConf.length; i++) {
                     for (String key : keys) {

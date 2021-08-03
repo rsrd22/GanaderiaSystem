@@ -1115,6 +1115,7 @@ public class VistaCargaMasivaAnimales extends javax.swing.JPanel {
             }
 
             for (Map<String, String> map : lista) {
+                System.out.println("key-->"+Key);
                 if (map.get(Key).equals("_")) {
                     continue;
                 }
