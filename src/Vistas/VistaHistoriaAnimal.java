@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -2492,7 +2493,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             modeloAnimal.setId_tipo_animal(ListaAnimalesMostrar.get(filaLista).get("IDTIPO_ANIMAL"));
             modeloAnimal.setFecha_muerte(fecha_Muerte);
             modeloAnimal.setDescripcion_muerte(observacion);
-            modeloAnimal.setVenta(""+id_finca);
+            modeloAnimal.setVenta("" + id_finca);
 
             int resp = controlAnimales.ActualizarMuerte(modeloAnimal);
             if (resp == Retorno.EXITO) {
@@ -2503,9 +2504,8 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 ValidarVentasyMuertes();
                 refTablaAnimales.setValueAt("Muerto", filaLista, 5);
                 QuitarMuerteVenta();
-                
-                
-            }else if(resp == Retorno.MENSAJE){
+
+            } else if (resp == Retorno.MENSAJE) {
                 JOptionPane.showMessageDialog(null, "No se encontro el grupo MUERTE, para realizar la operación.");
             }
         } else {
@@ -2558,8 +2558,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         modeloAnimal.setPrecio_venta(precio_Venta);
         modeloAnimal.setTipo_venta(tipo_Venta);
         modeloAnimal.setPeso_canal(pesoCanal);
-        modeloAnimal.setMuerte(""+id_finca);
-        
+        modeloAnimal.setMuerte("" + id_finca);
 
         int ret = JOptionPane.showConfirmDialog(this, "¿Está seguro de guardar la venta?", "Guardar Muerte", JOptionPane.YES_NO_OPTION);
         if (ret == JOptionPane.YES_OPTION) {
@@ -2574,7 +2573,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
                 ValidarVentasyMuertes();
                 refTablaAnimales.setValueAt("Vendido", filaLista, 5);
                 QuitarMuerteVenta();
-            }else if(resp == Retorno.MENSAJE){
+            } else if (resp == Retorno.MENSAJE) {
                 JOptionPane.showMessageDialog(null, "No se encontro el grupo VENTA, para realizar la operación.");
             }
         }
@@ -2783,7 +2782,9 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         lbltitNovilla.setText(ListaDatos.get(0).getGenero().equals("hembra") ? "Novilla" : "Capado");
         lblNumeroCria.setVisible(ListaDatos.get(0).getGenero().equals("hembra"));
 
-        lblNotas.setText(ListaDatos.get(0).getNotas().isEmpty() ? STRING_VACIO : Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()));
+        lblNotas.setText("<html><p style=\"text-align: justify;\">"
+                + (ListaDatos.get(0).getNotas().isEmpty() ? STRING_VACIO : Utilidades.decodificarElemento(ListaDatos.get(0).getNotas()))
+                + "</p></html>");
 
         /**
          * listaHistorico es un Map<String[], JLabel>
@@ -2802,7 +2803,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         listaHistorico.put(new String[]{"Capado", tabla, "capado", ListaDatos.get(0).getId()}, lblNovilla);
         String numero = ListaDatos.get(0).getNumero().split("-")[0];
         if (numero.equals(ListaDatos.get(0).getNumero_mama())) {
-            listaHistorico.put(new String[]{"Número del animal", tabla, "numero",  ListaDatos.get(0).getId(), ListaDatos.get(0).getId_tipo_animal()}, lblNumero);
+            listaHistorico.put(new String[]{"Número del animal", tabla, "numero", ListaDatos.get(0).getId(), ListaDatos.get(0).getId_tipo_animal()}, lblNumero);
             lblNumero.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else {
             lblNumero.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -3241,18 +3242,17 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         GetDatosAnimal();
         refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
     }
-    
-    public void QuitarMuerteVenta(){
+
+    public void QuitarMuerteVenta() {
         vistaVAnimales.EventoComboFincas();
         this.ListaAnimalesMostrar = vistaVAnimales.ListaAnimalesMostrar;
-        
+
         btnSiguiente.setEnabled(filaLista < ListaAnimalesMostrar.size());
         btnAnterior.setEnabled(filaLista > 0);
-        
-        
+
         filaLista += btnAnterior.isEnabled() ? 0 : 1;
         filaLista -= btnSiguiente.isEnabled() ? 0 : 1;
-        
+
         id_Animal = btnSiguiente.isEnabled() ? ListaAnimalesMostrar.get(filaLista).get("ID_ANIMAL") : id_Animal;
         GetDatosAnimal();
         refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
@@ -3528,19 +3528,34 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             pnlCriaAux.add(lblNumeroMamaCriaAux, gridBagConstraints);
 //</editor-fold>
             //<editor-fold defaultstate="collapsed" desc="lblNotasCria">
-            lblNotasCriaAux.setText(datos.get("NOTAS"));
+            lblNotasCriaAux.setText(
+                    "<html><p style=\"text-align: justify;\">"
+                    .concat(datos.get("NOTAS"))
+                    .concat("</p></html>")
+            );
             lblNotasCriaAux.setBackground(new java.awt.Color(255, 255, 255));
             lblNotasCriaAux.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
             lblNotasCriaAux.setForeground(new java.awt.Color(59, 123, 50));
             lblNotasCriaAux.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-            lblNotasCriaAux.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Notas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(59, 123, 50))); // NOI18N
-            lblNotasCriaAux.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            lblNotasCriaAux.setBorder(
+                    BorderFactory.createTitledBorder(
+                            null,
+                            "Notas",
+                            TitledBorder.DEFAULT_JUSTIFICATION, 
+                            TitledBorder.DEFAULT_POSITION,
+                            new Font("Tahoma", 1, 12),
+                            new Color(59, 123, 50)
+                    )
+            ); // NOI18N
+            lblNotasCriaAux.setCursor(new java.awt.Cursor(Cursor.DEFAULT_CURSOR));
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 1;
             gridBagConstraints.gridy = 2;
             gridBagConstraints.gridwidth = 2;
             gridBagConstraints.gridheight = 2;
             gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.weightx = 0.666666666666;
             gridBagConstraints.insets = new java.awt.Insets(10, 15, 10, 15);
             pnlCriaAux.add(lblNotasCriaAux, gridBagConstraints);
 

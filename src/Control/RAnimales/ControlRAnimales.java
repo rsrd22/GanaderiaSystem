@@ -339,10 +339,10 @@ public class ControlRAnimales implements IControl {
                     + "VALUES (\n"
                     + "0,\n"
                     + "" + animal.getId() + ",\n"
-                    + "" + traslado.getIdFinca() + ",\n" 
+                    + "" + traslado.getIdFinca() + ",\n"
                     + "" + id_GMuerte + ",\n"
                     + "NOW(),\n"
-                    + "'"+(animal.getMuerte().equals("1")?"Muerte a":"Venta del")+" animal',\n"
+                    + "'" + (animal.getMuerte().equals("1") ? "Muerte a" : "Venta del") + " animal',\n"
                     + "'Activo',\n"
                     + "NOW(),\n"
                     + "" + animal.getId_usuario() + ")"
@@ -460,21 +460,17 @@ public class ControlRAnimales implements IControl {
         ArrayList<String> consultas = new ArrayList<>();
         int id = Integer.parseInt(o.toString());
 
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="SE ELIMINA EL ANIMAL">
-                "DELETE FROM ranimales WHERE id = " + id
-        //</editor-fold>
-        );
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS EN EL TRASLADO">
-                "DELETE FROM traslado_animalxgrupo WHERE id_animal=" + id
-        //</editor-fold>
-        );
-        consultas.add(
-                //<editor-fold defaultstate="collapsed" desc="SE ELIMINAN LOS REGISTROS DEL HISTORICO DE PESOS">
-                "DELETE FROM pesaje WHERE id_animal=" + id
-        //</editor-fold>
-        );
+        if (existeAnimal(id)) {
+            consultas.add("DELETE FROM ranimales WHERE id = " + id);
+        }
+
+        if (existenTrasladoParaElAnimal(id)) {
+            consultas.add("DELETE FROM traslado_animalxgrupo WHERE id_animal=" + id);
+        }
+
+        if (existenRegistrosDePesajeParaElAnimal(id)) {
+            consultas.add("DELETE FROM pesaje WHERE id_animal=" + id);
+        }
 
         return EjecutarConsultas(consultas);
     }
@@ -1247,6 +1243,18 @@ public class ControlRAnimales implements IControl {
 
     public int EnviarConsultas(ArrayList<String> consultas) {
         return EjecutarConsultas(consultas);
+    }
+
+    private boolean existeAnimal(int id) {
+        return mySQL.ExistenDatos("SELECT * FROM ranimales WHERE id = " + id);
+    }
+
+    private boolean existenTrasladoParaElAnimal(int id) {
+        return mySQL.ExistenDatos("SELECT * FROM traslado_animalxgrupo WHERE id_animal = " + id);
+    }
+
+    private boolean existenRegistrosDePesajeParaElAnimal(int id) {
+        return mySQL.ExistenDatos("SELECT * FROM pesaje WHERE id_animal = " + id);
     }
 
 }

@@ -311,7 +311,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         }
 
         if (key[0].equalsIgnoreCase("Número del animal")) {
-            String nuevoNumeroAnimal = txtPesoDestete.getText().trim();
+            String nuevoNumeroAnimal = txtNumeroAnimal.getText().trim();
             if (nuevoNumeroAnimal.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe especificar un número para el animal");
                 return;
@@ -381,7 +381,7 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
         if (Utilidades.validarSINO(key[0])) {
             cbCombo.setSelectedItem(value.getText());
         } else if (key[0].equalsIgnoreCase("notas")) {
-            txtNotas.setText(value.getText().trim());
+            txtNotas.setText(Utilidades.scapeHTML(value.getText()).trim());
         } else if (key[0].equalsIgnoreCase("Peso de destete")) {
             txtPesoDestete.setText(value.getText());
         } else if (key[0].equalsIgnoreCase("Número del animal")) {

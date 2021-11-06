@@ -1,6 +1,7 @@
 package Utilidades;
 
 import BaseDeDatos.Encryptar;
+import BaseDeDatos.gestorMySQL;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
 import Modelo.Usuario.ModeloPermisoxModulos;
@@ -41,6 +42,7 @@ public class Utilidades {
     public static String DATOS_HISTORICO = "Implante|Descornado|Destete|Hierro fisico|Capado";
     public static String DATOS_PALPACION = "vacia|preñada|repaso";
     public static String FECHA_POR_DEFECTO = "1900-01-01";
+    private static final gestorMySQL mySQL = new gestorMySQL();
 
 //    public static void main(String[] args) {
 //        Pattern p = Pattern.compile(DATOS_HISTORICO);
@@ -51,6 +53,10 @@ public class Utilidades {
         Pattern p = Pattern.compile(DATOS_HISTORICO);
         Matcher m = p.matcher(texto);
         return m.find();
+    }
+    
+    public static String scapeHTML(String s) {
+        return s.replaceAll("<(.|\\n)+?>", "");
     }
 
     public static void EstablecerIcono(JFrame vent) {
@@ -978,5 +984,13 @@ public class Utilidades {
         String dato = Expresiones.procesarSoloNumP(valorsin);
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         return dato;
+    }
+    
+    /**
+     * Devuelve el nombre del esquema de base de datos
+     * @return String
+     */
+    public static String getSchema(){
+        return mySQL.getBD();
     }
 }

@@ -114,10 +114,10 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
-        
+
         txtValorVenta.setEnabled(false);
         txtPorcentajeCanal.setEnabled(false);
-        
+
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTiposDeAnimales);
     }
@@ -158,7 +158,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         cargarComboFincas();
         controles.habilitarControles();
         Utilidades.estadoBotonesDeControl(EstadoControles.POR_DEFECTO, botones);
-        
+
         InformacionGlobal.setFincaDesdeConstructor(cbFinca);
         InformacionGlobal.setTipoAnimalDesdeConstructor(cbTiposDeAnimales);
     }
@@ -1704,7 +1704,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     private void cbTiposDeAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTiposDeAnimalesActionPerformed
         InformacionGlobal.setTipoAnimalDesdeEventoChange(cbTiposDeAnimales);
-        
+
         int indice = cbTiposDeAnimales.getSelectedIndex();
         if (indice > 0) {
             String idTipoAnimal = tipoAnimales.get(indice).get("id");
@@ -1728,7 +1728,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
     private void cbFincaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFincaActionPerformed
         InformacionGlobal.setFincaDesdeEventoChange(cbFinca);
-        
+
         int indice = cbFinca.getSelectedIndex();
         if (indice > 0) {
             String idFinca = fincas.get(indice).get("id");
@@ -1736,7 +1736,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
 
             cargarComboPropietarios();
             cargarComboTipoAnimales();
-            
+
         }
     }//GEN-LAST:event_cbFincaActionPerformed
 
@@ -2321,7 +2321,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         ma.setNotas(Utilidades.CodificarElemento(txtNotas.getText().trim()));
         ma.setNumero(txtNumero.getText().trim());
         ma.setNumero_mama(txtNumeroMama.getText().trim());
-        ma.setPeso(txtPesoOculto.getText().replace(".", "").replace(",", "."));
+        ma.setPeso(txtPesoOculto.getText().trim().length() == 0 ? "0" : txtPesoOculto.getText().replace(".", "").replace(",", "."));
         Calendar fechaNacimiento = jdFechaNacimiento.getCalendar();
         ma.setFecha_nacimiento(sdf.format(fechaNacimiento.getTime()));
 
@@ -2403,7 +2403,7 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
         String consulta = "";
         if (datosMadre.size() > 0) {
             if (datosMadre.get("ES_MADRE").equalsIgnoreCase("FALSE")) {
-                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID")+";";
+                consulta = "UPDATE ranimales SET es_madre='Si' WHERE id=" + datosMadre.get("ID") + ";";
             }
         }
 
@@ -2414,8 +2414,8 @@ public class VistaRAnimales extends javax.swing.JPanel implements IControlesUsua
             partos += partos == 0 ? 1 : 0;
             int numeroParto = Integer.parseInt(ma.getNumero_parto());
             cantidadParto = partos > numeroParto ? partos : numeroParto;
-            consulta += "UPDATE ranimales SET cantidad_parto ="+cantidadParto+" "
-                    + "WHERE numero='" + ma.getNumero_mama() + "' AND id_tipo_animal='"+ma.getId_tipo_animal()+"';";
+            consulta += "UPDATE ranimales SET cantidad_parto =" + cantidadParto + " "
+                    + "WHERE numero='" + ma.getNumero_mama() + "' AND id_tipo_animal='" + ma.getId_tipo_animal() + "';";
         }
 //</editor-fold>
 

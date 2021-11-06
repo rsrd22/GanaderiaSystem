@@ -741,7 +741,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
         String idAnimal = "(SELECT (AUTO_INCREMENT-1)\n"
                 + "FROM information_schema.tables\n"
                 + "WHERE table_name = 'ranimales'\n"
-                + "AND table_schema = 'ganadero')";
+                + "AND table_schema = '"+Utilidades.getSchema()+"')";
 
         modelo.setDescornado("0");
         modelo.setImplante("0");
