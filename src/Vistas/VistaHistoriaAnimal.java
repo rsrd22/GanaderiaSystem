@@ -2815,6 +2815,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             panelBtnParto.setBackground(new Color(59, 123, 50));
         } else {
             panelBtnParto.setBackground(new Color(101, 101, 101));
+            panelBtnParto.setToolTipText("Verifique que el animal se encuentre destetado");
         }
 
         lblFecUltParto.setVisible(esHembra);

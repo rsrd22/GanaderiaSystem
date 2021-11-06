@@ -334,6 +334,8 @@ public class gestorMySQL implements IBaseDeDatos {
 
     @Override
     public boolean EnviarConsultas(ArrayList consultas) throws ClassNotFoundException, SQLException {
+        System.out.println("\n\n");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: inicia EnviarConsultas");
         String QuerySQL = null;
 
         try {
@@ -349,27 +351,25 @@ public class gestorMySQL implements IBaseDeDatos {
                     mensaje = "No hay consultas en la cadena enviada.";
                     return false;
                 }
-                //System.out.println("con--->"+con);
                 con.setAutoCommit(false);
                 Statement st = con.createStatement();
                 for (int x = 0; x < consultas.size(); x++) {
                     System.out.println("consultas.get(" + x + ")-->" + consultas.get(x) + "//////////////////////");
                     if (!consultas.get(x).equals("")) {
                         QuerySQL = consultas.get(x).toString();
-                        //System.out.println("EnviarConsultas-("+x+")->"+QuerySQL);
                         if (st.executeUpdate(QuerySQL) <= 0) {
-//                        if (st.execute(QuerySQL)) {
                             con.rollback();
                             con.setAutoCommit(true);
                             con.close();
                             return false;
                         }
                     }
-                    //System.out.println("HOLA");
                 }
                 con.commit();
                 con.setAutoCommit(true);
                 Desconectar();
+                System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: finaliza EnviarConsultas");
+                System.out.println("\n\n");
                 return true;
             }
 

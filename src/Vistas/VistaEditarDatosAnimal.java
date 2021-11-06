@@ -316,8 +316,8 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Debe especificar un número para el animal");
                 return;
             }
-            
-            if(nuevoNumeroAnimal.equals(numeroActualAnimal)){
+
+            if (nuevoNumeroAnimal.equals(numeroActualAnimal)) {
                 JOptionPane.showMessageDialog(this, "El número no puede ser el mismo");
                 return;
             }
@@ -405,6 +405,11 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
     }
 
     private void Guardar() {
+        /**
+         * key[0]: identificador<br>
+         * key[1]: nombre de la tabla de la base de datos<br>
+         * key[2]: nombre del campo de la tabla
+         */
         String[] key = map.getKey();
         JLabel value = map.getValue();
         ArrayList<String> consultas = new ArrayList<>();
@@ -458,7 +463,8 @@ public class VistaEditarDatosAnimal extends javax.swing.JPanel {
             Calendar fecha = jdFechaDestete.getCalendar();
             consultas.add(
                     "update " + key[1] + " "
-                    + "set " + key[2] + "='" + formato.format(fecha.getTime()) + "' "
+                    + "set " + key[2] + "='" + formato.format(fecha.getTime()) + "', "
+                    + "destete='1' "
                     + "where id=" + key[3]
             );
         }
