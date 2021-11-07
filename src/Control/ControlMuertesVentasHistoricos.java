@@ -8,6 +8,7 @@ package Control;
 
 import BaseDeDatos.gestorMySQL;
 import Modelo.ModeloMuertesVentasHistoricos;
+import Utilidades.Utilidades;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +29,19 @@ public class ControlMuertesVentasHistoricos {
     public int GuardarAnular(ModeloMuertesVentasHistoricos modelo) {
         ArrayList<String> consultas = new ArrayList<>();
         //<editor-fold defaultstate="collapsed" desc="Editar Tabla Animales">
-            String tipo = "`muerte` = '0'";
+            String tipo = "`muerte` = '0', \n"
+                        + "fecha_muerte = '1900-01-01',\n"
+                        + "descripcion_muerte = ''\n";   
+            
             if(modelo.getTipo().equals("venta")){
-                tipo = "`venta` = '0'";
+                tipo = "`venta` = '0', "
+                        + "peso = (SELECT peso FROM `pesaje` WHERE id_animal = '"+modelo.getIdAnimal()+"' ORDER BY fecha_pesado DESC, id DESC  LIMIT 1;),\n"
+                        + "precio_venta = NULL,\n"
+                        + "peso_canal = NULL,\n"
+                        + "fecha_venta = '1900-01-01',\n"
+                        + "tipo_venta = NULL \n";
             }
-            consultas.add("UPDATE `animales`\n" +
+            consultas.add("UPDATE `ranimales`\n" +
                             "SET "+tipo+"\n" +
                             "WHERE `id` = '"+modelo.getIdAnimal()+"';");
         

@@ -48,6 +48,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
     public String idTipoAnimal = "";
     public String idTipoAnimalFinca = "";
     public String idGrupo = "";
+    public String tipoGrupo = "";
     public int ancho;
     public int alto;
 
@@ -416,6 +417,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         System.out.println("listaLotes->" + listaGrupos.size());
         if (cbGrupo.getSelectedIndex() > -1) {
             idGrupo = listaGrupos.get(cbGrupo.getSelectedIndex()).get("ID");
+            tipoGrupo = listaGrupos.get(cbGrupo.getSelectedIndex()).get("TIPOG");
         }
     }//GEN-LAST:event_cbGrupoActionPerformed
 
@@ -516,9 +518,9 @@ public class VistaTrasladar extends javax.swing.JPanel {
 
     private void CargarListaGrupos(String idFinca, String tipoAnimal) {
         System.out.println("******CargarListaGrupos****");
-        listaGrupos = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION \n"
+        listaGrupos = controlgen.GetComboBox("SELECT '-1' AS ID, 'Seleccionar' AS DESCRIPCION , '' AS TIPOG\n"
                 + "UNION                                              \n"
-                + "SELECT grup.`id` AS ID, grup.`descripcion` AS DESCRIPCION\n"
+                + "SELECT grup.`id` AS ID, grup.`descripcion` AS DESCRIPCION, grup.`tipo_grupo` AS TIPOG\n"
                 + "FROM `grupos`  grup\n"
                 + "INNER JOIN  `tipo_animales` tipo ON tipo.`id` = grup.`id_tipo_animal`\n"
                 + "WHERE tipo.`id_finca` = '" + idFinca + "' AND tipo.`id` = '" + tipoAnimal + "'");
@@ -533,6 +535,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         String fechaT = sdf.format(fecha.getTime());
         String motivo = Utilidades.decodificarElemento(txtMotivo.getText().trim());
         boolean novilla = chNovilla.isSelected();
+        boolean muerte =  tipoGrupo.equals("muerte");
 
 //        if (motivo.equals("")) {
 //            JOptionPane.showMessageDialog(this, "Por favor diligencie el motivo de traslado.");
@@ -569,7 +572,7 @@ public class VistaTrasladar extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < ListamodeloTraslado.size(); i++) {
-            ret = controlTraslado.ActulizarAnimal(ListamodeloTraslado.get(i), novilla);
+            ret = controlTraslado.ActulizarAnimal(ListamodeloTraslado.get(i), novilla, muerte);
             ret = controlTraslado.InactivarTraslado(ListamodeloTraslado.get(i));
             if (ret == 0) {
                 ret = controlTraslado.Guardar(ListamodeloTraslado.get(i));

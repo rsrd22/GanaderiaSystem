@@ -845,6 +845,7 @@ public class VistaNacimientoAnimal extends javax.swing.JPanel {
                 vha.getDatosHembra();
                 vha.GetDatosPalpacion();
                 vha.GetDatosParto();
+                vha.ActualizarListaVerAnimales();
                 ((VistaGeneral) modeloVistaGeneral.getFrameVentana()).dispose();
                 break;
             case Retorno.ERROR:

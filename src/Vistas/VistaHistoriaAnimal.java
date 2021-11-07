@@ -2844,6 +2844,10 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             jTabbedPane1.setEnabledAt(6, false);
             jTabbedPane1.setEnabledAt(7, false);
         }
+        
+        if(!jTabbedPane1.isEnabledAt(jTabbedPane1.getSelectedIndex())){
+            jTabbedPane1.setSelectedIndex(0);
+        }
 
         lblLocalizacion.setText("" + localizacion);
         lblFecUltPeso.setText("" + FecUltPeso);
@@ -3243,6 +3247,11 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
         refTablaAnimales.setRowSelectionInterval(filaLista, filaLista);
     }
 
+    public void ActualizarListaVerAnimales(){
+        vistaVAnimales.EventoComboFincas();
+        this.ListaAnimalesMostrar = vistaVAnimales.ListaAnimalesMostrar;
+        
+    }
     public void QuitarMuerteVenta() {
         vistaVAnimales.EventoComboFincas();
         this.ListaAnimalesMostrar = vistaVAnimales.ListaAnimalesMostrar;
@@ -3274,6 +3283,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
 
         int fila = -1, y = 0, w = 0;
         sizeCrias = ListaDatosPartos.size();
+        
 
         //<editor-fold defaultstate="collapsed" desc="INIT ACORDEON CRIAS">
         flagsPnlCrias = new int[sizeCrias];
@@ -3618,6 +3628,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
             //</editor-fold>
 
             panelesCria.add(pnlCriaAux);
+            lblFecUltParto.setText(datos.get("FEC_NAC"));
         }
 
         JPanel panelEnd = new JPanel();

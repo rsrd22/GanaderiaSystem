@@ -47,7 +47,7 @@ public class ControlTraslado implements IControl {
     public Object ObtenerDatosTraslado(String IDFINCA, String IDTIPOFINCA, String Orden) {
         try {
             if(Orden.isEmpty()){
-                Orden = "CONVERT(animal.numero,INT) ASC";
+                Orden = "CONVERT(animal.numero,INT) ASC, animal.id asc";
             }
             String consulta = "SELECT traslado.`estado` AS ESTADO, traslado.`fecha` AS FECHA, IFNULL(DATE_FORMAT(traslado.`fecha_traslado`, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
                     + "traslado.`id` AS ID_TRASLADO, animal.`id` AS ID_ANIMAL, traslado.`id_finca` AS ID_FINCA, traslado.`id_grupo` AS ID_GRUPO,\n"
@@ -220,16 +220,22 @@ public class ControlTraslado implements IControl {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public int ActulizarAnimal(ModeloTraslado datos, boolean novilla) {
+    public int ActulizarAnimal(ModeloTraslado datos, boolean novilla, boolean muerte) {
         ArrayList<String> consultas = new ArrayList<>();
         String add = "";
 
-        boolean exist = mySQL.ExistenDatos("select * from animales where id = '" + datos.getIdAnimal() + "' and `fecha_novilla` is not null AND fecha_novilla > '1900-01-01' ");
+        boolean exist = mySQL.ExistenDatos("select * from ranimales where id = '" + datos.getIdAnimal() + "' and `fecha_novilla` is not null AND fecha_novilla > '1900-01-01' ");
 
         System.out.println("exist-->" + exist);
 
         if (novilla && !exist) {
             add = ", fecha_novilla = " + Utilidades.ValorNULL(datos.getFechaTraslado()) + " \n";
+        }
+        
+        if(muerte){
+            add += ", muerte = '1',\n"
+                + "fecha_muerte = '" + datos.getFechaTraslado() + "',\n"
+                + "descripcion_muerte = '" + datos.getMotivo() + "'\n";   
         }
 
         consultas.add("UPDATE `ranimales`\n"

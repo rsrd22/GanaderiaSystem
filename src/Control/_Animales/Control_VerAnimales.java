@@ -30,7 +30,7 @@ public class Control_VerAnimales {
     public Object ObtenerDatosAnimales(String IDFINCA, String IDTIPOFINCA, String Orden) {
         try {
             if(Orden.isEmpty()){
-                Orden = "CONVERT(animal.numero,INT) ASC";
+                Orden = "CONVERT(animal.numero,INT) ASC, animal.id asc";
             }
             //AND muerte = '0' and venta = '0'
             String consulta = "SELECT traslado.estado AS ESTADO, traslado.fecha AS FECHA, IFNULL(DATE_FORMAT(traslado.fecha_traslado, '%d/%m/%Y'), '') AS FECHA_TRASLADO,\n"
