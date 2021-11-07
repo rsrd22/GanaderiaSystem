@@ -2793,6 +2793,7 @@ public class VistaHistoriaAnimal extends javax.swing.JPanel {
          * campo de la tabla anterior
          */
         String tabla = "ranimales";
+        listaHistorico = new HashMap<String[], JLabel>();
         listaHistorico.put(new String[]{"Implante", tabla, "implante", ListaDatos.get(0).getId()}, lblImplante);
         listaHistorico.put(new String[]{"Descornado", tabla, "descornado", ListaDatos.get(0).getId()}, lblDescornado);
         listaHistorico.put(new String[]{"Fecha de destete", tabla, "fecha_destete", ListaDatos.get(0).getId()}, lblFechaDestete);
