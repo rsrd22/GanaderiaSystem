@@ -116,14 +116,18 @@ public class ImportExport extends Thread implements Runnable {
             FileReader fr = new FileReader(arch);
             BufferedReader br = new BufferedReader(fr);
             int valmax = -1;
-            vp.progreso.setMaximum(archivo.getNumeroDeLineas() + 1);
+            vp.progreso.setMaximum(archivo.getNumeroDeLineas());
             int banderaConsultaCampos = 0;
             List<String[]> camposTabla = new ArrayList<>();
 
             while ((linea = br.readLine()) != null) {
                 vp.progreso.setValue(++valmax);
-                vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Importando los datos espere...<BR>"
-                        + "Progreso en un " + (Math.round(valmax * 100 / vp.progreso.getMaximum())) + "%</P></HTML>");
+                vp.mensaje.setText(
+                        "<HTML><P ALIGN='CENTER'>"
+                        + "Importando los datos espere...<BR>Progreso en un "
+                        + (Math.round(valmax * 100 / vp.progreso.getMaximum()))
+                        + "%</P></HTML>"
+                );
                 texto = linea.trim();
 
                 if (texto.contains(Parametros.separadorIE)) {
@@ -144,11 +148,16 @@ public class ImportExport extends Thread implements Runnable {
             }
 
             if (!consultas.isEmpty()) {
-                if (sql.EnviarConsultas(consultas)) {
-                    vp.progreso.setValue(++valmax);
-                    vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Los datos se han importado con exito.</P></HTML>");
+                if (sql.EnviarConsultas(consultas, vp)) {
+                    vp.mensaje.setText(
+                            "<HTML><P ALIGN='CENTER'>"
+                            + "<b>Los datos se han importado con exito.</b>"
+                            + "</P></HTML>"
+                    );
                 } else {
-                    vp.mensaje.setText("Algo salio mal, los datos no se pudieron importar.");
+                    vp.mensaje.setText(
+                            "Algo salio mal, los datos no se pudieron importar."
+                    );
                 }
             }
         } catch (ClassNotFoundException | SQLException | IOException ex) {

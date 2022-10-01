@@ -150,35 +150,33 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPermisos = new javax.swing.JLabel();
         btnAgregarUsuario = new javax.swing.JLabel();
 
+        jPanel1.setBackground(java.awt.Color.white);
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
         progreso.setBackground(new java.awt.Color(255, 255, 255));
         progreso.setForeground(new java.awt.Color(36, 151, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanel1.add(progreso, gridBagConstraints);
 
         mensaje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         mensaje.setForeground(new java.awt.Color(36, 151, 20));
         mensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         mensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(progreso, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 0.25;
+        jPanel1.add(mensaje, gridBagConstraints);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1354,6 +1352,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void importarExportarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_importarExportarMouseClicked
         if (evt.getClickCount() == 1) {
+            MostrarPanel(this.jPanel1);
             ie.estado = Estados.EXPORTAR;
             ie.iniciar();
         }
@@ -1608,6 +1607,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         if (evt.getClickCount() == 1) {
+            MostrarPanel(this.jPanel1);
             ie.estado = Estados.IMPORTAR;
             ie.iniciar();
         }

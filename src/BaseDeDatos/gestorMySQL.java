@@ -1,6 +1,7 @@
 package BaseDeDatos;
 
 import Utilidades.Utilidades;
+import Vistas.VistaPrincipal;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.sql.*;
@@ -581,4 +582,70 @@ public class gestorMySQL implements IBaseDeDatos {
     public String getBD() {
         return BD;
     }
+    
+    public boolean EnviarConsultas(ArrayList consultas, VistaPrincipal vp) 
+            throws ClassNotFoundException, SQLException {
+        System.out.println("\n\n");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: inicia EnviarConsultas");
+        String QuerySQL = null;
+
+        try {
+            if (!Conectar()) {
+                JOptionPane.showMessageDialog(null, mensaje);
+                return false;
+            } else {
+                if (con == null) {
+                    return false;
+                }
+
+                if (consultas.size() < 1) {
+                    mensaje = "No hay consultas en la cadena enviada.";
+                    return false;
+                }
+                vp.progreso.setMaximum(consultas.size()-1);
+                con.setAutoCommit(false);
+                Statement st = con.createStatement();
+                for (int x = 0; x < consultas.size(); x++) {
+                    vp.progreso.setValue(x);
+                    vp.mensaje.setText(
+                            "<HTML><P ALIGN='CENTER'>"
+                            + "Cargando la informacion hacia la base de datos"
+                            + ", espere...<BR>Progreso en un " 
+                            + (Math.round(x * 100 / vp.progreso.getMaximum())) 
+                            + "%</P></HTML>"
+                    );
+                    
+                    System.out.println("consultas.get(" + x + ")-->" + consultas.get(x) + "//////////////////////");
+                    if (!consultas.get(x).equals("")) {
+                        QuerySQL = consultas.get(x).toString();
+                        if (st.executeUpdate(QuerySQL) <= 0) {
+                            con.rollback();
+                            con.setAutoCommit(true);
+                            con.close();
+                            return false;
+                        }
+                    }
+                }
+                con.commit();
+                con.setAutoCommit(true);
+                Desconectar();
+                System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: finaliza EnviarConsultas");
+                System.out.println("\n\n");
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("eroor--" + e.getMessage());
+            con.rollback();
+            con.setAutoCommit(true);
+
+            if (mensaje != null && QuerySQL.toUpperCase().indexOf("WHERE") > 0) {
+                mensaje += QuerySQL.toUpperCase().split("WHERE")[1];
+            }
+            Desconectar();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
