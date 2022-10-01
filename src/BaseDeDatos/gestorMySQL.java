@@ -17,6 +17,7 @@ public class gestorMySQL implements IBaseDeDatos {
     private String contrasena;
     public String mensaje;
     private String hostName;
+    private String puerto;
 
     public gestorMySQL() {
         con = null;
@@ -26,11 +27,7 @@ public class gestorMySQL implements IBaseDeDatos {
         usuario = baseDeDatos.BIENESUSER;
         hostName = baseDeDatos.HOSTALLONE;
         contrasena = baseDeDatos.PASSWORD_DB_SERVIDOR_CASA;
-
-//        BD = baseDeDatos.BIENESRAICES;
-//        usuario = baseDeDatos.BIENESUSER;
-//        hostName = baseDeDatos.HOSTLOCAL;
-//        contrasena = baseDeDatos.PASSWORD_DB_BIENES;  
+        puerto = baseDeDatos.PUERTO;
     }
 
     public ResultSet Consultar(String sentenciaSQL) {
@@ -137,7 +134,7 @@ public class gestorMySQL implements IBaseDeDatos {
         try {
             if (con == null) {
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
+                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":" + puerto + "/" + BD, usuario, contrasena);
             }
             ResultSet contenedorQUERY = null;
             ArrayList<String[]> datosQUERY = new ArrayList<>();
@@ -223,7 +220,7 @@ public class gestorMySQL implements IBaseDeDatos {
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
+                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":" + puerto + "/" + BD, usuario, contrasena);
             return true;
         } catch (ClassNotFoundException e) {
 
@@ -286,7 +283,7 @@ public class gestorMySQL implements IBaseDeDatos {
     private Connection ConectarConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
+                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":" + puerto + "/" + BD, usuario, contrasena);
             return con;
         } catch (ClassNotFoundException e) {
             mensaje = "Ocurrio un error al tratar de establecer conexión con el servidor.\n"
@@ -520,7 +517,7 @@ public class gestorMySQL implements IBaseDeDatos {
         try {
             if (con == null) {
                 Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":3306" + "/" + BD, usuario, contrasena);
+                con = DriverManager.getConnection("jdbc:mysql://" + hostName + ":" + puerto + "/" + BD, usuario, contrasena);
             }
 
             if (consultas.size() < 1) {

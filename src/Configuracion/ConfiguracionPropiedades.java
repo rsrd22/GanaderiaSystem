@@ -23,12 +23,14 @@ public class ConfiguracionPropiedades {
     private static String CLAVE;
     private static String BASE_DE_DATOS;
     private static String ANIO_FISCAL;
+    private static String PUERTO;
     private static String EST_CARGA_MASIVA_ANIMALES;
     private static String EST_CARGA_MASIVA_PESAJE;
     private static String EST_CARGA_MASIVA_PALPACION;
     private static final String KEY_SERVIDOR = "servidor";
     private static final String KEY_USUARIO = "usuario";
     private static final String KEY_CLAVE = "clave";
+    private static final String KEY_PUERTO = "puerto";
     private static final String KEY_BASE_DE_DATOS = "baseDeDatos";
     private static final String KEY_ANIO_FISCAL = "anioFiscal";
     private static final String KEY_EST_CARGA_MASIVA_ANIMALES = "EncabezadosCargaMasivaAnimal";
@@ -38,9 +40,7 @@ public class ConfiguracionPropiedades {
     public static void cargarConfiguracion() {
         propiedades = new Properties();
         try {
-//            String urlRelativa = "Z:\\GANADERIA\\CONFIG GANADERIA\\Config.properties";
-//            String urlRelativa = "Y:\\CONFIG GANADERIA\\Config.properties";
-            String urlRelativa = "C:\\CONFIG GANADERIA\\Config.properties";
+            String urlRelativa = "/home/dolf/Config.properties";
             FileInputStream archivoConfig = new FileInputStream(urlRelativa);
 
             propiedades.load(archivoConfig);
@@ -48,6 +48,7 @@ public class ConfiguracionPropiedades {
             BASE_DE_DATOS = propiedades.getProperty(KEY_BASE_DE_DATOS);
             USUARIO = propiedades.getProperty(KEY_USUARIO);
             CLAVE = propiedades.getProperty(KEY_CLAVE);
+            PUERTO = propiedades.getProperty(KEY_PUERTO);
             ANIO_FISCAL = propiedades.getProperty(KEY_ANIO_FISCAL);
             EST_CARGA_MASIVA_ANIMALES = propiedades.getProperty(KEY_EST_CARGA_MASIVA_ANIMALES);
             EST_CARGA_MASIVA_PESAJE = propiedades.getProperty(KEY_EST_CARGA_MASIVA_PESAJE);
@@ -123,11 +124,16 @@ public class ConfiguracionPropiedades {
         propiedades.setProperty(KEY_CLAVE, valor);
     }
 
+    private static String getPuerto() {
+        return propiedades.getProperty(KEY_PUERTO);
+    }
+
     private static void cargarPropiedades() {
         baseDeDatos.HOSTALLONE = getServidor();
         baseDeDatos.BIENESUSER = getUsuario();
         baseDeDatos.PASSWORD_DB_BIENES = getClave();
         baseDeDatos.PASSWORD_DB_SERVIDOR_CASA = getClave();
         baseDeDatos.BIENESRAICES = getBaseDeDatos();
+        baseDeDatos.PUERTO = getPuerto();
     }
 }

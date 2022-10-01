@@ -12,6 +12,7 @@ public class baseDeDatos {
     
     public static String PASSWORD_DB_BIENES = "";
     public static String PASSWORD_DB_SERVIDOR_CASA = "root";
+    public static String PUERTO="";
     
     
 } 

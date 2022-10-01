@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -103,7 +104,7 @@ public class ImportExport extends Thread implements Runnable {
     }
 
     public void importar() {
-        String texto = "", linea, encabezado = "";
+        String texto = "", linea, nombreTabalaMay = "";
         ArrayList<String> consultas = new ArrayList<>();
         String url = Expresiones.seleccionarArchivo(false, "C:/", "texto", "txt");
         archivo = new ControlArchivos(url);
@@ -116,43 +117,47 @@ public class ImportExport extends Thread implements Runnable {
             BufferedReader br = new BufferedReader(fr);
             int valmax = -1;
             vp.progreso.setMaximum(archivo.getNumeroDeLineas() + 1);
+            int banderaConsultaCampos = 0;
+            List<String[]> camposTabla = new ArrayList<>();
 
             while ((linea = br.readLine()) != null) {
                 vp.progreso.setValue(++valmax);
                 vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Importando los datos espere...<BR>"
                         + "Progreso en un " + (Math.round(valmax * 100 / vp.progreso.getMaximum())) + "%</P></HTML>");
                 texto = linea.trim();
+
                 if (texto.contains(Parametros.separadorIE)) {
-                    String consulta = importarDatosTabla(encabezado.toLowerCase(), texto);
+                    String nombreTabla = nombreTabalaMay.toLowerCase();
+                    if (banderaConsultaCampos == 0) {
+                        banderaConsultaCampos = 1;
+                        camposTabla = this.getCamposTabla(nombreTabla);
+                    }
+                    String consulta = this.importarDatosTabla(camposTabla, nombreTabla, texto);
                     if (!consulta.isEmpty()) {
                         consultas.add(consulta);
                     }
+
                 } else {
-                    encabezado = linea.trim();
+                    banderaConsultaCampos = 0;
+                    nombreTabalaMay = linea.trim();
                 }
             }
 
-            if (consultas.size() > 0) {
-                try {
-                    if (sql.EnviarConsultas(consultas)) {
-                        vp.progreso.setValue(++valmax);
-                        vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Los datos se han importado con exito.</P></HTML>");
-                    } else {
-                        vp.mensaje.setText("Algo salio mal, los datos no se pudieron importar.");
-                    }
-                } catch (ClassNotFoundException ex) {
-                    vp.mensaje.setText("");
-                    JOptionPane.showMessageDialog(vp, "Exepción general debido a: " + ex.getMessage());
-                } catch (SQLException ex) {
-                    vp.mensaje.setText("");
-                    JOptionPane.showMessageDialog(vp, "Exepción general debido a: " + ex.getMessage());
+            if (!consultas.isEmpty()) {
+                if (sql.EnviarConsultas(consultas)) {
+                    vp.progreso.setValue(++valmax);
+                    vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Los datos se han importado con exito.</P></HTML>");
+                } else {
+                    vp.mensaje.setText("Algo salio mal, los datos no se pudieron importar.");
                 }
             }
-        } catch (IOException ex) {
-            System.out.println("problemas leyendo el archivo");
+        } catch (ClassNotFoundException | SQLException | IOException ex) {
+            vp.mensaje.setText("");
+            JOptionPane.showMessageDialog(vp, "Exepción general debido a: " + ex.getMessage());
         }
     }
 
+    @Deprecated
     private String importarDatosTabla(String tabla, String lineaDeTexto) {
         String consulta = "SHOW COLUMNS FROM " + baseDeDatos.BIENESRAICES + "." + tabla;
         ArrayList<String[]> datos = sql.SELECT(consulta);
@@ -190,6 +195,51 @@ public class ImportExport extends Thread implements Runnable {
         }
 
         return keyDuplicada.isEmpty() ? "" : insert.replaceAll("'null'", "NULL");
+    }
+
+    private String importarDatosTabla(
+            List<String[]> datos, String tabla, String lineaDeTexto
+    ) {
+        String insert = "", keyDuplicada = "";
+        String[] datosLdt = lineaDeTexto.replace(Parametros.separadorIE, ":-:")
+                .split(":-:");
+        int band = 0;
+
+        if (!datos.isEmpty()) {
+            insert += "INSERT INTO " + tabla + "() VALUES (";
+            for (int i = 0; i < datos.size(); i++) {
+
+                String comilla = "", tipo = "", campo = "";
+                if (datos.get(i)[1].contains("(")) {
+                    tipo = datos.get(i)[1].substring(0, datos.get(i)[1]
+                            .indexOf("("));
+                } else {
+                    tipo = datos.get(i)[1];
+                }
+
+                if (Expresiones.validarCamposDeTextoDB(tipo)) {
+                    comilla = "'";
+                }
+
+                campo = comilla + datosLdt[i] + comilla;
+                insert += campo + ((i < datos.size() - 1) ? "," : "");
+
+                if (datos.get(i)[2].equalsIgnoreCase("yes") && band == 0) {
+                    band = 1;
+                    keyDuplicada = " ON DUPLICATE KEY UPDATE " + datos.get(i)[0]
+                            + "=" + campo;
+                }
+            }
+            insert += ")" + keyDuplicada;
+        }
+
+        return keyDuplicada.isEmpty() ? "" : insert.replaceAll("'null'", "NULL");
+    }
+
+    private List<String[]> getCamposTabla(String tabla) {
+        String consulta = "SHOW COLUMNS FROM " + baseDeDatos.BIENESRAICES + "."
+                + tabla;
+        return sql.SELECT(consulta);
     }
 
     public synchronized void iniciar() {

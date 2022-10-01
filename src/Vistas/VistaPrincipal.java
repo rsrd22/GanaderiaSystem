@@ -208,7 +208,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMinimizar.setForeground(java.awt.Color.gray);
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/minimizar.png"))); // NOI18N
         btnMinimizar.setToolTipText("Minimizar");
-        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMinimizarMouseClicked(evt);
@@ -225,7 +225,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnCerrar.setForeground(java.awt.Color.gray);
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/cerrar_1.png"))); // NOI18N
         btnCerrar.setToolTipText("Cerrar");
-        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCerrarMouseClicked(evt);
@@ -253,7 +253,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         importarExportar.setForeground(java.awt.Color.gray);
         importarExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/exportar.png"))); // NOI18N
         importarExportar.setToolTipText("Exportar");
-        importarExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        importarExportar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         importarExportar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 importarExportarMouseClicked(evt);
@@ -271,7 +271,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/histograma.png"))); // NOI18N
         btnInicio.setText("INICIO");
         btnInicio.setToolTipText("INICIO");
-        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInicio.setMaximumSize(new java.awt.Dimension(30, 30));
         btnInicio.setMinimumSize(new java.awt.Dimension(30, 30));
         btnInicio.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -291,7 +291,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMenuVertical.setForeground(java.awt.Color.gray);
         btnMenuVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/menu_1.png"))); // NOI18N
         btnMenuVertical.setToolTipText("Menu Vertical");
-        btnMenuVertical.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMenuVertical.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMenuVertical.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMenuVerticalMouseClicked(evt);
@@ -308,7 +308,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMaximizar.setForeground(java.awt.Color.gray);
         btnMaximizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/maximizar.png"))); // NOI18N
         btnMaximizar.setToolTipText("Maximizar");
-        btnMaximizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMaximizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMaximizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnMaximizarMousePressed(evt);
@@ -323,7 +323,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/importar.png"))); // NOI18N
         jLabel1.setToolTipText("Importar");
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -336,7 +341,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInicio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/excel30.png"))); // NOI18N
         btnInicio1.setText("INICIO");
         btnInicio1.setToolTipText("INICIO");
-        btnInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInicio1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInicio1.setMaximumSize(new java.awt.Dimension(30, 30));
         btnInicio1.setMinimumSize(new java.awt.Dimension(30, 30));
         btnInicio1.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -356,7 +361,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnLibroDiaario.setForeground(new java.awt.Color(255, 255, 255));
         btnLibroDiaario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/libro_diario30.png"))); // NOI18N
         btnLibroDiaario.setToolTipText("Libro Diario");
-        btnLibroDiaario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLibroDiaario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLibroDiaario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLibroDiaarioMouseClicked(evt);
@@ -373,7 +378,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/inventario30.png"))); // NOI18N
         btnInventario.setToolTipText("Inventario");
-        btnInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInventario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInventarioMouseClicked(evt);
@@ -443,7 +448,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarPropietarios.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarPropietarios.setText("Propietarios");
-        btnMostrarPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarPropietariosMouseClicked(evt);
@@ -462,7 +467,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPropietarios.setForeground(new java.awt.Color(255, 255, 255));
         btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPropietarios.setText("Propietario");
-        btnPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPropietarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPropietariosMouseClicked(evt);
@@ -473,7 +478,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnHierros.setForeground(new java.awt.Color(255, 255, 255));
         btnHierros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnHierros.setText("Hierros");
-        btnHierros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHierros.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnHierros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnHierrosMouseClicked(evt);
@@ -499,7 +504,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarFincas.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarFincas.setText("Fincas");
-        btnMostrarFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarFincas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarFincasMouseClicked(evt);
@@ -512,7 +517,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnFincas.setForeground(new java.awt.Color(255, 255, 255));
         btnFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnFincas.setText("Finca");
-        btnFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnFincas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFincasMouseClicked(evt);
@@ -523,7 +528,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnBloques.setForeground(new java.awt.Color(255, 255, 255));
         btnBloques.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnBloques.setText("Bloques");
-        btnBloques.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBloques.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnBloques.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBloquesMouseClicked(evt);
@@ -534,7 +539,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnLotes.setForeground(new java.awt.Color(255, 255, 255));
         btnLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnLotes.setText("Lotes");
-        btnLotes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLotes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLotes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLotesMouseClicked(evt);
@@ -545,7 +550,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnFuenteHidrica.setForeground(new java.awt.Color(255, 255, 255));
         btnFuenteHidrica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnFuenteHidrica.setText("Fuente Hidrica");
-        btnFuenteHidrica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFuenteHidrica.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnFuenteHidrica.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFuenteHidricaMouseClicked(evt);
@@ -556,7 +561,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPluviometro.setForeground(new java.awt.Color(255, 255, 255));
         btnPluviometro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPluviometro.setText("Pluviometro");
-        btnPluviometro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPluviometro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPluviometro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPluviometroMouseClicked(evt);
@@ -591,7 +596,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarGruposAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarGruposAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarGruposAnimales.setText("Grupos Animales");
-        btnMostrarGruposAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarGruposAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarGruposAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarGruposAnimalesMouseClicked(evt);
@@ -604,7 +609,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMacrogrupos.setForeground(new java.awt.Color(255, 255, 255));
         btnMacrogrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMacrogrupos.setText("Macrogrupos");
-        btnMacrogrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMacrogrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMacrogrupos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnMacrogruposRealMousePressed(evt);
@@ -615,7 +620,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnGrupos.setForeground(new java.awt.Color(255, 255, 255));
         btnGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnGrupos.setText("Grupos");
-        btnGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGrupos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnGruposMousePressed(evt);
@@ -626,7 +631,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTipoAnimal.setForeground(new java.awt.Color(255, 255, 255));
         btnTipoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnTipoAnimal.setText("Tipo Animales");
-        btnTipoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTipoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnTipoAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnTipoAnimalMousePressed(evt);
@@ -656,7 +661,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarAnimales.setText("Animales");
-        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarAnimalesMouseClicked(evt);
@@ -672,7 +677,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAnimales.setText("Agregar Animal");
-        btnAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnAnimalesRealMousePressed(evt);
@@ -683,7 +688,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMuerteAnimal.setForeground(new java.awt.Color(255, 255, 255));
         btnMuerteAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMuerteAnimal.setText("Muertes");
-        btnMuerteAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMuerteAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMuerteAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnMuerteAnimalMousePressed(evt);
@@ -694,7 +699,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnDescendientesAnimal.setForeground(new java.awt.Color(255, 255, 255));
         btnDescendientesAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnDescendientesAnimal.setText("Descendientes");
-        btnDescendientesAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDescendientesAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDescendientesAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnDescendientesAnimalMousePressed(evt);
@@ -705,7 +710,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnVentasAnimal.setForeground(new java.awt.Color(255, 255, 255));
         btnVentasAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnVentasAnimal.setText("Ventas");
-        btnVentasAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVentasAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnVentasAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnVentasAnimalMousePressed(evt);
@@ -716,7 +721,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnVerAnimales.setForeground(new java.awt.Color(255, 255, 255));
         btnVerAnimales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnVerAnimales.setText("Ver Animales");
-        btnVerAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVerAnimales.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnVerAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnVerAnimalesRealMousePressed(evt);
@@ -755,7 +760,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarActividades.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarActividades.setText("Actividades");
-        btnMostrarActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarActividades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarActividadesMouseClicked(evt);
@@ -771,7 +776,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnRegistroActividades.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistroActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnRegistroActividades.setText("Registro ");
-        btnRegistroActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistroActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRegistroActividades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnRegistroActividadesRealMousePressed(evt);
@@ -782,7 +787,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnEstadoActividades.setForeground(new java.awt.Color(255, 255, 255));
         btnEstadoActividades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnEstadoActividades.setText("Estado");
-        btnEstadoActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstadoActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEstadoActividades.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnEstadoActividadesMousePressed(evt);
@@ -793,7 +798,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnCronograma.setForeground(new java.awt.Color(255, 255, 255));
         btnCronograma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnCronograma.setText("Cronograma");
-        btnCronograma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCronograma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCronograma.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnCronogramaMousePressed(evt);
@@ -804,7 +809,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPesaje.setForeground(new java.awt.Color(255, 255, 255));
         btnPesaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPesaje.setText("Pesajes");
-        btnPesaje.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPesaje.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPesaje.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPesajeMousePressed(evt);
@@ -815,7 +820,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPalpacion.setForeground(new java.awt.Color(255, 255, 255));
         btnPalpacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPalpacion.setText("Palpación");
-        btnPalpacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPalpacion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPalpacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPalpacionMousePressed(evt);
@@ -826,7 +831,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMedicamentos.setForeground(new java.awt.Color(255, 255, 255));
         btnMedicamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMedicamentos.setText("Medicamentos");
-        btnMedicamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMedicamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMedicamentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnMedicamentosMousePressed(evt);
@@ -864,7 +869,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarTraslados.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarTraslados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarTraslados.setText("Traslados");
-        btnMostrarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarTraslados.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarTraslados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMostrarTrasladosMouseClicked(evt);
@@ -877,7 +882,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTrasladoAnimal.setForeground(new java.awt.Color(255, 255, 255));
         btnTrasladoAnimal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnTrasladoAnimal.setText("Traslado Animal");
-        btnTrasladoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrasladoAnimal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnTrasladoAnimal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnTrasladoAnimalRealMousePressed(evt);
@@ -888,7 +893,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnTrasladoGrupo.setForeground(new java.awt.Color(255, 255, 255));
         btnTrasladoGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnTrasladoGrupo.setText("Traslado Grupo");
-        btnTrasladoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrasladoGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnTrasladoGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnTrasladoGrupoMousePressed(evt);
@@ -915,7 +920,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnRotacion.setForeground(new java.awt.Color(255, 255, 255));
         btnRotacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnRotacion.setText("Rotación");
-        btnRotacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRotacion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnRotacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRotacionMouseClicked(evt);
@@ -926,7 +931,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnInformes.setForeground(new java.awt.Color(255, 255, 255));
         btnInformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnInformes.setText("Analisis de Datos");
-        btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnInformesMouseClicked(evt);
@@ -937,7 +942,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnMostrarUsuarios.setForeground(new java.awt.Color(255, 255, 255));
         btnMostrarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnMostrarUsuarios.setText("Usuarios");
-        btnMostrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMostrarUsuarios.setPreferredSize(new java.awt.Dimension(200, 30));
         btnMostrarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -951,7 +956,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPerfiles.setForeground(new java.awt.Color(255, 255, 255));
         btnPerfiles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPerfiles.setText("Perfiles");
-        btnPerfiles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPerfiles.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPerfiles.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPerfilesRealMousePressed(evt);
@@ -962,7 +967,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnPermisos.setForeground(new java.awt.Color(255, 255, 255));
         btnPermisos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnPermisos.setText("Permisos");
-        btnPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPermisos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPermisos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPermisosMousePressed(evt);
@@ -973,7 +978,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btnAgregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconos/agregar30.png"))); // NOI18N
         btnAgregarUsuario.setText("Agregar Usuario");
-        btnAgregarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAgregarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnAgregarUsuarioMousePressed(evt);
@@ -1600,6 +1605,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btnMaximizarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaximizarMousePressed
         minimizarMaximizar();
     }//GEN-LAST:event_btnMaximizarMousePressed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        if (evt.getClickCount() == 1) {
+            ie.estado = Estados.IMPORTAR;
+            ie.iniciar();
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     public void EstablecerPnlContenedor() {
         if (pnlContenedor.getComponents().length > 0) {
