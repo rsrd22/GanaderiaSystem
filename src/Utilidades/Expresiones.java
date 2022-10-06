@@ -23,7 +23,7 @@ public class Expresiones {
     public static String TEXTO_SIN_PUNTOS = "";
     public static String TEXTO_SIN_DOS_PUNTOS = "";
     public static String TEXTO_SIN_OPERADORES_ARITMETICOS = "";
-    private static String CAMPOS_DE_TEXTO_BD="^varchar|date|datetime|enum|text$";
+    private static String CAMPOS_DE_TEXTO_BD="^varchar|date|datetime|enum|text|longtext$";
 
     /**
      * Este metodo evalua el texto pasado por parametro basado en una

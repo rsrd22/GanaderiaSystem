@@ -585,8 +585,6 @@ public class gestorMySQL implements IBaseDeDatos {
     
     public boolean EnviarConsultas(ArrayList consultas, VistaPrincipal vp) 
             throws ClassNotFoundException, SQLException {
-        System.out.println("\n\n");
-        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: inicia EnviarConsultas");
         String QuerySQL = null;
 
         try {
@@ -615,7 +613,6 @@ public class gestorMySQL implements IBaseDeDatos {
                             + "%</P></HTML>"
                     );
                     
-                    System.out.println("consultas.get(" + x + ")-->" + consultas.get(x) + "//////////////////////");
                     if (!consultas.get(x).equals("")) {
                         QuerySQL = consultas.get(x).toString();
                         if (st.executeUpdate(QuerySQL) <= 0) {
@@ -630,7 +627,6 @@ public class gestorMySQL implements IBaseDeDatos {
                 con.setAutoCommit(true);
                 Desconectar();
                 System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::: finaliza EnviarConsultas");
-                System.out.println("\n\n");
                 return true;
             }
 

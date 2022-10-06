@@ -4,6 +4,7 @@ import BaseDeDatos.Encryptar;
 import BaseDeDatos.gestorMySQL;
 import GestionControles.EstadoControles;
 import GestionControles.GestionEstadoControles;
+import ImportExport.JuegoDeCaracteres;
 import Modelo.Usuario.ModeloPermisoxModulos;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,11 +15,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -54,7 +57,7 @@ public class Utilidades {
         Matcher m = p.matcher(texto);
         return m.find();
     }
-    
+
     public static String scapeHTML(String s) {
         return s.replaceAll("<(.|\\n)+?>", "");
     }
@@ -215,6 +218,107 @@ public class Utilidades {
 //            dato = dato.replace("<br/>", "\n");//° 
             //  alert(HTML);
 
+            //<editor-fold defaultstate="collapsed" desc="nuevos caracteres">
+            dato = dato.replace("\r", "\\RC");
+            dato = dato.replace("\n", "\\BR");
+            dato = dato.replace("\t", "\\TB");
+            dato = dato.replace("¡", "\\A1");
+            dato = dato.replace("¢", "\\A2");
+            dato = dato.replace("£", "\\A3");
+            dato = dato.replace("¤", "\\A4");
+            dato = dato.replace("¥", "\\A5");
+            dato = dato.replace("¦", "\\A6");
+            dato = dato.replace("§", "\\A7");
+            dato = dato.replace("¨", "\\A8");
+            dato = dato.replace("©", "\\A9");
+            dato = dato.replace("ª", "\\AA");
+            dato = dato.replace("«", "\\AB");
+            dato = dato.replace("¬", "\\AC");
+            dato = dato.replace("-", "\\AD");
+            dato = dato.replace("®", "\\AE");
+            dato = dato.replace("¯", "\\AF");
+            dato = dato.replace("°", "\\B0");
+            dato = dato.replace("±", "\\B1");
+            dato = dato.replace("²", "\\B2");
+            dato = dato.replace("³", "\\B3");
+            dato = dato.replace("´", "\\B4");
+            dato = dato.replace("µ", "\\B5");
+            dato = dato.replace("¶", "\\B6");
+            dato = dato.replace("·", "\\B7");
+            dato = dato.replace("¸", "\\B8");
+            dato = dato.replace("¹", "\\B9");
+            dato = dato.replace("º", "\\BA");
+            dato = dato.replace("»", "\\BB");
+            dato = dato.replace("¼", "\\BC");
+            dato = dato.replace("½", "\\BD");
+            dato = dato.replace("¾", "\\BE");
+            dato = dato.replace("¿", "\\BF");
+            dato = dato.replace("À", "\\C0");
+            dato = dato.replace("Á", "\\C1");
+            dato = dato.replace("Â", "\\C2");
+            dato = dato.replace("Ã", "\\C3");
+            dato = dato.replace("Ä", "\\C4");
+            dato = dato.replace("Å", "\\C5");
+            dato = dato.replace("Æ", "\\C6");
+            dato = dato.replace("Ç", "\\C7");
+            dato = dato.replace("È", "\\C8");
+            dato = dato.replace("É", "\\C9");
+            dato = dato.replace("Ê", "\\CA");
+            dato = dato.replace("Ë", "\\CB");
+            dato = dato.replace("Ì", "\\CC");
+            dato = dato.replace("Í", "\\CD");
+            dato = dato.replace("Î", "\\CE");
+            dato = dato.replace("Ï", "\\CF");
+            dato = dato.replace("Ð", "\\D0");
+            dato = dato.replace("Ñ", "\\D1");
+            dato = dato.replace("Ò", "\\D2");
+            dato = dato.replace("Ó", "\\D3");
+            dato = dato.replace("Ô", "\\D4");
+            dato = dato.replace("Õ", "\\D5");
+            dato = dato.replace("Ö", "\\D6");
+            dato = dato.replace("×", "\\D7");
+            dato = dato.replace("Ø", "\\D8");
+            dato = dato.replace("Ù", "\\D9");
+            dato = dato.replace("Ú", "\\DA");
+            dato = dato.replace("Û", "\\DB");
+            dato = dato.replace("Ü", "\\DC");
+            dato = dato.replace("Ý", "\\DD");
+            dato = dato.replace("Þ", "\\DE");
+            dato = dato.replace("ß", "\\DF");
+            dato = dato.replace("à", "\\E0");
+            dato = dato.replace("á", "\\E1");
+            dato = dato.replace("â", "\\E2");
+            dato = dato.replace("ã", "\\E3");
+            dato = dato.replace("ä", "\\E4");
+            dato = dato.replace("å", "\\E5");
+            dato = dato.replace("æ", "\\E6");
+            dato = dato.replace("ç", "\\E7");
+            dato = dato.replace("è", "\\E8");
+            dato = dato.replace("é", "\\E9");
+            dato = dato.replace("ê", "\\EA");
+            dato = dato.replace("ë", "\\EB");
+            dato = dato.replace("ì", "\\EC");
+            dato = dato.replace("í", "\\ED");
+            dato = dato.replace("î", "\\EE");
+            dato = dato.replace("ï", "\\EF");
+            dato = dato.replace("ð", "\\F0");
+            dato = dato.replace("ñ", "\\F1");
+            dato = dato.replace("ò", "\\F2");
+            dato = dato.replace("ó", "\\F3");
+            dato = dato.replace("ô", "\\F4");
+            dato = dato.replace("õ", "\\F5");
+            dato = dato.replace("ö", "\\F6");
+            dato = dato.replace("÷", "\\F7");
+            dato = dato.replace("ø", "\\F8");
+            dato = dato.replace("ù", "\\F9");
+            dato = dato.replace("ú", "\\FA");
+            dato = dato.replace("û", "\\FB");
+            dato = dato.replace("ü", "\\FC");
+            dato = dato.replace("ý", "\\FD");
+            dato = dato.replace("þ", "\\FE");
+            dato = dato.replace("ÿ", "\\FF");
+            //</editor-fold>
+
         } catch (Exception e) {
             System.out.println("ERROR decodificarElemento()-->" + e.toString());
         }
@@ -268,12 +372,138 @@ public class Utilidades {
             dato = dato.replace("°", "_Ord_");//°   
             dato = dato.replace("'", "_ComSpl_");//°   
 
-            //  alert(HTML);
+            //<editor-fold defaultstate="collapsed" desc="nuevos caracteres">
+            dato = dato.replace("\\RC", "\r");
+            dato = dato.replace("\\BR", "\n");
+            dato = dato.replace("\\TB", "\t");
+            dato = dato.replace("\\A1", "¡");
+            dato = dato.replace("\\A2", "¢");
+            dato = dato.replace("\\A3", "£");
+            dato = dato.replace("\\A4", "¤");
+            dato = dato.replace("\\A5", "¥");
+            dato = dato.replace("\\A6", "¦");
+            dato = dato.replace("\\A7", "§");
+            dato = dato.replace("\\A8", "¨");
+            dato = dato.replace("\\A9", "©");
+            dato = dato.replace("\\AA", "ª");
+            dato = dato.replace("\\AB", "«");
+            dato = dato.replace("\\AC", "¬");
+            dato = dato.replace("\\AD", "-");
+            dato = dato.replace("\\AE", "®");
+            dato = dato.replace("\\AF", "¯");
+            dato = dato.replace("\\B0", "°");
+            dato = dato.replace("\\B1", "±");
+            dato = dato.replace("\\B2", "²");
+            dato = dato.replace("\\B3", "³");
+            dato = dato.replace("\\B4", "´");
+            dato = dato.replace("\\B5", "µ");
+            dato = dato.replace("\\B6", "¶");
+            dato = dato.replace("\\B7", "·");
+            dato = dato.replace("\\B8", "¸");
+            dato = dato.replace("\\B9", "¹");
+            dato = dato.replace("\\BA", "º");
+            dato = dato.replace("\\BB", "»");
+            dato = dato.replace("\\BC", "¼");
+            dato = dato.replace("\\BD", "½");
+            dato = dato.replace("\\BE", "¾");
+            dato = dato.replace("\\BF", "¿");
+            dato = dato.replace("\\C0", "À");
+            dato = dato.replace("\\C1", "Á");
+            dato = dato.replace("\\C2", "Â");
+            dato = dato.replace("\\C3", "Ã");
+            dato = dato.replace("\\C4", "Ä");
+            dato = dato.replace("\\C5", "Å");
+            dato = dato.replace("\\C6", "Æ");
+            dato = dato.replace("\\C7", "Ç");
+            dato = dato.replace("\\C8", "È");
+            dato = dato.replace("\\C9", "É");
+            dato = dato.replace("\\CA", "Ê");
+            dato = dato.replace("\\CB", "Ë");
+            dato = dato.replace("\\CC", "Ì");
+            dato = dato.replace("\\CD", "Í");
+            dato = dato.replace("\\CE", "Î");
+            dato = dato.replace("\\CF", "Ï");
+            dato = dato.replace("\\D0", "Ð");
+            dato = dato.replace("\\D1", "Ñ");
+            dato = dato.replace("\\D2", "Ò");
+            dato = dato.replace("\\D3", "Ó");
+            dato = dato.replace("\\D4", "Ô");
+            dato = dato.replace("\\D5", "Õ");
+            dato = dato.replace("\\D6", "Ö");
+            dato = dato.replace("\\D7", "×");
+            dato = dato.replace("\\D8", "Ø");
+            dato = dato.replace("\\D9", "Ù");
+            dato = dato.replace("\\DA", "Ú");
+            dato = dato.replace("\\DB", "Û");
+            dato = dato.replace("\\DC", "Ü");
+            dato = dato.replace("\\DD", "Ý");
+            dato = dato.replace("\\DE", "Þ");
+            dato = dato.replace("\\DF", "ß");
+            dato = dato.replace("\\E0", "à");
+            dato = dato.replace("\\E1", "á");
+            dato = dato.replace("\\E2", "â");
+            dato = dato.replace("\\E3", "ã");
+            dato = dato.replace("\\E4", "ä");
+            dato = dato.replace("\\E5", "å");
+            dato = dato.replace("\\E6", "æ");
+            dato = dato.replace("\\E7", "ç");
+            dato = dato.replace("\\E8", "è");
+            dato = dato.replace("\\E9", "é");
+            dato = dato.replace("\\EA", "ê");
+            dato = dato.replace("\\EB", "ë");
+            dato = dato.replace("\\EC", "ì");
+            dato = dato.replace("\\ED", "í");
+            dato = dato.replace("\\EE", "î");
+            dato = dato.replace("\\EF", "ï");
+            dato = dato.replace("\\F0", "ð");
+            dato = dato.replace("\\F1", "ñ");
+            dato = dato.replace("\\F2", "ò");
+            dato = dato.replace("\\F3", "ó");
+            dato = dato.replace("\\F4", "ô");
+            dato = dato.replace("\\F5", "õ");
+            dato = dato.replace("\\F6", "ö");
+            dato = dato.replace("\\F7", "÷");
+            dato = dato.replace("\\F8", "ø");
+            dato = dato.replace("\\F9", "ù");
+            dato = dato.replace("\\FA", "ú");
+            dato = dato.replace("\\FB", "û");
+            dato = dato.replace("\\FC", "ü");
+            dato = dato.replace("\\FD", "ý");
+            dato = dato.replace("\\FE", "þ");
+            dato = dato.replace("\\FF", "ÿ");
+            //</editor-fold>
+
         } catch (Exception e) {
             System.out.println("ERROR decodificarElemento()-->" + e.toString());
         }
 
         return dato;
+    }
+
+    public static String decodificarElementoIE(String dato) {
+
+        List<JuegoDeCaracteres> listaDeCaracteres = EnumSet
+                .allOf(JuegoDeCaracteres.class).stream()
+                .collect(Collectors.toList());
+        for (JuegoDeCaracteres caracter : listaDeCaracteres) {
+            dato = dato.replace(caracter.getCodigo(), caracter.getValor());
+        }
+        
+        return dato;
+        
+    }
+
+    public static String codificarElementoIE(String dato) {
+        
+        List<JuegoDeCaracteres> listaDeCaracteres = EnumSet
+                .allOf(JuegoDeCaracteres.class).stream()
+                .collect(Collectors.toList());
+        for (JuegoDeCaracteres caracter : listaDeCaracteres) {
+            dato = dato.replace(caracter.getValor(), caracter.getCodigo());
+        }
+        
+        return dato;
+        
     }
 
     public static boolean validarSoloNumeros(String texto) {
@@ -985,12 +1215,13 @@ public class Utilidades {
         dato = Utilidades.MascaraMonedaConDecimales(dato);
         return dato;
     }
-    
+
     /**
      * Devuelve el nombre del esquema de base de datos
+     *
      * @return String
      */
-    public static String getSchema(){
+    public static String getSchema() {
         return mySQL.getBD();
     }
 }

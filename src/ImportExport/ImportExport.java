@@ -10,6 +10,7 @@ import BaseDeDatos.baseDeDatos;
 import BaseDeDatos.gestorMySQL;
 import Utilidades.Expresiones;
 import Utilidades.Parametros;
+import Utilidades.Utilidades;
 import Vistas.VistaPrincipal;
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +19,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javax.swing.JOptionPane;
 
 /**
@@ -49,58 +54,108 @@ public class ImportExport extends Thread implements Runnable {
         }
     }
 
-    public ArrayList<String[]> getTablas(String nombreDB) {
-        String consulta = "SHOW TABLES FROM " + nombreDB + "";
-        return sql.SELECT(consulta);
-    }
-
-    public String getDatosTabla(String tabla) {
-        String texto = "";
-        String consulta = "SELECT * FROM " + tabla;
-        ArrayList<String[]> datos = sql.SELECT(consulta);
-
-        texto += tabla.toUpperCase() + "\n";
-        if (datos.size() > 0) {
-            for (int i = 0; i < datos.size(); i++) {
-                for (int j = 0; j < datos.get(i).length; j++) {
-                    texto += datos.get(i)[j] + Parametros.separadorIE;
-                }
-                texto += "a\n";
-            }
-        }
-        return texto + tabla.toUpperCase() + "\n";
-    }
-
-    public void escribirArchivo(String texto, String url) {
-        archivo.EscribirArchivo(texto, url);
-    }
-
     public void exportar() {
         String url = Expresiones.guardarEn();
         if (url.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar la ruta donde desea exportar los datos.");
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Debe seleccionar la ruta donde desea exportar los datos."
+            );
             return;
-        } else {
-            ArrayList<String[]> tablas = getTablas(baseDeDatos.BIENESRAICES);
-            String txtie = "";
-            if (tablas.size() > 0) {
-                int valmax = 0;
-                vp.progreso.setMaximum(tablas.size());
+        }
 
-                for (int i = 0; i < tablas.size(); i++) {
-                    for (int j = 0; j < tablas.get(i).length; j++) {
-                        if (!tablas.get(i)[j].equalsIgnoreCase("BIENXIMAGEN")) {
-                            txtie += getDatosTabla(tablas.get(i)[j]);
-                            vp.progreso.setValue(++valmax);
-                            vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Exportando los datos de <b>" + tablas.get(i)[j].toUpperCase() + "</b> espere...</P></HTML>");
-                        }
-                    }
-                }
-                escribirArchivo(txtie, url + "/BIENESRAICES.txt");
-                vp.progreso.setValue(++valmax);
-                vp.mensaje.setText("<HTML><P ALIGN='CENTER'>Datos exportados exitosamente</P></HTML>");
+        List<String[]> tablas = this.getTablas(baseDeDatos.BIENESRAICES);
+        if (tablas.isEmpty()) {
+            vp.mensaje.setText(
+                    "<HTML><P ALIGN='CENTER'><b>"
+                    + "No se encontraron datos a exportar</b>"
+                    + "Proceso finalizado.</P></HTML>"
+            );
+            return;
+        }
+
+        String txtie = "";
+        int valmax = 0;
+        vp.progreso.setMaximum(tablas.size());
+
+        for (int i = 0; i < tablas.size(); i++) {
+            Optional<String> optTabla = Stream.of(tablas.get(i)).findFirst();
+            if (!optTabla.isPresent()) {
+                vp.progreso.setValue(tablas.size());
+                vp.mensaje.setText(
+                        "<HTML><P ALIGN='CENTER'><b>"
+                        + "El proceso finalizo con errores,</b>"
+                        + "Intentalo mas tarde.</P></HTML>"
+                );
+                return;
+            }
+            String tabla = optTabla.get();
+
+            List<Integer> indices = this.getIndicesCampoTexto(
+                    this.getCamposTabla(tabla)
+            );
+
+            txtie += this.getDatosTabla(tabla, indices);
+            vp.progreso.setValue(++valmax);
+            vp.mensaje.setText(
+                    "<HTML><P ALIGN='CENTER'>"
+                    + "Exportando los datos de <b>"
+                    + tabla.toUpperCase() + "</b> espere..."
+                    + "</P></HTML>"
+            );
+        }
+
+        archivo.EscribirArchivo(txtie, url.concat("/ganadero.txt"));
+        vp.progreso.setValue(++valmax);
+        vp.mensaje.setText(
+                "<HTML><P ALIGN='CENTER'>"
+                + "<b>Datos exportados exitosamente.</b>"
+                + "</P></HTML>"
+        );
+
+    }
+
+    public List<String[]> getTablas(String nombreBaesDatos) {
+        String consulta = "SHOW TABLES FROM " + nombreBaesDatos + "";
+        return sql.SELECT(consulta);
+    }
+
+    public String getDatosTabla(String tabla, List<Integer> indices) {
+        String texto = "";
+        String consulta = "SELECT * FROM " + tabla;
+        List<String[]> datos = sql.SELECT(consulta);
+
+        texto += tabla.toUpperCase().concat("\n");
+        if (datos.isEmpty()) {
+            return texto.concat(tabla.toUpperCase()).concat("\n");
+        }
+
+        for (int i = 0; i < datos.size(); i++) {
+            for (String elemento : datos.get(i)) {
+                texto += Utilidades.codificarElementoIE(elemento)
+                        .concat(Parametros.separadorIE);
+            }
+            texto += "a\n";
+        }
+
+        return texto.concat(tabla.toUpperCase()).concat("\n");
+    }
+
+    private List<Integer> getIndicesCampoTexto(List<String[]> camposTabla) {
+        List<Integer> indices = new ArrayList<>();
+
+        if (camposTabla.isEmpty()) {
+            return indices;
+        }
+
+        for (int i = 0; i < camposTabla.size(); i++) {
+            String tipo = this.getTipoDeDato(camposTabla.get(i)[1]);
+            if (Expresiones.validarCamposDeTextoDB(tipo)) {
+                indices.add(i);
             }
         }
+
+        return indices;
     }
 
     public void importar() {
@@ -136,7 +191,11 @@ public class ImportExport extends Thread implements Runnable {
                         banderaConsultaCampos = 1;
                         camposTabla = this.getCamposTabla(nombreTabla);
                     }
-                    String consulta = this.importarDatosTabla(camposTabla, nombreTabla, texto);
+                    
+                    String consulta = this.importarDatosTabla(
+                            camposTabla, nombreTabla, texto
+                    );
+                    
                     if (!consulta.isEmpty()) {
                         consultas.add(consulta);
                     }
@@ -166,46 +225,6 @@ public class ImportExport extends Thread implements Runnable {
         }
     }
 
-    @Deprecated
-    private String importarDatosTabla(String tabla, String lineaDeTexto) {
-        String consulta = "SHOW COLUMNS FROM " + baseDeDatos.BIENESRAICES + "." + tabla;
-        ArrayList<String[]> datos = sql.SELECT(consulta);
-        String insert = "", keyDuplicada = "";
-        String[] datosLdt = lineaDeTexto.replace(Parametros.separadorIE, ":-:").split(":-:");;
-        int band = 0;
-
-        if (datos.size() > 0) {
-            insert += "INSERT INTO " + tabla + "() VALUES (";
-            for (int i = 0; i < datos.size(); i++) {
-
-                String campo = "", tipo = "";
-                if (datos.get(i)[1].contains("(")) {
-                    tipo = datos.get(i)[1].substring(0, datos.get(i)[1].indexOf("("));
-                } else {
-                    tipo = datos.get(i)[1];
-                }
-
-                if (Expresiones.validarCamposDeTextoDB(tipo)) {
-                    campo = "'";
-                }
-
-                if (i < datos.size() - 1) {
-                    insert += campo + datosLdt[i] + campo + ",";
-                } else {
-                    insert += campo + datosLdt[i] + campo;
-                }
-
-                if (datos.get(i)[2].equalsIgnoreCase("yes") && band == 0) {
-                    band = 1;
-                    keyDuplicada = " ON DUPLICATE KEY UPDATE " + datos.get(i)[0] + "=" + campo + datosLdt[i] + campo;
-                }
-            }
-            insert += ")" + keyDuplicada;
-        }
-
-        return keyDuplicada.isEmpty() ? "" : insert.replaceAll("'null'", "NULL");
-    }
-
     private String importarDatosTabla(
             List<String[]> datos, String tabla, String lineaDeTexto
     ) {
@@ -217,29 +236,26 @@ public class ImportExport extends Thread implements Runnable {
         if (!datos.isEmpty()) {
             insert += "INSERT INTO " + tabla + "() VALUES (";
             for (int i = 0; i < datos.size(); i++) {
+                String tipo = this.getTipoDeDato(datos.get(i)[1]);
 
-                String comilla = "", tipo = "", campo = "";
-                if (datos.get(i)[1].contains("(")) {
-                    tipo = datos.get(i)[1].substring(0, datos.get(i)[1]
-                            .indexOf("("));
-                } else {
-                    tipo = datos.get(i)[1];
-                }
-
+                String comilla = "";
                 if (Expresiones.validarCamposDeTextoDB(tipo)) {
                     comilla = "'";
                 }
 
-                campo = comilla + datosLdt[i] + comilla;
-                insert += campo + ((i < datos.size() - 1) ? "," : "");
+                String campo = comilla
+                        .concat(Utilidades.decodificarElementoIE(datosLdt[i]))
+                        .concat(comilla);
+                insert += campo.concat((i < datos.size() - 1) ? "," : "");
 
                 if (datos.get(i)[2].equalsIgnoreCase("yes") && band == 0) {
                     band = 1;
-                    keyDuplicada = " ON DUPLICATE KEY UPDATE " + datos.get(i)[0]
-                            + "=" + campo;
+                    keyDuplicada = " ON DUPLICATE KEY UPDATE "
+                            .concat(datos.get(i)[0]).concat("=")
+                            .concat(campo);
                 }
             }
-            insert += ")" + keyDuplicada;
+            insert += ")".concat(keyDuplicada);
         }
 
         return keyDuplicada.isEmpty() ? "" : insert.replaceAll("'null'", "NULL");
@@ -262,6 +278,13 @@ public class ImportExport extends Thread implements Runnable {
         } catch (InterruptedException ex) {
             JOptionPane.showMessageDialog(null, "terminar -> " + ex.getMessage());
         }
+    }
+
+    private String getTipoDeDato(String datos) {
+        if (datos.contains("(")) {
+            return datos.substring(0, datos.indexOf("("));
+        }
+        return datos;
     }
 
 }
