@@ -40,7 +40,8 @@ public class ConfiguracionPropiedades {
     public static void cargarConfiguracion() {
         propiedades = new Properties();
         try {
-            String urlRelativa = "/home/dolf/Config.properties";
+            //String urlRelativa = "/home/dolf/Config.properties"; // LINUX
+            String urlRelativa = "C:\\CONFIG GANADERIA\\Config.properties";
             FileInputStream archivoConfig = new FileInputStream(urlRelativa);
 
             propiedades.load(archivoConfig);
